@@ -24,7 +24,7 @@
                 display: table-cell;
                 vertical-align: middle;
                 width: 100%;
-                max-width: 1920px; /* YOUR BG MAX SIZE */
+                max-width: 2560px; /* YOUR BG MAX SIZE */
                 background:url("{{asset('logo/background1.jpg')}}") no-repeat;
                 background-size: 100%;
             }
