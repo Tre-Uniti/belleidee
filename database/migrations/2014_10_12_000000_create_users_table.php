@@ -21,8 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('nymi', 60)->nullable();
             $table->string('sponsorid, 60');
             $table->string('photoPath, 60');
-            //$table->integer('v3c', 18);
-            //$table->integer('ninja', 18)->nullable();
+            $table->integer('v3c')->unsigned();
+            $table->integer('ninja')->unsigned();
+            $table->string('type', 20);
             $table->rememberToken();
             $table->timestamps();
         });
