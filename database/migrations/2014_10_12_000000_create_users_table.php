@@ -12,14 +12,14 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table)
+        {
             $table->increments('id');
-            $table->string('handle');
+            $table->string('handle')->unique();
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->string('motto', 30)->nullable();
             $table->string('nymi', 60)->nullable();
-            $table->string('sponsorid, 60');
             $table->string('photoPath, 60');
             $table->integer('v3c')->unsigned();
             $table->integer('ninja')->unsigned();
@@ -28,7 +28,6 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *
