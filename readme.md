@@ -1,2 +1,6 @@
 # belle-idee
-Faith based inspiration sharing
+Belief based inspiration sharing
+
+For more information contact:
+brendan.mcgoffin@tre-uniti.org
+

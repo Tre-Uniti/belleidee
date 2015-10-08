@@ -17,17 +17,7 @@
 <div class = "c-M">
     @yield('center-menu')
 </div>
-<div class = "c-V" style = "
-    width: 50%;
-	height: auto;
-	margin: 0 auto;
-	background-color: black;
-	display: inline-block;
-	opacity:0.87;
-	filter:alpha(opacity=87);
-	border: 2px solid;
-	border-radius: 25px;
-	font-family: Arial Black, Gadget, sans-serif;">
+<div class = "c-V">
     @yield('center-Valve')
 </div>
 <div class = "c-B")>

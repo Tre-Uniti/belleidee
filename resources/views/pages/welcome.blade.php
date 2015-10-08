@@ -72,7 +72,7 @@
                         <hr>
                         <h3 style = "color: white;">New members:</h3>
                         <button type = "button" class = "button_elevate" onclick = "window.location.href = 'tour.php'">Take our Tour!</button>
-                        <button type = "button" class = "button_elevate" onclick = "window.location.href = 'home.php'">Hack our Clone!</button>
+                        <button type = "button" class = "button_elevate" onclick = "window.location.href = 'pages.php'">Hack our Clone!</button>
                     </div>
                     <br/>
                     <br/>
