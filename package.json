@@ -1,10 +1,12 @@
 {
   "private": true,
   "devDependencies": {
-    "gulp": "^3.8.8"
+    "gulp": "^3.9.0"
   },
   "dependencies": {
+    "bootstrap-sass": "^3.0.0",
+    "coffee-script": "^1.10.0",
     "laravel-elixir": "^3.0.0",
-    "bootstrap-sass": "^3.0.0"
+    "lodash": "^3.10.1"
   }
 }

@@ -1,0 +1,22 @@
+/* This file is dedicated to the Div classes for the home layout
+   It is included in app.scss and controls the following divs:
+    -Left:
+      -topMenu, profile, bottomMenu
+    -Center:
+      -menu, Valve, Bottom
+    -Right:
+      -topMenu, profile, bottomMenu
+*/
+$tLM-BGC = #D8D8D8;
+.topLeft-menu
+{
+  width: 24%;
+  height: auto;
+  margin: 0 auto;
+  left: 0;
+  top:5%;
+  background-color: $tLM-BGC;
+  border: 1px solid;
+  border-radius: 20px;
+  opacity: 0.9;
+}

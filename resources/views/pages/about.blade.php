@@ -6,5 +6,5 @@
 
 @section('center-Valve')
     <
-    <a href="#">{!! Html::image("logo/idee.png", "Logo") !!}</a>
+    <a href="#">{!! Html::image("img", "Logo") !!}</a>
 @stop

@@ -1,32 +1,24 @@
 @extends('app')
 
 @section('siteTitle')
-    <title>Idee /-\ Home</title>
+    Home
 @stop
-@section('topLeft-menu')
-    <h1>topleft-menu</h1>
-@stop
-@section('left-profile')
-    <h1>left-profile</h1>
-@stop
-@section('bottomLeft-menu')
-    <h1>bottomLeft-menu</h1>
-@stop
-@section('center-menu')
+@section('topLeftMenu')
     <h1>center-menu</h1>
+    <a href="http://belle-idee.dev/contact"><button>Test: 1234</button></a>
 @stop
-@section('center-Valve')
-<h1>Center Valve</h1>
+@section('leftProfile')
+
 @stop
-@section('center-Bottom')
-    <h1>center-bottom</h1>
+@section('bottomLeftMenu')
+
 @stop
-@section('topRight-menu')
-    <h1>topRight-menu</h1>
+@section('centerMenu')
+
 @stop
-@section('right-profile')
-    <h1>right-profile</h1>
+@section('centerValve')
+    @include('partials.bLM')
 @stop
-@section('bottomRight-menu')
-    <h1>bottomRight-menu</h1>
+@section('centerBottom')
+
 @stop

@@ -1,36 +1,51 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset=""UTF-8">
-    @yield('siteTitle')
+    <title>Idee /-\ @yield('siteTitle')</title>
+    <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
+    <Link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!--
+       This code is maintained by the Tre-Uniti development ops
+       Requests and feedback are administered at Bella.ninja
+       Idee Repo: https://github.com/tre-uniti/belle-idee
+    -->
 </head>
 <body>
-<div class = "tL-M">
-    @yield('topLeft-menu')
-</div>
-<div class = "l-P">
-    @yield('left-profile')
-</div>
-<div class = "bL-M">
-    @yield('bottomLeft-menu')
-</div>
-<div class = "c-M">
-    @yield('center-menu')
-</div>
-<div class = "c-V">
-    @yield('center-Valve')
-</div>
-<div class = "c-B")>
-    @yield('center-Bottom')
-</div>
-<div class = "tR-M")>
-    @yield('topRight-menu')
-</div>
-<div class = "l-P")>
-    @yield('right-profile')
-</div>
-<div class = "bL-M")>
-    @yield('bottomRight-menu')
+<div id = "container">
+
+    <!-- Left --- --- -->
+    <div class = "tLM">
+        @yield('topLeftMenu')
+    </div>
+    <div class = "lP">
+        @yield('leftProfile')
+    </div>
+    <div class = "bLM">
+        @yield('bottomLeftMenu')
+    </div>
+
+    <!-- --- Center --- -->
+    <div class = "cM">
+        @yield('centerMenu')
+    </div>
+    <div class = "cV">
+        @yield('centerValve')
+    </div>
+    <div class = "cF">
+        @yield('centerFooter')
+    </div>
+
+    <!-- --- --- Right -->
+    <div class = "tRM">
+        @yield('topRightMenu')
+    </div>
+    <div class = "rP">
+        @yield('rightProfile')
+    </div>
+    <div class = "bRM">
+        @yield('bottomRightMenu')
+    </div>
 </div>
 </body>
 </html>
