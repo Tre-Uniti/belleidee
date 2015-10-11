@@ -1,61 +1,35 @@
-@extends('app')
+@extends('login')
+@section('siteTitle')
+    Login
+@stop
+@section('login')
+    @if (count($errors) > 0)
+        <strong>Woooah!</strong> There were some problems with your input.<br><br>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li style = "color:red">{{ $error }}</li>
+            @endforeach
+        </ul>
+    @endif
+    <h3>Login</h3>
+    <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <table class = "input">
+            <tr><td><label for = "email" class = "login">E-Mail Address</label></td>
+                <td><input type="text" id="email" name="email" value="{{ old('email') }}"></td>
+            </tr>
+            <tr><td><label for = "password" class = "login">Password</label></td>
+                <td><input type = "password" name = "password" id = "password"/></td>
+            </tr>
+            <tr><td><label for = "remember" class = "login"></label></td>
+                <td style = "color: green"><input type="checkbox" id = "remember" name="remember"> Remember Me</td></tr>
+        </table>
+        <button type="submit" class = "interactButton">Login</button>
+    </form>
 
-@section('center-Valve')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Login</div>
-                    <div class="panel-body">
-                        @if (count($errors) > 0)
-                            <div class="alert alert-danger">
-                                <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">E-Mail Address</label>
-                                <div class="col-md-6">
-                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Password</label>
-                                <div class="col-md-6">
-                                    <input type="password" class="form-control" name="password">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="remember"> Remember Me
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">Login</button>
-
-                                    <a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
+@stop
+@section('footer')
+    <h4>Other Options:</h4>
+    <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Nymi</button></a><br/>
+    <a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
+@stop

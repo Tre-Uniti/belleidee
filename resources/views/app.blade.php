@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset=""UTF-8">
     <title>Idee /-\ @yield('siteTitle')</title>

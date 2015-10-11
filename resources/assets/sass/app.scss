@@ -1,14 +1,21 @@
+// Utilities
+@import "utility/siteVars";
+// Base Imports
+@import "pages/normalize";
 @import 'pages/home';
+@import 'pages/layoutDivs';
 @import 'pages/welcome';
+//Button Imports
+@import 'mixins/baseButton';
+@import 'mixins/colorButton';
 
 html{
-  background-image: url("/img/background3.jpg");
+  background-image: url($imgBackgound1);
   background-repeat: no-repeat;
   min-width: 1375px;
   -webkit-background-size: cover;
-  -moz-background-size: cover;
   -o-background-size: cover;
-  -background-size: cover;
+  background-size: cover;
 
 }
 #container
@@ -17,4 +24,17 @@ html{
   position: relative;
 }
 
-/* Div specific classes */
+/* Div specific */
+
+
+/* Button specific */
+.navButton
+{
+  @include colorNavButton($navButtonColor1, $navButtonColor2);
+  @include baseButton;
+}
+.interactButton
+{
+  @include colorActButton($actButtonColor1, $actButtonColor2);
+  @include baseButton;
+}

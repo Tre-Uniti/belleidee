@@ -1,30 +1,20 @@
-<!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset=""UTF-8">
-    <title>Idee /-\ Welcome!</title>
-    <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
-    <!--
-       This code is maintained by the Tre-Uniti development ops
-       Requests and feedback are administered at Bella.ninja
-       Idee Repo: https://github.com/tre-uniti/belle-idee
-    -->
-</head>
-<body>
-<div class = "welcome">
-    <h1>Welcome to Belle Idee</h1>
-    <h4><u>The home for anonymously sharing ideas, inspiration, and influence</u></h4>
-    <div class = "login">
-        <button type = "button" class = "button_connector" onclick = "window.location.href = 'nymiLogin.php'">Nymi</button>
-        <button type = "button" class = "button_connector" onclick = "window.location.href = 'passwordLogin.php'">Password</button>
-        <hr>
-        <button type = "button" class = "button_elevate" onclick = "window.location.href = 'tour.php'">Take our Tour!</button>
-        <button type = "button" class = "button_elevate" onclick = "window.location.href = 'home.php'">Hack our Clone!</button>
-    </div>
-    <!--Question of the Week:-->
-    <h2>This week's question:</h2>
-    <p><u>How are we influenced by our emotions, what purpose do they play?</u></p>
-    <!--Question of the Week:-->
-</div>
-</body>
-</html>
+@extends('login')
+@section('siteTitle')
+    Welcome!
+@stop
+@section('login')
+        <h3>Login Options:</h3>
+            <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Nymi</button></a>
+            <a href="{{ url('/auth/login') }}"><button type = "button" class = "interactButton">Password</button></a>
+
+        <h3>New members:</h3>
+            <a href="{{ url('/auth/register') }}"><button type = "button" class = "interactButton">Take our Tour!</button></a>
+            <a href="https://bella.ninja"><button type = "button" class = "interactButton">Adapt our Clone!</button></a>
+@stop
+
+@section('footer')
+        <!--Question of the Week:-->
+            <h2>This week's question:</h2>
+                <p>How are we influenced by our emotions, what purpose do they play?</p>
+        <!--Question of the Week:-->
+@stop
