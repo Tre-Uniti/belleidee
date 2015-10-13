@@ -14,17 +14,21 @@
 
 html{
   background-image: url($imgBackground1);
+  background-attachment: fixed;
   background-repeat: no-repeat;
-  min-width: 1375px;
   -webkit-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  min-width: 1000px;
+
 
 }
 #container
 {
   text-align: center;
-  position: relative;
+  position: absolute;
+  height: 100%;
+
 }
 
 /* Div specific */
@@ -35,41 +39,63 @@ html{
   @include menuDiv($topBackgroundColor);
   left: $sideMargin;
   top: $topPosition;
+  min-width: 400px;
 }
 .bottomLeftMenu
 {
   @include menuDiv($bottomBackgroundColor);
   left: $sideMargin;
   bottom: $bottomPosition;
+  min-width: 417px;
 }
 .topRightMenu
 {
   @include menuDiv($topBackgroundColor);
   right: $sideMargin;
   top: $topPosition;
+  min-width: 415px;
 }
 .bottomRightMenu
 {
   @include menuDiv($bottomBackgroundColor);
   right: $sideMargin;
   bottom: $bottomPosition;
+  min-width: 400px;
 }
 //Profiles
 .leftProfile
 {
   @include profileDiv($profileBackgroundColor, $profileOpacity);
   left: 0;
+  min-width: 100px;
 }
 .rightProfile
 {
   @include profileDiv($profileBackgroundColor, $profileOpacity);
   right: 0;
+  min-width: 100px;
 }
 //Content
 .centerContent
 {
   @include centerContent($centerBackgroundColor, $centerOpacity);
-  margin: .4% auto;
+  margin: 65px auto;
+  min-width: 10px;
+}
+.centerMenu
+{
+  margin: 0 auto;
+  width: 70%;
+  height: auto;
+  background-color: black;
+}
+.centerText
+{
+  margin: 0 auto;
+  width: 90%;
+  height: auto;
+  font-family: Georgia, serif;
+  font-size: 1.1em;
 }
 
 /* Button specific */
@@ -77,9 +103,25 @@ html{
 {
   @include colorNavButton($navButtonColor1, $navButtonColor2);
   @include baseButton;
+  &:hover {
+    color: #7dff23;
+    background: -webkit-linear-gradient($actButtonColor1, $actButtonColor2); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient($actButtonColor1, $actButtonColor2); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient($actButtonColor1, $actButtonColor2); /* For Firefox 3.6 to 15 */
+    background: linear-gradient($actButtonColor1, $actButtonColor2); /* Standard syntax */
+  }
 }
 .interactButton
 {
   @include colorActButton($actButtonColor1, $actButtonColor2);
   @include baseButton;
+  &:hover {
+    color: #fff;
+    background: -webkit-linear-gradient($navButtonColor1, $navButtonColor2); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient($navButtonColor1, $navButtonColor2); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient($navButtonColor1, $navButtonColor2); /* For Firefox 3.6 to 15 */
+    background: linear-gradient($navButtonColor1, $navButtonColor2); /* Standard syntax */
+
+  }
+  color: #7dff23;
 }

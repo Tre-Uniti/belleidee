@@ -17,18 +17,18 @@
     <!-- Left --- --- -->
     <div class = "topLeftMenu">
         @yield('topLeftMenu')
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Directory</button></a>
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Discover Inspiration</button></a>
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Home</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Directory</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Discover Inspiration</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Home</button></a>
     </div>
     <div class = "leftProfile">
         @yield('leftProfile')
     </div>
     <div class = "bottomLeftMenu">
         @yield('bottomLeftMenu')
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Questions</button></a>
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Create Inspiration</button></a>
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Bookmarks</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Questions</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Create Inspiration</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Bookmarks</button></a>
     </div>
 
     <!-- --- Center --- -->
@@ -49,19 +49,19 @@
     <div class = "topRightMenu">
         @yield('topRightMenu')
         <input type = "text" name = "search" size = "15">
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Search</button></a>
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Settings</button></a>
-        <a href="https://tre-uniti.org"><button type = "button" class = "interactButton">/-\</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Search</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Settings</button></a>
+        <a href="https://tre-uniti.org"><button type = "button" class = "navButton">/-\</button></a>
     </div>
     <div class = "rightProfile">
         @yield('rightProfile')
     </div>
     <div class = "bottomRightMenu">
         @yield('bottomRightMenu')
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Artist Name</button></a>
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Play</button></a>
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Next</button></a>
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Volume</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Artist Name</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Play</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Next</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Volume</button></a>
     </div>
 </div>
 </body>

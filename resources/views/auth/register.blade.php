@@ -30,7 +30,7 @@
                     <td><input type = "text" name = "beta" id = "beta"/></td>
                 </tr>
             </table>
-                <button type="submit" class = "interactButton">Register</button>
+                <button type="submit" class = "navButton">Register</button>
             </form>
 
 @stop
