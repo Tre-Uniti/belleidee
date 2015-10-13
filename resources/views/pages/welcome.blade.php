@@ -1,5 +1,5 @@
 @extends('login')
-@section('siteTitle')
+@section('loginTitle')
     Welcome!
 @stop
 @section('login')
@@ -10,6 +10,8 @@
         <h3>New members:</h3>
             <a href="{{ url('/auth/register') }}"><button type = "button" class = "interactButton">Take our Tour!</button></a>
             <a href="https://bella.ninja"><button type = "button" class = "interactButton">Adapt our Clone!</button></a>
+        {{$string = str_random(16)}}
+                <p style = "color: white;">{{$string}}</p>
 @stop
 
 @section('footer')

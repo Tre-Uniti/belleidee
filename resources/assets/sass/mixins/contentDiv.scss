@@ -1,0 +1,12 @@
+@mixin centerContent($centerBackgroundColor, $centerOpacity)
+{
+  width: 50%;
+  height: auto;
+  background-color: $centerBackgroundColor;
+  display: inline-block;
+  opacity: $centerOpacity;
+  filter:alpha(opacity=87); /* For IE8 and earlier */
+  border: 2px solid;
+  border-radius: 25px;
+  font-family: "Arial Black", Gadget, sans-serif;
+}

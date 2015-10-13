@@ -3,8 +3,8 @@
 <head>
     <meta charset=""UTF-8">
     <title>Idee /-\ @yield('siteTitle')</title>
+    <link rel = "stylesheet" href = "/css/normalize.css">
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
-    <Link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <!--
        This code is maintained by the Tre-Uniti development ops
        Requests and feedback are administered at Bella.ninja
@@ -15,36 +15,53 @@
 <div id = "container">
 
     <!-- Left --- --- -->
-    <div class = "tLM">
+    <div class = "topLeftMenu">
         @yield('topLeftMenu')
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Directory</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Discover Inspiration</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Home</button></a>
     </div>
-    <div class = "lP">
+    <div class = "leftProfile">
         @yield('leftProfile')
     </div>
-    <div class = "bLM">
+    <div class = "bottomLeftMenu">
         @yield('bottomLeftMenu')
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Questions</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Create Inspiration</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Bookmarks</button></a>
     </div>
 
     <!-- --- Center --- -->
-    <div class = "cM">
+    <div class = "centerContent">
+        @yield('centerContent')
+    <div class = "centerMenu">
         @yield('centerMenu')
     </div>
-    <div class = "cV">
-        @yield('centerValve')
+    <div class = "centerText">
+        @yield('centerText')
     </div>
-    <div class = "cF">
+    </div>
+    <div class = "centerFooter">
         @yield('centerFooter')
     </div>
 
     <!-- --- --- Right -->
-    <div class = "tRM">
+    <div class = "topRightMenu">
         @yield('topRightMenu')
+        <input type = "text" name = "search" size = "15">
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Search</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Settings</button></a>
+        <a href="https://tre-uniti.org"><button type = "button" class = "interactButton">/-\</button></a>
     </div>
-    <div class = "rP">
+    <div class = "rightProfile">
         @yield('rightProfile')
     </div>
-    <div class = "bRM">
+    <div class = "bottomRightMenu">
         @yield('bottomRightMenu')
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Artist Name</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Play</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Next</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Volume</button></a>
     </div>
 </div>
 </body>

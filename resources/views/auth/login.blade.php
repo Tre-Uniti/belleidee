@@ -1,5 +1,5 @@
 @extends('login')
-@section('siteTitle')
+@section('loginTitle')
     Login
 @stop
 @section('login')

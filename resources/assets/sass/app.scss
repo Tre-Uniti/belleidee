@@ -1,16 +1,19 @@
 // Utilities
 @import "utility/siteVars";
 // Base Imports
-@import "pages/normalize";
 @import 'pages/home';
 @import 'pages/layoutDivs';
 @import 'pages/welcome';
-//Button Imports
+//Button Mixins
 @import 'mixins/baseButton';
 @import 'mixins/colorButton';
+// Div Mixins
+@import 'mixins/menuDiv';
+@import 'mixins/profileDiv';
+@import 'mixins/contentDiv';
 
 html{
-  background-image: url($imgBackgound1);
+  background-image: url($imgBackground1);
   background-repeat: no-repeat;
   min-width: 1375px;
   -webkit-background-size: cover;
@@ -26,6 +29,48 @@ html{
 
 /* Div specific */
 
+//Menus:
+.topLeftMenu
+{
+  @include menuDiv($topBackgroundColor);
+  left: $sideMargin;
+  top: $topPosition;
+}
+.bottomLeftMenu
+{
+  @include menuDiv($bottomBackgroundColor);
+  left: $sideMargin;
+  bottom: $bottomPosition;
+}
+.topRightMenu
+{
+  @include menuDiv($topBackgroundColor);
+  right: $sideMargin;
+  top: $topPosition;
+}
+.bottomRightMenu
+{
+  @include menuDiv($bottomBackgroundColor);
+  right: $sideMargin;
+  bottom: $bottomPosition;
+}
+//Profiles
+.leftProfile
+{
+  @include profileDiv($profileBackgroundColor, $profileOpacity);
+  left: 0;
+}
+.rightProfile
+{
+  @include profileDiv($profileBackgroundColor, $profileOpacity);
+  right: 0;
+}
+//Content
+.centerContent
+{
+  @include centerContent($centerBackgroundColor, $centerOpacity);
+  margin: .4% auto;
+}
 
 /* Button specific */
 .navButton
