@@ -13,7 +13,6 @@
 </head>
 <body>
 <div id = "container">
-
     <!-- Left --- --- -->
     <div class = "topLeftMenu">
         @yield('topLeftMenu')

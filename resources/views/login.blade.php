@@ -13,7 +13,6 @@
     -->
 </head>
 <body>
-<div id = "container">
     <div id = "welcome">
         <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "35%" width = "35%"></a>
             <hr/>
@@ -23,6 +22,5 @@
             <hr/>
             @yield('footer')
     </div>
-</div>
 </body>
 </html>
