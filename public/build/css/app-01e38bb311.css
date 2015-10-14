@@ -7,15 +7,6 @@
   border-width: 7px;
   border-color: #009900; }
 
-/* This file is dedicated to the Div classes for the home layout
-   It is included in app.scss and controls the following divs:
-    -Left:
-      -topMenu, profile, bottomMenu
-    -Center:
-      -menu, Valve, Bottom
-    -Right:
-      -topMenu, profile, bottomMenu
-*/
 #welcome {
   width: 35%;
   height: auto;
@@ -130,7 +121,7 @@ html {
   width: 24%;
   height: auto;
   margin: 0 auto;
-  top: 7%;
+  top: 11%;
   background-color: #D8D8D8;
   position: fixed;
   border: 1px solid;
@@ -146,7 +137,7 @@ html {
   width: 24%;
   height: auto;
   margin: 0 auto;
-  top: 7%;
+  top: 11%;
   background-color: #D8D8D8;
   position: fixed;
   border: 1px solid;
@@ -169,14 +160,13 @@ html {
   border: 2px solid;
   border-radius: 25px;
   font-family: "Arial Black", Gadget, sans-serif;
-  margin: 65px auto;
+  margin: 105px auto;
   min-width: 10px; }
 
 .centerMenu {
   margin: 0 auto;
   width: 70%;
-  height: auto;
-  background-color: black; }
+  height: auto; }
 
 .centerText {
   margin: 0 auto;
@@ -242,5 +232,8 @@ html {
     /* For Firefox 3.6 to 15 */
     background: linear-gradient(#7dff23, #188BC0);
     /* Standard syntax */ }
+
+h2 {
+  text-decoration: underline; }
 
 /*# sourceMappingURL=app.css.map */
