@@ -18,7 +18,7 @@
         @yield('topLeftMenu')
         <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Directory</button></a>
         <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Discover Inspiration</button></a>
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Home</button></a>
+        <a href="{{ url('/home') }}"><button type = "button" class = "navButton">Home</button></a>
     </div>
     <div class = "leftProfile">
         @yield('leftProfile')
@@ -49,7 +49,7 @@
         @yield('topRightMenu')
         <input type = "text" name = "search" size = "15">
         <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Search</button></a>
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Settings</button></a>
+        <a href="{{ url('/settings') }}"><button type = "button" class = "navButton">Settings</button></a>
         <a href="https://tre-uniti.org"><button type = "button" class = "navButton">/-\</button></a>
     </div>
     <div class = "rightProfile">

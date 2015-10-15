@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddForeignKeyToIntolerant extends Migration
+class CreateIntolerantTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,15 @@ class AddForeignKeyToIntolerant extends Migration
      */
     public function up()
     {
-        Schema::table('intolerant', function (Blueprint $table) {
+        Schema::create('intolerant', function (Blueprint $table)
+        {
+            $table->increments('intolerant_id');
+            $table->integer('descent')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('post_id')->unsigned();
             $table->foreign('post_id')->references('post_id')->on('posts');
+            $table->timestamps();
         });
     }
 
@@ -27,11 +31,6 @@ class AddForeignKeyToIntolerant extends Migration
      */
     public function down()
     {
-        Schema::table('intolerant', function (Blueprint $table) {
-            $table->dropForeign('intolerant_user_id_foreign');
-            $table->dropForeign('intolerant_post_id_foreign');
-            $table->dropColumn('user_id');
-            $table->dropColumn('post_id');
-        });
+        Schema::drop('intolerant');
     }
 }

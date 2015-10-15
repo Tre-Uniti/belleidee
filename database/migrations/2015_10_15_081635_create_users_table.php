@@ -19,15 +19,22 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->string('motto', 30)->nullable();
-            $table->string('nymi', 60)->nullable();
-            $table->string('photoPath, 60');
-            $table->integer('v3c')->unsigned();
-            $table->integer('ninja')->unsigned();
-            $table->string('type', 20);
+            $table->string('nymi_id', 60)->nullable();
+            $table->string('photoPath1');
+            $table->string('photoPath2')->nullable();
+            $table->integer('user_elevation')->unsigned();
+            $table->integer('user_extension')->unsigned();
+            $table->integer('ninja_handle')->unsigned();
+            $table->string('type');
+            $table->string('ip')->nullable();
+            $table->string('profile_preference')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->integer('sponsor_id')->unsigned();
+            $table->foreign('sponsor_id')->references('sponsor_id')->on('sponsors');
         });
     }
+
     /**
      * Reverse the migrations.
      *

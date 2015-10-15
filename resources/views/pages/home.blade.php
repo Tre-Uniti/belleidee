@@ -14,14 +14,14 @@
 
 
 <p>This is someone's motto, let's see how long it can be
-Should be at least 3 lines long by default. Right?</p>
+Should be at least 3 lines long by default. Right? And one One more line yes until we reach the end</p>
     <hr/>
 <h2>Top 3</h2>
 
-<ul>
-    <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Testimony of a Toker</button></a></li>
-    <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Destiny of Forgiveness</button></a></li>
-    <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Where to find God for your journey</button></a></li>
+<ul style = "text-align: left;">
+    <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Create and Post your first inspiration</button></a></li>
+    <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Post a second</button></a></li>
+    <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Post a third</button></a></li>
 </ul>
 <hr/>
     <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "70%" width = "70%"></a>
@@ -30,53 +30,39 @@ Should be at least 3 lines long by default. Right?</p>
 
 @stop
 @section('centerMenu')
-    <h2>This is a title</h2>
-    <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Elevate: 133 123 120</button></a>
-    <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Extend: 103 423 4</button></a>
- <table align = "center" border = "1" style = "margin: 23px auto;">
-     <tr><td>Indexer</td><td>Date</td><td>Belief Center</td></tr>
-     <tr><td>#Bab</td><td>9/23/2014</td><td>Treacy Levine Center </td></tr>
- </table>
+
+<h1>Belief Centers</h1>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Atheism</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Buddhism</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Cheondoism</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Christianity</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Druze</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Hinduism</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Islam</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Jainism</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Judaism</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Native American</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Taoism</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Urantia</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Sikhism</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Shinto</button></a>
+
+<h1>Question of the Week:</h1>
+    <h4>How are we influenced by our emotions, what purpose do they serve?</h4>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Elevate: 723 422 923</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Extend: 232 300 2</button></a>
+<h2>Your Sponsor</h2>
+<table align = "center" border = "1">
+    <tr><td>Sponsor Name:</td><td># Days Continuous</td><td>Status</td></tr>
+    <tr><td>Starbucks</td><td>27 Days</td><td>Active</td></tr>
+</table>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">View Sponsor</button></a>
+<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Change Sponsor</button></a>
+
+
+
 @stop
 @section('centerText')
-    <hr class = "mainHr">
-    <p>Some things in CSS are a bit tedious to write,
-        especially with CSS3 and the many vendor prefixes
-        that exist. A mixin lets you make groups of CSS
-        declarations that you want to reuse throughout your
-        site. You can even pass in values to make your mixin
-        more flexible. A good use of a mixin is for vendor
-        prefixes. Here's an example for border-radius.</p>
-    <p>Some things in CSS are a bit tedious to write,
-        especially with CSS3 and the many vendor prefixes
-        that exist. A mixin lets you make groups of CSS
-        declarations that you want to reuse throughout your
-        site. You can even pass in values to make your mixin
-        more flexible. A good use of a mixin is for vendor
-        prefixes. Here's an example for border-radius.</p>
-    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-        The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.
-
-        There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-
-    </p>
-    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-        The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.
-
-        There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-
-    </p>
-    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-        The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.
-
-        There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-
-    </p>
-
-
 
 @stop
 @section('centerBottom')
@@ -87,17 +73,17 @@ Should be at least 3 lines long by default. Right?</p>
 @stop
 @section('rightProfile')
     <h2>Inspired By:</h2>
-    <ul>
-        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">1Dr. Greenthumb</button></a></li>
-        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Majestic</button></a></li>
-        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">TheThoughtAdjuster</button></a></li>
+    <ul style = "text-align: left;">
+        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Extend someone elses' post</button></a></li>
+        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Extend 2 Posts</button></a></li>
+        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Extend 3 Posts</button></a></li>
     </ul>
     <hr/>
     <h2>Inspires:</h2>
-    <ul>
-        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">WhereartThou?</button></a></li>
-        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">OneLoveLoveLove Love BabyaLone God</button></a></li>
-        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Num1</button></a></li>
+    <ul style = "text-align: left;">
+        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Need 1 person to extend your post</button></a></li>
+        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">2nd person</button></a></li>
+        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">3rd person</button></a></li>
     </ul>
     <hr/>
     <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "70%" width = "70%"></a>

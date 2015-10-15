@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIntolerantTable extends Migration
+class CreateVersionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,12 @@ class CreateIntolerantTable extends Migration
      */
     public function up()
     {
-        Schema::create('intolerant', function (Blueprint $table)
+        Schema::create('versions', function (Blueprint $table)
         {
-            $table->increments('intolerant_id');
-            $table->integer('descent')->unsigned();
+            $table->increments('version_id');
+            $table->string('version_path');
+            $table->integer('post_id')->unsigned();
+            $table->foreign('post_id')->references('post_id')->on('posts');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateIntolerantTable extends Migration
      */
     public function down()
     {
-        Schema::drop('intolerant');
+        Schema::drop('versions');
     }
 }

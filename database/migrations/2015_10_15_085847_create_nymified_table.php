@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddForeignKeyToDrafts extends Migration
+class CreateNymifiedTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,15 @@ class AddForeignKeyToDrafts extends Migration
      */
     public function up()
     {
-        Schema::table('drafts', function (Blueprint $table) {
+        Schema::create('nymified', function (Blueprint $table) {
+            $table->increments('nymi_id');
+            $table->integer('n_post_id')->unsigned()->nullable();
+            $table->integer('n_extension_id')->unsigned()->nullable();
+            $table->integer('n_question_id')->unsigned()->nullable();
+            $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            });
+        });
     }
 
     /**
@@ -25,9 +30,6 @@ class AddForeignKeyToDrafts extends Migration
      */
     public function down()
     {
-        Schema::table('drafts', function (Blueprint $table) {
-            $table->dropForeign('drafts_user_id_foreign');
-            $table->dropColumn('user_id');
-        });
+        Schema::drop('nymified');
     }
 }

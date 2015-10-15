@@ -3,10 +3,11 @@
   width: 50%;
   height: auto;
   background-color: $centerBackgroundColor;
-  display: inline-block;
+  position: relative;
   opacity: $centerOpacity;
   filter:alpha(opacity=87); /* For IE8 and earlier */
   border: 2px solid;
   border-radius: 25px;
-  font-family: "Arial Black", Gadget, sans-serif;
+  font-family: Verdana, Geneva, sans-serif;
+  z-index: 1;
 }

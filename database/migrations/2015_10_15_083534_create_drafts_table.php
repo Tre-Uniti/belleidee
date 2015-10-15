@@ -16,14 +16,16 @@ class CreateDraftsTable extends Migration
         {
             $table->increments('draft_id');
             $table->string('title');
-            $table->string('index')->nullable();
-            $table->string('2index')->nullable();
+            $table->string('draft_index')->nullable();
+            $table->string('draft_belief_beacon')->nullable();
+            $table->string('draft_index2')->nullable();
             $table->string('nymified')->nullable();
             $table->string('draft_path');
             $table->string('source_path');
             $table->timestamps();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
         });
-
     }
 
     /**

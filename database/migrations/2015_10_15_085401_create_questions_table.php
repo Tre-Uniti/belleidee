@@ -17,9 +17,11 @@ class CreateQuestionsTable extends Migration
             $table->increments('question_id');
             $table->string('title');
             $table->string('body');
-            $table->integer('q_elevation')->unsigned();
-            $table->integer('q_extension')->unsigned();
+            $table->integer('question_elevation')->unsigned();
+            $table->integer('question_extension')->unsigned();
             $table->timestamps();
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

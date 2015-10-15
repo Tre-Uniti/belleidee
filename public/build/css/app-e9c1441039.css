@@ -56,7 +56,8 @@ html {
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
-  min-width: 1000px; }
+  min-width: 1000px;
+  background-color: black; }
 
 #container {
   text-align: center;
@@ -74,6 +75,7 @@ html {
   border: 1px solid;
   border-radius: 20px;
   opacity: 0.9;
+  z-index: 2;
   left: 0;
   top: 1%;
   min-width: 400px; }
@@ -87,6 +89,7 @@ html {
   border: 1px solid;
   border-radius: 20px;
   opacity: 0.9;
+  z-index: 2;
   left: 0;
   bottom: 1%;
   min-width: 417px; }
@@ -100,6 +103,7 @@ html {
   border: 1px solid;
   border-radius: 20px;
   opacity: 0.9;
+  z-index: 2;
   right: 0;
   top: 1%;
   min-width: 415px; }
@@ -113,6 +117,7 @@ html {
   border: 1px solid;
   border-radius: 20px;
   opacity: 0.9;
+  z-index: 2;
   right: 0;
   bottom: 1%;
   min-width: 400px; }
@@ -122,14 +127,14 @@ html {
   height: auto;
   margin: 0 auto;
   top: 11%;
-  background-color: #D8D8D8;
+  background-color: #E8E8E8;
   position: fixed;
   border: 1px solid;
   border-radius: 20px;
   opacity: 0.85;
   filter: alpha(opacity-75);
   /* For IE8 and earlier */
-  font-family: "Arial Black", Gadget, sans-serif;
+  font-family: Verdana, Geneva, sans-serif;
   left: 0;
   min-width: 100px; }
 
@@ -138,34 +143,35 @@ html {
   height: auto;
   margin: 0 auto;
   top: 11%;
-  background-color: #D8D8D8;
+  background-color: #E8E8E8;
   position: fixed;
   border: 1px solid;
   border-radius: 20px;
   opacity: 0.85;
   filter: alpha(opacity-75);
   /* For IE8 and earlier */
-  font-family: "Arial Black", Gadget, sans-serif;
+  font-family: Verdana, Geneva, sans-serif;
   right: 0;
   min-width: 100px; }
 
 .centerContent {
   width: 50%;
   height: auto;
-  background-color: #D8D8D8;
-  display: inline-block;
+  background-color: #E8E8E8;
+  position: relative;
   opacity: 0.97;
   filter: alpha(opacity=87);
   /* For IE8 and earlier */
   border: 2px solid;
   border-radius: 25px;
-  font-family: "Arial Black", Gadget, sans-serif;
+  font-family: Verdana, Geneva, sans-serif;
+  z-index: 1;
   margin: 105px auto;
   min-width: 10px; }
 
 .centerMenu {
   margin: 0 auto;
-  width: 70%;
+  width: 90%;
   height: auto; }
 
 .centerText {

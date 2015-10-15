@@ -24,12 +24,12 @@
             <tr><td><label for = "remember" class = "login"></label></td>
                 <td style = "color: green"><input type="checkbox" id = "remember" name="remember"> Remember Me</td></tr>
         </table>
-        <button type="submit" class = "interactButton">Login</button>
+        <button type="submit" class = "navButton">Login</button>
     </form>
 
 @stop
 @section('footer')
     <h4>Other Options:</h4>
-    <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Nymi</button></a><br/>
+    <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Nymi</button></a><br/>
     <a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
 @stop

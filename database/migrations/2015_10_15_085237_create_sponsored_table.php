@@ -12,11 +12,18 @@ class CreateSponsoredTable extends Migration
      */
     public function up()
     {
-        Schema::create('sponsored', function (Blueprint $table) {
+        Schema::create('sponsored', function (Blueprint $table)
+        {
             $table->increments('sponsorship_id');
-            $table->string('status');
-            $table->string('promo');
+            $table->integer('tier1');
+            $table->integer('tier2');
+            $table->integer('tier3');
+            $table->string('promo1');
+            $table->string('promo2');
+            $table->string('promo3');
             $table->timestamps();
+            $table->integer('sponsor_id')->unsigned();
+            $table->foreign('sponsor_id')->references('sponsor_id')->on('sponsors');
         });
     }
 

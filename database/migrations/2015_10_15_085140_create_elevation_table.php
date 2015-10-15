@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddForeignKeyToVersions extends Migration
+class CreateElevationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,15 @@ class AddForeignKeyToVersions extends Migration
      */
     public function up()
     {
-        Schema::table('versions', function (Blueprint $table) {
+        Schema::create('elevation', function (Blueprint $table)
+        {
+            $table->increments('elevation_id');
+            $table->integer('post_id')->unsigned()->nullable();
+            $table->integer('extension_id')->unsigned()->nullable();
+            $table->integer('question_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
         });
     }
 
@@ -25,9 +31,6 @@ class AddForeignKeyToVersions extends Migration
      */
     public function down()
     {
-        Schema::table('versions', function (Blueprint $table) {
-            $table->dropForeign('versions_user_id_foreign');
-            $table->dropColumn('user_id');
-        });
+        Schema::drop('elevation');
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSponsorTable extends Migration
+class CreateSponsorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -23,6 +23,7 @@ class CreateSponsorTable extends Migration
             $table->integer('budget')->unsigned();
             $table->integer('views')->unsigned();
             $table->integer('triggers')->unsigned();
+            $table->timestamps();
         });
     }
 
