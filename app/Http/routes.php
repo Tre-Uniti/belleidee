@@ -10,8 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-// Posting routes (resource)
-Route::resource('posts', 'PostController');
+
 
 // Authentication routes
 Route::get('auth/login', 'Auth\AuthController@getLogin');
@@ -28,5 +27,8 @@ Route::get('home', 'HomeController@home');
 Route::get('contact', 'HomeController@contact');
 Route::get('about', 'HomeController@about');
 Route::get('settings', 'HomeController@settings');
+
+// Posting routes (resource)
+Route::resource('posts', 'PostController');
 
 

@@ -23,8 +23,8 @@
     <div class = "leftProfile">
         <h1>@yield('handle')</h1>
 
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">100</button></a>
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">1000</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">0</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">0</button></a>
 
 
         <p>This is someone's motto, let's see how long it can be
