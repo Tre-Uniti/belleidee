@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSponsoredTable extends Migration
+class CreateSponsorPromoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class CreateSponsoredTable extends Migration
      */
     public function up()
     {
-        Schema::create('sponsored', function (Blueprint $table)
+        Schema::create('sponsor_promo', function (Blueprint $table)
         {
-            $table->increments('sponsorship_id');
+            $table->increments('promolist_id');
             $table->integer('tier1');
             $table->integer('tier2');
             $table->integer('tier3');
@@ -34,6 +34,6 @@ class CreateSponsoredTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sponsored');
+        Schema::drop('sponsor_promo');
     }
 }

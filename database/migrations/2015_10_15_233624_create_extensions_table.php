@@ -14,20 +14,14 @@ class CreateExtensionsTable extends Migration
     {
         Schema::create('extensions', function (Blueprint $table)
         {
-            $table->increments('extension_id');
+            $table->increments('draft_id');
             $table->string('title');
-            $table->integer('elevation')->unsigned();
-            $table->integer('extension')->unsigned();
-            $table->string('ext_index')->nullable();
-            $table->string('ext_belief_beacon')->nullable();
-            $table->string('ext_index2')->nullable();
-            $table->integer('extension_version_path')->unsigned();
+            $table->string('draft_index')->nullable();
+            $table->string('draft_belief_beacon')->nullable();
+            $table->string('draft_index2')->nullable();
             $table->string('nymified')->nullable();
-            $table->string('extension_path');
-            $table->string('extSource_path');
-            $table->integer('post_id')->unsigned()->nullable();
-            $table->integer('extenception_id')->unsigned()->nullable();
-            $table->integer('question_id')->unsigned()->nullable();
+            $table->string('draft_path');
+            $table->string('source_path');
             $table->timestamps();
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users');

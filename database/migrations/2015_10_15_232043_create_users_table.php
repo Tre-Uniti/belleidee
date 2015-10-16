@@ -30,8 +30,6 @@ class CreateUsersTable extends Migration
             $table->string('profile_preference')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->integer('sponsor_id')->unsigned();
-            $table->foreign('sponsor_id')->references('sponsor_id')->on('sponsors');
         });
     }
 

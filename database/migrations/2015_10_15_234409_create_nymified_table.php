@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQuestionsTable extends Migration
+class CreateNymifiedTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,11 @@ class CreateQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table)
-        {
-            $table->increments('question_id');
-            $table->string('title');
-            $table->string('body');
-            $table->integer('question_elevation')->unsigned();
-            $table->integer('question_extension')->unsigned();
+        Schema::create('nymified', function (Blueprint $table) {
+            $table->increments('nymified_id');
+            $table->integer('n_post_id')->unsigned()->nullable();
+            $table->integer('n_extension_id')->unsigned()->nullable();
+            $table->integer('n_question_id')->unsigned()->nullable();
             $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
@@ -32,6 +30,6 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('questions');
+        Schema::drop('nymified');
     }
 }

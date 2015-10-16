@@ -12,10 +12,11 @@ class CreateIntolerantTable extends Migration
      */
     public function up()
     {
-        Schema::create('intolerant', function (Blueprint $table)
-        {
+        Schema::create('intolerant', function (Blueprint $table) {
             $table->increments('intolerant_id');
             $table->integer('descent')->unsigned();
+            $table->string('sponsor_path')->nullable();
+            $table->string('profile_path')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('post_id')->unsigned();
