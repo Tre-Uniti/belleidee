@@ -30,7 +30,16 @@ html{
   position: absolute;
   height: 100%;
   width:100%;
-
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+table, td {
+  border: 1px solid black;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  padding: 5px;
 }
 
 /* Div specific */
@@ -107,11 +116,11 @@ html{
   @include colorNavButton($navButtonColor1, $navButtonColor2);
   @include baseButton;
   &:hover {
-    color: #7dff23;
-    background: -webkit-linear-gradient($actButtonColor1, $actButtonColor2); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient($actButtonColor1, $actButtonColor2); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient($actButtonColor1, $actButtonColor2); /* For Firefox 3.6 to 15 */
-    background: linear-gradient($actButtonColor1, $actButtonColor2); /* Standard syntax */
+
+    background: -webkit-linear-gradient($navHoverColor1, $navHoverColor2); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient($navHoverColor1, $navHoverColor2); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient($navHoverColor1, $navHoverColor2); /* For Firefox 3.6 to 15 */
+    background: linear-gradient($navHoverColor1, $navHoverColor2); /* Standard syntax */
   }
 }
 .interactButton {
@@ -119,10 +128,10 @@ html{
   @include baseButton;
   &:hover {
     color: #fff;
-    background: -webkit-linear-gradient($navButtonColor1, $navButtonColor2); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient($navButtonColor1, $navButtonColor2); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient($navButtonColor1, $navButtonColor2); /* For Firefox 3.6 to 15 */
-    background: linear-gradient($navButtonColor1, $navButtonColor2); /* Standard syntax */
+    background: -webkit-linear-gradient($actHoverColor1, $actHoverColor2); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient($actHoverColor1, $actHoverColor2); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient($actHoverColor1, $actHoverColor2); /* For Firefox 3.6 to 15 */
+    background: linear-gradient($actHoverColor1, $actHoverColor2); /* Standard syntax */
 
   }
   color: #7dff23;

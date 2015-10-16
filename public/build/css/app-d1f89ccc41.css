@@ -65,6 +65,16 @@ html {
   height: 100%;
   width: 100%; }
 
+table {
+  border-collapse: separate;
+  border-spacing: 0; }
+
+table, td {
+  border: 1px solid black;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  padding: 5px; }
+
 /* Div specific */
 .topLeftMenu {
   width: 24%;
@@ -203,18 +213,17 @@ html {
     padding: 0;
     margin: 0; }
   .navButton:hover {
-    color: #7dff23;
     /* For Safari 5.1 to 6.0 */
     /* For Opera 11.1 to 12.0 */
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#585858, #000000);
+    background: linear-gradient(#188BC0, #7dff23);
     /* Standard syntax */ }
 
 .interactButton {
   /* For Safari 5.1 to 6.0 */
   /* For Opera 11.1 to 12.0 */
   /* For Firefox 3.6 to 15 */
-  background: linear-gradient(#585858, #000000);
+  background: linear-gradient(#003300, #000000);
   /* Standard syntax */
   padding: 8px 13px;
   color: #fff;
@@ -236,7 +245,7 @@ html {
     /* For Safari 5.1 to 6.0 */
     /* For Opera 11.1 to 12.0 */
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#7dff23, #188BC0);
+    background: linear-gradient(#7dff23, #000066);
     /* Standard syntax */ }
 
 h2 {
