@@ -1,12 +1,14 @@
-@mixin colorNavButton($color1, $color2)
+@mixin colorNavButton($color1, $color2, $navTextColor)
 {
+  color: $navTextColor;
   background: -webkit-linear-gradient($color1, $color2); /* For Safari 5.1 to 6.0 */
   background: -o-linear-gradient($color1, $color2); /* For Opera 11.1 to 12.0 */
   background: -moz-linear-gradient($color1, $color2); /* For Firefox 3.6 to 15 */
   background: linear-gradient($color1, $color2); /* Standard syntax */
 }
-@mixin colorActButton($color1, $color2)
+@mixin colorActButton($color1, $color2, $actTextColor)
 {
+  color: $actTextColor;
   background: -webkit-linear-gradient($color1, $color2); /* For Safari 5.1 to 6.0 */
   background: -o-linear-gradient($color1, $color2); /* For Opera 11.1 to 12.0 */
   background: -moz-linear-gradient($color1, $color2); /* For Firefox 3.6 to 15 */

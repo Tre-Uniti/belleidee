@@ -24,6 +24,7 @@ class CreateSponsorsTable extends Migration
             $table->integer('budget')->unsigned();
             $table->integer('views')->unsigned();
             $table->integer('triggers')->unsigned();
+            $table->boolean('adult');
             $table->timestamps();
         });
     }

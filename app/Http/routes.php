@@ -11,7 +11,7 @@
 |
 */
 
-
+Route::resource('posts', 'PostController');
 // Authentication routes
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -29,6 +29,6 @@ Route::get('about', 'HomeController@about');
 Route::get('settings', 'HomeController@settings');
 
 // Posting routes (resource)
-Route::resource('posts', 'PostController');
+
 
 

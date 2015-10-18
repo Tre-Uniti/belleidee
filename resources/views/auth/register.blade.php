@@ -14,8 +14,8 @@
         <h3>Register</h3>
             <form role="form" method="POST" action="{{ url('/auth/register') }}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <table class = "input">
-            <tr>><td><label for = "handle" class = "login">Handle</label></td>
+            <table align = "center">
+            <tr><td><label for = "handle" class = "login">Handle</label></td>
             <td><input type="text" id = "handle" name="handle" value="{{ old('handle') }}"></td>
             </tr>
             <tr><td><label for = "email" class = "login">E-Mail Address</label></td>

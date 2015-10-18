@@ -16,6 +16,7 @@ class CreatePostsTable extends Migration
         {
             $table->increments('post_id');
             $table->string('title');
+            $table->text('excerpt')->nullable();
             $table->integer('elevation')->unsigned();
             $table->integer('extension')->unsigned();
             $table->string('master_version_path')->nullable();
@@ -23,8 +24,8 @@ class CreatePostsTable extends Migration
             $table->string('index')->nullable();
             $table->string('belief_beacon')->nullable();
             $table->string('index2')->nullable();
-            $table->string('postPath');
-            $table->string('sourcePath');
+            $table->string('postPath')->nullable();
+            $table->string('sourcePath')->nullable();
             $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');

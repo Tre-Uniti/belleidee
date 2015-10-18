@@ -2,21 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Post;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     public function index()
     {
         return view ('posts.index');
@@ -29,18 +34,33 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view ('posts.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CreatePostRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
-        //
+        $user = Auth::user();
+        $post = new Post($request->except('body'));
+        $post->user()->associate($user);
+        $post->save();
+        $path = '/posts/user1/test.txt';
+        $inspiration = $request->input('body');
+
+        Storage::put($path, $inspiration);
+        flash()->overlay('Your article has been created', 'Good job');
+        return redirect('posts');
+        /*$user = User::findOrFail($id);
+        Storage::put(
+            'avatars/'.$user->id,
+            file_get_contents($request->file('avatar')->getRealPath())
+        );
+        */
     }
 
     /**

@@ -44,7 +44,7 @@
     <div class = "bottomLeftMenu">
         @yield('bottomLeftMenu')
         <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Questions</button></a>
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Create Inspiration</button></a>
+        <a href="{{ url('/posts/create') }}"><button type = "button" class = "navButton">Create Inspiration</button></a>
         <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Bookmarks</button></a>
     </div>
 
@@ -52,15 +52,18 @@
     <div class = "centerContent">
         @yield('centerContent')
     <div class = "centerMenu">
+        @include('flash::message')
         @yield('centerMenu')
     </div>
     <div class = "centerText">
         @yield('centerText')
     </div>
+        <hr/>
+        <div class = "centerFooter">
+            @yield('centerFooter')
+        </div>
     </div>
-    <div class = "centerFooter">
-        @yield('centerFooter')
-    </div>
+
 
     <!-- --- --- Right -->
     <div class = "topRightMenu">

@@ -1,4 +1,15 @@
-@extends('create');
+@extends('app')
+@section('siteTitle')
+    Discover
+@stop
+@section('handle')
+    {{Auth::user()->handle}}
+@stop
+@section('centerMenu')
+    @if (count($errors) > 0)
+        @include('errors.list')
+    @endif
+@stop
 @section('centerText')
     <section>
         <h1>Articles on: Fruit</h1>
@@ -20,3 +31,7 @@
 
     </section>
 @stop
+@section('centerFooter')
+    <h2>test</h2>
+@stop
+

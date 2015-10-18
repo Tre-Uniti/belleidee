@@ -1,7 +1,6 @@
 // Utilities
 @import "utility/siteVars";
 // Base Imports
-@import 'pages/home';
 @import 'pages/layoutDivs';
 @import 'pages/welcome';
 //Button Mixins
@@ -11,6 +10,8 @@
 @import 'mixins/menuDiv';
 @import 'mixins/profileDiv';
 @import 'mixins/contentDiv';
+// Textfield Mixins
+@import 'mixins/createTextField';
 
 html{
   background-image: url($imgBackground1);
@@ -21,8 +22,6 @@ html{
   background-size: cover;
   min-width: 1000px;
   background-color: black;
-
-
 }
 #container
 {
@@ -51,7 +50,6 @@ table, td {
   left: $sideMargin;
   top: $topPosition;
   min-width: 400px;
-
 }
 .bottomLeftMenu
 {
@@ -106,17 +104,46 @@ table, td {
   margin: 0 auto;
   width: 90%;
   height: auto;
-  font-family: Georgia, serif;
-  font-size: 1.1em;
+}
+.createSubmit
+{
+  margin: 7px auto;
+  width: 20%;
+  background-color: $bottomBackgroundColor;
+  border: 1px solid;
+  border-radius: 20px;
+  opacity: $centerOpacity;
+
+}
+//TextField for posts, extensions, drafts
+.createBodyText
+{
+  @include baseTextField();
+  font-size: 125%;
+}
+
+.centerFooter
+{
+
+  margin: 0 auto;
+  width: 50%;
+  height: auto;
+  background-color: #202020;
+  opacity: $centerOpacity;
+  border: 2px solid;
+  border-radius: 25px;
+  color: #ffffff;
+
+
 }
 
 /* Button specific */
 .navButton
 {
-  @include colorNavButton($navButtonColor1, $navButtonColor2);
   @include baseButton;
+  @include colorNavButton($navButtonColor1, $navButtonColor2, $navTextColor);
   &:hover {
-
+    color: $navTextHoverColor;
     background: -webkit-linear-gradient($navHoverColor1, $navHoverColor2); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient($navHoverColor1, $navHoverColor2); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient($navHoverColor1, $navHoverColor2); /* For Firefox 3.6 to 15 */
@@ -124,17 +151,15 @@ table, td {
   }
 }
 .interactButton {
-  @include colorActButton($actButtonColor1, $actButtonColor2);
   @include baseButton;
+  @include colorActButton($actButtonColor1, $actButtonColor2, $actTextColor);
   &:hover {
-    color: #fff;
+    color: $actTextHoverColor;
     background: -webkit-linear-gradient($actHoverColor1, $actHoverColor2); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient($actHoverColor1, $actHoverColor2); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient($actHoverColor1, $actHoverColor2); /* For Firefox 3.6 to 15 */
     background: linear-gradient($actHoverColor1, $actHoverColor2); /* Standard syntax */
-
   }
-  color: #7dff23;
 }
 h2
 {
