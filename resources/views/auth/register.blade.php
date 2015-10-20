@@ -27,7 +27,7 @@
             <tr><td><label for = "password_confirmation" class = "login">Confirm Password</label></td>
                     <td><input type="password" id = "password_confirmation" name="password_confirmation"></td></tr>
                 <tr><td><label for = "beta" class = "login">Beta-Code</label></td>
-                    <td><input type = "text" name = "beta" id = "beta"/></td>
+                    <td><input type = "text" name = "betaToken" id = "betaToken"/></td>
                 </tr>
             </table>
                 <button type="submit" class = "navButton">Register</button>

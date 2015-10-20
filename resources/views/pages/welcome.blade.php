@@ -3,7 +3,8 @@
     Welcome!
 @stop
 @section('login')
-        <h3>Login Options:</h3>
+    <meta name="google-site-verification" content="yJFOL4PAS5gZ5D2HbR0K9ESGx8ser7t_QW7sd8_wjrU" />
+    <h3>Login Options:</h3>
             <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Nymi</button></a>
             <a href="{{ url('/auth/login') }}"><button type = "button" class = "navButton">Password</button></a>
 

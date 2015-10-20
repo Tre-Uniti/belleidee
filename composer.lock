@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9248e1ca3280a45bab6fc867e5ee8e63",
-    "content-hash": "a823c992e89e4b7070886ef0e4c04fb1",
+    "hash": "f02817fe0d271236402a060b07f6246e",
+    "content-hash": "107a2e07fdf1a5fa4433ce0451cf8972",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1001,16 +1001,16 @@
         },
         {
             "name": "jenssegers/agent",
-            "version": "v2.2.1",
+            "version": "v2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jenssegers/agent.git",
-                "reference": "7bfe41ec754c27e687edb5b903202b7893a2890e"
+                "reference": "6b9a79a7838a37ca0334c79c29ff8d4f87d53fb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jenssegers/agent/zipball/7bfe41ec754c27e687edb5b903202b7893a2890e",
-                "reference": "7bfe41ec754c27e687edb5b903202b7893a2890e",
+                "url": "https://api.github.com/repos/jenssegers/agent/zipball/6b9a79a7838a37ca0334c79c29ff8d4f87d53fb9",
+                "reference": "6b9a79a7838a37ca0334c79c29ff8d4f87d53fb9",
                 "shasum": ""
             },
             "require": {
@@ -1053,7 +1053,7 @@
                 "user agent",
                 "useragent"
             ],
-            "time": "2015-08-28 07:58:24"
+            "time": "2015-10-16 16:14:37"
         },
         {
             "name": "jeremeamia/SuperClosure",
@@ -1740,20 +1740,23 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.0.5",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "f667aa2000a192adfa53332335a2ae0c1cb9ea6e"
+                "reference": "7fe2420f8ad46aa08d5b317c92a148611d366d88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/f667aa2000a192adfa53332335a2ae0c1cb9ea6e",
-                "reference": "f667aa2000a192adfa53332335a2ae0c1cb9ea6e",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/7fe2420f8ad46aa08d5b317c92a148611d366d88",
+                "reference": "7fe2420f8ad46aa08d5b317c92a148611d366d88",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.0"
+            },
+            "suggest": {
+                "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
             },
             "type": "library",
             "autoload": {
@@ -1778,7 +1781,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2015-10-08 12:57:25"
+            "time": "2015-10-18 21:39:26"
         },
         {
             "name": "psr/http-message",
@@ -3416,16 +3419,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.13",
+            "version": "4.8.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "be067d6105286b74272facefc2697038f8807b77"
+                "reference": "b4900675926860bef091644849305399b986efa2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/be067d6105286b74272facefc2697038f8807b77",
-                "reference": "be067d6105286b74272facefc2697038f8807b77",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b4900675926860bef091644849305399b986efa2",
+                "reference": "b4900675926860bef091644849305399b986efa2",
                 "shasum": ""
             },
             "require": {
@@ -3484,7 +3487,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-10-14 13:49:40"
+            "time": "2015-10-17 15:03:30"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

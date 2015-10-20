@@ -23,12 +23,12 @@
     <div class = "leftProfile">
         <h1>@yield('handle')</h1>
 
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">0</button></a>
-        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">0</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">987.223.100.342.923.92</button></a>
+        <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">100.323.234.234.298</button></a>
 
 
         <p>This is someone's motto, let's see how long it can be
-            Should be at least 3 lines long by default. Right?  And one One more line yes</p>
+            Should be at least 3 lines long by default. .Right?  And one One more line yes. Right?  And one One more line</p>
         <hr/>
         <h2>Top 3</h2>
 

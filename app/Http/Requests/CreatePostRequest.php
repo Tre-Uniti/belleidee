@@ -13,8 +13,6 @@ class CreatePostRequest extends Request
      */
     public function authorize()
     {
-        //Need to add logic here:
-        //http://laravel.com/docs/5.1/authorization
         return true;
     }
 

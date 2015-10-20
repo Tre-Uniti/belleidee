@@ -9,9 +9,9 @@
          <th>{!! Form::label('index2', 'Indexer') !!}</th>
      </thead>
         <tbody>
-        <tr><td>{!! Form::text('index', null, ['class' => 'createAttributes']) !!}</td>
+        <tr><td>{!! Form::text('index', null, ['class' => 'createAttributes', 'placeholder' => 'Primary']) !!}</td>
         <td>{!! Form::text('beacon', null, ['class' => 'createAttributes']) !!}</td>
-        <td>{!! Form::text('index2', null, ['class' => 'createAttributes']) !!}</td></tr>
+        <td>{!! Form::text('index2', null, ['class' => 'createAttributes','placeholder' => 'Secondary']) !!}</td></tr>
         </tbody>
     </table>
 

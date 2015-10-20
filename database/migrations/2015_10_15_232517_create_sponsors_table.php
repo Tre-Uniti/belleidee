@@ -25,6 +25,8 @@ class CreateSponsorsTable extends Migration
             $table->integer('views')->unsigned();
             $table->integer('triggers')->unsigned();
             $table->boolean('adult');
+            $table->string('country_code');
+            $table->string('location_code');
             $table->timestamps();
         });
     }

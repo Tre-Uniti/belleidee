@@ -26,6 +26,8 @@ class CreateBeaconsTable extends Migration
             $table->integer('beacon_use')->unsigned();
             $table->integer('tier')->unsigned();
             $table->string('status');
+            $table->string('country_code');
+            $table->string('location_code');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
         });

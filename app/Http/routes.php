@@ -12,6 +12,7 @@
 */
 
 Route::resource('posts', 'PostController');
+Route::resource('invites', 'InviteController');
 // Authentication routes
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
