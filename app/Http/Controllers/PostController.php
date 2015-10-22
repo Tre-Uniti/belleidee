@@ -53,7 +53,7 @@ class PostController extends Controller
         $inspiration = $request->input('body');
 
         Storage::put($path, $inspiration);
-        flash()->overlay('Your article has been created', 'Good job');
+        flash()->overlay('Your article has been created');
         return redirect('posts');
         /*$user = User::findOrFail($id);
         Storage::put(

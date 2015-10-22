@@ -183,6 +183,9 @@ table, td {
   border-radius: 20px;
   opacity: 0.97; }
 
+.errors {
+  background-color: red; }
+
 .createBodyText {
   background-color: #FFFFFF;
   color: #000000;

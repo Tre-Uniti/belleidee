@@ -24,10 +24,9 @@ class CreateUsersTable extends Migration
             $table->string('photoPath2')->nullable();
             $table->integer('user_elevation')->unsigned();
             $table->integer('user_extension')->unsigned();
-            $table->integer('ninja_handle')->unsigned();
             $table->string('type');
-            $table->string('ip')->nullable();
-            $table->string('profile_preference')->nullable();
+            $table->boolean('verified')->default(false);
+            $table->string('email_token')->nullalble();
             $table->rememberToken();
             $table->timestamps();
         });

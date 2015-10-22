@@ -1,4 +1,4 @@
-@extends('app')
+@extends('auth')
 
 @section('center-Valve')
     <div class="container-fluid">

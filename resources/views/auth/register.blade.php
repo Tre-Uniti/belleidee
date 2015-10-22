@@ -1,16 +1,11 @@
-@extends('login')
+@extends('auth')
 @section('loginTitle')
     Register
 @stop
 @section('login')
-    @if (count($errors) > 0)
-        <strong>Woooah!</strong> There were some problems with your input.<br><br>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li style = "color:red">{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
+    @include('errors.list')
+
+
         <h3>Register</h3>
             <form role="form" method="POST" action="{{ url('/auth/register') }}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -26,7 +21,7 @@
             </tr>
             <tr><td><label for = "password_confirmation" class = "login">Confirm Password</label></td>
                     <td><input type="password" id = "password_confirmation" name="password_confirmation"></td></tr>
-                <tr><td><label for = "beta" class = "login">Beta-Code</label></td>
+                <tr><td><label for = "betaToken" class = "login">Beta-Token</label></td>
                     <td><input type = "text" name = "betaToken" id = "betaToken"/></td>
                 </tr>
             </table>

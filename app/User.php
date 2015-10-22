@@ -41,4 +41,20 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('App\Posts');
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($user)
+        {
+            $user->email_token = str_random(30);
+        });
+    }
+    public function confirmEmail()
+    {
+        $this->verified = true;
+        $this->email_token = null;
+        $this->save();
+    }
 }

@@ -1,4 +1,4 @@
-@extends('login')
+@extends('auth')
 @section('loginTitle')
     Welcome!
 @stop

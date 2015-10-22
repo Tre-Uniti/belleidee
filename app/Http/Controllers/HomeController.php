@@ -36,4 +36,5 @@ class HomeController extends Controller
     {
         return view ('pages.settings');
     }
+
 }

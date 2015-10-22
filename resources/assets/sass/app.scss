@@ -115,6 +115,11 @@ table, td {
   opacity: $centerOpacity;
 
 }
+//Errors:
+.errors
+{
+  background-color: red;
+}
 //TextField for posts, extensions, drafts
 .createBodyText
 {
