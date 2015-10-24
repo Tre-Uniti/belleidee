@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers\Auth;
 use App\User;
+use App\Mailers\UserMailer;
+use Illuminate\Http\Request;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 class AuthController extends Controller
 {
     /*
@@ -17,7 +19,7 @@ class AuthController extends Controller
     | a simple trait to add these behaviors. Why don't you explore it?
     |
     */
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use AuthenticatesUsers, ThrottlesLogins;
     protected $redirectTo = '/home';
     /**
      * Create a new authentication controller instance.
@@ -72,5 +74,38 @@ class AuthController extends Controller
         User::whereEmailToken($token)->firstOrFail()->confirmEmail();
         flash('You are now confirmed. Please login.');
         return redirect('/auth/login');
+    }
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+
+    public function getRegister()
+    {
+        return view('auth.register');
+    }
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postRegister(Request $request, UserMailer $mailer)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+        $user = $this->create($request->all());
+        //$mailer->sendEmailConfirmationTo(Auth::user());
+        $mailer->sendEmailConfirmationTo($user);
+        //Auth::logout();
+        flash('Please confirm your email before logging in');
+        return redirect('/auth/verify');
     }
 }
