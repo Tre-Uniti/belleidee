@@ -7,17 +7,19 @@
 @section('centerText')
 
     <h1>Send Invites:</h1>
+    {!! Form::open(['url' => 'invites']) !!}
         <table align = "center">
             <thead>
-            <tr><th> {!! Form::label('To_Email', 'Email') !!}</th><th> {!! Form::label('token', 'Token') !!}</th></tr>
+            <tr><th> {!! Form::label('to_Email', 'Email') !!}</th><th> {!! Form::label('beta_token', 'Beta_Token') !!}</th></tr>
             </thead>
             <tbody>
-            <tr><td>{!! Form::text('to_Email', null, ['class' => 'createAttributes', 'placeholder' => 'To whom?']) !!}</td>
-                <td>{!! Form::text('to_Email', str_random(7), ['class' => 'createAttributes']) !!} </td>
+            <tr><td>{!! Form::text('to_email', null, ['class' => 'createAttributes', 'placeholder' => 'To whom?']) !!}</td>
+                <td>{!! Form::text('beta_token', str_random(7), ['class' => 'createAttributes']) !!} </td>
             </tr>
             </tbody>
         </table>
     <div class = "createSubmit">
         {!! Form::submit('Send Invite', ['class' => 'navButton']) !!}
+        {!! Form::close()   !!}
     </div>
 @stop

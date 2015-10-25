@@ -14,8 +14,9 @@ class CreateBeaconsTable extends Migration
     {
         Schema::create('beacons', function (Blueprint $table)
         {
-            $table->increments('beacon_id');
+            $table->increments('id');
             $table->string('name');
+            $table->string('beacon_tag')->unique();
             $table->string('beliefcenter');
             $table->string('website')->nullable();
             $table->integer('phone')->unsigned();
@@ -30,6 +31,7 @@ class CreateBeaconsTable extends Migration
             $table->string('location_code');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
         });
     }
 

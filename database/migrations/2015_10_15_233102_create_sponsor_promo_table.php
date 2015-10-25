@@ -14,7 +14,7 @@ class CreateSponsorPromoTable extends Migration
     {
         Schema::create('sponsor_promo', function (Blueprint $table)
         {
-            $table->increments('promolist_id');
+            $table->increments('id');
             $table->integer('tier1');
             $table->integer('tier2');
             $table->integer('tier3');
@@ -23,7 +23,7 @@ class CreateSponsorPromoTable extends Migration
             $table->string('promo3');
             $table->timestamps();
             $table->integer('sponsor_id')->unsigned();
-            $table->foreign('sponsor_id')->references('sponsor_id')->on('sponsors');
+            $table->foreign('sponsor_id')->references('id')->on('sponsors');
         });
     }
 

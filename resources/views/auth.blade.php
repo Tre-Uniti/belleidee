@@ -20,6 +20,7 @@
                     @if (Session::has('flash_notification.message'))
                         {{ Session::get('flash_notification.message') }}
                     @endif
+                    @include('errors.list')
                     @yield('login')
                 </div>
             <hr/>

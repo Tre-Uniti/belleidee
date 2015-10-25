@@ -14,7 +14,7 @@ class CreateDraftsTable extends Migration
     {
         Schema::create('drafts', function (Blueprint $table)
         {
-            $table->increments('draft_id');
+            $table->increments('id');
             $table->string('title');
             $table->string('draft_index')->nullable();
             $table->string('draft_belief_beacon')->nullable();
@@ -23,7 +23,7 @@ class CreateDraftsTable extends Migration
             $table->string('draft_path');
             $table->string('source_path');
             $table->timestamps();
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

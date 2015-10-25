@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Auth;
+use App\Invite;
 use App\User;
 use App\Mailers\UserMailer;
 use Illuminate\Http\Request;
@@ -20,7 +21,6 @@ class AuthController extends Controller
     |
     */
     use AuthenticatesUsers, ThrottlesLogins;
-    protected $redirectTo = '/home';
     /**
      * Create a new authentication controller instance.
      *
@@ -42,7 +42,7 @@ class AuthController extends Controller
             'handle' => 'required|max:35',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:7',
-            'betaToken' => 'exists:invites,token',
+            'beta_token' => 'required|exists:invites,token',
         ]);
     }
     /**
@@ -71,7 +71,7 @@ class AuthController extends Controller
      */
     public function confirmEmail($token)
     {
-        User::whereEmailToken($token)->firstOrFail()->confirmEmail();
+        User::whereemailtoken($token)->firstOrFail()->confirmEmail();
         flash('You are now confirmed. Please login.');
         return redirect('/auth/login');
     }
@@ -86,10 +86,12 @@ class AuthController extends Controller
     {
         return view('auth.register');
     }
+
     /**
      * Handle a registration request for the application.
      *
      * @param  \Illuminate\Http\Request $request
+     * @param UserMailer $mailer
      * @return \Illuminate\Http\Response
      */
     public function postRegister(Request $request, UserMailer $mailer)
@@ -104,6 +106,7 @@ class AuthController extends Controller
         $user = $this->create($request->all());
         //$mailer->sendEmailConfirmationTo(Auth::user());
         $mailer->sendEmailConfirmationTo($user);
+        Invite::findorFail($request->input('beta_token'));
         //Auth::logout();
         flash('Please confirm your email before logging in');
         return redirect('/auth/verify');

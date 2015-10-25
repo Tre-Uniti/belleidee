@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mailers\UserMailer;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Invite;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class inviteController extends Controller
 {
@@ -36,15 +38,19 @@ class inviteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     * @param UserMailer $mailer
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, UserMailer $mailer)
     {
         $user = Auth::user();
-        $post = new Invite($request);
-        $post->user()->associate($user);
-        $post->save();
+        $invite = new Invite($request->all());
+        $invite->user()->associate($user);
+        $invite->save();
+        $mailer->sendEmailInviteTo($invite);
+        flash('Invite successfully sent');
+        return redirect('/home');
     }
 
     /**

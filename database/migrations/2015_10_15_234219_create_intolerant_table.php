@@ -13,15 +13,16 @@ class CreateIntolerantTable extends Migration
     public function up()
     {
         Schema::create('intolerant', function (Blueprint $table) {
-            $table->increments('intolerant_id');
+            $table->increments('id');
             $table->integer('descent')->unsigned();
             $table->string('sponsor_path')->nullable();
-            $table->string('profile_path')->nullable();
+            $table->string('photo_path1')->nullable();
+            $table->string('photo_path2')->nullable();
+            $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('post_id')->unsigned();
-            $table->foreign('post_id')->references('post_id')->on('posts');
-            $table->timestamps();
+            $table->foreign('post_id')->references('id')->on('posts');
         });
     }
 

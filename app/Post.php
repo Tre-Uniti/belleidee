@@ -14,11 +14,13 @@ class Post extends Model
         'belief_beacon',
         'index2',
         'user_id',
-        'published_at',
+        'post_path',
     ];
+
 
     public function user()
     {
         return $this->belongsTo('App\User');
     }
+
 }

@@ -3,9 +3,6 @@
     Register
 @stop
 @section('login')
-    @include('errors.list')
-
-
         <h3>Register</h3>
             <form role="form" method="POST" action="{{ url('/auth/register') }}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">

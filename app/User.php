@@ -37,9 +37,9 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
 
-    public function articles()
+    public function posts()
     {
-        return $this->hasMany('App\Posts');
+        return $this->hasMany('App\Post');
     }
 
     public static function boot()
@@ -48,13 +48,13 @@ class User extends Model implements AuthenticatableContract,
 
         static::creating(function($user)
         {
-            $user->email_token = str_random(30);
+            $user->emailToken = str_random(30);
         });
     }
     public function confirmEmail()
     {
         $this->verified = true;
-        $this->email_token = null;
+        $this->emailToken = null;
         $this->save();
     }
 }

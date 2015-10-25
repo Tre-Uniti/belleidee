@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostsTable extends Migration
+class CreateLegacyPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,23 +12,17 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table)
-        {
+        Schema::create('legacy_posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->text('excerpt')->nullable();
             $table->integer('elevation')->unsigned();
             $table->integer('extension')->unsigned();
-            $table->string('master_version_path')->nullable();
-            $table->string('nymified')->nullable();
-            $table->string('index')->nullable();
-            $table->string('belief_beacon')->nullable();
-            $table->string('index2')->nullable();
             $table->string('post_path')->nullable();
             $table->string('source_path')->nullable();
             $table->timestamps();
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('legacy_id')->unsigned();
+            $table->foreign('legacy_id')->references('id')->on('legacy');
         });
     }
 
@@ -39,6 +33,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('posts');
+        Schema::drop('legacy_posts');
     }
 }

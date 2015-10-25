@@ -13,11 +13,11 @@ class CreateVersionsTable extends Migration
     public function up()
     {
         Schema::create('versions', function (Blueprint $table) {
-            $table->increments('version_id');
+            $table->increments('id');
             $table->string('version_path');
-            $table->integer('post_id')->unsigned();
-            $table->foreign('post_id')->references('post_id')->on('posts');
             $table->timestamps();
+            $table->integer('post_id')->unsigned();
+            $table->foreign('post_id')->references('id')->on('posts');
         });
     }
 

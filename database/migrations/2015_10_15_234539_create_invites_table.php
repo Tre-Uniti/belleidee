@@ -13,9 +13,10 @@ class CreateInvitesTable extends Migration
     public function up()
     {
         Schema::create('invites', function (Blueprint $table) {
-            $table->increments('invite_id');
-            $table->string('betaToken')->unique();
+            $table->increments('id');
+            $table->string('beta_token')->unique();
             $table->string('to_email');
+            $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
         });

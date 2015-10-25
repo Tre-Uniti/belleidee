@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Discover
+    Index Inspirations
 @stop
 @section('handle')
     {{Auth::user()->handle}}
@@ -12,22 +12,14 @@
 @stop
 @section('centerText')
     <section>
-        <h1>Articles on: Fruit</h1>
-
-        <article>
-            <h2>Apple</h2>
-            <p>The apple is the pomaceous fruit of the apple tree...</p>
-        </article>
-
-        <article>
-            <h2>Orange</h2>
-            <p>The orange is a hybrid of ancient cultivated origin, possibly between pomelo and tangerine...</p>
-        </article>
-
-        <article>
-            <h2>Banana</h2>
-            <p>Bananas come in a variety of sizes and colors when ripe, including yellow, purple, and red...</p>
-        </article>
+        @foreach ($posts as $post)
+            <article>
+                <h2>
+                    <a href="{{ action('PostController@show', [$post->id])}}"> {{ $post->title }}</a>
+                </h2>
+                <div class = "body">{{ $post->elevation }}</div>
+            </article>
+        @endforeach
 
     </section>
 @stop

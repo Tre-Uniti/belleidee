@@ -3,26 +3,18 @@
     Login
 @stop
 @section('login')
-    @if (count($errors) > 0)
-        <strong>Woooah!</strong> There were some problems with your input.<br><br>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li style = "color:red">{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
     <h3>Login</h3>
     <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <table class = "input">
+        <table class = "input" align = "center">
             <tr><td><label for = "email" class = "login">E-Mail Address</label></td>
                 <td><input type="text" id="email" name="email" value="{{ old('email') }}"></td>
             </tr>
             <tr><td><label for = "password" class = "login">Password</label></td>
                 <td><input type = "password" name = "password" id = "password"/></td>
             </tr>
-            <tr><td><label for = "remember" class = "login"></label></td>
-                <td style = "color: green"><input type="checkbox" id = "remember" name="remember"> Remember Me</td></tr>
+            <tr><td colspan="2"><label for = "remember" class = "login"> Remember Me</label>
+                <input type="checkbox" id = "remember" name="remember"></td></tr>
         </table>
         <button type="submit" class = "navButton">Login</button>
     </form>

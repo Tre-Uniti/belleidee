@@ -20,13 +20,15 @@ class CreateUsersTable extends Migration
             $table->string('password', 60);
             $table->string('motto', 30)->nullable();
             $table->string('nymi_id', 60)->nullable();
-            $table->string('photoPath1');
-            $table->string('photoPath2')->nullable();
+            $table->string('photo_path1');
+            $table->string('photo_path2')->nullable();
+            $table->string('photo_path_temp1');
+            $table->string('photo_path_temp2')->nullable();
             $table->integer('user_elevation')->unsigned();
             $table->integer('user_extension')->unsigned();
             $table->string('type');
             $table->boolean('verified')->default(false);
-            $table->string('email_token')->nullalble();
+            $table->string('emailToken')->nullalble();
             $table->rememberToken();
             $table->timestamps();
         });

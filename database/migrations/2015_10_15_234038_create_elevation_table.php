@@ -14,7 +14,7 @@ class CreateElevationTable extends Migration
     {
         Schema::create('elevation', function (Blueprint $table)
         {
-            $table->increments('elevation_id');
+            $table->increments('id');
             $table->integer('post_id')->unsigned()->nullable();
             $table->integer('extension_id')->unsigned()->nullable();
             $table->integer('question_id')->unsigned()->nullable();

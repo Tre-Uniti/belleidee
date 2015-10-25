@@ -24,7 +24,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view ('posts.index');
+        $posts = Post::latest('created_at')->get();
+        return view ('posts.index', compact('posts'));
     }
 
     /**
@@ -46,21 +47,30 @@ class PostController extends Controller
     public function store(CreatePostRequest $request)
     {
         $user = Auth::user();
+        $user_id = $user->id;
+        //Check User has already has path set for title
+
+
+        $title = $request->input('title');
+        $path = '/posts/'.$user_id.'/'.$title.'.txt';
+        $inspiration = $request->input('body');
+        //Store body text at AWS
+        if (Storage::exists($path))
+        {
+            $error = "You've already saved an inspiration with this title.";
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors([$error]);
+        }
+        Storage::put($path, $inspiration);
+        $request = array_add($request, 'post_path', $path);
         $post = new Post($request->except('body'));
         $post->user()->associate($user);
         $post->save();
-        $path = '/posts/user1/test.txt';
-        $inspiration = $request->input('body');
-
-        Storage::put($path, $inspiration);
-        flash()->overlay('Your article has been created');
+        flash()->overlay('Your post has been created');
         return redirect('posts');
-        /*$user = User::findOrFail($id);
-        Storage::put(
-            'avatars/'.$user->id,
-            file_get_contents($request->file('avatar')->getRealPath())
-        );
-        */
+
     }
 
     /**
@@ -71,7 +81,12 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post_path = $post->post_path;
+        $contents = Storage::get($post_path);
+        $post = array_add($post, 'body', $contents);
+
+        return view('posts.show', compact('post'));
     }
 
     /**

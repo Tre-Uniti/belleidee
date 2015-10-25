@@ -2,6 +2,8 @@
 
 namespace App\Mailers;
 
+use App\Invite;
+use App\Post;
 use App\User;
 use Illuminate\Contracts\Mail\Mailer;
 
@@ -23,6 +25,14 @@ class UserMailer
         $this->to = $user->email;
         $this->view = 'emails.confirm';
         $this->data = compact('user');
+
+        $this->deliver();
+    }
+    public function sendEmailInviteTo(Invite $invite)
+    {
+        $this->to = $invite->to_email;
+        $this->view = 'emails.invite';
+        $this->data = compact('invite');
 
         $this->deliver();
     }
