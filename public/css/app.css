@@ -64,6 +64,15 @@ table, td {
   padding: 5px; }
 
 /* Div specific */
+.flash-info {
+  color: #009900; }
+
+.flash-success {
+  color: #009900; }
+
+.flash-danger {
+  color: red; }
+
 .topLeftMenu {
   width: 24%;
   height: auto;

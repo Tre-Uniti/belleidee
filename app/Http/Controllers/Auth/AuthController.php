@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Auth;
 use App\Invite;
 use App\User;
 use App\Mailers\UserMailer;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -42,7 +43,7 @@ class AuthController extends Controller
             'handle' => 'required|max:35',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:7',
-            'beta_token' => 'required|exists:invites,token',
+            'betaToken' => 'exists:invites,betaToken',
         ]);
     }
     /**
@@ -71,7 +72,17 @@ class AuthController extends Controller
      */
     public function confirmEmail($token)
     {
-        User::whereemailtoken($token)->firstOrFail()->confirmEmail();
+
+        try
+        {
+            User::whereemailtoken($token)->firstOrFail()->confirmemail();
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->error('Token invalid or already used');
+            return redirect('/');
+        }
+
         flash('You are now confirmed. Please login.');
         return redirect('/auth/login');
     }
@@ -106,9 +117,23 @@ class AuthController extends Controller
         $user = $this->create($request->all());
         //$mailer->sendEmailConfirmationTo(Auth::user());
         $mailer->sendEmailConfirmationTo($user);
-        Invite::findorFail($request->input('beta_token'));
-        //Auth::logout();
-        flash('Please confirm your email before logging in');
+
+        /*Invite, betaToken.  Delete or commit out after Beta finishes
+        try
+        {
+            $invite = Invite::wherebetaToken($request->input('betaToken'))->findOrFail();
+        }
+        catch(ModelNotFoundException $e)
+        {
+            $error = "Invalid or already used Beta Token".$request->input('betaToken');
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors([$error]);
+        }
+        $invite->delete();
+        */
+        flash()->success('Registration Successful');
         return redirect('/auth/verify');
     }
 }

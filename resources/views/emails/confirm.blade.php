@@ -5,9 +5,9 @@
     <title>Please Verify Email</title>
 </head>
 <body>
-<h1>Thanks for signing up!</h1>
+<h2>Thanks for signing up!</h2>
 <p>
-    <a href='{{ url("auth/confirm/{$user->emailToken}") }}'>confirm your email address</a>
+    Please click on the link to sign-in: <a href='{{ url("auth/confirm/{$user->emailToken}") }}'>confirm your email address</a>
 </p>
 </body>
 </html>

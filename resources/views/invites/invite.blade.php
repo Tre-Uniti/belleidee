@@ -10,11 +10,11 @@
     {!! Form::open(['url' => 'invites']) !!}
         <table align = "center">
             <thead>
-            <tr><th> {!! Form::label('to_Email', 'Email') !!}</th><th> {!! Form::label('beta_token', 'Beta_Token') !!}</th></tr>
+            <tr><th> {!! Form::label('to_Email', 'Email') !!}</th><th> {!! Form::label('betaToken', 'Beta-Token') !!}</th></tr>
             </thead>
             <tbody>
             <tr><td>{!! Form::text('to_email', null, ['class' => 'createAttributes', 'placeholder' => 'To whom?']) !!}</td>
-                <td>{!! Form::text('beta_token', str_random(7), ['class' => 'createAttributes']) !!} </td>
+                <td>{!! Form::text('betaToken', str_random(7), ['class' => 'createAttributes']) !!} </td>
             </tr>
             </tbody>
         </table>

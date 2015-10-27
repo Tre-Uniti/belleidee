@@ -3,5 +3,5 @@
     Verify Email
 @stop
 @section('login')
-    <h1>Hi please check your email to verify and login</h1>
+    <h3>We've sent you an email to login!</h3>
 @stop
