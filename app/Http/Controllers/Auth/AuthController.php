@@ -114,14 +114,11 @@ class AuthController extends Controller
                 $request, $validator
             );
         }
-        $user = $this->create($request->all());
-        //$mailer->sendEmailConfirmationTo(Auth::user());
-        $mailer->sendEmailConfirmationTo($user);
-
-        /*Invite, betaToken.  Delete or commit out after Beta finishes
+        //Invite, betaToken.  Delete or commit out after Beta finishes
         try
         {
-            $invite = Invite::wherebetaToken($request->input('betaToken'))->findOrFail();
+            $betaToken = $request->input('betaToken');
+            $invite = Invite::where('betaToken', '=', $betaToken)->firstOrFail();;
         }
         catch(ModelNotFoundException $e)
         {
@@ -131,8 +128,10 @@ class AuthController extends Controller
                 ->withInput()
                 ->withErrors([$error]);
         }
+        $user = $this->create($request->all());
+        //$mailer->sendEmailConfirmationTo(Auth::user());
+        $mailer->sendEmailConfirmationTo($user);
         $invite->delete();
-        */
         flash()->success('Registration Successful');
         return redirect('/auth/verify');
     }
