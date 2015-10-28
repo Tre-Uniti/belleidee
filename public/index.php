@@ -1,10 +1,13 @@
 <?php
 
 /**
- * Laravel - A PHP Framework For Web Artisans
+ * Belle-Idee : Created on the Laravel Framework
+ * Dedicated to supporting Inspiration and Love
+ * while maintaining open and free development
  *
- * @package  Laravel
- * @author   Taylor Otwell <taylorotwell@gmail.com>
+ *
+ * Join, adapt and request new features at Bella.ninja
+ * @author   Brendan McGoffin of Tre-Uniti <brendan.mcgoffin@tre-uniti.org>
  */
 
 /*

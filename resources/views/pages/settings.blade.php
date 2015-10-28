@@ -61,7 +61,9 @@
 
 @stop
 @section('centerText')
-
+    //SiteLock Label
+    <a href="#" onclick="window.open('https://www.sitelock.com/verify.php?site=www.belle-idee.org','SiteLock','width=600,height=600,left=160,top=170');" >
+        <img alt="SiteLock" title="SiteLock" src="//shield.sitelock.com/shield/www.belle-idee.org"/></a>
 @stop
 @section('centerBottom')
 
