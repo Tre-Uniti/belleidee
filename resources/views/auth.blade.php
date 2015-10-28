@@ -17,9 +17,7 @@
         <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "35%" width = "35%"></a>
             <hr/>
                 <div id = "login">
-                    @if (Session::has('flash_notification.message'))
-                        {{ Session::get('flash_notification.message') }}
-                    @endif
+                    @include('partials.flash')
                     @include('errors.list')
                     @yield('login')
                 </div>

@@ -9,7 +9,7 @@ use App\Invite;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class inviteController extends Controller
+class InviteController extends Controller
 {
     public function __construct()
     {
@@ -44,12 +44,17 @@ class inviteController extends Controller
      */
     public function store(Request $request, UserMailer $mailer)
     {
+        // Load user from Auth facade.
         $user = Auth::user();
+
+        // Create Invite, associate with user, save.
         $invite = new Invite($request->all());
         $invite->user()->associate($user);
         $invite->save();
+
+        // Mailed to email selected by user
         $mailer->sendEmailInviteTo($invite);
-        flash('Invite successfully sent');
+        flash()->success('Invite successfully sent');
         return redirect('/home');
     }
 

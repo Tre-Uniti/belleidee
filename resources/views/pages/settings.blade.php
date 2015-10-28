@@ -35,6 +35,7 @@
     <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Lock Profile Visibility</button></a>
     <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Download Inspirations</button></a>
     <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Request Support</button></a>
+    <a href="{{ url('/invites') }}"><button type = "button" class = "navButton">Invite Friends</button></a>
     <a href="{{ url('/auth/logout') }}"><button type = "button" class = "navButton">Logout</button></a>
 
     <h2>Motto</h2>

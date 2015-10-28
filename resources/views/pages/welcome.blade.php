@@ -10,7 +10,7 @@
 
         <h3>New members:</h3>
             <a href="{{ url('/auth/register') }}"><button type = "button" class = "navButton">Take our Tour!</button></a>
-            <a href="https://bella.ninja"><button type = "button" class = "navButton">Adapt our Clone!</button></a>
+            <a href="https://bella.ninja"><button type = "button" class = "navButton">Adapt our Branch!</button></a>
 @stop
 
 @section('footer')

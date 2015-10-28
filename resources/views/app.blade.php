@@ -52,7 +52,7 @@
     <div class = "centerContent">
         @yield('centerContent')
     <div class = "centerMenu">
-        @include('flash::message')
+        @include('partials.flash')
         @yield('centerMenu')
     </div>
     <div class = "centerText">

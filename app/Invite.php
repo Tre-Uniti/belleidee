@@ -9,7 +9,7 @@ class Invite extends Model
     protected $fillable = [
         'user_id',
         'to_email',
-        'beta_token',
+        'betaToken',
     ];
 
     public function user()
