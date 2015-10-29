@@ -36,5 +36,9 @@ class HomeController extends Controller
     {
         return view ('pages.settings');
     }
+    public function indev()
+    {
+        return view ('pages.indev');
+    }
 
 }

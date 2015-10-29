@@ -18,6 +18,7 @@ class CreateElevationTable extends Migration
             $table->integer('post_id')->unsigned()->nullable();
             $table->integer('extension_id')->unsigned()->nullable();
             $table->integer('question_id')->unsigned()->nullable();
+            $table->integer('legacy_post_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

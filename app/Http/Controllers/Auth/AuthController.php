@@ -114,7 +114,7 @@ class AuthController extends Controller
                 $request, $validator
             );
         }
-        //Invite, betaToken.  Delete or commit out after Beta finishes
+        /*Invite, betaToken.  Delete or commit out after Beta finishes
         try
         {
             $betaToken = $request->input('betaToken');
@@ -127,11 +127,11 @@ class AuthController extends Controller
                 ->back()
                 ->withInput()
                 ->withErrors([$error]);
-        }
+        }*/
         $user = $this->create($request->all());
         //$mailer->sendEmailConfirmationTo(Auth::user());
         $mailer->sendEmailConfirmationTo($user);
-        $invite->delete();
+        //$invite->delete();
         flash()->success('Registration Successful');
         return redirect('/auth/verify');
     }

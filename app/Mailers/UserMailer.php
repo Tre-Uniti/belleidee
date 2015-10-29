@@ -25,7 +25,6 @@ class UserMailer
         $this->to = $user->email;
         $this->view = 'emails.confirm';
         $this->data = compact('user');
-
         $this->deliver();
     }
     public function sendEmailInviteTo(Invite $invite)
@@ -33,14 +32,15 @@ class UserMailer
         $this->to = $invite->to_email;
         $this->view = 'emails.invite';
         $this->data = compact('invite');
-
         $this->deliver();
     }
     public function deliver()
     {
-        $this->mailer->send($this->view, $this->data, function($message){
+        $this->mailer->send($this->view, $this->data, function($message)
+        {
             $message->from($this->from, 'Zoko')
-                    ->to($this->to);
+                    ->to($this->to)
+                    ->subject('A Message from Belle-Idee');
         });
     }
 }

@@ -1,11 +1,14 @@
-@extends ('app')
+@extends('app')
+@section('siteTitle')
+    Invite Friends
+@stop
+@section('handle')
+    {{Auth::user()->handle}}
+@stop
 @section('centerMenu')
-    @if (count($errors) > 0)
-        @include('errors.list')
-    @endif
+@include('errors.list')
 @stop
 @section('centerText')
-
     <h1>Send Invites:</h1>
     {!! Form::open(['url' => 'invites']) !!}
         <table align = "center">

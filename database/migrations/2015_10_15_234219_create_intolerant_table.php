@@ -14,8 +14,9 @@ class CreateIntolerantTable extends Migration
     {
         Schema::create('intolerant', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('descent')->unsigned();
+            $table->integer('descentLevel')->unsigned();
             $table->string('sponsor_path')->nullable();
+            $table->string('sponsor_path2')->nullable();
             $table->string('photo_path1')->nullable();
             $table->string('photo_path2')->nullable();
             $table->timestamps();

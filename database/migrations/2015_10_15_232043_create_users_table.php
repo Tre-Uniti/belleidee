@@ -18,8 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('handle')->unique();
             $table->string('email')->unique();
             $table->string('password', 60);
-            $table->string('motto', 30)->nullable();
-            $table->string('nymi_id', 60)->nullable();
+            $table->string('motto')->nullable();
+            $table->string('nymi_id')->nullable();
             $table->string('photo_path1');
             $table->string('photo_path2')->nullable();
             $table->string('photo_path_temp1');

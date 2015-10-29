@@ -30,7 +30,6 @@ class CreateBeaconsTable extends Migration
             $table->string('country_code');
             $table->string('location_code');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

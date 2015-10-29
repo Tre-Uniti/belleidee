@@ -27,8 +27,8 @@
 @section('centerText')
     <h1>Question of the Week:</h1>
     <h4>How are we influenced by our emotions, what purpose do they serve?</h4>
-    <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Elevate: 723 422 923</button></a>
-    <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Extend: 232 300 2</button></a>
+    <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevate: 723 422 923</button></a>
+    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extend: 232 300 2</button></a>
 @stop
 @section('centerFooter')
     <h2>Your Sponsor</h2>
@@ -45,8 +45,8 @@
             <td style = "border: 1px solid white;">Active</td>
         </tr>
         <tr>
-            <td colspan = 3" style = "border: 0px solid white;" ><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">View Sponsor</button></a>
-                <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Change Sponsor</button></a>
+            <td colspan = 3" style = "border: 0px solid white;" ><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">View Sponsor</button></a>
+                <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Change Sponsor</button></a>
             </td>
         </tr>
         </tbody>

@@ -20,6 +20,8 @@ class CreateLegacyTable extends Migration
             $table->string('photo_path2')->nullable();
             $table->integer('legacy_elevation')->unsigned();
             $table->integer('legacy_extension')->unsigned();
+            $table->string('email');
+            $table->string('token');
             $table->timestamps();
         });
     }

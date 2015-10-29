@@ -21,7 +21,7 @@
     @include ('errors.list')
 @stop
 @section('centerFooter')
-    <a href="{{ url('/draft/converter') }}"><button type = "button" class = "navButton">Save as draft</button></a>
-    <a href="{{ url('/sources/index') }}"><button type = "button" class = "navButton">Show Sources</button></a>
-    <a href="{{ url('/sponsor/show') }}"><button type = "button" class = "navButton">Check Sponsor</button></a>
+    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Save as draft</button></a>
+    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Show Sources</button></a>
+    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Check Sponsor</button></a>
 @stop

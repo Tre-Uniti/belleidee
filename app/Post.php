@@ -17,7 +17,6 @@ class Post extends Model
         'post_path',
     ];
 
-
     public function user()
     {
         return $this->belongsTo('App\User');

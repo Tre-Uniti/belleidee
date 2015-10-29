@@ -48,13 +48,13 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $user_id = $user->id;
-        //Check User has already has path set for title
+
 
 
         $title = $request->input('title');
         $path = '/posts/'.$user_id.'/'.$title.'.txt';
         $inspiration = $request->input('body');
-        //Store body text at AWS
+        //Check if User has already has path set for title
         if (Storage::exists($path))
         {
             $error = "You've already saved an inspiration with this title.";
@@ -63,6 +63,7 @@ class PostController extends Controller
                 ->withInput()
                 ->withErrors([$error]);
         }
+        //Store body text at AWS
         Storage::put($path, $inspiration);
         $request = array_add($request, 'post_path', $path);
         $post = new Post($request->except('body'));

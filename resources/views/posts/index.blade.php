@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Index Inspirations
+    Discover
 @stop
 @section('handle')
     {{Auth::user()->handle}}
