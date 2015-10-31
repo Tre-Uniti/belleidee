@@ -5,6 +5,8 @@
     <title>Idee /-\ @yield('siteTitle')</title>
     <link rel = "stylesheet" href = "/css/normalize.css">
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/js/app.js"></script>
     <!--
        This code is maintained by the Tre-Uniti development ops
        Requests and feedback are administered at Bella.ninja
@@ -13,14 +15,16 @@
 </head>
 <body>
 <div id = "container">
+
     <!-- Left --- --- -->
-    <div class = "topLeftMenu">
+    <div id = "leftContainer">
+    <div id = "topLeftMenu">
         @yield('topLeftMenu')
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Directory</button></a>
         <a href="{{ url('/posts') }}"><button type = "button" class = "navButton">Discover Inspiration</button></a>
         <a href="{{ url('/home') }}"><button type = "button" class = "navButton">Home</button></a>
     </div>
-    <div class = "leftProfile">
+    <div id = "leftProfile">
         <h1>@yield('handle')</h1>
 
         <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">987.223.100.342.923.92</button></a>
@@ -41,39 +45,41 @@
         <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "70%" width = "70%"></a>
 
     </div>
-    <div class = "bottomLeftMenu">
+    <div id = "bottomLeftMenu">
         @yield('bottomLeftMenu')
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Questions</button></a>
         <a href="{{ url('/posts/create') }}"><button type = "button" class = "navButton">Create Inspiration</button></a>
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Bookmarks</button></a>
     </div>
-
+    </div>
     <!-- --- Center --- -->
-    <div class = "centerContent">
+    <div id = "centerContent">
         @yield('centerContent')
-    <div class = "centerMenu">
+    <div id = "centerMenu">
         @include('partials.flash')
         @yield('centerMenu')
     </div>
-    <div class = "centerText">
+    <div id = "centerText">
         @yield('centerText')
     </div>
         <hr/>
-        <div class = "centerFooter">
+        <div id = "centerFooter">
             @yield('centerFooter')
         </div>
     </div>
 
 
     <!-- --- --- Right -->
-    <div class = "topRightMenu">
+    <div id = "rightContainer">
+    <div id = "topRightMenu">
         @yield('topRightMenu')
         <input type = "text" name = "search" size = "15">
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Search</button></a>
         <a href="{{ url('/settings') }}"><button type = "button" class = "navButton">Settings</button></a>
         <a href="https://tre-uniti.org"><button type = "button" class = "navButton">/-\</button></a>
     </div>
-    <div class = "rightProfile">
+
+    <div id = "rightProfile">
         <h2>Inspired By:</h2>
         <ul style = "text-align: left;">
             <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Extend someone elses' post</button></a></li>
@@ -90,13 +96,16 @@
         <hr/>
         <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "70%" width = "70%"></a>
     </div>
-    <div class = "bottomRightMenu">
+    <div id = "bottomRightMenu">
         @yield('bottomRightMenu')
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Artist Name</button></a>
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Play</button></a>
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Next</button></a>
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Volume</button></a>
     </div>
+    </div>
 </div>
+
+
 </body>
 </html>

@@ -9,7 +9,6 @@
 // Div Mixins
 @import 'mixins/menuDiv';
 @import 'mixins/profileDiv';
-@import 'mixins/contentDiv';
 // Textfield Mixins
 @import 'mixins/createTextField';
 
@@ -23,6 +22,7 @@ html{
   min-width: 1000px;
   background-color: black;
 }
+//Containers:
 #container
 {
   text-align: center;
@@ -30,9 +30,21 @@ html{
   height: 100%;
   width:100%;
 }
+#leftContainer
+{
+  opacity: .9;
+  transition: opacity 1s;
+}
+#rightContainer
+{
+  opacity: .9;
+  transition: opacity 1s;
+}
+
 table {
   border-collapse: separate;
   border-spacing: 3px;
+
 }
 table, td {
   border: 1px solid black;
@@ -56,29 +68,30 @@ table, td {
   color: red;
 }
 
+
 //Menus:
-.topLeftMenu
+#topLeftMenu
 {
   @include menuDiv($topBackgroundColor);
   left: $sideMargin;
   top: $topPosition;
   min-width: 400px;
 }
-.bottomLeftMenu
+#bottomLeftMenu
 {
   @include menuDiv($bottomBackgroundColor);
   left: $sideMargin;
   bottom: $bottomPosition;
   min-width: 417px;
 }
-.topRightMenu
+#topRightMenu
 {
   @include menuDiv($topBackgroundColor);
   right: $sideMargin;
   top: $topPosition;
   min-width: 415px;
 }
-.bottomRightMenu
+#bottomRightMenu
 {
   @include menuDiv($bottomBackgroundColor);
   right: $sideMargin;
@@ -86,37 +99,51 @@ table, td {
   min-width: 400px;
 }
 //Profiles
-.leftProfile
+#leftProfile
 {
-  @include profileDiv($profileBackgroundColor, $profileOpacity);
+  @include profileDiv($profileBackgroundColor);
   left: 0;
   min-width: 100px;
+
 }
-.rightProfile
+#rightProfile
 {
-  @include profileDiv($profileBackgroundColor, $profileOpacity);
+  @include profileDiv($profileBackgroundColor);
   right: 0;
   min-width: 100px;
+  -webkit-transition: opacity 2s; /* Safari */
 }
 //Content
-.centerContent
+#centerContent
 {
-  @include centerContent($centerBackgroundColor, $centerOpacity);
+  width: 50%;
+  height: auto;
+  background-color: $centerBackgroundColor;
+  opacity: $centerOpacity;
+  border: 2px solid;
+  border-radius: 25px;
+  font-family: Verdana, Geneva, sans-serif;
+  z-index: 2;
   margin: 105px auto;
-  min-width: 10px;
+  min-width: 300px;
 }
-.centerMenu
+#centerMenu
 {
   margin: 0 auto;
   width: 90%;
   height: auto;
 
 }
-.centerText
+#centerText
 {
   margin: 0 auto;
-  width: 90%;
+  width: 95%;
   height: auto;
+}
+#createOptions
+{
+  margin: 0 auto;
+  padding: 3px;
 }
 .createSubmit
 {
@@ -126,21 +153,21 @@ table, td {
   border: 1px solid;
   border-radius: 20px;
   opacity: $centerOpacity;
-
 }
+
 //Errors:
 .errors
 {
   background-color: red;
 }
 //TextField for posts, extensions, drafts
-.createBodyText
+#createBodyText
 {
   @include baseTextField();
   font-size: 125%;
 }
 
-.centerFooter
+#centerFooter
 {
 
   margin: 0 auto;

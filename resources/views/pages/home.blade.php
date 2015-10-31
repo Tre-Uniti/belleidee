@@ -8,18 +8,18 @@
 @section('centerMenu')
 
 <h1>Belief Centers</h1>
-<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Atheism</button></a>
-<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Adaptia</button></a>
-<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Ba Gua</button></a>
-<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Buddhism</button></a>
-<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Christianity</button></a>
-<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Druze</button></a>
-<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Hinduism</button></a>
-<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Islam</button></a>
-<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Judaism</button></a>
-<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Native</button></a>
-<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Taoism</button></a>
-<a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Urantia</button></a>
+<a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Atheism</button></a>
+<a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Adaptia</button></a>
+<a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Ba Gua</button></a>
+<a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Buddhism</button></a>
+<a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Christianity</button></a>
+<a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Druze</button></a>
+<a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Hinduism</button></a>
+<a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Islam</button></a>
+<a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Judaism</button></a>
+<a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Native</button></a>
+<a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Taoism</button></a>
+<a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Urantia</button></a>
 
 
 

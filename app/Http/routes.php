@@ -27,6 +27,7 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::get('auth/confirm/{token}', 'Auth\AuthController@confirmEmail');
 Route::get('auth/verify', 'Auth\AuthController@verify');
+Route::get('auth/tour', 'Auth\AuthController@getTour');
 
 // Core Info App routes
 Route::get('/', 'HomeController@welcome');
@@ -35,6 +36,7 @@ Route::get('contact', 'HomeController@contact');
 Route::get('about', 'HomeController@about');
 Route::get('settings', 'HomeController@settings');
 Route::get('indev', 'HomeController@indev');
+
 
 
 // Posting routes (resource)

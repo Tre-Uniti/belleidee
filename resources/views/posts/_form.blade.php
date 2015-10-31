@@ -1,4 +1,4 @@
-<div class = "createTitle">
+<div id = "createOptions">
     {!! Form::label('title', 'Title:') !!}
     {!! Form::text('title', null, ['class' => 'createTitleText']) !!}
     <p>Today's Date: 10-17-2015</p>
@@ -14,12 +14,11 @@
         <td>{!! Form::text('index2', null, ['class' => 'createAttributes','placeholder' => 'Secondary']) !!}</td></tr>
         </tbody>
     </table>
-
 </div>
 <!-- Body Form Input -->
 
-<div class="createBody">
-    {!! Form::textarea('body', null, ['class' => 'createBodyText', 'placeholder' => 'Express your belief here:']) !!}
+<div id="centerText">
+    {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your belief here:']) !!}
 </div>
 <div class = "createSubmit">
     {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}

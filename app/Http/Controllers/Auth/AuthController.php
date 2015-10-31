@@ -97,6 +97,18 @@ class AuthController extends Controller
     {
         return view('auth.register');
     }
+    /**
+     * Show the Tour Page
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+
+    public function getTour()
+    {
+        return view('auth.tour');
+    }
+
 
     /**
      * Handle a registration request for the application.

@@ -13,7 +13,7 @@
   margin-top: 9.3%; }
 
 #login {
-  width: 62%;
+  width: 69%;
   height: auto;
   margin: 0 auto;
   background-color: #202020;
@@ -39,6 +39,9 @@ hr {
 label.login {
   color: white; }
 
+.welcomeInputText {
+  width: 14em; }
+
 html {
   background-image: url("/img/background1.jpg");
   background-attachment: fixed;
@@ -52,6 +55,14 @@ html {
   position: absolute;
   height: 100%;
   width: 100%; }
+
+#leftContainer {
+  opacity: .9;
+  transition: opacity 1s; }
+
+#rightContainer {
+  opacity: .9;
+  transition: opacity 1s; }
 
 table {
   border-collapse: separate;
@@ -73,7 +84,7 @@ table, td {
 .flash-danger {
   color: red; }
 
-.topLeftMenu {
+#topLeftMenu {
   width: 24%;
   height: auto;
   margin: 0 auto;
@@ -87,7 +98,7 @@ table, td {
   top: 1%;
   min-width: 400px; }
 
-.bottomLeftMenu {
+#bottomLeftMenu {
   width: 24%;
   height: auto;
   margin: 0 auto;
@@ -101,7 +112,7 @@ table, td {
   bottom: 1%;
   min-width: 417px; }
 
-.topRightMenu {
+#topRightMenu {
   width: 24%;
   height: auto;
   margin: 0 auto;
@@ -115,7 +126,7 @@ table, td {
   top: 1%;
   min-width: 415px; }
 
-.bottomRightMenu {
+#bottomRightMenu {
   width: 24%;
   height: auto;
   margin: 0 auto;
@@ -129,7 +140,7 @@ table, td {
   bottom: 1%;
   min-width: 400px; }
 
-.leftProfile {
+#leftProfile {
   width: 24%;
   height: auto;
   margin: 0 auto;
@@ -138,14 +149,12 @@ table, td {
   position: fixed;
   border: 1px solid;
   border-radius: 20px;
-  opacity: 0.85;
-  filter: alpha(opacity-75);
-  /* For IE8 and earlier */
   font-family: Verdana, Geneva, sans-serif;
+  z-index: 1;
   left: 0;
   min-width: 100px; }
 
-.rightProfile {
+#rightProfile {
   width: 24%;
   height: auto;
   margin: 0 auto;
@@ -154,35 +163,38 @@ table, td {
   position: fixed;
   border: 1px solid;
   border-radius: 20px;
-  opacity: 0.85;
-  filter: alpha(opacity-75);
-  /* For IE8 and earlier */
   font-family: Verdana, Geneva, sans-serif;
+  z-index: 1;
   right: 0;
-  min-width: 100px; }
+  min-width: 100px;
+  -webkit-transition: opacity 2s;
+  /* Safari */ }
 
-.centerContent {
+#centerContent {
   width: 50%;
   height: auto;
   background-color: #E8E8E8;
-  position: relative;
   opacity: 0.97;
   border: 2px solid;
   border-radius: 25px;
   font-family: Verdana, Geneva, sans-serif;
-  z-index: 1;
+  z-index: 2;
   margin: 105px auto;
-  min-width: 10px; }
+  min-width: 300px; }
 
-.centerMenu {
+#centerMenu {
   margin: 0 auto;
   width: 90%;
   height: auto; }
 
-.centerText {
+#centerText {
   margin: 0 auto;
-  width: 90%;
+  width: 95%;
   height: auto; }
+
+#createOptions {
+  margin: 0 auto;
+  padding: 3px; }
 
 .createSubmit {
   margin: 7px auto;
@@ -195,17 +207,17 @@ table, td {
 .errors {
   background-color: red; }
 
-.createBodyText {
+#createBodyText {
   background-color: #FFFFFF;
   color: #000000;
   resize: vertical;
   width: 100%;
-  height: 390px;
+  height: 380px;
   padding-left: 5px;
   padding-right: 5px;
   font-size: 125%; }
 
-.centerFooter {
+#centerFooter {
   margin: 0 auto;
   width: 50%;
   height: auto;
