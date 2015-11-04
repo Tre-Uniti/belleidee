@@ -17,7 +17,7 @@ class CreateSourcesTable extends Migration
             $table->string('nameHandle');
             $table->string('url')->nullable();
             $table->string('isbn')->nullable();
-            $table->string('loc');
+            $table->string('location');
             $table->integer('post_id')->unsigned()->nullable();
             $table->integer('extension_id')->unsigned()->nullable();
             $table->integer('question_id')->unsigned()->nullable();

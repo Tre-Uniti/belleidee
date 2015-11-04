@@ -10,5 +10,5 @@
 
 @stop
 @section('centerFooter')
-    <p>You may track the dev progress at <a href="https://bella.ninja"><button type = "button" class = "navButton">Bella Ninja</button></a></p>
+    <p>You may track the dev progress at <a href="https://belle-creatori.org"><button type = "button" class = "navButton">Belle-Creatori</button></a></p>
 @stop

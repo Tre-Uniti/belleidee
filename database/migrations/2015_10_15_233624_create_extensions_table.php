@@ -16,9 +16,11 @@ class CreateExtensionsTable extends Migration
         {
             $table->increments('id');
             $table->string('title');
-            $table->string('extension_index')->nullable();
-            $table->string('extension_belief_beacon')->nullable();
-            $table->string('extension_index2')->nullable();
+            $table->integer('elevation')->unsigned();
+            $table->integer('extension')->unsigned();
+            $table->string('index')->nullable();
+            $table->string('belief_beacon')->nullable();
+            $table->string('index2')->nullable();
             $table->string('nymified')->nullable();
             $table->string('extension_path');
             $table->string('source_path');

@@ -14,6 +14,7 @@ class UserMailer
     protected $to;
     protected $view;
     protected $data = [];
+    protected $title;
 
     public function __construct(Mailer $mailer)
     {
@@ -25,6 +26,7 @@ class UserMailer
         $this->to = $user->email;
         $this->view = 'emails.confirm';
         $this->data = compact('user');
+        $this->title = 'Please confirm your email';
         $this->deliver();
     }
     public function sendEmailInviteTo(Invite $invite)
@@ -32,6 +34,7 @@ class UserMailer
         $this->to = $invite->to_email;
         $this->view = 'emails.invite';
         $this->data = compact('invite');
+        $this->title = 'An Invitation to Belle-Idee';
         $this->deliver();
     }
     public function deliver()
@@ -40,7 +43,7 @@ class UserMailer
         {
             $message->from($this->from, 'Zoko')
                     ->to($this->to)
-                    ->subject('A Message from Belle-Idee');
+                    ->subject($this->title);
         });
     }
 }

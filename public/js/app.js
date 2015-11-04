@@ -2,7 +2,7 @@
   $(function() {
     var a, b;
     a = function() {
-      return $("#leftContainer").css("opacity", "0.02")($("#rightContainer").css("opacity", "0.02"));
+      return $("#leftContainer").css("opacity", "0.003")($("#rightContainer").css("opacity", "0.003"));
     };
     b = function() {
       return $("#leftContainer").css("opacity", "0.90")($("#rightContainer").css("opacity", "0.90"));

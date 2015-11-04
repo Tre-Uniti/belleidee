@@ -11,34 +11,43 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => 'welcome']);
+        $this->middleware('auth', ['except' => ['getWelcome', 'getDemo', 'getTour']]);
     }
-    public function welcome()
+    public function getWelcome()
     {
         return view ('pages.welcome');
     }
-    public function home()
+    public function getTour()
+    {
+        return view('pages.tour');
+    }
+    public function getDemo()
+    {
+        return view ('pages.demo');
+    }
+    public function getHome()
     {
         return view ('pages.home');
     }
 
-    public function about()
+    public function getAbout()
     {
         return view ('pages.about');
     }
 
-    public function contact()
+    public function getContact()
     {
         return view ('pages.contact');
     }
 
-    public function settings()
+    public function getSettings()
     {
         return view ('pages.settings');
     }
-    public function indev()
+    public function getIndev()
     {
         return view ('pages.indev');
     }
+
 
 }

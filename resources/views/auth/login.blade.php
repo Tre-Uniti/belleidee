@@ -18,10 +18,9 @@
         </table>
         <button type="submit" class = "navButton">Login</button>
     </form>
-
 @stop
 @section('footer')
     <h4>Other Options:</h4>
-    <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">Nymi</button></a><br/>
+    <a href="{{ url('/auth/login') }}"><button type = "button" class = "navButton">Nymi</button></a><br/>
     <a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
 @stop

@@ -9,7 +9,7 @@
     <script src="/js/app.js"></script>
     <!--
        This code is maintained by the Tre-Uniti development ops
-       Requests and feedback are administered at Bella.ninja
+       Feature & Pull Requests decided at Belle-Creatori.org
        Idee Repo: https://github.com/tre-uniti/belle-idee
     -->
 </head>
@@ -27,12 +27,12 @@
     <div id = "leftProfile">
         <h1>@yield('handle')</h1>
 
-        <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">987.223.100.342.923.92</button></a>
-        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">100.323.234.234.298</button></a>
+        <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 0</button></a>
+        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 0</button></a>
 
 
-        <p>This is someone's motto, let's see how long it can be
-            Should be at least 3 lines long by default. .Right?  And one One more line yes. Right?  And one One more line</p>
+        <p>This is someone's motto, it is customized by the user</p>
+        <p>It can be your motto, or another motto you like</p>
         <hr/>
         <h2>Top 3</h2>
 
@@ -54,18 +54,24 @@
     </div>
     <!-- --- Center --- -->
     <div id = "centerContent">
-        @yield('centerContent')
-    <div id = "centerMenu">
-        @include('partials.flash')
-        @yield('centerMenu')
-    </div>
-    <div id = "centerText">
-        @yield('centerText')
-    </div>
-        <hr/>
-        <div id = "centerFooter">
-            @yield('centerFooter')
+        <article>
+            @yield('centerContent')
+        <div id = "centerMenu">
+        <header>
+            @include('partials.flash')
+            @yield('centerMenu')
+        </header>
         </div>
+        <div id = "centerText">
+            @yield('centerText')
+        </div>
+        <hr/>
+        <footer>
+            <div id = "centerFooter">
+                @yield('centerFooter')
+            </div>
+        </footer>
+        </article>
     </div>
 
 

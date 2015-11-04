@@ -12,7 +12,8 @@ class CreateNymifiedTable extends Migration
      */
     public function up()
     {
-        Schema::create('nymified', function (Blueprint $table) {
+        Schema::create('nymified', function (Blueprint $table)
+        {
             $table->increments('id');
             $table->integer('n_post_id')->unsigned()->nullable();
             $table->integer('n_extension_id')->unsigned()->nullable();

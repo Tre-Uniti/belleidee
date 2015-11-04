@@ -15,11 +15,11 @@ class CreateLegacyTable extends Migration
         Schema::create('legacy', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('elevation')->unsigned();
+            $table->integer('extension')->unsigned();
             $table->string('motto');
             $table->string('photo_path1');
             $table->string('photo_path2')->nullable();
-            $table->integer('legacy_elevation')->unsigned();
-            $table->integer('legacy_extension')->unsigned();
             $table->string('email');
             $table->string('token');
             $table->timestamps();

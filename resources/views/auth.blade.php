@@ -5,7 +5,7 @@
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
     <!--
        This code is maintained by the Tre-Uniti development ops
-       Requests and feedback are administered at Bella.ninja
+       Feature & Pull Requests decided at Belle-Creatori.org
        Idee Repo: https://github.com/tre-uniti/belle-idee
     -->
 </head>

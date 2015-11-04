@@ -21,21 +21,23 @@ Route::get('auth/login', 'Auth\SessionController@getLogin');
 Route::post('auth/login', 'Auth\SessionController@postLogin');
 Route::get('auth/logout', 'Auth\SessionController@getLogout');
 
-
 // Registration routes
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::get('auth/confirm/{token}', 'Auth\AuthController@confirmEmail');
 Route::get('auth/verify', 'Auth\AuthController@verify');
-Route::get('auth/tour', 'Auth\AuthController@getTour');
 
 // Core Info App routes
-Route::get('/', 'HomeController@welcome');
-Route::get('home', 'HomeController@home');
-Route::get('contact', 'HomeController@contact');
-Route::get('about', 'HomeController@about');
-Route::get('settings', 'HomeController@settings');
-Route::get('indev', 'HomeController@indev');
+Route::get('/', 'HomeController@getWelcome');
+Route::get('demo', 'HomeController@getDemo');
+Route::get('tour', 'HomeController@getTour');
+Route::get('home', 'HomeController@getHome');
+Route::get('contact', 'HomeController@getContact');
+Route::get('about', 'HomeController@getAbout');
+Route::get('settings', 'HomeController@getSettings');
+Route::get('indev', 'HomeController@getIndev');
+
+
 
 
 

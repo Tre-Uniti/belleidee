@@ -15,11 +15,11 @@ class CreateSponsorsTable extends Migration
         Schema::create('sponsors', function (Blueprint $table)
         {
             $table->increments('id');
-            $table->string('sponsor_name');
-            $table->string('sponsor_website');
-            $table->string('sponsor_phone');
-            $table->string('sponsor_path1');
-            $table->string('sponsor_path2')->nullable();
+            $table->string('name');
+            $table->string('website');
+            $table->string('phone');
+            $table->string('path1');
+            $table->string('path2')->nullable();
             $table->string('status');
             $table->integer('budget')->unsigned();
             $table->integer('views')->unsigned();

@@ -97,17 +97,7 @@ class AuthController extends Controller
     {
         return view('auth.register');
     }
-    /**
-     * Show the Tour Page
-     *
-     * @return \Illuminate\Http\Response
-     */
 
-
-    public function getTour()
-    {
-        return view('auth.tour');
-    }
 
 
     /**
@@ -141,7 +131,6 @@ class AuthController extends Controller
                 ->withErrors([$error]);
         }*/
         $user = $this->create($request->all());
-        //$mailer->sendEmailConfirmationTo(Auth::user());
         $mailer->sendEmailConfirmationTo($user);
         //$invite->delete();
         flash()->success('Registration Successful');

@@ -7,7 +7,7 @@
 @stop
 @section('centerMenu')
 
-<h1>Belief Centers</h1>
+<h1>Beliefs</h1>
 <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Atheism</button></a>
 <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Adaptia</button></a>
 <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Ba Gua</button></a>
