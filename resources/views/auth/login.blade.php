@@ -8,10 +8,10 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <table class = "input" align = "center">
             <tr><td><label for = "email" class = "login">E-Mail Address</label></td>
-                <td><input type="text" id="email" name="email" value="{{ old('email') }}"></td>
+                <td><input type="text" id="email" name="email" class = "welcomeInputText" value="{{ old('email') }}"></td>
             </tr>
             <tr><td><label for = "password" class = "login">Password</label></td>
-                <td><input type = "password" name = "password" id = "password"/></td>
+                <td><input type = "password" name = "password" id = "password" class = "welcomeInputText"/></td>
             </tr>
             <tr><td colspan="2"><label for = "remember" class = "login"> Remember Me</label>
                 <input type="checkbox" id = "remember" name="remember"></td></tr>

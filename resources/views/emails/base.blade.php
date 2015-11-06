@@ -11,14 +11,18 @@
             <table align="center" width="480px" style = "border: 1px solid black;
                    border-radius: 7px;
                    -moz-border-radius: 7px;
-                   padding: 3px;">
+                   padding: 3px;
+                   background-color: #C8C8C8; ">
                 <tr>
                     <td colspan="3">
-                        <img src="http://belle-idee.org/img/idee.png" alt="idee">
+                        <img src="http://belle-idee.org/img/idee.png" alt="idee" height="45%" width="35%">
                     </td>
                 </tr>
 
                 @yield('emailContent')
+                <tr>
+                    <td colspan="3"><hr/></td>
+                </tr>
                 <tr>
                     <td>
                         <table align="center" style="text-align: center; border: 1px solid black;
@@ -39,7 +43,7 @@
                             <tr><th>Email Opt Out</th></tr>
                             <tr><td>Reply to this email</td></tr>
                             <tr><td>Or</td></tr>
-                            <tr><td>Change your email settings<a href ="http://belle-idee.org/settings">here</a></td></tr>
+                            <tr><td>Change settings <a href ="http://belle-idee.org/settings">here</a></td></tr>
                         </table>
                     </td>
                     <td>
@@ -48,9 +52,7 @@
                    -moz-border-radius: 7px;
                    padding: 3px;">
                             <tr><th>Message Type</th></tr>
-                            <tr><td>This is a System Message</td></tr>
-                            <tr><td>In reference to:</td></tr>
-                            <tr><td>@yield('messageType')</td></tr>
+                            @yield('messageType')
                         </table>
                     </td>
                 </tr>

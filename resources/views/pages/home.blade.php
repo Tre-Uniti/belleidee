@@ -26,9 +26,9 @@
 @stop
 @section('centerText')
     <h1>Question of the Week:</h1>
-    <h4>How are we influenced by our emotions, what purpose do they serve?</h4>
-    <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevate: 723 422 923</button></a>
-    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extend: 232 300 2</button></a>
+    <h4>What constitutes an inspiration?</h4>
+    <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevate: 0</button></a>
+    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extend: 0</button></a>
 @stop
 @section('centerFooter')
     <h2>Your Sponsor</h2>

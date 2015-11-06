@@ -111,7 +111,6 @@ table, td {
   @include profileDiv($profileBackgroundColor);
   right: 0;
   min-width: 100px;
-  -webkit-transition: opacity 2s; /* Safari */
 }
 //Content
 #centerContent
