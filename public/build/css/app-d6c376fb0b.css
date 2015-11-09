@@ -95,8 +95,7 @@ table, td {
   opacity: 0.9;
   z-index: 2;
   left: 0;
-  top: 1%;
-  min-width: 400px; }
+  top: 1%; }
 
 #bottomLeftMenu {
   width: 24%;
@@ -109,8 +108,7 @@ table, td {
   opacity: 0.9;
   z-index: 2;
   left: 0;
-  bottom: 1%;
-  min-width: 417px; }
+  bottom: 1%; }
 
 #topRightMenu {
   width: 24%;
@@ -123,8 +121,7 @@ table, td {
   opacity: 0.9;
   z-index: 2;
   right: 0;
-  top: 1%;
-  min-width: 415px; }
+  top: 1%; }
 
 #bottomRightMenu {
   width: 24%;
@@ -137,14 +134,13 @@ table, td {
   opacity: 0.9;
   z-index: 2;
   right: 0;
-  bottom: 1%;
-  min-width: 400px; }
+  bottom: 1%; }
 
 #leftProfile {
   width: 24%;
   height: auto;
   margin: 0 auto;
-  top: 11%;
+  top: 14%;
   background-color: #E8E8E8;
   position: fixed;
   border: 1px solid;
@@ -152,13 +148,13 @@ table, td {
   font-family: Verdana, Geneva, sans-serif;
   z-index: 1;
   left: 0;
-  min-width: 100px; }
+  width: 24%; }
 
 #rightProfile {
   width: 24%;
   height: auto;
   margin: 0 auto;
-  top: 11%;
+  top: 14%;
   background-color: #E8E8E8;
   position: fixed;
   border: 1px solid;
@@ -166,7 +162,13 @@ table, td {
   font-family: Verdana, Geneva, sans-serif;
   z-index: 1;
   right: 0;
-  min-width: 100px; }
+  width: 24%; }
+
+.innerSideMenus {
+  margin: 0 auto;
+  width: 97%;
+  height: 155px;
+  overflow: auto; }
 
 #centerContent {
   width: 50%;
@@ -177,7 +179,7 @@ table, td {
   border-radius: 25px;
   font-family: Verdana, Geneva, sans-serif;
   z-index: 2;
-  margin: 105px auto;
+  margin: 132px auto;
   min-width: 300px; }
 
 #centerMenu {
@@ -189,6 +191,10 @@ table, td {
   margin: 0 auto;
   width: 95%;
   height: auto; }
+
+#centerTextContent {
+  text-align: left;
+  font-size: 103%; }
 
 #createOptions {
   margin: 0 auto;
@@ -228,14 +234,13 @@ table, td {
 /* Button specific */
 .navButton {
   padding: 8px 13px;
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: "Comic Sans MS", Arial, sans-serif;
   font-size: 100%;
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border: 1px solid #003300;
   text-shadow: 3px 3px 10px #000000;
-  /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
   color: #FFFFFF;
   /* For Safari 5.1 to 6.0 */
   /* For Opera 11.1 to 12.0 */
@@ -244,22 +249,17 @@ table, td {
   /* Standard syntax */ }
   .navButton:hover {
     color: #FFFFFF;
-    /* For Safari 5.1 to 6.0 */
-    /* For Opera 11.1 to 12.0 */
-    /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#33FF33, #000000);
-    /* Standard syntax */ }
+    background: linear-gradient(#33FF33, #000000); }
 
 .interactButton {
   padding: 8px 13px;
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: "Comic Sans MS", Arial, sans-serif;
   font-size: 100%;
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border: 1px solid #003300;
   text-shadow: 3px 3px 10px #000000;
-  /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
   color: #7dff23;
   /* For Safari 5.1 to 6.0 */
   /* For Opera 11.1 to 12.0 */
@@ -268,11 +268,7 @@ table, td {
   /* Standard syntax */ }
   .interactButton:hover {
     color: #FFFFFF;
-    /* For Safari 5.1 to 6.0 */
-    /* For Opera 11.1 to 12.0 */
-    /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#000000, #33FF33);
-    /* Standard syntax */ }
+    background: linear-gradient(#000000, #33FF33); }
 
 h2 {
   text-decoration: underline; }

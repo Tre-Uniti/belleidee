@@ -9,6 +9,7 @@
 // Div Mixins
 @import 'mixins/menuDiv';
 @import 'mixins/profileDiv';
+@import 'mixins/sideInner';
 // Textfield Mixins
 @import 'mixins/createTextField';
 
@@ -75,43 +76,45 @@ table, td {
   @include menuDiv($topBackgroundColor);
   left: $sideMargin;
   top: $topPosition;
-  min-width: 400px;
 }
 #bottomLeftMenu
 {
   @include menuDiv($bottomBackgroundColor);
   left: $sideMargin;
   bottom: $bottomPosition;
-  min-width: 417px;
+
 }
 #topRightMenu
 {
   @include menuDiv($topBackgroundColor);
   right: $sideMargin;
   top: $topPosition;
-  min-width: 415px;
+
 }
 #bottomRightMenu
 {
   @include menuDiv($bottomBackgroundColor);
   right: $sideMargin;
   bottom: $bottomPosition;
-  min-width: 400px;
 }
 //Profiles
 #leftProfile
 {
   @include profileDiv($profileBackgroundColor);
   left: 0;
-  min-width: 100px;
-
+  width: 24%;
 }
 #rightProfile
 {
   @include profileDiv($profileBackgroundColor);
   right: 0;
-  min-width: 100px;
+  width: 24%;
 }
+.innerSideMenus
+{
+  @include sideInner();
+}
+
 //Content
 #centerContent
 {
@@ -123,7 +126,7 @@ table, td {
   border-radius: 25px;
   font-family: Verdana, Geneva, sans-serif;
   z-index: 2;
-  margin: 105px auto;
+  margin: 132px auto;
   min-width: 300px;
 }
 #centerMenu
@@ -131,7 +134,6 @@ table, td {
   margin: 0 auto;
   width: 90%;
   height: auto;
-
 }
 #centerText
 {
@@ -139,11 +141,18 @@ table, td {
   width: 95%;
   height: auto;
 }
+#centerTextContent
+{
+  text-align: left;
+  font-size: 103%;
+}
 #createOptions
 {
   margin: 0 auto;
   padding: 3px;
 }
+
+
 .createSubmit
 {
   margin: 7px auto;
@@ -177,8 +186,6 @@ table, td {
   border: 2px solid;
   border-radius: 25px;
   color: #ffffff;
-
-
 }
 
 /* Button specific */
@@ -188,10 +195,10 @@ table, td {
   @include colorNavButton($navButtonColor1, $navButtonColor2, $navTextColor);
   &:hover {
     color: $navTextHoverColor;
-    background: -webkit-linear-gradient($navHoverColor1, $navHoverColor2); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient($navHoverColor1, $navHoverColor2); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient($navHoverColor1, $navHoverColor2); /* For Firefox 3.6 to 15 */
-    background: linear-gradient($navHoverColor1, $navHoverColor2); /* Standard syntax */
+    background: -webkit-linear-gradient($navHoverColor1, $navHoverColor2);
+    background: -o-linear-gradient($navHoverColor1, $navHoverColor2);
+    background: -moz-linear-gradient($navHoverColor1, $navHoverColor2);
+    background: linear-gradient($navHoverColor1, $navHoverColor2);
   }
 }
 .interactButton {
@@ -199,10 +206,10 @@ table, td {
   @include colorActButton($actButtonColor1, $actButtonColor2, $actTextColor);
   &:hover {
     color: $actTextHoverColor;
-    background: -webkit-linear-gradient($actHoverColor1, $actHoverColor2); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient($actHoverColor1, $actHoverColor2); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient($actHoverColor1, $actHoverColor2); /* For Firefox 3.6 to 15 */
-    background: linear-gradient($actHoverColor1, $actHoverColor2); /* Standard syntax */
+    background: -webkit-linear-gradient($actHoverColor1, $actHoverColor2);
+    background: -o-linear-gradient($actHoverColor1, $actHoverColor2);
+    background: -moz-linear-gradient($actHoverColor1, $actHoverColor2);
+    background: linear-gradient($actHoverColor1, $actHoverColor2);
   }
 }
 h2

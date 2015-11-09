@@ -4,7 +4,7 @@
 @stop
 @section('login')
     <h3>What is Belle-Idee?</h3>
-    <ul style = "color: white;">
+    <ul style = "color: white; text-align: left;">
         <li>A community of various belief journeyers</li>
         <li>Integrated with places of worship and thought</li>
         <li>Supported by sponsors with promotions</li>

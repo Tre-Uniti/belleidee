@@ -2,8 +2,27 @@
 @section('siteTitle')
     Show Inspiration
 @stop
-@section('handle')
-    {{Auth::user()->handle}}
+
+@section('leftSideBar')
+    <div id = "leftProfile">
+        <h1>{{Auth::user()->handle}}</h1>
+
+        <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 0</button></a>
+        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 0</button></a>
+
+        <div id = "motto">
+            <p>This is your motto, it is customized by the user
+                It can be your motto, or another motto you like
+            <hr/>
+        </div>
+        <h2>Top 3</h2>
+
+        <ul style = "text-align: left;">
+            <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Create and Post your first inspiration</button></a></li>
+            <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Post a second</button></a></li>
+            <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Post a third</button></a></li>
+        </ul>
+        </div>
 @stop
 
 @section('centerText')
