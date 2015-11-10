@@ -8,8 +8,8 @@
 @import 'mixins/colorButton';
 // Div Mixins
 @import 'mixins/menuDiv';
-@import 'mixins/profileDiv';
-@import 'mixins/sideInner';
+@import 'mixins/sideDiv';
+@import 'mixins/innerMenu';
 // Textfield Mixins
 @import 'mixins/createTextField';
 
@@ -53,8 +53,15 @@ table, td {
   -moz-border-radius: 7px;
   padding: 3px;
 }
+h2
+{
+  text-decoration: underline;
+}
+ul
+{
+  text-align: left;
+}
 
-/* Div specific */
 //Flash Messages:
 .flash-info
 {
@@ -97,22 +104,33 @@ table, td {
   right: $sideMargin;
   bottom: $bottomPosition;
 }
-//Profiles
-#leftProfile
+
+#leftSide
 {
-  @include profileDiv($profileBackgroundColor);
+  @include sideDiv($profileBackgroundColor);
   left: 0;
   width: 24%;
 }
-#rightProfile
+#rightSide
 {
-  @include profileDiv($profileBackgroundColor);
+  @include sideDiv($profileBackgroundColor);
   right: 0;
   width: 24%;
 }
-.innerSideMenus
+.innerProfileMenus
 {
-  @include sideInner();
+  @include innerMenu($profileScrollHeight);
+  width: 97%;
+}
+.innerHomeMenus
+{
+  @include innerMenu($homeScrollHeight);
+  width: 85%
+}
+.innerPhotos
+{
+  @include innerMenu($photoScrollHeight);
+  width: 95%;
 }
 
 //Content
@@ -126,7 +144,7 @@ table, td {
   border-radius: 25px;
   font-family: Verdana, Geneva, sans-serif;
   z-index: 2;
-  margin: 132px auto;
+  margin: 37.7px auto;
   min-width: 300px;
 }
 #centerMenu
@@ -144,19 +162,24 @@ table, td {
 #centerTextContent
 {
   text-align: left;
-  font-size: 103%;
+  font-size: 125%;
+  height: 561px;
+  overflow: auto;
 }
 #createOptions
 {
   margin: 0 auto;
   padding: 3px;
 }
-
+.createTitleText
+{
+  width: 350px;
+}
 
 .createSubmit
 {
   margin: 7px auto;
-  width: 20%;
+  width: 180px;
   background-color: $bottomBackgroundColor;
   border: 1px solid;
   border-radius: 20px;
@@ -212,7 +235,4 @@ table, td {
     background: linear-gradient($actHoverColor1, $actHoverColor2);
   }
 }
-h2
-{
-  text-decoration: underline;
-}
+

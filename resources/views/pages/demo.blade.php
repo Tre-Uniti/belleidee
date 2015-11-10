@@ -4,9 +4,9 @@
 @stop
 
 @section('leftSideBar')
-    <div id = "leftProfile">
+    <div id = "leftSide">
         <h2>Your Handle</h2>
-        <div class = "innerSideMenus">
+        <div class = "innerProfileMenus">
         <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 0</button></a>
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 0</button></a>
 
@@ -16,17 +16,15 @@
         </div>
         <hr/>
         <h2>Top Posts</h2>
-        <div class = "innerSideMenus">
-            <ul style = "text-align: left;">
+        <div class = "innerProfileMenus">
+            <ul>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your most inspired post</button></a></li>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your second most inspired post</button></a></li>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
             </ul>
         </div>
         <hr/>
-        <div class = "innerSidePhotos">
-        <a href="/"><img src={{asset('img/background1.jpg')}} alt="idee" height = "69%" width = "69%"></a>
-        </div>
+        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "55%" width = "55%"></a>
     </div>
 @stop
 
@@ -78,7 +76,7 @@
 
         <a href="{{ url('/auth/register') }}"><button type = "button" class = "navButton">I'd like to join!</button></a>
     </article>
-
+<hr/>
 
 @stop
 @section('centerFooter')
@@ -86,10 +84,10 @@
 @stop
 
 @section('rightSideBar')
-    <div id = "rightProfile">
+    <div id = "rightSide">
         <h2>Inspired By:</h2>
-        <div class = "innerSideMenus">
-            <ul style = "text-align: left;">
+        <div class = "innerProfileMenus">
+            <ul>
                 <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 1</button></a></li>
                 <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 2</button></a></li>
                 <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 3</button></a></li>
@@ -97,8 +95,8 @@
         </div>
         <hr/>
         <h2>Inspires:</h2>
-        <div class = "innerSideMenus">
-        <ul style = "text-align: left;">
+        <div class = "innerProfileMenus">
+        <ul>
             <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 4</button></a></li>
             <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 5</button></a></li>
             <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 6</button></a></li>

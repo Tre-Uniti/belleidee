@@ -1,14 +1,13 @@
-@mixin profileDiv($backgroundColor)
+@mixin sideDiv($backgroundColor)
 {
   width: 24%;
   height: auto;
   margin: 0 auto;
-  top: 14%;
+  top: 12%;
   background-color: $backgroundColor;
   position: fixed;
   border: 1px solid;
   border-radius: 20px;
   font-family: Verdana, Geneva, sans-serif;
   z-index: 1;
-
 }

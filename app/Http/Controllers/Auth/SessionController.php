@@ -14,6 +14,16 @@ class SessionController extends Controller
 {
     use RedirectsUsers, ThrottlesLogins;
     protected $redirectTo = '/home';
+
+    /**
+     * Create a new authentication controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest', ['except' => 'getLogout']);
+    }
     /**
      * Show the application login form.
      *

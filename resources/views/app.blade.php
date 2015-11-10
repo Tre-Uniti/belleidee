@@ -43,7 +43,6 @@
         <div id = "centerText">
             @yield('centerText')
         </div>
-        <hr/>
         <footer>
             <div id = "centerFooter">
                 @yield('centerFooter')

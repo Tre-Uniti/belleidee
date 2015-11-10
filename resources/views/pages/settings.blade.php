@@ -3,31 +3,29 @@
 @section('siteTitle')
     Settings
 @stop
-@section('handle')
-    {{Auth::user()->handle}}
-@stop
-@section('topLeftMenu')
-
-@stop
-@section('leftProfile')
-    <h1>Amaricus</h1>
-
-    <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">100</button></a>
-    <a href="{{ url('/auth/nymi') }}"><button type = "button" class = "navButton">1000</button></a>
+@section('leftSideBar')
+    <div id = "leftSide">
+        <h2>{{Auth::user()->handle}}</h2>
+        <div class = "innerProfileMenus">
+            <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 0</button></a>
+            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 0</button></a>
 
 
-    <p>This is someone's motto, let's see how long it can be
-        Should be at least 3 lines long by default. Right?  And one One more line yes</p>
-    <hr/>
-    <h2>Top 3</h2>
-
-    <ul style = "text-align: left;">
-        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Create and Post your first inspiration</button></a></li>
-        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Post a second</button></a></li>
-        <li><a href="{{ url('/auth/nymi') }}"><button type = "button" class = "interactButton">Post a third</button></a></li>
-    </ul>
-    <hr/>
-    <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "70%" width = "70%"></a>
+            <p>This is your motto, it is customized by the user
+                It can be your motto, or another motto you like.  What happens with a third line</p>
+        </div>
+        <hr/>
+        <h2>Top Posts</h2>
+        <div class = "innerProfileMenus">
+            <ul>
+                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your most inspired post</button></a></li>
+                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your second most inspired post</button></a></li>
+                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
+            </ul>
+        </div>
+        <hr/>
+        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "55%" width = "55%"></a>
+    </div>
 @stop
 @section('bottomLeftMenu')
 
@@ -69,26 +67,26 @@
     <a href="#" onclick="window.open('https://www.sitelock.com/verify.php?site=www.belle-idee.org','SiteLock','width=600,height=600,left=160,top=170');" >
         <img alt="SiteLock" title="SiteLock" src="//shield.sitelock.com/shield/www.belle-idee.org"/></a>
 @stop
-@section('topRightMenu')
-
-@stop
-@section('rightProfile')
-    <h2>Inspired By:</h2>
-    <ul style = "text-align: left;">
-        <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Extend someone elses' post</button></a></li>
-        <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Extend 2 Posts</button></a></li>
-        <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Extend 3 Posts</button></a></li>
-    </ul>
-    <hr/>
-    <h2>Inspires:</h2>
-    <ul style = "text-align: left;">
-        <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Need 1 person to extend your post</button></a></li>
-        <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">2nd person</button></a></li>
-        <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">3rd person</button></a></li>
-    </ul>
-    <hr/>
-    <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "70%" width = "70%"></a>
-@stop
-@section('bottomRightMenu')
-
+@section('rightSideBar')
+    <div id = "rightSide">
+        <h2>Inspired By:</h2>
+        <div class = "innerProfileMenus">
+            <ul>
+                <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 1</button></a></li>
+                <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 2</button></a></li>
+                <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 3</button></a></li>
+            </ul>
+        </div>
+        <hr/>
+        <h2>Inspires:</h2>
+        <div class = "innerProfileMenus">
+            <ul>
+                <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 4</button></a></li>
+                <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 5</button></a></li>
+                <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 6</button></a></li>
+            </ul>
+        </div>
+        <hr/>
+        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "55%" width = "55%"></a>
+    </div>
 @stop

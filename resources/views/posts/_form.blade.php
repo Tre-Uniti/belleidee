@@ -1,22 +1,28 @@
 <div id = "createOptions">
-    {!! Form::label('title', 'Title:') !!}
-    {!! Form::text('title', null, ['class' => 'createTitleText']) !!}
-    <p>Today's Date: 10-17-2015</p>
-    <table align = "center">
-     <thead>
-     <tr><th> {!! Form::label('index', 'Indexer') !!}</th>
-         <th>{!! Form::label('beacon', 'Beacon') !!}</th>
-         <th>{!! Form::label('index2', 'Indexer') !!}</th>
-     </thead>
-        <tbody>
-        <tr><td>{!! Form::text('index', null, ['class' => 'createAttributes', 'placeholder' => 'Primary']) !!}</td>
-        <td>{!! Form::text('belief_beacon', null, ['class' => 'createAttributes']) !!}</td>
-        <td>{!! Form::text('index2', null, ['class' => 'createAttributes','placeholder' => 'Secondary']) !!}</td></tr>
-        </tbody>
-    </table>
+<table align = "center" style = "margin-bottom: 7px;">
+    <tr>
+        <th colspan="3" style = "border-color: #E8E8E8;">{!! Form::label('title', 'Title:') !!}</th>
+    </tr>
+        <tr>
+        <td colspan="3" style = "border-color: #E8E8E8;">{!! Form::text('title', null, ['class' => 'createTitleText']) !!}</td>
+        </tr>
+
+        <tr>
+            <td>{!! Form::label('index','System of Belief') !!}</td>
+            <td>{!! Form::label('beacon','Location of Post') !!}</td>
+            <td>{!! Form::label('index2','Type of Creation') !!}</td>
+        </tr>
+    <tr>
+            <td colspan="3" style = "border-color: #E8E8E8;">
+                {!! Form::text('index', null, ['class' => 'createAttributes', 'placeholder' => 'Belief Indexer']) !!}
+                {!! Form::text('belief_beacon', null, ['class' => 'createAttributes' , 'placeholder' => 'Beacon Tag']) !!}
+                {!! Form::text('index2', null, ['class' => 'createAttributes', 'placeholder' => 'Type Indexer']) !!}
+            </td>
+    </tr>
+
+</table>
 </div>
 <!-- Body Form Input -->
-
 <div id="centerText">
     {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your belief here:']) !!}
 </div>
