@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 class SessionController extends Controller
 {
     use RedirectsUsers, ThrottlesLogins;
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/posts';
 
     /**
      * Create a new authentication controller instance.

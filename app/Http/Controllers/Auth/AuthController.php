@@ -22,6 +22,8 @@ class AuthController extends Controller
     |
     */
     use AuthenticatesUsers, ThrottlesLogins;
+
+    protected $redirectPath = '/posts';
     /**
      * Create a new authentication controller instance.
      *
@@ -92,13 +94,10 @@ class AuthController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
     public function getRegister()
     {
         return view('auth.register');
     }
-
-
 
     /**
      * Handle a registration request for the application.

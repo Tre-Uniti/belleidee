@@ -24,7 +24,9 @@
             </ul>
         </div>
         <hr/>
-        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "55%" width = "55%"></a>
+        <div class = "innerPhotos">
+            <a href="/"><img src={{asset('img/background1.jpg')}} alt="idee" height = "93%" width = "90%"></a>
+        </div>
     </div>
 @stop
 
@@ -78,7 +80,9 @@
             </ul>
         </div>
         <hr/>
-        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "55%" width = "55%"></a>
+        <div class = "innerPhotos">
+            <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "95%" width = "80%"></a>
+        </div>
     </div>
 @stop
 

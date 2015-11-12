@@ -20,35 +20,33 @@
         <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Urantia</button></a>
         </div>
         <hr/>
-
-        <h2>Legacy Posts</h2>
+        <h2>Your Posts:</h2>
         <div class = "innerProfileMenus">
             <ul>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your most inspired post</button></a></li>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your second most inspired post</button></a></li>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
+                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
+                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
             </ul>
         </div>
         <hr/>
         <div class = "innerPhotos">
-        <a href="/"><img src={{asset('img/background1.jpg')}} alt="idee" height = "95%" width = "80%"></a>
+        <a href="/"><img src={{asset('img/background1.jpg')}} alt="idee" height = "93%" width = "90%"></a>
         </div>
     </div>
     @stop
-@section('centerMenu')
-<h1>Home of {{Auth::user()->handle}}</h1>
-
-<div class = "innerHomeMenus">
-<a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 0</button></a>
-<a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 0</button></a>
-
-
-    <p>This is your motto, it is customized by the user
-        It can be your motto, or another motto you like.  What happens with a third line</p>
-</div>
-@stop
 @section('centerText')
+    <h1>Home of {{Auth::user()->handle}}</h1>
+    <div class = "innerHomeMenus">
+        <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 0</button></a>
+        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 0</button></a>
+
+
+        <p>This is your motto, it is customized by the user
+            It can be your motto, or another motto you like.  What happens with a third line</p>
+    </div>
     <h2>People who inspire you</h2>
     <div class = "innerHomeMenus">
         <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">None yet, extend another's post to be inspired</button></a>
@@ -73,13 +71,11 @@
 @stop
 @section('rightSideBar')
     <div id = "rightSide">
-        <h2>Your Posts:</h2>
+        <h2>Legacy Posts</h2>
         <div class = "innerProfileMenus">
             <ul>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your most inspired post</button></a></li>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your second most inspired post</button></a></li>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
             </ul>

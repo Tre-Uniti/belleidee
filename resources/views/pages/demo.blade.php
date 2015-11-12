@@ -24,7 +24,9 @@
             </ul>
         </div>
         <hr/>
-        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "55%" width = "55%"></a>
+        <div class = "innerPhotos">
+            <a href="/"><img src={{asset('img/background1.jpg')}} alt="idee" height = "93%" width = "90%"></a>
+        </div>
     </div>
 @stop
 
@@ -73,14 +75,13 @@
             Such an endeavor has been taken in hopes that other lights will join and together our radiant glow may become a beacon for others to see.
         </p>
         </div>
-
-        <a href="{{ url('/auth/register') }}"><button type = "button" class = "navButton">I'd like to join!</button></a>
     </article>
-<hr/>
-
 @stop
 @section('centerFooter')
+    <div id = "centerFooter">
     <a href="https://duckduckgo.com/"><button type = "button" class = "interactButton">Not Interested</button></a>
+    <a href="{{ url('/auth/register') }}"><button type = "button" class = "navButton">I'd like to join!</button></a>
+    </div>
 @stop
 
 @section('rightSideBar')
@@ -103,6 +104,8 @@
         </ul>
         </div>
         <hr/>
-        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "55%" width = "55%"></a>
+        <div class = "innerPhotos">
+            <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "95%" width = "80%"></a>
+        </div>
     </div>
 @stop
