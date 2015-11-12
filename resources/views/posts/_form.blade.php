@@ -1,3 +1,4 @@
+
 <div id = "createOptions">
 <table align = "center" style = "margin-bottom: 7px;">
     <tr>
@@ -19,13 +20,13 @@
                 {!! Form::text('index2', null, ['class' => 'createAttributes', 'placeholder' => 'Type Indexer']) !!}
             </td>
     </tr>
-
 </table>
 </div>
+
 <!-- Body Form Input -->
-<div id="centerText">
-    {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your belief here:']) !!}
-</div>
+
+    {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your belief here:', 'rows' => '23%']) !!}
+
 <div class = "createSubmit">
     {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
 </div>

@@ -20,15 +20,15 @@
     <div id = "leftContainer">
         <div id = "topLeftMenu">
         @yield('topLeftMenu')
-        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Directory</button></a>
-        <a href="{{ url('/posts') }}"><button type = "button" class = "navButton">Discover Posts</button></a>
-        <a href="{{ url('/home') }}"><button type = "button" class = "navButton">Home</button></a>
+            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Idee Directory</button></a>
+            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Questions</button></a>
+            <a href="{{ url('/home') }}"><button type = "button" class = "navButton">Your Home</button></a>
         </div>
         @yield('leftSideBar')
         <div id = "bottomLeftMenu">
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Questions</button></a>
-            <a href="{{ url('/posts/create') }}"><button type = "button" class = "navButton">Create Posts</button></a>
+            <a href="{{ url('/posts') }}"><button type = "button" class = "navButton">Discover Posts</button></a>
             <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Bookmarks</button></a>
+            <a href="{{ url('/posts/create') }}"><button type = "button" class = "navButton">Create Post</button></a>
         </div>
     </div>
     <!-- --- Center --- -->
@@ -43,11 +43,7 @@
         <div id = "centerText">
             @yield('centerText')
         </div>
-        <footer>
-            <div id = "centerFooter">
-                @yield('centerFooter')
-            </div>
-        </footer>
+            @yield('centerFooter')
         </article>
     </div>
     <!-- --- --- Right -->
@@ -62,10 +58,9 @@
         @yield('rightSideBar')
         <div id = "bottomRightMenu">
             @yield('bottomRightMenu')
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Artist Name</button></a>
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Play</button></a>
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Next</button></a>
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Volume</button></a>
+            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Song Lyrics</button></a>
+            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Play/Pause</button></a>
+            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Next Song</button></a>
         </div>
     </div>
 </div>

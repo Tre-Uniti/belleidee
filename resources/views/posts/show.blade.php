@@ -24,13 +24,14 @@
             </ul>
         </div>
         <hr/>
-        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "55%" width = "55%"></a>
+        <div class = "innerPhotos">
+            <a href="/"><img src={{asset('img/background1.jpg')}} alt="idee" height = "93%" width = "90%"></a>
+        </div>
     </div>
 @stop
 
 @section('centerText')
     <h1>{{ $post->title }}</h1>
-
     <article>
         <table align = "center" cellpadding = "15">
             <thead>
@@ -50,13 +51,18 @@
             </tr>
             </tbody>
         </table>
-
+        <div id = "centerTextContent">
+            <p>
         {{ $post->body }}
-
+            </p>
+        </div>
     </article>
 @stop
 @section('centerFooter')
-    <a href="https://duckduckgo.com/"><button type = "button" class = "interactButton">Not Interested</button></a>
+    <div id = "centerFooter">
+        <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Intolerant</button></a>
+        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extend Post</button></a>
+    </div>
 @stop
 
 @section('rightSideBar')
@@ -79,6 +85,8 @@
             </ul>
         </div>
         <hr/>
-        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "55%" width = "55%"></a>
+        <div class = "innerPhotos">
+            <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "95%" width = "80%"></a>
+        </div>
     </div>
 @stop

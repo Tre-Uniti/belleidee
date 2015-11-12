@@ -36,7 +36,7 @@ Route::get('contact', 'HomeController@getContact');
 Route::get('about', 'HomeController@getAbout');
 Route::get('settings', 'HomeController@getSettings');
 Route::get('indev', 'HomeController@getIndev');
-
+Route::get('navGuide', 'HomeController@getNavGuide');
 
 
 

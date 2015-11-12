@@ -24,23 +24,25 @@
             </ul>
         </div>
         <hr/>
-        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "55%" width = "55%"></a>
+        <div class = "innerPhotos">
+            <a href="/"><img src={{asset('img/background1.jpg')}} alt="idee" height = "93%" width = "90%"></a>
+        </div>
     </div>
 @stop
 
 @section('centerText')
     <h2>Create Post</h2>
-
-    {!! Form::open(['url' => 'posts']) !!}
-    @include ('posts._form', ['submitButtonText' => 'Post Inspiration'])
-    {!! Form::close()   !!}
-
     @include ('errors.list')
-        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Save as draft</button></a>
-        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Add Sources</button></a>
+    {!! Form::open(['url' => 'posts']) !!}
+    @include ('posts._form', ['submitButtonText' => 'Post Belief'])
+    {!! Form::close()   !!}
 @stop
-@section('centerFooter')
 
+@section('centerFooter')
+    <div id = "centerFooter">
+    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Save as draft</button></a>
+    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Add Sources</button></a>
+    </div>
 @stop
 
 @section('rightSideBar')
@@ -63,7 +65,9 @@
             </ul>
         </div>
         <hr/>
-        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "55%" width = "55%"></a>
+        <div class = "innerPhotos">
+            <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "95%" width = "80%"></a>
+        </div>
     </div>
 @stop
 

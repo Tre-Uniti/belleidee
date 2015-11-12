@@ -11,7 +11,7 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['getWelcome', 'getDemo', 'getTour']]);
+        $this->middleware('auth', ['except' => ['getWelcome', 'getDemo', 'getTour', 'getNavGuide']]);
     }
     public function getWelcome()
     {
@@ -47,6 +47,10 @@ class HomeController extends Controller
     public function getIndev()
     {
         return view ('pages.indev');
+    }
+    public function getNavGuide()
+    {
+        return view ('pages.navGuide');
     }
 
 
