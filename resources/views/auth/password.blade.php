@@ -1,32 +1,31 @@
 @extends('auth')
 
 @section('login')
-                    <div class="panel-heading">Reset Password</div>
-                    <div class="panel-body">
-                        @if (session('status'))
-                            <div class="alert alert-success">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+    <h3>Reset Password</h3>
+    @if (session('status'))
+    <div class = "flash-success">
+        <table align="center">
+            <tr>
+                <td>{{ session('status') }}</td>
+            </tr>
+        </table>
+    </div>
+    @endif
+    <form role="form" method="POST" action="{{ url('/password/email') }}">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
+        <table align = "center">
+            <tr>
+                <td><label for = "email" class = "login">E-Mail Address</label></td>
+            </tr>
+            <tr>
+                <td><input type= "email" id = "email" class = "welcomeInputText" name="email" value="{{ old('email') }}"></td>
+            </tr>
+        </table>
+        <button type="submit" class="navButton">Send Password Reset Link</button>
+    </form>
 
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">E-Mail Address</label>
-                                <div class="col-md-6">
-                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Send Password Reset Link
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-@endsection
+@stop
+@section('footer')
+    <h5>You may email Zoko@belle-idee.org if login problems persist.</h5>
+@stop
