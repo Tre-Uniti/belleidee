@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -35,7 +36,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view ('posts.create');
+        $date = Carbon::now()->format('M-d-Y');
+        return view ('posts.create', ['date' => $date]);
     }
 
     /**
@@ -48,8 +50,6 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $user_id = $user->id;
-
-
 
         $title = $request->input('title');
         $path = '/posts/'.$user_id.'/'.$title.'.txt';

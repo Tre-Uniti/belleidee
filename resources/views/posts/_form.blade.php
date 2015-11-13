@@ -7,17 +7,12 @@
         <tr>
         <td colspan="3" style = "border-color: #E8E8E8;">{!! Form::text('title', null, ['class' => 'createTitleText']) !!}</td>
         </tr>
-
-        <tr>
-            <td>{!! Form::label('index','System of Belief') !!}</td>
-            <td>{!! Form::label('beacon','Location of Post') !!}</td>
-            <td>{!! Form::label('index2','Type of Creation') !!}</td>
-        </tr>
+    <tr><td>Today's Date:  {{ $date }}</td></tr>
     <tr>
             <td colspan="3" style = "border-color: #E8E8E8;">
-                {!! Form::text('index', null, ['class' => 'createAttributes', 'placeholder' => 'Belief Indexer']) !!}
+                {!! Form::text('index', null, ['class' => 'createAttributes', 'placeholder' => 'Belief System']) !!}
                 {!! Form::text('belief_beacon', null, ['class' => 'createAttributes' , 'placeholder' => 'Beacon Tag']) !!}
-                {!! Form::text('index2', null, ['class' => 'createAttributes', 'placeholder' => 'Type Indexer']) !!}
+                {!! Form::text('index2', null, ['class' => 'createAttributes', 'placeholder' => 'Type of Post']) !!}
             </td>
     </tr>
 </table>
@@ -27,6 +22,5 @@
 
     {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your belief here:', 'rows' => '23%']) !!}
 
-<div class = "createSubmit">
+
     {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
-</div>

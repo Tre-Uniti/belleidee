@@ -35,9 +35,9 @@
     <article>
         <table align = "center" cellpadding = "15">
             <thead>
-            <tr><th>Indexer</th>
-                <th>Beacon</th>
-                <th>Indexer</th>
+            <tr><th>Belief system</th>
+                <th>Beacon Tag</th>
+                <th>Type of Post</th>
             </tr>
             </thead>
             <tbody>
