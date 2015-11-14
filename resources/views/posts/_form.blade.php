@@ -5,14 +5,14 @@
         <th colspan="3" style = "border-color: #E8E8E8;">{!! Form::label('title', 'Title:') !!}</th>
     </tr>
         <tr>
-        <td colspan="3" style = "border-color: #E8E8E8;">{!! Form::text('title', null, ['class' => 'createTitleText']) !!}</td>
+        <td colspan="3" style = "border-color: #E8E8E8;">{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}</td>
         </tr>
     <tr><td>Today's Date:  {{ $date }}</td></tr>
     <tr>
             <td colspan="3" style = "border-color: #E8E8E8;">
-                {!! Form::text('index', null, ['class' => 'createAttributes', 'placeholder' => 'Belief System']) !!}
-                {!! Form::text('belief_beacon', null, ['class' => 'createAttributes' , 'placeholder' => 'Beacon Tag']) !!}
-                {!! Form::text('index2', null, ['class' => 'createAttributes', 'placeholder' => 'Type of Post']) !!}
+                {!! Form::select('index', $categories) !!}
+                {!! Form::select('belief_beacon', $beacons) !!}
+                {!! Form::select('index2', $types) !!}
             </td>
     </tr>
 </table>

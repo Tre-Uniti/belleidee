@@ -37,7 +37,41 @@ class PostController extends Controller
     public function create()
     {
         $date = Carbon::now()->format('M-d-Y');
-        return view ('posts.create', ['date' => $date]);
+        $categories =
+            [
+                'Your Belief' => 'Your Belief',
+                'Atheism' => 'Atheism',
+                'Adaptia' => 'Adaptia',
+                'Ba Gua' => 'Ba Gua',
+                'Buddhism' => 'Buddhism',
+                'Christianity' => 'Christianity',
+                'Druze' => 'Druze',
+                'Hinduism' => 'Hinduism',
+                'Islam' => 'Islam',
+                'Judaism' => 'Judaism',
+                'Native' => 'Native',
+                'Taoism' => 'Taoism',
+                'Urantia' => 'Urantia',
+                'Other Belief' => 'Other Belief'
+            ];
+        $beacons =
+            [
+                'No Beacon' => 'No Beacon',
+                'US-SW-Idee' => 'US-SW-Idee'
+            ];
+
+        $types =
+            [
+                'Basic Type' => 'Basic Type',
+                'Poem' => 'Poem',
+                'Prayer' => 'Prayer',
+                'Question' => 'Question',
+                'Reflection' => 'Reflection',
+                'Song Lyrics' => 'Song Lyrics',
+                'Speech' => 'Speech',
+                'Other Type' => 'Other Type'
+            ];
+        return view ('posts.create', ['date' => $date, 'categories' => $categories, 'beacons' => $beacons, 'types' => $types]);
     }
 
     /**
@@ -71,7 +105,6 @@ class PostController extends Controller
         $post->save();
         flash()->overlay('Your post has been created');
         return redirect('posts');
-
     }
 
     /**
