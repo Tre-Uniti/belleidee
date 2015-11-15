@@ -1,7 +1,6 @@
 @mixin innerMenu($height)
 {
   margin: 0 auto;
-
   height: $height;
   overflow: auto;
 }

@@ -1,5 +1,8 @@
-//Image Variable:
-$imgBackground1: "/img/background1.jpg";
+//Image Variables:
+$imgBackground1: "/img/background.jpg";
+$imgBackgroundLandscape: "/img/backgroundLandscape.jpg";
+$imgBackgroundPortrait: "/img/backgroundPortrait.jpg";
+
 //Action Button Variables:
 $actButtonColor1: #000000;
 $actButtonColor2: #383838;
@@ -7,6 +10,21 @@ $actHoverColor1:  #000000;
 $actHoverColor2:  #33FF33;
 $actTextColor:    #7dff23;
 $actTextHoverColor: #FFFFFF;
+
+//Content
+$centerBackgroundColor: #E8E8E8;
+$centerOpacity: 0.97;
+$centerPosition: 5%;
+
+//Horizontal Line Variables:
+$mainHrColor: #009900;
+
+//Inner Side Menus
+$profileScrollHeight: 155px;
+$homeScrollHeight: 125px;
+$photoScrollHeight: 200px;
+$navScrollHeight: 567px;
+
 //Nav Buttons
 $navButtonColor1: #33FF00;
 $navButtonColor2: #188BC0;
@@ -14,29 +32,22 @@ $navHoverColor1:  #33FF00;
 $navHoverColor2:  #000000;
 $navTextColor:    #FFFFFF;
 $navTextHoverColor: #FFFFFF;
-//Horizontal Line Variables:
-$mainHrColor: #009900;
 
-//Div Variables:
 //Menus
 $topPosition: 1%;
 $topBackgroundColor: #202020;
 $bottomPosition: 1%;
 $bottomBackgroundColor: #202020;
 $sideMargin: 0;
-//Inner Side Menus
-$profileScrollHeight: 155px;
-$homeScrollHeight: 125px;
-$photoScrollHeight: 200px;
-$navScrollHeight: 567px;
 
 //Profiles
 $profileBackgroundColor: #E8E8E8;
 $profileOpacity: 0.7;
 $profileTransition: opacity 1s;
-//Content
-$centerBackgroundColor: #E8E8E8;
-$centerOpacity: 0.97;
-$centerPosition: 5%;
+
+
+
+
+
 
 

@@ -12,16 +12,15 @@
 @import 'mixins/innerMenu';
 // Textfield Mixins
 @import 'mixins/createTextField';
+// Media Queries
+@import 'mixins/mediaQueries';
 
 html{
-  background-image: url($imgBackground1);
   background-attachment: fixed;
   background-repeat: no-repeat;
   -webkit-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  min-width: 1000px;
-  background-color: black;
 }
 //Containers:
 #container
@@ -112,13 +111,11 @@ ul
 {
   @include sideDiv($profileBackgroundColor);
   left: 0;
-  width: 24%;
 }
 #rightSide
 {
   @include sideDiv($profileBackgroundColor);
   right: 0;
-  width: 24%;
 }
 .innerProfileMenus
 {
@@ -148,37 +145,40 @@ ul
 {
   width: 50%;
   height: 91%;
+  font-family: Verdana, Geneva, sans-serif;
+  z-index: 2;
+  margin: 2.1% auto;
+}
+article
+{
+  height: auto;
+  max-height: 100%;
   background-color: $centerBackgroundColor;
   opacity: $centerOpacity;
   border: 2px solid;
   border-radius: 25px;
-  font-family: Verdana, Geneva, sans-serif;
-  z-index: 2;
-  margin: 2.1% auto;
-  min-width: 350px;
+  overflow: auto;
 }
 #centerMenu
 {
   margin: 0 auto;
-  width: 90%;
-  height: auto;
+  width: 98%;
 }
 #centerText
 {
-  margin: 5px auto;
-  overflow: auto;
-  height: 850px;
+  margin: 5px auto 10px;
   width: 99%;
+  height: 100%;
 }
 #centerTextContent
 {
   text-align: left;
   font-size: 125%;
-  height: 650px;
-  overflow: auto;
   margin: 0 auto;
   padding-left: 15px;
   padding-right: 15px;
+  height: 500px;
+  overflow: auto;
 }
 #createOptions
 {
@@ -213,12 +213,12 @@ ul
 }
 #centerFooter
 {
-  @include menuDiv($bottomBackgroundColor);
-  bottom: .1%;
-  left: 0;
-  right: 0;
-  width: 310px;
-
+  background-color: $bottomBackgroundColor;
+  margin: 0 auto;
+  width: 50%;
+  border: 1px solid;
+  border-radius: 20px;
+  opacity: 0.9;
 }
 
 /* Button specific */
@@ -245,4 +245,11 @@ ul
     background: linear-gradient($actHoverColor1, $actHoverColor2);
   }
 }
+
+//Include Media Queries
+@include desktop($imgBackground1);
+@include tablet($imgBackgroundLandscape);
+@include mobile($imgBackgroundPortrait);
+
+
 

@@ -1,16 +1,16 @@
 #welcome
 {
-  width: 44%;
+  width: 30%;
+  min-width: 300px;
   height: auto;
-  margin: 0 auto;
+  margin: 9.3% auto;
   background-color: #E8E8E8;
   opacity:0.90;
-  filter:alpha(opacity=90); /* For IE8 and earlier */
+  filter:alpha(opacity=90);
   border: 2px solid;
   border-radius: 25px;
   font-family: Verdana, Geneva, sans-serif;
   text-align: center;
-  margin-top: 9.3%;
 }
 #login
 {
@@ -19,9 +19,10 @@
   margin: 0 auto;
   background-color: #202020;
   opacity:0.9;
-  filter:alpha(opacity=90); /* For IE8 and earlier */
+  filter:alpha(opacity=90);
   border: 2px solid;
   border-radius: 25px;
+  min-width: 290px;
 }
 h3
 {

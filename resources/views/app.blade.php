@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Idee /-\ @yield('siteTitle')</title>
     <link rel = "stylesheet" href = "/css/normalize.css">
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
@@ -43,8 +44,8 @@
         <div id = "centerText">
             @yield('centerText')
         </div>
-            @yield('centerFooter')
         </article>
+        @yield('centerFooter')
     </div>
     <!-- --- --- Right -->
     <div id = "rightContainer">

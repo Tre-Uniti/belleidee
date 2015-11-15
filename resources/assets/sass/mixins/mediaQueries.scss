@@ -1,0 +1,80 @@
+//Desktop
+@mixin desktop($desktopBackground)
+{
+  @media screen and (min-width: 980px)
+  {
+    html
+    {
+      background-image: url($desktopBackground);
+      background-color: black;
+    }
+    .interactButton
+    {
+      font-size: 100%;
+    }
+    .navButton
+    {
+      font-size: 100%;
+    }
+  }
+}
+//Tablet
+@mixin tablet($tabletBackground)
+{
+  @media screen and (max-width: 979px)
+  {
+    html
+    {
+      background-image: url($tabletBackground);
+      background-color: blue;
+    }
+    .interactButton
+    {
+      font-size: 80%;
+    }
+    .navButton
+    {
+      font-size: 80%;
+    }
+    #leftSide
+    {
+      height: 75%;
+      overflow: auto;
+    }
+    #rightSide
+    {
+      height: 75%;
+      overflow: auto;
+    }
+  }
+}
+//Mobile
+@mixin mobile($mobileBackground)
+{
+  @media screen and (max-width: 500px)
+  {
+    html
+    {
+      background-image: url($mobileBackground);
+      background-color: red;
+    }
+    #leftSide
+    {
+      height: 65%;
+
+    }
+    #rightSide
+    {
+      height: 65%;
+      overflow: auto;
+    }
+    .interactButton
+    {
+      font-size: 65%;
+    }
+    .navButton
+    {
+      font-size: 65%;
+    }
+  }
+}
