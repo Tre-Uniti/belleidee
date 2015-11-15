@@ -33,7 +33,7 @@
         </div>
         <hr/>
         <div class = "innerPhotos">
-        <a href="/"><img src={{asset('img/backgroundLandscape.jpg')}} alt="idee" height = "100%" width = "100%"></a>
+        <a href="/"><img src={{asset('img/backgroundLandscape.jpg')}} alt="idee" height = "95%" width = "95%"></a>
         </div>
     </div>
     @stop
@@ -42,20 +42,16 @@
     <div class = "innerHomeMenus">
         <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 0</button></a>
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 0</button></a>
-
-
         <p>This is your motto, it is customized by the user
             It can be your motto, or another motto you like.  What happens with a third line</p>
     </div>
     <h2>People who inspire you</h2>
     <div class = "innerHomeMenus">
         <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">None yet, extend another's post to be inspired</button></a>
-
     </div>
     <h2>People you inspire:</h2>
     <div class = "innerHomeMenus">
         <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">None yet, need someone to extend your post</button></a>
-
     </div>
 
     <h2>Question of the Week:</h2>

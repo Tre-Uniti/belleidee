@@ -25,7 +25,7 @@
         </div>
         <hr/>
         <div class = "innerPhotos">
-            <a href="/"><img src={{asset('img/background1.jpg')}} alt="idee" height = "93%" width = "90%"></a>
+            <a href="/"><img src={{asset('img/backgroundLandscape.jpg')}} alt="idee" height = "93%" width = "90%"></a>
         </div>
     </div>
 @stop
@@ -36,12 +36,13 @@
     {!! Form::open(['url' => 'posts']) !!}
     @include ('posts._form', ['submitButtonText' => 'Post Belief'])
     {!! Form::close()   !!}
+
 @stop
 
 @section('centerFooter')
     <div id = "centerFooter">
-    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Save as draft</button></a>
-    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Add Sources</button></a>
+        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Save as draft</button></a>
+        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Add Sources</button></a>
     </div>
 @stop
 

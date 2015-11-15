@@ -32,6 +32,10 @@
 
 @section('centerMenu')
     <h1>{{ $post->title }}</h1>
+
+@stop
+
+@section('centerText')
     <table align = "center" cellpadding = "15">
         <thead>
         <tr><th>Indexer</th>
@@ -50,20 +54,19 @@
         </tr>
         </tbody>
     </table>
-@stop
-
-@section('centerText')
         <div id = "centerTextContent">
             <p>
         {{ $post->body }}
             </p>
         </div>
+
 @stop
 @section('centerFooter')
     <div id = "centerFooter">
         <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Intolerant</button></a>
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extend Post</button></a>
     </div>
+
 @stop
 
 @section('rightSideBar')

@@ -1,4 +1,3 @@
-
 <div id = "createOptions">
 <table align = "center" style = "margin-bottom: 7px;">
     <tr>
@@ -16,11 +15,12 @@
             </td>
     </tr>
 </table>
-</div>
+
 
 <!-- Body Form Input -->
 
-    {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your belief here:', 'rows' => '23%']) !!}
+    {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your belief here:', 'rows' => '22%']) !!}
 
 
     {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
+</div>

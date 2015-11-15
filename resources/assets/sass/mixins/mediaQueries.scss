@@ -28,6 +28,10 @@
       background-image: url($tabletBackground);
       background-color: blue;
     }
+    #centerText
+    {
+      max-height: 845px;
+    }
     .interactButton
     {
       font-size: 80%;
@@ -58,6 +62,10 @@
       background-image: url($mobileBackground);
       background-color: red;
     }
+    #centerText
+    {
+      max-height: 845px;
+    }
     #leftSide
     {
       height: 65%;
@@ -76,5 +84,6 @@
     {
       font-size: 65%;
     }
+
   }
 }

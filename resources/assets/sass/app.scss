@@ -156,19 +156,21 @@ article
   background-color: $centerBackgroundColor;
   opacity: $centerOpacity;
   border: 2px solid;
-  border-radius: 25px;
-  overflow: auto;
+  border-radius: 12px;
 }
 #centerMenu
 {
   margin: 0 auto;
   width: 98%;
+
 }
 #centerText
 {
-  margin: 5px auto 10px;
+  margin: 5px auto;
   width: 99%;
-  height: 100%;
+  height: auto;
+  max-height: 795px;
+  overflow: auto;
 }
 #centerTextContent
 {
@@ -177,13 +179,16 @@ article
   margin: 0 auto;
   padding-left: 15px;
   padding-right: 15px;
-  height: 500px;
-  overflow: auto;
+  height: auto;
+  max-height: 557px;
+
 }
 #createOptions
 {
   margin: 0 auto;
   padding: 3px;
+  height: auto;
+  max-height: 100%;
 }
 .createTitleText
 {

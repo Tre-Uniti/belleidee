@@ -25,7 +25,7 @@
         </div>
         <hr/>
         <div class = "innerPhotos">
-            <a href="/"><img src={{asset('img/background1.jpg')}} alt="idee" height = "93%" width = "90%"></a>
+            <a href="/"><img src={{asset('img/backgroundLandscape.jpg')}} alt="idee" height = "93%" width = "90%"></a>
         </div>
     </div>
 @stop
