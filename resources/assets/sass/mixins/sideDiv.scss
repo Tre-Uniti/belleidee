@@ -1,6 +1,7 @@
 @mixin sideDiv($backgroundColor)
 {
   width: 24%;
+  height: auto;
   margin: 0 auto;
   top: 12%;
   background-color: $backgroundColor;

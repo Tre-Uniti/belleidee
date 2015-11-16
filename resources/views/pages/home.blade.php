@@ -4,24 +4,25 @@
 @stop
 @section('leftSideBar')
     <div id = "leftSide">
-        <h2>Beliefs</h2>
         <div class = "innerProfileMenus">
-        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Atheism</button></a>
-        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Adaptia</button></a>
-        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Ba Gua</button></a>
-        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Buddhism</button></a>
-        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Christianity</button></a>
-        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Druze</button></a>
-        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Hinduism</button></a>
-        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Islam</button></a>
-        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Judaism</button></a>
-        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Native</button></a>
-        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Taoism</button></a>
-        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Urantia</button></a>
+            <h2>Beliefs</h2>
+
+            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Atheism</button></a>
+            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Adaptia</button></a>
+            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Ba Gua</button></a>
+            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Buddhism</button></a>
+            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Christianity</button></a>
+            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Druze</button></a>
+            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Hinduism</button></a>
+            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Islam</button></a>
+            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Judaism</button></a>
+            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Native</button></a>
+            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Taoism</button></a>
+            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Urantia</button></a>
         </div>
         <hr/>
-        <h2>Your Posts:</h2>
         <div class = "innerProfileMenus">
+        <h2>Your Posts:</h2>
             <ul>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your most inspired post</button></a></li>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your second most inspired post</button></a></li>
@@ -33,7 +34,7 @@
         </div>
         <hr/>
         <div class = "innerPhotos">
-        <a href="/"><img src={{asset('img/backgroundLandscape.jpg')}} alt="idee" height = "95%" width = "95%"></a>
+        <a href="/"><img src={{asset('img/backgroundLandscape.jpg')}} alt="idee" height = "97%" width = "85%"></a>
         </div>
     </div>
     @stop
@@ -67,8 +68,8 @@
 @stop
 @section('rightSideBar')
     <div id = "rightSide">
-        <h2>Legacy Posts</h2>
         <div class = "innerProfileMenus">
+            <h2>Legacy Posts</h2>
             <ul>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your most inspired post</button></a></li>
                 <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your second most inspired post</button></a></li>
@@ -77,9 +78,10 @@
             </ul>
         </div>
         <hr/>
-        <h2>Your Sponsor</h2>
         <div class = "innerProfileMenus">
-        <table align = "center">
+            <h2>Your Sponsor</h2>
+
+         <table align = "center">
             <thead>
             <tr><th>Name</th>
                 <th># Days</th>
@@ -101,7 +103,7 @@
         </div>
         <hr/>
         <div class = "innerPhotos">
-            <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "97%" width = "80%"></a>
+            <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "97%" width = "85%"></a>
         </div>
     </div>
 @stop

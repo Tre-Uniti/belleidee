@@ -117,6 +117,8 @@ ul
   @include sideDiv($profileBackgroundColor);
   right: 0;
 }
+
+//Inner Menus
 .innerProfileMenus
 {
   @include innerMenu($profileScrollHeight);
@@ -194,7 +196,6 @@ article
 {
   width: 350px;
 }
-
 .createSubmit
 {
   margin: 7px auto;

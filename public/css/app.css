@@ -142,6 +142,7 @@ ul {
 
 #leftSide {
   width: 24%;
+  height: auto;
   margin: 0 auto;
   top: 12%;
   background-color: #E8E8E8;
@@ -154,6 +155,7 @@ ul {
 
 #rightSide {
   width: 24%;
+  height: auto;
   margin: 0 auto;
   top: 12%;
   background-color: #E8E8E8;
@@ -304,39 +306,59 @@ article {
   .interactButton {
     font-size: 100%; }
   .navButton {
-    font-size: 100%; } }
+    font-size: 100%; }
+  #centerText {
+    max-height: 870px; }
+  #centerTextContent {
+    max-height: 557px; }
+  .innerProfileMenus {
+    height: 210px; }
+  #leftSide {
+    height: auto; }
+  #rightSide {
+    height: auto; } }
 
-@media screen and (max-width: 979px) {
+@media screen and (max-width: 989px) {
   html {
     background-image: url("/img/backgroundLandscape.jpg");
     background-color: blue; }
   #centerText {
-    max-height: 845px; }
+    max-height: 870px; }
+  #centerTextContent {
+    max-height: 440px; }
+  .innerProfileMenus {
+    height: 175px; }
   .interactButton {
     font-size: 80%; }
   .navButton {
     font-size: 80%; }
   #leftSide {
-    height: 75%;
-    overflow: auto; }
+    height: 64%; }
   #rightSide {
-    height: 75%;
-    overflow: auto; } }
+    height: 64%; } }
 
 @media screen and (max-width: 500px) {
   html {
     background-image: url("/img/backgroundPortrait.jpg");
     background-color: red; }
   #centerText {
-    max-height: 845px; }
+    max-height: 500px; }
+  #centerTextContent {
+    max-height: 0px; }
   #leftSide {
-    height: 65%; }
+    top: 24%;
+    height: 55%; }
   #rightSide {
-    height: 65%;
-    overflow: auto; }
+    top: 24%;
+    height: 55%; }
+  .innerProfileMenus {
+    height: 70px;
+    font-size: 60%; }
   .interactButton {
     font-size: 65%; }
   .navButton {
-    font-size: 65%; } }
+    font-size: 65%; }
+  .innerPhotos {
+    height: 100px; } }
 
 /*# sourceMappingURL=app.css.map */

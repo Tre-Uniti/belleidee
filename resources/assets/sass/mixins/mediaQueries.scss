@@ -16,12 +16,33 @@
     {
       font-size: 100%;
     }
+    #centerText
+    {
+      max-height: 870px;
+    }
+    #centerTextContent
+    {
+      max-height: 557px;
+    }
+    .innerProfileMenus
+    {
+      height: 210px;
+    }
+    #leftSide
+    {
+      height: auto;
+
+    }
+    #rightSide
+    {
+      height: auto;
+    }
   }
 }
 //Tablet
 @mixin tablet($tabletBackground)
 {
-  @media screen and (max-width: 979px)
+  @media screen and (max-width: 989px)
   {
     html
     {
@@ -30,7 +51,15 @@
     }
     #centerText
     {
-      max-height: 845px;
+      max-height: 870px;
+    }
+    #centerTextContent
+    {
+      max-height: 440px;
+    }
+    .innerProfileMenus
+    {
+      height: 175px;
     }
     .interactButton
     {
@@ -42,13 +71,12 @@
     }
     #leftSide
     {
-      height: 75%;
-      overflow: auto;
+      height: 64%;
+
     }
     #rightSide
     {
-      height: 75%;
-      overflow: auto;
+      height: 64%;
     }
   }
 }
@@ -64,17 +92,26 @@
     }
     #centerText
     {
-      max-height: 845px;
+      max-height: 500px;
+    }
+    #centerTextContent
+    {
+      max-height: 0px;
     }
     #leftSide
     {
-      height: 65%;
-
+      top: 24%;
+      height: 55%;
     }
     #rightSide
     {
-      height: 65%;
-      overflow: auto;
+      top: 24%;
+      height: 55%;
+    }
+    .innerProfileMenus
+    {
+      height: 70px;
+      font-size: 60%;
     }
     .interactButton
     {
@@ -83,6 +120,10 @@
     .navButton
     {
       font-size: 65%;
+    }
+    .innerPhotos
+    {
+      height: 100px;
     }
 
   }
