@@ -19,7 +19,7 @@ Route::controllers([
 ]);
 // Authentication routes
 Route::get('auth/login', 'Auth\SessionController@getLogin',['https' => true]);
-Route::post('auth/login', 'Auth\SessionController@postLogin');
+Route::post('auth/login', 'Auth\SessionController@postLogin', ['https' => true]);
 Route::get('auth/logout', 'Auth\SessionController@getLogout');
 
 // Registration routes
