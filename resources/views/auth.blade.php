@@ -13,7 +13,7 @@
 </head>
 <body>
     <div id = "welcome">
-        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "35%" width = "35%"></a>
+        <a href="/"><img src={{secure_asset('img/idee.png')}} alt="idee" height = "35%" width = "35%"></a>
             <hr/>
                 <div id = "login">
                     @include('partials.flash')
