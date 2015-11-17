@@ -14,7 +14,7 @@ return [
      * of your proxy (e.g. if using Rackspace balancers).
      */
     'proxies' => [
-        '162.243.140.29',
+        '*',
     ],
 
     /*
