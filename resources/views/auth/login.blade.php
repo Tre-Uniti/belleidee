@@ -4,7 +4,7 @@
 @stop
 @section('login')
     <h3>Login</h3>
-    <form role="form" method="POST" action="{{ secure_url('/auth/login') }}">
+    <form role="form" method="POST" action="{{ url('/auth/login') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <table class = "input" align = "center">
             <tr><td><label for = "email" class = "login">E-Mail Address</label></td>
