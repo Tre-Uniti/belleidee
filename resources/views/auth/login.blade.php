@@ -4,7 +4,7 @@
 @stop
 @section('login')
     <h3>Login</h3>
-    <form role="form" method="POST" action="{{ url('/auth/login') }}">
+    <form role="form" method="POST" action="{{ secure_url('/auth/login') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <table class = "input" align = "center">
             <tr><td><label for = "email" class = "login">E-Mail Address</label></td>
@@ -21,6 +21,6 @@
 @stop
 @section('footer')
     <h4>Other Options:</h4>
-    <a href="{{ url('/auth/login') }}"><button type = "button" class = "navButton">Nymi</button></a><br/>
-    <a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
+    <a href="{{ secure_url('/auth/login') }}"><button type = "button" class = "navButton">Nymi</button></a><br/>
+    <a class="btn btn-link" href="{{ secure_url('/password/email') }}">Forgot Your Password?</a>
 @stop

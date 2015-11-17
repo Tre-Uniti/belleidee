@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <base href = "https://belle-idee.org">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Idee /-\ @yield('siteTitle')</title>
