@@ -29,10 +29,10 @@ Route::get('auth/confirm/{token}', 'Auth\AuthController@confirmEmail');
 Route::get('auth/verify', 'Auth\AuthController@verify');
 
 // Core Info App routes
-Route::get('/', 'HomeController@getWelcome');
+Route::get('/', 'HomeController@getWelcome', ['https' => true]);
 Route::get('demo', 'HomeController@getDemo');
 Route::get('tour', 'HomeController@getTour');
-Route::get('home', 'HomeController@getHome');
+Route::get('home', 'HomeController@getHome', ['https' => true]);
 Route::get('contact', 'HomeController@getContact');
 Route::get('about', 'HomeController@getAbout');
 Route::get('settings', 'HomeController@getSettings');
