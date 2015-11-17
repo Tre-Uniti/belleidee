@@ -11,13 +11,14 @@
 |
 */
 
+
 Route::resource('posts', 'PostController');
 Route::resource('invites', 'InviteController');
 Route::controllers([
     'password' => 'Auth\PasswordController',
 ]);
 // Authentication routes
-Route::get('auth/login', 'Auth\SessionController@getLogin');
+Route::get('auth/login', 'Auth\SessionController@getLogin',['https' => true]);
 Route::post('auth/login', 'Auth\SessionController@postLogin');
 Route::get('auth/logout', 'Auth\SessionController@getLogout');
 
@@ -37,8 +38,6 @@ Route::get('about', 'HomeController@getAbout');
 Route::get('settings', 'HomeController@getSettings');
 Route::get('indev', 'HomeController@getIndev');
 Route::get('navGuide', 'HomeController@getNavGuide');
-
-
 
 
 // Posting routes (resource)
