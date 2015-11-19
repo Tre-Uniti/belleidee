@@ -18,8 +18,8 @@ Route::controllers([
     'password' => 'Auth\PasswordController',
 ]);
 // Authentication routes
-Route::get('auth/login', 'Auth\SessionController@getLogin',['https' => true]);
-Route::post('auth/login', 'Auth\SessionController@postLogin', ['https' => true]);
+Route::get('auth/login', 'Auth\SessionController@getLogin');
+Route::post('auth/login', 'Auth\SessionController@postLogin');
 Route::get('auth/logout', 'Auth\SessionController@getLogout');
 
 // Registration routes
@@ -28,17 +28,16 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::get('auth/confirm/{token}', 'Auth\AuthController@confirmEmail');
 Route::get('auth/verify', 'Auth\AuthController@verify');
 
-// Core Info App routes
-Route::get('/', 'HomeController@getWelcome', ['https' => true]);
-Route::get('demo', 'HomeController@getDemo');
-Route::get('tour', 'HomeController@getTour');
-Route::get('home', 'HomeController@getHome', ['https' => true]);
-Route::get('contact', 'HomeController@getContact');
-Route::get('about', 'HomeController@getAbout');
-Route::get('settings', 'HomeController@getSettings');
-Route::get('indev', 'HomeController@getIndev');
-Route::get('navGuide', 'HomeController@getNavGuide');
+//Welcome routes
+Route::get('/', 'WelcomeController@getWelcome');
+Route::get('demo', 'WelcomeController@getDemo');
+Route::get('tour', 'WelcomeController@getTour');
+Route::get('indev', 'WelcomeController@getIndev');
+Route::get('navGuide', 'WelcomeController@getNavGuide');
 
+// Home routes
+Route::get('home', 'HomeController@getHome');
+Route::get('settings', 'HomeController@getSettings');
 
 // Posting routes (resource)
 

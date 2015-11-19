@@ -6,9 +6,8 @@
     <div id = "leftSide">
         <div class = "innerProfileMenus">
             <h2>Beliefs</h2>
-
-            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Atheism</button></a>
             <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Adaptia</button></a>
+            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Atheism</button></a>
             <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Ba Gua</button></a>
             <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Buddhism</button></a>
             <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Christianity</button></a>
@@ -22,14 +21,12 @@
         </div>
         <hr/>
         <div class = "innerProfileMenus">
-        <h2>Your Posts:</h2>
+        <h2>Your Posts</h2>
             <ul>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your most inspired post</button></a></li>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your second most inspired post</button></a></li>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
+                @foreach($posts as $post)
+                    <li><a href="{{ action('PostController@show', [$post->id])}}"> <button type = "button" class = "interactButton">{{ $post->title }}</button></a></li>
+                @endforeach
+
             </ul>
         </div>
         <hr/>
@@ -39,12 +36,11 @@
     </div>
     @stop
 @section('centerText')
-    <h1>Home of {{Auth::user()->handle}}</h1>
+    <h1>Home of {{$user->handle}}</h1>
     <div class = "innerHomeMenus">
         <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 0</button></a>
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 0</button></a>
-        <p>This is your motto, it is customized by the user
-            It can be your motto, or another motto you like.  What happens with a third line</p>
+        <p>{{$user->motto}}</p>
     </div>
     <h2>People who inspire you</h2>
     <div class = "innerHomeMenus">

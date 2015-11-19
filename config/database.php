@@ -116,7 +116,7 @@ return [
         'cluster' => false,
 
         'default' => [
-            'host'     => '10.134.195.148',
+            'host'     => env('REDIS_IP', '127.0.0.1'),
             'port'     => 6379,
             'database' => 0,
         ],

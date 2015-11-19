@@ -74,7 +74,6 @@ class AuthController extends Controller
      */
     public function confirmEmail($token)
     {
-
         try
         {
             User::whereemailtoken($token)->firstOrFail()->confirmemail();

@@ -15,10 +15,9 @@
                    background-color: #C8C8C8; ">
                 <tr>
                     <td colspan="3">
-                        <img src="http://belle-idee.org/img/idee.png" alt="idee" height="30%" width="35%">
+                        <img src="https://belle-idee.org/img/idee.png" alt="idee" height="30%" width="35%">
                     </td>
                 </tr>
-
                 @yield('emailContent')
                 <tr>
                     <td colspan="3"><hr/></td>

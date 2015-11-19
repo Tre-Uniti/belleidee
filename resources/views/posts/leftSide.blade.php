@@ -1,7 +1,7 @@
 @section('leftSideBar')
     <div id = "leftSide">
         <div class = "innerProfileMenus">
-            <h2>{{Auth::user()->handle}}</h2>
+            <h2>{{$user->handle}}</h2>
             <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 0</button></a>
             <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 0</button></a>
             <p>This is your motto, it is customized by the user
@@ -9,11 +9,15 @@
         </div>
         <hr/>
         <div class = "innerProfileMenus">
-            <h2>Top Posts</h2>
+            <h2>Your Posts</h2>
             <ul>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your most inspired post</button></a></li>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your second most inspired post</button></a></li>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
+                @if ($profilePosts->isEmpty())
+                    <li><a href="{{url('/post/create')}}"> <button type = "button" class = "interactButton">Create a new Post</button></a></li>
+                @else
+                    @foreach($profilePosts as $profilePost)
+                        <li><a href="{{ action('PostController@show', [$profilePost->id])}}"> <button type = "button" class = "interactButton">{{ $profilePost->title }}</button></a></li>
+                    @endforeach
+                @endif
             </ul>
         </div>
         <hr/>

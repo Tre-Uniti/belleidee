@@ -13,7 +13,6 @@ class Post extends Model
         'index',
         'belief_beacon',
         'index2',
-        'user_id',
         'post_path',
     ];
 
