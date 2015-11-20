@@ -6,11 +6,17 @@
 @include('posts.leftSide')
 
 @section('centerMenu')
-    <h1>{{ $post->title }}</h1>
+    <h2>{{ $post->title }}</h2>
+
 @stop
 
 @section('centerText')
+
+
+
+    <p style = "margin: 7px">Created on {{ $post->created_at->format('M-d-Y') }}</p>
     <div>
+
         <table style="display: inline-block;">
             <thead>
             <tr><th>Belief</th>
@@ -46,12 +52,11 @@
     </div>
     <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 100 300{{$post->elevation}}</button></a>
     <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 53{{$post->extension}}</button></a>
-
         <div id = "centerTextContent">
             <p>
                 {!! nl2br(e($post->body)) !!}
-
             </p>
+
         </div>
 @stop
 
