@@ -49,7 +49,8 @@
 
         <div id = "centerTextContent">
             <p>
-        {{ $post->body }}
+                {!! nl2br(e($post->body)) !!}
+
             </p>
         </div>
 @stop

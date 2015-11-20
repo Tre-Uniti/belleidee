@@ -123,6 +123,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function show($id)
     {
         //Get requested post and add body
@@ -138,6 +139,7 @@ class PostController extends Controller
 
         return view('posts.show', compact('user', 'post', 'profilePosts'));
     }
+
 
 
     /**
