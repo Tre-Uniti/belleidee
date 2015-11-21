@@ -64,6 +64,9 @@
     <div id = "centerFooter">
         <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Intolerant</button></a>
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extend Post</button></a>
+        @if($post->user_id == Auth::id())
+            <a href="{{ url('/posts/'.$post->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+            @endif
     </div>
 @stop
 

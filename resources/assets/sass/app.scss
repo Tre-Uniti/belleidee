@@ -79,6 +79,13 @@ ul
   color: red;
 }
 
+//Errors
+.errors
+{
+  background-color: #202020;
+  opacity: .9;
+}
+
 //Menus:
 #topLeftMenu
 {
@@ -206,11 +213,7 @@ article
   opacity: $centerOpacity;
 }
 
-//Errors:
-.errors
-{
-  background-color: red;
-}
+
 //TextField for posts, extensions, drafts
 #createBodyText
 {

@@ -7,7 +7,10 @@
 
 @section('centerText')
     <h2>Create Post</h2>
+    <div class="errors">
     @include ('errors.list')
+    </div>
+
     {!! Form::open(['url' => 'posts']) !!}
     @include ('posts._form', ['submitButtonText' => 'Post Belief'])
     {!! Form::close()   !!}

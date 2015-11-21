@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
+use App\Http\Requests\EditPostRequest;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,26 +16,20 @@ use Illuminate\Support\Facades\Storage;
 class PostController extends Controller
 {
 
-    public function __construct()
+    private $post;
+
+    public function __construct(Post $post)
     {
         $this->middleware('auth');
+        $this->post = $post;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getProfilePosts($user)
-    {
-        $profilePosts = $user->posts()->latest('created_at')->get();
-        return $profilePosts;
-    }
+
 
     public function index()
     {
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
-        $posts = Post::latest('created_at')->get();
+        $posts = $this->post->latest()->get();
         return view ('posts.index', compact('user', 'posts', 'profilePosts'));
     }
 
@@ -127,7 +122,7 @@ class PostController extends Controller
     public function show($id)
     {
         //Get requested post and add body
-        $post = Post::findOrFail($id);
+        $post = $this->post->findOrFail($id);
         $post_path = $post->post_path;
         $contents = Storage::get($post_path);
         $post = array_add($post, 'body', $contents);
@@ -148,9 +143,53 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
-        //return view('post.edit', compact('post'));
+        $post = $this->post->findOrFail($id);
+        $post_path = $post->post_path;
+        $contents = Storage::get($post_path);
+        $post = array_add($post, 'body', $contents);
+
+        //Get other Posts of User
+        $user_id = $post->user_id;
+        $user = User::findOrFail($user_id);
+        $profilePosts = Post::where('user_id', $user_id)->latest('created_at')->get();
+
+        //
+        $date = $post->created_at->format('M-d-Y');
+        $categories =
+            [
+                'Adaptia' => 'Adaptia',
+                'Atheism' => 'Atheism',
+                'Ba Gua' => 'Ba Gua',
+                'Buddhism' => 'Buddhism',
+                'Christianity' => 'Christianity',
+                'Druze' => 'Druze',
+                'Hinduism' => 'Hinduism',
+                'Islam' => 'Islam',
+                'Judaism' => 'Judaism',
+                'Native' => 'Native',
+                'Taoism' => 'Taoism',
+                'Urantia' => 'Urantia'
+            ];
+        $beacons =
+            [
+                'No Beacon' => 'No Beacon',
+                'US-SW-IHOM' => 'US-SW-IHOM'
+            ];
+
+        $types =
+            [
+                'Opinion' => 'Opinion',
+                'Poem' => 'Poem',
+                'Prayer' => 'Prayer',
+                'Question' => 'Question',
+                'Reflection' => 'Reflection',
+                'Song Lyrics' => 'Song Lyrics',
+                'Speech' => 'Speech',
+            ];
+
+        return view('posts.edit', compact('user', 'post', 'profilePosts', 'categories', 'beacons', 'types'));
     }
 
     /**
@@ -160,9 +199,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, EditPostRequest $request)
     {
+        $post = $this->post->findOrFail($id);
+        $post->update($request->except('body', '_method', '_token'));
 
+        return redirect('posts');
     }
 
     /**
@@ -174,6 +216,17 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getProfilePosts($user)
+    {
+        $profilePosts = $user->posts()->latest('created_at')->get();
+        return $profilePosts;
     }
 
 

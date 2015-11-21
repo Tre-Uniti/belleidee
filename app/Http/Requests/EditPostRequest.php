@@ -6,7 +6,7 @@ use App\Http\Requests\Request;
 use App\Post;
 use Illuminate\Support\Facades\Auth;
 
-class CreatePostRequest extends Request
+class EditPostRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +15,10 @@ class CreatePostRequest extends Request
      */
     public function authorize()
     {
-        return Auth::check();
+        $postId = $this->route('posts');
+
+        return Post::where('id', $postId)
+            ->where('user_id', Auth::id())->exists();
     }
 
     /**
@@ -27,7 +30,12 @@ class CreatePostRequest extends Request
     {
         return [
             'title' => 'required|min:5',
-            'body'  => 'required|min:10'
+            'body'  => 'required|min:5'
         ];
+    }
+    // override this to redirect back
+    public function forbiddenResponse()
+    {
+        return redirect()->back()->withInput()->withErrors('This is not your post and you are not a Mod or Admin.');
     }
 }

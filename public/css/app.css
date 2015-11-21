@@ -88,6 +88,10 @@ ul {
 .flash-danger {
   color: red; }
 
+.errors {
+  background-color: #202020;
+  opacity: .9; }
+
 #topLeftMenu {
   width: 24%;
   height: auto;
@@ -241,9 +245,6 @@ article {
   border: 1px solid;
   border-radius: 20px;
   opacity: 0.97; }
-
-.errors {
-  background-color: red; }
 
 #createBodyText {
   background-color: #FFFFFF;

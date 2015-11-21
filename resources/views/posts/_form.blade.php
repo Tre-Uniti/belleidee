@@ -6,7 +6,6 @@
         <tr>
         <td colspan="3" style = "border-color: #E8E8E8;">{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}</td>
         </tr>
-    <tr><td>Today's Date:  {{ $date }}</td></tr>
     <tr>
             <td colspan="3" style = "border-color: #E8E8E8;">
                 {!! Form::select('index', $categories) !!}
