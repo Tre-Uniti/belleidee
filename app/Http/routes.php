@@ -13,6 +13,7 @@
 
 
 Route::resource('posts', 'PostController');
+Route::resource('extensions', 'ExtensionController');
 Route::resource('invites', 'InviteController');
 Route::controllers([
     'password' => 'Auth\PasswordController',
