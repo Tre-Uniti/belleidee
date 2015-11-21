@@ -202,6 +202,11 @@ class PostController extends Controller
     public function update($id, EditPostRequest $request)
     {
         $post = $this->post->findOrFail($id);
+
+        $inspiration = $request->input('body');
+        $path = $post->post_path;
+        Storage::put($path, $inspiration);
+
         $post->update($request->except('body', '_method', '_token'));
 
         return redirect('posts');
