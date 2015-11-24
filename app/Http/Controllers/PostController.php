@@ -202,14 +202,47 @@ class PostController extends Controller
     public function update($id, EditPostRequest $request)
     {
         $post = $this->post->findOrFail($id);
+        $user = Auth::user();
+        $user_id = $user->id;
 
         $inspiration = $request->input('body');
         $path = $post->post_path;
-        Storage::put($path, $inspiration);
+        $newTitle = $request->input('title');
+        $newPath = '/posts/'.$user_id.'/'.$newTitle.'.txt';
+        $inspiration = $request->input('body');
 
+        //Update AWS document if Title changes
+        if($path != $newPath)
+        {
+
+            //Check if User has already has path set for title
+            if (Storage::exists($newPath))
+            {
+                $error = "You've already saved an inspiration with this title.";
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->withErrors([$error]);
+            }
+            //Update AWS with new file and path for title change
+            else
+            {
+                Storage::put($newPath, $inspiration);
+                Storage::delete($path);
+                $request = array_add($request, 'post_path', $newPath);
+            }
+        }
+        else
+        {
+            //Store updated body text with same title at AWS
+            Storage::put($path, $inspiration);
+        }
+
+
+        //Update database with new values
         $post->update($request->except('body', '_method', '_token'));
 
-        return redirect('posts');
+        return redirect('posts/'.$id);
     }
 
     /**
