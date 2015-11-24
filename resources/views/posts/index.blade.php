@@ -14,13 +14,13 @@
                 <table align = "center" cellpadding = "15">
                     <thead>
                     <tr>
-                        <td colspan="2"><h4><a href="{{ action('PostController@show', [$post->id])}}"> {{ $post->title }}</a></h4></td colspan="2">
+                        <td colspan="2"><h4><a href="{{ action('PostController@show', [$post->id])}}"> {{ $post->title }}</a></h4></td>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 100 300{{$post->elevation}}</button></a></td>
-                        <td><a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 53{{$post->extension}}</button></a></td>
+                        <td><a href="{{ url('/extensions') }}"><button type = "button" class = "navButton">Extension: 53{{$post->extension}}</button></a></td>
                     </tr>
                     </tbody>
                 </table>

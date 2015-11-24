@@ -51,7 +51,7 @@
         </table>
     </div>
     <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 100 300{{$post->elevation}}</button></a>
-    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 53{{$post->extension}}</button></a>
+    <a href="{{ url('/extensions/post/'. $post->id) }}"><button type = "button" class = "navButton">Extension: 53{{$post->extension}}</button></a>
         <div id = "centerTextContent">
             <p>
                 {!! nl2br(e($post->body)) !!}

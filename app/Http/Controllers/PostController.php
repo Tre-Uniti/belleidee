@@ -237,10 +237,10 @@ class PostController extends Controller
             //Store updated body text with same title at AWS
             Storage::put($path, $inspiration);
         }
-
-
         //Update database with new values
         $post->update($request->except('body', '_method', '_token'));
+
+        flash()->overlay('Your post has been updated');
 
         return redirect('posts/'.$id);
     }

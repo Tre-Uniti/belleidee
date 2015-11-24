@@ -14,6 +14,7 @@
 
 Route::resource('posts', 'PostController');
 Route::resource('extensions', 'ExtensionController');
+Route::get('/extensions/post/{source}', ['uses' =>'ExtensionController@extendPost']);
 Route::resource('invites', 'InviteController');
 Route::controllers([
     'password' => 'Auth\PasswordController',

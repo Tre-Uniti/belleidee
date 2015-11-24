@@ -7,10 +7,14 @@
 
 @section('centerText')
     <h2>Create Extension</h2>
-    <p>You are extending User's post (1324)</p>
     <div class="errors">
     @include ('errors.list')
     </div>
+    @foreach($sources as $source)
+        <ul>
+        <li>{{$source  }}</li>
+        </ul>
+        @endforeach
 
     {!! Form::open(['url' => 'extensions']) !!}
     @include ('extensions._form', ['submitButtonText' => 'Post Extension'])

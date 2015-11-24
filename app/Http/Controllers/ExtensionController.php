@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateExtensionRequest;
 use App\Http\Requests\EditExtensionRequest;
@@ -11,6 +12,7 @@ use Carbon\Carbon;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class ExtensionController extends Controller
@@ -44,6 +46,7 @@ class ExtensionController extends Controller
     public function create()
     {
         $user = Auth::user();
+        $sources = Session::get('sources');
         //$extensionSource = $source;
         //pregrematch to get userid and postid?
         //elseif pregmatch to get userid and legacyid
@@ -85,7 +88,7 @@ class ExtensionController extends Controller
                 'Speech' => 'Speech',
             ];
 
-        return view('extensions.create', compact('user', 'date', 'profileExtensions', 'categories', 'beacons', 'types'));
+        return view('extensions.create', compact('user', 'date', 'profileExtensions', 'categories', 'beacons', 'types', 'sources'));
     }
 
 
@@ -234,5 +237,16 @@ class ExtensionController extends Controller
     {
         $profileExtensions = $user->posts()->latest('created_at')->get();
         return $profileExtensions;
+    }
+
+    public function extendPost($id)
+    {
+        $sourcePost = Post::findOrFail($id);
+        $fullSource = ['type' => 'post', 'user_id' => $sourcePost->user_id,  'post_id' => $sourcePost->id];
+        Session::put('sources', $fullSource);
+
+        flash()->overlay('You are extending post: '. $sourcePost->title);
+
+        return redirect('extensions/create');
     }
 }
