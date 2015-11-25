@@ -1,5 +1,3 @@
-
-
 @extends('app')
 @section('siteTitle')
     Create

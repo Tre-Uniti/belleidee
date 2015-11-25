@@ -194,7 +194,7 @@ class PostController extends Controller
                 'Speech' => 'Speech',
             ];
 
-        return view('posts.edit', compact('user', 'post', 'profilePosts', 'profileExtensions', 'categories', 'beacons', 'types'));
+        return view('posts.edit', compact('user', 'date', 'post', 'profilePosts', 'profileExtensions', 'categories', 'beacons', 'types'));
     }
 
     /**
