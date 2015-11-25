@@ -1,22 +1,24 @@
 @section('rightSideBar')
     <div id = "rightSide">
         <div class = "innerProfileMenus">
-            <h2>Inspired By:</h2>
-
-            <ul>
-                <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 1</button></a></li>
-                <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 2</button></a></li>
-                <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 3</button></a></li>
-            </ul>
+            <h2>Inspires</h2>
+            <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Queenbee</button></a>
+            <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Leprechaun720</button></a>
+            <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Amaricus</button></a>
         </div>
         <hr/>
         <div class = "innerProfileMenus">
-            <h2>Inspires:</h2>
+            <h2>Extensions</h2>
             <ul>
-                <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 4</button></a></li>
-                <li><a href="{{ url('/indev') }}"><button type
-                                                          = "button" class = "interactButton">Handle of user 5</button></a></li>
-                <li><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Handle of user 6</button></a></li>
+                @if ($profileExtensions->isEmpty())
+                    <li><a href="{{url('/extension/create')}}"> <button type = "button" class = "interactButton">Create a new Extension</button></a></li>
+                @else
+                    @foreach($profileExtensions as $profileExtension)
+                        <li><a href="{{ action('ExtensionController@show', [$profileExtension->id])}}">
+                                <button type = "button" class = "interactButton">{{ $profileExtension->title }}</button></a>
+                        </li>
+                    @endforeach
+                @endif
             </ul>
         </div>
         <hr/>

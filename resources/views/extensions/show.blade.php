@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Show Inspiration
+    Show Extension
 @stop
 
 @include('extensions.leftSide')
@@ -11,9 +11,6 @@
 @stop
 
 @section('centerText')
-
-
-
     <p style = "margin: 7px">Created on {{ $extension->created_at->format('M-d-Y') }}</p>
     <div>
 
@@ -62,11 +59,13 @@
 
 @section('centerFooter')
     <div id = "centerFooter">
-        <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Intolerant</button></a>
-        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extend Post</button></a>
         @if($extension->user_id == Auth::id())
-            <a href="{{ url('/extensions/'.$extension->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
-            @endif
+            <a href="{{ url('/extensions/'.$extension->id.'/edit') }}"><button type = "button" class = "navButton">Edit Extension</button></a>
+        @else
+            <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Intolerant</button></a>
+        @endif
+        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extend More</button></a>
+
     </div>
 @stop
 

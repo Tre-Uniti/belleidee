@@ -9,7 +9,7 @@
         </div>
         <hr/>
         <div class = "innerProfileMenus">
-            <h2>Your Posts</h2>
+            <h2>Posts</h2>
             <ul>
                 @if ($profilePosts->isEmpty())
                     <li><a href="{{url('/post/create')}}"> <button type = "button" class = "interactButton">Create a new Post</button></a></li>

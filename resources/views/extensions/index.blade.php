@@ -6,7 +6,7 @@
 @include('extensions.leftSide')
 
 @section('centerText')
-    <h2>Discover New Posts</h2>
+    <h2>Discover New Extensions</h2>
     <h4>Sort by:</h4>
     <section>
         @foreach ($extensions as $extension)

@@ -33,9 +33,10 @@ class ExtensionController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
         $extensions = $this->extension->latest()->get();
-        return view ('extensions.index', compact('user', 'extensions', 'profileExtensions'));
+        return view ('extensions.index', compact('user', 'extensions', 'profilePosts', 'profileExtensions'));
     }
 
     /**
@@ -47,13 +48,8 @@ class ExtensionController extends Controller
     {
         $user = Auth::user();
         $sources = Session::get('sources');
-        //$extensionSource = $source;
-        //pregrematch to get userid and postid?
-        //elseif pregmatch to get userid and legacyid
-        //elseif pregmatch to get userid and extensionid
-        //elseif pregmatch to get userid and question id
-        //Create array with [userid, id of inspiration]
 
+        $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
         $date = Carbon::now()->format('M-d-Y');
         $categories =
@@ -88,7 +84,7 @@ class ExtensionController extends Controller
                 'Speech' => 'Speech',
             ];
 
-        return view('extensions.create', compact('user', 'date', 'profileExtensions', 'categories', 'beacons', 'types', 'sources'));
+        return view('extensions.create', compact('user', 'date', 'profilePosts', 'profileExtensions', 'categories', 'beacons', 'types', 'sources'));
     }
 
 
@@ -103,9 +99,16 @@ class ExtensionController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
 
+        //Get sources from session (what type of extension this is)
+        $sources = Session::get('sources');
+        $sourceId = $sources['post_id'];
+
+        //$sourceUser = $sources->user_id;
+        $sourceType = $sources['type'];
         $title = $request->input('title');
         $path = '/extensions/'.$user_id.'/'.$title.'.txt';
         $inspiration = $request->input('body');
+
         //Check if User has already has path set for title
         if (Storage::exists($path))
         {
@@ -115,14 +118,17 @@ class ExtensionController extends Controller
                 ->withInput()
                 ->withErrors([$error]);
         }
+
         //Store body text at AWS
         Storage::put($path, $inspiration);
         $request = array_add($request, 'extension_path', $path);
-        $post = new Extension($request->except('body'));
-        $post->user()->associate($user);
-        $post->save();
+        $request = array_add($request, 'post_id', $sourceId);
+
+        $extension = new Extension($request->except('body'));
+        $extension->user()->associate($user);
+        $extension->save();
         flash()->overlay('Your extension has been created');
-        return redirect('extensions');
+        return redirect('extensions/'. $extension->id);
     }
 
     /**
@@ -139,12 +145,15 @@ class ExtensionController extends Controller
         $contents = Storage::get($extension_path);
         $extension = array_add($extension, 'body', $contents);
 
-        //Get other Posts of User
+        //Get other Posts and Extensions of User
         $user_id = $extension->user_id;
         $user = User::findOrFail($user_id);
-        $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->get();
 
-        return view('extensions.show', compact('user', 'extension', 'profileExtensions'));
+        //Get Posts and Extensions of user
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = $this->getProfileExtensions($user);
+
+        return view('extensions.show', compact('user', 'extension', 'profilePosts', 'profileExtensions'));
     }
 
     /**
@@ -163,7 +172,10 @@ class ExtensionController extends Controller
         //Get other Posts of User
         $user_id = $extension->user_id;
         $user = User::findOrFail($user_id);
-        $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->get();
+
+        //Get Posts and Extensions of user
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = $this->getProfileExtensions($user);
 
         //
         $date = $extension->created_at->format('M-d-Y');
@@ -199,7 +211,7 @@ class ExtensionController extends Controller
                 'Speech' => 'Speech',
             ];
 
-        return view('extensions.edit', compact('user', 'extension', 'profileExtensions', 'categories', 'beacons', 'types'));
+        return view('extensions.edit', compact('user', 'extension', 'profilePosts', 'profileExtensions', 'categories', 'beacons', 'types'));
     }
 
     /**
@@ -212,14 +224,42 @@ class ExtensionController extends Controller
     public function update(Request $request, $id)
     {
         $extension = $this->extension->findOrFail($id);
+        $user_id = Auth::id();
 
         $inspiration = $request->input('body');
         $path = $extension->extension_path;
-        Storage::put($path, $inspiration);
+        $newTitle = $request->input('title');
+        $newPath = '/posts/'.$user_id.'/'.$newTitle.'.txt';
+        //Update AWS document if Title changes
+        if($path != $newPath)
+        {
+
+            //Check if User has already has path set for title
+            if (Storage::exists($newPath))
+            {
+                $error = "You've already saved an inspiration with this title.";
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->withErrors([$error]);
+            }
+            //Update AWS with new file and path for title change
+            else
+            {
+                Storage::put($newPath, $inspiration);
+                Storage::delete($path);
+                $request = array_add($request, 'extension_path', $newPath);
+            }
+        }
+        else
+        {
+            //Store updated body text with same title at AWS
+            Storage::put($path, $inspiration);
+        }
 
         $extension->update($request->except('body', '_method', '_token'));
 
-        return redirect('extensions');
+        return redirect('extensions/'.$id);
     }
 
     /**
@@ -233,19 +273,30 @@ class ExtensionController extends Controller
         //
     }
 
+    /**
+     * Display the recent posts of the user.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getProfilePosts($user)
+    {
+        $profilePosts = $user->posts()->latest('created_at')->get();
+        return $profilePosts;
+    }
+
     public function getProfileExtensions($user)
     {
-        $profileExtensions = $user->posts()->latest('created_at')->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->get();
         return $profileExtensions;
     }
 
     public function extendPost($id)
     {
         $sourcePost = Post::findOrFail($id);
-        $fullSource = ['type' => 'post', 'user_id' => $sourcePost->user_id,  'post_id' => $sourcePost->id];
+        $fullSource = ['type' => 'posts', 'user_id' => $sourcePost->user_id,  'post_id' => $sourcePost->id];
         Session::put('sources', $fullSource);
 
-        flash()->overlay('You are extending post: '. $sourcePost->title);
+        flash()->overlay('Extending post: '. $sourcePost->title);
 
         return redirect('extensions/create');
     }

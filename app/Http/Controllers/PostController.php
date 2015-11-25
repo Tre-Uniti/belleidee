@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Post;
+use App\Extension;
 use App\Http\Requests\CreatePostRequest;
 use App\Http\Requests\EditPostRequest;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,13 +25,13 @@ class PostController extends Controller
         $this->post = $post;
     }
 
-
     public function index()
     {
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
         $posts = $this->post->latest()->get();
-        return view ('posts.index', compact('user', 'posts', 'profilePosts'));
+        return view ('posts.index', compact('user', 'posts', 'profilePosts','profileExtensions'));
     }
 
     /**
@@ -43,6 +44,7 @@ class PostController extends Controller
 
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = $this->getProfileExtensions($user);
         $date = Carbon::now()->format('M-d-Y');
         $categories =
             [
@@ -76,7 +78,7 @@ class PostController extends Controller
                 'Speech' => 'Speech',
             ];
 
-        return view('posts.create', compact('user', 'date', 'profilePosts', 'categories', 'beacons', 'types'));
+        return view('posts.create', compact('user', 'date', 'profilePosts', 'profileExtensions', 'categories', 'beacons', 'types'));
     }
 
     /**
@@ -131,8 +133,10 @@ class PostController extends Controller
         $user_id = $post->user_id;
         $user = User::findOrFail($user_id);
         $profilePosts = Post::where('user_id', $user_id)->latest('created_at')->get();
+        //Get other Extensions of User
+        $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->get();
 
-        return view('posts.show', compact('user', 'post', 'profilePosts'));
+        return view('posts.show', compact('user', 'post', 'profilePosts', 'profileExtensions'));
     }
 
 
@@ -152,8 +156,9 @@ class PostController extends Controller
 
         //Get other Posts of User
         $user_id = $post->user_id;
-        $user = User::findOrFail($user_id);
-        $profilePosts = Post::where('user_id', $user_id)->latest('created_at')->get();
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->get();
 
         //
         $date = $post->created_at->format('M-d-Y');
@@ -189,7 +194,7 @@ class PostController extends Controller
                 'Speech' => 'Speech',
             ];
 
-        return view('posts.edit', compact('user', 'post', 'profilePosts', 'categories', 'beacons', 'types'));
+        return view('posts.edit', compact('user', 'post', 'profilePosts', 'profileExtensions', 'categories', 'beacons', 'types'));
     }
 
     /**
@@ -202,10 +207,8 @@ class PostController extends Controller
     public function update($id, EditPostRequest $request)
     {
         $post = $this->post->findOrFail($id);
-        $user = Auth::user();
-        $user_id = $user->id;
+        $user_id = Auth::id();
 
-        $inspiration = $request->input('body');
         $path = $post->post_path;
         $newTitle = $request->input('title');
         $newPath = '/posts/'.$user_id.'/'.$newTitle.'.txt';
@@ -214,7 +217,6 @@ class PostController extends Controller
         //Update AWS document if Title changes
         if($path != $newPath)
         {
-
             //Check if User has already has path set for title
             if (Storage::exists($newPath))
             {
@@ -265,6 +267,11 @@ class PostController extends Controller
     {
         $profilePosts = $user->posts()->latest('created_at')->get();
         return $profilePosts;
+    }
+    public function getProfileExtensions($user)
+    {
+        $profileExtensions = $user->extensions()->latest('created_at')->get();
+        return $profileExtensions;
     }
 
 

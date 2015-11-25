@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Show Inspiration
+    Show Post
 @stop
 
 @include('posts.leftSide')
@@ -11,9 +11,6 @@
 @stop
 
 @section('centerText')
-
-
-
     <p style = "margin: 7px">Created on {{ $post->created_at->format('M-d-Y') }}</p>
     <div>
 
@@ -56,17 +53,17 @@
             <p>
                 {!! nl2br(e($post->body)) !!}
             </p>
-
         </div>
 @stop
 
 @section('centerFooter')
     <div id = "centerFooter">
-        <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Intolerant</button></a>
-        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extend Post</button></a>
         @if($post->user_id == Auth::id())
-            <a href="{{ url('/posts/'.$post->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
-            @endif
+            <a href="{{ url('/posts/'.$post->id.'/edit') }}"><button type = "button" class = "navButton">Edit Post</button></a>
+        @else
+            <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Intolerant</button></a>
+        @endif
+        <a href="{{ url('/extensions/post/'. $post->id) }}"><button type = "button" class = "navButton">Extend Post</button></a>
     </div>
 @stop
 

@@ -10,11 +10,6 @@
     <div class="errors">
     @include ('errors.list')
     </div>
-    @foreach($sources as $source)
-        <ul>
-        <li>{{$source  }}</li>
-        </ul>
-        @endforeach
 
     {!! Form::open(['url' => 'extensions']) !!}
     @include ('extensions._form', ['submitButtonText' => 'Post Extension'])

@@ -13,6 +13,7 @@ class Extension extends Model
         'belief_beacon',
         'index2',
         'extension_path',
+        'post_id',
     ];
 
     public function user()

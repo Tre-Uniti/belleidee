@@ -23,10 +23,15 @@
         <div class = "innerProfileMenus">
         <h2>Your Posts</h2>
             <ul>
-                @foreach($posts as $post)
-                    <li><a href="{{ action('PostController@show', [$post->id])}}"> <button type = "button" class = "interactButton">{{ $post->title }}</button></a></li>
-                @endforeach
-
+                @if ($profilePosts->isEmpty())
+                    <li><a href="{{url('/extension/create')}}"> <button type = "button" class = "interactButton">Create a new Extension</button></a></li>
+                @else
+                    @foreach($profilePosts as $profilePost)
+                        <li><a href="{{ action('ExtensionController@show', [$profilePost->id])}}">
+                                <button type = "button" class = "interactButton">{{ $profilePost->title }}</button></a>
+                        </li>
+                    @endforeach
+                @endif
             </ul>
         </div>
         <hr/>
@@ -75,27 +80,18 @@
         </div>
         <hr/>
         <div class = "innerProfileMenus">
-            <h2>Your Sponsor</h2>
-
-         <table align = "center">
-            <thead>
-            <tr><th>Name</th>
-                <th># Days</th>
-                <th>Status</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr><td>Belle-Idee</td>
-                <td>1</td>
-                <td>Active</td>
-            </tr>
-            <tr>
-                <td colspan = 3" ><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">View Sponsor</button></a>
-                    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Change Sponsor</button></a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+            <h2>Extensions</h2>
+            <ul>
+                @if ($profileExtensions->isEmpty())
+                    <li><a href="{{url('/extension/create')}}"> <button type = "button" class = "interactButton">Create a new Extension</button></a></li>
+                @else
+                    @foreach($profileExtensions as $profileExtension)
+                        <li><a href="{{ action('ExtensionController@show', [$profileExtension->id])}}">
+                                <button type = "button" class = "interactButton">{{ $profileExtension->title }}</button></a>
+                        </li>
+                    @endforeach
+                @endif
+            </ul>
         </div>
         <hr/>
         <div class = "innerPhotos">

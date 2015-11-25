@@ -9,15 +9,13 @@
         </div>
         <hr/>
         <div class = "innerProfileMenus">
-            <h2>Your Posts</h2>
+            <h2>Posts</h2>
             <ul>
-                @if ($profileExtensions->isEmpty())
-                    <li><a href="{{url('/extension/create')}}"> <button type = "button" class = "interactButton">Create a new Extension</button></a></li>
+                @if ($profilePosts->isEmpty())
+                    <li><a href="{{url('/post/create')}}"> <button type = "button" class = "interactButton">Create a new Post</button></a></li>
                 @else
-                    @foreach($profileExtensions as $profileExtension)
-                        <li><a href="{{ action('PostController@show', [$profileExtension->id])}}">
-                                <button type = "button" class = "interactButton">{{ $profileExtension->title }}</button></a>
-                        </li>
+                    @foreach($profilePosts as $profilePost)
+                        <li><a href="{{ action('PostController@show', [$profilePost->id])}}"> <button type = "button" class = "interactButton">{{ $profilePost->title }}</button></a></li>
                     @endforeach
                 @endif
             </ul>

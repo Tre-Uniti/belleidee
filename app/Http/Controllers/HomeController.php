@@ -17,11 +17,15 @@ class HomeController extends Controller
     public function getHome()
     {
         $user = Auth::user();
-        $posts = $user->posts()->latest('created_at')->get();
-        return view ('pages.home', compact('posts'), compact('user'));
+        $profilePosts = $user->posts()->latest('created_at')->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->get();
+        return view ('pages.home', compact('user', 'profilePosts', 'profileExtensions'));
     }
     public function getSettings()
     {
-        return view ('pages.settings');
+        $user = Auth::user();
+        $profilePosts = $user->posts()->latest('created_at')->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->get();
+        return view ('pages.settings', compact('user', 'profilePosts', 'profileExtensions'));
     }
 }
