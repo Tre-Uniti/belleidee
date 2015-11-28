@@ -151,6 +151,7 @@ class PostController extends Controller
     {
         $post = $this->post->findOrFail($id);
         $post_path = $post->post_path;
+        $date = $post->created_at;
         $contents = Storage::get($post_path);
         $post = array_add($post, 'body', $contents);
 
@@ -194,7 +195,8 @@ class PostController extends Controller
                 'Speech' => 'Speech',
             ];
 
-        return view('posts.edit', compact('user', 'date', 'post', 'profilePosts', 'profileExtensions', 'categories', 'beacons', 'types'));
+        return view('posts.edit', compact('user', 'post', 'profilePosts', 'profileExtensions', 'categories', 'beacons', 'types', 'date'));
+
     }
 
     /**

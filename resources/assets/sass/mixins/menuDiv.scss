@@ -1,9 +1,9 @@
 @mixin menuDiv($bgc)
 {
-  width: 24%;
+  width: 99%;
   height: auto;
   margin: 0 auto;
-  position: fixed;
+  position: relative;
   background-color: $bgc;
   border: 1px solid;
   border-radius: 20px;

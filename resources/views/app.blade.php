@@ -16,24 +16,59 @@
 </head>
 <body>
 <div id = "container">
-
+    <nav>
+        <ul>
+            <li><a href={{ url('/home') }}>Home</a></li>
+            <li>
+                <a href="{{ url('/posts') }}">Posts<span class="caret"></span></a>
+                <div>
+                    <ul>
+                        <li><a href={{ url('/posts/create') }}>Create</a></li>
+                        <li><a href={{ url('/posts') }}>Discover</a></li>
+                        <li><a href="cooker.html">Your Posts</a></li>
+                        <li><a href="a">Extensions</a></li>
+                        <li><a href="cooker.html">Bookmarks</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="{{ url('/indev') }}">Directory<span class="caret"></span></a>
+                <div>
+                    <ul>
+                        <li><a href="products.html#chair">Beliefs</a></li>
+                        <li><a href="{{ url('/indev') }}">Questions</a></li>
+                        <li><a href="products.html#chair">Beacons</a></li>
+                        <li><a href="products.html#table">Sponsors</a></li>
+                        <li><a href="cooker.html">Legacy Posts</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="products.html">Settings<span class="caret"></span></a>
+                <div>
+                    <ul>
+                        <li><a href="{{ url('/settings') }}">View/Change</a></li>
+                        <li><a href="products.html#chair">Support</a></li>
+                        <li><a href="cooker.html">Your Sponsor</a></li>
+                        <li><a href="products.html#table">Invite Friends</a></li>
+                        <li><a href="https://tre-uniti.org">Tre-Uniti</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </nav>
     <!-- Left --- --- -->
     <div id = "leftContainer">
-        <div id = "topLeftMenu">
-        @yield('topLeftMenu')
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Idee Directory</button></a>
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Questions</button></a>
-            <a href="{{ url('/home') }}"><button type = "button" class = "navButton">Your Home</button></a>
-        </div>
+        <div id = "leftSide">
+
         @yield('leftSideBar')
-        <div id = "bottomLeftMenu">
-            <a href="{{ url('/posts') }}"><button type = "button" class = "navButton">Discover Posts</button></a>
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Bookmarks</button></a>
-            <a href="{{ url('/posts/create') }}"><button type = "button" class = "navButton">Create Post</button></a>
         </div>
     </div>
     <!-- --- Center --- -->
+
     <div id = "centerContent">
+
+
         <article>
         <div id = "centerMenu">
         <header>
@@ -49,21 +84,14 @@
     </div>
     <!-- --- --- Right -->
     <div id = "rightContainer">
-        <div id = "topRightMenu">
-            @yield('topRightMenu')
-            <input type = "text" name = "search" size = "15">
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Search</button></a>
-            <a href="{{ url('/settings') }}"><button type = "button" class = "navButton">Settings</button></a>
-            <a href="https://tre-uniti.org"><button type = "button" class = "navButton">/-\</button></a>
-        </div>
+        <div id = "rightSide">
+
         @yield('rightSideBar')
-        <div id = "bottomRightMenu">
-            @yield('bottomRightMenu')
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Song Lyrics</button></a>
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Play/Pause</button></a>
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Next Song</button></a>
+
         </div>
     </div>
+
+
 </div>
 </body>
 </html>

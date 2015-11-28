@@ -3,12 +3,20 @@ $imgBackground1: "/img/background.jpg";
 $imgBackgroundLandscape: "/img/backgroundLandscape.jpg";
 $imgBackgroundPortrait: "/img/backgroundPortrait.jpg";
 
+//Nav Buttons
+$navButtonColor1: #33FF00;
+$navButtonColor2: #188BC0;
+$navHoverColor1:  #33FF00;
+$navHoverColor2:  #000000;
+$navTextColor:    #FFFFFF;
+$navTextHoverColor: #FFFFFF;
+
 //Action Button Variables:
-$actButtonColor1: #000000;
-$actButtonColor2: #383838;
+$actButtonColor2: #E8E8E8;
+$actButtonColor1: #E8E8E8;
 $actHoverColor1:  #000000;
 $actHoverColor2:  #33FF33;
-$actTextColor:    #7dff23;
+$actTextColor:    #003300;
 $actTextHoverColor: #FFFFFF;
 
 //Content
@@ -25,13 +33,7 @@ $homeScrollHeight: 125px;
 $photoScrollHeight: 200px;
 $navScrollHeight: 567px;
 
-//Nav Buttons
-$navButtonColor1: #33FF00;
-$navButtonColor2: #188BC0;
-$navHoverColor1:  #33FF00;
-$navHoverColor2:  #000000;
-$navTextColor:    #FFFFFF;
-$navTextHoverColor: #FFFFFF;
+
 
 //Menus
 $topPosition: 1%;

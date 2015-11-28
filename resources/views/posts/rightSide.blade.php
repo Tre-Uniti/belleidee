@@ -1,11 +1,11 @@
 @section('rightSideBar')
     <div id = "rightSide">
-        <div class = "innerProfileMenus">
+
             <h2>Inspires</h2>
-                <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Queenbee</button></a>
-                <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Leprechaun720</button></a>
-                <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Amaricus</button></a>
-        </div>
+            <select>
+                <option>Inspires 1</option>
+            </select>
+
         <hr/>
         <div class = "innerProfileMenus">
             <h2>Extensions</h2>
