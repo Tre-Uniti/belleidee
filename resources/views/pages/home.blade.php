@@ -3,42 +3,31 @@
     Home
 @stop
 @section('leftSideBar')
-    <div id = "leftSide">
-        <div class = "innerProfileMenus">
+        <div>
             <h2>Beliefs</h2>
-            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Adaptia</button></a>
-            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Atheism</button></a>
-            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Ba Gua</button></a>
-            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Buddhism</button></a>
-            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Christianity</button></a>
-            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Druze</button></a>
-            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Hinduism</button></a>
-            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Islam</button></a>
-            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Judaism</button></a>
-            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Native</button></a>
-            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Taoism</button></a>
-            <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Urantia</button></a>
-        </div>
-        <hr/>
-        <div class = "innerProfileMenus">
-        <h2>Your Posts</h2>
-            <ul>
+            {!! Form::open(['url' => 'posts']) !!}
+            {!! Form::select('index', $categories) !!}
+            {!! Form::close()   !!}
+            <hr/>
+            <div class = "innerProfileMenus">
+                <h2>Posts</h2>
+                <ul>
                 @if ($profilePosts->isEmpty())
                     <li><a href="{{url('/extension/create')}}"> <button type = "button" class = "interactButton">Create a new Extension</button></a></li>
                 @else
                     @foreach($profilePosts as $profilePost)
-                        <li><a href="{{ action('ExtensionController@show', [$profilePost->id])}}">
+                        <li><a href="{{ action('PostController@show', [$profilePost->id])}}">
                                 <button type = "button" class = "interactButton">{{ $profilePost->title }}</button></a>
                         </li>
                     @endforeach
                 @endif
-            </ul>
-        </div>
-        <hr/>
+                </ul>
+            </div>
+<hr/>
         <div class = "innerPhotos">
         <a href="/"><img src={{asset('img/backgroundLandscape.jpg')}} alt="idee" height = "97%" width = "85%"></a>
         </div>
-    </div>
+</div>
     @stop
 @section('centerText')
     <h1>Home of {{$user->handle}}</h1>
@@ -63,25 +52,23 @@
         <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevate: 0</button></a>
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extend: 0</button></a>
     </div>
+    <br/>
+    <br/>
 
 @stop
 @section('centerFooter')
 @stop
 @section('rightSideBar')
-    <div id = "rightSide">
-        <div class = "innerProfileMenus">
-            <h2>Legacy Posts</h2>
-            <ul>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your most inspired post</button></a></li>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your second most inspired post</button></a></li>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
-                <li><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Your third post inspired post</button></a></li>
-            </ul>
-        </div>
-        <hr/>
-        <div class = "innerProfileMenus">
+
+
+            <h2>Legacy</h2>
+            {!! Form::open(['url' => 'posts']) !!}
+            {!! Form::select('index', $categories) !!}
+            {!! Form::close()   !!}
+            <hr/>
+            <div class = "innerProfileMenus">
             <h2>Extensions</h2>
-            <ul>
+                <ul>
                 @if ($profileExtensions->isEmpty())
                     <li><a href="{{url('/extension/create')}}"> <button type = "button" class = "interactButton">Create a new Extension</button></a></li>
                 @else
@@ -91,11 +78,12 @@
                         </li>
                     @endforeach
                 @endif
-            </ul>
+                </ul>
         </div>
-        <hr/>
+            <hr/>
+
         <div class = "innerPhotos">
             <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "97%" width = "85%"></a>
         </div>
-    </div>
+
 @stop
