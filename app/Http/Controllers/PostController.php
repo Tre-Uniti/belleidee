@@ -196,6 +196,7 @@ class PostController extends Controller
             ];
 
         return view('posts.edit', compact('user', 'post', 'profilePosts', 'profileExtensions', 'categories', 'beacons', 'types', 'date'));
+
     }
 
     /**
