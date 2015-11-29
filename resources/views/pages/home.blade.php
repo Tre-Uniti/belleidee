@@ -3,87 +3,143 @@
     Home
 @stop
 @section('leftSideBar')
+
+
         <div>
-            <h2>Beliefs</h2>
-            {!! Form::open(['url' => 'posts']) !!}
-            {!! Form::select('index', $categories) !!}
-            {!! Form::close()   !!}
-            <hr/>
-            <div class = "innerProfileMenus">
-                <h2>Posts</h2>
-                <ul>
-                @if ($profilePosts->isEmpty())
-                    <li><a href="{{url('/extension/create')}}"> <button type = "button" class = "interactButton">Create a new Extension</button></a></li>
-                @else
-                    @foreach($profilePosts as $profilePost)
-                        <li><a href="{{ action('PostController@show', [$profilePost->id])}}">
-                                <button type = "button" class = "interactButton">{{ $profilePost->title }}</button></a>
-                        </li>
-                    @endforeach
-                @endif
-                </ul>
+            <h2>Zoko</h2>
+            <table style = "display: inline-block;">
+                <tr>
+                    <th>Posts</th>
+                </tr>
+                <tr>
+                    <td>
+                        <select>
+                            @if ($profilePosts->isEmpty())
+                                <a href="{{url('/post/create')}}"> <button type = "button" class = "interactButton">Create a new Post</button></a>
+                            @else
+                                @foreach($profilePosts as $profilePost)
+                                    <option>
+                                        {{ $profilePost->created_at->format('M-d-Y')}}
+                                    </option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </td>
+                </tr>
+            </table>
+
+            <table style = "display: inline-block;">
+                <tr>
+                    <th>Extensions</th>
+                </tr>
+                <tr>
+                    <td><select>
+                            @if ($profileExtensions->isEmpty())
+                                <a href="{{url('/extension/create')}}"> <button type = "button" class = "interactButton">Create a new Extension</button></a>
+                            @else
+                                @foreach($profileExtensions as $profileExtension)
+                                    <option>
+                                        {{ $profileExtension->created_at->format('M-d-Y')}}
+                                    </option>
+                                @endforeach
+                            @endif
+                        </select>
+                        </td>
+                </tr>
+            </table>
+            <div class = "innerPhotos">
+                <a href="/"><img src={{asset('img/backgroundLandscape.jpg')}} alt="idee" height = "97%" width = "85%"></a>
             </div>
-<hr/>
-        <div class = "innerPhotos">
-        <a href="/"><img src={{asset('img/backgroundLandscape.jpg')}} alt="idee" height = "97%" width = "85%"></a>
-        </div>
+
 </div>
     @stop
 @section('centerText')
     <h1>Home of {{$user->handle}}</h1>
-    <div class = "innerHomeMenus">
         <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 0</button></a>
-        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 0</button></a>
-        <p>{{$user->motto}}</p>
+        <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Extension: 0</button></a>
+    <hr/>
+    <div style = "width: 50%; float: left;">
+    <h2>Influences</h2>
+        </div>
+    <div style = "width: 50%; float: right;">
+    <h2>Extenders</h2>
+        </div>
+
+
+        <div style = "width: 50%; float: left;">
+        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">QueenBee</button></a>
+            </div>
+    <div style = "width: 50%; float: right;">
+        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Zoko</button></a>
     </div>
-    <h2>People who inspire you</h2>
-    <div class = "innerHomeMenus">
-        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">None yet, extend another's post to be inspired</button></a>
+    <div style = "width: 50%; float: left;">
+        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Zoko</button></a>
+        </div>
+    <div style = "width: 50%; float: right;">
+        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">QueenBee</button></a>
     </div>
-    <h2>People you inspire:</h2>
-    <div class = "innerHomeMenus">
-        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">None yet, need someone to extend your post</button></a>
+    <div style = "width: 50%; float: left;">
+        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Amaricus</button></a>
+    </div>
+    <div style = "width: 50%; float: right;">
+        <a href="{{ url('/indev')}}"><button type = "button" class = "interactButton">Leprechaun720</button></a>
     </div>
 
-    <h2>Question of the Week:</h2>
-    <div class = "innerHomeMenus">
-        <h4>What constitutes an inspiration?  Is it the only way to learn of something new?</h4>
 
-        <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevate: 0</button></a>
-        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extend: 0</button></a>
-    </div>
-    <br/>
-    <br/>
+
+
+
+
+
+
+
 
 @stop
 @section('centerFooter')
 @stop
 @section('rightSideBar')
+    <h2>Hosted</h2>
+    <table style = "display: inline-block;">
+        <tr>
+            <th>Beliefs</th>
+        </tr>
+        <tr>
+            <td>
+                {!! Form::open(['url' => 'posts']) !!}
+                {!! Form::select('index', $categories) !!}
+                {!! Form::close()   !!}
+            </td>
+        </tr>
+        </table>
+    <table style = "display: inline-block;">
+        <tr>
+            <th>Legacy</th>
+        </tr>
+        <tr>
+            <td>
+                <select>
+                    @if ($profilePosts->isEmpty())
+                        <a href="{{url('/post/create')}}"> <button type = "button" class = "interactButton">Create a new Post</button></a>
+                    @else
+                        @foreach($profilePosts as $profilePost)
+                            <option>
+                                {{ $profilePost->created_at->format('M-d-Y')}}
+                            </option>
+                        @endforeach
+                    @endif
+                </select>
+            </td>
+        </tr>
+    </table>
+    <div class = "innerPhotos">
+        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "97%" width = "85%"></a>
+    </div>
 
 
-            <h2>Legacy</h2>
-            {!! Form::open(['url' => 'posts']) !!}
-            {!! Form::select('index', $categories) !!}
-            {!! Form::close()   !!}
-            <hr/>
-            <div class = "innerProfileMenus">
-            <h2>Extensions</h2>
-                <ul>
-                @if ($profileExtensions->isEmpty())
-                    <li><a href="{{url('/extension/create')}}"> <button type = "button" class = "interactButton">Create a new Extension</button></a></li>
-                @else
-                    @foreach($profileExtensions as $profileExtension)
-                        <li><a href="{{ action('ExtensionController@show', [$profileExtension->id])}}">
-                                <button type = "button" class = "interactButton">{{ $profileExtension->title }}</button></a>
-                        </li>
-                    @endforeach
-                @endif
-                </ul>
-        </div>
-            <hr/>
 
-        <div class = "innerPhotos">
-            <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "97%" width = "85%"></a>
-        </div>
+
+
+
+
 
 @stop

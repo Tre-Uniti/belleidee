@@ -8,6 +8,11 @@
       background-image: url($desktopBackground);
       background-color: black;
     }
+    nav
+    {
+      width: 25%;
+    }
+
     .interactButton
     {
       font-size: 100%;
@@ -48,6 +53,10 @@
       background-image: url($tabletBackground);
       background-color: blue;
     }
+    nav
+    {
+      width: 60%;
+    }
     #centerText
     {
       max-height: 870px;
@@ -70,12 +79,14 @@
     }
     #leftSide
     {
-      height: 64%;
+      height: 41%;
+      left: 1em;
 
     }
     #rightSide
     {
-      height: 64%;
+      height: 41%;
+      right: 1em;
     }
   }
 }
@@ -89,6 +100,10 @@
       background-image: url($mobileBackground);
       background-color: red;
     }
+    nav
+    {
+      width: 75%;
+    }
     #centerText
     {
       max-height: 500px;
@@ -100,12 +115,12 @@
     #leftSide
     {
       top: 24%;
-      height: 35%;
+      height: 30%;
     }
     #rightSide
     {
       top: 24%;
-      height: 35%;
+      height: 30%;
     }
     .innerProfileMenus
     {

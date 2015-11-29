@@ -47,10 +47,10 @@ html {
   background-size: cover; }
 
 nav {
+  font-family: "Comic Sans MS", Arial, sans-serif;
   background-color: #101010;
   border: 1px solid #A8A8A8;
   border-radius: 4px;
-  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
   color: #FFFFFF;
   display: block;
   margin: .5% auto;
@@ -164,9 +164,6 @@ table, td {
 .leftTDAlign {
   text-align: left; }
 
-h2 {
-  text-decoration: underline; }
-
 .flash-info {
   color: #009900; }
 
@@ -232,30 +229,30 @@ h2 {
   right: 0; }
 
 #leftSide {
-  width: 22%;
+  width: 20%;
   height: auto;
   margin: 0 auto;
-  top: 20%;
+  top: 10.15%;
   background-color: #E8E8E8;
   position: fixed;
   border: 1px solid;
   border-radius: 20px;
   font-family: Verdana, Geneva, sans-serif;
   z-index: 1;
-  left: 2em; }
+  left: 3em; }
 
 #rightSide {
-  width: 22%;
+  width: 20%;
   height: auto;
   margin: 0 auto;
-  top: 20%;
+  top: 10.15%;
   background-color: #E8E8E8;
   position: fixed;
   border: 1px solid;
   border-radius: 20px;
   font-family: Verdana, Geneva, sans-serif;
   z-index: 1;
-  right: 2em; }
+  right: 3em; }
 
 .innerProfileMenus {
   margin: 0 auto;
@@ -283,7 +280,7 @@ h2 {
 
 #centerContent {
   width: 50%;
-  height: 84%;
+  height: 80%;
   font-family: Verdana, Geneva, sans-serif;
   z-index: 2;
   margin: 1.5% auto; }
@@ -357,7 +354,7 @@ article {
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  border: 1px solid #003300;
+  border: 1px solid #000000;
   text-shadow: 3px 3px 10px #003300;
   color: #FFFFFF;
   /* For Safari 5.1 to 6.0 */
@@ -375,13 +372,13 @@ article {
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  border: 1px solid #003300;
+  border: 1px solid #000000;
   text-shadow: 3px 3px 10px #003300;
-  color: #003300;
+  color: #A8A8A8;
   /* For Safari 5.1 to 6.0 */
   /* For Opera 11.1 to 12.0 */
   /* For Firefox 3.6 to 15 */
-  background: linear-gradient(#E8E8E8, #E8E8E8);
+  background: linear-gradient(#000000, #101010);
   /* Standard syntax */ }
   .interactButton:hover {
     color: #FFFFFF;
@@ -391,6 +388,8 @@ article {
   html {
     background-image: url("/img/background.jpg");
     background-color: black; }
+  nav {
+    width: 25%; }
   .interactButton {
     font-size: 100%; }
   .navButton {
@@ -410,6 +409,8 @@ article {
   html {
     background-image: url("/img/backgroundLandscape.jpg");
     background-color: blue; }
+  nav {
+    width: 60%; }
   #centerText {
     max-height: 870px; }
   #centerTextContent {
@@ -421,24 +422,28 @@ article {
   .navButton {
     font-size: 80%; }
   #leftSide {
-    height: 64%; }
+    height: 41%;
+    left: 1em; }
   #rightSide {
-    height: 64%; } }
+    height: 41%;
+    right: 1em; } }
 
 @media screen and (max-width: 500px) {
   html {
     background-image: url("/img/backgroundPortrait.jpg");
     background-color: red; }
+  nav {
+    width: 75%; }
   #centerText {
     max-height: 500px; }
   #centerTextContent {
     max-height: 0px; }
   #leftSide {
     top: 24%;
-    height: 35%; }
+    height: 30%; }
   #rightSide {
     top: 24%;
-    height: 35%; }
+    height: 30%; }
   .innerProfileMenus {
     height: 70px;
     font-size: 60%; }

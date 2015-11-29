@@ -3,7 +3,7 @@
         <div class = "innerProfileMenus">
             <h2>{{Auth::user()->handle}}</h2>
             <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 0</button></a>
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 0</button></a>
+            <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Extension: 0</button></a>
             <p>This is your motto, it is customized by the user
                 It can be your motto, or another motto you like.  What happens with a third line</p>
         </div>

@@ -3,7 +3,7 @@
         <div>
             <h2>{{$user->handle}}</h2>
             <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 0</button></a>
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 0</button></a>
+            <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Extension: 0</button></a>
         </div>
 <hr/>
         <div class = "innerProfileMenus">
