@@ -6,7 +6,7 @@
 
 
         <div>
-            <h2>Zoko</h2>
+            <h2>{{$user->handle}}</h2>
             <table style = "display: inline-block;">
                 <tr>
                     <th>Posts</th>
