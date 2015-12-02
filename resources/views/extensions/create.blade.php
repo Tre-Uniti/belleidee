@@ -6,7 +6,6 @@
 @include('extensions.leftSide')
 
 @section('centerText')
-    <h2>Create Extension</h2>
     <div class="errors">
     @include ('errors.list')
     </div>

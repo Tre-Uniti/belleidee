@@ -153,7 +153,23 @@ class ExtensionController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
 
-        return view('extensions.show', compact('user', 'extension', 'profilePosts', 'profileExtensions'));
+        $categories =
+            [
+                'Adaptia' => 'Adaptia',
+                'Atheism' => 'Atheism',
+                'Ba Gua' => 'Ba Gua',
+                'Buddhism' => 'Buddhism',
+                'Christianity' => 'Christianity',
+                'Druze' => 'Druze',
+                'Hinduism' => 'Hinduism',
+                'Islam' => 'Islam',
+                'Judaism' => 'Judaism',
+                'Native' => 'Native',
+                'Taoism' => 'Taoism',
+                'Urantia' => 'Urantia'
+            ];
+
+        return view('extensions.show', compact('user', 'extension', 'profilePosts', 'profileExtensions', 'categories'));
     }
 
     /**

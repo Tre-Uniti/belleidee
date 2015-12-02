@@ -59,10 +59,10 @@
         <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Extension: 0</button></a>
     <hr/>
     <div style = "width: 50%; float: left;">
-    <h2>Influences</h2>
+    <h2>Influenced by</h2>
         </div>
     <div style = "width: 50%; float: right;">
-    <h2>Extenders</h2>
+    <h2>Extended by</h2>
         </div>
 
 

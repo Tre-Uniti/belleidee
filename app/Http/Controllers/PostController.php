@@ -79,7 +79,8 @@ class PostController extends Controller
         $beacons =
             [
                 'No Beacon' => 'No Beacon',
-                'US-SW-IHOM' => 'US-SW-IHOM'
+                'US-SW-IHOM' => 'US-SW-IHOM',
+                'US-SW-ACE'  => 'US-SW-ACE'
             ];
 
         $types =

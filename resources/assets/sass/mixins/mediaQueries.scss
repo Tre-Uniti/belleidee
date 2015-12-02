@@ -1,7 +1,7 @@
 //Desktop
 @mixin desktop($desktopBackground)
 {
-  @media screen and (min-width: 980px)
+  @media screen and (min-width: 1100px)
   {
     html
     {
@@ -10,7 +10,7 @@
     }
     nav
     {
-      width: 25%;
+      width: 55%;
     }
 
     .interactButton
@@ -46,7 +46,7 @@
 //Tablet
 @mixin tablet($tabletBackground)
 {
-  @media screen and (max-width: 989px)
+  @media screen and (max-width: 1099px)
   {
     html
     {
@@ -55,7 +55,7 @@
     }
     nav
     {
-      width: 60%;
+      width: 65%;
     }
     #centerText
     {

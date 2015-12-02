@@ -47,8 +47,6 @@
             </tbody>
         </table>
     </div>
-    <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Elevation: 100 300{{$extension->elevation}}</button></a>
-    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extension: 53{{$extension->extension}}</button></a>
         <div id = "centerTextContent">
             <p>
                 {!! nl2br(e($extension->body)) !!}
@@ -60,11 +58,12 @@
 @section('centerFooter')
     <div id = "centerFooter">
         @if($extension->user_id == Auth::id())
-            <a href="{{ url('/extensions/'.$extension->id.'/edit') }}"><button type = "button" class = "navButton">Edit Extension</button></a>
+            <a href="{{ url('/extensions/'.$extension->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
         @else
+            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Elevate</button></a>
             <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Intolerant</button></a>
         @endif
-        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extend More</button></a>
+        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extend</button></a>
 
     </div>
 @stop
