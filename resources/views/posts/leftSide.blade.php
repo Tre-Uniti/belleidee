@@ -8,7 +8,7 @@
                     <li><a href="{{url('/post/create')}}">Posts</a></li>
                 @else
                     <li>
-                        <a href="{{ url('/posts') }}">Posts</a>
+                        <a href="{{ action('PostController@show', [$profilePosts[0]->id])}}">{{ $profilePosts[0]->created_at->format('M-d-Y') }}</a>
                         <div>
                             <ul>
                                 @foreach($profilePosts as $profilePost)
