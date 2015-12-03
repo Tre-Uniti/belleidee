@@ -1,0 +1,113 @@
+@mixin nav()
+{
+  font-family: "Comic Sans MS", Arial, sans-serif;
+  background-color: #101010;
+  border: 1px solid #A8A8A8;
+  border-radius: 4px;
+  color: #FFFFFF;
+  display: block;
+  margin: .5% auto;
+  max-width: 25%;
+}
+@mixin profileNavUl()
+{
+  margin: 0;
+  padding: 0;
+}
+@mixin navUlLi()
+{
+  display: inline-block;
+  width: auto;
+  list-style-type: none;
+  border-radius:4px;
+  -moz-border-radius:4px;
+  -webkit-border-radius:4px;
+  border:1px solid #101010;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
+@mixin navCaret()
+{
+  border-top: 4px solid #aaa;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  content: "";
+  display: inline-block;
+  height: 0;
+  width: 0;
+  vertical-align: middle;
+  -webkit-transition: color 0.1s linear;
+  -moz-transition: color 0.1s linear;
+  -o-transition: color 0.1s linear;
+  transition: color 0.1s linear;
+}
+@mixin navActive()
+{
+  color: #A8A8A8;
+  display: block;
+  line-height: 56px;
+  padding: 0 24px;
+  text-decoration: none;
+}
+@mixin NavLiHover()
+{
+  border-radius:4px;
+  -moz-border-radius:4px;
+  -webkit-border-radius:4px;
+  border:1px solid #003300;
+  color: $navTextHoverColor;
+  background: -webkit-linear-gradient($navHoverColor1, $navHoverColor2);
+  background: -o-linear-gradient($navHoverColor1, $navHoverColor2);
+  background: -moz-linear-gradient($navHoverColor1, $navHoverColor2);
+  background: linear-gradient($navHoverColor1, $navHoverColor2);
+}
+
+
+
+@mixin navDiv()
+{
+  background-color: rgb( 40, 44, 47 );
+  border-top: 0;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
+  display: none;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  width: 165px;
+  visibility: hidden;
+  z-index: 100;
+  -webkit-transiton: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -transition: opacity 0.2s;
+}
+
+.profileNav > ul > li:hover > div
+{
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+.profileNav > ul > li > div ul > li
+{
+  display: block;
+}
+
+.profileNav > ul > li > div ul > li > a
+{
+  color: #fff;
+  display: block;
+  padding: 12px 24px;
+  text-decoration: none;
+}
+
+.profileNav > ul > li > div ul > li:hover > a
+{
+  background-color: rgba( 255, 255, 255, 0.1);
+}

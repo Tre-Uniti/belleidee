@@ -42,15 +42,15 @@ class HomeController extends Controller
                 '1' => '1',
                 '2' => '2',
             ];
-        $profilePosts = $user->posts()->latest('created_at')->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->get();
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
         return view ('pages.home', compact('user', 'profilePosts', 'profileExtensions', 'categories', 'years', 'days'));
     }
     public function getSettings()
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->get();
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
         return view ('pages.settings', compact('user', 'profilePosts', 'profileExtensions'));
     }
 }

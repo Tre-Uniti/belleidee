@@ -45,7 +45,7 @@ class PostController extends Controller
             ];
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
-        $posts = $this->post->latest()->get();
+        $posts = $this->post->latest()->paginate(14);
         return view ('posts.index', compact('user', 'posts', 'categories', 'profilePosts','profileExtensions'));
     }
 
@@ -166,7 +166,7 @@ class PostController extends Controller
         //Get other Posts of User
         $user_id = $post->user_id;
         $user = User::findOrFail($user_id);
-        $profilePosts = Post::where('user_id', $user_id)->latest('created_at')->get();
+        $profilePosts = Post::where('user_id', $user_id)->latest('created_at')->take(7)->get();
         //Get other Extensions of User
         $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->get();
 
@@ -193,7 +193,7 @@ class PostController extends Controller
         $user_id = $post->user_id;
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->get();
+        $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->take(7)->get();
 
         //
         $date = $post->created_at->format('M-d-Y');
@@ -301,12 +301,12 @@ class PostController extends Controller
      */
     public function getProfilePosts($user)
     {
-        $profilePosts = $user->posts()->latest('created_at')->get();
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         return $profilePosts;
     }
     public function getProfileExtensions($user)
     {
-        $profileExtensions = $user->extensions()->latest('created_at')->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
         return $profileExtensions;
     }
 

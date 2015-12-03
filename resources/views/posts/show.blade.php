@@ -12,36 +12,20 @@
 @section('centerText')
     <div>
         <table style="display: inline-block;">
-            <thead>
-            <tr><th>Belief</th>
+            <tr>
+                <td><a href="{{ url('/posts/') }}">{{ $post->index }}</a>
+                </td>
             </tr>
-            </thead>
-            <tbody>
-            <tr><td>{{ $post->index }}</td>
-            </tr>
-            </tbody>
         </table>
 
         <table style="display: inline-block;">
-            <thead>
-            <tr><th>Beacon</th>
+            <tr><td><a href="{{ url('/posts') }}">{{ $post->belief_beacon }}</a></td>
             </tr>
-            </thead>
-            <tbody>
-            <tr><td>{{ $post->belief_beacon }}</td>
-            </tr>
-            </tbody>
         </table>
 
         <table style="display: inline-block;">
-            <thead>
-            <tr><th>Type</th>
+            <tr><td><a href="{{ url('/posts') }}">{{ $post->index2 }}</a></td>
             </tr>
-            </thead>
-            <tbody>
-            <tr><td>{{ $post->index2 }}</td>
-            </tr>
-            </tbody>
         </table>
     </div>
 

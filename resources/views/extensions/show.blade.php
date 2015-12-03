@@ -7,44 +7,25 @@
 
 @section('centerMenu')
     <h2>{{ $extension->title }}</h2>
-
 @stop
 
 @section('centerText')
-    <p style = "margin: 7px">Created on {{ $extension->created_at->format('M-d-Y') }}</p>
     <div>
-
         <table style="display: inline-block;">
-            <thead>
-            <tr><th>Belief</th>
+            <tr>
+                <td><a href="{{ url('/posts/') }}">{{ $extension->index }}</a>
+                </td>
             </tr>
-            </thead>
-            <tbody>
-            <tr><td>{{ $extension->index }}</td>
-            </tr>
-            </tbody>
         </table>
 
         <table style="display: inline-block;">
-            <thead>
-            <tr><th>Beacon</th>
+            <tr><td><a href="{{ url('/indev') }}">{{ $extension->belief_beacon }}</a></td>
             </tr>
-            </thead>
-            <tbody>
-            <tr><td>{{ $extension->belief_beacon }}</td>
-            </tr>
-            </tbody>
         </table>
 
         <table style="display: inline-block;">
-            <thead>
-            <tr><th>Type</th>
+            <tr><td><a href="{{ url('/indev') }}">{{ $extension->index2 }}</a></td>
             </tr>
-            </thead>
-            <tbody>
-            <tr><td>{{ $extension->index2 }}</td>
-            </tr>
-            </tbody>
         </table>
     </div>
         <div id = "centerTextContent">

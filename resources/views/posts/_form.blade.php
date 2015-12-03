@@ -8,7 +8,7 @@
     </tr>
     <tr>
         <td colspan="3" style = "border-color: #E8E8E8;">
-            {!! Form::select('index', $categories) !!}
+            {!! Form::select('index', $beliefs) !!}
             {!! Form::select('belief_beacon', $beacons) !!}
             {!! Form::select('index2', $types) !!}
         </td>

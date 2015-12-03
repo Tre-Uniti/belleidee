@@ -16,7 +16,7 @@
 </head>
 <body>
 <div id = "container">
-    <nav>
+    <nav class = "topNav">
         <ul>
             <li><a href={{ url('/home') }}>Home</a></li>
             <li>
@@ -35,11 +35,11 @@
                 <a href="{{ url('/indev') }}">Directory<span class="caret"></span></a>
                 <div>
                     <ul>
-                        <li><a href="{{ url('/indev') }}">Beliefs</a></li>
-                        <li><a href="{{ url('/indev') }}">Questions</a></li>
-                        <li><a href="{{ url('/indev') }}">Beacons</a></li>
-                        <li><a href="{{ url('/indev') }}">Sponsors</a></li>
-                        <li><a href="{{ url('/indev') }}">Legacy Posts</a></li>
+                        <li><a href="{{ url('/posts') }}">Beliefs</a></li>
+                        <li><a href="{{ url('/posts') }}">Questions</a></li>
+                        <li><a href="{{ url('/posts') }}">Beacons</a></li>
+                        <li><a href="{{ url('/posts') }}">Sponsors</a></li>
+                        <li><a href="{{ url('/posts') }}">Legacy Posts</a></li>
                     </ul>
                 </div>
             </li>
@@ -48,8 +48,8 @@
                 <div>
                     <ul>
                         <li><a href="{{ url('/settings') }}">View/Change</a></li>
-                        <li><a href="{{ url('/indev') }}">Support</a></li>
-                        <li><a href="{{ url('/indev') }}">Your Sponsor</a></li>
+                        <li><a href="{{ url('/posts') }}">Support</a></li>
+                        <li><a href="{{ url('/posts') }}">Your Sponsor</a></li>
                         <li><a href="{{ url('/invites') }}">Invite Friends</a></li>
                         <li><a href="https://tre-uniti.org">Tre-Uniti</a></li>
                     </ul>
@@ -60,15 +60,43 @@
     <!-- Left --- --- -->
     <div id = "leftContainer">
         <div id = "leftSide">
-
         @yield('leftSideBar')
+            <nav class = "profileNav">
+                <ul>
+                    @if ($profilePosts->isEmpty())
+                        <li><a href="{{url('/post/create')}}">Posts</a></li>
+                    @else
+                        <li>
+                            <a href="{{ action('PostController@show', [$profilePosts[0]->id])}}">{{ $profilePosts[0]->created_at->format('M-d-Y') }}</a>
+                            <div>
+                                <ul>
+                                    @foreach($profilePosts as $profilePost)
+                                        <li><a href={{ action('PostController@show', [$profilePost->id])}}>{{ $profilePost->created_at->format('M-d-Y')}}</a></li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </li>
+                    @endif
+                    @if ($profileExtensions->isEmpty())
+                        <li><a href="{{url('/posts')}}">Extend</a></li>
+                    @else
+                        <li>
+                            <a href="{{ url('/posts') }}">Extends</a>
+                            <div>
+                                <ul>
+                                    @foreach($profileExtensions as $profileExtension)
+                                        <li><a href={{ action('ExtensionController@show', [$profileExtension->id])}}>{{ $profileExtension->created_at->format('M-d-Y')}}</a></li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
         </div>
     </div>
     <!-- --- Center --- -->
-
     <div id = "centerContent">
-
-
         <article>
         <div id = "centerMenu">
         <header>
@@ -80,18 +108,53 @@
             @yield('centerText')
         </div>
         </article>
-        @yield('centerFooter')
+        <div id = "centerFooter">
+            @yield('centerFooter')
+        </div>
     </div>
     <!-- --- --- Right -->
     <div id = "rightContainer">
         <div id = "rightSide">
-
         @yield('rightSideBar')
+            <nav class = "profileNav">
+                <ul>
+                    @if ($profilePosts->isEmpty())
+                        <li><a href="{{url('/post/create')}}">Posts</a></li>
+                    @else
+                        <li>
+                            <a href="{{url('/posts')}}">Beacons</a>
+                            <div>
+                                <ul>
+                                    <li><a href="{{url('/posts')}}">US-SW-ACE</a></li>
+                                    <li><a href="{{url('/posts')}}">Atheism</a></li>
+                                    <li><a href="{{url('/posts')}}">Ba Gua</a></li>
+                                    <li><a href="{{url('/posts')}}">Buddhism</a></li>
+                                    <li><a href="{{url('/posts')}}">Christianity</a></li>
+                                    <li><a href="{{url('/posts')}}">Druze</a></li>
 
+                                </ul>
+                            </div>
+                        </li>
+                    @endif
+                        @if ($profileExtensions->isEmpty())
+                            <li><a href="{{url('/posts')}}">Legacy</a></li>
+                        @else
+                            <li>
+                                <a href="{{ url('/posts') }}">Legacy</a>
+                                <div>
+                                    <ul>
+                                        @foreach($profileExtensions as $profileExtension)
+                                            <li><a href={{ action('ExtensionController@show', [$profileExtension->id])}}>{{ $profileExtension->created_at->format('M-d-Y')}}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </li>
+                        @endif
+
+                </ul>
+            </nav>
         </div>
     </div>
-
-
 </div>
 </body>
 </html>

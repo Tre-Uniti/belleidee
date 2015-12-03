@@ -53,9 +53,9 @@
       background-image: url($tabletBackground);
       background-color: blue;
     }
-    nav
+    .topNav
     {
-      width: 65%;
+      max-width: 60%;
     }
     #centerText
     {
@@ -81,12 +81,14 @@
     {
       height: 41%;
       left: 1em;
+      width: 22%;
 
     }
     #rightSide
     {
       height: 41%;
       right: 1em;
+      width: 22%;
     }
   }
 }
@@ -100,9 +102,14 @@
       background-image: url($mobileBackground);
       background-color: red;
     }
-    nav
+    .topNav
     {
-      width: 75%;
+      max-width: 95%;
+    }
+    #centerContent
+    {
+      width: 95%;
+      height: 95%;
     }
     #centerText
     {
@@ -116,11 +123,13 @@
     {
       top: 24%;
       height: 30%;
+      visibility: hidden;
     }
     #rightSide
     {
       top: 24%;
       height: 30%;
+      visibility: hidden;
     }
     .innerProfileMenus
     {

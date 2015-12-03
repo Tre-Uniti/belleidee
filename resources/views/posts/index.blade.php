@@ -8,7 +8,7 @@
 @section('centerText')
     <h2>Discover Posts</h2>
     <div style = "width: 50%; float: left;">
-        <h4>Title</h4>
+
     <select>
     <option>Top Elevated</option>
     <option>Top Extended</option>
@@ -18,7 +18,6 @@
     </div>
 
     <div style = "width: 50%; float: right;">
-        <h4>Date</h4>
     <select>
         <option>Today</option>
         <option>Week</option>
@@ -26,7 +25,7 @@
         <option>2015</option>
     </select>
         </div>
-<hr/>
+
         @foreach ($posts as $post)
 
             <div style = "width: 35%; float: left; text-align: left; padding-left: 12%; overflow: auto;">
@@ -37,9 +36,10 @@
             </div>
         @endforeach
 
+
 @stop
 @section('centerFooter')
-
+    {!! $posts->render() !!}
 @stop
 
 @include('posts.rightSide')

@@ -13,7 +13,23 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $beliefs=
+            [
+            'Adaptia' => 'Adaptia',
+            'Atheism' => 'Atheism',
+            'Ba Gua' => 'Ba Gua',
+            'Buddhism' => 'Buddhism',
+            'Christianity' => 'Christianity',
+            'Druze' => 'Druze',
+            'Hinduism' => 'Hinduism',
+            'Islam' => 'Islam',
+            'Judaism' => 'Judaism',
+            'Native' => 'Native',
+            'Taoism' => 'Taoism',
+            'Urantia' => 'Urantia'
+            ];
+
+        view()->share('beliefs', $beliefs);
     }
 
     /**

@@ -17,10 +17,8 @@
 @stop
 
 @section('centerFooter')
-    <div id = "centerFooter">
-        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Save as draft</button></a>
-        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Add Sources</button></a>
-    </div>
+    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Save as draft</button></a>
+
 @stop
 
 @include('posts.rightSide')
