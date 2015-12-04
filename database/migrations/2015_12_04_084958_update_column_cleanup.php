@@ -18,11 +18,11 @@ class UpdateColumnCleanup extends Migration
         Schema::table('users', function ($table) {
             $table->dropColumn('motto');
             $table->dropColumn('photo_path2');
-            $table->dropColumn('temp_photo_path2');
+            $table->dropColumn('photo_path_temp2');
             $table->renameColumn('user_elevation', 'elevation');
             $table->renameColumn('user_extension', 'extension');
             $table->renameColumn('photo_path1', 'photo_path');
-            $table->renameColumn('temp_photo_path1', 'temp_photo_path');
+            $table->renameColumn('photo_path_temp1', 'photo_path_temp');
         });
 
         /*
@@ -56,6 +56,15 @@ class UpdateColumnCleanup extends Migration
             $table->renameColumn('question_extension', 'extension');
         });
 
+        /*
+        *  Remove 2 unnecessary columns and rename
+        */
+        Schema::table('intolerant', function ($table) {
+            $table->dropColumn('sponsor_path2');
+            $table->dropColumn('photo_path2');
+            $table->renameColumn('photo_path1', 'photo_path');
+            $table->renameColumn('descentLevel', 'severity');
+        });
         /*
         *  Remove question_ from column names
         */
@@ -110,11 +119,11 @@ class UpdateColumnCleanup extends Migration
         Schema::table('users', function ($table) {
             $table->string('motto')->nullable();
             $table->string('photo_path2')->nullable();
-            $table->string('temp_photo_path2')->nullable();
+            $table->string('photo_path_temp2')->nullable();
             $table->renameColumn('elevation', 'user_elevation');
             $table->renameColumn('extension', 'user_extension');
             $table->renameColumn('photo_path', 'photo_path1');
-            $table->renameColumn('temp_photo_path', 'temp_photo_path1');
+            $table->renameColumn('photo_path_temp', 'photo_path_temp1');
         });
 
         /*
@@ -145,6 +154,16 @@ class UpdateColumnCleanup extends Migration
         Schema::table('questions', function ($table) {
             $table->renameColumn('elevation', 'question_elevation');
             $table->renameColumn('extension', 'question_extension');
+        });
+
+        /*
+        *  Add 2 necessary columns and rename
+        */
+        Schema::table('intolerant', function ($table) {
+            $table->string('sponsor_path2')->nullable();
+            $table->string('photo_path2')->nullable();
+            $table->renameColumn('photo_path', 'photo_path1');
+            $table->renameColumn('severity', 'descentLevel');
         });
 
         /*
