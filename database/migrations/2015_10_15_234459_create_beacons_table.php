@@ -17,13 +17,13 @@ class CreateBeaconsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('beacon_tag')->unique();
-            $table->string('belief_center');
+            $table->string('beliefcenter');
             $table->string('website')->nullable();
             $table->integer('phone')->unsigned();
             $table->string('beacon_email')->unique();
-            $table->string('top1');
-            $table->string('top2');
-            $table->string('top3');
+            $table->string('beacon_top1');
+            $table->string('beacon_top2');
+            $table->string('beacon_top3');
             $table->integer('beacon_use')->unsigned();
             $table->integer('tier')->unsigned();
             $table->string('status');

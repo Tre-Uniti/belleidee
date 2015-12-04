@@ -533,7 +533,7 @@ article {
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  color: #FFFFFF;
+  color: #F0F0F0;
   /* For Safari 5.1 to 6.0 */
   /* For Opera 11.1 to 12.0 */
   /* For Firefox 3.6 to 15 */
@@ -599,11 +599,11 @@ article {
   .navButton {
     font-size: 80%; }
   #leftSide {
-    height: 41%;
+    height: 51%;
     left: 1em;
     width: 22%; }
   #rightSide {
-    height: 41%;
+    height: 51%;
     right: 1em;
     width: 22%; } }
 

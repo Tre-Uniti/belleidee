@@ -32,4 +32,4 @@
     <p>Handles cannot contain intolerant or aggressive language</p>
     <p>Handles can be real names or anonymous</p>
 @stop
-@endsection
+

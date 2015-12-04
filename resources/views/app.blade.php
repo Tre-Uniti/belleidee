@@ -25,9 +25,9 @@
                     <ul>
                         <li><a href={{ url('/posts/create') }}>Create</a></li>
                         <li><a href={{ url('/posts') }}>Discover</a></li>
-                        <li><a href="{{ url('/indev') }}">Your Posts</a></li>
-                        <li><a href="{{ url('/indev') }}">Extensions</a></li>
-                        <li><a href="{{ url('/indev') }}">Bookmarks</a></li>
+                        <li><a href="{{ url('/posts') }}">Your Posts</a></li>
+                        <li><a href="{{ url('/posts') }}">Extensions</a></li>
+                        <li><a href="{{ url('/posts') }}">Bookmarks</a></li>
                     </ul>
                 </div>
             </li>
@@ -50,7 +50,7 @@
                         <li><a href="{{ url('/settings') }}">View/Change</a></li>
                         <li><a href="{{ url('/posts') }}">Support</a></li>
                         <li><a href="{{ url('/posts') }}">Your Sponsor</a></li>
-                        <li><a href="{{ url('/invites') }}">Invite Friends</a></li>
+                        <li><a href="{{ url('/posts') }}">Invite Friends</a></li>
                         <li><a href="https://tre-uniti.org">Tre-Uniti</a></li>
                     </ul>
                 </div>

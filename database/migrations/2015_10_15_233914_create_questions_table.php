@@ -16,8 +16,8 @@ class CreateQuestionsTable extends Migration
         {
             $table->increments('id');
             $table->string('question')->unique();
-            $table->integer('elevation')->unsigned();
-            $table->integer('extension')->unsigned();
+            $table->integer('question_elevation')->unsigned();
+            $table->integer('question_extension')->unsigned();
             $table->string('questionToken')->unique();
             $table->timestamps();
             $table->integer('user_id')->unsigned();

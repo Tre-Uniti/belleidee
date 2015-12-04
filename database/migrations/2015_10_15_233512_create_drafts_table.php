@@ -16,9 +16,9 @@ class CreateDraftsTable extends Migration
         {
             $table->increments('id');
             $table->string('title');
-            $table->string('index')->nullable();
-            $table->string('belief_beacon')->nullable();
-            $table->string('index2')->nullable();
+            $table->string('draft_index')->nullable();
+            $table->string('draft_belief_beacon')->nullable();
+            $table->string('draft_index2')->nullable();
             $table->string('nymified')->nullable();
             $table->string('draft_path');
             $table->string('source_path');
