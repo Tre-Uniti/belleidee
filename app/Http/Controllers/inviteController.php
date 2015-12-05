@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateInviteRequest;
 use App\Mailers\UserMailer;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -22,7 +23,13 @@ class InviteController extends Controller
      */
     public function index()
     {
-        return view('invites.invite');
+        $user = Auth::user();
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
+
+        $invites = $user->invites()->latest('created_at')->take(7)->get();
+
+        return view('invites.invite', compact('user', 'profilePosts', 'profileExtensions', 'invites'));
     }
 
     /**
@@ -32,7 +39,11 @@ class InviteController extends Controller
      */
     public function create()
     {
-        return view('invites.invite');
+        $user = Auth::user();
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
+
+        return view('invites.create', compact('user', 'profilePosts', 'profileExtensions'));
     }
 
     /**
@@ -42,7 +53,7 @@ class InviteController extends Controller
      * @param UserMailer $mailer
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, UserMailer $mailer)
+    public function store(CreateInviteRequest $request, UserMailer $mailer)
     {
         // Load user from Auth facade.
         $user = Auth::user();
@@ -55,7 +66,7 @@ class InviteController extends Controller
         // Mailed to email selected by user
         $mailer->sendEmailInviteTo($invite);
         flash()->success('Invite successfully sent');
-        return redirect('/home');
+        return redirect('/invites');
     }
 
     /**

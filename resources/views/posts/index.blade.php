@@ -1,12 +1,12 @@
 @extends('app')
 @section('siteTitle')
-    Discover
+    Posts
 @stop
 
 @include('posts.leftSide')
 
 @section('centerText')
-    <h2>Discover Posts</h2>
+    <h2>Posts</h2>
     <div style = "width: 50%; float: left;">
 
     <select>

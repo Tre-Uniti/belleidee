@@ -11,7 +11,7 @@
 |
 */
 
-
+Route::get('posts/yours', 'PostController@yourPosts');
 Route::resource('posts', 'PostController');
 Route::resource('extensions', 'ExtensionController');
 Route::get('/extensions/post/{source}', ['uses' =>'ExtensionController@extendPost']);

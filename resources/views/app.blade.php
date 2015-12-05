@@ -25,8 +25,8 @@
                     <ul>
                         <li><a href={{ url('/posts/create') }}>Create</a></li>
                         <li><a href={{ url('/posts') }}>Discover</a></li>
-                        <li><a href="{{ url('/posts') }}">Your Posts</a></li>
-                        <li><a href="{{ url('/posts') }}">Extensions</a></li>
+                        <li><a href="{{ url('posts/yours') }}">Your Posts</a></li>
+                        <li><a href="{{ url('/extensions') }}">Extensions</a></li>
                         <li><a href="{{ url('/posts') }}">Bookmarks</a></li>
                     </ul>
                 </div>
@@ -49,9 +49,9 @@
                     <ul>
                         <li><a href="{{ url('/settings') }}">View/Change</a></li>
                         <li><a href="{{ url('/posts') }}">Support</a></li>
-                        <li><a href="{{ url('/posts') }}">Your Sponsor</a></li>
-                        <li><a href="{{ url('/posts') }}">Invite Friends</a></li>
+                        <li><a href="{{ url('/invites') }}">Invite Friends</a></li>
                         <li><a href="https://tre-uniti.org">Tre-Uniti</a></li>
+                        <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
                     </ul>
                 </div>
             </li>
@@ -67,7 +67,7 @@
                         <li><a href="{{url('/post/create')}}">Posts</a></li>
                     @else
                         <li>
-                            <a href="{{ action('PostController@show', [$profilePosts[0]->id])}}">{{ $profilePosts[0]->created_at->format('M-d-Y') }}</a>
+                        <li><a href="{{url('/posts')}}">Posts</a>
                             <div>
                                 <ul>
                                     @foreach($profilePosts as $profilePost)
@@ -78,10 +78,10 @@
                         </li>
                     @endif
                     @if ($profileExtensions->isEmpty())
-                        <li><a href="{{url('/posts')}}">Extend</a></li>
+                        <li><a href="{{url('/posts')}}">Extensions</a></li>
                     @else
                         <li>
-                            <a href="{{ url('/posts') }}">Extends</a>
+                            <a href="{{ url('/posts') }}">Extensions</a>
                             <div>
                                 <ul>
                                     @foreach($profileExtensions as $profileExtension)

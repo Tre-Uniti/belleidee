@@ -28,25 +28,22 @@ class PostController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $categories =
-            [
-                'Adaptia' => 'Adaptia',
-                'Atheism' => 'Atheism',
-                'Ba Gua' => 'Ba Gua',
-                'Buddhism' => 'Buddhism',
-                'Christianity' => 'Christianity',
-                'Druze' => 'Druze',
-                'Hinduism' => 'Hinduism',
-                'Islam' => 'Islam',
-                'Judaism' => 'Judaism',
-                'Native' => 'Native',
-                'Taoism' => 'Taoism',
-                'Urantia' => 'Urantia'
-            ];
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
         $posts = $this->post->latest()->paginate(14);
-        return view ('posts.index', compact('user', 'posts', 'categories', 'profilePosts','profileExtensions'));
+        return view ('posts.index', compact('user', 'posts', 'profilePosts','profileExtensions'));
+    }
+
+    /*
+     * Get posts of specific user (Your Posts)
+     */
+    public function yourPosts()
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
+        $posts = $this->post->where('user_id', $user->id)->latest()->paginate(14);
+        return view ('posts.yourPosts', compact('user', 'posts', 'profilePosts','profileExtensions'));
     }
 
     /**

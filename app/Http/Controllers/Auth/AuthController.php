@@ -42,10 +42,10 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'handle' => 'required|max:35',
+            'handle' => 'required|max:14',
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:7',
-            'betaToken' => 'exists:invites,betaToken',
+            'password' => 'required|confirmed|min:8',
+            'betaToken' => 'required|exists:invites,betaToken',
         ]);
     }
     /**
@@ -114,7 +114,7 @@ class AuthController extends Controller
                 $request, $validator
             );
         }
-        /*Invite, betaToken.  Delete or commit out after Beta finishes
+        //Invite, betaToken.  Delete or commit out after Beta finishes
         try
         {
             $betaToken = $request->input('betaToken');
@@ -127,10 +127,10 @@ class AuthController extends Controller
                 ->back()
                 ->withInput()
                 ->withErrors([$error]);
-        }*/
+        }
         $user = $this->create($request->all());
         $mailer->sendEmailConfirmationTo($user);
-        //$invite->delete();
+        $invite->delete();
         flash()->success('Registration Successful');
         return redirect('/auth/verify');
     }

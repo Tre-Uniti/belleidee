@@ -28,8 +28,7 @@
 @stop
 @section('footer')
     <h4>Guidelines:</h4>
-    <p>Passwords at least 8 characters long with a mix of numbers, letters, and punctuation </p>
-    <p>Handles cannot contain intolerant or aggressive language</p>
-    <p>Handles can be real names or anonymous</p>
+    <p>Passwords must be at least 8 characters long</p>
+    <p>Handle can be your name or anonymous, max-length (14)</p>
 @stop
 

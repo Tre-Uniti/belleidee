@@ -8,17 +8,21 @@
 <table align = "center" width="100%" style = "text-align: center;">
     <tr>
         <td colspan="3">
-            <table align="center" width="480px" style = "border: 1px solid black;
+            <table align="center" width="480px" style = "
+                   border: 1px solid black;
                    border-radius: 7px;
                    -moz-border-radius: 7px;
                    padding: 3px;
-                   background-color: #C8C8C8; ">
+                   background-color: #D8D8D8; ">
                 <tr>
                     <td colspan="3">
                         <img src="https://belle-idee.org/img/idee.png" alt="idee" height="30%" width="35%">
                     </td>
                 </tr>
-                @yield('emailContent')
+                <tr>
+                    @yield('emailContent')
+                </tr>
+
                 <tr>
                     <td colspan="3"><hr/></td>
                 </tr>

@@ -1,14 +1,12 @@
 @extends('app')
 @section('siteTitle')
-    Create
+    Create Extension
 @stop
 
 @include('extensions.leftSide')
 
 @section('centerText')
-    <div class="errors">
     @include ('errors.list')
-    </div>
 
     {!! Form::open(['url' => 'extensions']) !!}
     @include ('extensions._form', ['submitButtonText' => 'Post Extension'])

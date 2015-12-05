@@ -13,15 +13,9 @@
 @stop
 @section('centerText')
     <h2>The Settings of {{Auth::user()->handle}}</h2>
-    <a href="{{ url('/navGuide') }}"><button type = "button" class = "navButton">Navigation Guide</button></a>
-    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Download Inspirations</button></a>
-    <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Request Support</button></a>
-    <a href="{{ url('/invites') }}"><button type = "button" class = "navButton">Invite Friends</button></a>
-    <a href="{{ url('/auth/logout') }}"><button type = "button" class = "navButton">Logout</button></a>
-    <h4>Motto</h4>
 
     <h4>Contact Details and Preferences</h4>
-    <p>Email:  bmcgoffin14gmail.com (Set email level)</p>
+    <p>Email:  zoko@belle-idee.org (Set email level)</p>
 
     <h4>Your Sponsor</h4>
 

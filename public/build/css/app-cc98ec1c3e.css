@@ -2,7 +2,7 @@
   width: 30%;
   min-width: 305px;
   height: auto;
-  margin: 9.3% auto;
+  margin: 7.3% auto;
   background-color: #E8E8E8;
   opacity: 0.90;
   filter: alpha(opacity=90);
@@ -533,6 +533,7 @@ article {
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
+  text-shadow: 3px 3px 10px #003300;
   color: #F0F0F0;
   /* For Safari 5.1 to 6.0 */
   /* For Opera 11.1 to 12.0 */

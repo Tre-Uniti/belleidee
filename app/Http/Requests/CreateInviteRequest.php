@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CreateInviteRequest extends Request
 {
@@ -13,7 +14,7 @@ class CreateInviteRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -24,8 +25,9 @@ class CreateInviteRequest extends Request
     public function rules()
     {
         return [
-            'beta_Token' => 'required|min:7|unique:invites',
-            'to_email' => 'required|email|unique:invites',
+            'betaToken' => 'required|min:7|max:7|unique:invites',
+            'email' => 'required|email|unique:invites',
+
         ];
     }
 }

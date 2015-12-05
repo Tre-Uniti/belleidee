@@ -1,15 +1,14 @@
 @extends('app')
 @section('siteTitle')
-    Create
+    Create Post
 @stop
 
 @include('posts.leftSide')
 
 @section('centerText')
     <h2>Create Post</h2>
-    <div class="errors">
     @include ('errors.list')
-    </div>
+
     {!! Form::open(['url' => 'posts']) !!}
     @include ('posts._form', ['submitButtonText' => 'Post Belief'])
     {!! Form::close()   !!}

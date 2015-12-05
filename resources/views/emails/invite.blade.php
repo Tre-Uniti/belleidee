@@ -5,17 +5,22 @@
         <td colspan="3"><h3>Invitation to Belle-Idee</h3></td>
     </tr>
     <tr>
-        <td colspan="3"><h4>Greetings! My name is Zoko and I welcome you to join our community!</h4></td>
+        <td colspan="3">Greetings! My name is Zoko and I welcome you to join our community!</td>
     </tr>
     <tr>
-        <td colspan="3">One of your friends has invited you to join Belle-Idee.
-                A community of fellow beings who respectfully discuss their beliefs.</td>
+        <td colspan="3">One of your friends has invited you to join Belle-Idee.</td>
     </tr>
     <tr>
-        <td colspan="3">If interested you may join our beta with the below code:</td>
+        <td colspan="3">Belle-Idee is a community who respectfully discuss their beliefs</td>
     </tr>
     <tr>
-        <td colspan="3" style="background-color: #FFFFFF">
+        <td colspan="3">-</td>
+    </tr>
+    <tr>
+        <td colspan="3">You may register with the beta token below:</td>
+    </tr>
+    <tr>
+        <td colspan="3" style="background-color: #E0E0E0">
             {{$invite->betaToken}}
         </td>
     </tr>

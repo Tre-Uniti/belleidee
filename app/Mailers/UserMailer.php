@@ -31,7 +31,7 @@ class UserMailer
     }
     public function sendEmailInviteTo(Invite $invite)
     {
-        $this->to = $invite->to_email;
+        $this->to = $invite->email;
         $this->view = 'emails.invite';
         $this->data = compact('invite');
         $this->title = 'An Invitation to Belle-Idee';

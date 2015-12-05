@@ -551,6 +551,7 @@ article
 .navButton
 {
   @include baseButton;
+  text-shadow: 3px 3px 10px #003300;
   @include colorNavButton($navButtonColor1, $navButtonColor2, $navTextColor);
   &:hover
   {

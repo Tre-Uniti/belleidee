@@ -16,7 +16,6 @@
 </head>
 <body>
 <div id = "container">
-
     <nav class = "topNav">
         <ul>
             <li><a href={{ url('/home') }}>Home</a></li>
@@ -50,9 +49,9 @@
                     <ul>
                         <li><a href="{{ url('/settings') }}">View/Change</a></li>
                         <li><a href="{{ url('/posts') }}">Support</a></li>
-                        <li><a href="{{ url('/posts') }}">Your Sponsor</a></li>
                         <li><a href="{{ url('/invites') }}">Invite Friends</a></li>
                         <li><a href="https://tre-uniti.org">Tre-Uniti</a></li>
+                        <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
                     </ul>
                 </div>
             </li>
@@ -149,13 +148,10 @@
             </div>
         </article>
         <div id = "centerFooter">
-
-                    <a href="{{ url('/auth/register') }}"><button type = "button" class = "navButton">Register</button></a>
-                    <a href="{{ url('/auth/register') }}"><button type = "button" class = "navButton">Nav Guide</button></a>
-
-            </div>
+            <a href="{{ url('/auth/register') }}"><button type = "button" class = "navButton">Register</button></a>
         </div>
     </div>
+
     <!-- --- --- Right -->
     <div id = "rightContainer">
         <div id = "rightSide">
@@ -197,5 +193,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>

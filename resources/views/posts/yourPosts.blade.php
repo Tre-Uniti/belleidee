@@ -1,12 +1,12 @@
 @extends('app')
 @section('siteTitle')
-    Extensions
+    Your Posts
 @stop
 
-@include('extensions.leftSide')
+@include('posts.leftSide')
 
 @section('centerText')
-    <h2>Extensions</h2>
+    <h2>Your Posts</h2>
     <div style = "width: 50%; float: left;">
 
         <select>
@@ -26,20 +26,22 @@
         </select>
     </div>
 
-    @foreach ($extensions as $extension)
+    @foreach ($posts as $post)
 
         <div style = "width: 35%; float: left; text-align: left; padding-left: 12%; overflow: auto;">
-            <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButton">{{ $extension->title }}</button></a>
+            <a href="{{ action('PostController@show', [$post->id])}}"><button type = "button" class = "interactButton">{{ $post->title }}</button></a>
         </div>
         <div style = "width: 50%; float: right;">
-            <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButton">{{ $extension->created_at->format('M-d-Y') }}</button></a>
+            <a href="{{ action('PostController@show', [$post->id])}}"><button type = "button" class = "interactButton">{{ $post->created_at->format('M-d-Y') }}</button></a>
         </div>
     @endforeach
 
-@stop
 
+@stop
 @section('centerFooter')
-    {!! $extensions->render() !!}
+    {!! $posts->render() !!}
 @stop
 
-@include('extensions.rightSide')
+@include('posts.rightSide')
+
+

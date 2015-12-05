@@ -1,28 +1,46 @@
 @extends('app')
 @section('siteTitle')
-    Invite Friends
+    List Invites
 @stop
-@section('handle')
-    {{Auth::user()->handle}}
+@section('leftSideBar')
+    <div>
+        <h2>{{$user->handle}}</h2>
+
+        <div class = "innerPhotos">
+            <a href="/"><img src={{asset('img/backgroundLandscape.jpg')}} alt="idee" height = "97%" width = "85%"></a>
+        </div>
+
+    </div>
 @stop
 @section('centerMenu')
 @include('errors.list')
 @stop
 @section('centerText')
-    <h1>Send Invites:</h1>
-    {!! Form::open(['url' => 'invites']) !!}
-        <table align = "center">
-            <thead>
-            <tr><th> {!! Form::label('to_Email', 'Email') !!}</th><th> {!! Form::label('betaToken', 'Beta-Token') !!}</th></tr>
-            </thead>
-            <tbody>
-            <tr><td>{!! Form::text('to_email', null, ['class' => 'createAttributes', 'placeholder' => 'To whom?']) !!}</td>
-                <td>{!! Form::text('betaToken', str_random(7), ['class' => 'createAttributes']) !!} </td>
-            </tr>
-            </tbody>
-        </table>
-    <div class = "createSubmit">
-        {!! Form::submit('Send Invite', ['class' => 'navButton']) !!}
-        {!! Form::close()   !!}
+    <h2>Idee Invites:</h2>
+    @if ($invites->isEmpty())
+        <a href="{{ url('/invites/create')}}"><button type = "button" class = "interactButton">Create New</button></a>
+    @else
+        @foreach ($invites as $invite)
+            <div style = "width: 35%; float: left; text-align: left; padding-left: 12%; overflow: auto;">
+                <a href="{{ url('/invites')}}"><button type = "button" class = "interactButton">{{ $invite->email }}</button></a>
+            </div>
+            <div style = "width: 50%; float: right;">
+                <a href="{{ url('/invites')}}"><button type = "button" class = "interactButton">{{ $invite->created_at->format('M-d-Y') }}</button></a>
+            </div>
+
+        @endforeach
+            <a href="{{ url('/invites/create')}}"><button type = "button" class = "interactButton">New Invite</button></a>
+    @endif
+@stop
+
+@section('centerFooter')
+
+@stop
+
+@section('rightSideBar')
+    <h2>Hosted</h2>
+
+    <div class = "innerPhotos">
+        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "97%" width = "85%"></a>
     </div>
 @stop
