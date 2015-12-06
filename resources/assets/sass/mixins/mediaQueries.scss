@@ -1,7 +1,7 @@
 //Desktop
 @mixin desktop($desktopBackground)
 {
-  @media screen and (min-width: 1100px)
+  @media screen and (min-width: 1000px)
   {
     html
     {
@@ -46,7 +46,7 @@
 //Tablet
 @mixin tablet($tabletBackground)
 {
-  @media screen and (max-width: 1099px)
+  @media screen and (max-width: 999px)
   {
     html
     {

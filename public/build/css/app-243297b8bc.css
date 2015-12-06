@@ -562,7 +562,7 @@ article {
     color: #FFFFFF;
     background: linear-gradient(#000000, #33FF33); }
 
-@media screen and (min-width: 1100px) {
+@media screen and (min-width: 1000px) {
   html {
     background-image: url("/img/background.jpg");
     background-color: black; }
@@ -583,7 +583,7 @@ article {
   #rightSide {
     height: auto; } }
 
-@media screen and (max-width: 1099px) {
+@media screen and (max-width: 999px) {
   html {
     background-image: url("/img/backgroundLandscape.jpg");
     background-color: blue; }

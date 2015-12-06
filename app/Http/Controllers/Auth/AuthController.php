@@ -130,7 +130,7 @@ class AuthController extends Controller
         }
         $user = $this->create($request->all());
         $mailer->sendEmailConfirmationTo($user);
-        $invite->delete();
+        //$invite->delete();
         flash()->success('Registration Successful');
         return redirect('/auth/verify');
     }
