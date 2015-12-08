@@ -1,16 +1,16 @@
 //Desktop
 @mixin desktop($desktopBackground)
 {
-  @media screen and (min-width: 1000px)
+  @media screen and (min-width: 1099px)
   {
     html
     {
       background-image: url($desktopBackground);
       background-color: black;
     }
-    nav
+    .topNav
     {
-      width: 55%;
+      width: 65%;
     }
 
     .interactButton
@@ -23,11 +23,11 @@
     }
     #centerText
     {
-      max-height: 870px;
+      max-height: 720px;
     }
     #centerTextContent
     {
-      max-height: 557px;
+      max-height: 640px;
     }
     .innerProfileMenus
     {
@@ -46,7 +46,7 @@
 //Tablet
 @mixin tablet($tabletBackground)
 {
-  @media screen and (max-width: 999px)
+  @media screen and (max-width: 1000px) and (orientation: portrait)
   {
     html
     {
@@ -55,15 +55,20 @@
     }
     .topNav
     {
-      max-width: 60%;
+      max-width: 65%;
+    }
+    #centerContent
+    {
+      width: 97%;
+      height: 85%;
     }
     #centerText
     {
-      max-height: 870px;
+      max-height: 750px;
     }
     #centerTextContent
     {
-      max-height: 440px;
+      max-height: 685px;
     }
     .innerProfileMenus
     {
@@ -79,23 +84,66 @@
     }
     #leftSide
     {
-      height: 51%;
-      left: 1em;
-      width: 22%;
-
+      top: 24%;
+      height: 30%;
+      visibility: hidden;
     }
     #rightSide
     {
-      height: 51%;
-      right: 1em;
-      width: 22%;
+      top: 24%;
+      height: 30%;
+      visibility: hidden;
+    }
+  }
+
+  @media screen and (max-width: 1000px) and (orientation: landscape)
+  {
+    html {
+      background-image: url($tabletBackground);
+      background-color: pink;
+    }
+    .topNav {
+      max-width: 70%;
+    }
+    #centerContent {
+      width: 42%;
+      height: 85%;
+    }
+    #centerText {
+      max-height: 550px;
+    }
+    #centerTextContent {
+      max-height: 500px;
+    }
+    #leftSide {
+      top: 24%;
+      height: 30%;
+      visibility: visible;
+    }
+    #rightSide {
+      top: 24%;
+      height: 30%;
+      visibility: visible;
+    }
+    .innerProfileMenus {
+      height: 70px;
+      font-size: 60%;
+    }
+    .interactButton {
+      font-size: 65%;
+    }
+    .navButton {
+      font-size: 65%;
+    }
+    .innerPhotos {
+      height: 100px;
     }
   }
 }
 //Mobile
 @mixin mobile($mobileBackground)
 {
-  @media screen and (max-width: 500px)
+  @media screen and (max-width: 500px) and (orientation: portrait)
   {
     html
     {
@@ -104,20 +152,20 @@
     }
     .topNav
     {
-      max-width: 95%;
+      max-width: 97%;
     }
     #centerContent
     {
-      width: 95%;
-      height: 95%;
+      width: 97%;
+      height: 85%;
     }
     #centerText
     {
-      max-height: 500px;
+      max-height: 400px;
     }
     #centerTextContent
     {
-      max-height: 0px;
+      max-height: 250px;
     }
     #leftSide
     {
@@ -148,6 +196,47 @@
     {
       height: 100px;
     }
-
+  }
+  @media screen and (max-width: 500px) and (orientation: landscape) {
+    html {
+      background-image: url($mobileBackground);
+      background-color: yellow;
+    }
+    .topNav {
+      max-width: 65%;
+    }
+    #centerContent {
+      width: 42%;
+      height: 85%;
+    }
+    #centerText {
+      max-height: 350px;
+    }
+    #centerTextContent {
+      max-height: 300px;
+    }
+    #leftSide {
+      top: 24%;
+      height: 30%;
+      visibility: visible;
+    }
+    #rightSide {
+      top: 24%;
+      height: 30%;
+      visibility: visible;
+    }
+    .innerProfileMenus {
+      height: 70px;
+      font-size: 60%;
+    }
+    .interactButton {
+      font-size: 65%;
+    }
+    .navButton {
+      font-size: 65%;
+    }
+    .innerPhotos {
+      height: 100px;
+    }
   }
 }

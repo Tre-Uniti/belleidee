@@ -67,7 +67,7 @@
                         <li><a href="{{url('/post/create')}}">Posts</a></li>
                     @else
                         <li>
-                        <li><a href="{{url('/posts')}}">Posts</a>
+                            <a href="{{url('/posts')}}">Posts</a>
                             <div>
                                 <ul>
                                     @foreach($profilePosts as $profilePost)
@@ -126,12 +126,7 @@
                             <div>
                                 <ul>
                                     <li><a href="{{url('/posts')}}">US-SW-ACE</a></li>
-                                    <li><a href="{{url('/posts')}}">Atheism</a></li>
-                                    <li><a href="{{url('/posts')}}">Ba Gua</a></li>
-                                    <li><a href="{{url('/posts')}}">Buddhism</a></li>
-                                    <li><a href="{{url('/posts')}}">Christianity</a></li>
-                                    <li><a href="{{url('/posts')}}">Druze</a></li>
-
+                                    <li><a href="{{url('/posts')}}">US-SW-IHOM</a></li>
                                 </ul>
                             </div>
                         </li>

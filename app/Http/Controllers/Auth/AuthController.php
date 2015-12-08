@@ -45,7 +45,7 @@ class AuthController extends Controller
             'handle' => 'required|max:14',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:8',
-            'betaToken' => 'requried|exists:invites,betaToken',
+            'betaToken' => 'required|exists:invites,betaToken',
         ]);
     }
     /**

@@ -42,7 +42,7 @@
             <a href="{{ url('/extensions/'.$extension->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
         @else
             <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Elevate</button></a>
-            <a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Intolerant</button></a>
+            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Intolerant</button></a>
         @endif
         <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Extend</button></a>
 

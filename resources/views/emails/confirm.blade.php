@@ -35,10 +35,10 @@
         <td colspan="3" style = "text-align: left;">4.  The Weekly Question is asked by the user whose answer to the last question was most inspirational (Elevation+Extension)</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">5.  Users must select a sponsor who can send 3 levels of promotions for continuous sponsorship and loyalty </td>
+        <td colspan="3" style = "text-align: left;">5.  Users must select a sponsor who may send 3 levels of promotions for continuous sponsorship and loyalty</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">6.  Beacon centers are places of worship like Churches, Synagogues, Mosques, and Temples or thought (Atheism)</td>
+        <td colspan="3" style = "text-align: left;">6.  Beacon centers are places of worship like Churches, Synagogues, Mosques, Temples or thought (Atheism)</td>
     </tr>
     <tr>
         <td colspan="3" style = "text-align: left;">7.  We are open source, you are free customize your local fork and download any posts for offline use</td>

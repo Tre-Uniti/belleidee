@@ -16,8 +16,8 @@
 
 @section('centerFooter')
     <div id = "centerFooter">
-        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Save as draft</button></a>
-        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Add Sources</button></a>
+        <a href="{{ url('/posts') }}"><button type = "button" class = "navButton">Save as draft</button></a>
+
     </div>
 @stop
 

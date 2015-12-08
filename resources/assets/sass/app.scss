@@ -56,7 +56,7 @@ a:active {
   color: #FFFFFF;
   display: block;
   margin: .5% auto;
-  max-width: 25%;
+  max-width: 37%;
 }
 .topNav ul
 {
@@ -366,7 +366,6 @@ table
 {
   border-collapse: separate;
   border-spacing: 3px;
-
 }
 td
 {
@@ -433,12 +432,12 @@ td
 #leftSide
 {
   @include sideDiv($profileBackgroundColor);
-  left: 3em;
+  left: 2em;
 }
 #rightSide
 {
   @include sideDiv($profileBackgroundColor);
-  right: 3em;
+  right: 2em;
 }
 
 //Inner Menus
@@ -487,25 +486,24 @@ article
 {
   margin: 0 auto;
   width: 98%;
-
 }
 #centerText
 {
   margin: 5px auto;
   width: 99%;
   height: auto;
-  max-height: 795px;
+  max-height: 650px;
   overflow: auto;
 }
 #centerTextContent
 {
   text-align: left;
-  font-size: 125%;
+  font-size: 120%;
   margin: 0 auto;
   padding-left: 15px;
   padding-right: 15px;
   height: auto;
-  max-height: 557px;
+  max-height: 550px;
   overflow:auto;
 
 }
@@ -514,7 +512,7 @@ article
   margin: 0 auto;
   padding: 3px;
   height: auto;
-  max-height: 100%;
+  max-height: 640px;
 }
 .createTitleText
 {
@@ -535,7 +533,7 @@ article
 #createBodyText
 {
   @include baseTextField();
-  font-size: 125%;
+  font-size: 120%;
 }
 #centerFooter
 {
