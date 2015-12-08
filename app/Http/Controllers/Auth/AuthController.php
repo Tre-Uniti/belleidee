@@ -45,7 +45,7 @@ class AuthController extends Controller
             'handle' => 'required|max:14',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:8',
-            'betaToken' => 'required|exists:invites,betaToken',
+            'betaToken' => 'requried|exists:invites,betaToken',
         ]);
     }
     /**
@@ -130,7 +130,7 @@ class AuthController extends Controller
         }
         $user = $this->create($request->all());
         $mailer->sendEmailConfirmationTo($user);
-        //$invite->delete();
+        $invite->delete();
         flash()->success('Registration Successful');
         return redirect('/auth/verify');
     }
