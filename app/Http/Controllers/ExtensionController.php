@@ -132,7 +132,7 @@ class ExtensionController extends Controller
         $extension = array_add($extension, 'body', $contents);
 
         //Get other Posts and Extensions of User
-        $user_id = Auth::id();
+        $user_id = $extension->user_id;
         $user = User::findOrFail($user_id);
 
         //Get Posts and Extensions of user
