@@ -6,7 +6,6 @@
 @include('posts.leftSide')
 
 @section('centerText')
-    <h2>Create Post</h2>
     @include ('errors.list')
 
     {!! Form::open(['url' => 'posts']) !!}

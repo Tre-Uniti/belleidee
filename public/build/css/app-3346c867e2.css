@@ -342,6 +342,20 @@ td {
 .leftTDAlign {
   text-align: left; }
 
+.listResource {
+  clear: both; }
+
+.listResourceLeft {
+  width: 35%;
+  float: left;
+  text-align: left;
+  padding-left: 12%;
+  overflow: auto; }
+
+.listResourceRight {
+  width: 50%;
+  float: right; }
+
 .flash-info {
   color: #009900; }
 
@@ -354,57 +368,6 @@ td {
 .errors {
   background-color: #202020;
   opacity: .9; }
-
-#topLeftMenu {
-  width: 99%;
-  height: auto;
-  margin: 0 auto;
-  position: relative;
-  background-color: #202020;
-  border: 1px solid;
-  border-radius: 20px;
-  opacity: 0.9;
-  z-index: 2;
-  left: 0;
-  top: 1%; }
-
-#bottomLeftMenu {
-  width: 99%;
-  height: auto;
-  margin: 0 auto;
-  position: relative;
-  background-color: #202020;
-  border: 1px solid;
-  border-radius: 20px;
-  opacity: 0.9;
-  z-index: 2;
-  left: 0;
-  bottom: 1%; }
-
-#topRightMenu {
-  width: 99%;
-  height: auto;
-  margin: 0 auto;
-  position: relative;
-  background-color: #202020;
-  border: 1px solid;
-  border-radius: 20px;
-  opacity: 0.9;
-  z-index: 2;
-  right: 0;
-  top: 1%; }
-
-#bottomRightMenu {
-  width: 99%;
-  height: auto;
-  margin: 0 auto;
-  position: relative;
-  background-color: #202020;
-  border: 1px solid;
-  border-radius: 20px;
-  opacity: 0.9;
-  z-index: 2;
-  right: 0; }
 
 #leftSide {
   width: 21%;
@@ -479,7 +442,7 @@ article {
   margin: 5px auto;
   width: 99%;
   height: auto;
-  max-height: 650px;
+  max-height: 500px;
   overflow: auto; }
 
 #centerTextContent {
@@ -489,14 +452,14 @@ article {
   padding-left: 15px;
   padding-right: 15px;
   height: auto;
-  max-height: 550px;
+  max-height: 530px;
   overflow: auto; }
 
 #createOptions {
   margin: 0 auto;
   padding: 3px;
   height: auto;
-  max-height: 640px; }
+  max-height: 720px; }
 
 .createTitleText {
   width: 350px; }
@@ -522,17 +485,17 @@ article {
   background-color: #202020;
   margin: 0 auto;
   display: inline-block;
-  border: 1px solid;
   border-radius: 20px;
-  opacity: 0.9; }
+  opacity: 0.9;
+  padding: 3px; }
 
 /* Button specific */
 .navButton {
   padding: 8px 13px;
   font-family: "Comic Sans MS", Arial, sans-serif;
-  border-radius: 4px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
+  border-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
   text-shadow: 3px 3px 10px #003300;
   color: #F0F0F0;
   /* For Safari 5.1 to 6.0 */
@@ -548,9 +511,9 @@ article {
 .interactButton {
   padding: 8px 13px;
   font-family: "Comic Sans MS", Arial, sans-serif;
-  border-radius: 4px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
+  border-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
   color: #000000;
   /* For Safari 5.1 to 6.0 */
   /* For Opera 11.1 to 12.0 */
@@ -562,7 +525,7 @@ article {
     color: #FFFFFF;
     background: linear-gradient(#000000, #33FF33); }
 
-@media screen and (min-width: 1099px) {
+@media screen and (min-width: 1024px) {
   html {
     background-image: url("/img/background.jpg");
     background-color: black; }
@@ -575,15 +538,17 @@ article {
   #centerText {
     max-height: 720px; }
   #centerTextContent {
-    max-height: 640px; }
+    max-height: 615px; }
   .innerProfileMenus {
     height: 210px; }
   #leftSide {
     height: auto; }
   #rightSide {
-    height: auto; } }
+    height: auto; }
+  #createOptions {
+    max-height: 720px; } }
 
-@media screen and (max-width: 1000px) and (orientation: portrait) {
+@media screen and (max-width: 1023px) {
   html {
     background-image: url("/img/backgroundLandscape.jpg");
     background-color: blue; }
@@ -593,15 +558,11 @@ article {
     width: 97%;
     height: 85%; }
   #centerText {
-    max-height: 750px; }
+    max-height: 730px; }
   #centerTextContent {
-    max-height: 685px; }
+    max-height: 645px; }
   .innerProfileMenus {
     height: 175px; }
-  .interactButton {
-    font-size: 80%; }
-  .navButton {
-    font-size: 80%; }
   #leftSide {
     top: 24%;
     height: 30%;
@@ -611,38 +572,34 @@ article {
     height: 30%;
     visibility: hidden; } }
 
-@media screen and (max-width: 1000px) and (orientation: landscape) {
+@media screen and (max-width: 1023px) and (orientation: landscape) {
   html {
     background-image: url("/img/backgroundLandscape.jpg");
     background-color: pink; }
   .topNav {
-    max-width: 70%; }
+    max-width: 60%; }
   #centerContent {
-    width: 42%;
+    width: 50%;
     height: 85%; }
   #centerText {
     max-height: 550px; }
   #centerTextContent {
-    max-height: 500px; }
+    max-height: 350px; }
   #leftSide {
-    top: 24%;
-    height: 30%;
+    top: 10.15%;
+    height: auto;
     visibility: visible; }
   #rightSide {
-    top: 24%;
-    height: 30%;
+    top: 10.15%;
+    height: auto;
     visibility: visible; }
   .innerProfileMenus {
     height: 70px;
     font-size: 60%; }
-  .interactButton {
-    font-size: 65%; }
-  .navButton {
-    font-size: 65%; }
   .innerPhotos {
     height: 100px; } }
 
-@media screen and (max-width: 500px) and (orientation: portrait) {
+@media screen and (max-width: 500px) {
   html {
     background-image: url("/img/backgroundPortrait.jpg");
     background-color: red; }
@@ -650,11 +607,11 @@ article {
     max-width: 97%; }
   #centerContent {
     width: 97%;
-    height: 85%; }
+    height: 70%; }
   #centerText {
-    max-height: 400px; }
+    max-height: 300px; }
   #centerTextContent {
-    max-height: 250px; }
+    max-height: 200px; }
   #leftSide {
     top: 24%;
     height: 30%;
@@ -664,14 +621,12 @@ article {
     height: 30%;
     visibility: hidden; }
   .innerProfileMenus {
-    height: 70px;
-    font-size: 60%; }
-  .interactButton {
-    font-size: 65%; }
-  .navButton {
-    font-size: 65%; }
+    height: 70px; }
   .innerPhotos {
-    height: 100px; } }
+    height: 100px; }
+  .listResourceLeft {
+    padding-left: 1%;
+    width: 45%; } }
 
 @media screen and (max-width: 500px) and (orientation: landscape) {
   html {
@@ -702,6 +657,8 @@ article {
   .navButton {
     font-size: 65%; }
   .innerPhotos {
-    height: 100px; } }
+    height: 100px; }
+  .listResourceLeft {
+    padding-left: 1%; } }
 
 /*# sourceMappingURL=app.css.map */

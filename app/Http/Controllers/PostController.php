@@ -139,22 +139,6 @@ class PostController extends Controller
         //Get requested post and add body
         $viewUser = Auth::user();
 
-        $categories =
-            [
-                'Adaptia' => 'Adaptia',
-                'Atheism' => 'Atheism',
-                'Ba Gua' => 'Ba Gua',
-                'Buddhism' => 'Buddhism',
-                'Christianity' => 'Christianity',
-                'Druze' => 'Druze',
-                'Hinduism' => 'Hinduism',
-                'Islam' => 'Islam',
-                'Judaism' => 'Judaism',
-                'Native' => 'Native',
-                'Taoism' => 'Taoism',
-                'Urantia' => 'Urantia'
-            ];
-
         $post = $this->post->findOrFail($id);
         $post_path = $post->post_path;
         $contents = Storage::get($post_path);
@@ -167,7 +151,7 @@ class PostController extends Controller
         //Get other Extensions of User
         $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->get();
 
-        return view('posts.show', compact('user', 'viewUser', 'post', 'categories', 'profilePosts', 'profileExtensions'));
+        return view('posts.show', compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'));
     }
 
 

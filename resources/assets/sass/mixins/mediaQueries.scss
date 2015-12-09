@@ -1,7 +1,7 @@
 //Desktop
 @mixin desktop($desktopBackground)
 {
-  @media screen and (min-width: 1099px)
+  @media screen and (min-width: 1024px)
   {
     html
     {
@@ -27,7 +27,7 @@
     }
     #centerTextContent
     {
-      max-height: 640px;
+      max-height: 615px;
     }
     .innerProfileMenus
     {
@@ -41,12 +41,16 @@
     {
       height: auto;
     }
+    #createOptions
+    {
+      max-height: 720px;
+    }
   }
 }
 //Tablet
 @mixin tablet($tabletBackground)
 {
-  @media screen and (max-width: 1000px) and (orientation: portrait)
+  @media screen and (max-width: 1023px)
   {
     html
     {
@@ -64,24 +68,17 @@
     }
     #centerText
     {
-      max-height: 750px;
+      max-height: 730px;
     }
     #centerTextContent
     {
-      max-height: 685px;
+      max-height: 645px;
     }
     .innerProfileMenus
     {
       height: 175px;
     }
-    .interactButton
-    {
-      font-size: 80%;
-    }
-    .navButton
-    {
-      font-size: 80%;
-    }
+
     #leftSide
     {
       top: 24%;
@@ -96,54 +93,54 @@
     }
   }
 
-  @media screen and (max-width: 1000px) and (orientation: landscape)
+  @media screen and (max-width: 1023px) and (orientation: landscape)
   {
     html {
       background-image: url($tabletBackground);
       background-color: pink;
     }
     .topNav {
-      max-width: 70%;
+      max-width: 60%;
     }
     #centerContent {
-      width: 42%;
+      width: 50%;
       height: 85%;
     }
     #centerText {
       max-height: 550px;
     }
-    #centerTextContent {
-      max-height: 500px;
+    #centerTextContent
+    {
+      max-height: 350px;
     }
-    #leftSide {
-      top: 24%;
-      height: 30%;
+    #leftSide
+    {
+      top: 10.15%;
+      height: auto;
       visibility: visible;
     }
-    #rightSide {
-      top: 24%;
-      height: 30%;
+    #rightSide
+    {
+      top: 10.15%;
+      height: auto;
       visibility: visible;
     }
-    .innerProfileMenus {
+    .innerProfileMenus
+    {
       height: 70px;
       font-size: 60%;
     }
-    .interactButton {
-      font-size: 65%;
-    }
-    .navButton {
-      font-size: 65%;
-    }
-    .innerPhotos {
+    .innerPhotos
+    {
       height: 100px;
     }
+
   }
 }
 //Mobile
 @mixin mobile($mobileBackground)
 {
-  @media screen and (max-width: 500px) and (orientation: portrait)
+  @media screen and (max-width: 500px)
   {
     html
     {
@@ -157,15 +154,15 @@
     #centerContent
     {
       width: 97%;
-      height: 85%;
+      height: 70%;
     }
     #centerText
     {
-      max-height: 400px;
+      max-height: 300px;
     }
     #centerTextContent
     {
-      max-height: 250px;
+      max-height: 200px;
     }
     #leftSide
     {
@@ -178,6 +175,62 @@
       top: 24%;
       height: 30%;
       visibility: hidden;
+    }
+    .innerProfileMenus
+    {
+      height: 70px;
+    }
+    .interactButton
+    {
+    }
+    .navButton
+    {
+
+    }
+    .innerPhotos
+    {
+      height: 100px;
+    }
+    .listResourceLeft
+    {
+      padding-left: 1%;
+      width: 45%;
+    }
+  }
+  @media screen and (max-width: 500px) and (orientation: landscape) {
+    html
+    {
+      background-image: url($mobileBackground);
+      background-color: yellow;
+    }
+    .topNav
+    {
+      max-width: 65%;
+    }
+    #centerContent
+    {
+      width: 42%;
+      height: 85%;
+    }
+    #centerText
+    {
+      max-height: 350px;
+    }
+    #centerTextContent
+    {
+      max-height: 300px;
+    }
+    #leftSide
+    {
+      top: 24%;
+      height: 30%;
+      visibility: visible;
+    }
+    #rightSide
+    {
+      top: 24%;
+      height: 30%;
+      visibility: visible;
     }
     .innerProfileMenus
     {
@@ -196,47 +249,9 @@
     {
       height: 100px;
     }
-  }
-  @media screen and (max-width: 500px) and (orientation: landscape) {
-    html {
-      background-image: url($mobileBackground);
-      background-color: yellow;
-    }
-    .topNav {
-      max-width: 65%;
-    }
-    #centerContent {
-      width: 42%;
-      height: 85%;
-    }
-    #centerText {
-      max-height: 350px;
-    }
-    #centerTextContent {
-      max-height: 300px;
-    }
-    #leftSide {
-      top: 24%;
-      height: 30%;
-      visibility: visible;
-    }
-    #rightSide {
-      top: 24%;
-      height: 30%;
-      visibility: visible;
-    }
-    .innerProfileMenus {
-      height: 70px;
-      font-size: 60%;
-    }
-    .interactButton {
-      font-size: 65%;
-    }
-    .navButton {
-      font-size: 65%;
-    }
-    .innerPhotos {
-      height: 100px;
+    .listResourceLeft
+    {
+      padding-left: 1%;
     }
   }
 }

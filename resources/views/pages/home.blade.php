@@ -24,24 +24,6 @@
         </div>
 
 
-        <div style = "width: 50%; float: left;">
-        <a href="{{ url('/posts')}}"><button type = "button" class = "interactButton">QueenBee</button></a>
-            </div>
-    <div style = "width: 50%; float: right;">
-        <a href="{{ url('/posts')}}"><button type = "button" class = "interactButton">Zoko</button></a>
-    </div>
-    <div style = "width: 50%; float: left;">
-        <a href="{{ url('/posts')}}"><button type = "button" class = "interactButton">Zoko</button></a>
-        </div>
-    <div style = "width: 50%; float: right;">
-        <a href="{{ url('/posts')}}"><button type = "button" class = "interactButton">QueenBee</button></a>
-    </div>
-    <div style = "width: 50%; float: left;">
-        <a href="{{ url('/posts')}}"><button type = "button" class = "interactButton">Amaricus</button></a>
-    </div>
-    <div style = "width: 50%; float: right;">
-        <a href="{{ url('/posts')}}"><button type = "button" class = "interactButton">Leprechaun720</button></a>
-    </div>
 
 
 @stop

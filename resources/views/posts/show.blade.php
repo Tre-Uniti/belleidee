@@ -28,7 +28,7 @@
             </tr>
         </table>
     </div>
-
+    <a href={{ url('/extensions/post/list/'.$post->id)}}><button type = "button" class = "interactButton">Extensions</button></a>
         <div id = "centerTextContent">
             <p>
                 {!! nl2br(e($post->body)) !!}

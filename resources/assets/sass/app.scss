@@ -378,6 +378,24 @@ td
 {
   text-align: left;
 }
+.listResource
+{
+  clear: both;
+}
+.listResourceLeft
+{
+  width: 35%;
+  float: left;
+  text-align: left;
+  padding-left: 12%;
+  overflow: auto;
+}
+.listResourceRight
+{
+  width: 50%;
+  float: right;
+}
+
 
 
 //Flash Messages:
@@ -401,34 +419,7 @@ td
   opacity: .9;
 }
 
-//Menus:
-#topLeftMenu
-{
-  @include menuDiv($topBackgroundColor);
-  left: $sideMargin;
-  top: $topPosition;
-}
-#bottomLeftMenu
-{
-  @include menuDiv($bottomBackgroundColor);
-  left: $sideMargin;
-  bottom: $bottomPosition;
-
-}
-#topRightMenu
-{
-  @include menuDiv($topBackgroundColor);
-  right: $sideMargin;
-  top: $topPosition;
-
-}
-#bottomRightMenu
-{
-  @include menuDiv($bottomBackgroundColor);
-  right: $sideMargin;
-  //bottom: $bottomPosition;
-}
-
+//Sides
 #leftSide
 {
   @include sideDiv($profileBackgroundColor);
@@ -492,7 +483,7 @@ article
   margin: 5px auto;
   width: 99%;
   height: auto;
-  max-height: 650px;
+  max-height: 500px;
   overflow: auto;
 }
 #centerTextContent
@@ -503,7 +494,7 @@ article
   padding-left: 15px;
   padding-right: 15px;
   height: auto;
-  max-height: 550px;
+  max-height: 530px;
   overflow:auto;
 
 }
@@ -512,7 +503,7 @@ article
   margin: 0 auto;
   padding: 3px;
   height: auto;
-  max-height: 640px;
+  max-height: 720px;
 }
 .createTitleText
 {
@@ -540,9 +531,9 @@ article
   background-color: $bottomBackgroundColor;
   margin: 0 auto;
   display: inline-block;
-  border: 1px solid;
   border-radius: 20px;
   opacity: 0.9;
+  padding: 3px;
 }
 
 /* Button specific */

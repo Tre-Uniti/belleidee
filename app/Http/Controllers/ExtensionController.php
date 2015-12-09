@@ -52,25 +52,12 @@ class ExtensionController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
         $date = Carbon::now()->format('M-d-Y');
-        $categories =
-            [
-                'Adaptia' => 'Adaptia',
-                'Atheism' => 'Atheism',
-                'Ba Gua' => 'Ba Gua',
-                'Buddhism' => 'Buddhism',
-                'Christianity' => 'Christianity',
-                'Druze' => 'Druze',
-                'Hinduism' => 'Hinduism',
-                'Islam' => 'Islam',
-                'Judaism' => 'Judaism',
-                'Native' => 'Native',
-                'Taoism' => 'Taoism',
-                'Urantia' => 'Urantia'
-            ];
+
         $beacons =
             [
                 'No Beacon' => 'No Beacon',
-                'US-SW-IHOM' => 'US-SW-IHOM'
+                'US-SW-IHOM' => 'US-SW-IHOM',
+                'US-SW-ACE' => 'US-SW-ACE'
             ];
 
         $types =
@@ -84,9 +71,8 @@ class ExtensionController extends Controller
                 'Speech' => 'Speech',
             ];
 
-        return view('extensions.create', compact('user', 'date', 'profilePosts', 'profileExtensions', 'categories', 'beacons', 'types', 'sources'));
+        return view('extensions.create', compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'sources'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -146,30 +132,22 @@ class ExtensionController extends Controller
         $extension = array_add($extension, 'body', $contents);
 
         //Get other Posts and Extensions of User
-        $user_id = $extension->user_id;
+        $user_id = Auth::id();
         $user = User::findOrFail($user_id);
 
         //Get Posts and Extensions of user
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
 
-        $categories =
-            [
-                'Adaptia' => 'Adaptia',
-                'Atheism' => 'Atheism',
-                'Ba Gua' => 'Ba Gua',
-                'Buddhism' => 'Buddhism',
-                'Christianity' => 'Christianity',
-                'Druze' => 'Druze',
-                'Hinduism' => 'Hinduism',
-                'Islam' => 'Islam',
-                'Judaism' => 'Judaism',
-                'Native' => 'Native',
-                'Taoism' => 'Taoism',
-                'Urantia' => 'Urantia'
-            ];
+        //Get Source info of extension
+        $post_id = $extension->post_id;
+        $post = Post::findOrFail($post_id);
+        $sources = [
+            'post_id' => $post->id,
+            'post_title' => $post->title
+        ];
 
-        return view('extensions.show', compact('user', 'extension', 'profilePosts', 'profileExtensions', 'categories'));
+        return view('extensions.show', compact('user', 'extension', 'profilePosts', 'profileExtensions', 'sources' ));
     }
 
     /**
@@ -185,6 +163,14 @@ class ExtensionController extends Controller
         $contents = Storage::get($extension_path);
         $extension = array_add($extension, 'body', $contents);
 
+        //Get Source Post info
+        $post_id = $extension->post_id;
+        $post = Post::findOrFail($post_id);
+        $sources = [
+            'post_id' => $post->id,
+            'post_title' => $post->title
+        ];
+
         //Get other Posts of User
         $user_id = $extension->user_id;
         $user = User::findOrFail($user_id);
@@ -193,23 +179,6 @@ class ExtensionController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
 
-        //
-        $date = $extension->created_at->format('M-d-Y');
-        $categories =
-            [
-                'Adaptia' => 'Adaptia',
-                'Atheism' => 'Atheism',
-                'Ba Gua' => 'Ba Gua',
-                'Buddhism' => 'Buddhism',
-                'Christianity' => 'Christianity',
-                'Druze' => 'Druze',
-                'Hinduism' => 'Hinduism',
-                'Islam' => 'Islam',
-                'Judaism' => 'Judaism',
-                'Native' => 'Native',
-                'Taoism' => 'Taoism',
-                'Urantia' => 'Urantia'
-            ];
         $beacons =
             [
                 'No Beacon' => 'No Beacon',
@@ -223,11 +192,11 @@ class ExtensionController extends Controller
                 'Prayer' => 'Prayer',
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
-                'Song Lyrics' => 'Song Lyrics',
                 'Speech' => 'Speech',
+                'Story' => 'Story'
             ];
 
-        return view('extensions.edit', compact('user', 'extension', 'profilePosts', 'profileExtensions', 'categories', 'beacons', 'types'));
+        return view('extensions.edit', compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'sources'));
     }
 
     /**
@@ -306,14 +275,37 @@ class ExtensionController extends Controller
         return $profileExtensions;
     }
 
+    //Used to setup extension of post
     public function extendPost($id)
     {
         $sourcePost = Post::findOrFail($id);
-        $fullSource = ['type' => 'posts', 'user_id' => $sourcePost->user_id,  'post_id' => $sourcePost->id];
+        $fullSource = ['type' => 'posts', 'user_id' => $sourcePost->user_id,  'post_id' => $sourcePost->id, 'post_title' => $sourcePost->title];
         Session::put('sources', $fullSource);
 
-        flash()->overlay('Extending post: '. $sourcePost->title);
-
         return redirect('extensions/create');
+    }
+
+    //Show extensions of a specific post
+    public function postList($id)
+    {
+        //Get post and set sources for extension
+        $post = Post::findOrFail($id);
+        $sources = [
+            'post_id' => $post->id,
+            'post_title' => $post->title
+        ];
+
+        //Get other Posts and Extensions of User
+        $user_id = $post->user_id;
+        $user = User::findOrFail($user_id);
+
+
+        //Get Posts and Extensions of user
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = $this->getProfileExtensions($user);
+
+        $extensions = Extension::where('post_id', $id)->latest('created_at')->paginate(14);
+
+        return view('extensions.postList', compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources'));
     }
 }

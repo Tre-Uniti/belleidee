@@ -8,7 +8,6 @@
 @include('extensions.leftSide')
 
 @section('centerText')
-    <h1>Edit: {!! $extension->title !!}</h1>
     <div class = "errors">
         @include ('errors.list')
     </div>
