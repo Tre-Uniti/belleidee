@@ -6,7 +6,7 @@
 @include('extensions.leftSide')
 
 @section('centerText')
-    <h2>Extension of {{ $sources['post_title'] }}</h2>
+    <h2>Extension of <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></h2>
     <div style = "width: 50%; float: left;">
         <select>
             <option>Top Elevated</option>

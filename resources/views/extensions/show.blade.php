@@ -42,10 +42,14 @@
         @if($extension->user_id == Auth::id())
             <a href="{{ url('/extensions/'.$extension->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
         @else
-            <a href="{{ url('/home') }}"><button type = "button" class = "navButton">Elevate</button></a>
-            <a href="{{ url('/home') }}"><button type = "button" class = "navButton">Intolerant</button></a>
-        @endif
-        <a href="{{ url('/home') }}"><button type = "button" class = "navButton">Extend</button></a>
+            @if($elevation === 'Elevated')
+                <a href="{{ url('/extensions/'.$extension->id) }}"><button type = "button" class = "navButton">{{ $elevation }}</button></a>
+            @else
+                <a href="{{ url('/extensions/elevate/'.$extension->id) }}"><button type = "button" class = "navButton">{{ $elevation }}</button></a>
+            @endif
+                <a href="{{ url('/home') }}"><button type = "button" class = "navButton">Intolerant</button></a>
+            @endif
+            <a href="{{ url('/extensions/'. $extension->id) }}"><button type = "button" class = "navButton">Extend</button></a>
 
     </div>
 @stop

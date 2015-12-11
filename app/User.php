@@ -53,6 +53,11 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Invite');
     }
 
+    public function elevation()
+    {
+        return $this->hasMany('App\Elevate');
+    }
+
     public static function boot()
     {
         parent::boot();

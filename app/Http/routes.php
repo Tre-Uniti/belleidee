@@ -12,10 +12,12 @@
 */
 
 Route::get('posts/yours', 'PostController@yourPosts');
+Route::get('posts/elevate/{id}', 'PostController@elevatePost');
 Route::resource('posts', 'PostController');
 Route::resource('extensions', 'ExtensionController');
-Route::get('/extensions/post/{source}', ['uses' =>'ExtensionController@extendPost']);
-Route::get('/extensions/post/list/{id}', ['uses' =>'ExtensionController@postList']);
+Route::get('extensions/elevate/{id}', 'ExtensionController@elevateExtension');
+Route::get('extensions/post/{source}', 'ExtensionController@extendPost');
+Route::get('extensions/post/list/{id}', 'ExtensionController@postList');
 Route::resource('invites', 'InviteController');
 Route::controllers([
     'password' => 'Auth\PasswordController',

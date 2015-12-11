@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Elevate;
 use App\User;
 use App\Post;
 use App\Extension;
@@ -148,13 +149,24 @@ class PostController extends Controller
         $user_id = $post->user_id;
         $user = User::findOrFail($user_id);
         $profilePosts = Post::where('user_id', $user_id)->latest('created_at')->take(7)->get();
+
         //Get other Extensions of User
         $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->get();
 
-        return view('posts.show', compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'));
+        //Check if viewing user has already elevated post
+        if(Elevate::where('post_id', $post->id)->where('user_id', $viewUser->id)->exists())
+        {
+            $elevation = 'Elevated';
+        }
+        else
+        {
+            $elevation = 'Elevate';
+        }
+
+        return view('posts.show')
+            ->with(compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'))
+            ->with('elevation', $elevation);
     }
-
-
 
     /**
      * Show the form for editing the specified resource.
@@ -278,6 +290,7 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  $user
      * @return \Illuminate\Http\Response
      */
     public function getProfilePosts($user)
@@ -285,10 +298,46 @@ class PostController extends Controller
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         return $profilePosts;
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  $user
+     * @return \Illuminate\Http\Response
+     */
     public function getProfileExtensions($user)
     {
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
         return $profileExtensions;
+    }
+
+    /**
+     * Elevate post if not already elevated and redirect to original post
+     * @param int $id
+     * @return
+     */
+    public function elevatePost($id)
+    {
+        $post = Post::findOrFail($id);
+        $user = Auth::user();
+        if(Elevate::where('user_id', $user->id)->where('post_id', $id)->exists())
+        {
+            flash('You have already elevated this post');
+            return redirect('posts/'. $id);
+        }
+        else
+        {
+            $elevation = new Elevate;
+            $elevation->post_id = $post->id;
+            $elevation->user()->associate($user);
+            $elevation->save();
+
+            //Add 1 elevation to post
+            $post->where('id', $post->id)
+                 ->update(['elevation' => $post->elevation + 1]);
+        }
+
+        flash('Elevation successful');
+        return redirect('posts/'. $post->id);
     }
 
 
