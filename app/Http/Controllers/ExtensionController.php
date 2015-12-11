@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Elevate;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateExtensionRequest;
@@ -89,8 +90,6 @@ class ExtensionController extends Controller
         $sources = Session::get('sources');
         $sourceId = $sources['post_id'];
 
-        //$sourceUser = $sources->user_id;
-        $sourceType = $sources['type'];
         $title = $request->input('title');
         $path = '/extensions/'.$user_id.'/'.$title.'.txt';
         $inspiration = $request->input('body');
@@ -113,6 +112,13 @@ class ExtensionController extends Controller
         $extension = new Extension($request->except('body'));
         $extension->user()->associate($user);
         $extension->save();
+
+        //Add 1 extension to original post
+        $post = Post::findOrFail($sourceId);
+        $post->extension = $post->extension + 1;
+        $post->save();
+
+
         flash()->overlay('Your extension has been created');
         return redirect('extensions/'. $extension->id);
     }
@@ -147,7 +153,20 @@ class ExtensionController extends Controller
             'post_title' => $post->title
         ];
 
-        return view('extensions.show', compact('user', 'extension', 'profilePosts', 'profileExtensions', 'sources' ));
+        //Check if viewing user has already elevated extension
+        $viewUserID = Auth::id();
+        if(Elevate::where('extension_id', $extension->id)->where('user_id', $viewUserID)->exists())
+        {
+            $elevation = 'Elevated';
+        }
+        else
+        {
+            $elevation = 'Elevate';
+        }
+
+        return view('extensions.show')
+            ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'sources' ))
+            ->with ('elevation', $elevation);
     }
 
     /**
@@ -307,5 +326,35 @@ class ExtensionController extends Controller
         $extensions = Extension::where('post_id', $id)->latest('created_at')->paginate(14);
 
         return view('extensions.postList', compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources'));
+    }
+
+    /**
+     * Elevate post if not already elevated and redirect to original post
+     * @param int $id
+     * @return
+     */
+    public function elevateExtension($id)
+    {
+        $extension = Extension::findOrFail($id);
+        $user = Auth::user();
+        if(Elevate::where('user_id', $user->id)->where('extension_id', $id)->exists())
+        {
+            flash('You have already elevated this extension');
+            return redirect('extensions/'. $id);
+        }
+        else
+        {
+            $elevation = new Elevate;
+            $elevation->extension_id = $extension->id;
+            $elevation->user()->associate($user);
+            $elevation->save();
+
+            //Add 1 elevation to extension
+            $extension->where('id', $extension->id)
+                ->update(['elevation' => $extension->elevation + 1]);
+        }
+
+        flash('Elevation successful');
+        return redirect('extensions/'. $extension->id);
     }
 }

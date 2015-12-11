@@ -64,10 +64,10 @@
             <nav class = "profileNav">
                 <ul>
                     @if ($profilePosts->isEmpty())
-                        <li><a href="{{url('/post/create')}}">Posts</a></li>
+                        <li><a href="{{url('/posts/create')}}">Posts</a></li>
                     @else
                         <li>
-                            <a href="{{url('/posts')}}">Posts</a>
+                            <a href="{{ url('/posts') }}">Posts</a>
                             <div>
                                 <ul>
                                     @foreach($profilePosts as $profilePost)
@@ -78,10 +78,10 @@
                         </li>
                     @endif
                     @if ($profileExtensions->isEmpty())
-                        <li><a href="{{url('/posts')}}">Extensions</a></li>
+                        <li><a href="{{url('/extensions/create')}}">Extensions</a></li>
                     @else
                         <li>
-                            <a href="{{ url('/posts') }}">Extensions</a>
+                            <a href="{{ url('/extensions') }}">Extensions</a>
                             <div>
                                 <ul>
                                     @foreach($profileExtensions as $profileExtension)

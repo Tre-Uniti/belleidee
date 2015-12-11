@@ -42,7 +42,11 @@
         @if($post->user_id == Auth::id())
             <a href="{{ url('/posts/'.$post->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
         @else
-            <a href="{{ url('/posts/'.$post->id.'/edit') }}"><button type = "button" class = "navButton">Elevate</button></a>
+            @if($elevation === 'Elevated')
+                <a href="{{ url('/posts/'.$post->id) }}"><button type = "button" class = "navButton">{{ $elevation }}</button></a>
+            @else
+                <a href="{{ url('/posts/elevate/'.$post->id) }}"><button type = "button" class = "navButton">{{ $elevation }}</button></a>
+            @endif
             <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Intolerant</button></a>
         @endif
         <a href="{{ url('/extensions/post/'. $post->id) }}"><button type = "button" class = "navButton">Extend</button></a>

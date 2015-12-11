@@ -6,7 +6,6 @@
 @include('posts.leftSide')
 
 @section('centerText')
-    <h2>Edit: {!! $post->title !!}</h2>
     <div class = "errors">
         @include ('errors.list')
     </div>
