@@ -119,7 +119,7 @@
             <nav class = "profileNav">
                 <ul>
                     @if ($profilePosts->isEmpty())
-                        <li><a href="{{url('/post/create')}}">Posts</a></li>
+                        <li><a href="{{url('/post/create')}}">Beacons</a></li>
                     @else
                         <li>
                             <a href="{{url('/posts')}}">Beacons</a>
