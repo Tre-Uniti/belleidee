@@ -442,7 +442,7 @@ article {
   margin: 5px auto;
   width: 99%;
   height: auto;
-  max-height: 690px;
+  max-height: 550px;
   overflow: auto; }
 
 #centerTextContent {
@@ -452,7 +452,7 @@ article {
   padding-left: 15px;
   padding-right: 15px;
   height: auto;
-  max-height: 530px;
+  max-height: 350px;
   overflow: auto; }
 
 #createOptions {
@@ -479,7 +479,7 @@ article {
   width: 97%;
   padding-left: 5px;
   padding-right: 5px;
-  font-size: 120%; }
+  font-size: 110%; }
 
 #centerFooter {
   background-color: #202020;
@@ -536,9 +536,9 @@ article {
   .navButton {
     font-size: 100%; }
   #centerText {
-    max-height: 690px; }
+    max-height: 630px; }
   #centerTextContent {
-    max-height: 615px; }
+    max-height: 530px; }
   .innerProfileMenus {
     height: 210px; }
   #leftSide {

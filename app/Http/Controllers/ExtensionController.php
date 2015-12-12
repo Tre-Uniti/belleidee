@@ -36,7 +36,7 @@ class ExtensionController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
-        $extensions = $this->extension->latest()->paginate(14);
+        $extensions = $this->extension->latest()->paginate(12);
         return view ('extensions.index', compact('user', 'extensions', 'profilePosts', 'profileExtensions'));
     }
 

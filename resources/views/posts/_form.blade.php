@@ -17,7 +17,7 @@
 
 <!-- Body Form Input -->
     <div id = "centerTextContent">
-    {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your belief here:', 'rows' => '19%']) !!}
+    {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your belief here:', 'rows' => '18%']) !!}
     </div>
 
     {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}

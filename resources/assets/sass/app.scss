@@ -483,7 +483,7 @@ article
   margin: 5px auto;
   width: 99%;
   height: auto;
-  max-height: 690px;
+  max-height: 550px;
   overflow: auto;
 }
 #centerTextContent
@@ -494,7 +494,7 @@ article
   padding-left: 15px;
   padding-right: 15px;
   height: auto;
-  max-height: 530px;
+  max-height: 350px;
   overflow:auto;
 
 }
@@ -524,7 +524,7 @@ article
 #createBodyText
 {
   @include baseTextField();
-  font-size: 120%;
+  font-size: 110%;
 }
 #centerFooter
 {
