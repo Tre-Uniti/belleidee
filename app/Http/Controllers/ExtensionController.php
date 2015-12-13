@@ -347,18 +347,34 @@ class ExtensionController extends Controller
             flash('You have already elevated this extension');
             return redirect('extensions/'. $id);
         }
+        //Post approved for Elevation
         else
         {
+            //Start elevation of Post
             $elevation = new Elevate;
             $elevation->extension_id = $extension->id;
-            $elevation->source_user = $extension->user_id;
+
+            //Get user of Extension being elevated
+            $sourceUser = User::findOrFail($extension->user_id);
+
+            //Assign id of user who Posted as source
+            $elevation->source_user = $sourceUser->id;
+
+            //Associate id of the user who gifted Elevation
             $elevation->user()->associate($user);
             $elevation->save();
 
-            //Add 1 elevation to extension
+            //Elevate Extension by 1
             $extension->where('id', $extension->id)
                 ->update(['elevation' => $extension->elevation + 1]);
+
+            //Elevate User of Post by 1
+            $sourceUser->where('id', $sourceUser->id)
+                ->update(['elevation' => $sourceUser->elevation + 1]);
+
+
         }
+        //Successful elevation of User and Extension :)
 
         flash('Elevation successful');
         return redirect('extensions/'. $extension->id);
