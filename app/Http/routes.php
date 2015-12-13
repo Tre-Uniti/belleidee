@@ -11,17 +11,26 @@
 |
 */
 
+//User Routes (Resource)
+Route::resource('users', 'UserController');
+
+//Post Routes (Resource)
 Route::get('posts/yours', 'PostController@yourPosts');
 Route::get('posts/elevate/{id}', 'PostController@elevatePost');
 Route::resource('posts', 'PostController');
+
+//Extension Routes (Resource)
 Route::resource('extensions', 'ExtensionController');
 Route::get('extensions/elevate/{id}', 'ExtensionController@elevateExtension');
 Route::get('extensions/post/{source}', 'ExtensionController@extendPost');
 Route::get('extensions/post/list/{id}', 'ExtensionController@postList');
+
+//Invite Routes (Resource)
 Route::resource('invites', 'InviteController');
-Route::controllers([
-    'password' => 'Auth\PasswordController',
-]);
+
+//Password Route (Laravel)
+Route::controllers(['password' => 'Auth\PasswordController',]);
+
 // Authentication routes
 Route::get('auth/login', 'Auth\SessionController@getLogin');
 Route::post('auth/login', 'Auth\SessionController@postLogin');
@@ -44,7 +53,7 @@ Route::get('navGuide', 'WelcomeController@getNavGuide');
 Route::get('home', 'HomeController@getHome');
 Route::get('settings', 'HomeController@getSettings');
 
-// Posting routes (resource)
+
 
 
 

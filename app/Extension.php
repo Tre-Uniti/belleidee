@@ -14,10 +14,16 @@ class Extension extends Model
         'index2',
         'extension_path',
         'post_id',
+        'source_user',
     ];
 
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function elevation()
+    {
+        return $this->hasMany('App\Elevate');
     }
 }

@@ -15,11 +15,21 @@ class Elevate extends Model
 
     protected $fillable = [
         'post_id',
-        'extension_id'
+        'extension_id',
+        'source_user',
     ];
 
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function post()
+    {
+        return $this->belongsTo('App\Post');
+    }
+    public function extension()
+    {
+        return $this->belongsTo('App\Extension');
     }
 }

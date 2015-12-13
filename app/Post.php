@@ -21,4 +21,9 @@ class Post extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function elevation()
+    {
+        return $this->hasMany('App\Elevate');
+    }
+
 }

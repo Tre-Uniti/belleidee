@@ -59,21 +59,6 @@ class PostController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
         $date = Carbon::now()->format('M-d-Y');
-        $categories =
-            [
-                'Adaptia' => 'Adaptia',
-                'Atheism' => 'Atheism',
-                'Ba Gua' => 'Ba Gua',
-                'Buddhism' => 'Buddhism',
-                'Christianity' => 'Christianity',
-                'Druze' => 'Druze',
-                'Hinduism' => 'Hinduism',
-                'Islam' => 'Islam',
-                'Judaism' => 'Judaism',
-                'Native' => 'Native',
-                'Taoism' => 'Taoism',
-                'Urantia' => 'Urantia'
-            ];
         $beacons =
             [
                 'No Beacon' => 'No Beacon',
@@ -92,7 +77,7 @@ class PostController extends Controller
                 'Speech' => 'Speech',
             ];
 
-        return view('posts.create', compact('user', 'date', 'profilePosts', 'profileExtensions', 'categories', 'beacons', 'types'));
+        return view('posts.create', compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'types'));
     }
 
     /**
@@ -151,7 +136,7 @@ class PostController extends Controller
         $profilePosts = Post::where('user_id', $user_id)->latest('created_at')->take(7)->get();
 
         //Get other Extensions of User
-        $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->get();
+        $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->take(7)->get();
 
         //Check if viewing user has already elevated post
         if(Elevate::where('post_id', $post->id)->where('user_id', $viewUser->id)->exists())
@@ -190,21 +175,7 @@ class PostController extends Controller
 
         //
         $date = $post->created_at->format('M-d-Y');
-        $categories =
-            [
-                'Adaptia' => 'Adaptia',
-                'Atheism' => 'Atheism',
-                'Ba Gua' => 'Ba Gua',
-                'Buddhism' => 'Buddhism',
-                'Christianity' => 'Christianity',
-                'Druze' => 'Druze',
-                'Hinduism' => 'Hinduism',
-                'Islam' => 'Islam',
-                'Judaism' => 'Judaism',
-                'Native' => 'Native',
-                'Taoism' => 'Taoism',
-                'Urantia' => 'Urantia'
-            ];
+
         $beacons =
             [
                 'No Beacon' => 'No Beacon',
@@ -218,11 +189,11 @@ class PostController extends Controller
                 'Prayer' => 'Prayer',
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
-                'Song Lyrics' => 'Song Lyrics',
+                'Story' => 'Song Lyrics',
                 'Speech' => 'Speech',
             ];
 
-        return view('posts.edit', compact('user', 'post', 'profilePosts', 'profileExtensions', 'categories', 'beacons', 'types', 'date'));
+        return view('posts.edit', compact('user', 'post', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'date'));
 
     }
 
@@ -313,29 +284,51 @@ class PostController extends Controller
     /**
      * Elevate post if not already elevated and redirect to original post
      * @param int $id
-     * @return
+     * @return \Illuminate\Http\Response
      */
     public function elevatePost($id)
     {
+        //Get Post associated with id
         $post = Post::findOrFail($id);
+
+        //Get User elevating the Post
         $user = Auth::user();
+
+        //Check if the User has already elevated
         if(Elevate::where('user_id', $user->id)->where('post_id', $id)->exists())
         {
             flash('You have already elevated this post');
             return redirect('posts/'. $id);
         }
+
+        //Post approved for Elevation
         else
         {
+            //Start elevation of Post
             $elevation = new Elevate;
             $elevation->post_id = $post->id;
+
+            //Get user of Post being elevated
+            $sourceUser = User::findOrFail($post->user_id);
+
+            //Assign id of user who Posted as source
+            $elevation->source_user = $sourceUser->id;
+
+            //Associate id of the user who gifted Elevation
             $elevation->user()->associate($user);
             $elevation->save();
 
-            //Add 1 elevation to post
+            //Elevate Post by 1
             $post->where('id', $post->id)
                  ->update(['elevation' => $post->elevation + 1]);
-        }
 
+            //Elevate User of Post by 1
+            $sourceUser->where('id', $sourceUser->id)
+                ->update(['elevation' => $sourceUser->elevation + 1]);
+
+
+        }
+        //Successful elevation of User and Post :)
         flash('Elevation successful');
         return redirect('posts/'. $post->id);
     }

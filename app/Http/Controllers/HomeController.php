@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Elevate;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -17,21 +18,11 @@ class HomeController extends Controller
     public function getHome()
     {
         $user = Auth::user();
-        $categories =
-            [
-                'Adaptia' => 'Adaptia',
-                'Atheism' => 'Atheism',
-                'Ba Gua' => 'Ba Gua',
-                'Buddhism' => 'Buddhism',
-                'Christianity' => 'Christianity',
-                'Druze' => 'Druze',
-                'Hinduism' => 'Hinduism',
-                'Islam' => 'Islam',
-                'Judaism' => 'Judaism',
-                'Native' => 'Native',
-                'Taoism' => 'Taoism',
-                'Urantia' => 'Urantia'
-            ];
+
+        //Get users who have Elevated
+        $elevations = Elevate::where('source_user', $user->id)->latest('created_at')->take(12)->get();
+
+
         $years =
             [
                 '2015' => '2015',
@@ -44,7 +35,7 @@ class HomeController extends Controller
             ];
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
-        return view ('pages.home', compact('user', 'profilePosts', 'profileExtensions', 'categories', 'years', 'days'));
+        return view ('pages.home', compact('user', 'profilePosts', 'profileExtensions', 'years', 'days', 'elevations'));
     }
     public function getSettings()
     {

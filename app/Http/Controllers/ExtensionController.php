@@ -108,6 +108,7 @@ class ExtensionController extends Controller
         Storage::put($path, $inspiration);
         $request = array_add($request, 'extension_path', $path);
         $request = array_add($request, 'post_id', $sourceId);
+        $request = array_add($request, 'source_user', $sources['user_id']);
 
         $extension = new Extension($request->except('body'));
         $extension->user()->associate($user);
@@ -115,9 +116,13 @@ class ExtensionController extends Controller
 
         //Add 1 extension to original post
         $post = Post::findOrFail($sourceId);
-        $post->extension = $post->extension + 1;
-        $post->save();
+        $post->where('id', $post->id)
+            ->update(['extension' => $post->extension + 1]);
 
+        //Add 1 extension to user of post
+        $postUser = User::findOrFail($post->user_id);
+        $postUser->where('id', $postUser->id)
+            ->update(['extension' => $postUser->extension + 1]);
 
         flash()->overlay('Your extension has been created');
         return redirect('extensions/'. $extension->id);
@@ -284,13 +289,13 @@ class ExtensionController extends Controller
      */
     public function getProfilePosts($user)
     {
-        $profilePosts = $user->posts()->latest('created_at')->get();
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         return $profilePosts;
     }
 
     public function getProfileExtensions($user)
     {
-        $profileExtensions = $user->extensions()->latest('created_at')->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
         return $profileExtensions;
     }
 
@@ -346,6 +351,7 @@ class ExtensionController extends Controller
         {
             $elevation = new Elevate;
             $elevation->extension_id = $extension->id;
+            $elevation->source_user = $extension->user_id;
             $elevation->user()->associate($user);
             $elevation->save();
 
