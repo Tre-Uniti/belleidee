@@ -5,7 +5,7 @@
   {
     html
     {
-      background-image: url($desktopBackground);
+      //background-image: url($desktopBackground);
       background-color: black;
     }
     .topNav
@@ -28,6 +28,12 @@
     #centerTextContent
     {
       max-height: 530px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    .createTitleText
+    {
+      width: 350px;
     }
     .innerProfileMenus
     {
@@ -45,6 +51,21 @@
     {
       max-height: 30%;
     }
+
+    .topNav > ul > li > a
+    {
+      padding: 0 24px;
+    }
+    .topNav > ul > li > div
+    {
+      width: 165px;
+    }
+    .topNav > ul > li > div ul > li > a
+    {
+      padding: 12px 24px;
+    }
+
+
   }
 }
 //Tablet
@@ -54,7 +75,7 @@
   {
     html
     {
-      background-image: url($tabletBackground);
+      //background-image: url($tabletBackground);
       background-color: blue;
     }
     .topNav
@@ -91,12 +112,16 @@
       height: 30%;
       visibility: hidden;
     }
+    .topNav > ul > li > a
+    {
+      padding: 0 18px;
+    }
   }
 
   @media screen and (max-width: 1023px) and (orientation: landscape)
   {
     html {
-      background-image: url($tabletBackground);
+      //background-image: url($tabletBackground);
       background-color: pink;
     }
     .topNav {
@@ -113,6 +138,7 @@
     {
       max-height: 350px;
     }
+
     #leftSide
     {
       top: 10.15%;
@@ -134,35 +160,66 @@
     {
       height: 100px;
     }
+    .topNav > ul > li > a
+    {
+      padding: 0 24px;
+    }
 
   }
 }
 //Mobile
 @mixin mobile($mobileBackground)
 {
-  @media screen and (max-width: 500px)
+  @media screen and (max-width: 400px)
   {
     html
     {
-      background-image: url($mobileBackground);
+      //background-image: url($mobileBackground);
       background-color: red;
     }
     .topNav
     {
       max-width: 97%;
     }
+    .topNav > ul > li > a
+    {
+      padding: 0 1px;
+    }
+    .topNav > ul > li > div
+    {
+      width: 92px;
+    }
+    .topNav > ul > li > div ul > li > a
+    {
+      padding: 7px 1px;
+    }
     #centerContent
     {
       width: 97%;
-      height: 70%;
+      height: 83%;
     }
     #centerText
     {
-      max-height: 300px;
+      max-height: 425px;
+    }
+    .createTitleText
+    {
+      width: 250px;
     }
     #centerTextContent
     {
-      max-height: 200px;
+      max-height: 240px;
+      padding-left: 3px;
+      padding-right: 3px;
+    }
+    #createBodyText
+    {
+      padding-left: 1px;
+      padding-right: 1px;
+    }
+    #createOptions
+    {
+      max-height: 410px;
     }
     #leftSide
     {
@@ -180,12 +237,85 @@
     {
       height: 70px;
     }
-    .interactButton
+    .innerPhotos
     {
+      height: 100px;
     }
-    .navButton
+    .listResourceLeft
     {
+      padding-left: 1%;
+      width: 45%;
+    }
 
+  }
+
+  //Small screen mobile
+  @media screen and (max-width: 400px) and (max-height: 499px)
+  {
+    html
+    {
+      //background-image: url($mobileBackground);
+      background-color: purple;
+    }
+    .topNav
+    {
+      max-width: 97%;
+    }
+    .topNav > ul > li > a
+    {
+      padding: 0 1px;
+    }
+    .topNav > ul > li > div
+    {
+      width: 92px;
+    }
+    .topNav > ul > li > div ul > li > a
+    {
+      padding: 7px 1px;
+    }
+    #centerContent
+    {
+      width: 97%;
+      height: 83%;
+    }
+    #centerText
+    {
+      max-height: 370px;
+    }
+    .createTitleText
+    {
+      width: 250px;
+    }
+    #centerTextContent
+    {
+      max-height: 155px;
+      padding-left: 3px;
+      padding-right: 3px;
+    }
+    #createBodyText
+    {
+      padding-left: 1px;
+      padding-right: 1px;
+    }
+    #createOptions
+    {
+      max-height: 350px;
+    }
+    #leftSide
+    {
+      top: 24%;
+      height: 30%;
+      visibility: hidden;
+    }
+    #rightSide
+    {
+      top: 24%;
+      height: 30%;
+      visibility: hidden;
+    }
+    .innerProfileMenus
+    {
+      height: 70px;
     }
     .innerPhotos
     {
@@ -197,6 +327,7 @@
       width: 45%;
     }
   }
+
   @media screen and (max-width: 500px) and (orientation: landscape) {
     html
     {

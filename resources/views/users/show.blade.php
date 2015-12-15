@@ -14,7 +14,7 @@
             <h2>Inspiration</h2>
         </div>
     <div style = "width: 50%; float: right;">
-            <h2>Elevated By</h2>
+            <h2>Elevated</h2>
         </div>
             <div class = "listResource">
             @foreach ($elevations as $elevation)

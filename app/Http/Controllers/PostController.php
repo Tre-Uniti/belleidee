@@ -73,8 +73,8 @@ class PostController extends Controller
                 'Prayer' => 'Prayer',
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
-                'Song Lyrics' => 'Song Lyrics',
                 'Speech' => 'Speech',
+                'Story' => 'Story',
             ];
 
         return view('posts.create', compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'types'));
@@ -179,7 +179,8 @@ class PostController extends Controller
         $beacons =
             [
                 'No Beacon' => 'No Beacon',
-                'US-SW-IHOM' => 'US-SW-IHOM'
+                'US-SW-IHOM' => 'US-SW-IHOM',
+                'US-SW-ACE' => 'US-SW-ACE',
             ];
 
         $types =
@@ -189,8 +190,8 @@ class PostController extends Controller
                 'Prayer' => 'Prayer',
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
-                'Story' => 'Song Lyrics',
                 'Speech' => 'Speech',
+                'Story' => 'Story',
             ];
 
         return view('posts.edit', compact('user', 'post', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'date'));

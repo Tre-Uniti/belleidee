@@ -68,8 +68,8 @@ class ExtensionController extends Controller
                 'Prayer' => 'Prayer',
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
-                'Song Lyrics' => 'Song Lyrics',
                 'Speech' => 'Speech',
+                'Story' => 'Story',
             ];
 
         return view('extensions.create', compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'sources'));
@@ -206,7 +206,8 @@ class ExtensionController extends Controller
         $beacons =
             [
                 'No Beacon' => 'No Beacon',
-                'US-SW-IHOM' => 'US-SW-IHOM'
+                'US-SW-IHOM' => 'US-SW-IHOM',
+                'US-SW-ACE' => 'US-SW-ACE'
             ];
 
         $types =
@@ -217,7 +218,7 @@ class ExtensionController extends Controller
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
                 'Speech' => 'Speech',
-                'Story' => 'Story'
+                'Story' => 'Story',
             ];
 
         return view('extensions.edit', compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'sources'));

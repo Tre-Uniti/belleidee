@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Idee /-\ @yield('siteTitle')</title>
     <link rel = "stylesheet" href = "/css/normalize.css">
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
@@ -47,7 +47,7 @@
                 <a href="{{ url('/settings') }}">Settings<span class="caret"></span></a>
                 <div>
                     <ul>
-                        <li><a href="{{ url('/settings') }}">View/Change</a></li>
+                        <li><a href="{{ url('/settings') }}">Modify</a></li>
                         <li><a href="{{ url('/posts') }}">Support</a></li>
                         <li><a href="{{ url('/invites') }}">Invite Friends</a></li>
                         <li><a href="https://tre-uniti.org">Tre-Uniti</a></li>
