@@ -10,7 +10,7 @@
 
     {!! Form::open(['url' => 'extensions']) !!}
     @include ('extensions._form', ['submitButtonText' => 'Post Extension'])
-    {!! Form::close()   !!}
+
 
 @stop
 

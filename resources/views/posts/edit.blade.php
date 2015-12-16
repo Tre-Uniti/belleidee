@@ -12,7 +12,6 @@
 
     {!! Form::model($post, ['route' => ['posts.update', $post->id], 'method' => 'patch']) !!}
     @include ('posts._form', ['submitButtonText' => 'Update Post'])
-    {!! Form::close()   !!}
 
 @stop
 

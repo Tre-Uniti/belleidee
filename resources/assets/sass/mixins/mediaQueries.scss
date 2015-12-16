@@ -1,7 +1,7 @@
 //Desktop
 @mixin desktop($desktopBackground)
 {
-  @media screen and (min-width: 1024px) and (min-height: 951px)
+  @media screen and (min-width: 1401px) and (min-height: 850px)
   {
     html
     {
@@ -64,13 +64,11 @@
     {
       padding: 12px 24px;
     }
-
-
   }
 }
 
 //Small Desktop
-@media screen and (min-width: 1024px) and (max-height : 950px)
+@media screen and (min-width: 656px) and (max-height: 849px)
 {
   html
   {
@@ -92,13 +90,17 @@
   }
   #centerText
   {
-    max-height: 580px;
+    max-height: 430px;
   }
   #centerTextContent
   {
-    max-height: 510px;
+    max-height: 300px;
     padding-left: 15px;
     padding-right: 15px;
+  }
+  #createOptions
+  {
+    max-height: 425px;
   }
   .createTitleText
   {
@@ -115,10 +117,6 @@
   #rightSide
   {
     height: auto;
-  }
-  #createOptions
-  {
-    max-height: 25%;
   }
 
   .topNav > ul > li > a
@@ -138,10 +136,10 @@
 
 
 
-//Tablet
+//Tablet Portrait
 @mixin tablet($tabletBackground)
 {
-  @media screen and (max-width: 1023px)
+  @media screen and (max-width: 655px) and (min-height: 600px)
   {
     html
     {
@@ -159,11 +157,15 @@
     }
     #centerText
     {
-      max-height: 530px;
+      max-height: 635px;
     }
     #centerTextContent
     {
-      max-height: 445px;
+      max-height: 545px;
+    }
+    #createOptions
+    {
+      max-height: 625px;
     }
     .innerProfileMenus
     {
@@ -189,11 +191,11 @@
   }
 
   //Tablet Landscape
-  @media screen and (max-width: 2500px) and (min-height: 700px) and (max-height: 870px)
+  @media screen and (min-width: 656px) and (max-width: 1400px)
   {
     html {
       //background-image: url($tabletBackground);
-      background-color: pink;
+      background-color: green;
     }
     .topNav {
       max-width: 75%;
@@ -203,11 +205,15 @@
       height: 85%;
     }
     #centerText {
-      max-height: 450px;
+      max-height: 600px;
     }
     #centerTextContent
     {
-      max-height: 350px;
+      max-height: 400px;
+    }
+    #createOptions
+    {
+      max-height: 605px;
     }
 
     #leftSide
@@ -215,12 +221,14 @@
       top: 10.15%;
       height: auto;
       visibility: visible;
+      left: .7em;
     }
     #rightSide
     {
       top: 10.15%;
       height: auto;
       visibility: visible;
+      right: .7em;
     }
     .innerProfileMenus
     {
@@ -229,7 +237,7 @@
     }
     .innerPhotos
     {
-      height: 100px;
+      height: 150px;
     }
     .topNav > ul > li > a
     {
@@ -238,229 +246,136 @@
 
   }
 }
-//Mobile
-@mixin mobile($mobileBackground)
-{
-  @media screen and (max-width: 400px)
-  {
-    html
-    {
+//Mobile Portrait
+@mixin mobile($mobileBackground) {
+  @media screen and (max-width: 420px) {
+    html {
       //background-image: url($mobileBackground);
       background-color: red;
     }
-    .topNav
-    {
+    .topNav {
       max-width: 97%;
     }
-    .topNav > ul > li > a
-    {
+    .topNav > ul > li > a {
       padding: 0 1px;
     }
-    .topNav > ul > li > div
-    {
+    .topNav > ul > li > div {
       width: 92px;
     }
-    .topNav > ul > li > div ul > li > a
-    {
+    .topNav > ul > li > div ul > li > a {
       padding: 7px 1px;
     }
-    #centerContent
-    {
+    #centerContent {
       width: 97%;
       height: 84%;
     }
-    #centerText
-    {
-      max-height: 335px;
+    #centerText {
+      max-height: 325px;
     }
-    .createTitleText
-    {
+    .createTitleText {
       width: 250px;
     }
-    #centerTextContent
-    {
-      max-height: 110px;
+    #centerTextContent {
+      max-height: 185px;
       padding-left: 3px;
       padding-right: 3px;
     }
-    #createBodyText
-    {
+    #createBodyText {
       padding-left: 1px;
       padding-right: 1px;
     }
-    #createOptions
-    {
-      max-height: 330px;
+    #createOptions {
+      max-height: 320px;
     }
-    #leftSide
-    {
+    #leftSide {
       top: 24%;
       height: 30%;
       visibility: hidden;
     }
-    #rightSide
-    {
+    #rightSide {
       top: 24%;
       height: 30%;
       visibility: hidden;
     }
-    .innerProfileMenus
-    {
+    .innerProfileMenus {
       height: 70px;
     }
-    .innerPhotos
-    {
+    .innerPhotos {
       height: 100px;
     }
-    .listResourceLeft
-    {
+    .listResourceLeft {
       padding-left: 1%;
       width: 45%;
     }
 
   }
 
-  //Small screen mobile
-  @media screen and (max-width: 955px) and (max-height: 699px) and (orientation: landscape)
+  //Small screen mobile landscape
+  @media screen and (max-width: 655px) and (max-height: 399px)
   {
-    html
-    {
+    html {
       //background-image: url($mobileBackground);
       background-color: purple;
     }
-    h2
-    {
+    h2 {
       font-size: 90%;
     }
-    .topNav
-    {
+    .topNav {
       max-width: 55%;
     }
-    .topNav > ul > li > a
-    {
+    .topNav > ul > li > a {
       padding: 0 1px;
     }
-    .topNav > ul > li > div
-    {
+    .topNav > ul > li > div {
       width: 92px;
     }
-    .topNav > ul > li > div ul > li > a
-    {
+    .topNav > ul > li > div ul > li > a {
       padding: 7px 1px;
     }
-    #centerContent
-    {
-      width: 56%;
-      height: 70%;
+    #centerContent {
+      width: 57%;
+      height: 60%;
     }
-    #centerText
-    {
-      max-height: 175px;
+    #centerText {
+      max-height: 165px;
     }
-    .createTitleText
-    {
+    .createTitleText {
       width: 250px;
     }
-    #centerTextContent
-    {
-      max-height: 65px;
+    #centerTextContent {
+      max-height: 32px;
       padding-left: 3px;
       padding-right: 3px;
     }
-    #createBodyText
-    {
+    #createBodyText {
       padding-left: 1px;
       padding-right: 1px;
     }
-    #createOptions
-    {
-      max-height: 190px;
+    #createOptions {
+      max-height: 160px;
     }
 
-    #leftSide
-    {
+    #leftSide {
       top: 3%;
       height: auto;
       visibility: visible;
       left: .1em;
     }
-    #rightSide
-    {
+    #rightSide {
       top: 3%;
       height: auto;
       visibility: visible;
       right: .1em;
     }
-    .innerProfileMenus
-    {
+    .innerProfileMenus {
       height: 70px;
     }
-    .innerPhotos
-    {
+    .innerPhotos {
       height: 100px;
     }
-    .listResourceLeft
-    {
+    .listResourceLeft {
       padding-left: 1%;
       width: 45%;
-    }
-  }
-
-  @media screen and (max-width: 500px) and (orientation: landscape) {
-    html
-    {
-      background-image: url($mobileBackground);
-      background-color: yellow;
-    }
-    .topNav
-    {
-      max-width: 65%;
-    }
-    #centerContent
-    {
-      width: 42%;
-      height: 85%;
-    }
-    #centerText
-    {
-      max-height: 350px;
-    }
-    #centerTextContent
-    {
-      max-height: 300px;
-    }
-    #leftSide
-    {
-      top: 24%;
-      height: 30%;
-      visibility: visible;
-    }
-    #rightSide
-    {
-      top: 24%;
-      height: 30%;
-      visibility: visible;
-    }
-    .innerProfileMenus
-    {
-      height: 70px;
-      font-size: 60%;
-    }
-    .interactButton
-    {
-      font-size: 65%;
-    }
-    .navButton
-    {
-      font-size: 65%;
-    }
-    .innerPhotos
-    {
-      height: 100px;
-    }
-    .listResourceLeft
-    {
-      padding-left: 1%;
     }
   }
 }

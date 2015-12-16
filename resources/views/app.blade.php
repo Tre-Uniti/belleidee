@@ -22,6 +22,7 @@
             <li>
                 <a href="{{ url('/posts') }}">Posts<span class="caret"></span></a>
                 <div>
+
                     <ul>
                         <li><a href={{ url('/posts/create') }}>Create</a></li>
                         <li><a href={{ url('/posts') }}>Discover</a></li>
@@ -29,6 +30,7 @@
                         <li><a href="{{ url('/extensions') }}">Extensions</a></li>
                         <li><a href="{{ url('/posts') }}">Bookmarks</a></li>
                     </ul>
+
                 </div>
             </li>
             <li>
@@ -41,11 +43,13 @@
                         <li><a href="{{ url('/posts') }}">Sponsors</a></li>
                         <li><a href="{{ url('/posts') }}">Legacy Posts</a></li>
                     </ul>
+
                 </div>
             </li>
             <li>
                 <a href="{{ url('/settings') }}">Settings<span class="caret"></span></a>
                 <div>
+
                     <ul>
                         <li><a href="{{ url('/settings') }}">Modify</a></li>
                         <li><a href="{{ url('/posts') }}">Support</a></li>
@@ -53,6 +57,7 @@
                         <li><a href="https://tre-uniti.org">Tre-Uniti</a></li>
                         <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
                     </ul>
+
                 </div>
             </li>
         </ul>

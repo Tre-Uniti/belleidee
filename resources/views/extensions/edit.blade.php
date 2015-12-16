@@ -14,7 +14,7 @@
 
     {!! Form::model($extension, ['route' => ['extensions.update', $extension->id], 'method' => 'patch']) !!}
     @include ('extensions._form', ['submitButtonText' => 'Update Extension'])
-    {!! Form::close()   !!}
+
 
 @stop
 

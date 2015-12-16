@@ -18,6 +18,8 @@
     <div id = "centerTextContent">
     {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Continue your extension here:', 'rows' => '19%']) !!}
     </div>
-
+    @section('centerFooter')
     {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
+            <!-- Later Implementation<a href="{{ url('/drafts') }}"><button type = "button" class = "navButton">Save as draft</button></a>-->
+    @stop
 </div>

@@ -58,7 +58,7 @@ label.login {
 .profileNav > ul > li > div ul > li:hover > a {
   background-color: rgba(255, 255, 255, 0.1); }
 
-@media screen and (min-width: 1024px) and (max-height: 950px) {
+@media screen and (min-width: 656px) and (max-height: 849px) {
   html {
     background-color: orange; }
   .topNav {
@@ -68,11 +68,13 @@ label.login {
   .navButton {
     font-size: 100%; }
   #centerText {
-    max-height: 580px; }
+    max-height: 430px; }
   #centerTextContent {
-    max-height: 510px;
+    max-height: 300px;
     padding-left: 15px;
     padding-right: 15px; }
+  #createOptions {
+    max-height: 425px; }
   .createTitleText {
     width: 350px; }
   .innerProfileMenus {
@@ -81,8 +83,6 @@ label.login {
     height: auto; }
   #rightSide {
     height: auto; }
-  #createOptions {
-    max-height: 25%; }
   .topNav > ul > li > a {
     padding: 0 24px; }
   .topNav > ul > li > div {
@@ -558,7 +558,7 @@ article {
     color: #FFFFFF;
     background: linear-gradient(#000000, #33FF33); }
 
-@media screen and (min-width: 1024px) and (min-height: 951px) {
+@media screen and (min-width: 1401px) and (min-height: 850px) {
   html {
     background-color: black; }
   .topNav {
@@ -590,7 +590,7 @@ article {
   .topNav > ul > li > div ul > li > a {
     padding: 12px 24px; } }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: 655px) and (min-height: 600px) {
   html {
     background-color: blue; }
   .topNav {
@@ -599,9 +599,11 @@ article {
     width: 97%;
     height: 85%; }
   #centerText {
-    max-height: 530px; }
+    max-height: 635px; }
   #centerTextContent {
-    max-height: 445px; }
+    max-height: 545px; }
+  #createOptions {
+    max-height: 625px; }
   .innerProfileMenus {
     height: 175px; }
   #leftSide {
@@ -615,35 +617,39 @@ article {
   .topNav > ul > li > a {
     padding: 0 18px; } }
 
-@media screen and (max-width: 2500px) and (min-height: 700px) and (max-height: 870px) {
+@media screen and (min-width: 656px) and (max-width: 1400px) {
   html {
-    background-color: pink; }
+    background-color: green; }
   .topNav {
     max-width: 75%; }
   #centerContent {
     width: 50%;
     height: 85%; }
   #centerText {
-    max-height: 450px; }
+    max-height: 600px; }
   #centerTextContent {
-    max-height: 350px; }
+    max-height: 400px; }
+  #createOptions {
+    max-height: 605px; }
   #leftSide {
     top: 10.15%;
     height: auto;
-    visibility: visible; }
+    visibility: visible;
+    left: .7em; }
   #rightSide {
     top: 10.15%;
     height: auto;
-    visibility: visible; }
+    visibility: visible;
+    right: .7em; }
   .innerProfileMenus {
     height: 70px;
     font-size: 60%; }
   .innerPhotos {
-    height: 100px; }
+    height: 150px; }
   .topNav > ul > li > a {
     padding: 0 24px; } }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 420px) {
   html {
     background-color: red; }
   .topNav {
@@ -658,18 +664,18 @@ article {
     width: 97%;
     height: 84%; }
   #centerText {
-    max-height: 335px; }
+    max-height: 325px; }
   .createTitleText {
     width: 250px; }
   #centerTextContent {
-    max-height: 110px;
+    max-height: 185px;
     padding-left: 3px;
     padding-right: 3px; }
   #createBodyText {
     padding-left: 1px;
     padding-right: 1px; }
   #createOptions {
-    max-height: 330px; }
+    max-height: 320px; }
   #leftSide {
     top: 24%;
     height: 30%;
@@ -686,7 +692,7 @@ article {
     padding-left: 1%;
     width: 45%; } }
 
-@media screen and (max-width: 955px) and (max-height: 699px) and (orientation: landscape) {
+@media screen and (max-width: 655px) and (max-height: 399px) {
   html {
     background-color: purple; }
   h2 {
@@ -700,21 +706,21 @@ article {
   .topNav > ul > li > div ul > li > a {
     padding: 7px 1px; }
   #centerContent {
-    width: 56%;
-    height: 70%; }
+    width: 57%;
+    height: 60%; }
   #centerText {
-    max-height: 175px; }
+    max-height: 165px; }
   .createTitleText {
     width: 250px; }
   #centerTextContent {
-    max-height: 65px;
+    max-height: 32px;
     padding-left: 3px;
     padding-right: 3px; }
   #createBodyText {
     padding-left: 1px;
     padding-right: 1px; }
   #createOptions {
-    max-height: 190px; }
+    max-height: 160px; }
   #leftSide {
     top: 3%;
     height: auto;
@@ -732,38 +738,5 @@ article {
   .listResourceLeft {
     padding-left: 1%;
     width: 45%; } }
-
-@media screen and (max-width: 500px) and (orientation: landscape) {
-  html {
-    background-image: url("/img/backgroundPortrait.jpg");
-    background-color: yellow; }
-  .topNav {
-    max-width: 65%; }
-  #centerContent {
-    width: 42%;
-    height: 85%; }
-  #centerText {
-    max-height: 350px; }
-  #centerTextContent {
-    max-height: 300px; }
-  #leftSide {
-    top: 24%;
-    height: 30%;
-    visibility: visible; }
-  #rightSide {
-    top: 24%;
-    height: 30%;
-    visibility: visible; }
-  .innerProfileMenus {
-    height: 70px;
-    font-size: 60%; }
-  .interactButton {
-    font-size: 65%; }
-  .navButton {
-    font-size: 65%; }
-  .innerPhotos {
-    height: 100px; }
-  .listResourceLeft {
-    padding-left: 1%; } }
 
 /*# sourceMappingURL=app.css.map */
