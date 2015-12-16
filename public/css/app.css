@@ -58,38 +58,6 @@ label.login {
 .profileNav > ul > li > div ul > li:hover > a {
   background-color: rgba(255, 255, 255, 0.1); }
 
-@media screen and (min-width: 656px) and (max-height: 849px) {
-  html {
-    background-color: orange; }
-  .topNav {
-    width: 65%; }
-  .interactButton {
-    font-size: 100%; }
-  .navButton {
-    font-size: 100%; }
-  #centerText {
-    max-height: 430px; }
-  #centerTextContent {
-    max-height: 300px;
-    padding-left: 15px;
-    padding-right: 15px; }
-  #createOptions {
-    max-height: 425px; }
-  .createTitleText {
-    width: 350px; }
-  .innerProfileMenus {
-    height: 210px; }
-  #leftSide {
-    height: auto; }
-  #rightSide {
-    height: auto; }
-  .topNav > ul > li > a {
-    padding: 0 24px; }
-  .topNav > ul > li > div {
-    width: 165px; }
-  .topNav > ul > li > div ul > li > a {
-    padding: 12px 24px; } }
-
 html {
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -560,6 +528,7 @@ article {
 
 @media screen and (min-width: 1401px) and (min-height: 850px) {
   html {
+    background-image: url("/img/background.jpg");
     background-color: black; }
   .topNav {
     width: 65%; }
@@ -590,8 +559,42 @@ article {
   .topNav > ul > li > div ul > li > a {
     padding: 12px 24px; } }
 
-@media screen and (max-width: 655px) and (min-height: 600px) {
+@media screen and (min-width: 751px) and (max-height: 849px) {
   html {
+    background-image: url("/img/background.jpg");
+    background-color: orange; }
+  .topNav {
+    width: 65%; }
+  .interactButton {
+    font-size: 100%; }
+  .navButton {
+    font-size: 100%; }
+  #centerText {
+    max-height: 430px; }
+  #centerTextContent {
+    max-height: 300px;
+    padding-left: 15px;
+    padding-right: 15px; }
+  #createOptions {
+    max-height: 425px; }
+  .createTitleText {
+    width: 350px; }
+  .innerProfileMenus {
+    height: 210px; }
+  #leftSide {
+    height: auto; }
+  #rightSide {
+    height: auto; }
+  .topNav > ul > li > a {
+    padding: 0 24px; }
+  .topNav > ul > li > div {
+    width: 165px; }
+  .topNav > ul > li > div ul > li > a {
+    padding: 12px 24px; } }
+
+@media screen and (max-width: 750px) {
+  html {
+    background-image: url("/img/backgroundLandscape.jpg");
     background-color: blue; }
   .topNav {
     max-width: 65%; }
@@ -617,20 +620,21 @@ article {
   .topNav > ul > li > a {
     padding: 0 18px; } }
 
-@media screen and (min-width: 656px) and (max-width: 1400px) {
+@media screen and (min-width: 751px) and (max-width: 1400px) {
   html {
+    background-image: url("/img/backgroundLandscape.jpg");
     background-color: green; }
   .topNav {
     max-width: 75%; }
   #centerContent {
     width: 50%;
-    height: 85%; }
+    height: 82%; }
   #centerText {
-    max-height: 600px; }
+    max-height: 550px; }
   #centerTextContent {
     max-height: 400px; }
   #createOptions {
-    max-height: 605px; }
+    max-height: 530px; }
   #leftSide {
     top: 10.15%;
     height: auto;
@@ -651,6 +655,7 @@ article {
 
 @media screen and (max-width: 420px) {
   html {
+    background-image: url("/img/backgroundPortrait.jpg");
     background-color: red; }
   .topNav {
     max-width: 97%; }
@@ -694,6 +699,7 @@ article {
 
 @media screen and (max-width: 655px) and (max-height: 399px) {
   html {
+    background-image: url("/img/backgroundPortrait.jpg");
     background-color: purple; }
   h2 {
     font-size: 90%; }
