@@ -47,7 +47,7 @@
             @else
                 <a href="{{ url('/extensions/elevate/'.$extension->id) }}"><button type = "button" class = "navButton">{{ $elevation }}</button></a>
             @endif
-                <a href="{{ url('/home') }}"><button type = "button" class = "navButton">Intolerant</button></a>
+                <a href="{{ url('/home') }}"><button type = "button" class = "navButton">Report</button></a>
             @endif
             <a href="{{ url('/extensions/'. $extension->id) }}"><button type = "button" class = "navButton">Extend</button></a>
 
