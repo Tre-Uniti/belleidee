@@ -63,7 +63,8 @@ class PostController extends Controller
             [
                 'No Beacon' => 'No Beacon',
                 'US-SW-IHOM' => 'US-SW-IHOM',
-                'US-SW-ACE'  => 'US-SW-ACE'
+                'US-SW-ACE'  => 'US-SW-ACE',
+                'PH-CEB-CMC' => 'PH-CEB-CMC',
             ];
 
         $types =
@@ -181,6 +182,7 @@ class PostController extends Controller
                 'No Beacon' => 'No Beacon',
                 'US-SW-IHOM' => 'US-SW-IHOM',
                 'US-SW-ACE' => 'US-SW-ACE',
+                'PH-CEB-CMC' => 'PH-CEB-CMC',
             ];
 
         $types =
