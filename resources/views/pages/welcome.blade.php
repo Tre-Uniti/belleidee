@@ -9,7 +9,7 @@ Welcome!
 
         <h3>New members:</h3>
             <a href="{{ secure_url('/tour') }}"><button type = "button" class = "navButton">Take our Tour!</button></a>
-            <a href="https://github.com/tre-uniti/belle-idee"><button type = "button" class = "navButton">Our Git Repo!</button></a>
+            <a href="https://github.com/tre-uniti/belle-idee"><button type = "button" class = "navButton">Open Source</button></a>
 @stop
 
 @section('footer')

@@ -41,6 +41,8 @@
     </div>
 @stop
 @section('centerFooter')
+    <a href="{{ url('/auth/logout') }}">
+        <a href="{{ url('/auth/logout') }}"><button type = "button" class = "navButton">Logout</button></a>
 @stop
 @section('rightSideBar')
     <h2>Hosted</h2>
