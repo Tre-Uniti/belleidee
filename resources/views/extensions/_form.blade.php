@@ -1,5 +1,4 @@
 <div id = "createOptions">
-    <p><b>Extending:</b>
     @if(isset($sources['extenception']))
         <p>Extension of: <a href = {{ action('ExtensionController@show', [$sources['extenception']])}}> {{ $sources['extension_title'] }}</a></p>
     @else
