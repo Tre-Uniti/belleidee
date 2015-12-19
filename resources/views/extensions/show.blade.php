@@ -7,7 +7,11 @@
 
 @section('centerMenu')
     <h2>{{ $extension->title }}</h2>
-    <p>Extension of: <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></p>
+    @if($sources['type'] === 'extensions')
+        <p>Extension of: <a href = {{ action('ExtensionController@show', [$sources['extenception']])}}> {{ $sources['extension_title'] }}</a></p>
+    @elseif($sources['type'] === 'posts')
+        <p>Extension of: <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></p>
+    @endif
 @stop
 
 @section('centerText')
@@ -29,6 +33,7 @@
             </tr>
         </table>
     </div>
+    <a href={{ url('/extensions/extend/list/'.$extension->id)}}><button type = "button" class = "interactButton">Extensions</button></a>
         <div id = "centerTextContent">
             <p>
                 {!! nl2br(e($extension->body)) !!}
@@ -49,7 +54,7 @@
             @endif
                 <a href="{{ url('/home') }}"><button type = "button" class = "navButton">Report</button></a>
             @endif
-            <a href="{{ url('/extensions/'. $extension->id) }}"><button type = "button" class = "navButton">Extend</button></a>
+            <a href="{{ url('/extensions/extenception/'. $extension->id) }}"><button type = "button" class = "navButton">Extend</button></a>
 
     </div>
 @stop

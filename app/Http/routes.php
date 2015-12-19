@@ -23,7 +23,9 @@ Route::resource('posts', 'PostController');
 Route::resource('extensions', 'ExtensionController');
 Route::get('extensions/elevate/{id}', 'ExtensionController@elevateExtension');
 Route::get('extensions/post/{source}', 'ExtensionController@extendPost');
+Route::get('extensions/extenception/{source}', 'ExtensionController@extenception');
 Route::get('extensions/post/list/{id}', 'ExtensionController@postList');
+Route::get('extensions/extend/list/{id}', 'ExtensionController@extendList');
 
 //Invite Routes (Resource)
 Route::resource('invites', 'InviteController');

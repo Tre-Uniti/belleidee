@@ -105,15 +105,27 @@ class ExtensionController extends Controller
                 ->withErrors([$error]);
         }
 
-        //Store body text at AWS
-        Storage::put($path, $inspiration);
-        $request = array_add($request, 'extension_path', $path);
-        $request = array_add($request, 'post_id', $sourceId);
-        $request = array_add($request, 'source_user', $sources['user_id']);
+        //Store body text at AWS insert into db with extenception and/or post
+        if (isset($sources['extenception']))
+        {
+            Storage::put($path, $inspiration);
+            $request = array_add($request, 'extension_path', $path);
+            $request = array_add($request, 'post_id', $sourceId);
+            $request = array_add($request, 'extenception', $sources['extenception']);
+            $request = array_add($request, 'source_user', $sources['user_id']);
+        }
+        else
+        {
+            Storage::put($path, $inspiration);
+            $request = array_add($request, 'extension_path', $path);
+            $request = array_add($request, 'post_id', $sourceId);
+            $request = array_add($request, 'source_user', $sources['user_id']);
+        }
 
         $extension = new Extension($request->except('body'));
         $extension->user()->associate($user);
         $extension->save();
+
 
         //Add 1 extension to original post
         $post = Post::findOrFail($sourceId);
@@ -154,10 +166,29 @@ class ExtensionController extends Controller
         //Get Source info of extension
         $post_id = $extension->post_id;
         $post = Post::findOrFail($post_id);
-        $sources = [
-            'post_id' => $post->id,
-            'post_title' => $post->title
-        ];
+
+        //If extension source is another extension (Extenception)
+        if(isset($extension->extenception))
+        {
+            $extenception = Extension::findOrFail($extension->extenception);
+            $sources = [
+                'type' => 'extensions',
+                'post_id' => $extenception->post_id,
+                'extenception' => $extenception->id,
+                'extension_title' => $extenception->title,
+                'post_title' => $post->title
+            ];
+        }
+        //Else extension is sourced from post
+        else
+        {
+            $sources = [
+                'type' => 'posts',
+                'post_id' => $post->id,
+                'post_title' => $post->title
+            ];
+        }
+
 
         //Check if viewing user has already elevated extension
         $viewUserID = Auth::id();
@@ -312,6 +343,16 @@ class ExtensionController extends Controller
         return redirect('extensions/create');
     }
 
+    //Used to setup extension of extension
+    public function extenception($id)
+    {
+        $sourceExtension = Extension::findOrFail($id);
+        $fullSource = ['type' => 'extensions', 'user_id' => $sourceExtension->user_id, 'post_id' => $sourceExtension->post_id,  'extenception' => $id, 'extension_title' => $sourceExtension->title];
+        Session::put('sources', $fullSource);
+
+        return redirect('extensions/create');
+    }
+
     //Show extensions of a specific post
     public function postList($id)
     {
@@ -332,6 +373,30 @@ class ExtensionController extends Controller
         $profileExtensions = $this->getProfileExtensions($user);
 
         $extensions = Extension::where('post_id', $id)->latest('created_at')->paginate(14);
+
+        return view('extensions.postList', compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources'));
+    }
+
+    //Show extensions of a specific extension (extenception)
+    public function extendList($id)
+    {
+        //Get post and set sources for extension
+        $extension = Extension::findOrFail($id);
+        $sources = [
+            'extenception' => $extension->id,
+            'extension_title' => $extension->title
+        ];
+
+        //Get other Posts and Extensions of User
+        $user_id = $extension->user_id;
+        $user = User::findOrFail($user_id);
+
+
+        //Get Posts and Extensions of user
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = $this->getProfileExtensions($user);
+
+        $extensions = Extension::where('extenception', $id)->latest('created_at')->paginate(14);
 
         return view('extensions.postList', compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources'));
     }
