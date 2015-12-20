@@ -98,8 +98,9 @@
 
                 </header>
             </div>
+            <h2>The Commencement</h2>
             <div id = "centerText">
-                    <h2>The Commencement</h2>
+
                 <div>
                     <table style="display: inline-block;">
                         <tr>

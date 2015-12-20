@@ -14,6 +14,9 @@
 //User Routes (Resource)
 Route::resource('users', 'UserController');
 
+//Beacon Routes (Resource)
+Route::resource('beacons', 'BeaconController');
+
 //Post Routes (Resource)
 Route::get('posts/yours', 'PostController@yourPosts');
 Route::get('posts/elevate/{id}', 'PostController@elevatePost');

@@ -19,7 +19,7 @@
     <tr>
         <td colspan = "3">
             <p>We are honored to have you along for the journey and look forward to reading your beliefs and inspirations.</p>
-            <p>Below are 7 important notes to remember about Idee, typically the first thing users do is change their sponsor or post their first inspiration.</p>
+            <p>Below are 7 important notes to remember about Idee, typically the first thing users do is read, extend, or change sponsors.</p>
         </td>
     </tr>
     <tr>
