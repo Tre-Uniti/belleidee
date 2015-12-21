@@ -59,6 +59,16 @@ class PostController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
         $date = Carbon::now()->format('M-d-Y');
+
+        //Get last post of user and check if it was UTC today
+        //If the dates match redirect them to their post
+        $lastPost = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
+        if($lastPost->created_at->format('M-d-Y') === $date)
+        {
+            flash()->overlay('You have already posted on UTC: '. $date);
+            return redirect('posts/'.$lastPost->id);
+        }
+        
         $beacons =
             [
                 'No Beacon' => 'No Beacon',
