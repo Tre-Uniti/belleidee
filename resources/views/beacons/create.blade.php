@@ -12,8 +12,6 @@
     @include ('beacons._form', ['submitButtonText' => 'Request Beacon'])
 @stop
 
-
-
 @include('beacons.rightSide')
 
 

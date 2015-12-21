@@ -121,7 +121,7 @@ class SessionController extends Controller
      */
     protected function getFailedLoginMessage()
     {
-        return '-These credentials do not match our records.  (Only verified email accounts may sign in)';
+        return '-These credentials do not match our records.';
     }
 
     /**

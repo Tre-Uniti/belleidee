@@ -36,7 +36,7 @@ class ExtensionController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
-        $extensions = $this->extension->latest()->paginate(12);
+        $extensions = $this->extension->latest()->paginate(10);
         return view ('extensions.index', compact('user', 'extensions', 'profilePosts', 'profileExtensions'));
     }
 
@@ -113,6 +113,11 @@ class ExtensionController extends Controller
             $request = array_add($request, 'post_id', $sourceId);
             $request = array_add($request, 'extenception', $sources['extenception']);
             $request = array_add($request, 'source_user', $sources['user_id']);
+
+            //Add 1 extension to source extension
+            $extension = Extension::findOrFail($sources['extenception']);
+            $extension->where('id', $extension->id)
+                ->update(['extension' => $extension->extension + 1]);
         }
         else
         {

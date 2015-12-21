@@ -18,8 +18,7 @@ class User extends Model implements AuthenticatableContract,
 
     /**
      * The database table used by the model.
-     *$table->integer('elevation')->unsigned();
-    $table->integer('extension')->unsigned();
+     *
      * @var string
      */
     protected $table = 'users';

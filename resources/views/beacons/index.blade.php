@@ -6,39 +6,33 @@
 @include('beacons.leftSide')
 
 @section('centerText')
+    <div>
     <h2>Beacons</h2>
+        <table style="display: inline-block;">
+            <tr>
+                <td><a href={{ url('/beacons/create')}}>Top Beacons</a></td>
+                <td><a href={{ url('/beacons/create')}}>Search</a></td>
+                <td><a href={{ url('/beacons/create')}}>Request New</a></td>
+            </tr>
+        </table>
+    </div>
     <div style = "width: 50%; float: left;">
-
-    <select>
-    <option>Top Elevated</option>
-    <option>Top Extended</option>
-        <option>With Beacon</option>
-        <option>Legacy Posts</option>
-    </select>
+        <h4>Name</h4>
+    </div>
+    <div style = "width: 50%; float: right;">
+        <h4>Tag</h4>
     </div>
 
-    <div style = "width: 50%; float: right;">
-    <select>
-        <option>Today</option>
-        <option>Week</option>
-        <option>Month</option>
-        <option>2015</option>
-    </select>
-        </div>
-
         @foreach ($beacons as $beacon)
-
             <div class = "listResource">
             <div class = "listResourceLeft">
             <a href="{{ action('BeaconController@show', [$beacon->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $beacon->name }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('UserController@show', [$beacon->user_id])}}"><button type = "button" class = "interactButton">{{ $beacon->name }}</button></a>
+                <a href="{{ action('UserController@show', [$beacon->user_id])}}"><button type = "button" class = "interactButton">{{ $beacon->beacon_tag }}</button></a>
             </div>
             </div>
-
         @endforeach
-
 
 @stop
 @section('centerFooter')

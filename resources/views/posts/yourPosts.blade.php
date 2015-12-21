@@ -6,25 +6,23 @@
 @include('posts.leftSide')
 
 @section('centerText')
-    <h2>Your Posts</h2>
+    <div>
+        <h2>Your Posts</h2>
+        <table style="display: inline-block;">
+            <tr>
+                <td><a href={{ url('/posts')}}>Top Elevated</a></td>
+                <td><a href={{ url('/posts')}}>Search</a></td>
+                <td><a href={{ url('/posts')}}>Most Extended</a></td>
+            </tr>
+        </table>
+    </div>
     <div style = "width: 50%; float: left;">
-
-        <select>
-            <option>Top Elevated</option>
-            <option>Top Extended</option>
-            <option>With Beacon</option>
-            <option>Legacy Posts</option>
-        </select>
+        <h4>Title</h4>
     </div>
-
     <div style = "width: 50%; float: right;">
-        <select>
-            <option>Today</option>
-            <option>Week</option>
-            <option>Month</option>
-            <option>2015</option>
-        </select>
+        <h4>Date</h4>
     </div>
+
 
     @foreach ($posts as $post)
 

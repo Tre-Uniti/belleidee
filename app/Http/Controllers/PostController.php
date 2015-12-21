@@ -31,7 +31,7 @@ class PostController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
-        $posts = $this->post->latest()->paginate(12);
+        $posts = $this->post->latest()->paginate(10);
         return view ('posts.index', compact('user', 'posts', 'profilePosts','profileExtensions'));
     }
 

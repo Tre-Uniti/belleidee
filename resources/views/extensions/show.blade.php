@@ -33,7 +33,7 @@
             </tr>
         </table>
     </div>
-    <a href={{ url('/extensions/extend/list/'.$extension->id)}}><button type = "button" class = "interactButton">Extensions</button></a>
+    <a href={{ url('/extensions/extend/list/'.$extension->id)}}><button type = "button" class = "interactButton">Extensions: {{ $extension->extension }}</button></a>
         <div id = "centerTextContent">
             <p>
                 {!! nl2br(e($extension->body)) !!}

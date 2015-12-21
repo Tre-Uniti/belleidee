@@ -39,7 +39,7 @@
                     <ul>
                         <li><a href="{{ url('/posts') }}">Beliefs</a></li>
                         <li><a href="{{ url('/posts') }}">Questions</a></li>
-                        <li><a href="{{ url('/posts') }}">Beacons</a></li>
+                        <li><a href="{{ url('/beacons') }}">Beacons</a></li>
                         <li><a href="{{ url('/posts') }}">Sponsors</a></li>
                         <li><a href="{{ url('/posts') }}">Legacy Posts</a></li>
                     </ul>

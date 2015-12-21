@@ -46,8 +46,11 @@ class Handler extends ExceptionHandler
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
-        
 
+        if ($e instanceof TokenMismatchException){
+            // Used when session times out and user tries to submit still
+            return redirect()->back()->withInput()->with('error', 'Your session has expired please login');
+        }
         return parent::render($request, $e);
     }
 }

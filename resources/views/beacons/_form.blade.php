@@ -9,10 +9,10 @@
     </tr>
     <tr>
         <td>
-            {!! Form::label('name', 'Belief') !!}
+            {!! Form::label('belief', 'Belief') !!}
         </td>
         <td>
-            {!! Form::select('index', $beliefs) !!}
+            {!! Form::select('belief', $beliefs) !!}
         </td>
     </tr>
 

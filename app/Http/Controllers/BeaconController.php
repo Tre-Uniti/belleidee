@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateBeaconRequest;
 use Illuminate\Http\Request;
 use App\User;
 use App\Post;
@@ -33,7 +34,7 @@ class BeaconController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
-        $beacons = $this->beacon->latest()->paginate(12);
+        $beacons = $this->beacon->latest()->paginate(10);
         return view ('beacons.index', compact('user', 'beacons', 'profilePosts','profileExtensions'));
     }
 
@@ -57,7 +58,7 @@ class BeaconController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBeaconRequest $request)
     {
         $user = Auth::user();
         $user_id = $user->id;
@@ -65,6 +66,22 @@ class BeaconController extends Controller
         //$request = array_add($request, 'tier', 3);
         $beacon = new Beacon;
         $beacon->name = $request['name'];
+        $beacon->beacon_tag = $request['beacon_tag'];
+        $beacon->belief = $request['belief'];
+        $beacon->email = $request['email'];
+        if(isset($request['website']))
+        {
+            $beacon->website = $request['website'];
+        }
+        else
+        {
+            $beacon->website = 'N/A';
+        }
+        $beacon->phone = $request['phone'];
+        $beacon->address = $request['address'];
+        $beacon->tier = 1;
+        $beacon->status = 'requested';
+        $beacon->user_id = $user_id;
         $beacon->save();
         flash()->overlay('Your beacon request has been created');
         return redirect('beacons');
@@ -78,7 +95,11 @@ class BeaconController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
+        $beacon = $this->beacon->findOrFail($id);
+        return view ('beacons.show', compact('user', 'beacon', 'profilePosts','profileExtensions'));
     }
 
     /**
