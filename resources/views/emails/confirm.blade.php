@@ -23,25 +23,25 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">1.  Zoko is the first user, mod, and admin of Belle-Idee, the account is maintained by the CEO of Tre-Uniti</td>
+        <td colspan="3" style = "text-align: left;">1.  Zoko is the first user, mod, and admin of Belle-Idee, the account is maintained by the CEO of Tre-Uniti.</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">2.  It is our belief that the majority of world beliefs seek to enlighten the mind and/or spirit</td>
+        <td colspan="3" style = "text-align: left;">2.  It is our belief that the majority of world beliefs seek to enlighten the mind and/or spirit.</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">3.  We (the users) are free to post our beliefs so long as users and moderators don't find them intolerant of others</td>
+        <td colspan="3" style = "text-align: left;">3.  We (the users) are free to post our beliefs so long as users and moderators don't find them intolerant of others.</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">4.  The Weekly Question is asked by the user whose answer to the last question was most inspirational (Elevation+Extension)</td>
+        <td colspan="3" style = "text-align: left;">4.  The Weekly Question is asked by the user whose answer to the last question was most inspirational (Elevation+Extension).</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">5.  Users must select a sponsor who may send 3 levels of promotions for continuous sponsorship and loyalty</td>
+        <td colspan="3" style = "text-align: left;">5.  Users must select a sponsor who may send 3 levels of promotions for continuous sponsorship and loyalty.</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">6.  Beacon centers are places of worship like Churches, Synagogues, Mosques, Temples or thought (Atheism)</td>
+        <td colspan="3" style = "text-align: left;">6.  Beacon centers are places of worship like Churches, Synagogues, Mosques, Temples or thought (Atheism).</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">7.  We are open source, you are free customize your local fork and download any posts for offline use</td>
+        <td colspan="3" style = "text-align: left;">7.  We are open source, we welcome pull requests at Github and feature requests at Creatori.</td>
     </tr>
 @endsection
 @section('messageType')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateBeaconRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\User;
 use App\Post;
@@ -81,7 +82,7 @@ class BeaconController extends Controller
         $beacon->address = $request['address'];
         $beacon->tier = 1;
         $beacon->status = 'requested';
-        $beacon->user_id = $user_id;
+        $beacon->user_id = $user;
         $beacon->save();
         flash()->overlay('Your beacon request has been created');
         return redirect('beacons');
@@ -99,6 +100,7 @@ class BeaconController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
         $beacon = $this->beacon->findOrFail($id);
+        //$posts = Post:where('beacon_tag')
         return view ('beacons.show', compact('user', 'beacon', 'profilePosts','profileExtensions'));
     }
 
@@ -135,4 +137,38 @@ class BeaconController extends Controller
     {
         //
     }
+
+
+    /**
+     * List posts and extensions with the specific beacon_tag
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function listTagged($beacon_tag)
+    {
+
+        //Check if Beacon_tag belongs to an Idee Beacon
+        try
+        {
+            $beacon = Beacon::where('beacon_tag', '=',  $beacon_tag)->firstOrFail();
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('No active Idee Beacon with this tag: '.$beacon_tag);
+            $error = "No active Idee Beacon with this tag: $beacon_tag";
+            return redirect()
+                ->back();
+        }
+
+        $posts = Post::where('beacon_tag', $beacon_tag)->latest()->paginate(10);;
+
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
+
+        return view ('beacons.listTagged', compact('user', 'posts', 'beacon', 'profilePosts','profileExtensions'));
+
+    }
+
 }

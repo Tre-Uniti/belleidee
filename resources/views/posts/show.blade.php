@@ -19,7 +19,7 @@
         </table>
 
         <table style="display: inline-block;">
-            <tr><td><a href="{{ url('/posts') }}">{{ $post->belief_beacon }}</a></td>
+            <tr><td><a href="{{ url('/beacons/tags/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a></td>
             </tr>
         </table>
 

@@ -10,7 +10,7 @@ class Extension extends Model
         'title',
         'body',
         'index',
-        'belief_beacon',
+        'beacon_tag',
         'index2',
         'extension_path',
         'post_id',

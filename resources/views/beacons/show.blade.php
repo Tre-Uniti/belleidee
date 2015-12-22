@@ -12,11 +12,36 @@
 @section('centerText')
     <div>
         <table style="display: inline-block;">
+        <tr>
+            <th>
+                <a href="{{ url('/beacons') }}">Shepherd</a>
+            </th>
+            <th>
+                <a href="{{ url('/beacons') }}">Tag</a>
+            </th>
+            <th>
+                <a href="{{ url('/beacons') }}">Usage</a>
+            </th>
+
+    </tr>
             <tr>
-                <td><a href="{{ url('/posts/') }}">{{ $beacon->name }}</a>
+                <td><a href="{{ url('/posts/') }}">{{ $beacon->user_id }}</a>
+                </td>
+                <td><a href="{{ url('/beacons/tags/'.$beacon->beacon_tag) }}">{{ $beacon->beacon_tag }}</a>
+                </td>
+                <td><a href="{{ url('/posts/') }}">{{ $beacon->tag_usage }}</a>
                 </td>
             </tr>
-        </table>
+            <tr>
+                <td colspan="3">
+                    <a href="{{ $beacon->website }}">Beacon Website</a>
+                </td>
+            </tr>
+    </table>
+
+        <hr/>
+        <h2>Top 7</h2>
+
 
         </div>
 @stop

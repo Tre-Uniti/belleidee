@@ -16,6 +16,7 @@ Route::resource('users', 'UserController');
 
 //Beacon Routes (Resource)
 Route::resource('beacons', 'BeaconController');
+Route::get('beacons/tags/{source}', 'BeaconController@listTagged');
 
 //Post Routes (Resource)
 Route::get('posts/yours', 'PostController@yourPosts');

@@ -25,8 +25,8 @@ class CreateExtensionRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|min:5',
-            'body'  => 'required|min:10'
+            'title' => 'required|min:5|max:37',
+            'body'  => 'required|min:10|max:3500'
         ];
     }
 }

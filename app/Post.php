@@ -11,7 +11,7 @@ class Post extends Model
         'body',
         'published_at',
         'index',
-        'belief_beacon',
+        'beacon_tag',
         'index2',
         'post_path',
     ];

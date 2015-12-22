@@ -28,8 +28,8 @@ class EditExtensionRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|min:5',
-            'body'  => 'required|min:5'
+            'title' => 'required|min:5|max:37',
+            'body'  => 'required|min:5|max:3500'
         ];
     }
     // override to redirect back
