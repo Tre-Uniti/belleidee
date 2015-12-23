@@ -28,7 +28,7 @@
                         <li><a href={{ url('/posts') }}>Discover</a></li>
                         <li><a href="{{ url('posts/yours') }}">Your Posts</a></li>
                         <li><a href="{{ url('/extensions') }}">Extensions</a></li>
-                        <li><a href="{{ url('/posts') }}">Bookmarks</a></li>
+                        <li><a href="{{ url('/posts') }}">Legacy Posts</a></li>
                     </ul>
 
                 </div>
@@ -41,7 +41,7 @@
                         <li><a href="{{ url('/posts') }}">Questions</a></li>
                         <li><a href="{{ url('/beacons') }}">Beacons</a></li>
                         <li><a href="{{ url('/posts') }}">Sponsors</a></li>
-                        <li><a href="{{ url('/posts') }}">Legacy Posts</a></li>
+                        <li><a href="{{ url('/bookmarks') }}">Bookmarks</a></li>
                     </ul>
 
                 </div>

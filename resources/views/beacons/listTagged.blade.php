@@ -39,6 +39,6 @@
     {!! $posts->render() !!}
 @stop
 
-@include('posts.rightSide')
+@include('beacons.rightSide')
 
 

@@ -54,13 +54,8 @@ class ExtensionController extends Controller
         $profileExtensions = $this->getProfileExtensions($user);
         $date = Carbon::now()->format('M-d-Y');
 
-        $beacons =
-            [
-                'No Beacon' => 'No Beacon',
-                'US-SW-IHOM' => 'US-SW-IHOM',
-                'US-SW-ACE' => 'US-SW-ACE',
-                'PH-CEB-CMC' => 'PH-CEB-CMC'
-            ];
+        //Populate Beacon options with user's bookmarked beacons
+        $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
 
         $types =
             [
@@ -69,7 +64,6 @@ class ExtensionController extends Controller
                 'Prayer' => 'Prayer',
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
-                'Speech' => 'Speech',
                 'Story' => 'Story',
             ];
 
@@ -240,13 +234,8 @@ class ExtensionController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
 
-        $beacons =
-            [
-                'No Beacon' => 'No Beacon',
-                'US-SW-IHOM' => 'US-SW-IHOM',
-                'US-SW-ACE' => 'US-SW-ACE',
-                'PH-CEB-CMC' => 'PH-CEB-CMC'
-            ];
+        //Populate Beacon options with user's bookmarked beacons
+        $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
 
         $types =
             [
@@ -255,7 +244,6 @@ class ExtensionController extends Controller
                 'Prayer' => 'Prayer',
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
-                'Speech' => 'Speech',
                 'Story' => 'Story',
             ];
 

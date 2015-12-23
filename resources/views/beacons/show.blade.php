@@ -48,7 +48,7 @@
 
 @section('centerFooter')
     <div id = "centerFooter">
-
+        <a href="{{ url('/bookmarks/beacons/'.$beacon->beacon_tag) }}"><button type = "button" class = "navButton">Bookmark</button></a>
     </div>
 @stop
 

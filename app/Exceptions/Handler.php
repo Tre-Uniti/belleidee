@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Session\TokenMismatchException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -50,6 +51,11 @@ class Handler extends ExceptionHandler
         if ($e instanceof TokenMismatchException){
             // Used when session times out and user tries to submit still
             return redirect()->back()->withInput()->with('error', 'Your session has expired please login');
+        }
+        if($e instanceof FileNotFoundException)
+        {
+            flash()->overlay('Post does not exist please contact Zoko@belle-idee.org');
+            return redirect()->back();
         }
         return parent::render($request, $e);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bookmark;
 use App\Elevate;
 use App\User;
 use App\Post;
@@ -29,8 +30,8 @@ class PostController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->latest()->paginate(10);
         return view ('posts.index', compact('user', 'posts', 'profilePosts','profileExtensions'));
     }
@@ -68,14 +69,9 @@ class PostController extends Controller
             flash()->overlay('You have already posted on UTC: '. $date);
             return redirect('posts/'.$lastPost->id);
         }
-        
-        $beacons =
-            [
-                'No Beacon' => 'No Beacon',
-                'US-SW-IHOM' => 'US-SW-IHOM',
-                'US-SW-ACE'  => 'US-SW-ACE',
-                'PH-CEB-CMC' => 'PH-CEB-CMC',
-            ];
+
+        //Populate Beacon options with user's bookmarked beacons
+        $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
 
         $types =
             [
@@ -84,7 +80,6 @@ class PostController extends Controller
                 'Prayer' => 'Prayer',
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
-                'Speech' => 'Speech',
                 'Story' => 'Story',
             ];
 
@@ -138,6 +133,7 @@ class PostController extends Controller
 
         $post = $this->post->findOrFail($id);
         $post_path = $post->post_path;
+
         $contents = Storage::get($post_path);
         $post = array_add($post, 'body', $contents);
 
@@ -187,13 +183,8 @@ class PostController extends Controller
         //
         $date = $post->created_at->format('M-d-Y');
 
-        $beacons =
-            [
-                'No Beacon' => 'No Beacon',
-                'US-SW-IHOM' => 'US-SW-IHOM',
-                'US-SW-ACE' => 'US-SW-ACE',
-                'PH-CEB-CMC' => 'PH-CEB-CMC',
-            ];
+        //Populate Beacon options with user's bookmarked beacons
+        $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
 
         $types =
             [
@@ -202,7 +193,6 @@ class PostController extends Controller
                 'Prayer' => 'Prayer',
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
-                'Speech' => 'Speech',
                 'Story' => 'Story',
             ];
 

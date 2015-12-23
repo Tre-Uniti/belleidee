@@ -18,6 +18,11 @@ Route::resource('users', 'UserController');
 Route::resource('beacons', 'BeaconController');
 Route::get('beacons/tags/{source}', 'BeaconController@listTagged');
 
+//Bookmark Routes (Resources)
+Route::resource('bookmarks', 'BookmarkController');
+Route::get('bookmarks/beacons/{beacon_tag}', 'BookmarkController@bookmarkBeacon');
+Route::get('bookmarks/personal/{user_id}', 'BookmarkController@listPersonal');
+
 //Post Routes (Resource)
 Route::get('posts/yours', 'PostController@yourPosts');
 Route::get('posts/elevate/{id}', 'PostController@elevatePost');

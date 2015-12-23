@@ -24,7 +24,7 @@
         </table>
 
         <table style="display: inline-block;">
-            <tr><td><a href="{{ url('/home') }}">{{ $extension->beacon_tag }}</a></td>
+            <tr><td><a href="{{ url('/beacons/tags/'.$extension->beacon_tag) }}">{{ $extension->beacon_tag }}</a></td>
             </tr>
         </table>
 

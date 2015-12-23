@@ -57,6 +57,16 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Elevate');
     }
 
+    /*
+     * Get the bookmarks associated with the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function bookmarks()
+    {
+        return $this->belongsToMany('App\Bookmark')->withTimestamps();
+    }
+
     public static function boot()
     {
         parent::boot();

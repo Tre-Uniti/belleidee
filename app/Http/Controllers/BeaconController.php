@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bookmark;
 use App\Http\Requests\CreateBeaconRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -100,6 +101,10 @@ class BeaconController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
         $beacon = $this->beacon->findOrFail($id);
+
+        //Check if user has already bookmarked beacon
+        //$bookmarked = DB:
+        //if()
         //$posts = Post:where('beacon_tag')
         return view ('beacons.show', compact('user', 'beacon', 'profilePosts','profileExtensions'));
     }
@@ -142,7 +147,7 @@ class BeaconController extends Controller
     /**
      * List posts and extensions with the specific beacon_tag
      *
-     * @param  int  $id
+     * @param  string  $beacon_tag
      * @return \Illuminate\Http\Response
      */
     public function listTagged($beacon_tag)
