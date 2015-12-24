@@ -23,6 +23,7 @@ class BeaconController extends Controller
     public function __construct(Beacon $beacon)
     {
         $this->middleware('auth');
+        $this->middleware('admin', ['only' => 'create']);
         $this->beacon = $beacon;
     }
 
