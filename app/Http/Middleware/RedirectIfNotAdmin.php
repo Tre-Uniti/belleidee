@@ -21,12 +21,12 @@ class RedirectIfNotAdmin
         if ($user->type < 1)
         {
             flash()->overlay('Ascension level insufficient to view');
-            return redirect('/home');
+            return redirect()->back();
         }
         elseif ($user->type < 4)
         {
             flash()->overlay('Ascension level insufficient to view');
-            return redirect('/posts');
+            return redirect()->back();
         }
         else
         {

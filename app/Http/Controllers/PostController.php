@@ -72,6 +72,7 @@ class PostController extends Controller
 
         //Populate Beacon options with user's bookmarked beacons
         $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
+        $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
         $types =
             [
@@ -185,6 +186,7 @@ class PostController extends Controller
 
         //Populate Beacon options with user's bookmarked beacons
         $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
+        $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
         $types =
             [

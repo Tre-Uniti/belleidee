@@ -112,6 +112,11 @@ class BookmarkController extends Controller
      */
     public function bookmarkBeacon($beacon_tag)
     {
+        if($beacon_tag == 'No-Beacon')
+        {
+            flash()->overlay('No-Beacon cannot be bookmarked');
+            return redirect()->back();
+        }
         $user = Auth::user();
         $bookmark = Bookmark::where('pointer', '=', $beacon_tag)->where('type', '=', 'beacon')->first();
         if(count($bookmark))
@@ -120,9 +125,10 @@ class BookmarkController extends Controller
             if(count($bookmark_user))
             {
                 flash()->overlay('You have already bookmarked this Beacon');
-                    return redirect()
-                        ->back();
+                return redirect()->back();
             }
+
+
             $user->bookmarks()->attach($bookmark->id);
             return redirect('bookmarks/personal/'.$user->id);
         }

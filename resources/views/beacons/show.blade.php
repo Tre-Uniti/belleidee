@@ -48,7 +48,9 @@
 
 @section('centerFooter')
     <div id = "centerFooter">
+        @if($beacon->beacon_tag != 'No-Beacon')
         <a href="{{ url('/bookmarks/beacons/'.$beacon->beacon_tag) }}"><button type = "button" class = "navButton">Bookmark</button></a>
+        @endif
     </div>
 @stop
 
