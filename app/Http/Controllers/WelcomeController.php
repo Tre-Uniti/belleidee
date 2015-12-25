@@ -21,10 +21,7 @@ class WelcomeController extends Controller
     {
         return view ('pages.demo');
     }
-    public function getIndev()
-    {
-        return view ('pages.indev');
-    }
+
     public function getNavGuide()
     {
         return view ('pages.navGuide');

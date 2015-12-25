@@ -57,12 +57,13 @@ Route::get('auth/verify', 'Auth\AuthController@verify');
 Route::get('/', 'WelcomeController@getWelcome');
 Route::get('demo', 'WelcomeController@getDemo');
 Route::get('tour', 'WelcomeController@getTour');
-Route::get('indev', 'WelcomeController@getIndev');
+
 Route::get('navGuide', 'WelcomeController@getNavGuide');
 
 // Home routes
 Route::get('home', 'HomeController@getHome');
 Route::get('settings', 'HomeController@getSettings');
+Route::get('indev', 'HomeController@getIndev');
 
 
 

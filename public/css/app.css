@@ -562,7 +562,7 @@ article {
 @media screen and (min-width: 801px) and (max-height: 849px) {
   html {
     background-image: url("/img/background.jpg");
-    background-color: orange; }
+    background-color: black; }
   .topNav {
     width: 65%; }
   .interactButton {
@@ -595,7 +595,7 @@ article {
 @media screen and (max-width: 850px) {
   html {
     background-image: url("/img/backgroundLandscape.jpg");
-    background-color: blue; }
+    background-color: black; }
   .topNav {
     max-width: 65%; }
   #centerContent {
@@ -623,16 +623,16 @@ article {
 @media screen and (min-width: 851px) and (max-width: 1500px) {
   html {
     background-image: url("/img/backgroundLandscape.jpg");
-    background-color: green; }
+    background-color: black; }
   .topNav {
     max-width: 75%; }
   #centerContent {
     width: 50%;
     height: 81%; }
   #centerText {
-    max-height: 540px; }
+    max-height: 535px; }
   #centerTextContent {
-    max-height: 390px; }
+    max-height: 385px; }
   #createOptions {
     max-height: 520px; }
   #leftSide {
@@ -656,7 +656,7 @@ article {
 @media screen and (max-width: 420px) {
   html {
     background-image: url("/img/backgroundPortrait.jpg");
-    background-color: red; }
+    background-color: black; }
   .topNav {
     max-width: 97%; }
   .topNav > ul > li > a {
@@ -700,7 +700,7 @@ article {
 @media screen and (max-width: 655px) and (max-height: 399px) {
   html {
     background-image: url("/img/backgroundPortrait.jpg");
-    background-color: purple; }
+    background-color: black; }
   h2 {
     font-size: 90%; }
   .topNav {

@@ -28,7 +28,7 @@
                         <li><a href={{ url('/posts') }}>Discover</a></li>
                         <li><a href="{{ url('posts/yours') }}">Your Posts</a></li>
                         <li><a href="{{ url('/extensions') }}">Extensions</a></li>
-                        <li><a href="{{ url('/posts') }}">Legacy Posts</a></li>
+                        <li><a href="{{ url('/indev') }}">Legacy Posts</a></li>
                     </ul>
 
                 </div>
@@ -37,10 +37,10 @@
                 <a href="{{ url('/indev') }}">Directory<span class="caret"></span></a>
                 <div>
                     <ul>
-                        <li><a href="{{ url('/posts') }}">Beliefs</a></li>
-                        <li><a href="{{ url('/posts') }}">Questions</a></li>
+                        <li><a href="{{ url('/indev') }}">Beliefs</a></li>
+                        <li><a href="{{ url('/indev') }}">Questions</a></li>
                         <li><a href="{{ url('/beacons') }}">Beacons</a></li>
-                        <li><a href="{{ url('/posts') }}">Sponsors</a></li>
+                        <li><a href="{{ url('/indev') }}">Sponsors</a></li>
                         <li><a href="{{ url('/bookmarks') }}">Bookmarks</a></li>
                     </ul>
 
@@ -52,7 +52,7 @@
 
                     <ul>
                         <li><a href="{{ url('/settings') }}">Modify</a></li>
-                        <li><a href="{{ url('/posts') }}">Support</a></li>
+                        <li><a href="{{ url('/indev') }}">Support</a></li>
                         <li><a href="{{ url('/invites') }}">Invite Friends</a></li>
                         <li><a href="https://tre-uniti.org">Tre-Uniti</a></li>
                         <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
@@ -130,27 +130,23 @@
                             <a href="{{url('/posts')}}">Beacons</a>
                             <div>
                                 <ul>
-                                    <li><a href="{{url('/posts')}}">US-SW-ACE</a></li>
-                                    <li><a href="{{url('/posts')}}">US-SW-IHOM</a></li>
+                                    <li><a href="{{url('/beacons/tags/US-SW-ACE')}}">US-SW-ACE</a></li>
+                                    <li><a href="{{url('/beacons/tags/US-SW-IHOM')}}">US-SW-IHOM</a></li>
                                 </ul>
                             </div>
                         </li>
                     @endif
                         @if ($profileExtensions->isEmpty())
-                            <li><a href="{{url('/posts')}}">Legacy</a></li>
+                            <li><a href="{{url('/indev')}}">Legacy</a></li>
                         @else
                             <li>
-                                <a href="{{ url('/posts') }}">Legacy</a>
+                                <a href="{{ url('/indev') }}">Legacy</a>
                                 <div>
                                     <ul>
-                                        @foreach($profileExtensions as $profileExtension)
-                                            <li><a href={{ action('ExtensionController@show', [$profileExtension->id])}}>{{ $profileExtension->created_at->format('M-d-Y')}}</a></li>
-                                        @endforeach
                                     </ul>
                                 </div>
                             </li>
                         @endif
-
                 </ul>
             </nav>
         </div>

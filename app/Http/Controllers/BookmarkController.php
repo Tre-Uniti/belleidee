@@ -128,7 +128,6 @@ class BookmarkController extends Controller
                 return redirect()->back();
             }
 
-
             $user->bookmarks()->attach($bookmark->id);
             return redirect('bookmarks/personal/'.$user->id);
         }
@@ -143,6 +142,8 @@ class BookmarkController extends Controller
             //Add beacon_tag to user's bookmarks
             $user->bookmarks()->attach($newBookmark->id);
 
+            //Notify user bookmark was successful
+            flash()->overlay('You have successfully bookmarked this beacon');
             return redirect('bookmarks/personal/'.$user->id);
         }
     }

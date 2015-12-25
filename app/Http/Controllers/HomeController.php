@@ -44,4 +44,12 @@ class HomeController extends Controller
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
         return view ('pages.settings', compact('user', 'profilePosts', 'profileExtensions'));
     }
+
+    public function getIndev()
+    {
+        $user = Auth::user();
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
+        return view ('pages.indev', compact('user', 'profilePosts', 'profileExtensions'));
+    }
 }

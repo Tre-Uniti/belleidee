@@ -2,13 +2,24 @@
 @section('siteTitle')
     In Development
 @stop
-@section('handle')
-    {{Auth::user()->handle}}
+@section('leftSideBar')
+    <div>
+        <h2>{{$user->handle}}</h2>
+
+        <div class = "innerPhotos">
+            <a href="/"><img src={{asset('img/backgroundLandscape.jpg')}} alt="idee" height = "97%" width = "85%"></a>
+        </div>
+    </div>
 @stop
 @section('centerMenu')
     <h1>This feature is still in development</h1>
-
+    <p>You may track the progress at <a href="https://belle-creatori.org"><button type = "button" class = "navButton">Belle-Creatori</button></a></p>
 @stop
-@section('centerFooter')
-    <p>You may track the dev progress at <a href="https://belle-creatori.org"><button type = "button" class = "navButton">Belle-Creatori</button></a></p>
+
+@section('rightSideBar')
+    <h2>Hosted</h2>
+
+    <div class = "innerPhotos">
+        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "97%" width = "85%"></a>
+    </div>
 @stop

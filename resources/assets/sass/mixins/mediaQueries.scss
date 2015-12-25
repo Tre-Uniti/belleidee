@@ -54,7 +54,7 @@
   @media screen and (min-width: 801px) and (max-height: 849px) {
     html {
       background-image: url($desktopBackground);
-      background-color: orange;
+      background-color: black;
     }
     .topNav {
       width: 65%;
@@ -113,7 +113,7 @@
     html
     {
       background-image: url($tabletBackground);
-      background-color: blue;
+      background-color: black;
     }
     .topNav
     {
@@ -164,7 +164,7 @@
   {
     html {
       background-image: url($tabletBackground);
-      background-color: green;
+      background-color: black;
     }
     .topNav {
       max-width: 75%;
@@ -174,11 +174,11 @@
       height: 81%;
     }
     #centerText {
-      max-height: 540px;
+      max-height: 535px;
     }
     #centerTextContent
     {
-      max-height: 390px;
+      max-height: 385px;
     }
     #createOptions
     {
@@ -220,7 +220,7 @@
   @media screen and (max-width: 420px) {
     html {
       background-image: url($mobileBackground);
-      background-color: red;
+      background-color: black;
     }
     .topNav {
       max-width: 97%;
@@ -284,7 +284,7 @@
   {
     html {
       background-image: url($mobileBackground);
-      background-color: purple;
+      background-color: black;
     }
     h2 {
       font-size: 90%;
