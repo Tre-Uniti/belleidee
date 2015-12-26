@@ -13,7 +13,7 @@
 @stop
 @section('centerMenu')
     <h1>This feature is still in development</h1>
-    <p>You may track the progress at <a href="https://belle-creatori.org"><button type = "button" class = "navButton">Belle-Creatori</button></a></p>
+    <p>You may track the progress at <a href="http://tre-uniti.org"><button type = "button" class = "navButton">Belle-Creatori</button></a></p>
 @stop
 
 @section('rightSideBar')
