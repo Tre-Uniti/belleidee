@@ -10,6 +10,7 @@ use App\Extension;
 use App\Http\Requests\CreatePostRequest;
 use App\Http\Requests\EditPostRequest;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -63,11 +64,18 @@ class PostController extends Controller
 
         //Get last post of user and check if it was UTC today
         //If the dates match redirect them to their post
-        $lastPost = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
-        if($lastPost->created_at->format('M-d-Y') === $date)
+        try
         {
-            flash()->overlay('You have already posted on UTC: '. $date);
-            return redirect('posts/'.$lastPost->id);
+            $lastPost = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->firstOrFail();
+            if($lastPost != null & $lastPost->created_at->format('M-d-Y') === $date)
+            {
+                flash()->overlay('You have already posted on UTC: '. $date);
+                return redirect('posts/'.$lastPost->id);
+            }
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('Your first post:');
         }
 
         //Populate Beacon options with user's bookmarked beacons
