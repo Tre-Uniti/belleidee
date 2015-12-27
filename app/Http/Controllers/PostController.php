@@ -43,7 +43,7 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->where('user_id', $user->id)->latest()->paginate(14);
         return view ('posts.yourPosts', compact('user', 'posts', 'profilePosts','profileExtensions'));
     }
@@ -337,6 +337,23 @@ class PostController extends Controller
         flash('Elevation successful');
         return redirect('posts/'. $post->id);
     }
-
+    /**
+     * List posts for a specific date
+     * @param $date
+     * @return \Illuminate\Http\Response
+     */
+    public function listDates($date)
+    {
+        $user = Auth::user();
+        $queryDate = Carbon::parse($date);
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $posts = $this->post->whereDate('created_at', '=', $queryDate)->latest()->paginate(14);
+        return view ('posts.listDates')
+                ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+                ->with('date', $queryDate);
+    }
 
 }
+
+

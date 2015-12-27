@@ -23,16 +23,27 @@
             </tr>
         </table>
 
+
         <table style="display: inline-block;">
             <tr><td><a href="{{ url('/posts') }}">{{ $post->index2 }}</a></td>
             </tr>
         </table>
+
     </div>
+
+    <a href={{ url('/indev')}}><button type = "button" class = "interactButton">Elevations: {{ $post->elevation }}</button></a>
+    <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}><button type = "button" class = "interactButton">{{ $post->created_at->format('M-d-Y') }}</button></a>
     <a href={{ url('/extensions/post/list/'.$post->id)}}><button type = "button" class = "interactButton">Extensions: {{ $post->extension }}</button></a>
-        <div id = "centerTextContent">
+
+
+    <div id = "centerTextContent">
             <p>
                 {!! nl2br(e($post->body)) !!}
-            </p>
+
+                <p style = "text-align: center;">
+
+                </p>
+
         </div>
 @stop
 

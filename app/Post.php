@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -25,5 +26,23 @@ class Post extends Model
     {
         return $this->hasMany('App\Elevate');
     }
+
+    /**
+     * Additional fields to treat as Carbon instances.
+     *
+     * @var array
+     */
+    protected $date = ['created_at'];
+
+    /**
+     * Scope queries to articles that have been published.
+     *
+     * @param $query
+     */
+    public function scopePublished($query)
+    {
+        $query->where('created_at', '>=', Carbon::now());
+    }
+
 
 }

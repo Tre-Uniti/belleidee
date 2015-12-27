@@ -33,6 +33,9 @@
             </tr>
         </table>
     </div>
+
+    <a href={{ url('/indev')}}><button type = "button" class = "interactButton">Elevations: {{ $extension->elevation }}</button></a>
+    <a href = {{ url('/indev') }}><button type = "button" class = "interactButton">{{ $extension->created_at->format('M-d-Y') }}</button></a>
     <a href={{ url('/extensions/extend/list/'.$extension->id)}}><button type = "button" class = "interactButton">Extensions: {{ $extension->extension }}</button></a>
         <div id = "centerTextContent">
             <p>

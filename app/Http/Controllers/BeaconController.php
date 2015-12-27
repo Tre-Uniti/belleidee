@@ -49,8 +49,8 @@ class BeaconController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         return view('beacons.create', compact('user', 'profilePosts', 'profileExtensions'));
     }
@@ -99,8 +99,8 @@ class BeaconController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $beacon = $this->beacon->findOrFail($id);
 
         //Check if user has already bookmarked beacon
@@ -170,8 +170,8 @@ class BeaconController extends Controller
         $posts = Post::where('beacon_tag', $beacon_tag)->latest()->paginate(10);;
 
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         return view ('beacons.listTagged', compact('user', 'posts', 'beacon', 'profilePosts','profileExtensions'));
 
