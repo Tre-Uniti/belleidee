@@ -7,37 +7,54 @@
 
 @section('centerMenu')
     <h2>{{ $extension->title }}</h2>
-    @if($sources['type'] === 'extensions')
-        <p>Extension of: <a href = {{ action('ExtensionController@show', [$sources['extenception']])}}> {{ $sources['extension_title'] }}</a></p>
-    @elseif($sources['type'] === 'posts')
-        <p>Extension of: <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></p>
-    @endif
+
 @stop
 
 @section('centerText')
     <div>
-        <table style="display: inline-block;">
-            <tr>
-                <td><a href="{{ url('/posts/') }}">{{ $extension->index }}</a>
-                </td>
-            </tr>
-        </table>
-
-        <table style="display: inline-block;">
-            <tr><td><a href="{{ url('/beacons/tags/'.$extension->beacon_tag) }}">{{ $extension->beacon_tag }}</a></td>
-            </tr>
-        </table>
-
-        <table style="display: inline-block;">
-            <tr><td><a href="{{ url('/home') }}">{{ $extension->index2 }}</a></td>
-            </tr>
-        </table>
+        <div>
+            <table align = "center">
+                <tr>
+                    <th>Belief</th>
+                    <th>Beacon</th>
+                    <th>Type</th>
+                </tr>
+                <tr>
+                    <td><a href="{{ url('/extensions/') }}">{{ $extension->index }}</a></td>
+                    <td><a href="{{ url('/beacons/tags/'.$extension->beacon_tag) }}">{{ $extension->beacon_tag }}</a></td>
+                    <td><a href="{{ url('/extensions') }}">{{ $extension->index2 }}</a></td>
+                </tr>
+            </table>
+        </div>
     </div>
-
-    <a href={{ url('/indev')}}><button type = "button" class = "interactButton">Elevations: {{ $extension->elevation }}</button></a>
-    <a href = {{ url('/indev') }}><button type = "button" class = "interactButton">{{ $extension->created_at->format('M-d-Y') }}</button></a>
-    <a href={{ url('/extensions/extend/list/'.$extension->id)}}><button type = "button" class = "interactButton">Extensions: {{ $extension->extension }}</button></a>
         <div id = "centerTextContent">
+            <nav class = "infoNav">
+                <ul>
+                    <li>
+                        <a href = "">/-\</a>
+                        <div>
+                            @if($sources['type'] === 'extensions')
+                                <p>Extends: <a href = {{ action('ExtensionController@show', [$sources['extenception']])}}> {{ $sources['extension_title'] }}</a></p>
+                            @elseif($sources['type'] === 'posts')
+                                <p>Extends: <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></p>
+                            @endif
+                            <table align = "center">
+                                <tr>
+                                    <th>Elevation</th>
+                                    <th>Created</th>
+                                    <th>Extension</th>
+                                </tr>
+                                <tr>
+                                    <td><a href={{ url('/indev')}}>{{ $extension->elevation }}</a></td>
+                                    <td> <a href = {{ url('/posts/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a></td>
+                                    <td><a href={{ url('/extensions/extend/list/'.$extension->id)}}>{{ $extension->extension }}</a></td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </li>
+                </ul>
+            </nav>
             <p>
                 {!! nl2br(e($extension->body)) !!}
             </p>

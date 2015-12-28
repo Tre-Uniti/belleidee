@@ -11,40 +11,47 @@
 
 @section('centerText')
     <div>
-        <table style="display: inline-block;">
+        <table align = "center">
             <tr>
-                <td><a href="{{ url('/posts/') }}">{{ $post->index }}</a>
-                </td>
+                <th>Belief</th>
+                <th>Beacon</th>
+                <th>Type</th>
+            </tr>
+            <tr>
+                <td><a href="{{ url('/posts/') }}">{{ $post->index }}</a></td>
+                <td><a href="{{ url('/beacons/tags/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a></td>
+                <td><a href="{{ url('/posts') }}">{{ $post->index2 }}</a></td>
             </tr>
         </table>
-
-        <table style="display: inline-block;">
-            <tr><td><a href="{{ url('/beacons/tags/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a></td>
-            </tr>
-        </table>
-
-
-        <table style="display: inline-block;">
-            <tr><td><a href="{{ url('/posts') }}">{{ $post->index2 }}</a></td>
-            </tr>
-        </table>
-
     </div>
 
-    <a href={{ url('/indev')}}><button type = "button" class = "interactButton">Elevation</button></a>
-    <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}><button type = "button" class = "interactButton">{{ $post->created_at->format('M-d-Y') }}</button></a>
-    <a href={{ url('/extensions/post/list/'.$post->id)}}><button type = "button" class = "interactButton">Extension</button></a>
-
-
     <div id = "centerTextContent">
+        <nav class = "infoNav">
+            <ul>
+                <li>
+                    <a href = "">/-\</a>
+                    <div>
+                        <table align = "center">
+                            <tr>
+                                <th>Elevation</th>
+                                <th>Created</th>
+                                <th>Extension</th>
+                            </tr>
+                            <tr>
+                                <td><a href={{ url('/indev')}}>{{ $post->elevation }}</a></td>
+                                <td> <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a></td>
+                                <td><a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+            </ul>
+        </nav>
             <p>
                 {!! nl2br(e($post->body)) !!}
-
-                <p style = "text-align: center;">
-
-                </p>
-
+            </p>
         </div>
+
 @stop
 
 @section('centerFooter')

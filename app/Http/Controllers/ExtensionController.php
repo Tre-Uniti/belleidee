@@ -109,10 +109,14 @@ class ExtensionController extends Controller
             $request = array_add($request, 'extenception', $sources['extenception']);
             $request = array_add($request, 'source_user', $sources['user_id']);
 
-            //Add 1 extension to source extension
+            //Add 1 extension to source extension and user
             $extension = Extension::findOrFail($sources['extenception']);
+            $sourceUser = User::findOrFail($extension->user_id);
             $extension->where('id', $extension->id)
                 ->update(['extension' => $extension->extension + 1]);
+            //Add 1 extension to source user of extension
+            $sourceUser->where('id', $sourceUser->id)
+                ->update(['extension' => $sourceUser->extension + 1]);
         }
         else
         {

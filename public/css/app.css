@@ -248,6 +248,51 @@ a:active {
 .profileNav > ul > li > div ul > li:hover > a {
   background-color: #303030; }
 
+.infoNav {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 90%; }
+
+.infoNav > ul {
+  margin: 0;
+  padding: 0; }
+
+.infoNav > ul > li {
+  width: auto;
+  list-style-type: none;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border: 1px solid #E8E8E8;
+  transition: all 0.2s; }
+
+.infoNav > ul > li > div {
+  background-color: #E8E8E8;
+  border-top: 0;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
+  display: none;
+  margin: 0 auto;
+  opacity: 0;
+  position: relative;
+  width: auto;
+  visibility: hidden;
+  z-index: 100;
+  -webkit-transiton: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -transition: opacity 0.2s; }
+
+.infoNav > ul > li:hover > div {
+  display: block;
+  opacity: 1;
+  visibility: visible; }
+
+.infoNav > ul > li > div > table {
+  color: #202020; }
+
 .pagination {
   display: inline-block;
   padding-left: 0;
@@ -449,12 +494,33 @@ article {
 #centerTextContent {
   text-align: left;
   font-size: 110%;
-  margin: 0 auto;
+  margin: .5% auto;
   padding-left: 15px;
   padding-right: 15px;
   height: auto;
   max-height: 350px;
   overflow: auto; }
+
+#centerTextContent > button {
+  padding: 8px 13px;
+  font-family: "Comic Sans MS", Arial, sans-serif;
+  border-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  text-shadow: 3px 3px 10px #003300;
+  color: #F0F0F0;
+  /* For Safari 5.1 to 6.0 */
+  /* For Opera 11.1 to 12.0 */
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#33FF00, #188BC0);
+  /* Standard syntax */
+  border: 1px solid #202020; }
+
+#centerTextContent > button:hover > div {
+  display: inline-block; }
+
+#centerTextContent > div {
+  display: none; }
 
 #createOptions {
   margin: 0 auto;

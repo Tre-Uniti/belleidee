@@ -273,6 +273,66 @@ a:active {
   background-color: #303030;
 }
 
+//Post and Extension footer Nav
+.infoNav
+{
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 90%;
+}
+.infoNav > ul
+{
+  margin: 0;
+  padding: 0;
+}
+
+.infoNav > ul > li
+{
+  width: auto;
+  list-style-type: none;
+  border-radius:4px;
+  -moz-border-radius:4px;
+  -webkit-border-radius:4px;
+  border:1px solid #E8E8E8;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.infoNav > ul > li > div
+{
+  background-color: #E8E8E8;
+  border-top: 0;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
+  display: none;
+  margin: 0 auto;
+  opacity: 0;
+  position: relative;
+  width: auto;
+  visibility: hidden;
+  z-index: 100;
+  -webkit-transiton: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -transition: opacity 0.2s;
+}
+
+.infoNav > ul > li:hover > div
+{
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+.infoNav > ul > li > div > table
+{
+  color: #202020;
+}
+
 //Pagination
 .pagination {
   display: inline-block;
@@ -490,12 +550,28 @@ article
 {
   text-align: left;
   font-size: 110%;
-  margin: 0 auto;
+  margin: .5% auto;
   padding-left: 15px;
   padding-right: 15px;
   height: auto;
   max-height: 350px;
   overflow:auto;
+}
+
+
+#centerTextContent > button
+{
+  @include baseButton;
+  text-shadow: 3px 3px 10px #003300;
+  @include colorNavButton($navButtonColor1, $navButtonColor2, $navTextColor);
+}
+#centerTextContent > button:hover > div
+{
+  display: inline-block;
+}
+#centerTextContent > div
+{
+  display: none;
 }
 #createOptions
 {
