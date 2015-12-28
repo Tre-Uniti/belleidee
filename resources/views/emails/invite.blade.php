@@ -34,7 +34,7 @@
     -webkit-border-radius: 4px;
     border: 1px solid #003300;
     text-shadow: 3px 3px 10px #000000;
-    color: #FFFFFF;
+    color: #000000;
     background: linear-gradient(#7dff23, #188BC0);">Check us out!</button></a>
         </td>
     </tr>

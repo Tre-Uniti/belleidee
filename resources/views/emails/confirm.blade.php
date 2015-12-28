@@ -13,36 +13,47 @@
     -webkit-border-radius: 4px;
     border: 1px solid #003300;
     text-shadow: 3px 3px 10px #000000;
-    color: #FFFFFF;
+    color: #000000;
     background: linear-gradient(#7dff23, #188BC0);">Login</button></a></td>
     </tr>
     <tr>
         <td colspan = "3">
-            <p>We are honored to have you along for the journey and look forward to reading your beliefs and inspirations.</p>
-            <p>Below are 7 important notes to remember about Idee, typically the first thing users do is read, extend, or change sponsors.</p>
+            <p>We look forward to your participation in this community.</p>
         </td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">1.  Zoko is the first user, mod, and admin of Belle-Idee, the account is maintained by the CEO of Tre-Uniti.</td>
+        <td colspan="3" style = "text-align: left;">What do these terms mean?</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">2.  It is our belief that the majority of world beliefs seek to enlighten the mind and/or spirit.</td>
+        <td colspan="3" style = "text-align: left;">1.  <b>Zoko</b> is the handle of the CEO of Tre-Uniti, the posts from Zoko are meant to help users understand the site.</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">3.  We (the users) are free to post our beliefs so long as users and moderators don't find them intolerant of others.</td>
+        <td colspan="3" style = "text-align: left;">2.  <b>Elevation</b> is similar to "Like" and <b>Extension</b> is similar to "Comment".</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">4.  The Weekly Question is asked by the user whose answer to the last question was most inspirational (Elevation+Extension).</td>
+        <td colspan="3" style = "text-align: left;">3.  <b>Beacons</b> are places of worship like Churches, Synagogues, Mosques, and Temples.</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">5.  Users must select a sponsor who may send 3 levels of promotions for continuous sponsorship and loyalty.</td>
+        <td>
+            <hr/>
+        </td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">6.  Beacon centers are places of worship like Churches, Synagogues, Mosques, Temples or thought (Atheism).</td>
+        <td colspan="3" style = "text-align: left;">How do I get started once I login?</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">7.  We are open source, we welcome pull requests at Github and feature requests at Creatori.</td>
+        <td colspan="3" style = "text-align: left;">1.  You may get started by exploring, elevating and extending the user posts especially Zoko's.</td>
     </tr>
+    <tr>
+        <td colspan="3" style = "text-align: left;">2.  Choose a sponsor from the Idee directory to start your first sponsorship.</td>
+    </tr>
+    <tr>
+        <td colspan="3" style = "text-align: left;">3.  Bookmark a beacon from the Idee directory and then create your first post.</td>
+    </tr>
+    <tr>
+        <td colspan="3" style = "text-align: left;">4.  Ponder the current weekly question and when ready post your one question extension.</td>
+    </tr>
+
 @endsection
 @section('messageType')
     <tr><td>System Message</td></tr>

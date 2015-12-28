@@ -20,7 +20,7 @@
         <h4>Title</h4>
     </div>
     <div style = "width: 50%; float: right;">
-        <h4>Date</h4>
+        <h4>User</h4>
     </div>
 
     @foreach ($posts as $post)
@@ -29,7 +29,7 @@
             <a href="{{ action('PostController@show', [$post->id])}}"><button type = "button" class = "interactButton">{{ $post->title }}</button></a>
         </div>
         <div style = "width: 50%; float: right;">
-            <a href="{{ action('PostController@show', [$post->id])}}"><button type = "button" class = "interactButton">{{ $post->user->handle }}</button></a>
+            <a href="{{ action('UserController@show', [$post->user_id])}}"><button type = "button" class = "interactButton">{{ $post->user->handle }}</button></a>
         </div>
     @endforeach
 

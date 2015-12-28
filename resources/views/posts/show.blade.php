@@ -31,9 +31,9 @@
 
     </div>
 
-    <a href={{ url('/indev')}}><button type = "button" class = "interactButton">Elevations: {{ $post->elevation }}</button></a>
+    <a href={{ url('/indev')}}><button type = "button" class = "interactButton">Elevation</button></a>
     <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}><button type = "button" class = "interactButton">{{ $post->created_at->format('M-d-Y') }}</button></a>
-    <a href={{ url('/extensions/post/list/'.$post->id)}}><button type = "button" class = "interactButton">Extensions: {{ $post->extension }}</button></a>
+    <a href={{ url('/extensions/post/list/'.$post->id)}}><button type = "button" class = "interactButton">Extension</button></a>
 
 
     <div id = "centerTextContent">
