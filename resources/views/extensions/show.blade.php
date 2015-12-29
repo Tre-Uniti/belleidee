@@ -15,11 +15,6 @@
         <div>
             <table align = "center">
                 <tr>
-                    <th>Belief</th>
-                    <th>Beacon</th>
-                    <th>Type</th>
-                </tr>
-                <tr>
                     <td><a href="{{ url('/extensions/') }}">{{ $extension->index }}</a></td>
                     <td><a href="{{ url('/beacons/tags/'.$extension->beacon_tag) }}">{{ $extension->beacon_tag }}</a></td>
                     <td><a href="{{ url('/extensions') }}">{{ $extension->index2 }}</a></td>
@@ -40,14 +35,9 @@
                             @endif
                             <table align = "center">
                                 <tr>
-                                    <th>Elevation</th>
-                                    <th>Created</th>
-                                    <th>Extension</th>
-                                </tr>
-                                <tr>
-                                    <td><a href={{ url('/indev')}}>{{ $extension->elevation }}</a></td>
+                                    <td><a href={{ url('/indev')}}>Elevation</a></td>
                                     <td> <a href = {{ url('/posts/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a></td>
-                                    <td><a href={{ url('/extensions/extend/list/'.$extension->id)}}>{{ $extension->extension }}</a></td>
+                                    <td><a href={{ url('/extensions/extend/list/'.$extension->id)}}>Extension</a></td>
                                 </tr>
                             </table>
 

@@ -11,7 +11,7 @@ class Bookmark extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function articles()
+    public function users()
     {
         return $this->belongsToMany('App\User')->withTimestamps();
     }

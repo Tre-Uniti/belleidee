@@ -13,11 +13,6 @@
     <div>
         <table align = "center">
             <tr>
-                <th>Belief</th>
-                <th>Beacon</th>
-                <th>Type</th>
-            </tr>
-            <tr>
                 <td><a href="{{ url('/posts/') }}">{{ $post->index }}</a></td>
                 <td><a href="{{ url('/beacons/tags/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a></td>
                 <td><a href="{{ url('/posts') }}">{{ $post->index2 }}</a></td>
@@ -32,15 +27,11 @@
                     <a href = "">/-\</a>
                     <div>
                         <table align = "center">
+
                             <tr>
-                                <th>Elevation</th>
-                                <th>Created</th>
-                                <th>Extension</th>
-                            </tr>
-                            <tr>
-                                <td><a href={{ url('/indev')}}>{{ $post->elevation }}</a></td>
+                                <td><a href={{ url('/indev')}}>Elevation</a></td>
                                 <td> <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a></td>
-                                <td><a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a></td>
+                                <td><a href={{ url('/extensions/post/list/'.$post->id)}}>Extension</a></td>
                             </tr>
                         </table>
                     </div>

@@ -118,6 +118,8 @@ class BookmarkController extends Controller
             return redirect()->back();
         }
         $user = Auth::user();
+
+        //Check if bookmark already exists
         $bookmark = Bookmark::where('pointer', '=', $beacon_tag)->where('type', '=', 'beacon')->first();
         if(count($bookmark))
         {
@@ -127,8 +129,11 @@ class BookmarkController extends Controller
                 flash()->overlay('You have already bookmarked this Beacon');
                 return redirect()->back();
             }
-
+            //Add beacon_tag to user's bookmarks
             $user->bookmarks()->attach($bookmark->id);
+
+            //Notify user bookmark was successful
+            flash()->overlay('You have successfully bookmarked this beacon');
             return redirect('bookmarks/personal/'.$user->id);
         }
         else
@@ -157,7 +162,6 @@ class BookmarkController extends Controller
     {
         $user = User::findOrFail($id);
         $bookmarks = $user->bookmarks;
-
 
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
