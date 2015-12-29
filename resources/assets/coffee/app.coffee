@@ -4,5 +4,13 @@ $ ->
 
   $("#centerContent").hover hide, show
 
+$(document).ready ->
+  $('.hover').bind 'touchstart touchend', (e) ->
+    e.preventDefault()
+    $(this).toggleClass 'hover_effect'
+    return
+  return
+
+
 
 

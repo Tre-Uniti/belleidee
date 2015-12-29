@@ -24,7 +24,7 @@
         <nav class = "infoNav">
             <ul>
                 <li>
-                    <a href = "">/-\</a>
+                    <a href = "{{ url('/users/'. $post->user_id)}}" class = "hover">/-\</a>
                     <div>
                         <table align = "center">
 

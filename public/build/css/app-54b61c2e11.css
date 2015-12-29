@@ -73,12 +73,16 @@ a:visited {
   color: #202020; }
 
 /* mouse over link */
-a:hover {
+a:hover, a.hover_effect {
   color: #009900; }
 
 /* selected link */
 a:active {
   color: #00CC33; }
+
+.hover {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none; }
 
 .topNav {
   font-family: "Comic Sans MS", Arial, sans-serif;
