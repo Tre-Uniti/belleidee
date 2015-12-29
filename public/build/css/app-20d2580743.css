@@ -73,7 +73,7 @@ a:visited {
   color: #202020; }
 
 /* mouse over link */
-a:hover, a.hover_effect {
+a:hover {
   color: #009900; }
 
 /* selected link */
@@ -82,7 +82,9 @@ a:active {
 
 .hover {
   -webkit-user-select: none;
-  -webkit-touch-callout: none; }
+  -webkit-touch-callout: none;
+  margin: 0px;
+  padding: 0px; }
 
 .topNav {
   font-family: "Comic Sans MS", Arial, sans-serif;

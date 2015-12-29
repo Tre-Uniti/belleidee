@@ -24,10 +24,9 @@
         <nav class = "infoNav">
             <ul>
                 <li>
-                    <a href = "{{ url('/users/'. $post->user_id)}}" class = "hover">/-\</a>
+                    <p class = "hover">/-\</p>
                     <div>
                         <table align = "center">
-
                             <tr>
                                 <td><a href={{ url('/indev')}}>Elevation</a></td>
                                 <td> <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a></td>
