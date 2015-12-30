@@ -22,15 +22,13 @@
             <li>
                 <a href="{{ url('/posts') }}">Posts<span class="caret"></span></a>
                 <div>
-
                     <ul>
                         <li><a href={{ url('/posts/create') }}>Create</a></li>
                         <li><a href={{ url('/posts') }}>Discover</a></li>
                         <li><a href="{{ url('posts/yours') }}">Your Posts</a></li>
                         <li><a href="{{ url('/extensions') }}">Extensions</a></li>
-                        <li><a href="{{ url('/indev') }}">Legacy Posts</a></li>
+                        <li><a href="{{ url('/posts') }}">Legacy Posts</a></li>
                     </ul>
-
                 </div>
             </li>
             <li>
@@ -43,7 +41,6 @@
                         <li><a href="{{ url('/indev') }}">Sponsors</a></li>
                         <li><a href="{{ url('/bookmarks') }}">Bookmarks</a></li>
                     </ul>
-
                 </div>
             </li>
             <li>
