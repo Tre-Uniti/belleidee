@@ -47,13 +47,21 @@ a:active {
 
 }
 
+.extras
+{
+  margin: 0px;
+  padding: 0px;
+  color: #000000;
+}
+.extras:hover, .extras.hover_effect {
+  color: #00CC33;
+}
+
 .hover {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
-  margin: 0px;
-  padding: 0px;
-}
 
+}
 
 //Navigation
 .topNav

@@ -38,7 +38,6 @@
                 </td>
             </tr>
     </table>
-
         <hr/>
         <h2>Top 7</h2>
 

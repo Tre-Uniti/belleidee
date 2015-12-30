@@ -26,7 +26,7 @@
             <nav class = "infoNav">
                 <ul>
                     <li>
-                        <a href = "">/-\</a>
+                        <p class = "extras">/-\</p>
                         <div>
                             @if($sources['type'] === 'extensions')
                                 <p>Extends: <a href = {{ action('ExtensionController@show', [$sources['extenception']])}}> {{ $sources['extension_title'] }}</a></p>

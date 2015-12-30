@@ -24,7 +24,7 @@
         <nav class = "infoNav">
             <ul>
                 <li>
-                    <p class = "hover">/-\</p>
+                    <p class = "extras">/-\</p>
                     <div>
                         <table align = "center">
                             <tr>
