@@ -12,7 +12,7 @@
     </div>
 @stop
 @section('centerText')
-    <h2>The Settings of {{Auth::user()->handle}}</h2>
+    <h2>Settings of {{ $user->handle}}</h2>
 
     <h4>Contact Details and Preferences</h4>
     <p>Email:  zoko@belle-idee.org (Set email level)</p>

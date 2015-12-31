@@ -7,7 +7,7 @@
 
 @section('centerText')
     <div>
-        <h2>Your Posts</h2>
+        <h2>Posts by {{ $user->handle }}</h2>
         <table style="display: inline-block;">
             <tr>
                 <td><a href={{ url('/posts')}}>Top Elevated</a></td>
