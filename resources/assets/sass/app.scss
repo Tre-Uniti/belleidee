@@ -118,6 +118,28 @@ a:active {
   padding: 0 24px;
   text-decoration: none;
 }
+.topNav > ul > li > p > .caret
+{
+  border-top: 4px solid #aaa;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  content: "";
+  display: inline-block;
+  height: 0;
+  width: 0;
+  vertical-align: middle;
+  -webkit-transition: color 0.1s linear;
+  -moz-transition: color 0.1s linear;
+  -o-transition: color 0.1s linear;
+  transition: color 0.1s linear;
+}
+.topNav > ul > li > p
+{
+  color: #A8A8A8;
+  display: block;
+  padding: 0 24px;
+  text-decoration: none;
+}
 .topNav > ul > li:hover
 {
   border-radius:4px;
@@ -133,12 +155,21 @@ a:active {
 
 .topNav > ul > li:hover > a
 {
-  color: rgb( 255, 255, 255 );
+  color: #FFFFFF;
 }
 
 .topNav > ul > li:hover > a > .caret
 {
-  border-top-color: rgb( 255, 255, 255 );
+  border-top-color: #FFFFFF;
+}
+.topNav > ul > li:hover > p
+{
+  color: #FFFFFF;
+}
+
+.topNav > ul > li:hover > p > .caret
+{
+  border-top-color: #FFFFFF;
 }
 
 .topNav > ul > li > div

@@ -37,16 +37,19 @@ class PostController extends Controller
         return view ('posts.index', compact('user', 'posts', 'profilePosts','profileExtensions'));
     }
 
-    /*
-     * Get posts of specific user (Your Posts)
+    /**
+     * Retrieve posts of specific user.
+     *
+     * @param   $user_id
+     * @return \Illuminate\Http\Response
      */
-    public function yourPosts()
+    public function userPosts($user_id)
     {
-        $user = Auth::user();
+        $user = User::findOrFail($user_id);
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->where('user_id', $user->id)->latest()->paginate(14);
-        return view ('posts.yourPosts', compact('user', 'posts', 'profilePosts','profileExtensions'));
+        return view ('posts.userPosts', compact('user', 'posts', 'profilePosts','profileExtensions'));
     }
 
     /**

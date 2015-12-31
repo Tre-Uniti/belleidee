@@ -20,19 +20,19 @@
         <ul>
             <li><a href={{ url('/home') }}>Home</a></li>
             <li>
-                <a href="{{ url('/posts') }}">Posts<span class="caret"></span></a>
+                <p>Posts<span class="caret"></span></p>
                 <div>
                     <ul>
                         <li><a href={{ url('/posts/create') }}>Create</a></li>
                         <li><a href={{ url('/posts') }}>Discover</a></li>
-                        <li><a href="{{ url('posts/yours') }}">Your Posts</a></li>
+                        <li><a href="{{ url('/indev') }}">Drafts</a></li>
                         <li><a href="{{ url('/extensions') }}">Extensions</a></li>
                         <li><a href="{{ url('/posts') }}">Legacy Posts</a></li>
                     </ul>
                 </div>
             </li>
             <li>
-                <a href="{{ url('/indev') }}">Directory<span class="caret"></span></a>
+                <p>Directory<span class="caret"></span></p>
                 <div>
                     <ul>
                         <li><a href="{{ url('/indev') }}">Beliefs</a></li>
@@ -44,7 +44,7 @@
                 </div>
             </li>
             <li>
-                <a href="{{ url('/settings') }}">Settings<span class="caret"></span></a>
+                <p>Settings<span class="caret"></span></p>
                 <div>
 
                     <ul>
@@ -69,7 +69,7 @@
                         <li><a href="{{url('/posts/create')}}">Posts</a></li>
                     @else
                         <li>
-                            <a href="{{ url('/posts') }}">Posts</a>
+                            <a href="{{ url('/posts/user/'. $user->id) }}">Posts</a>
                             <div>
                                 <ul>
                                     @foreach($profilePosts as $profilePost)

@@ -24,7 +24,7 @@ Route::get('bookmarks/beacons/{beacon_tag}', 'BookmarkController@bookmarkBeacon'
 Route::get('bookmarks/personal/{user_id}', 'BookmarkController@listPersonal');
 
 //Post Routes (Resource)
-Route::get('posts/yours', 'PostController@yourPosts');
+Route::get('posts/user/{id}', 'PostController@userPosts');
 Route::get('posts/date/{date}', 'PostController@listDates');
 Route::get('posts/elevate/{id}', 'PostController@elevatePost');
 Route::resource('posts', 'PostController');
