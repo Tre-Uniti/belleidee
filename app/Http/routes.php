@@ -65,6 +65,8 @@ Route::get('navGuide', 'WelcomeController@getNavGuide');
 Route::get('home', 'HomeController@getHome');
 Route::get('settings', 'HomeController@getSettings');
 Route::get('indev', 'HomeController@getIndev');
+Route::get('photo', 'HomeController@userPhoto');
+Route::post('storePhoto', 'HomeController@storePhoto');
 
 
 

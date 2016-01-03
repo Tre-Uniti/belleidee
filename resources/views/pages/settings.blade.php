@@ -13,12 +13,9 @@
 @stop
 @section('centerText')
     <h2>Settings of {{ $user->handle}}</h2>
-
-    <h4>Contact Details and Preferences</h4>
-    <p>Email:  zoko@belle-idee.org (Set email level)</p>
-
+    <a href="{{ url('photo') }}"><button type = "button" class = "navButton">Change Profile Photo</button></a>
+    <hr/>
     <h4>Your Sponsor</h4>
-
     <table align = "center">
         <thead>
         <tr><th>Name</th>

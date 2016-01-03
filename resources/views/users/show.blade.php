@@ -3,10 +3,10 @@
     Show Post
 @stop
 
-@include('posts.leftSide')
+@include('users.leftSide')
 
 @section('centerText')
-    <h1>Home of {{$user->handle}}</h1>
+    <h2>Home of {{$user->handle}}</h2>
     <a href="{{ url('/posts') }}"><button type = "button" class = "interactButton">Elevation: {{ $user->elevation }}</button></a>
     <a href="{{ url('/extensions') }}"><button type = "button" class = "interactButton">Extension: {{ $user->extension }}</button></a>
     <hr/>

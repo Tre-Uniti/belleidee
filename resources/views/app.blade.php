@@ -20,19 +20,19 @@
         <ul>
             <li><a href={{ url('/home') }}>Home</a></li>
             <li>
-                <p>Posts<span class="caret"></span></p>
+                <p onclick="">Posts<span class="caret"></span></p>
                 <div>
                     <ul>
                         <li><a href={{ url('/posts/create') }}>Create</a></li>
                         <li><a href={{ url('/posts') }}>Discover</a></li>
                         <li><a href="{{ url('/indev') }}">Drafts</a></li>
                         <li><a href="{{ url('/extensions') }}">Extensions</a></li>
-                        <li><a href="{{ url('/posts') }}">Legacy Posts</a></li>
+                        <li><a href="{{ url('/posts') }}">Legacy</a></li>
                     </ul>
                 </div>
             </li>
             <li>
-                <p>Directory<span class="caret"></span></p>
+                <p onclick="">Directory<span class="caret"></span></p>
                 <div>
                     <ul>
                         <li><a href="{{ url('/indev') }}">Beliefs</a></li>
@@ -44,7 +44,7 @@
                 </div>
             </li>
             <li>
-                <p>Settings<span class="caret"></span></p>
+                <p onclick="">Settings<span class="caret"></span></p>
                 <div>
 
                     <ul>

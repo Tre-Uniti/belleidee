@@ -46,12 +46,12 @@ a:active {
   color: #00CC33;
 
 }
-
 .extras
 {
   margin: 0px;
   padding: 0px;
   color: #000000;
+  width: auto;
 }
 .extras:hover, .extras.hover_effect {
   color: #00CC33;
@@ -60,7 +60,6 @@ a:active {
 .hover {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
-
 }
 
 //Navigation
@@ -323,7 +322,7 @@ a:active {
 //Post and Extension footer Nav
 .infoNav
 {
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
   text-align: center;
   font-size: 90%;
@@ -333,7 +332,6 @@ a:active {
   margin: 0;
   padding: 0;
 }
-
 .infoNav > ul > li
 {
   width: auto;
@@ -489,6 +487,7 @@ td
 .listResource
 {
   clear: both;
+  overflow: auto;
 }
 .listResourceLeft
 {

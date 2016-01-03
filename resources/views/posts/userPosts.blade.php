@@ -23,7 +23,6 @@
         <h4>Date</h4>
     </div>
 
-
     @foreach ($posts as $post)
 
         <div class = "listResource">

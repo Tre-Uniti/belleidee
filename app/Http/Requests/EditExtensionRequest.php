@@ -28,7 +28,7 @@ class EditExtensionRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|min:5|max:37',
+            'title' => 'required|min:5|max:40',
             'body'  => 'required|min:5|max:3500'
         ];
     }

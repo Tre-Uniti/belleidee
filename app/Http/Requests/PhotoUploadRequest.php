@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CreateExtensionRequest extends Request
+class PhotoUploadRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,7 @@ class CreateExtensionRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|min:5|max:40',
-            'body'  => 'required|min:10|max:3500'
+            //
         ];
     }
 }

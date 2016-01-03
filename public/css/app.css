@@ -83,7 +83,8 @@ a:active {
 .extras {
   margin: 0px;
   padding: 0px;
-  color: #000000; }
+  color: #000000;
+  width: auto; }
 
 .extras:hover, .extras.hover_effect {
   color: #00CC33; }
@@ -284,7 +285,7 @@ a:active {
   background-color: #303030; }
 
 .infoNav {
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
   text-align: center;
   font-size: 90%; }
@@ -423,7 +424,8 @@ td {
   text-align: left; }
 
 .listResource {
-  clear: both; }
+  clear: both;
+  overflow: auto; }
 
 .listResourceLeft {
   width: 35%;
@@ -659,6 +661,8 @@ article {
     width: 165px; }
   .topNav > ul > li > div ul > li > a {
     padding: 12px 24px; }
+  .topNav > ul > li > p {
+    padding: 0 24px; }
   .profileNav > ul > li > a {
     color: #202020;
     display: block;
@@ -671,7 +675,7 @@ article {
     background-image: url("/img/background.jpg");
     background-color: black; }
   .topNav {
-    width: 65%; }
+    width: 67%; }
   .interactButton {
     font-size: 100%; }
   .navButton {
@@ -692,6 +696,8 @@ article {
     height: auto; }
   #rightSide {
     height: auto; }
+  .topNav > ul > li > p {
+    padding: 0 18px; }
   .topNav > ul > li > a {
     padding: 0 24px; }
   .topNav > ul > li > div {
@@ -725,6 +731,8 @@ article {
     height: 30%;
     visibility: hidden; }
   .topNav > ul > li > a {
+    padding: 0 18px; }
+  .topNav > ul > li > p {
     padding: 0 18px; } }
 
 @media screen and (min-width: 851px) and (max-width: 1500px) {
@@ -732,7 +740,7 @@ article {
     background-image: url("/img/backgroundLandscape.jpg");
     background-color: black; }
   .topNav {
-    max-width: 75%; }
+    max-width: 77%; }
   #centerContent {
     width: 50%;
     height: 81%; }
@@ -758,6 +766,8 @@ article {
   .innerPhotos {
     height: 150px; }
   .topNav > ul > li > a {
+    padding: 0 24px; }
+  .topNav > ul > li > p {
     padding: 0 24px; } }
 
 @media screen and (max-width: 420px) {
@@ -767,6 +777,8 @@ article {
   .topNav {
     max-width: 97%; }
   .topNav > ul > li > a {
+    padding: 0 1px; }
+  .topNav > ul > li > p {
     padding: 0 1px; }
   .topNav > ul > li > div {
     width: 92px; }
@@ -819,6 +831,8 @@ article {
     max-width: 55%;
     display: none; }
   .topNav > ul > li > a {
+    padding: 0 1px; }
+  .topNav > ul > li > p {
     padding: 0 1px; }
   .topNav > ul > li > div {
     width: 92px; }

@@ -48,6 +48,9 @@
     .topNav > ul > li > div ul > li > a {
       padding: 12px 24px;
     }
+    .topNav > ul > li > p {
+      padding: 0 24px;
+    }
     .profileNav > ul > li > a
     {
       color: #202020;
@@ -66,7 +69,7 @@
       background-color: black;
     }
     .topNav {
-      width: 65%;
+      width: 67%;
     }
 
     .interactButton {
@@ -98,7 +101,9 @@
     #rightSide {
       height: auto;
     }
-
+    .topNav > ul > li > p {
+      padding: 0 18px;
+    }
     .topNav > ul > li > a {
       padding: 0 24px;
     }
@@ -165,6 +170,9 @@
     {
       padding: 0 18px;
     }
+    .topNav > ul > li > p {
+      padding: 0 18px;
+    }
   }
 
   //Tablet Landscape
@@ -175,7 +183,7 @@
       background-color: black;
     }
     .topNav {
-      max-width: 75%;
+      max-width: 77%;
     }
     #centerContent {
       width: 50%;
@@ -220,6 +228,9 @@
     {
       padding: 0 24px;
     }
+    .topNav > ul > li > p {
+      padding: 0 24px;
+    }
   }
 }
 //Mobile Portrait
@@ -233,6 +244,9 @@
       max-width: 97%;
     }
     .topNav > ul > li > a {
+      padding: 0 1px;
+    }
+    .topNav > ul > li > p {
       padding: 0 1px;
     }
     .topNav > ul > li > div {
@@ -309,6 +323,9 @@
       display: none;
     }
     .topNav > ul > li > a {
+      padding: 0 1px;
+    }
+    .topNav > ul > li > p {
       padding: 0 1px;
     }
     .topNav > ul > li > div {
