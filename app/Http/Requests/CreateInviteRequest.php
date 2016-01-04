@@ -27,7 +27,6 @@ class CreateInviteRequest extends Request
         return [
             'betaToken' => 'required|min:7|max:7|unique:invites',
             'email' => 'required|email|unique:invites',
-
         ];
     }
 }

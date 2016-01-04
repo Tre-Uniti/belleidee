@@ -38,7 +38,20 @@ class HomeController extends Controller
             ];
         $profilePosts = $user->posts()->latest('created_at')->take(12)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(12)->get();
-        return view ('pages.home', compact('user', 'elevations', 'profilePosts', 'profileExtensions', 'years', 'days'));
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view ('pages.home')
+                ->with(compact('user', 'elevations', 'profilePosts', 'profileExtensions', 'years', 'days'))
+                ->with('photoPath', $photoPath);
     }
     public function getSettings()
     {
@@ -80,13 +93,30 @@ class HomeController extends Controller
     public function storePhoto(PhotoUploadRequest $request)
     {
         $user = Auth::user();
+        if(!$request->hasFile('image'))
+        {
+            $error = "No File uploaded.";
+            return redirect()
+                ->back()
+                ->withErrors([$error]);
+        }
+
+        if(!$request->file('image')->isValid())
+        {
+            $error = "Image File invalid.";
+            return redirect()
+                ->back()
+                ->withErrors([$error]);
+        }
+
         $image = $request->file('image');
         $imageFileName = $user->handle . '.' . $image->getClientOriginalExtension();
         $path = '/user_photos/'. $user->id . '/' .$imageFileName;
 
-        $user->where('id', $user->id)
-             ->update(['photo_path' => $path]);
         Storage::put($path, file_get_contents($image));
+
+        $user->where('id', $user->id)
+            ->update(['photo_path' => $path]);
 
         flash()->overlay('Image upload successful');
         return redirect('home');

@@ -25,7 +25,8 @@ class PhotoUploadRequest extends Request
     public function rules()
     {
         return [
-            //
+            'image' => 'required|mimes:jpeg,jpg,png|max:8000'
         ];
     }
+
 }

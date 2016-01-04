@@ -37,7 +37,20 @@ class ExtensionController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
         $extensions = $this->extension->latest()->paginate(10);
-        return view ('extensions.index', compact('user', 'extensions', 'profilePosts', 'profileExtensions'));
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view ('extensions.index')
+                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions'))
+                    ->with('photoPath', $photoPath);
     }
 
     /**
@@ -68,7 +81,19 @@ class ExtensionController extends Controller
                 'Story' => 'Story',
             ];
 
-        return view('extensions.create', compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'sources'));
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view('extensions.create')
+                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'sources'))
+                    ->with('photoPath', $photoPath);
     }
 
     /**
@@ -205,9 +230,20 @@ class ExtensionController extends Controller
             $elevation = 'Elevate';
         }
 
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
         return view('extensions.show')
             ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'sources' ))
-            ->with ('elevation', $elevation);
+            ->with ('elevation', $elevation)
+            ->with ('photoPath', $photoPath);
     }
 
     /**
@@ -253,7 +289,20 @@ class ExtensionController extends Controller
                 'Story' => 'Story',
             ];
 
-        return view('extensions.edit', compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'sources'));
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+
+        return view('extensions.edit')
+                    ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'sources'))
+                    ->with('photoPath', $photoPath);
     }
 
     /**
@@ -373,7 +422,19 @@ class ExtensionController extends Controller
 
         $extensions = Extension::where('post_id', $id)->latest('created_at')->paginate(14);
 
-        return view('extensions.postList', compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources'));
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view('extensions.postList')
+                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources'))
+                    ->with('photoPath', $photoPath);
     }
 
     //Show extensions of a specific extension (extenception)
@@ -397,7 +458,19 @@ class ExtensionController extends Controller
 
         $extensions = Extension::where('extenception', $id)->latest('created_at')->paginate(14);
 
-        return view('extensions.postList', compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources'));
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view('extensions.postList')
+                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources'))
+                    ->with('photoPath', $photoPath);
     }
 
     /**

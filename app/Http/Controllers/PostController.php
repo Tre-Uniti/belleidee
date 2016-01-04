@@ -34,7 +34,20 @@ class PostController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->latest()->paginate(10);
-        return view ('posts.index', compact('user', 'posts', 'profilePosts','profileExtensions'));
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view ('posts.index')
+                    ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+                    ->with('photoPath', $photoPath);
     }
 
     /**
@@ -49,7 +62,20 @@ class PostController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->where('user_id', $user->id)->latest()->paginate(14);
-        return view ('posts.userPosts', compact('user', 'posts', 'profilePosts','profileExtensions'));
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view ('posts.userPosts')
+                ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+                ->with('photoPath', $photoPath);
     }
 
     /**
@@ -95,7 +121,19 @@ class PostController extends Controller
                 'Story' => 'Story',
             ];
 
-        return view('posts.create', compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'types'));
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view('posts.create')
+                ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'types'))
+                ->with('photoPath', $photoPath);
     }
 
     /**
@@ -167,9 +205,21 @@ class PostController extends Controller
             $elevation = 'Elevate';
         }
 
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
         return view('posts.show')
             ->with(compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'))
-            ->with('elevation', $elevation);
+            ->with('elevation', $elevation)
+            ->with('photoPath', $photoPath);
     }
 
     /**
@@ -208,8 +258,19 @@ class PostController extends Controller
                 'Reflection' => 'Reflection',
                 'Story' => 'Story',
             ];
+        if($user->photo_path == '')
+        {
 
-        return view('posts.edit', compact('user', 'post', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'date'));
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view('posts.edit')
+                ->with(compact('user', 'post', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'date'))
+                ->with('photoPath', $photoPath);
 
     }
 

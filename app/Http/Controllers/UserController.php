@@ -71,7 +71,18 @@ class UserController extends Controller
         //Get other Extensions of User
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        $photoPath = $user->photo_path;
+        //Get path of photo and append correct Amazon bucket
+        //First check user has submitted their own photo otherwise default to medium background image
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
 
         return view('users.show')
             ->with(compact('user', 'elevations', 'profilePosts', 'profileExtensions'))
