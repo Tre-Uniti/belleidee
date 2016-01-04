@@ -121,7 +121,7 @@
 //Tablet Portrait
 @mixin tablet($tabletBackground)
 {
-  @media screen and (max-width: 850px)
+  @media screen and (max-width: 851px)
   {
     html
     {
@@ -176,7 +176,7 @@
   }
 
   //Tablet Landscape
-  @media screen and (min-width: 851px) and (max-width: 1500px)
+  @media screen and (min-width: 852px) and (max-width: 1500px)
   {
     html {
       background-image: url($tabletBackground);
@@ -235,7 +235,7 @@
 }
 //Mobile Portrait
 @mixin mobile($mobileBackground) {
-  @media screen and (max-width: 420px) {
+  @media screen and (max-width: 419px) {
     html {
       background-image: url($mobileBackground);
       background-color: black;
@@ -309,7 +309,7 @@
   }
 
   //Small screen mobile landscape
-  @media screen and (max-width: 655px) and (max-height: 399px)
+  @media screen and (min-width: 420px) and (max-width: 851px) and (max-height: 499px)
   {
     html {
       background-image: url($mobileBackground);
@@ -340,7 +340,7 @@
       margin: 2% auto;
     }
     #centerText {
-      max-height: 250px;
+      max-height: 225px;
     }
     .createTitleText {
       width: 250px;

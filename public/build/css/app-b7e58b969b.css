@@ -705,7 +705,7 @@ article {
   .topNav > ul > li > div ul > li > a {
     padding: 12px 24px; } }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 851px) {
   html {
     background-image: url("/img/backgroundLandscape.jpg");
     background-color: black; }
@@ -735,7 +735,7 @@ article {
   .topNav > ul > li > p {
     padding: 0 18px; } }
 
-@media screen and (min-width: 851px) and (max-width: 1500px) {
+@media screen and (min-width: 852px) and (max-width: 1500px) {
   html {
     background-image: url("/img/backgroundLandscape.jpg");
     background-color: black; }
@@ -770,7 +770,7 @@ article {
   .topNav > ul > li > p {
     padding: 0 24px; } }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 419px) {
   html {
     background-image: url("/img/backgroundPortrait.jpg");
     background-color: black; }
@@ -821,7 +821,7 @@ article {
   .profileNav > ul > li > div ul > li {
     display: block; } }
 
-@media screen and (max-width: 655px) and (max-height: 399px) {
+@media screen and (min-width: 420px) and (max-width: 851px) and (max-height: 499px) {
   html {
     background-image: url("/img/backgroundPortrait.jpg");
     background-color: black; }
@@ -843,7 +843,7 @@ article {
     height: 92%;
     margin: 2% auto; }
   #centerText {
-    max-height: 250px; }
+    max-height: 225px; }
   .createTitleText {
     width: 250px; }
   #centerTextContent {

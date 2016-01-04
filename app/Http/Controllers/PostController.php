@@ -61,7 +61,7 @@ class PostController extends Controller
         $user = User::findOrFail($user_id);
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $posts = $this->post->where('user_id', $user->id)->latest()->paginate(14);
+        $posts = $this->post->where('user_id', $user->id)->latest()->paginate(10);
 
         if($user->photo_path == '')
         {
@@ -420,7 +420,7 @@ class PostController extends Controller
         $queryDate = Carbon::parse($date);
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $posts = $this->post->whereDate('created_at', '=', $queryDate)->latest()->paginate(14);
+        $posts = $this->post->whereDate('created_at', '=', $queryDate)->latest()->paginate(10);
 
         if($user->photo_path == '')
         {
@@ -436,6 +436,55 @@ class PostController extends Controller
                 ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
                 ->with('date', $queryDate)
                 ->with('photoPath', $photoPath);
+    }
+
+    /**
+     * Sort and show all posts by highest Elevation
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByElevation()
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $posts = $this->post->orderBy('elevation', 'asc')->paginate(10);
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view ('posts.sortByElevation')
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+    /**
+     * Sort and show all posts by highest Extension
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByExtension()
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $posts = $this->post->orderBy('extension', 'asc')->paginate(10);
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view ('posts.sortByExtension')
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
     }
 
 }
