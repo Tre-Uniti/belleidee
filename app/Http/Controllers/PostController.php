@@ -421,9 +421,21 @@ class PostController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->whereDate('created_at', '=', $queryDate)->latest()->paginate(14);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
         return view ('posts.listDates')
                 ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
-                ->with('date', $queryDate);
+                ->with('date', $queryDate)
+                ->with('photoPath', $photoPath);
     }
 
 }

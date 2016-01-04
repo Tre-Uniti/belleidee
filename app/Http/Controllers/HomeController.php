@@ -58,7 +58,18 @@ class HomeController extends Controller
         $user = Auth::user();
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
-        return view ('pages.settings', compact('user', 'profilePosts', 'profileExtensions'));
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+        return view ('pages.settings')
+                    ->with(compact('user', 'profilePosts', 'profileExtensions'))
+                    ->with('photoPath', $photoPath);
     }
 
     public function getIndev()
@@ -66,7 +77,20 @@ class HomeController extends Controller
         $user = Auth::user();
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
-        return view ('pages.indev', compact('user', 'profilePosts', 'profileExtensions'));
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view ('pages.indev')
+                    ->with(compact('user', 'profilePosts', 'profileExtensions'))
+                    ->with('photoPath', $photoPath);
     }
 
     /**

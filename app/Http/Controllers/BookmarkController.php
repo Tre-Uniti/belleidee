@@ -35,7 +35,20 @@ class BookmarkController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $bookmarks = $this->bookmark->latest()->paginate(10);
-        return view ('bookmarks.index', compact('user', 'bookmarks', 'profilePosts','profileExtensions'));
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view ('bookmarks.index')
+                    ->with(compact('user', 'bookmarks', 'profilePosts','profileExtensions'))
+                    ->with('photoPath', $photoPath);
     }
 
     /**
@@ -166,7 +179,21 @@ class BookmarkController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         //$bookmarks = $this->bookmark->latest()->paginate(10);
-        return view ('bookmarks.index', compact('user', 'bookmarks', 'profilePosts','profileExtensions'));
+
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view ('bookmarks.index')
+                    ->with(compact('user', 'bookmarks', 'profilePosts','profileExtensions'))
+                    ->with('photoPath', $photoPath);
 
     }
 }

@@ -38,7 +38,21 @@ class BeaconController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
         $beacons = $this->beacon->latest()->paginate(10);
-        return view ('beacons.index', compact('user', 'beacons', 'profilePosts','profileExtensions'));
+
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view ('beacons.index')
+                    ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'))
+                    ->with('photoPath', $photoPath);
     }
 
     /**
@@ -51,8 +65,20 @@ class BeaconController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        //Get user photo
+        if($user->photo_path == '')
+        {
 
-        return view('beacons.create', compact('user', 'profilePosts', 'profileExtensions'));
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view('beacons.create')
+                    ->with(compact('user', 'profilePosts', 'profileExtensions'))
+                    ->with('photoPath', $photoPath);
     }
 
     /**
@@ -103,11 +129,19 @@ class BeaconController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $beacon = $this->beacon->findOrFail($id);
 
-        //Check if user has already bookmarked beacon
-        //$bookmarked = DB:
-        //if()
-        //$posts = Post:where('beacon_tag')
-        return view ('beacons.show', compact('user', 'beacon', 'profilePosts','profileExtensions'));
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+        return view ('beacons.show')
+                    ->with(compact('user', 'beacon', 'profilePosts','profileExtensions'))
+                    ->with('photoPath', $photoPath);
     }
 
     /**
@@ -173,7 +207,20 @@ class BeaconController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        return view ('beacons.listTagged', compact('user', 'posts', 'beacon', 'profilePosts','profileExtensions'));
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view ('beacons.listTagged')
+                    ->with(compact('user', 'posts', 'beacon', 'profilePosts','profileExtensions'))
+                    ->with('photoPath', $photoPath);
 
     }
 
