@@ -83,7 +83,7 @@
                         <li><a href="{{url('/extensions/create')}}">Extensions</a></li>
                     @else
                         <li>
-                            <a href="{{ url('/extensions') }}">Extensions</a>
+                            <a href="{{ url('/extensions/user/' .$user->id) }}">Extensions</a>
                             <div>
                                 <ul>
                                     @foreach($profileExtensions as $profileExtension)
@@ -121,10 +121,10 @@
             <nav class = "profileNav">
                 <ul>
                     @if ($profilePosts->isEmpty())
-                        <li><a href="{{url('/post/create')}}">Beacons</a></li>
+                        <li><a href="{{url('/beacons')}}">Beacons</a></li>
                     @else
                         <li>
-                            <a href="{{url('/posts')}}">Beacons</a>
+                            <a href="{{url('/beacons')}}">Beacons</a>
                             <div>
                                 <ul>
                                     <li><a href="{{url('/beacons/tags/US-SW-ACE')}}">US-SW-ACE</a></li>

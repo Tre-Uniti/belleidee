@@ -1,18 +1,18 @@
 @extends('app')
 @section('siteTitle')
-    Extensions
+    Most Extended
 @stop
 
 @include('extensions.leftSide')
 
 @section('centerText')
     <div>
-        <h2>Recent Extensions</h2>
+        <h2>Most Extended Extensions</h2>
         <table style="display: inline-block;">
             <tr>
                 <td><a href={{ url('/extensions/sortByElevation')}}>Top Elevated</a></td>
                 <td><a href={{ url('/indev')}}>Search</a></td>
-                <td><a href={{ url('/extensions/sortByExtension')}}>Most Extended</a></td>
+                <td><a href={{ url('/extensions')}}>Most Recent</a></td>
             </tr>
         </table>
     </div>
@@ -22,6 +22,7 @@
     <div style = "width: 50%; float: right;">
         <h4>User</h4>
     </div>
+
 
     @foreach ($extensions as $extension)
 

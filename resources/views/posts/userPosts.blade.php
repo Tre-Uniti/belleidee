@@ -30,7 +30,7 @@
                 <a href="{{ action('PostController@show', [$post->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $post->title }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('PostController@show', [$post->id])}}"><button type = "button" class = "interactButton">{{ $post->created_at->format('M-d-Y') }}</button></a>
+                <a href="{{ action('PostController@listDates', [$post->created_at])}}"><button type = "button" class = "interactButton">{{ $post->created_at->format('M-d-Y') }}</button></a>
             </div>
         </div>
     @endforeach

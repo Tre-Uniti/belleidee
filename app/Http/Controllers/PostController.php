@@ -42,7 +42,7 @@ class PostController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view ('posts.index')
@@ -70,7 +70,7 @@ class PostController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view ('posts.userPosts')
@@ -213,7 +213,7 @@ class PostController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view('posts.show')
@@ -265,7 +265,7 @@ class PostController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view('posts.edit')
@@ -429,7 +429,7 @@ class PostController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view ('posts.listDates')
@@ -455,7 +455,7 @@ class PostController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view ('posts.sortByElevation')
@@ -479,7 +479,7 @@ class PostController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view ('posts.sortByExtension')

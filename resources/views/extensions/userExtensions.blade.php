@@ -1,13 +1,13 @@
 @extends('app')
 @section('siteTitle')
-    Extensions
+    User Extensions
 @stop
 
 @include('extensions.leftSide')
 
 @section('centerText')
     <div>
-        <h2>Recent Extensions</h2>
+        <h2>Extensions by {{ $user->handle }}</h2>
         <table style="display: inline-block;">
             <tr>
                 <td><a href={{ url('/extensions/sortByElevation')}}>Top Elevated</a></td>
@@ -30,7 +30,7 @@
             <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $extension->title }}</button></a>
         </div>
         <div class = "listResourceRight">
-            <a href="{{ action('UserController@show', [$extension->user_id])}}"><button type = "button" class = "interactButton">{{ $extension->user->handle }}</button></a>
+            <a href="{{ action('PostController@listDates', [$extension->created_at->format('M-d-Y')])}}"><button type = "button" class = "interactButton">{{ $extension->created_at->format('M-d-Y') }}</button></a>
         </div>
         </div>
     @endforeach

@@ -28,7 +28,7 @@
 @stop
 @section('footer')
     <h4>Guidelines:</h4>
-    <p>Passwords must be at least 8 characters long</p>
-    <p>Handle can be your name or anonymous, max-length (14)</p>
+    <p>Beta-Token was sent in invitational email</p>
+    <p>Handle (username) can be real or anonymous, max-length (14)</p>
 @stop
 

@@ -519,4 +519,81 @@ class ExtensionController extends Controller
         flash('Elevation successful');
         return redirect('extensions/'. $extension->id);
     }
+
+    /**
+     * Retrieve extensions of specific user.
+     *
+     * @param   $user_id
+     * @return \Illuminate\Http\Response
+     */
+    public function userExtensions($user_id)
+    {
+        $user = User::findOrFail($user_id);
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $extensions = $this->extension->where('user_id', $user->id)->latest()->paginate(10);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('extensions.userExtensions')
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /**
+     * Sort and show all extensions by highest Elevation
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByElevation()
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $extensions = $this->extension->orderBy('elevation', 'desc')->paginate(10);
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('extensions.sortByElevation')
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /**
+     * Sort and show all extensions by highest Extension
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByExtension()
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $extensions = $this->extension->orderBy('extension', 'desc')->paginate(10);
+        if($user->photo_path == '')
+        {
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = env('S3_BUCKET') .$user->photo_path;
+        }
+
+        return view ('extensions.sortByExtension')
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
 }

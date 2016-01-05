@@ -32,12 +32,17 @@ Route::get('posts/sortByExtension', 'PostController@sortByExtension');
 Route::resource('posts', 'PostController');
 
 //Extension Routes (Resource)
-Route::resource('extensions', 'ExtensionController');
+Route::get('extensions/sortByElevation', 'ExtensionController@sortByElevation');
+Route::get('extensions/sortByExtension', 'ExtensionController@sortByExtension');
+Route::get('extensions/user/{id}', 'ExtensionController@userExtensions');
 Route::get('extensions/elevate/{id}', 'ExtensionController@elevateExtension');
 Route::get('extensions/post/{source}', 'ExtensionController@extendPost');
 Route::get('extensions/extenception/{source}', 'ExtensionController@extenception');
 Route::get('extensions/post/list/{id}', 'ExtensionController@postList');
 Route::get('extensions/extend/list/{id}', 'ExtensionController@extendList');
+
+Route::resource('extensions', 'ExtensionController');
+
 
 //Invite Routes (Resource)
 Route::resource('invites', 'InviteController');

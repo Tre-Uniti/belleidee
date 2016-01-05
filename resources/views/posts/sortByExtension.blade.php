@@ -7,10 +7,10 @@
 
 @section('centerText')
     <div>
-    <h2>Top Extended Posts</h2>
+    <h2>Most Extended Posts</h2>
     <table style="display: inline-block;">
         <tr>
-            <td><a href={{ url('/posts/sortByElevation')}}>Most Elevated</a></td>
+            <td><a href={{ url('/posts/sortByElevation')}}>Top Elevated</a></td>
             <td><a href={{ url('/indev')}}>Search</a></td>
             <td><a href={{ url('/posts')}}>Most Recent</a></td>
         </tr>

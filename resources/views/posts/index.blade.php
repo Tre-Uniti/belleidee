@@ -7,7 +7,7 @@
 
 @section('centerText')
     <div>
-    <h2>Posts</h2>
+    <h2>Recent Posts</h2>
     <table style="display: inline-block;">
         <tr>
             <td><a href={{ url('/posts/sortByElevation')}}>Top Elevated</a></td>
