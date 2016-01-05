@@ -447,7 +447,7 @@ class PostController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $posts = $this->post->orderBy('elevation', 'asc')->paginate(10);
+        $posts = $this->post->orderBy('elevation', 'desc')->paginate(10);
         if($user->photo_path == '')
         {
 
@@ -471,7 +471,7 @@ class PostController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $posts = $this->post->orderBy('extension', 'asc')->paginate(10);
+        $posts = $this->post->orderBy('extension', 'desc')->paginate(10);
         if($user->photo_path == '')
         {
 
