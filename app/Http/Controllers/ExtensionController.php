@@ -45,7 +45,7 @@ class ExtensionController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view ('extensions.index')
@@ -88,7 +88,7 @@ class ExtensionController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view('extensions.create')
@@ -237,7 +237,7 @@ class ExtensionController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view('extensions.show')
@@ -296,7 +296,7 @@ class ExtensionController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
 
@@ -429,7 +429,7 @@ class ExtensionController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view('extensions.postList')
@@ -465,7 +465,7 @@ class ExtensionController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view('extensions.postList')
@@ -589,7 +589,7 @@ class ExtensionController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view ('extensions.sortByExtension')
