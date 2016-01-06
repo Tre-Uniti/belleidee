@@ -3,7 +3,6 @@
     Beacons
 @stop
 
-@include('beacons.leftSide')
 
 @section('centerText')
     <div>

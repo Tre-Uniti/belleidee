@@ -2,19 +2,6 @@
 @section('siteTitle')
     Settings
 @stop
-@section('leftSideBar')
-    <div>
-        <h2>{{$user->handle}}</h2>
-
-        <div class = "innerPhotos">
-            @if($photoPath === '')
-                <a href="/"><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "97%" width = "85%"></a>
-            @else
-                <a href="/"><img src= {{ url('https://s3-us-west-2.amazonaws.com/'. $photoPath) }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
-            @endif
-        </div>
-    </div>
-@stop
 @section('centerText')
     <h2>Settings of {{ $user->handle}}</h2>
     <a href="{{ url('photo') }}"><button type = "button" class = "navButton">Change Profile Photo</button></a>

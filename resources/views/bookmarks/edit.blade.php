@@ -3,7 +3,7 @@
     Create
 @stop
 
-@include('bookmarks.leftSide')
+
 
 @section('centerText')
     <div class = "errors">

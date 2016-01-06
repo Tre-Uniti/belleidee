@@ -3,7 +3,6 @@
     Create
 @stop
 
-@include('posts.leftSide')
 
 @section('centerText')
     <div class = "errors">

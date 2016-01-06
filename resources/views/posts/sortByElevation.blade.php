@@ -3,7 +3,7 @@
     Posts
 @stop
 
-@include('posts.leftSide')
+
 
 @section('centerText')
     <div>

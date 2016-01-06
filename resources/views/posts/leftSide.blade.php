@@ -9,6 +9,5 @@
                 <a href={{ url('/users/'. $user->id) }}><img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $photoPath) }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
             @endif
         </div>
-
     </div>
 @stop

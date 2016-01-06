@@ -3,7 +3,7 @@
     Create Post
 @stop
 
-@include('posts.leftSide')
+
 
 @section('centerText')
     @include ('errors.list')

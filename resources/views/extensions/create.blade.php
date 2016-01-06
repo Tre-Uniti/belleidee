@@ -3,7 +3,7 @@
     Create Extension
 @stop
 
-@include('extensions.leftSide')
+
 
 @section('centerText')
     @include ('errors.list')

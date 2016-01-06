@@ -35,11 +35,11 @@
                 <p onclick="">Directory<span class="caret"></span></p>
                 <div>
                     <ul>
-                        <li><a href="{{ url('/indev') }}">Beliefs</a></li>
-                        <li><a href="{{ url('/indev') }}">Questions</a></li>
+                        <li><a href="{{ url('/users') }}">Users</a></li>
                         <li><a href="{{ url('/beacons') }}">Beacons</a></li>
+                        <li><a href="{{ url('/beliefs') }}">Beliefs</a></li>
+                        <li><a href="{{ url('/indev') }}">Questions</a></li>
                         <li><a href="{{ url('/indev') }}">Sponsors</a></li>
-                        <li><a href="{{ url('/bookmarks/personal/'. $user->id) }}">Bookmarks</a></li>
                     </ul>
                 </div>
             </li>
@@ -62,7 +62,17 @@
     <!-- Left --- --- -->
     <div id = "leftContainer">
         <div id = "leftSide">
-        @yield('leftSideBar')
+            <div>
+                <h2><a href="{{ action('UserController@show', [$user->id])}}">{{$user->handle}}</a></h2>
+
+                <div class = "innerPhotos">
+                    @if($photoPath === '')
+                        <a href="/"><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "97%" width = "85%"></a>
+                    @else
+                        <a href={{ url('/users/'. $user->id) }}><img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $photoPath) }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
+                    @endif
+                </div>
+            </div>
             <nav class = "profileNav">
                 <ul>
                     @if ($profilePosts->isEmpty())

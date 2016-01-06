@@ -3,7 +3,7 @@
     Top Elevated
 @stop
 
-@include('extensions.leftSide')
+
 
 @section('centerText')
     <div>

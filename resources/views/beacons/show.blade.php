@@ -3,7 +3,7 @@
     Show Beacon
 @stop
 
-@include('beacons.leftSide')
+
 
 @section('centerMenu')
     <h2>{{ $beacon->name }}</h2>

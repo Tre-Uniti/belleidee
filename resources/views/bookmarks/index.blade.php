@@ -1,18 +1,17 @@
 @extends('app')
 @section('siteTitle')
-    Posts
+    Bookmarks
 @stop
 
-@include('posts.leftSide')
 
 @section('centerText')
     <div>
     <h2>Bookmarks of {{ $user->handle  }}</h2>
     <table style="display: inline-block;">
         <tr>
-            <td><a href={{ url('/posts')}}>Top Elevated</a></td>
-            <td><a href={{ url('/posts')}}>Search</a></td>
-            <td><a href={{ url('/posts')}}>Most Extended</a></td>
+            <td><a href={{ url('/indev')}}>Top Elevated</a></td>
+            <td><a href={{ url('/indev')}}>Search</a></td>
+            <td><a href={{ url('/indev')}}>Most Extended</a></td>
         </tr>
     </table>
     </div>

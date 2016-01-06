@@ -3,8 +3,6 @@
     Your Posts
 @stop
 
-@include('posts.leftSide')
-
 @section('centerText')
     <div>
         <h2>Created: {{ $date->format('M-d-Y') }}</h2>

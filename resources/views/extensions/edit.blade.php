@@ -5,7 +5,7 @@
     Edit Extension
 @stop
 
-@include('extensions.leftSide')
+
 
 @section('centerText')
     <div class = "errors">

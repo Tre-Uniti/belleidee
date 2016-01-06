@@ -3,7 +3,6 @@
     Show Post
 @stop
 
-@include('users.leftSide')
 
 @section('centerText')
     <h2>Home of {{$user->handle}}</h2>

@@ -12,16 +12,22 @@
 */
 
 //User Routes (Resource)
+Route::get('users/sortByElevation', 'UserController@sortByElevation');
+Route::get('users/sortByExtension', 'UserController@sortByExtension');
 Route::resource('users', 'UserController');
 
 //Beacon Routes (Resource)
 Route::resource('beacons', 'BeaconController');
 Route::get('beacons/tags/{source}', 'BeaconController@listTagged');
 
+//Belief Routes
+Route::get('beliefs', 'BeliefController@index');
+Route::get('belief/index/{name}', 'BeliefController@beliefIndex');
+
 //Bookmark Routes (Resources)
-Route::resource('bookmarks', 'BookmarkController');
+Route::get('bookmarks/personal', 'BookmarkController@listPersonal');
 Route::get('bookmarks/beacons/{beacon_tag}', 'BookmarkController@bookmarkBeacon');
-Route::get('bookmarks/personal/{user_id}', 'BookmarkController@listPersonal');
+Route::resource('bookmarks', 'BookmarkController');
 
 //Post Routes (Resource)
 Route::get('posts/user/{id}', 'PostController@userPosts');

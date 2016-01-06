@@ -3,15 +3,14 @@
     Beacons
 @stop
 
-@include('beacons.leftSide')
 
 @section('centerText')
     <div>
-    <h2>Beacons</h2>
+    <h2>Beacon Directory</h2>
         <table style="display: inline-block;">
             <tr>
-                <td><a href={{ url('/beacons/create')}}>Top Beacons</a></td>
-                <td><a href={{ url('/beacons/create')}}>Search</a></td>
+                <td><a href={{ url('/indev')}}>Top Beacons</a></td>
+                <td><a href={{ url('/indev')}}>Search</a></td>
                 <td><a href={{ url('/beacons/create')}}>Request New</a></td>
             </tr>
         </table>

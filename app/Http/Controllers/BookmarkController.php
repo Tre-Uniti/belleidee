@@ -168,12 +168,11 @@ class BookmarkController extends Controller
     /**
      * List personal bookmarks of user
      *
-     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function listPersonal($id)
+    public function listPersonal()
     {
-        $user = User::findOrFail($id);
+        $user = Auth::user();
         $bookmarks = $user->bookmarks;
 
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
@@ -188,7 +187,7 @@ class BookmarkController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view ('bookmarks.index')

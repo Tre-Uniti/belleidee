@@ -3,7 +3,7 @@
     User Extensions
 @stop
 
-@include('extensions.leftSide')
+
 
 @section('centerText')
     <div>

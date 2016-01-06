@@ -47,7 +47,7 @@ class BeaconController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view ('beacons.index')
@@ -73,7 +73,7 @@ class BeaconController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view('beacons.create')
@@ -137,7 +137,7 @@ class BeaconController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
         return view ('beacons.show')
                     ->with(compact('user', 'beacon', 'profilePosts','profileExtensions'))
@@ -215,7 +215,7 @@ class BeaconController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view ('beacons.listTagged')

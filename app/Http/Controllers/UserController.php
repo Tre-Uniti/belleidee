@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -31,7 +32,24 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $users = $this->user->latest()->paginate(10);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('users.index')
+            ->with(compact('user', 'users', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
     }
 
     /**
@@ -80,7 +98,7 @@ class UserController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
 
@@ -121,6 +139,55 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Sort and show all users by highest Elevation
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByElevation()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $users = $this->user->orderBy('elevation', 'desc')->paginate(10);
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('users.sortByElevation')
+            ->with(compact('user', 'users', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+    /**
+     * Sort and show all users by highest Extension
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByExtension()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $users = $this->user->orderBy('extension', 'desc')->paginate(10);
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('users.sortByExtension')
+            ->with(compact('user', 'users', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
     }
 
 

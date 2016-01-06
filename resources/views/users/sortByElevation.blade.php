@@ -8,7 +8,7 @@
         <h2>User Directory</h2>
         <table style="display: inline-block;">
             <tr>
-                <td><a href={{ url('/users/sortByElevation')}}>Top Elevated</a></td>
+                <td><a href={{ url('/users')}}>Most Recent</a></td>
                 <td><a href={{ url('/indev')}}>Search</a></td>
                 <td><a href={{ url('/users/sortByExtension')}}>Most Extended</a></td>
             </tr>
@@ -26,7 +26,7 @@
                 <a href="{{ action('UserController@show', [$user2->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $user2->handle }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('UserController@show', [$user2->id])}}"><button type = "button" class = "interactButton">{{ $user2->created_at->format('M-d-Y') }}</button></a>
+                <a href="{{ action('UserController@show', [$user2->id])}}"><button type = "button" class = "interactButton">{{ $user2->created_at->format('d-M-y') }}</button></a>
             </div>
         </div>
     @endforeach

@@ -3,7 +3,6 @@
     Show Post
 @stop
 
-@include('posts.leftSide')
 
 @section('centerMenu')
     <h2>{{ $post->title }}</h2>

@@ -46,7 +46,7 @@ class HomeController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view ('pages.home')
@@ -65,7 +65,7 @@ class HomeController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
         return view ('pages.settings')
                     ->with(compact('user', 'profilePosts', 'profileExtensions'))
@@ -85,7 +85,7 @@ class HomeController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view ('pages.indev')
@@ -103,9 +103,19 @@ class HomeController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
 
         return view('pages.photo')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'profilePosts', 'profileExtensions'))
+            ->with('photoPath', $photoPath);
     }
     /**
      * Upload profile photo to S3 and set in database.

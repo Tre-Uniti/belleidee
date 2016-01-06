@@ -3,8 +3,6 @@
     Create Post
 @stop
 
-@include('beacons.leftSide')
-
 @section('centerText')
     @include ('errors.list')
 
