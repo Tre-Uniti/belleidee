@@ -5,7 +5,7 @@
 
 @section('centerText')
     <div>
-    <h2>Posts of {{ $belief }}</h2>
+    <h2>{{ $belief }} Posts</h2>
     <table style="display: inline-block;">
         <tr>
             <td><a href={{ url('/posts/sortByElevation')}}>Top Elevated</a></td>
@@ -26,7 +26,7 @@
             <a href="{{ action('PostController@show', [$post->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $post->title }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('BeaconController@listTagged', [$post->beacon_tag])}}"><button type = "button" class = "interactButton">{{ $post->beacon_tag }}</button></a>
+                <a href="{{ action('UserController@show', [$post->user_id])}}"><button type = "button" class = "interactButton">{{ $post->user->handle }}</button></a>
             </div>
             </div>
         @endforeach

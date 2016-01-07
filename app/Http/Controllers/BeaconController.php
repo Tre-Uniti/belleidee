@@ -35,8 +35,8 @@ class BeaconController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->get();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $beacons = $this->beacon->latest()->paginate(10);
 
         //Get user photo

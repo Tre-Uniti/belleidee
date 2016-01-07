@@ -121,7 +121,7 @@ class SessionController extends Controller
      */
     protected function getFailedLoginMessage()
     {
-        return '-These credentials do not match our records.';
+        return 'These credentials do not match our records.';
     }
 
     /**

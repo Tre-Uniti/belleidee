@@ -14,7 +14,7 @@
         <div>
             <table align = "center">
                 <tr>
-                    <td><a href="{{ url('/extensions/') }}">{{ $extension->index }}</a></td>
+                    <td><a href="{{ action('BeliefController@beliefIndex', $extension->index) }}">{{ $extension->index }}</a></td>
                     <td><a href="{{ url('/beacons/tags/'.$extension->beacon_tag) }}">{{ $extension->beacon_tag }}</a></td>
                     <td><a href="{{ url('/extensions') }}">{{ $extension->index2 }}</a></td>
                 </tr>

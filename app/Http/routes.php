@@ -46,8 +46,10 @@ Route::get('extensions/post/{source}', 'ExtensionController@extendPost');
 Route::get('extensions/extenception/{source}', 'ExtensionController@extenception');
 Route::get('extensions/post/list/{id}', 'ExtensionController@postList');
 Route::get('extensions/extend/list/{id}', 'ExtensionController@extendList');
-
 Route::resource('extensions', 'ExtensionController');
+
+//Legacy Routes (Resource)
+Route::resource('legacy', 'LegacyController');
 
 
 //Invite Routes (Resource)
