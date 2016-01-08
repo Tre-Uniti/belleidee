@@ -37,6 +37,10 @@ Route::get('posts/sortByElevation', 'PostController@sortByElevation');
 Route::get('posts/sortByExtension', 'PostController@sortByExtension');
 Route::resource('posts', 'PostController');
 
+//Draft Routes (Resource)
+Route::get('drafts/convert/{id}', 'DraftController@convert');
+Route::resource('drafts', 'DraftController');
+
 //Extension Routes (Resource)
 Route::get('extensions/sortByElevation', 'ExtensionController@sortByElevation');
 Route::get('extensions/sortByExtension', 'ExtensionController@sortByExtension');

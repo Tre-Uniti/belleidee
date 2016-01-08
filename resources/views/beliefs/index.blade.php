@@ -15,7 +15,7 @@
                     <tr>
                         <td><a href="{{ action('BeliefController@beliefIndex', 'Adaptia') }}"><button type = "button" class = "interactButton">Adaptia</button></a></td>
                         <td><a href="{{ action('BeliefController@beliefIndex', 'Atheism') }}"><button type = "button" class = "interactButton">Atheism</button></a></td>
-                        <td><a href="{{ action('BeliefController@beliefIndex', 'Ba Qua') }}"><button type = "button" class = "interactButton">Ba Qua</button></a></td>
+                        <td><a href="{{ action('BeliefController@beliefIndex', 'Ba Gua') }}"><button type = "button" class = "interactButton">Ba Gua</button></a></td>
                     </tr>
                     <tr>
                         <td><a href="{{ action('BeliefController@beliefIndex', 'Buddhism') }}"><button type = "button" class = "interactButton">Buddhism</button></a></td>

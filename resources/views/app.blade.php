@@ -25,9 +25,9 @@
                     <ul>
                         <li><a href={{ url('/posts/create') }}>Create</a></li>
                         <li><a href={{ url('/posts') }}>Discover</a></li>
-                        <li><a href="{{ url('/indev') }}">Drafts</a></li>
+                        <li><a href="{{ url('/drafts') }}">Drafts</a></li>
                         <li><a href="{{ url('/extensions') }}">Extensions</a></li>
-                        <li><a href="{{ url('/posts') }}">Legacy</a></li>
+                        <li><a href="{{ url('/indev') }}">Legacy</a></li>
                     </ul>
                 </div>
             </li>
