@@ -26,9 +26,7 @@
                     <div>
                         <table align = "center">
                             <tr>
-                                <td><a href={{ url('/indev')}}>Elevation</a></td>
-                                <td> <a href = {{ url('/drafts/date/'.$draft->created_at->format('M-d-Y')) }}>{{ $draft->created_at->format('M-d-Y') }}</a></td>
-                                <td><a href={{ url('/extensions/post/list/'.$draft->id)}}>Extension</a></td>
+                                <td> <a href = {{ url('/indev') }}>{{ $draft->created_at->format('M-d-Y') }}</a></td>
                             </tr>
                         </table>
                     </div>
