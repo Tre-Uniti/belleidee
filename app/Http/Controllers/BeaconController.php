@@ -90,7 +90,6 @@ class BeaconController extends Controller
     public function store(CreateBeaconRequest $request)
     {
         $user = Auth::user();
-        $user_id = $user->id;
 
         //$request = array_add($request, 'tier', 3);
         $beacon = new Beacon;

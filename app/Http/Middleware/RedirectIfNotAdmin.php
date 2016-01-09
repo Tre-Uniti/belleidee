@@ -20,7 +20,7 @@ class RedirectIfNotAdmin
         $user = Auth::user();
         if ($user->type < 1)
         {
-            flash()->overlay('Ascension level insufficient to view');
+            flash()->overlay('Access restricted to Admin and Guardian users only');
             return redirect()->back();
         }
         elseif ($user->type < 4)

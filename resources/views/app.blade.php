@@ -39,7 +39,7 @@
                         <li><a href="{{ url('/beacons') }}">Beacons</a></li>
                         <li><a href="{{ url('/beliefs') }}">Beliefs</a></li>
                         <li><a href="{{ url('/indev') }}">Questions</a></li>
-                        <li><a href="{{ url('/indev') }}">Sponsors</a></li>
+                        <li><a href="{{ url('/sponsors') }}">Sponsors</a></li>
                     </ul>
                 </div>
             </li>
