@@ -37,7 +37,6 @@ class BeliefController extends Controller
 
         if($user->photo_path == '')
         {
-
             $photoPath = '';
         }
         else

@@ -151,7 +151,26 @@ class BeaconController extends Controller
      */
     public function edit($id)
     {
-        //
+        //Get Beacon requested for editing
+        $beacon = $this->beacon->findOrFail($id);
+
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view('beacons.edit')
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'beacon'))
+            ->with('photoPath', $photoPath);
     }
 
     /**
@@ -163,7 +182,11 @@ class BeaconController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $beacon = $this->beacon->findOrFail($id);
+        $beacon->update($request->all());
+        flash()->overlay('Beacon has been updated');
+
+        return redirect('beacons/'. $beacon->id);
     }
 
     /**

@@ -36,6 +36,6 @@ class EditPostRequest extends Request
     // override this to redirect back
     public function forbiddenResponse()
     {
-        return redirect()->back()->withInput()->withErrors('This is not your post and you are not a Mod or Admin.');
+        return redirect()->back()->withInput()->withErrors('This is not your post to edit.');
     }
 }

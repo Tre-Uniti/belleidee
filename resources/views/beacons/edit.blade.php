@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Create
+    Edit
 @stop
 
 
@@ -9,8 +9,8 @@
         @include ('errors.list')
     </div>
 
-    {!! Form::model($post, ['route' => ['posts.update', $post->id], 'method' => 'patch']) !!}
-    @include ('posts._form', ['submitButtonText' => 'Update Post'])
+    {!! Form::model($beacon, ['route' => ['beacons.update', $beacon->id], 'method' => 'patch']) !!}
+    @include ('beacons._form', ['submitButtonText' => 'Update Beacon'])
 
 @stop
 

@@ -136,7 +136,26 @@ class SponsorController extends Controller
      */
     public function edit($id)
     {
-        //
+        //Get Sponsor requested for editing
+        $sponsor = $this->sponsor->findOrFail($id);
+
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view('sponsors.edit')
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'sponsor'))
+            ->with('photoPath', $photoPath);
     }
 
     /**
@@ -148,7 +167,11 @@ class SponsorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $sponsor = $this->sponsor->findOrFail($id);
+        $sponsor->update($request->all());
+        flash()->overlay('Sponsor has been updated');
+
+        return redirect('sponsors/'. $sponsor->id);
     }
 
     /**

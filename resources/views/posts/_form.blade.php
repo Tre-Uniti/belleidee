@@ -22,7 +22,6 @@
     </div>
     @section('centerFooter')
         {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
-        <!-- Later Implementation<a href="{{ url('/drafts') }}"><button type = "button" class = "navButton">Save as draft</button></a>-->
         <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>
     {!! Form::close()   !!}
     @stop

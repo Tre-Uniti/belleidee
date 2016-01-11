@@ -14,7 +14,7 @@
         <table style="display: inline-block;">
         <tr>
             <th>
-                <a href="{{ url('/beacons') }}">Shepherd</a>
+                <a href="{{ url('/beliefs') }}">Belief</a>
             </th>
             <th>
                 <a href="{{ url('/beacons') }}">Tag</a>
@@ -22,10 +22,9 @@
             <th>
                 <a href="{{ url('/beacons') }}">Usage</a>
             </th>
-
-    </tr>
+        </tr>
             <tr>
-                <td><a href="{{ url('/posts/') }}">{{ $beacon->user_id }}</a>
+                <td><a href="{{ url('/belief/index/'. $beacon->belief) }}">{{ $beacon->belief }}</a>
                 </td>
                 <td><a href="{{ url('/beacons/tags/'.$beacon->beacon_tag) }}">{{ $beacon->beacon_tag }}</a>
                 </td>
@@ -39,16 +38,17 @@
             </tr>
     </table>
         <hr/>
-        <h2>Top 7</h2>
-
-
+        <h2>Shepherd Posts:</h2>
         </div>
 @stop
 
 @section('centerFooter')
     <div id = "centerFooter">
+        @if($user->type > 3)
+            <a href="{{ url('/beacons/'.$beacon->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+        @endif
         @if($beacon->beacon_tag != 'No-Beacon')
-        <a href="{{ url('/bookmarks/beacons/'.$beacon->beacon_tag) }}"><button type = "button" class = "navButton">Bookmark</button></a>
+            <a href="{{ url('/bookmarks/beacons/'.$beacon->beacon_tag) }}"><button type = "button" class = "navButton">Bookmark</button></a>
         @endif
     </div>
 @stop

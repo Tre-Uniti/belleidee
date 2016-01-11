@@ -12,21 +12,21 @@
         <table style="display: inline-block;">
             <tr>
                 <th>
+                    <a href="{{ url('/sponsors') }}">Location</a>
+                </th>
+                <th>
                     <a href="{{ url('/sponsors') }}">Views</a>
                 </th>
                 <th>
-                    <a href="{{ url('/sponsors') }}">Country</a>
-                </th>
-                <th>
-                    <a href="{{ url('/sponsors') }}">City</a>
+                    <a href="{{ url('/sponsors') }}">Status</a>
                 </th>
             </tr>
             <tr>
-                <td><a href="{{ url('/posts/') }}">{{ $sponsor->views }}</a>
+                <td><a href="{{ url('/indev') }}">{{ $sponsor->country }}-{{ $sponsor->city }}</a>
                 </td>
-                <td><a href="{{ url('/beacons/tags/'.$sponsor->views) }}">{{ $sponsor->country }}</a>
+                <td><a href="{{ url('/indev') }}">{{ $sponsor->views }}</a>
                 </td>
-                <td><a href="{{ url('/posts/') }}">{{ $sponsor->city }}</a>
+                <td><a href="{{ url('/indev') }}">{{ $sponsor->status }}
                 </td>
             </tr>
             <tr>
@@ -41,7 +41,10 @@
 @stop
 
 @section('centerFooter')
-
+    @if($user->type > 3)
+        <a href="{{ url('/sponsors/'.$sponsor->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+    @endif
+        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Start Sponsorship</button></a>
 @stop
 
 @include('sponsors.rightSide')
