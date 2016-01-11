@@ -79,6 +79,7 @@ class ExtensionController extends Controller
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
                 'Story' => 'Story',
+                'Verse' => 'Verse',
             ];
 
         if($user->photo_path == '')
@@ -287,6 +288,7 @@ class ExtensionController extends Controller
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
                 'Story' => 'Story',
+                'Verse' => 'Verse',
             ];
 
         if($user->photo_path == '')
