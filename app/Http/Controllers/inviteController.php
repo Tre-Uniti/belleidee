@@ -15,6 +15,7 @@ class InviteController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('admin');
     }
     /**
      * Display a listing of the resource.
@@ -28,8 +29,20 @@ class InviteController extends Controller
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         $invites = $user->invites()->latest('created_at')->take(7)->get();
+        //Get user photo
+        if($user->photo_path == '')
+        {
 
-        return view('invites.invite', compact('user', 'profilePosts', 'profileExtensions', 'invites'));
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view('invites.invite')
+                ->with(compact('user', 'profilePosts', 'profileExtensions', 'invites'))
+                ->with('photoPath', $photoPath);
     }
 
     /**
@@ -43,7 +56,19 @@ class InviteController extends Controller
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
-        return view('invites.create', compact('user', 'profilePosts', 'profileExtensions'));
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view('invites.create')
+                    ->with(compact('user', 'profilePosts', 'profileExtensions'))
+                    ->with('photoPath', $photoPath);
     }
 
     /**

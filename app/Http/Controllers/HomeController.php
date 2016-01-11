@@ -36,8 +36,8 @@ class HomeController extends Controller
                 '1' => '1',
                 '2' => '2',
             ];
-        $profilePosts = $user->posts()->latest('created_at')->take(12)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(12)->get();
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         if($user->photo_path == '')
         {
