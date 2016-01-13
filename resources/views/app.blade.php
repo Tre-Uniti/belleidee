@@ -134,7 +134,7 @@
                 @elseif(isset($sponsorPath))
                     <a href={{ url('/users/'. $user->id) }}><img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $photoPath) }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
                 @else
-                    <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
+                    <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/tre-uniti.png') }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
                 @endif
             </div>
             <nav class = "profileNav">
