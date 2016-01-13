@@ -118,8 +118,8 @@ class PostController extends Controller
                 'Prayer' => 'Prayer',
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
+                'Scholar' => 'Scholar',
                 'Story' => 'Story',
-                'Verse' => 'Verse',
             ];
 
         if($user->photo_path == '')
@@ -257,8 +257,8 @@ class PostController extends Controller
                 'Prayer' => 'Prayer',
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
+                'Scholar' => 'Scholar',
                 'Story' => 'Story',
-                'Verse' => 'Verse',
             ];
         if($user->photo_path == '')
         {

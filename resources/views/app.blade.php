@@ -127,7 +127,16 @@
     <!-- --- --- Right -->
     <div id = "rightContainer">
         <div id = "rightSide">
-        @yield('rightSideBar')
+            <h2>Hosted:</h2>
+            <div class = "innerPhotos">
+                @if(isset($beaconPath))
+                    <a href="/"><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "97%" width = "85%"></a>
+                @elseif(isset($sponsorPath))
+                    <a href={{ url('/users/'. $user->id) }}><img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $photoPath) }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
+                @else
+                    <a href={{ url('/users/'. $user->id) }}><img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $photoPath) }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
+                @endif
+            </div>
             <nav class = "profileNav">
                 <ul>
                     @if ($profilePosts->isEmpty())

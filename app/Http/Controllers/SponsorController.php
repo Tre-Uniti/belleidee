@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SponsorController extends Controller
 {
@@ -183,5 +184,41 @@ class SponsorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Start a new Sponsorship.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function sponsorship($id)
+    {
+        $sponsor = $this->sponsor->findOrFail($id);
+        $user = Auth::user();
+
+        //Check if user already has a sponsor
+        $exists = DB::table('sponsorships')->where('user_id', $user->id)->first();
+        if(!$exists)
+        {
+            //Create new Sponsorship
+            DB::table('sponsorships')->insert(
+                ['sponsor_id' => $sponsor->id, 'user_id' => $user->id]
+            );
+
+            flash()->overlay('Your first sponsorship has started!');
+        }
+        else
+        {
+            //Delete old Sponsorship
+            DB::table('sponsorships')->where('user_id', '=', $user->id)->delete();
+            //Create new Sponsorship
+            DB::table('sponsorships')->insert(
+                ['sponsor_id' => $sponsor->id, 'user_id' => $user->id]
+            );
+
+            flash()->overlay('Your sponsorship has started!');
+        }
+        return redirect('users/'. $user->id);
     }
 }

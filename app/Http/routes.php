@@ -42,6 +42,7 @@ Route::get('drafts/convert/{id}', 'DraftController@convert');
 Route::resource('drafts', 'DraftController');
 
 //Sponsor Routes (Resource)
+Route::get('sponsors/sponsorship/{id}', 'SponsorController@sponsorship');
 Route::resource('sponsors', 'SponsorController');
 
 //Extension Routes (Resource)
