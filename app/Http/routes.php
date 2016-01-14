@@ -43,6 +43,8 @@ Route::resource('drafts', 'DraftController');
 
 //Sponsor Routes (Resource)
 Route::get('sponsors/sponsorship/{id}', 'SponsorController@sponsorship');
+Route::get('sponsors/photo/{id}', 'SponsorController@sponsorPhoto');
+Route::post('sponsors/storePhoto/{id}', 'SponsorController@storePhoto');
 Route::resource('sponsors', 'SponsorController');
 
 //Extension Routes (Resource)

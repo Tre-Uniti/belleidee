@@ -2,7 +2,7 @@
 
     <table align = "center" style = "margin-bottom: 7px;">
         <tr>
-            <th colspan= "2">New Sponsor</th>
+            <th colspan= "2">Sponsor</th>
         </tr>
         <tr>
             <td>

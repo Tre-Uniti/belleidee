@@ -6,11 +6,15 @@ use App\Elevate;
 use App\Extension;
 use App\Http\Requests\PhotoUploadRequest;
 use App\Post;
+use App\Sponsor;
+use App\Sponsorship;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
@@ -56,6 +60,11 @@ class HomeController extends Controller
     public function getSettings()
     {
         $user = Auth::user();
+        //Get Sponsorship of user
+        $sponsorship = Sponsorship::where('user_id', $user->id)->first();
+        $sponsor = Sponsor::where('id', $sponsorship->sponsor_id)->first();
+
+        $days = Carbon::now()->diffInDays(new Carbon($sponsorship->created_at));
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
         if($user->photo_path == '')
@@ -68,8 +77,9 @@ class HomeController extends Controller
             $photoPath = $user->photo_path;
         }
         return view ('pages.settings')
-                    ->with(compact('user', 'profilePosts', 'profileExtensions'))
-                    ->with('photoPath', $photoPath);
+                    ->with(compact('user', 'profilePosts', 'profileExtensions', 'sponsor'))
+                    ->with('photoPath', $photoPath)
+                    ->with('days', $days);
     }
 
     public function getIndev()

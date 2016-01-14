@@ -14,7 +14,4 @@
 
 @stop
 
-@section('centerFooter')
-@stop
-
 @include('drafts.rightSide')

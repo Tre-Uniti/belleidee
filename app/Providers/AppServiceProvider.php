@@ -30,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
             ];
 
         view()->share('beliefs', $beliefs);
+
+
     }
 
     /**

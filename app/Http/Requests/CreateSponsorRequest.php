@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class CreateSponsorRequest extends Request
@@ -14,7 +15,8 @@ class CreateSponsorRequest extends Request
      */
     public function authorize()
     {
-        return Auth::check();
+        return User::where('id', Auth::id())
+            ->where('tier', '>', 3);
     }
 
     /**
