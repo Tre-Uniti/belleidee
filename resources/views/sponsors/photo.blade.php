@@ -20,7 +20,7 @@
     <tr>
         <td>
             {!! Form::submit('Upload Photo', ['class' => 'navButton']) !!}
-            <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>
+            <a href="{{ url('/sponsors/'.$sponsor->id) }}"><button type = "button" class = "navButton">Cancel</button></a>
         </td>
     </tr>
 </table>

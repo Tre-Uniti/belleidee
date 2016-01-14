@@ -23,7 +23,7 @@ class SponsorController extends Controller
     public function __construct(Sponsor $sponsor)
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['only' => 'create']);
+        $this->middleware('admin', ['except' => 'index', 'show', 'sponsorship']);
         $this->sponsor = $sponsor;
     }
     /**
@@ -240,14 +240,14 @@ class SponsorController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        if($sponsor->photo_path == '')
+        if($user->photo_path == '')
         {
 
             $photoPath = '';
         }
         else
         {
-            $photoPath = $sponsor->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view('sponsors.photo')

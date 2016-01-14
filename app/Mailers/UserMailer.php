@@ -10,7 +10,7 @@ use Illuminate\Contracts\Mail\Mailer;
 class UserMailer
 {
     protected $mailer;
-    protected $from = 'zoko@belle-idee.org';
+    protected $from = 'tre-uniti@belle-idee.org';
     protected $to;
     protected $view;
     protected $data = [];
