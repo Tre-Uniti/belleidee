@@ -74,8 +74,8 @@ class DraftController extends Controller
                 'Prayer' => 'Prayer',
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
+                'Scholar' => 'Scholar',
                 'Story' => 'Story',
-                'Text Study' => 'Text Study'
             ];
 
         if($user->photo_path == '')
@@ -202,6 +202,7 @@ class DraftController extends Controller
                 'Prayer' => 'Prayer',
                 'Question' => 'Question',
                 'Reflection' => 'Reflection',
+                'Scholar' => 'Scholar',
                 'Story' => 'Story',
             ];
         if($user->photo_path == '')
