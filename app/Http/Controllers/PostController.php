@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Bookmark;
 use App\Elevate;
+use App\Sponsor;
+use App\Sponsorship;
 use App\User;
 use App\Post;
 use App\Extension;
@@ -188,6 +190,8 @@ class PostController extends Controller
         $contents = Storage::get($post_path);
         $post = array_add($post, 'body', $contents);
 
+
+
         //Get other Posts of User
         $user_id = $post->user_id;
         $user = User::findOrFail($user_id);
@@ -195,6 +199,17 @@ class PostController extends Controller
 
         //Get other Extensions of User
         $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->take(7)->get();
+
+        //Get Sponsorship of user
+        if(Sponsorship::where('user_id', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', $user->id)->first();
+            $sponsor = Sponsor::where('id', $sponsorship->sponsor_id)->first();
+        }
+        else
+        {
+            $sponsor = Sponsor::where('id', 1)->first();
+        }
 
         //Check if viewing user has already elevated post
         if(Elevate::where('post_id', $post->id)->where('user_id', $viewUser->id)->exists())
@@ -220,7 +235,8 @@ class PostController extends Controller
         return view('posts.show')
             ->with(compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'))
             ->with('elevation', $elevation)
-            ->with('photoPath', $photoPath);
+            ->with('photoPath', $photoPath)
+            ->with('sponsor', $sponsor);
     }
 
     /**

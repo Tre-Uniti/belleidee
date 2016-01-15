@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Extension;
-use App\Http\Requests\CreateSponsorRequest;
+use App\Http\Requests\SponsorRequest;
 use App\Http\Requests\PhotoUploadRequest;
 use App\Post;
 use App\Sponsor;
@@ -23,7 +23,7 @@ class SponsorController extends Controller
     public function __construct(Sponsor $sponsor)
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['except' => 'index', 'show', 'sponsorship']);
+        $this->middleware('admin', ['except' => ['index', 'show', 'sponsorship']]);
         $this->sponsor = $sponsor;
     }
     /**
@@ -83,10 +83,10 @@ class SponsorController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\SponsorRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateSponsorRequest $request)
+    public function store(Request $request)
     {
         $sponsor = new Sponsor;
         $sponsor->name = $request['name'];
@@ -281,7 +281,9 @@ class SponsorController extends Controller
         }
 
         $image = $request->file('image');
-        $imageFileName = $sponsor->name . '.' . $image->getClientOriginalExtension();
+        $sponsorName = str_replace(' ', '_', $sponsor->name);
+        $imageFileName = $sponsorName . '.' . $image->getClientOriginalExtension();
+
         $path = '/sponsor_photos/'. $sponsor->id . '/' .$imageFileName;
 
         Storage::put($path, file_get_contents($image));

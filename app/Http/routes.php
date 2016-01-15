@@ -61,7 +61,6 @@ Route::resource('extensions', 'ExtensionController');
 //Legacy Routes (Resource)
 Route::resource('legacy', 'LegacyController');
 
-
 //Invite Routes (Resource)
 Route::resource('invites', 'InviteController');
 

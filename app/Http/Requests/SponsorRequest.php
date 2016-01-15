@@ -6,7 +6,7 @@ use App\Http\Requests\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
-class CreateSponsorRequest extends Request
+class SponsorRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

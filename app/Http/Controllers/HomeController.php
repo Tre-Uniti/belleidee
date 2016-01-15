@@ -61,10 +61,19 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         //Get Sponsorship of user
-        $sponsorship = Sponsorship::where('user_id', $user->id)->first();
-        $sponsor = Sponsor::where('id', $sponsorship->sponsor_id)->first();
+        if(Sponsorship::where('user_id', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', $user->id)->first();
+            $sponsor = Sponsor::where('id', $sponsorship->sponsor_id)->first();
+            $days = Carbon::now()->diffInDays(new Carbon($sponsorship->created_at));
+        }
+        else
+        {
+            $sponsor = Sponsor::where('id', 1)->first();
+            $days = 0;
+        }
 
-        $days = Carbon::now()->diffInDays(new Carbon($sponsorship->created_at));
+
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
         if($user->photo_path == '')
@@ -154,7 +163,9 @@ class HomeController extends Controller
         }
 
         $image = $request->file('image');
-        $imageFileName = $user->handle . '.' . $image->getClientOriginalExtension();
+
+        $userName = str_replace(' ', '_', $user->name);
+        $imageFileName = $userName . '.' . $image->getClientOriginalExtension();
         $path = '/user_photos/'. $user->id . '/' .$imageFileName;
 
         Storage::put($path, file_get_contents($image));

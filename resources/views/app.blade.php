@@ -132,6 +132,7 @@
                 @if(isset($beaconPath))
                     <a href="/"><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "97%" width = "85%"></a>
                 @elseif(isset($sponsor))
+
                     <a href={{ url('/sponsors/'. $sponsor->id) }}><img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $sponsor->photo_path) }} alt="{{$sponsor->name}}" height = "97%" width = "85%"></a>
                 @else
                     <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/tre-uniti.png') }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
