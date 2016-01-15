@@ -21,8 +21,8 @@
     {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your belief here:', 'rows' => '20', 'maxlength' => '3500']) !!}
     </div>
     @section('centerFooter')
-        {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
-        <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>
+        {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
+        <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
     {!! Form::close()   !!}
     @stop
 

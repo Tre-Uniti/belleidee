@@ -6,7 +6,6 @@
 @section('centerText')
     <div>
     <h2>Belief Directory</h2>
-
     </div>
     <nav class = "beliefNav">
         <ul>
@@ -25,12 +24,17 @@
                     <tr>
                         <td><a href="{{ action('BeliefController@beliefIndex', 'Hinduism') }}"><button type = "button" class = "interactButton">Hinduism</button></a></td>
                         <td><a href="{{ action('BeliefController@beliefIndex', 'Islam') }}"><button type = "button" class = "interactButton">Islam</button></a></td>
-                        <td><a href="{{ action('BeliefController@beliefIndex', 'Judaism') }}"><button type = "button" class = "interactButton">Judaism</button></a></td>
+                        <td><a href="{{ action('BeliefController@beliefIndex', 'Indigenous') }}"><button type = "button" class = "interactButton">Indigenous</button></a></td>
                     </tr>
                     <tr>
-                        <td><a href="{{ action('BeliefController@beliefIndex', 'Native') }}"><button type = "button" class = "interactButton">Native</button></a></td>
+                        <td><a href="{{ action('BeliefController@beliefIndex', 'Judaism') }}"><button type = "button" class = "interactButton">Judaism</button></a></td>
+                        <td><a href="{{ action('BeliefController@beliefIndex', 'Shinto') }}"><button type = "button" class = "interactButton">Shinto</button></a></td>
+                        <td><a href="{{ action('BeliefController@beliefIndex', 'Sikhism') }}"><button type = "button" class = "interactButton">Sikhism</button></a></td>
+                    </tr>
+                    <tr>
                         <td><a href="{{ action('BeliefController@beliefIndex', 'Taoism') }}"><button type = "button" class = "interactButton">Taoism</button></a></td>
                         <td><a href="{{ action('BeliefController@beliefIndex', 'Urantia') }}"><button type = "button" class = "interactButton">Urantia</button></a></td>
+                        <td><a href="{{ action('BeliefController@beliefIndex', 'Other') }}"><button type = "button" class = "interactButton">Other</button></a></td>
                     </tr>
                 </table>
             </li>

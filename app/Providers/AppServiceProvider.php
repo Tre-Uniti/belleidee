@@ -15,18 +15,21 @@ class AppServiceProvider extends ServiceProvider
     {
         $beliefs=
             [
-            'Adaptia' => 'Adaptia',
-            'Atheism' => 'Atheism',
-            'Ba Gua' => 'Ba Gua',
-            'Buddhism' => 'Buddhism',
-            'Christianity' => 'Christianity',
-            'Druze' => 'Druze',
-            'Hinduism' => 'Hinduism',
-            'Islam' => 'Islam',
-            'Judaism' => 'Judaism',
-            'Native' => 'Native',
-            'Taoism' => 'Taoism',
-            'Urantia' => 'Urantia'
+                'Adaptia' => 'Adaptia',
+                'Atheism' => 'Atheism',
+                'Ba Gua' => 'Ba Gua',
+                'Buddhism' => 'Buddhism',
+                'Christianity' => 'Christianity',
+                'Druze' => 'Druze',
+                'Hinduism' => 'Hinduism',
+                'Islam' => 'Islam',
+                'Indigenous' => 'Indigenous',
+                'Judaism' => 'Judaism',
+                'Shinto' => 'Shinto',
+                'Sikhism' => 'Sikhism',
+                'Taoism' => 'Taoism',
+                'Urantia' => 'Urantia',
+                'Other' => 'Other'
             ];
 
         view()->share('beliefs', $beliefs);
