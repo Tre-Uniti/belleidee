@@ -4,10 +4,13 @@
   height: auto;
   margin: 0 auto;
   top: 10.15%;
-  background-color: $backgroundColor;
+  background: -webkit-linear-gradient(#F8F8F8  , #C0C0C0 );
+  background: -o-linear-gradient(#F8F8F8 , #C0C0C0 );
+  background: -moz-linear-gradient(#F8F8F8 , #C0C0C0 );
+  background: linear-gradient(#F8F8F8 , #C0C0C0 );
   position: fixed;
   border: 1px solid;
   border-radius: 20px;
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: "Open Sans", Arial, serif;
   z-index: 1;
 }

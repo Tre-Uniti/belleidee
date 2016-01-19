@@ -65,7 +65,7 @@ a:active {
 //Navigation
 .topNav
 {
-  font-family: "Comic Sans MS", Arial, sans-serif;
+  font-family: "Open Sans", Arial, serif;
   background-color: #101010;
   border: 1px solid #A8A8A8;
   border-radius: 4px;
@@ -218,9 +218,7 @@ a:active {
 //Profile Navigiaton
 .profileNav
 {
-  font-family: "Comic Sans MS", Arial, sans-serif;
-  background-color: #E8E8E8;
-  border: 1px solid #E8E8E8;
+  font-family: "Open Sans", Arial, serif;
   border-radius: 4px;
   color: #000000;
   width: 85%;
@@ -239,7 +237,6 @@ a:active {
   border-radius:4px;
   -moz-border-radius:4px;
   -webkit-border-radius:4px;
-  border:1px solid #E8E8E8;
   -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
   -ms-transition: all 0.2s;
@@ -260,7 +257,6 @@ a:active {
   border-radius:4px;
   -moz-border-radius:4px;
   -webkit-border-radius:4px;
-  border:1px solid #003300;
   color: $navTextHoverColor;
   background: -webkit-linear-gradient($navHoverColor1, $navHoverColor2);
   background: -o-linear-gradient($navHoverColor1, $navHoverColor2);
@@ -339,7 +335,6 @@ a:active {
   border-radius:4px;
   -moz-border-radius:4px;
   -webkit-border-radius:4px;
-  border:1px solid #E8E8E8;
   -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
   -ms-transition: all 0.2s;
@@ -349,7 +344,6 @@ a:active {
 
 .infoNav > ul > li > div
 {
-  background-color: #E8E8E8;
   border-top: 0;
   border-radius: 0 0 4px 4px;
   box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
@@ -620,18 +614,23 @@ td
 {
   width: 50%;
   height: 80%;
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: "Open Sans", Arial, serif;
   z-index: 2;
   margin: 1.5% auto;
+
 }
 article
 {
   height: auto;
   max-height: 100%;
-  background-color: $centerBackgroundColor;
   opacity: $centerOpacity;
   border: 2px solid;
   border-radius: 12px;
+  background: -webkit-linear-gradient(#F8F8F8  , #C0C0C0 );
+  background: -o-linear-gradient(#F8F8F8 , #C0C0C0 );
+  background: -moz-linear-gradient(#F8F8F8 , #C0C0C0 );
+  background: linear-gradient(#F8F8F8 , #C0C0C0 );
+
 }
 #centerMenu
 {
@@ -643,7 +642,7 @@ article
   margin: 5px auto;
   width: 99%;
   height: auto;
-  max-height: 550px;
+  max-height: 630px;
   overflow: auto;
 }
 #centerTextContent
@@ -678,7 +677,6 @@ article
   margin: 0 auto;
   padding: 3px;
   height: auto;
-  max-height: 30%;
 }
 .createTitleText
 {

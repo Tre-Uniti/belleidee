@@ -94,7 +94,7 @@ a:active {
   -webkit-touch-callout: none; }
 
 .topNav {
-  font-family: "Comic Sans MS", Arial, sans-serif;
+  font-family: "Open Sans", Arial, serif;
   background-color: #101010;
   border: 1px solid #A8A8A8;
   border-radius: 4px;
@@ -208,9 +208,7 @@ a:active {
   background-color: #303030; }
 
 .profileNav {
-  font-family: "Comic Sans MS", Arial, sans-serif;
-  background-color: #E8E8E8;
-  border: 1px solid #E8E8E8;
+  font-family: "Open Sans", Arial, serif;
   border-radius: 4px;
   color: #000000;
   width: 85%;
@@ -227,7 +225,6 @@ a:active {
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  border: 1px solid #E8E8E8;
   transition: all 0.2s; }
 
 .profileNav > ul > li > a {
@@ -241,7 +238,6 @@ a:active {
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  border: 1px solid #003300;
   color: #FFFFFF;
   background: linear-gradient(#33FF00, #000000); }
 
@@ -300,11 +296,9 @@ a:active {
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  border: 1px solid #E8E8E8;
   transition: all 0.2s; }
 
 .infoNav > ul > li > div {
-  background-color: #E8E8E8;
   border-top: 0;
   border-radius: 0 0 4px 4px;
   box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
@@ -497,11 +491,11 @@ td {
   height: auto;
   margin: 0 auto;
   top: 10.15%;
-  background-color: #E8E8E8;
+  background: linear-gradient(#F8F8F8, #C0C0C0);
   position: fixed;
   border: 1px solid;
   border-radius: 20px;
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: "Open Sans", Arial, serif;
   z-index: 1;
   left: 2em; }
 
@@ -510,11 +504,11 @@ td {
   height: auto;
   margin: 0 auto;
   top: 10.15%;
-  background-color: #E8E8E8;
+  background: linear-gradient(#F8F8F8, #C0C0C0);
   position: fixed;
   border: 1px solid;
   border-radius: 20px;
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: "Open Sans", Arial, serif;
   z-index: 1;
   right: 2em; }
 
@@ -545,17 +539,17 @@ td {
 #centerContent {
   width: 50%;
   height: 80%;
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: "Open Sans", Arial, serif;
   z-index: 2;
   margin: 1.5% auto; }
 
 article {
   height: auto;
   max-height: 100%;
-  background-color: #E8E8E8;
   opacity: 0.97;
   border: 2px solid;
-  border-radius: 12px; }
+  border-radius: 12px;
+  background: linear-gradient(#F8F8F8, #C0C0C0); }
 
 #centerMenu {
   margin: 0 auto;
@@ -565,7 +559,7 @@ article {
   margin: 5px auto;
   width: 99%;
   height: auto;
-  max-height: 550px;
+  max-height: 630px;
   overflow: auto; }
 
 #centerTextContent {
@@ -580,17 +574,18 @@ article {
 
 #centerTextContent > button {
   padding: 8px 13px;
-  font-family: "Comic Sans MS", Arial, sans-serif;
+  font-family: "Open Sans", Arial, serif;
   border-radius: 7px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   text-shadow: 3px 3px 10px #003300;
-  color: #F0F0F0;
+  color: #FFFFFF;
   /* For Safari 5.1 to 6.0 */
   /* For Opera 11.1 to 12.0 */
   /* For Firefox 3.6 to 15 */
   background: linear-gradient(#33FF00, #188BC0);
   /* Standard syntax */
+  text-shadow: 0px 0px 7px #202020;
   border: 1px solid #202020; }
 
 #centerTextContent > button:hover > div {
@@ -602,8 +597,7 @@ article {
 #createOptions {
   margin: 0 auto;
   padding: 3px;
-  height: auto;
-  max-height: 30%; }
+  height: auto; }
 
 .createTitleText {
   width: 350px; }
@@ -636,17 +630,18 @@ article {
 /* Button specific */
 .navButton {
   padding: 8px 13px;
-  font-family: "Comic Sans MS", Arial, sans-serif;
+  font-family: "Open Sans", Arial, serif;
   border-radius: 7px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   text-shadow: 3px 3px 10px #003300;
-  color: #F0F0F0;
+  color: #FFFFFF;
   /* For Safari 5.1 to 6.0 */
   /* For Opera 11.1 to 12.0 */
   /* For Firefox 3.6 to 15 */
   background: linear-gradient(#33FF00, #188BC0);
   /* Standard syntax */
+  text-shadow: 0px 0px 7px #202020;
   border: 1px solid #202020; }
   .navButton:hover {
     color: #FFFFFF;
@@ -654,17 +649,16 @@ article {
 
 .interactButton {
   padding: 8px 13px;
-  font-family: "Comic Sans MS", Arial, sans-serif;
+  font-family: "Open Sans", Arial, serif;
   border-radius: 7px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   color: #000000;
-  /* For Safari 5.1 to 6.0 */
-  /* For Opera 11.1 to 12.0 */
-  /* For Firefox 3.6 to 15 */
-  background: linear-gradient(#E8E8E8, #E8E8E8);
-  /* Standard syntax */
-  border: 1px solid #E8E8E8; }
+  outline: none;
+  background-color: Transparent;
+  border: none;
+  cursor: pointer;
+  overflow: hidden; }
   .interactButton:hover {
     color: #FFFFFF;
     background: linear-gradient(#000000, #33FF33); }
@@ -680,7 +674,7 @@ article {
   .navButton {
     font-size: 100%; }
   #centerText {
-    max-height: 630px; }
+    max-height: 660px; }
   #centerTextContent {
     max-height: 530px;
     padding-left: 15px;
@@ -694,7 +688,7 @@ article {
   #rightSide {
     height: auto; }
   #createOptions {
-    max-height: 30%; }
+    max-height: 640px; }
   .topNav > ul > li > a {
     padding: 0 24px; }
   .topNav > ul > li > div {
