@@ -5,9 +5,8 @@ namespace App\Mailers;
 use App\Invite;
 use App\Post;
 use App\User;
-use Illuminate\Contracts\Mail\Mailer;
 
-class UserMailer
+class UserMailer extends Mailer
 {
     protected $mailer;
     protected $from = 'tre-uniti@belle-idee.org';
@@ -16,32 +15,28 @@ class UserMailer
     protected $data = [];
     protected $title;
 
-    public function __construct(Mailer $mailer)
-    {
-        $this->mailer = $mailer;
-    }
 
     public function sendEmailConfirmationTo(User $user)
     {
-        $this->to = $user->email;
-        $this->view = 'emails.confirm';
-        $this->data = compact('user');
-        $this->title = 'Please confirm your email';
-        $this->deliver();
+        $view = 'emails.confirm';
+        $data = compact('user');
+        $subject = 'Please confirm your email';
+        $this->sendTo($user, $subject, $view, $data);
     }
     public function sendEmailInviteTo(Invite $invite)
     {
-        $this->to = $invite->email;
-        $this->view = 'emails.invite';
-        $this->data = compact('invite');
-        $this->title = 'An Invitation to Belle-Idee';
-        $this->deliver();
+        $user['email'] = $invite['email'];
+        $view = 'emails.invite';
+        $data = compact('invite');
+        $subject = 'An Invitation to Belle-Idee';
+        $this->sendTo($user, $subject, $view, $data);
     }
+
     public function deliver()
     {
         $this->mailer->send($this->view, $this->data, function($message)
         {
-            $message->from($this->from, 'Zoko')
+            $message->from($this->from, 'Tre-Uniti')
                     ->to($this->to)
                     ->subject($this->title);
         });
