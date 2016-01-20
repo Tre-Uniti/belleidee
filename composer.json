@@ -23,8 +23,7 @@
     },
     "autoload": {
         "classmap": [
-            "database",
-            "App/Mailers"
+            "database"
         ],
         "psr-4": {
             "App\\": "app/"
