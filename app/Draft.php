@@ -10,9 +10,9 @@ class Draft extends Model
         'title',
         'body',
         'published_at',
-        'index',
+        'belief',
         'beacon_tag',
-        'index2',
+        'category',
         'draft_path',
     ];
     public function user()

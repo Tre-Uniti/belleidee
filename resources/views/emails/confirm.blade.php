@@ -13,8 +13,11 @@
     -webkit-border-radius: 4px;
     border: 1px solid #003300;
     text-shadow: 3px 3px 10px #000000;
-    color: #000000;
-    background: linear-gradient(#7dff23, #188BC0);">Login</button></a></td>
+    color: #FFFFFF;
+    background: linear-gradient(#7dff23, #188BC0);
+    background: -webkit-linear-gradient(#7dff23, #188BC0);
+    background: -o-linear-gradient(#7dff23, #188BC0);
+    background: -moz-linear-gradient(#7dff23, #188BC0);">Login</button></a></td>
     </tr>
     <tr>
         <td colspan = "3">
@@ -25,7 +28,7 @@
         <td colspan="3" style = "text-align: left;">What do these terms mean?</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">1.  <b>Zoko</b> is the handle of the CEO of Tre-Uniti, the posts from Zoko are meant to help users understand the site.</td>
+        <td colspan="3" style = "text-align: left;">1.  <b>Tre-Uniti</b> is the handle of the CEO of Tre-Uniti, the posts from Tre-Uniti are meant to help users understand the site.</td>
     </tr>
     <tr>
         <td colspan="3" style = "text-align: left;">2.  <b>Elevation</b> is similar to "Like" and <b>Extension</b> is similar to "Comment".</td>
@@ -42,7 +45,7 @@
         <td colspan="3" style = "text-align: left;">How do I get started once I login?</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">1.  You may get started by exploring, elevating and extending the user posts especially Zoko's.</td>
+        <td colspan="3" style = "text-align: left;">1.  You may get started by exploring, elevating and extending the user posts especially Tre-Uniti's.</td>
     </tr>
     <tr>
         <td colspan="3" style = "text-align: left;">2.  Choose a sponsor from the Idee directory to start your first sponsorship.</td>
@@ -51,7 +54,7 @@
         <td colspan="3" style = "text-align: left;">3.  Bookmark a beacon from the Idee directory and then create your first post.</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">4.  Ponder the current weekly question and when ready post your one question extension.</td>
+        <td colspan="3" style = "text-align: left;">4.  Ponder the current weekly question and when ready post extension/answer.</td>
     </tr>
 
 @endsection

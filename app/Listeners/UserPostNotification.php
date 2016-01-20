@@ -28,6 +28,6 @@ class UserPostNotification implements ShouldQueue
      */
     public function handle(PostExtended $event)
     {
-        dd($event);
+        //dd($event);
     }
 }

@@ -13,7 +13,7 @@
     </div>
 
     {!! Form::model($extension, ['route' => ['extensions.update', $extension->id], 'method' => 'patch']) !!}
-    @include ('extensions._form', ['submitButtonText' => 'Update Extension'])
+    @include ('extensions._edit', ['submitButtonText' => 'Update Extension'])
 
 
 @stop

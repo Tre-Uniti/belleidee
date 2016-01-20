@@ -116,13 +116,28 @@
                     </table>
 
                     <table style="display: inline-block;">
-                        <tr><td><a href="{{ url('/demo') }}">Type</a></td>
+                        <tr><td><a href="{{ url('/demo') }}">Category</a></td>
                         </tr>
                     </table>
                 </div>
 
                 <div id = "centerTextContent">
-
+                    <nav class = "infoNav">
+                        <ul>
+                            <li>
+                                <p class = "extras">/-\</p>
+                                <div>
+                                    <table align = "center">
+                                        <tr>
+                                            <td><a href={{ url('/demo')}}>Elevation</a></td>
+                                            <td> <a href = {{ url('/demo') }}>Date of Post</a></td>
+                                            <td><a href={{ url('/demo')}}>Extension</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
                     <p>
                         Welcome to Belle-Idee!
                     </p>
@@ -137,7 +152,7 @@
                         Right side: Links to the user's sponsor as well as recently used beacon tags and legacy extensions.
                     </p>
                     <p>
-                        These terms and features are more fully explained in the posts of Zoko (1st Admin of Idee).
+                        These terms and features are more fully explained in the tutorials and posts of the Tre-Uniti user.
                     </p>
 
                 </div>

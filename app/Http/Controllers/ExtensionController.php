@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Elevate;
+use App\Mailers\NotificationMailer;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateExtensionRequest;
@@ -100,10 +101,11 @@ class ExtensionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreateExtensionRequest|Request $request
+     * @param NotificationMailer $mailer
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateExtensionRequest $request)
+    public function store(CreateExtensionRequest $request, NotificationMailer $mailer)
     {
         $user = Auth::user();
         $user_id = $user->id;
@@ -166,6 +168,9 @@ class ExtensionController extends Controller
         $postUser = User::findOrFail($post->user_id);
         $postUser->where('id', $postUser->id)
             ->update(['extension' => $postUser->extension + 1]);
+
+        //Notify user of post of this extension
+        $mailer->sendExtensionNotification($extension);
 
         flash()->overlay('Your extension has been created');
         return redirect('extensions/'. $extension->id);
@@ -310,11 +315,11 @@ class ExtensionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  EditExtensionRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditExtensionRequest $request, $id)
     {
         $extension = $this->extension->findOrFail($id);
         $user_id = Auth::id();

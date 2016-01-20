@@ -5,7 +5,7 @@
         <td colspan="3"><h3>Invitation to Belle-Idee</h3></td>
     </tr>
     <tr>
-        <td colspan="3">Greetings! My name is Zoko and I welcome you to join our community!</td>
+        <td colspan="3">Greetings! This is a message from Tre-Uniti and we welcome you to join our community!</td>
     </tr>
     <tr>
         <td colspan="3">One of your friends has invited you to join Belle-Idee.</td>
@@ -27,15 +27,19 @@
     <tr>
         <td colspan="3">
             <a href="{{ url('/tour') }}"><button type = "button" style = "padding: 8px 13px;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-family: 'Open Sans', Arial, serif;
     font-size: 100%;
     border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border: 1px solid #003300;
     text-shadow: 3px 3px 10px #000000;
-    color: #000000;
-    background: linear-gradient(#7dff23, #188BC0);">Check us out!</button></a>
+    color: #FFFFFF;
+    background: linear-gradient(#7dff23, #188BC0);
+    background: -webkit-linear-gradient(#7dff23, #188BC0);
+    background: -o-linear-gradient(#7dff23, #188BC0);
+    background: -moz-linear-gradient(#7dff23, #188BC0);
+  ">Check us out!</button></a>
         </td>
     </tr>
 

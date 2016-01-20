@@ -3,10 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use App\Post;
 use Illuminate\Support\Facades\Auth;
 
-class CreatePostRequest extends Request
+class CreateDraftRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +25,7 @@ class CreatePostRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|min:5|max:40|unique:posts',
+            'title' => 'required|min:5|max:40|unique:drafts',
             'body'  => 'required|min:10|max:3500'
         ];
     }

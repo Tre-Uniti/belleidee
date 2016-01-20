@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Draft;
 use App\Extension;
+use App\Http\Requests\CreateDraftRequest;
+use App\Http\Requests\EditDraftRequest;
 use App\Post;
 use App\User;
 use Carbon\Carbon;
@@ -67,17 +69,6 @@ class DraftController extends Controller
         $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-        $types =
-            [
-                'Opinion' => 'Opinion',
-                'Poem' => 'Poem',
-                'Prayer' => 'Prayer',
-                'Question' => 'Question',
-                'Reflection' => 'Reflection',
-                'Scholar' => 'Scholar',
-                'Story' => 'Story',
-            ];
-
         if($user->photo_path == '')
         {
 
@@ -89,17 +80,17 @@ class DraftController extends Controller
         }
 
         return view('drafts.create')
-            ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'types'))
+            ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons'))
             ->with('photoPath', $photoPath);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CreateDraftRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateDraftRequest $request)
     {
         $user = Auth::user();
         $user_id = $user->id;
@@ -197,6 +188,7 @@ class DraftController extends Controller
 
         $types =
             [
+                'Type' => 'Type',
                 'Opinion' => 'Opinion',
                 'Poem' => 'Poem',
                 'Prayer' => 'Prayer',
@@ -223,11 +215,11 @@ class DraftController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  EditDraftRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditDraftRequest $request, $id)
     {
         $draft = $this->draft->findOrFail($id);
         $user_id = Auth::id();
@@ -327,9 +319,9 @@ class DraftController extends Controller
 
         $post = new Post;
         $post->title = $draft->title;
-        $post->index = $draft->index;
+        $post->belief = $draft->belief;
         $post->beacon_tag = $draft->beacon_tag;
-        $post->index2 = $draft->index2;
+        $post->category = $draft->category;
         $post->post_path = $path;
         $post->user()->associate($draft->user_id);
         $post->save();

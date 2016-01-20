@@ -13,9 +13,9 @@
     <div>
         <table align = "center">
             <tr>
-                <td><a href="{{ action('BeliefController@beliefIndex', $post->index) }}">{{ $post->index }}</a></td>
+                <td><a href="{{ action('BeliefController@beliefIndex', $post->belief) }}">{{ $post->belief }}</a></td>
                 <td><a href="{{ url('/beacons/tags/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a></td>
-                <td><a href="{{ url('/posts') }}">{{ $post->index2 }}</a></td>
+                <td><a href="{{ url('/posts') }}">{{ $post->category }}</a></td>
             </tr>
         </table>
     </div>

@@ -10,9 +10,9 @@
         <h2>Extensions by {{ $user->handle }}</h2>
         <table style="display: inline-block;">
             <tr>
-                <td><a href={{ url('/extensions/sortByElevation')}}>Top Elevated</a></td>
+                <td><a href={{ url('/indev')}}>Top Elevated</a></td>
                 <td><a href={{ url('/indev')}}>Search</a></td>
-                <td><a href={{ url('/extensions/sortByExtension')}}>Most Extended</a></td>
+                <td><a href={{ url('/indev')}}>Most Extended</a></td>
             </tr>
         </table>
     </div>
@@ -20,7 +20,7 @@
         <h4>Title</h4>
     </div>
     <div style = "width: 50%; float: right;">
-        <h4>User</h4>
+        <h4>Date</h4>
     </div>
 
     @foreach ($extensions as $extension)

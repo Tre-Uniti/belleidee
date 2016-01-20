@@ -8,13 +8,6 @@ use App\User;
 
 class UserMailer extends Mailer
 {
-    protected $mailer;
-    protected $from = 'tre-uniti@belle-idee.org';
-    protected $to;
-    protected $view;
-    protected $data = [];
-    protected $title;
-
 
     public function sendEmailConfirmationTo(User $user)
     {
@@ -30,15 +23,5 @@ class UserMailer extends Mailer
         $data = compact('invite');
         $subject = 'An Invitation to Belle-Idee';
         $this->sendTo($user, $subject, $view, $data);
-    }
-
-    public function deliver()
-    {
-        $this->mailer->send($this->view, $this->data, function($message)
-        {
-            $message->from($this->from, 'Tre-Uniti')
-                    ->to($this->to)
-                    ->subject($this->title);
-        });
     }
 }

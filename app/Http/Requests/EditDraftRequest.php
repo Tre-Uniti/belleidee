@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Draft;
 use App\Http\Requests\Request;
-use App\Extension;
 use Illuminate\Support\Facades\Auth;
 
-class EditExtensionRequest extends Request
+class EditDraftRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,9 +15,9 @@ class EditExtensionRequest extends Request
      */
     public function authorize()
     {
-        $extensionId = $this->route('extensions');
+        $draftId = $this->route('drafts');
 
-        return Extension::where('id', $extensionId)
+        return Draft::where('id', $draftId)
             ->where('user_id', Auth::id())->exists();
     }
 
@@ -33,9 +33,9 @@ class EditExtensionRequest extends Request
             'body'  => 'required|min:5|max:3500'
         ];
     }
-    // override to redirect back
+    // override this to redirect back
     public function forbiddenResponse()
     {
-        return redirect()->back()->withInput()->withErrors('This is not your extension and you are not a Mod or Admin.');
+        return redirect()->back()->withInput()->withErrors('This is not your draft to edit.');
     }
 }

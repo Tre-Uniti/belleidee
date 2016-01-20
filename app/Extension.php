@@ -9,9 +9,9 @@ class Extension extends Model
     protected $fillable = [
         'title',
         'body',
-        'index',
+        'belief',
         'beacon_tag',
-        'index2',
+        'category',
         'extension_path',
         'post_id',
         'source_user',

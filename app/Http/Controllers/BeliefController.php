@@ -59,7 +59,7 @@ class BeliefController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $posts = Post::where('index', $belief)->latest()->paginate(10);
+        $posts = Post::where('belief', $belief)->latest()->paginate(10);
 
         if($user->photo_path == '')
         {

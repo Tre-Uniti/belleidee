@@ -113,16 +113,6 @@ class PostController extends Controller
         $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-        $types =
-            [
-                'Opinion' => 'Opinion',
-                'Poem' => 'Poem',
-                'Prayer' => 'Prayer',
-                'Question' => 'Question',
-                'Reflection' => 'Reflection',
-                'Scholar' => 'Scholar',
-                'Story' => 'Story',
-            ];
 
         if($user->photo_path == '')
         {
@@ -135,7 +125,7 @@ class PostController extends Controller
         }
 
         return view('posts.create')
-                ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'types'))
+                ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons'))
                 ->with('photoPath', $photoPath);
     }
 
@@ -169,7 +159,7 @@ class PostController extends Controller
         $post->user()->associate($user);
         $post->save();
         flash()->overlay('Your post has been created');
-        return redirect('posts');
+        return redirect('posts/'. $post->id);
     }
 
     /**
@@ -266,16 +256,6 @@ class PostController extends Controller
         $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-        $types =
-            [
-                'Opinion' => 'Opinion',
-                'Poem' => 'Poem',
-                'Prayer' => 'Prayer',
-                'Question' => 'Question',
-                'Reflection' => 'Reflection',
-                'Scholar' => 'Scholar',
-                'Story' => 'Story',
-            ];
         if($user->photo_path == '')
         {
 
@@ -287,7 +267,7 @@ class PostController extends Controller
         }
 
         return view('posts.edit')
-                ->with(compact('user', 'post', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'date'))
+                ->with(compact('user', 'post', 'profilePosts', 'profileExtensions', 'beacons', 'date'))
                 ->with('photoPath', $photoPath);
 
     }
@@ -299,7 +279,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, EditPostRequest $request)
+    public function update(EditPostRequest $request, $id)
     {
         $post = $this->post->findOrFail($id);
         $user_id = Auth::id();
