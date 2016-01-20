@@ -33,7 +33,7 @@ class BeliefController extends Controller
 
         //Add 12 beliefs into Legacy
         //Add user_id on end to give permission and show user_id next to belief on index
-        $posts = Post::select('index', 'title', 'id')->groupBy('index')->get();
+        $posts = Post::select('belief', 'title', 'id')->groupBy('belief')->get();
 
         if($user->photo_path == '')
         {
