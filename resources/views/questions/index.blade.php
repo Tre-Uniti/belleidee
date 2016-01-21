@@ -1,0 +1,39 @@
+@extends('app')
+@section('siteTitle')
+    Questions
+@stop
+
+@section('centerText')
+    <div>
+    <h2>Weekly Questions</h2>
+    <table style="display: inline-block;">
+        <tr>
+            <td><a href={{ url('/indev')}}></a>Top Elevated</td>
+            <td><a href={{ url('/indev')}}>Search</a></td>
+            <td><a href={{ url('/indev')}}>Most Extended</a></td>
+        </tr>
+    </table>
+    </div>
+    <div style = "width: 50%; float: left;">
+        <h4>Question</h4>
+    </div>
+    <div style = "width: 50%; float: right;">
+        <h4>User</h4>
+    </div>
+    @foreach ($questions as $question)
+        <div class = "listResource">
+            <div class = "listResourceLeft">
+                <a href="{{ action('QuestionController@show', [$question->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $question->question }}</button></a>
+            </div>
+            <div class = "listResourceRight">
+                <a href="{{ action('UserController@show', [$question->user->id])}}"><button type = "button" class = "interactButton">{{ $question->user->handle}}</button></a>
+            </div>
+        </div>
+    @endforeach
+
+@stop
+@section('centerFooter')
+    {!! $questions->render() !!}
+@stop
+
+

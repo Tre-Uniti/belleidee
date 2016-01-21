@@ -38,7 +38,7 @@
                         <li><a href="{{ url('/users') }}">Users</a></li>
                         <li><a href="{{ url('/beacons') }}">Beacons</a></li>
                         <li><a href="{{ url('/beliefs') }}">Beliefs</a></li>
-                        <li><a href="{{ url('/indev') }}">Questions</a></li>
+                        <li><a href="{{ url('/questions') }}">Questions</a></li>
                         <li><a href="{{ url('/sponsors') }}">Sponsors</a></li>
                     </ul>
                 </div>
@@ -48,7 +48,7 @@
                 <div>
 
                     <ul>
-                        <li><a href="{{ url('/settings') }}">Modify</a></li>
+                        <li><a href="{{ url('/settings') }}">Personal</a></li>
                         <li><a href="{{ url('/indev') }}">Support</a></li>
                         <li><a href="{{ url('/invites') }}">Invite Friends</a></li>
                         <li><a href="https://tre-uniti.org">Tre-Uniti</a></li>

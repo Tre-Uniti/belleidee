@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Create Post
+    Create Beacon
 @stop
 
 @section('centerText')
@@ -9,7 +9,5 @@
     {!! Form::open(['url' => 'beacons']) !!}
     @include ('beacons._form', ['submitButtonText' => 'Request Beacon'])
 @stop
-
-@include('beacons.rightSide')
 
 

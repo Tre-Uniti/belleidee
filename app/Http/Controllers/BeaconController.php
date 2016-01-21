@@ -109,7 +109,7 @@ class BeaconController extends Controller
         $beacon->address = $request['address'];
         $beacon->tier = 1;
         $beacon->status = 'requested';
-        $beacon->user_id = $user;
+        $beacon->user_id = $user->id;
         $beacon->save();
         flash()->overlay('Your beacon request has been created');
         return redirect('beacons');

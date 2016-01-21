@@ -61,6 +61,9 @@ Route::resource('extensions', 'ExtensionController');
 //Legacy Routes (Resource)
 Route::resource('legacy', 'LegacyController');
 
+//Question Routes (Resource)
+Route::resource('questions', 'QuestionController');
+
 //Invite Routes (Resource)
 Route::resource('invites', 'InviteController');
 
@@ -91,6 +94,9 @@ Route::get('settings', 'HomeController@getSettings');
 Route::get('indev', 'HomeController@getIndev');
 Route::get('photo', 'HomeController@userPhoto');
 Route::post('storePhoto', 'HomeController@storePhoto');
+
+//Admin routes
+Route::get('admin', 'AdminController@portal');
 
 
 

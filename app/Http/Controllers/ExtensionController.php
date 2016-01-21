@@ -142,6 +142,7 @@ class ExtensionController extends Controller
             $sourceUser = User::findOrFail($extension->user_id);
             $extension->where('id', $extension->id)
                 ->update(['extension' => $extension->extension + 1]);
+
             //Add 1 extension to source user of extension
             $sourceUser->where('id', $sourceUser->id)
                 ->update(['extension' => $sourceUser->extension + 1]);

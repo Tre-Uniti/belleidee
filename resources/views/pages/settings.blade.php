@@ -44,12 +44,10 @@
 
 @stop
 @section('centerFooter')
-
-@stop
-@section('rightSideBar')
-    <h2>Hosted</h2>
-
-    <div class = "innerPhotos">
-        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "97%" width = "85%"></a>
-    </div>
+    @if($user->type > 0)
+        <a href="{{ url('/moderator') }}"><button type = "button" class = "navButton">Moderator</button></a>
+    @endif
+    @if($user->type > 3)
+        <a href="{{ url('/admin') }}"><button type = "button" class = "navButton">Admin</button></a>
+    @endif
 @stop
