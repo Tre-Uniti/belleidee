@@ -72,17 +72,6 @@ class ExtensionController extends Controller
         $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-        $types =
-            [
-                'Opinion' => 'Opinion',
-                'Poem' => 'Poem',
-                'Prayer' => 'Prayer',
-                'Question' => 'Question',
-                'Reflection' => 'Reflection',
-                'Scholar' => 'Scholar',
-                'Story' => 'Story',
-            ];
-
         if($user->photo_path == '')
         {
 
@@ -94,7 +83,7 @@ class ExtensionController extends Controller
         }
 
         return view('extensions.create')
-                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'sources'))
+                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources'))
                     ->with('photoPath', $photoPath);
     }
 

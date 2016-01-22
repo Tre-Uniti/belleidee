@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class RedirectIfNotAdmin
+class RedirectIfNotModerator
 {
     /**
      * Handle an incoming request.
@@ -18,9 +18,9 @@ class RedirectIfNotAdmin
     {
 
         $user = Auth::user();
-        if ($user->type < 4)
+        if ($user->type < 1)
         {
-            flash()->overlay('Must be an Admin or Guardian to view this page');
+            flash()->overlay('Must be a Moderator to view this page.');
             return redirect()->back();
         }
         else

@@ -32,5 +32,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'filterPost' => \App\Http\Middleware\FormatPost::class,
         'admin' => \App\Http\Middleware\RedirectIfNotAdmin::class,
+        'moderator' => \App\Http\Middleware\RedirectIfNotModerator::class,
     ];
 }

@@ -67,6 +67,12 @@ Route::resource('questions', 'QuestionController');
 //Invite Routes (Resource)
 Route::resource('invites', 'InviteController');
 
+//Intolerance routes (resource)
+Route::get('intolerances/post/{source}', 'IntoleranceController@intolerantPost');
+Route::get('intolerances/extension/{source}', 'IntoleranceController@intolerantExtension');
+Route::resource('intolerances', 'IntoleranceController');
+
+
 //Password Route (Laravel)
 Route::controllers(['password' => 'Auth\PasswordController',]);
 
@@ -97,6 +103,12 @@ Route::post('storePhoto', 'HomeController@storePhoto');
 
 //Admin routes
 Route::get('admin', 'AdminController@portal');
+
+//Moderator routes
+Route::get('moderator', 'ModeratorController@portal');
+
+
+
 
 
 
