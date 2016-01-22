@@ -1,40 +1,24 @@
 @extends('app')
 @section('siteTitle')
-    Show Draft
+    Show Intolerance
+@stop
+@section('centerMenu')
+    <h2>Intolerance</h2>
+    @if(isset($intolerance->post_id))
+        <p><a href = {{ action('PostController@show', $intolerance->post_id)}}>Source Post</a>
+        </p>
+    @elseif(isset($intolerance->extension_id))
+        <p>Source: {{$intolerance->extension_id}}</p>
+    @elseif(isset($intolerance->question_id))
+        <p>Source: {{$intolerance->question_id}}</p>
+    @endif
 @stop
 
-@section('centerMenu')
-    <h2>{{ $draft->title }}</h2>
-@stop
 
 @section('centerText')
-    <div>
-        <table align = "center">
-            <tr>
-                <td><a href="{{ action('BeliefController@beliefIndex', $draft->belief) }}">{{ $draft->belief }}</a></td>
-                <td><a href="{{ url('/beacons/tags/'.$draft->beacon_tag) }}">{{ $draft->beacon_tag }}</a></td>
-                <td><a href="{{ url('/posts') }}">{{ $draft->category }}</a></td>
-            </tr>
-        </table>
-    </div>
-
     <div id = "centerTextContent">
-        <nav class = "infoNav">
-            <ul>
-                <li>
-                    <p class = "extras">/-\</p>
-                    <div>
-                        <table align = "center">
-                            <tr>
-                                <td> <a href = {{ url('/indev') }}>{{ $draft->created_at->format('M-d-Y') }}</a></td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
-            </ul>
-        </nav>
             <p>
-                {!! nl2br(e($draft->body)) !!}
+                {{ $intolerance->user_ruling }}
             </p>
         </div>
 
@@ -42,13 +26,10 @@
 
 @section('centerFooter')
     <div id = "centerFooter">
-
-        @if($draft->user_id == Auth::id())
-            <a href="{{ url('/drafts/'.$draft->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
-        @else
-
+        @if($intolerance->user_id == Auth::id())
+            <a href="{{ url('/intolerances/'.$intolerance->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
         @endif
-        <a href="{{ url('/drafts/convert/'. $draft->id) }}"><button type = "button" class = "navButton">Convert to Post</button></a>
+            <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Back</button></a>
     </div>
 @stop
 

@@ -67,6 +67,11 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Question');
     }
 
+    public function intolerances()
+    {
+        return $this->hasMany('App\Intolerance');
+    }
+
     /*
      * Get the bookmarks associated with the user
      *
