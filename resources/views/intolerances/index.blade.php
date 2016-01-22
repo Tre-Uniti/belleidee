@@ -20,13 +20,13 @@
     <div style = "width: 50%; float: right;">
         <h4>Date</h4>
     </div>
-    @foreach ($drafts as $draft)
+    @foreach ($intolerances as $intolerance)
         <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('DraftController@show', [$draft->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $draft->title }}</button></a>
+                <a href="{{ action('IntoleranceController@show', [$intolerance->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $intolerance->user->handle }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('DraftController@show', [$draft->id])}}"><button type = "button" class = "interactButton">{{ $draft->created_at->format('M-d-Y')}}</button></a>
+                <a href="{{ action('IntoleranceController@show', [$intolerance->id])}}"><button type = "button" class = "interactButton">{{ $intolerance->created_at->format('M-d-Y')}}</button></a>
             </div>
         </div>
     @endforeach
@@ -34,7 +34,7 @@
 
 @stop
 @section('centerFooter')
-    {!! $drafts->render() !!}
+    {!! $intolerances->render() !!}
 @stop
 
 @include('posts.rightSide')

@@ -33,7 +33,24 @@ class IntoleranceController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $intolerances = $this->intolerance->latest()->paginate(10);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('intolerances.index')
+            ->with(compact('user', 'intolerances', 'profilePosts', 'profileExtensions'))
+            ->with('photoPath', $photoPath);
     }
 
     /**
