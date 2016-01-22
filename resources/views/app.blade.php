@@ -90,7 +90,7 @@
                         </li>
                     @endif
                     @if ($profileExtensions->isEmpty())
-                        <li><a href="{{url('/extensions/create')}}">Extensions</a></li>
+                        <li><a href="{{ url('/extensions/user/' .$user->id) }}">Extensions</a></li>
                     @else
                         <li>
                             <a href="{{ url('/extensions/user/' .$user->id) }}">Extensions</a>
