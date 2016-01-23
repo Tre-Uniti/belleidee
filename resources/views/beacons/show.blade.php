@@ -44,7 +44,7 @@
 
 @section('centerFooter')
     <div id = "centerFooter">
-        @if($user->type > 3)
+        @if($user->type > 1)
             <a href="{{ url('/beacons/'.$beacon->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
         @endif
         @if($beacon->beacon_tag != 'No-Beacon')

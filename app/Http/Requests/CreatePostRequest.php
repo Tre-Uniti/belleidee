@@ -27,7 +27,9 @@ class CreatePostRequest extends Request
     {
         return [
             'title' => 'required|min:5|max:40|unique:posts',
-            'body'  => 'required|min:10|max:3500'
+            'body'  => 'required|min:10|max:3500',
+            'belief'=> 'required',
+            'category' => 'required'
         ];
     }
 }

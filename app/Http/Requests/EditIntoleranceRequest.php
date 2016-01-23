@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\Intolerance;
 use Illuminate\Support\Facades\Auth;
 
-class CreateIntoleranceRequest extends Request
+class EditIntoleranceRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +15,10 @@ class CreateIntoleranceRequest extends Request
      */
     public function authorize()
     {
-        return Auth::check();
+        $intoleranceId = $this->route('intolerances');
+
+        return Intolerance::where('id', $intoleranceId)
+            ->where('user_id', Auth::id())->exists();
     }
 
     /**

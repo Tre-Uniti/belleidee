@@ -72,6 +72,11 @@ Route::get('intolerances/post/{source}', 'IntoleranceController@intolerantPost')
 Route::get('intolerances/extension/{source}', 'IntoleranceController@intolerantExtension');
 Route::resource('intolerances', 'IntoleranceController');
 
+//Moderation routes (resource)
+//Intolerance routes (resource)
+Route::get('moderations/intolerance/{source}', 'ModerationController@intolerance');
+Route::resource('moderations', 'ModerationController');
+
 
 //Password Route (Laravel)
 Route::controllers(['password' => 'Auth\PasswordController',]);

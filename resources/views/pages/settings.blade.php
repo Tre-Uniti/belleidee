@@ -47,7 +47,7 @@
     @if($user->type > 0)
         <a href="{{ url('/moderator') }}"><button type = "button" class = "navButton">Moderator</button></a>
     @endif
-    @if($user->type > 3)
+    @if($user->type > 1)
         <a href="{{ url('/admin') }}"><button type = "button" class = "navButton">Admin</button></a>
     @endif
 @stop

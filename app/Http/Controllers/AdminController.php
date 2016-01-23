@@ -26,7 +26,7 @@ class AdminController extends Controller
         $user = Auth::user();
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
-        $admins = User::where('type', '>' , 3)->latest()->paginate(10);
+        $admins = User::where('type', '>' , 1)->latest()->paginate(10);
         if($user->photo_path == '')
         {
 

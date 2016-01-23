@@ -1,11 +1,11 @@
 @extends('app')
 @section('siteTitle')
-    Intolerances
+    Moderations
 @stop
 
 @section('centerText')
     <div>
-    <h2>Recent Intolerances</h2>
+    <h2>Recent Moderations</h2>
     <table style="display: inline-block;">
         <tr>
             <td><a href={{ url('/indev')}}></a>Sort by Oldest</td>
@@ -20,13 +20,13 @@
     <div style = "width: 50%; float: right;">
         <h4>Date</h4>
     </div>
-    @foreach ($intolerances as $intolerance)
+    @foreach ($moderations as $moderation)
         <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('IntoleranceController@show', [$intolerance->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $intolerance->user->handle }}</button></a>
+                <a href="{{ action('IntoleranceController@show', [$moderation->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $moderation->user->handle }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('IntoleranceController@show', [$intolerance->id])}}"><button type = "button" class = "interactButton">{{ $intolerance->created_at->format('M-d-Y')}}</button></a>
+                <a href="{{ action('IntoleranceController@show', [$moderation->id])}}"><button type = "button" class = "interactButton">{{ $moderation->created_at->format('M-d-Y')}}</button></a>
             </div>
         </div>
     @endforeach
@@ -34,9 +34,7 @@
 
 @stop
 @section('centerFooter')
-    {!! $intolerances->render() !!}
+    {!! $moderations->render() !!}
 @stop
-
-@include('posts.rightSide')
 
 

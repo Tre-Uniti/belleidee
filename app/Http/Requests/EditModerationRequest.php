@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\Moderation;
 use Illuminate\Support\Facades\Auth;
 
-class CreateIntoleranceRequest extends Request
+class EditModerationRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +15,10 @@ class CreateIntoleranceRequest extends Request
      */
     public function authorize()
     {
-        return Auth::check();
+        $moderationId = $this->route('moderations');
+
+        return Moderation::where('id', $moderationId)
+            ->where('user_id', Auth::id())->exists();
     }
 
     /**
@@ -25,7 +29,8 @@ class CreateIntoleranceRequest extends Request
     public function rules()
     {
         return [
-            'user_ruling' => 'required|min:5|max:300',
+            'mod_ruling' => 'required|min:5|max:300',
+            'admin_ruling' => 'min:5|max:300',
         ];
     }
 }

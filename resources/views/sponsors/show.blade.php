@@ -41,11 +41,9 @@
 @stop
 
 @section('centerFooter')
-    @if($user->type > 3)
+    @if($user->type > 1)
         <a href="{{ url('/sponsors/'.$sponsor->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
     @endif
         <a href="{{ url('/sponsors/sponsorship/'.$sponsor->id) }}"><button type = "button" class = "navButton">Start Sponsorship</button></a>
 @stop
-
-@include('sponsors.rightSide')
 

@@ -5,7 +5,7 @@
 @section('centerText')
     <h2>Moderation Portal</h2>
     <a href="{{ url('questions/create') }}"><button type = "button" class = "navButton">Photos</button></a>
-    <a href="{{ url('intolerance') }}"><button type = "button" class = "navButton">Intolerance</button></a>
+    <a href="{{ url('intolerances') }}"><button type = "button" class = "navButton">Intolerance</button></a>
     <hr/>
     <div style = "width: 50%; float: left;">
         <h4>Moderator</h4>

@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Create
+    Edit Intolerance
 @stop
 
 
@@ -9,8 +9,8 @@
         @include ('errors.list')
     </div>
 
-    {!! Form::model($draft, ['route' => ['drafts.update', $draft->id], 'method' => 'patch']) !!}
-    @include ('drafts._edit', ['submitButtonText' => 'Update Draft'])
+    {!! Form::model($intolerance, ['route' => ['intolerances.update', $intolerance->id], 'method' => 'patch']) !!}
+    @include ('intolerances._edit', ['submitButtonText' => 'Update Intolerance'])
 
 @stop
 

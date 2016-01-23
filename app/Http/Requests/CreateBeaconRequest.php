@@ -16,7 +16,7 @@ class CreateBeaconRequest extends Request
     public function authorize()
     {
         return User::where('id', Auth::id())
-            ->where('tier', '>', 3);
+            ->where('tier', '>', 1);
     }
 
     /**

@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Create
+    Edit
 @stop
 
 
@@ -9,12 +9,10 @@
         @include ('errors.list')
     </div>
 
-    {!! Form::model($draft, ['route' => ['drafts.update', $draft->id], 'method' => 'patch']) !!}
-    @include ('drafts._edit', ['submitButtonText' => 'Update Draft'])
+    {!! Form::model($question, ['route' => ['questions.update', $question->id], 'method' => 'patch']) !!}
+    @include ('questions._edit', ['submitButtonText' => 'Update Draft'])
 
 @stop
 
 @section('centerFooter')
 @stop
-
-@include('drafts.rightSide')

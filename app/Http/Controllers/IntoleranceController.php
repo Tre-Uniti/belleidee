@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Extension;
 use App\Http\Requests\CreateIntoleranceRequest;
+use App\Http\Requests\EditIntoleranceRequest;
 use App\Intolerance;
 use App\Legacy;
 use App\Post;
@@ -23,6 +24,7 @@ class IntoleranceController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('moderator', ['only' => 'index']);
+        $this->middleware('admin', ['only' => 'delete']);
         $this->intolerance = $intolerance;
     }
 
@@ -63,6 +65,32 @@ class IntoleranceController extends Controller
         $user = Auth::user();
 
         $sources = Session::get('sources');
+
+        //Check if User has already posted intolerance for source
+        if(isset($sources['post_id']))
+        {
+            if ($intolerance = Intolerance::where('post_id', $sources['post_id'])->where('user_id', $user->id)->first())
+            {
+                flash()->overlay('You have already posted intolerance for this post');
+                return redirect('intolerances/' . $intolerance->id);
+            }
+        }
+        elseif(isset($sources['extension_id']))
+        {
+            if ($intolerance = Intolerance::where('extension_id', $sources['extension_id'])->where('user_id', $user->id)->first()) {
+                flash()->overlay('You have already posted intolerance for this extension');
+                return redirect('intolerances/' . $intolerance->id);
+            }
+        }
+        elseif(isset($sources['question_id']))
+        {
+            if($intolerance = Intolerance::where('question_id', $sources['question_id'])->where('user_id', $user->id)->first())
+            {
+                flash()->overlay('You have already posted intolerance for this question');
+                return redirect('intolerances/'. $intolerance->id);
+            }
+        }
+
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
@@ -124,7 +152,7 @@ class IntoleranceController extends Controller
         $intolerance = $this->intolerance->findOrFail($id);
 
         //Check if user requesting is the one who created the intolerance
-        if($intolerance->user_id != $user->id)
+        if($user->type < 1 && $intolerance->user_id != $user->id)
         {
             flash()->overlay('This intolerance belongs to another user');
             return redirect()->back();
@@ -153,19 +181,40 @@ class IntoleranceController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $intolerance = $this->intolerance->findOrFail($id);
 
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+        return view ('intolerances.edit')
+            ->with(compact('user', 'intolerance', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditIntoleranceRequest $request, $id)
     {
-        //
+        $intolerance = $this->intolerance->findOrFail($id);
+        $intolerance->update($request->all());
+        flash()->overlay('Intolerance has been updated');
+
+        return redirect('intolerances/'. $intolerance->id);
     }
 
     /**
@@ -176,7 +225,9 @@ class IntoleranceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $intolerance = Intolerance::findOrFail($id);
+        $intolerance->delete();
+        return redirect('intolerances');
     }
 
     //Used to setup intolerance of post
