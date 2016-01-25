@@ -1,11 +1,11 @@
 @extends('app')
 @section('siteTitle')
-    Moderations
+    Adjudications
 @stop
 
 @section('centerText')
     <div>
-    <h2>Recent Moderations</h2>
+    <h2>Recent Adjudications</h2>
     <table style="display: inline-block;">
         <tr>
             <td><a href={{ url('/indev')}}></a>Sort by Oldest</td>
@@ -20,13 +20,13 @@
     <div style = "width: 50%; float: right;">
         <h4>Date</h4>
     </div>
-    @foreach ($moderations as $moderation)
+    @foreach ($adjudications as $adjudication)
         <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('ModerationController@show', [$moderation->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $moderation->user->handle }}</button></a>
+                <a href="{{ action('AdjudicationController@show', [$adjudication->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $adjudication->user->handle }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('ModerationController@show', [$moderation->id])}}"><button type = "button" class = "interactButton">{{ $moderation->created_at->format('M-d-Y')}}</button></a>
+                <a href="{{ action('AdjudicationController@show', [$adjudication->id])}}"><button type = "button" class = "interactButton">{{ $adjudication->created_at->format('M-d-Y')}}</button></a>
             </div>
         </div>
     @endforeach
@@ -34,7 +34,7 @@
 
 @stop
 @section('centerFooter')
-    {!! $moderations->render() !!}
+    {!! $adjudications->render() !!}
 @stop
 
 

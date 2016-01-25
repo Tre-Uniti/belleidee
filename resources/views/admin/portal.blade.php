@@ -9,7 +9,7 @@
     <a href="{{ url('/') }}"><button type = "button" class = "navButton">Legacy</button></a>
     <hr/>
     <div style = "width: 50%; float: left;">
-        <h4>Admin</h4>
+        <h4>Admins</h4>
     </div>
     <div style = "width: 50%; float: right;">
         <h4>Joined</h4>

@@ -8,7 +8,7 @@
     <a href="{{ url('intolerances') }}"><button type = "button" class = "navButton">Intolerance</button></a>
     <hr/>
     <div style = "width: 50%; float: left;">
-        <h4>Moderator</h4>
+        <h4>Moderators</h4>
     </div>
     <div style = "width: 50%; float: right;">
         <h4>Joined</h4>

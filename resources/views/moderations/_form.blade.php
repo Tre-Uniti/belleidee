@@ -1,14 +1,14 @@
 <div id = "createOptions">
     <h2>Moderation</h2>
-    @if(isset($sources['post_id']))
-        <p>Post Title: <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></p>
-    @elseif(isset($sources['extension_id']))
-        <p>Extension Title: <a href = {{ action('ExtensionController@show', [$sources['extension_id']])}}> {{ $sources['extension_title'] }}</a></p>
+    @if($intolerance->post_id != '')
+        <p><a href = {{ action('PostController@show', [$intolerance->post_id])}}>Source Post</a></p>
+    @elseif($intolerance->extension_id != '')
+        <p><a href = {{ action('ExtensionController@show', [$intolerance->extension_id])}}>Source Extension</a></p>
     @endif
 
     <div id = "centerTextContent">
-        <p>{{$intolerance}}</p>
-        {!! Form::textarea('mod_ruling', null, ['id' => 'createBodyText', 'placeholder' => 'Why is this intolerant?:', 'rows' => '3%', 'maxlength' => '300']) !!}
+        <p>{{ $intolerance->user_ruling }}</p>
+        {!! Form::textarea('mod_ruling', null, ['id' => 'createBodyText', 'placeholder' => 'Is this intolerant?:', 'rows' => '3%', 'maxlength' => '300']) !!}
     </div>
 <!-- Body Form Input -->
     @section('centerFooter')

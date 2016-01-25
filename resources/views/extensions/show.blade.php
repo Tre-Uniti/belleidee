@@ -31,6 +31,8 @@
                                 <p>Extends: <a href = {{ action('ExtensionController@show', [$sources['extenception']])}}> {{ $sources['extension_title'] }}</a></p>
                             @elseif($sources['type'] === 'posts')
                                 <p>Extends: <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></p>
+                            @elseif($sources['type'] === 'question')
+                                <p>Extends: <a href = {{ action('QuestionController@show', [$sources['question_id']])}}> Weekly Question</a></p>
                             @endif
                             <table align = "center">
                                 <tr>

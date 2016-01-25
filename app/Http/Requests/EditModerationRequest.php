@@ -15,8 +15,13 @@ class EditModerationRequest extends Request
      */
     public function authorize()
     {
+        $user = Auth::user();
+        if($user->tier > 1)
+        {
+            return true;
+        }
+        else
         $moderationId = $this->route('moderations');
-
         return Moderation::where('id', $moderationId)
             ->where('user_id', Auth::id())->exists();
     }

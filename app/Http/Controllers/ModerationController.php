@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Extension;
+use App\Http\Requests\AdjudicationRequest;
+use App\Http\Requests\CreateModerationRequest;
+use App\Http\Requests\EditModerationRequest;
 use App\Intolerance;
 use App\Moderation;
 use App\Post;
@@ -61,11 +64,11 @@ class ModerationController extends Controller
     {
         $user = Auth::user();
 
-        $intoleranceId = Session::get('intolerance');
+        $intoleranceId = Session::get('intoleranceId');
         $intolerance = Intolerance::findOrFail($intoleranceId);
 
         //Check if User has already posted moderation for intolerance
-        if ($moderation = Moderation::where('intolerance_id', $intoleranceId)->where('mod_id', $user->id)->first())
+        if ($moderation = Moderation::where('intolerance_id', $intolerance['id'])->where('user_id', $user->id)->first())
         {
             flash()->overlay('You have already moderated for this intolerance');
             return redirect('moderations/' . $moderation->id);
@@ -92,15 +95,19 @@ class ModerationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateModerationRequest $request)
     {
         $user = Auth::user();
 
-        $moderation = new Moderation($request->all());
+        //Get Intolerance (is there a better way to get this?)
+        $intoleranceId = Session::get('intoleranceId');
+        $intolerance = Intolerance::findOrFail($intoleranceId);
 
+        $moderation = new Moderation($request->all());
+        $moderation->intolerance()->associate($intolerance);
         $moderation->user()->associate($user);
         $moderation->save();
         flash()->overlay('Your moderation has been created and will be reviewed');
@@ -115,7 +122,36 @@ class ModerationController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        //Get moderation with associated id
+        $moderation = $this->moderation->findOrFail($id);
+
+        //Get intolerance associated with moderation
+        $intolerance = Intolerance::where('id', $moderation->intolerance_id)->first();
+
+        //Check if user requesting is the one who created the intolerance
+        if($user->type < 1 && $moderation->user_id != $user->id)
+        {
+            flash()->overlay('This moderation belongs to another user');
+            return redirect()->back();
+        }
+
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+        return view ('moderations.show')
+            ->with(compact('user', 'moderation', 'intolerance', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
     }
 
     /**
@@ -126,19 +162,41 @@ class ModerationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $moderation = $this->moderation->findOrFail($id);
+        $intolerance = Intolerance::where('id', $moderation->intolerance_id)->first();
+
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+        return view ('moderations.edit')
+            ->with(compact('user', 'moderation', 'intolerance', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditModerationRequest $request, $id)
     {
-        //
+        $moderation = $this->moderation->findOrFail($id);
+        $moderation->update($request->all());
+        flash()->overlay('Moderation has been updated');
+
+        return redirect('moderations/'. $moderation->id);
     }
 
     /**
@@ -149,16 +207,21 @@ class ModerationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $moderation = Moderation::findOrFail($id);
+        $moderation->delete();
+
+        flash()->overlay('Moderation has been deleted');
+        return redirect('moderations');
     }
 
     //Used to setup moderation of intolerance
     public function intolerance($id)
     {
-        $intolerance = Intolerance::findOrFail($id);
-        $intolerance = ['intolerance' => $intolerance->id];
-        Session::put('intolerance', $intolerance);
+        $intoleranceId = $id;
+        Session::put('intoleranceId', $intoleranceId);
 
         return redirect('moderations/create');
     }
+
+
 }

@@ -9,7 +9,8 @@
     @endif
     <div id = "centerTextContent">
         <p>{{ $intolerance->user_ruling }}</p>
-        {!! Form::textarea('mod_ruling', null, ['id' => 'createBodyText', 'placeholder' => 'Is this intolerant?:', 'rows' => '3%', 'maxlength' => '300']) !!}
+        <p>{{ $moderation->mod_ruling }}</p>
+        {!! Form::textarea('admin_ruling', null, ['id' => 'createBodyText', 'placeholder' => 'Is this intolerant?:', 'rows' => '3%', 'maxlength' => '300']) !!}
     </div>
     <!-- Body Form Input -->
 

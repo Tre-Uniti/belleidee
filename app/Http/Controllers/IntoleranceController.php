@@ -227,6 +227,8 @@ class IntoleranceController extends Controller
     {
         $intolerance = Intolerance::findOrFail($id);
         $intolerance->delete();
+
+        flash()->overlay('Intolerance has been deleted');
         return redirect('intolerances');
     }
 

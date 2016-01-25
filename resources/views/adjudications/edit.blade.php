@@ -8,7 +8,7 @@
     </div>
 
     {!! Form::model($moderation, ['route' => ['moderations.update', $moderation->id], 'method' => 'patch']) !!}
-    @include ('moderations._edit', ['submitButtonText' => 'Update Moderation'])
+    @include ('adjudications._edit', ['submitButtonText' => 'Update Moderation'])
 
 @stop
 

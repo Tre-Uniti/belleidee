@@ -52,6 +52,7 @@ Route::get('extensions/sortByElevation', 'ExtensionController@sortByElevation');
 Route::get('extensions/sortByExtension', 'ExtensionController@sortByExtension');
 Route::get('extensions/user/{id}', 'ExtensionController@userExtensions');
 Route::get('extensions/elevate/{id}', 'ExtensionController@elevateExtension');
+Route::get('extensions/question/{source}', 'ExtensionController@extendQuestion');
 Route::get('extensions/post/{source}', 'ExtensionController@extendPost');
 Route::get('extensions/extenception/{source}', 'ExtensionController@extenception');
 Route::get('extensions/post/list/{id}', 'ExtensionController@postList');
@@ -73,9 +74,12 @@ Route::get('intolerances/extension/{source}', 'IntoleranceController@intolerantE
 Route::resource('intolerances', 'IntoleranceController');
 
 //Moderation routes (resource)
-//Intolerance routes (resource)
 Route::get('moderations/intolerance/{source}', 'ModerationController@intolerance');
 Route::resource('moderations', 'ModerationController');
+
+//Adjudication routes (resource)
+Route::get('adjudications/moderation/{source}', 'AdjudicationController@moderation');
+Route::resource('adjudications', 'AdjudicationController');
 
 
 //Password Route (Laravel)
@@ -108,6 +112,7 @@ Route::post('storePhoto', 'HomeController@storePhoto');
 
 //Admin routes
 Route::get('admin', 'AdminController@portal');
+
 
 //Moderator routes
 Route::get('moderator', 'ModeratorController@portal');

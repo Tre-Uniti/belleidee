@@ -3,7 +3,7 @@
     Show Intolerance
 @stop
 @section('centerMenu')
-    <h2>Intolerance</h2>
+    <h2><a href = {{ url('intolerances') }}>Intolerance</a></h2>
     @if(isset($intolerance->post_id))
         <p><a href = {{ action('PostController@show', $intolerance->post_id)}}>Source Post</a>
         </p>
@@ -18,7 +18,7 @@
             <p>
                 {{ $intolerance->user_ruling }}
             </p>
-        </div>
+    </div>
 @stop
 
 @section('centerFooter')
@@ -26,7 +26,7 @@
         @if($intolerance->user_id == Auth::id())
             <a href="{{ url('/intolerances/'.$intolerance->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
         @elseif($user->type > 0)
-            <a href="{{ url('/moderations/intolerance/'. $intolerance->id) }}"><button type = "button" class = "navButton">Mod</button></a>
+            <a href="{{ url('/moderations/intolerance/'. $intolerance->id) }}"><button type = "button" class = "navButton">Moderate</button></a>
         @endif
         @if($user->type > 1)
                 {!! Form::open(['method' => 'DELETE', 'route' => ['intolerances.destroy', $intolerance->id]]) !!}
@@ -36,6 +36,4 @@
 
     </div>
 @stop
-
-@include('drafts.rightSide')
 

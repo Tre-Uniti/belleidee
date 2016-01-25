@@ -1,7 +1,7 @@
 <div id = "createOptions">
     <h2>Intolerance</h2>
     @if($moderation->post_id != '')
-       <p><a href = {{ action('PostController@show', $moderation->post_id)}}> Source Post</a></p>
+        <p><a href = {{ action('PostController@show', $moderation->post_id)}}> Source Post</a></p>
     @elseif($moderation->extension_id != '')
         <p><a href = {{ action('ExtensionController@show', $moderation->extension_id)}}>Source Extension</a></p>
     @elseif($moderation->question_id != '')
@@ -9,7 +9,8 @@
     @endif
     <div id = "centerTextContent">
         <p>{{ $intolerance->user_ruling }}</p>
-        {!! Form::textarea('mod_ruling', null, ['id' => 'createBodyText', 'placeholder' => 'Is this intolerant?:', 'rows' => '3%', 'maxlength' => '300']) !!}
+        <p>{{ $moderation->mod_ruling }}</p>
+        {!! Form::textarea('admin_ruling', null, ['id' => 'createBodyText', 'placeholder' => 'Is this intolerant?:', 'rows' => '3%', 'maxlength' => '300']) !!}
     </div>
     <!-- Body Form Input -->
 

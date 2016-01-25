@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Intolerance;
+use App\Moderation;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -41,4 +43,9 @@ class AdminController extends Controller
             ->with(compact('user', 'admins', 'profilePosts', 'profileExtensions'))
             ->with('photoPath', $photoPath);
     }
+
+
+
+
+
 }

@@ -1,9 +1,9 @@
 @extends('app')
 @section('siteTitle')
-    Show Moderation
+    Show Adjudication
 @stop
 @section('centerMenu')
-    <h2><a href = {{ url('moderations') }}>Moderation</a></h2>
+    <h2><a href = {{ url('adjudications') }}>Adjudication</a></h2>
     @if($intolerance->post_id != '')
         <p><a href = {{ action('PostController@show', [$intolerance->post_id])}}>Source Post</a></p>
     @elseif($intolerance->extension_id != '')
@@ -21,6 +21,12 @@
         <p>
             {{ $moderation->mod_ruling }}
         </p>
+
+        <p><b>Admin: </b><a href = {{ action('UserController@show', [$adjudication->user_id])}}>{{ $adjudication->user->handle }} </a></p>
+
+        <p>
+            {{ $adjudication->admin_ruling }}
+        </p>
     </div>
 @stop
 
@@ -30,7 +36,7 @@
             <a href="{{ url('/moderations/'.$moderation->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
         @endif
         @if($user->type > 1)
-                <a href="{{ url('/adjudications/moderation/'. $moderation->id) }}"><button type = "button" class = "navButton">Admin</button></a>
+                <a href="{{ url('/moderations/adjudicate/'. $moderation->id) }}"><button type = "button" class = "navButton">Admin</button></a>
                 {!! Form::open(['method' => 'DELETE', 'route' => ['moderations.destroy', $moderation->id]]) !!}
                 {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}

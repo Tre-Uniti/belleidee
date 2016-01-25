@@ -3,10 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use App\Post;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
-class CreatePostRequest extends Request
+class AdjudicationRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +15,8 @@ class CreatePostRequest extends Request
      */
     public function authorize()
     {
-        return Auth::check();
+        return User::where('id', Auth::id())
+            ->where('tier', '>', 1);
     }
 
     /**
@@ -26,10 +27,7 @@ class CreatePostRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|min:5|max:40',
-            'body'  => 'required|min:10|max:3500',
-            'belief'=> 'required',
-            'category' => 'required'
+            'admin_ruling' => 'required|min:5|max:300',
         ];
     }
 }

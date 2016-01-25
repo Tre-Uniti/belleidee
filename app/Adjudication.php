@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Intolerance extends Model
+class Adjudication extends Model
 {
     protected $fillable = [
-    'user_ruling',
-];
+        'admin_ruling',
+    ];
 
     public function user()
     {
@@ -17,11 +17,11 @@ class Intolerance extends Model
 
     public function moderation()
     {
-        return $this->hasOne('App\Moderation');
+        return $this->belongsTo('App\Moderation');
     }
 
-    public function adjudication()
+    public function intolerance()
     {
-        return $this->hasOne('App\Moderation');
+        return $this->belongsTo('App\Intolerance');
     }
 }
