@@ -1,10 +1,7 @@
 @extends('app')
 @section('siteTitle')
-    Posts
+    Question
 @stop
-
-
-
 @section('centerText')
     <div>
     <h2>Top Elevated Posts</h2>

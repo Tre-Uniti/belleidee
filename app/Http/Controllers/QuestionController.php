@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Elevate;
 use App\Extension;
 use App\Question;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -184,4 +185,105 @@ class QuestionController extends Controller
     {
         //
     }
+
+    /**
+     * Elevate post if not already elevated and redirect to original post
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function elevateQuestion($id)
+    {
+        //Get Post associated with id
+        $question = Question::findOrFail($id);
+
+        //Get User elevating the Post
+        $user = Auth::user();
+
+        //Check if the User has already elevated
+        if(Elevate::where('user_id', $user->id)->where('question_id', $id)->exists())
+        {
+            flash('You have already elevated this question');
+            return redirect('questions/'. $id);
+        }
+
+        //Post approved for Elevation
+        else
+        {
+            //Start elevation of Post
+            $elevation = new Elevate;
+            $elevation->question_id = $question->id;
+
+            //Get user of Post being elevated
+            $sourceUser = User::findOrFail($question->user_id);
+
+            //Assign id of user who Posted as source
+            $elevation->source_user = $sourceUser->id;
+
+            //Associate id of the user who gifted Elevation
+            $elevation->user()->associate($user);
+            $elevation->save();
+
+            //Elevate Post by 1
+            $question->where('id', $question->id)
+                ->update(['elevation' => $question->elevation + 1]);
+
+        }
+        flash('Elevation successful');
+        return redirect('questions/'. $question->id);
+    }
+
+    /**
+     * Sort and show all extensions of Question by highest Elevation
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByElevation($id)
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        $question = Question::findOrFail($id);
+        $extensions = Extension::where('question_id', '=', $id)->orderBy('extension', 'desc')->paginate(10);
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('questions.sortByElevation')
+            ->with(compact('user', 'question', 'extensions', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+    /**
+     * Sort and show all extensions of Question by highest Extension
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByExtension($id)
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        $question = Question::findOrFail($id);
+        $extensions = Extension::where('question_id', '=', $id)->orderBy('elevation', 'desc')->paginate(10);
+        if($user->photo_path == '')
+        {
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+        return view ('questions.sortByExtension')
+            ->with(compact('user', 'question', 'extensions', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+
 }

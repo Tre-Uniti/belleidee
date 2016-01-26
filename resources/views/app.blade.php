@@ -27,7 +27,7 @@
                         <li><a href={{ url('/posts') }}>Discover</a></li>
                         <li><a href="{{ url('/drafts') }}">Drafts</a></li>
                         <li><a href="{{ url('/extensions') }}">Extensions</a></li>
-                        <li><a href="{{ url('/indev') }}">Legacy</a></li>
+                        <li><a href="{{ url('/questions') }}">Questions</a></li>
                     </ul>
                 </div>
             </li>
@@ -38,7 +38,7 @@
                         <li><a href="{{ url('/users') }}">Users</a></li>
                         <li><a href="{{ url('/beacons') }}">Beacons</a></li>
                         <li><a href="{{ url('/beliefs') }}">Beliefs</a></li>
-                        <li><a href="{{ url('/questions') }}">Questions</a></li>
+                        <li><a href="{{ url('/indev') }}">Legacy</a></li>
                         <li><a href="{{ url('/sponsors') }}">Sponsors</a></li>
                     </ul>
                 </div>
