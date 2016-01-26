@@ -115,7 +115,7 @@ class ExtensionController extends Controller
         //Get sources from session (what type of extension this is)
         $sources = Session::get('sources');
 
-        if (isset($sources['question_id']))
+        if(isset($sources['question_id']))
         {
             Storage::put($path, $inspiration);
             $request = array_add($request, 'extension_path', $path);
@@ -127,11 +127,7 @@ class ExtensionController extends Controller
 
             flash()->overlay('Your extension has been created');
             return redirect('extensions/'. $extension->id);
-
         }
-
-
-        //Check if User has already has path set for title
 
 
         //Store body text at AWS insert into db with extenception and/or post
@@ -438,7 +434,7 @@ class ExtensionController extends Controller
     public function extendQuestion($id)
     {
         $sourceQuestion = Question::findOrFail($id);
-        $fullSource = ['type' => 'questions', 'user_id' => $sourceQuestion->user_id, 'question_id' => $sourceQuestion->id];
+        $fullSource = ['type' => 'question', 'user_id' => $sourceQuestion->user_id, 'question_id' => $sourceQuestion->id];
         Session::put('sources', $fullSource);
 
         return redirect('extensions/create');

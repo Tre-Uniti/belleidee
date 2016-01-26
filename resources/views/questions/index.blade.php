@@ -8,9 +8,9 @@
     <h2>Weekly Questions</h2>
     <table style="display: inline-block;">
         <tr>
-            <td><a href={{ url('/indev')}}></a>Top Elevated</td>
+            <td><a href={{ url('/questions/sortByElevation')}}>Top Elevated</a></td>
             <td><a href={{ url('/indev')}}>Search</a></td>
-            <td><a href={{ url('/indev')}}>Most Extended</a></td>
+            <td><a href={{ url('/questions/sortByExtension')}}>Most Extended</a></td>
         </tr>
     </table>
     </div>
@@ -18,7 +18,7 @@
         <h4>Question</h4>
     </div>
     <div style = "width: 50%; float: right;">
-        <h4>User</h4>
+        <h4>Handle</h4>
     </div>
     @foreach ($questions as $question)
         <div class = "listResource">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Elevate;
 use App\Extension;
+use App\Post;
 use App\Question;
 use App\User;
 use Carbon\Carbon;
@@ -193,7 +194,7 @@ class QuestionController extends Controller
      */
     public function elevateQuestion($id)
     {
-        //Get Post associated with id
+        //Get Question associated with id
         $question = Question::findOrFail($id);
 
         //Get User elevating the Post
@@ -209,7 +210,7 @@ class QuestionController extends Controller
         //Post approved for Elevation
         else
         {
-            //Start elevation of Post
+            //Start elevation of Question
             $elevation = new Elevate;
             $elevation->question_id = $question->id;
 
@@ -228,23 +229,21 @@ class QuestionController extends Controller
                 ->update(['elevation' => $question->elevation + 1]);
 
         }
-        flash('Elevation successful');
+        flash('Elevation of Question successful');
         return redirect('questions/'. $question->id);
     }
-
     /**
-     * Sort and show all extensions of Question by highest Elevation
-     * @param int $id
+     * Sort Questions by highest Elevation
+
      * @return \Illuminate\Http\Response
      */
-    public function sortByElevation($id)
+    public function sortByElevation()
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        $question = Question::findOrFail($id);
-        $extensions = Extension::where('question_id', '=', $id)->orderBy('extension', 'desc')->paginate(10);
+        $questions = $this->question->orderBy('extension', 'desc')->paginate(10);
         if($user->photo_path == '')
         {
 
@@ -256,6 +255,59 @@ class QuestionController extends Controller
         }
 
         return view ('questions.sortByElevation')
+            ->with(compact('user', 'questions', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+    /**
+     * Sort Questions by highest Extension
+
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByExtension()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        $questions = $this->question->orderBy('elevation', 'desc')->paginate(10);
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('questions.sortByExtension')
+            ->with(compact('user', 'questions', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /**
+     * Sort and show all extensions of Question by highest Elevation
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByExtensionElevation($id)
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        $question = Question::findOrFail($id);
+        $extensions = Extension::where('question_id', '=', $id)->orderBy('extension', 'desc')->paginate(10);
+        if($user->photo_path == '')
+        {
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('questions.sortByExtensionElevation')
             ->with(compact('user', 'question', 'extensions', 'profilePosts','profileExtensions'))
             ->with('photoPath', $photoPath);
     }
@@ -264,10 +316,10 @@ class QuestionController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function sortByExtension($id)
+    public function sortByMostExtensions($id)
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $question = Question::findOrFail($id);
@@ -280,7 +332,7 @@ class QuestionController extends Controller
         {
             $photoPath = $user->photo_path;
         }
-        return view ('questions.sortByExtension')
+        return view ('questions.sortByMostExtension')
             ->with(compact('user', 'question', 'extensions', 'profilePosts','profileExtensions'))
             ->with('photoPath', $photoPath);
     }

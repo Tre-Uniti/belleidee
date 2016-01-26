@@ -63,9 +63,12 @@ Route::resource('extensions', 'ExtensionController');
 Route::resource('legacy', 'LegacyController');
 
 //Question Routes (Resource)
-Route::get('questions/elevate/{id}', 'QuestionController@elevatePost');
-Route::get('questions/sortByElevation/{id}', 'QuestionController@sortByElevation');
-Route::get('questions/sortByExtension/{id}', 'QuestionController@sortByExtension');
+Route::get('questions/elevate/{id}', 'QuestionController@elevateQuestion');
+Route::get('questions/sortByElevation', 'QuestionController@sortByElevation');
+Route::get('questions/sortByExtension', 'QuestionController@sortByExtension');
+Route::get('questions/sortByElevation/{id}', 'QuestionController@sortByExtensionElevation');
+Route::get('questions/sortByExtension/{id}', 'QuestionController@sortByMostExtensions');
+
 Route::resource('questions', 'QuestionController');
 
 //Invite Routes (Resource)

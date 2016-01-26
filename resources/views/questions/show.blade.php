@@ -8,15 +8,14 @@
 @stop
 
 @section('centerText')
-    <div id = "centerTextContent">
         <table align = "center">
             <tr>
-                <td><a href={{ url('/questions/sortByElevation')}}>Top Elevated</a></td>
+                <td><a href={{ url('/questions/sortByElevation/'. $question->id)}}>Top Elevated</a></td>
                 <td> <a href = {{ url('/indev') }}>{{ $question->created_at->format('M-d-Y') }}</a></td>
-                <td><a href={{ url('/questions/sortByExtension')}}>Most Extended</a></td>
+                <td><a href={{ url('/questions/sortByExtension/'. $question->id)}}>Most Extended</a></td>
             </tr>
         </table>
-    </div>
+
     <div style = "width: 50%; float: left;">
         <h4>Extension</h4>
     </div>

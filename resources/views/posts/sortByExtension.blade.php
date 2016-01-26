@@ -2,9 +2,6 @@
 @section('siteTitle')
     Posts
 @stop
-
-
-
 @section('centerText')
     <div>
     <h2>Most Extended Posts</h2>
@@ -34,8 +31,6 @@
             </div>
 
         @endforeach
-
-
 @stop
 @section('centerFooter')
     {!! $posts->render() !!}
