@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Adjudication;
 use App\Bookmark;
 use App\Elevate;
+use App\Intolerance;
+use App\Moderation;
 use App\Sponsor;
 use App\Sponsorship;
 use App\User;
@@ -17,6 +20,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -35,7 +39,8 @@ class PostController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $posts = $this->post->latest()->paginate(10);
+        $posts = $this->post->whereNull('status')->paginate(10);
+
 
         if($user->photo_path == '')
         {
@@ -175,12 +180,11 @@ class PostController extends Controller
         $viewUser = Auth::user();
 
         $post = $this->post->findOrFail($id);
+
         $post_path = $post->post_path;
 
         $contents = Storage::get($post_path);
         $post = array_add($post, 'body', $contents);
-
-
 
         //Get other Posts of User
         $user_id = $post->user_id;
@@ -200,6 +204,31 @@ class PostController extends Controller
         {
             $sponsor = Sponsor::where('id', 1)->first();
         }
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        //Check if Post is intolerant and User hasn't unlocked
+        if(isset($post->status))
+        {
+            $unlock = Session::get('unlock');
+                if(($unlock['confirmed'] != 'Yes'))
+                {
+                    $intolerance = Intolerance::where('post_id', $id)->first();
+                    $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
+                    $adjudication = Adjudication::where('moderation_id', $moderation->id)->first();
+                    return view('posts.locked')
+                        ->with(compact('user', 'post', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
+                        ->with('photoPath', $photoPath);
+                }
+        }
 
         //Check if viewing user has already elevated post
         if(Elevate::where('post_id', $post->id)->where('user_id', $viewUser->id)->exists())
@@ -211,16 +240,7 @@ class PostController extends Controller
             $elevation = 'Elevate';
         }
 
-        //Get user photo
-        if($user->photo_path == '')
-        {
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
         return view('posts.show')
             ->with(compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'))
@@ -483,6 +503,16 @@ class PostController extends Controller
         return view ('posts.sortByExtension')
             ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
             ->with('photoPath', $photoPath);
+    }
+
+    //Used to setup extension of post
+    public function unlockPost($id)
+    {
+        $post = Post::findOrFail($id);
+        $unlock = ['post_id' => $post->id, 'confirmed' => 'Yes'];
+        Session::put('unlock', $unlock);
+
+        return redirect('posts/'. $post->id);
     }
 
 }

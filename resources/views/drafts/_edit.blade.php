@@ -36,7 +36,6 @@
                     <option value="Opinion" @if (old('category') == 'Opinion') selected="selected" @elseif($draft->category == 'Opinion' & (old('category') == '')) selected="selected"  @endif>Opinion</option>
                     <option value="Poem" @if (old('category') == 'Poem') selected="selected" @elseif($draft->category == 'Poem' & (old('category') == '')) selected="selected"  @endif>Poem</option>
                     <option value="Prayer" @if (old('category') == 'Prayer') selected="selected" @elseif($draft->category == 'Prayer' & (old('category') == '')) selected="selected"  @endif>Prayer</option>
-                    <option value="Question" @if (old('category') == 'Question') selected="selected" @elseif($draft->category == 'Question' & (old('category') == '')) selected="selected"  @endif>Question</option>
                     <option value="Reflection" @if (old('category') == 'Reflection') selected="selected" @elseif($draft->category == 'Reflection' & (old('category') == '')) selected="selected"  @endif>Reflection</option>
                     <option value="Scholar" @if (old('category') == 'Scholar') selected="selected" @elseif($draft->category == 'Scholar' & (old('category') == '')) selected="selected" @endif>Scholar</option>
                     <option value="Story" @if (old('category') == 'Story') selected="selected" @elseif($draft->category == 'Story' & (old('category') == '')) selected="selected" @endif>Story</option>

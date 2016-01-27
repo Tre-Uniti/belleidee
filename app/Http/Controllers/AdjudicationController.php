@@ -98,6 +98,21 @@ class AdjudicationController extends Controller
         $moderation = Moderation::findOrFail($moderationId);
         $intolerance = Intolerance::findOrFail($moderation->intolerance_id);
 
+        //Lock Post or Extension for intolerance
+        if(isset($intolerance->post_id))
+        {
+            $post = Post::where('id', $intolerance->post_id);
+            //Lock Post
+            $post->where('id', $intolerance->post_id)->update(['status' => 1]);
+
+        }
+        elseif(isset($intolerance->extension_id))
+        {
+            $extension = Extension::where('id', $intolerance->extension_id);
+            //Lock Extension
+            $extension->where('id', $intolerance->extension_id)->update(['status' => 1]);
+        }
+
         $adjudication = new Adjudication($request->all());
         $adjudication->intolerance()->associate($intolerance);
         $adjudication->moderation()->associate($moderation);
@@ -156,7 +171,28 @@ class AdjudicationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $adjudication = $this->adjudication->findOrFail($id);
+
+        //Get moderation associated with adjudication
+        $moderation = Moderation::where('id', $adjudication->moderation_id)->first();
+        $intolerance = Intolerance::where('id', $moderation->intolerance_id)->first();
+
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+        return view ('adjudication.edit')
+            ->with(compact('user', 'adjudication', 'moderation', 'intolerance', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
     }
 
     /**
@@ -168,7 +204,11 @@ class AdjudicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $adjudication = $this->adjudication->findOrFail($id);
+        $adjudication->update($request->all());
+        flash()->overlay('Moderation has been updated');
+
+        return redirect('adjudication/'. $adjudication->id);
     }
 
     /**
@@ -179,7 +219,11 @@ class AdjudicationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $adjudication = Adjudication::findOrFail($id);
+        $adjudication->delete();
+
+        flash()->overlay('Adjudication has been deleted');
+        return redirect('adjudications');
     }
 
     //Used to setup moderation of intolerance

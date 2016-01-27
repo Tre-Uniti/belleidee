@@ -4,9 +4,12 @@
 @stop
 @section('centerText')
     <h2>Admin Portal</h2>
-    <a href="{{ url('questions/create') }}"><button type = "button" class = "navButton">Questions</button></a>
+    <a href="{{ url('adjudications') }}"><button type = "button" class = "navButton">Adjudications</button></a>
     <a href="{{ url('moderations') }}"><button type = "button" class = "navButton">Moderations</button></a>
+    <a href="{{ url('questions/create') }}"><button type = "button" class = "navButton">Questions</button></a>
     <a href="{{ url('/') }}"><button type = "button" class = "navButton">Legacy</button></a>
+
+
     <hr/>
     <div style = "width: 50%; float: left;">
         <h4>Admins</h4>

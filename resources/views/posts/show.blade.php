@@ -2,9 +2,6 @@
 @section('siteTitle')
     Show Post
 @stop
-
-
-
 @section('centerMenu')
     <h2>{{ $post->title }}</h2>
 @stop

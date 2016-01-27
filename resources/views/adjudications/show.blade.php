@@ -32,12 +32,8 @@
 
 @section('centerFooter')
     <div id = "centerFooter">
-        @if($moderation->user_id == Auth::id())
-            <a href="{{ url('/moderations/'.$moderation->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
-        @endif
         @if($user->type > 1)
-                <a href="{{ url('/moderations/adjudicate/'. $moderation->id) }}"><button type = "button" class = "navButton">Admin</button></a>
-                {!! Form::open(['method' => 'DELETE', 'route' => ['moderations.destroy', $moderation->id]]) !!}
+                {!! Form::open(['method' => 'DELETE', 'route' => ['adjudications.destroy', $adjudication->id]]) !!}
                 {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}
         @endif

@@ -10,7 +10,7 @@
         <tr>
             <td><a href={{ url('/indev')}}></a>Sort by Oldest</td>
             <td><a href={{ url('/indev')}}>Search</a></td>
-            <td><a href={{ url('/drafts/create')}}>Create Draft</a></td>
+            <td><a href={{ url('/indev')}}>In Dev</a></td>
         </tr>
     </table>
     </div>

@@ -18,7 +18,7 @@
         <h4>Extension</h4>
     </div>
     <div style = "width: 50%; float: right;">
-        <h4>Handle</h4>
+        <h4>Extended By</h4>
     </div>
     @foreach ($extensions as $extension)
         <div class = "listResource">
