@@ -14,6 +14,9 @@
 //User Routes (Resource)
 Route::get('users/sortByElevation', 'UserController@sortByElevation');
 Route::get('users/sortByExtension', 'UserController@sortByExtension');
+Route::get('users/extendedBy/{id}', 'UserController@extendedBy');
+Route::get('users/elevatedBy/{id}', 'UserController@elevatedBy');
+Route::get('users/beacons/{id}', 'UserController@beaconsOfUser');
 Route::resource('users', 'UserController');
 
 //Beacon Routes (Resource)

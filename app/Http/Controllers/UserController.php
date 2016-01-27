@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bookmark;
 use App\Elevate;
 use App\Extension;
 use App\Post;
@@ -84,10 +85,10 @@ class UserController extends Controller
         //Get requested post and add body
         $user = User::findOrFail($id);
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $elevations = Elevate::where('source_user',$user->id )->latest('created_at')->take(10)->get();
-
         //Get other Extensions of User
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        $posts = Post::where('user_id',$user->id )->latest('created_at')->take(10)->get();
 
         //Get path of photo and append correct Amazon bucket
         //First check user has submitted their own photo otherwise default to medium background image
@@ -103,7 +104,7 @@ class UserController extends Controller
 
 
         return view('users.show')
-            ->with(compact('user', 'elevations', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user', 'posts', 'profilePosts', 'profileExtensions'))
             ->with('photoPath', $photoPath);
     }
 
@@ -187,6 +188,91 @@ class UserController extends Controller
 
         return view ('users.sortByExtension')
             ->with(compact('user', 'users', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+
+    /*
+     * Show extensions of a users inspirations
+     *
+     * @param $id
+     */
+
+    public function extendedBy($id)
+    {
+        $user = User::findOrFail($id);
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        $extensions = Extension::where('source_user', $user->id)->latest('created_at')->paginate(10);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+        return view ('users.extendedBy')
+            ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /*
+     * Show elevation of a users inspirations
+     *
+     * @param $id
+     */
+
+    public function elevatedBy($id)
+    {
+        $user = User::findOrFail($id);
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        $elevations = Elevate::where('source_user', $user->id)->latest('created_at')->paginate(10);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+        return view ('users.elevatedBy')
+            ->with(compact('user', 'elevations', 'profilePosts', 'profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /*
+ * Show beacons of a specific user
+ *
+ * @param $id
+ */
+
+    public function beaconsOfUser($id)
+    {
+        $user = User::findOrFail($id);
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $bookmarks = $user->bookmarks;
+        //$bookmarks = Bookmark::where('user_id', $user->id)->latest('created_at')->paginate(10);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+        return view ('users.beacons')
+            ->with(compact('user', 'bookmarks', 'profilePosts', 'profileExtensions'))
             ->with('photoPath', $photoPath);
     }
 

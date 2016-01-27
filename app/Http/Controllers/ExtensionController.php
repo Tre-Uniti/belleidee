@@ -576,6 +576,8 @@ class ExtensionController extends Controller
                     ->with('photoPath', $photoPath);
     }
 
+
+
     //Show extensions of a specific extension (extenception)
     public function extendList($id)
     {
