@@ -28,7 +28,8 @@ class HomeController extends Controller
         $user = Auth::user();
 
         //Get users who have Elevated
-        $posts = Post::where('user_id', $user->id)->latest('created_at')->take(10)->get();
+        $posts = Post::where('user_id',$user->id )->count();
+        $extensions = Extension::where('user_id',$user->id )->count();
 
         $years =
             [
@@ -55,7 +56,9 @@ class HomeController extends Controller
 
         return view ('pages.home')
                 ->with(compact('user', 'posts', 'profilePosts', 'profileExtensions', 'years', 'days'))
-                ->with('photoPath', $photoPath);
+                ->with('photoPath', $photoPath)
+                ->with('extensions', $extensions)
+                ->with('posts', $posts);
     }
     public function getSettings()
     {

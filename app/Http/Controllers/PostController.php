@@ -39,7 +39,7 @@ class PostController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $posts = $this->post->whereNull('status')->paginate(10);
+        $posts = $this->post->whereNull('status')->latest('created_at')->paginate(10);
 
 
         if($user->photo_path == '')

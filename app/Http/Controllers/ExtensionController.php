@@ -38,7 +38,7 @@ class ExtensionController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
-        $extensions = $this->extension->whereNull('status')->paginate(10);
+        $extensions = $this->extension->whereNull('status')->latest('created_at')->paginate(10);
 
         if($user->photo_path == '')
         {
