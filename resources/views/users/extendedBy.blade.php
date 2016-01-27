@@ -23,7 +23,7 @@
     @foreach ($extensions as $extension)
         <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('QuestionController@show', [$extension->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $extension->title }}</button></a>
+                <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $extension->title }}</button></a>
             </div>
             <div class = "listResourceRight">
                 <a href="{{ action('UserController@show', [$extension->user->id])}}"><button type = "button" class = "interactButton">{{ $extension->user->handle}}</button></a>
