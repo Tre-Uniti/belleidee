@@ -18,7 +18,7 @@
         <h4>Question</h4>
     </div>
     <div style = "width: 50%; float: right;">
-        <h4>Handle</h4>
+        <h4>Asked By</h4>
     </div>
     @foreach ($questions as $question)
         <div class = "listResource">

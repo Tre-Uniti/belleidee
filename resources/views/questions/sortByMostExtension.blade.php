@@ -4,8 +4,8 @@
 @stop
 @section('centerText')
     <div>
-    <h2>Most Extended</h2>
-        <p>Question: <a href={{ url('/questions/'. $question->id)}}>{{$question->question}}</a></p>
+    <h2><a href={{ url('/questions/'. $question->id)}}>{{$question->question}}</a></h2>
+        <p>Most Extended</p>
     <table style="display: inline-block;">
         <tr>
             <td><a href={{ url('/questions/sortByElevation/'. $question->id)}}>Top Elevated</a></td>
@@ -32,11 +32,22 @@
             </div>
 
         @endforeach
-
+    {!! $extensions->render() !!}
 
 @stop
 @section('centerFooter')
-    {!! $extensions->render() !!}
+
+    @if($elevation === 'Elevated')
+        <a href="{{ url('/questions/'.$question->id) }}"><button type = "button" class = "navButton">{{ $elevation }}</button></a>
+    @else
+        <a href="{{ url('/questions/elevate/'.$question->id) }}"><button type = "button" class = "navButton">{{ $elevation }}</button></a>
+    @endif
+    @if($user->type > 1)
+        <a href="{{ url('/questions/'.$question->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+    @else
+        <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Report</button></a>
+    @endif
+    <a href="{{ url('/extensions/question/'. $question->id) }}"><button type = "button" class = "navButton">Extend</button></a>
 @stop
 
 

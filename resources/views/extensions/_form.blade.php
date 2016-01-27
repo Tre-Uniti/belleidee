@@ -4,7 +4,7 @@
     @elseif(isset($sources['post_id']))
         <p>Extension of: <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></p>
     @elseif(isset($sources['question_id']))
-        <p>Extension of: <a href = {{ action('QuestionController@show', [$sources['question_id']])}}> {{ $sources['question_id'] }}</a></p>
+        <p>Extension of: <a href = {{ action('QuestionController@show', [$sources['question_id']])}}> {{ $sources['question'] }}</a></p>
     @endif
 
 <table align = "center" style = "margin-bottom: 7px;">

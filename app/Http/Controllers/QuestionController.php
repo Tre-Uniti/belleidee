@@ -297,7 +297,7 @@ class QuestionController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $question = Question::findOrFail($id);
-        $extensions = Extension::where('question_id', '=', $id)->orderBy('extension', 'desc')->paginate(10);
+        $extensions = Extension::where('question_id', '=', $id)->orderBy('elevation', 'desc')->paginate(10);
         if($user->photo_path == '')
         {
             $photoPath = '';
@@ -307,8 +307,17 @@ class QuestionController extends Controller
             $photoPath = $user->photo_path;
         }
 
+        if(Elevate::where('question_id', $question->id)->where('user_id', $user->id)->exists())
+        {
+            $elevation = 'Elevated';
+        }
+        else
+        {
+            $elevation = 'Elevate';
+        }
+
         return view ('questions.sortByExtensionElevation')
-            ->with(compact('user', 'question', 'extensions', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'question', 'extensions', 'profilePosts','profileExtensions', 'elevation'))
             ->with('photoPath', $photoPath);
     }
     /**
@@ -323,7 +332,7 @@ class QuestionController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $question = Question::findOrFail($id);
-        $extensions = Extension::where('question_id', '=', $id)->orderBy('elevation', 'desc')->paginate(10);
+        $extensions = Extension::where('question_id', '=', $id)->orderBy('extension', 'desc')->paginate(10);
         if($user->photo_path == '')
         {
             $photoPath = '';
@@ -332,8 +341,18 @@ class QuestionController extends Controller
         {
             $photoPath = $user->photo_path;
         }
+
+        if(Elevate::where('question_id', $question->id)->where('user_id', $user->id)->exists())
+        {
+            $elevation = 'Elevated';
+        }
+        else
+        {
+            $elevation = 'Elevate';
+        }
+        
         return view ('questions.sortByMostExtension')
-            ->with(compact('user', 'question', 'extensions', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'question', 'extensions', 'profilePosts','profileExtensions', 'elevation'))
             ->with('photoPath', $photoPath);
     }
 

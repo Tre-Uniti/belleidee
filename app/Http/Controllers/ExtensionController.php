@@ -115,8 +115,81 @@ class ExtensionController extends Controller
         //Get sources from session (what type of extension this is)
         $sources = Session::get('sources');
 
-        if(isset($sources['question_id']))
+        //Store body text at AWS insert into db with extenception and/or post
+        if(isset($sources['extenception']))
         {
+            Storage::put($path, $inspiration);
+            $request = array_add($request, 'extension_path', $path);
+            if(isset($sources['question_id']))
+            {
+                $sourceId = $sources['question_id'];
+                $request = array_add($request, 'question_id', $sourceId);
+                $request = array_add($request, 'extenception', $sources['extenception']);
+                $request = array_add($request, 'source_user', $sources['user_id']);
+
+                //Add 1 extension to original question
+                $question = Question::findOrFail($sourceId);
+                $question->where('id', $question->id)
+                    ->update(['extension' => $question->extension + 1]);
+
+                //Add 1 extension to source extension and user
+                $extension = Extension::findOrFail($sources['extenception']);
+                $extension->where('id', $extension->id)
+                    ->update(['extension' => $extension->extension + 1]);
+
+                //Add 1 extension to source user of extension
+                $sourceUser = User::findOrFail($extension->user_id);
+                $sourceUser->where('id', $sourceUser->id)
+                    ->update(['extension' => $sourceUser->extension + 1]);
+
+                $extension = new Extension($request->except('body'));
+                $extension->user()->associate($user);
+                $extension->save();
+
+                flash()->overlay('Your extension has been created');
+                return redirect('extensions/'. $extension->id);
+            }
+            elseif(isset($sources['post_id']))
+            {
+                $sourceId = $sources['post_id'];
+                $request = array_add($request, 'post_id', $sourceId);
+                $request = array_add($request, 'extenception', $sources['extenception']);
+                $request = array_add($request, 'source_user', $sources['user_id']);
+
+                //Add 1 extension to original post
+                $post = Post::findOrFail($sourceId);
+                $post->where('id', $post->id)
+                    ->update(['extension' => $post->extension + 1]);
+
+                //Add 1 extension to user of post
+                $postUser = User::findOrFail($post->user_id);
+                $postUser->where('id', $postUser->id)
+                    ->update(['extension' => $postUser->extension + 1]);
+
+                //Add 1 extension to source extension
+                $extension = Extension::findOrFail($sources['extenception']);
+                $extension->where('id', $extension->id)
+                    ->update(['extension' => $extension->extension + 1]);
+
+                //Add 1 extension to source user of extension
+                $sourceUser = User::findOrFail($extension->user_id);
+                $sourceUser->where('id', $sourceUser->id)
+                    ->update(['extension' => $sourceUser->extension + 1]);
+
+
+                $extension = new Extension($request->except('body'));
+                $extension->user()->associate($user);
+                $extension->save();
+
+                flash()->overlay('Your extension has been created');
+                return redirect('extensions/'. $extension->id);
+            }
+        }
+
+        //Extension is directly from Question
+        elseif(isset($sources['question_id']))
+        {
+
             Storage::put($path, $inspiration);
             $request = array_add($request, 'extension_path', $path);
             $request = array_add($request, 'question_id', $sources['question_id']);
@@ -125,54 +198,36 @@ class ExtensionController extends Controller
             $extension->user()->associate($user);
             $extension->save();
 
-            flash()->overlay('Your extension has been created');
+            //Add 1 extension to original question
+            $question = Question::findOrFail($sources['question_id']);
+            $question->where('id', $question->id)
+                ->update(['extension' => $question->extension + 1]);
+
+            flash()->overlay('Your extension has been created!');
             return redirect('extensions/'. $extension->id);
         }
-
-
-        //Store body text at AWS insert into db with extenception and/or post
-        if (isset($sources['extenception']))
-        {
-            $sourceId = $sources['post_id'];
-            Storage::put($path, $inspiration);
-            $request = array_add($request, 'extension_path', $path);
-            $request = array_add($request, 'post_id', $sourceId);
-            $request = array_add($request, 'extenception', $sources['extenception']);
-            $request = array_add($request, 'source_user', $sources['user_id']);
-
-            //Add 1 extension to source extension and user
-            $extension = Extension::findOrFail($sources['extenception']);
-            $sourceUser = User::findOrFail($extension->user_id);
-            $extension->where('id', $extension->id)
-                ->update(['extension' => $extension->extension + 1]);
-
-            //Add 1 extension to source user of extension
-            $sourceUser->where('id', $sourceUser->id)
-                ->update(['extension' => $sourceUser->extension + 1]);
-        }
-        else
+        elseif(isset($sources['post_id']))
         {
             $sourceId = $sources['post_id'];
             Storage::put($path, $inspiration);
             $request = array_add($request, 'extension_path', $path);
             $request = array_add($request, 'post_id', $sourceId);
             $request = array_add($request, 'source_user', $sources['user_id']);
+
+            //Add 1 extension to original post
+            $post = Post::findOrFail($sourceId);
+            $post->where('id', $post->id)
+                ->update(['extension' => $post->extension + 1]);
+
+            //Add 1 extension to user of post
+            $postUser = User::findOrFail($post->user_id);
+            $postUser->where('id', $postUser->id)
+                ->update(['extension' => $postUser->extension + 1]);
         }
 
         $extension = new Extension($request->except('body'));
         $extension->user()->associate($user);
         $extension->save();
-
-
-        //Add 1 extension to original post
-        $post = Post::findOrFail($sourceId);
-        $post->where('id', $post->id)
-            ->update(['extension' => $post->extension + 1]);
-
-        //Add 1 extension to user of post
-        $postUser = User::findOrFail($post->user_id);
-        $postUser->where('id', $postUser->id)
-            ->update(['extension' => $postUser->extension + 1]);
 
         //Notify user of post of this extension
         $mailer->sendExtensionNotification($extension);
@@ -204,48 +259,55 @@ class ExtensionController extends Controller
         $profileExtensions = $this->getProfileExtensions($user);
 
         //Get Source info of extension
-        if($extension->post_id != '')
+        if(isset($extension->post_id))
         {
             $post_id = $extension->post_id;
             $post = Post::findOrFail($post_id);
+
+            if(isset($extension->extenception))
+            {
+                $extenception = Extension::findOrFail($extension->extenception);
+                $sources = [
+                    'type' => 'extensions',
+                    'post_id' => $extenception->post_id,
+                    'extenception' => $extenception->id,
+                    'extension_title' => $extenception->title,
+                    'post_title' => $post->title
+                ];
+            }
+            else
+            {
+                $sources = [
+                    'type' => 'posts',
+                    'post_id' => $post->id,
+                    'post_title' => $post->title
+                ];
+            }
         }
-
-
-        elseif($extension->question_id !='')
+        elseif(isset($extension->question_id))
         {
             $question_id = $extension->question_id;
             $question = Question::findOrFail($question_id);
-        }
 
-        //If extension source is another extension (Extenception)
-        if(isset($extension->extenception))
-        {
-            $extenception = Extension::findOrFail($extension->extenception);
-            $sources = [
-                'type' => 'extensions',
-                'post_id' => $extenception->post_id,
-                'extenception' => $extenception->id,
-                'extension_title' => $extenception->title,
-                'post_title' => $post->title
-            ];
+            if(isset($extension->extenception))
+            {
+                $extenception = Extension::findOrFail($extension->extenception);
+                $sources = [
+                    'type' => 'extensions',
+                    'question_id' => $extenception->question_id,
+                    'extenception' => $extenception->id,
+                    'extension_title' => $extenception->title,
+                ];
+            }
+            else
+            {
+                $sources = [
+                    'type' => 'question',
+                    'question_id' => $question->id,
+                    'question' => $question->question
+                ];
+            }
         }
-        //Else extension is sourced from post
-        elseif(isset($extension->post_id))
-        {
-            $sources = [
-                'type' => 'posts',
-                'post_id' => $post->id,
-                'post_title' => $post->title
-            ];
-        }
-        else
-        {
-            $sources = [
-                'type' => 'question',
-                'question_id' => $question->id,
-            ];
-        }
-
 
         //Check if viewing user has already elevated extension
         $viewUserID = Auth::id();
@@ -287,13 +349,54 @@ class ExtensionController extends Controller
         $contents = Storage::get($extension_path);
         $extension = array_add($extension, 'body', $contents);
 
-        //Get Source Post info
-        $post_id = $extension->post_id;
-        $post = Post::findOrFail($post_id);
-        $sources = [
-            'post_id' => $post->id,
-            'post_title' => $post->title
-        ];
+        //Get Source info of extension
+        if(isset($extension->post_id))
+        {
+            $post_id = $extension->post_id;
+            $post = Post::findOrFail($post_id);
+
+            if(isset($extension->extenception))
+            {
+                $extenception = Extension::findOrFail($extension->extenception);
+                $sources = [
+                    'type' => 'extensions',
+                    'post_id' => $extenception->post_id,
+                    'extenception' => $extenception->id,
+                    'extension_title' => $extenception->title,
+                    'post_title' => $post->title
+                ];
+            }
+            else
+            {
+                $sources = [
+                    'type' => 'posts',
+                    'post_id' => $post->id,
+                    'post_title' => $post->title
+                ];
+            }
+        }
+        elseif(isset($extension->question_id))
+        {
+            $question_id = $extension->question_id;
+            $question = Question::findOrFail($question_id);
+
+            if (isset($extension->extenception)) {
+                $extenception = Extension::findOrFail($extension->extenception);
+                $sources = [
+                    'type' => 'extensions',
+                    'question_id' => $extenception->question_id,
+                    'extenception' => $extenception->id,
+                    'extension_title' => $extenception->title,
+                ];
+            } else {
+                $sources = [
+                    'type' => 'question',
+                    'question_id' => $question->id,
+                    'question' => $question->question
+                ];
+            }
+        }
+
 
         //Get other Posts of User
         $user_id = $extension->user_id;
@@ -307,17 +410,6 @@ class ExtensionController extends Controller
         $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-        $types =
-            [
-                'Opinion' => 'Opinion',
-                'Poem' => 'Poem',
-                'Prayer' => 'Prayer',
-                'Question' => 'Question',
-                'Reflection' => 'Reflection',
-                'Scholar' => 'Scholar',
-                'Story' => 'Story',
-            ];
-
         if($user->photo_path == '')
         {
 
@@ -330,7 +422,7 @@ class ExtensionController extends Controller
 
 
         return view('extensions.edit')
-                    ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'sources'))
+                    ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'sources'))
                     ->with('photoPath', $photoPath);
     }
 
@@ -424,7 +516,15 @@ class ExtensionController extends Controller
     public function extenception($id)
     {
         $sourceExtension = Extension::findOrFail($id);
-        $fullSource = ['type' => 'extensions', 'user_id' => $sourceExtension->user_id, 'post_id' => $sourceExtension->post_id,  'extenception' => $id, 'extension_title' => $sourceExtension->title];
+        if(isset($sourceExtension->post_id))
+        {
+            $fullSource = ['type' => 'extensions', 'user_id' => $sourceExtension->user_id, 'post_id' => $sourceExtension->post_id,   'extenception' => $id, 'extension_title' => $sourceExtension->title];
+        }
+        elseif(isset($sourceExtension->question_id))
+        {
+            $fullSource = ['type' => 'extensions', 'user_id' => $sourceExtension->user_id, 'question_id' => $sourceExtension->question_id,   'extenception' => $id, 'extension_title' => $sourceExtension->title];
+        }
+
         Session::put('sources', $fullSource);
 
         return redirect('extensions/create');
@@ -434,7 +534,7 @@ class ExtensionController extends Controller
     public function extendQuestion($id)
     {
         $sourceQuestion = Question::findOrFail($id);
-        $fullSource = ['type' => 'question', 'user_id' => $sourceQuestion->user_id, 'question_id' => $sourceQuestion->id];
+        $fullSource = ['type' => 'question', 'user_id' => $sourceQuestion->user_id, 'question_id' => $sourceQuestion->id, 'question' => $sourceQuestion->question];
         Session::put('sources', $fullSource);
 
         return redirect('extensions/create');
