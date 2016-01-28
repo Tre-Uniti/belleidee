@@ -33,5 +33,9 @@ class Kernel extends HttpKernel
         'filterPost' => \App\Http\Middleware\FormatPost::class,
         'admin' => \App\Http\Middleware\RedirectIfNotAdmin::class,
         'moderator' => \App\Http\Middleware\RedirectIfNotModerator::class,
+        'postOwner' => \App\Http\Middleware\RedirectIfNotPostOwner::class,
+        'extensionOwner' => \App\Http\Middleware\RedirectIfNotExtensionOwner::class,
+        'draftOwner' => \App\Http\Middleware\RedirectIfNotDraftOwner::class,
+        'supportOwner' => \App\Http\Middleware\RedirectIfNotSupportOwner::class,
     ];
 }

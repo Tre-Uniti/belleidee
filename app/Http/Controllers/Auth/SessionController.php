@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class SessionController extends Controller
 {
@@ -132,6 +133,7 @@ class SessionController extends Controller
     public function getLogout()
     {
         Auth::logout();
+        Session::flush();
 
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }

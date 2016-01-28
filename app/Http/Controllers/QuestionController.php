@@ -22,7 +22,7 @@ class QuestionController extends Controller
     public function __construct(Question $question)
     {
         $this->middleware('auth');
-        $this->middleware('admin',['only' => 'create, edit, update, store']);
+        $this->middleware('admin',['only' => ['create, edit, update, store']]);
         $this->question = $question;
     }
 
@@ -161,7 +161,24 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $question = $this->question->findOrFail($id);
+
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+        return view ('questions.edit')
+            ->with(compact('user', 'question', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
     }
 
     /**
@@ -173,7 +190,12 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $question = $this->question->findOrFail($id);
+        $question->user()->associate($request['user_id']);
+        $question->update($request->all());
+        flash()->overlay('Question has been updated');
+
+        return redirect('questions/'. $question->id);
     }
 
     /**

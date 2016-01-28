@@ -49,7 +49,7 @@
 
                     <ul>
                         <li><a href="{{ url('/settings') }}">Personal</a></li>
-                        <li><a href="{{ url('/indev') }}">Support</a></li>
+                        <li><a href="{{ url('/supports') }}">Support</a></li>
                         <li><a href="{{ url('/invites') }}">Invite Friends</a></li>
                         <li><a href="https://tre-uniti.org">Tre-Uniti</a></li>
                         <li><a href="{{ url('/auth/logout') }}">Logout</a></li>

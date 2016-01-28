@@ -51,6 +51,9 @@ Route::get('sponsors/photo/{id}', 'SponsorController@sponsorPhoto');
 Route::post('sponsors/storePhoto/{id}', 'SponsorController@storePhoto');
 Route::resource('sponsors', 'SponsorController');
 
+//Support Routes (Resource)
+Route::resource('supports', 'SupportController');
+
 //Extension Routes (Resource)
 Route::get('extensions/sortByElevation', 'ExtensionController@sortByElevation');
 Route::get('extensions/sortByExtension', 'ExtensionController@sortByExtension');

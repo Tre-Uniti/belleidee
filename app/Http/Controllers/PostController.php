@@ -31,6 +31,7 @@ class PostController extends Controller
     public function __construct(Post $post)
     {
         $this->middleware('auth');
+        $this->middleware('postOwner', ['only' => 'edit']);
         $this->post = $post;
     }
 
@@ -219,15 +220,15 @@ class PostController extends Controller
         if(isset($post->status))
         {
             $unlock = Session::get('unlock');
-                if(($unlock['confirmed'] != 'Yes'))
-                {
-                    $intolerance = Intolerance::where('post_id', $id)->first();
-                    $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
-                    $adjudication = Adjudication::where('moderation_id', $moderation->id)->first();
-                    return view('posts.locked')
-                        ->with(compact('user', 'post', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
-                        ->with('photoPath', $photoPath);
-                }
+            if($unlock['post_id'] != $post->id || $unlock['confirmed'] != 'Yes' || $unlock['user_id'] != $user->id)
+            {
+                $intolerance = Intolerance::where('post_id', $id)->first();
+                $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
+                $adjudication = Adjudication::where('moderation_id', $moderation->id)->first();
+                return view('posts.locked')
+                    ->with(compact('user', 'post', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
+                    ->with('photoPath', $photoPath);
+            }
         }
 
         //Check if viewing user has already elevated post
@@ -239,8 +240,6 @@ class PostController extends Controller
         {
             $elevation = 'Elevate';
         }
-
-
 
         return view('posts.show')
             ->with(compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'))
@@ -278,7 +277,6 @@ class PostController extends Controller
 
         if($user->photo_path == '')
         {
-
             $photoPath = '';
         }
         else
@@ -509,7 +507,8 @@ class PostController extends Controller
     public function unlockPost($id)
     {
         $post = Post::findOrFail($id);
-        $unlock = ['post_id' => $post->id, 'confirmed' => 'Yes'];
+        $userId = Auth::id();
+        $unlock = ['user_id' => $userId, 'post_id' => $post->id, 'confirmed' => 'Yes'];
         Session::put('unlock', $unlock);
 
         return redirect('posts/'. $post->id);

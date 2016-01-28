@@ -10,7 +10,7 @@
     </div>
 
     {!! Form::model($question, ['route' => ['questions.update', $question->id], 'method' => 'patch']) !!}
-    @include ('questions._edit', ['submitButtonText' => 'Update Draft'])
+    @include ('questions._edit', ['submitButtonText' => 'Update Question'])
 
 @stop
 

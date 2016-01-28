@@ -25,6 +25,7 @@ class DraftController extends Controller
     public function __construct(Draft $draft)
     {
         $this->middleware('auth');
+        $this->middleware('draftOwner', ['only' => ['edit', 'show']]);
         $this->draft = $draft;
     }
     /**

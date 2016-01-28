@@ -7,7 +7,7 @@
 
 @section('centerText')
     <div>
-        <h2>Extensions by {{ $user->handle }}</h2>
+        <h2>Extensions by <a href={{ url('/users/'. $user->id)}}>{{ $user->handle }}</a></h2>
         <table style="display: inline-block;">
             <tr>
                 <td><a href={{ url('/indev')}}>Top Elevated</a></td>

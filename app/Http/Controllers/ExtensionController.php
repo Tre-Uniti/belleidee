@@ -25,6 +25,7 @@ class ExtensionController extends Controller
     public function __construct(Extension $extension)
     {
         $this->middleware('auth');
+        $this->middleware('extensionOwner', ['only' => 'edit']);
         $this->extension = $extension;
     }
 
@@ -161,10 +162,6 @@ class ExtensionController extends Controller
                 $post->where('id', $post->id)
                     ->update(['extension' => $post->extension + 1]);
 
-                //Add 1 extension to user of post
-                $postUser = User::findOrFail($post->user_id);
-                $postUser->where('id', $postUser->id)
-                    ->update(['extension' => $postUser->extension + 1]);
 
                 //Add 1 extension to source extension
                 $extension = Extension::findOrFail($sources['extenception']);
