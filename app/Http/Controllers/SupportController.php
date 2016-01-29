@@ -74,6 +74,8 @@ class SupportController extends Controller
 
         $types =
             [
+                'Error Report' => 'Error Report',
+                'Vulnerability' => 'Vulnerability',
                 'User' => 'User',
                 'Beacon' => 'Beacon',
                 'Sponsor' => 'Sponsor',
@@ -150,6 +152,8 @@ class SupportController extends Controller
 
         $types =
             [
+                'Error Report' => 'Error Report',
+                'Vulnerability' => 'Vulnerability',
                 'User' => 'User',
                 'Beacon' => 'Beacon',
                 'Sponsor' => 'Sponsor',
