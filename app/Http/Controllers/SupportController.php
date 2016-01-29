@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Extension;
+use App\Mailers\NotificationMailer;
 use App\Post;
 use App\Support;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class SupportController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('admin', ['only' => 'delete']);
+        $this->middleware('supportOwner', ['only' => 'edit']);
         $this->support = $support;
     }
 
@@ -32,7 +34,7 @@ class SupportController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $supports = $this->support->latest()->paginate(10);
+        $supports = $this->support->where('user_id', $user->id)->latest()->paginate(10);
 
         if($user->photo_path == '')
         {
@@ -44,7 +46,7 @@ class SupportController extends Controller
             $photoPath = $user->photo_path;
         }
 
-        return view ('support.index')
+        return view ('supports.index')
             ->with(compact('user', 'supports', 'profilePosts', 'profileExtensions'))
             ->with('photoPath', $photoPath);
     }
@@ -76,10 +78,10 @@ class SupportController extends Controller
                 'Beacon' => 'Beacon',
                 'Sponsor' => 'Sponsor',
                 'Intolerance' => 'Intolerance',
-                'Other' => 'other,'
+                'Other' => 'Other'
             ];
 
-        return view('support.create')
+        return view('supports.create')
             ->with(compact('user', 'profilePosts', 'profileExtensions'))
             ->with('photoPath', $photoPath)
             ->with('types', $types);
@@ -89,15 +91,20 @@ class SupportController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param NotificationMailer $mailer
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, NotificationMailer $mailer)
     {
         $user = Auth::user();
 
         $support = new Support($request->all());
+        $support->status = 'Open';
         $support->user()->associate($user);
         $support->save();
+
+        $mailer->sendSupportNotification($support);
+
         flash()->overlay('Your support request has been created and will be reviewed');
         return redirect('supports/'. $support->id);
     }
@@ -125,7 +132,7 @@ class SupportController extends Controller
         {
             $photoPath = $user->photo_path;
         }
-        return view ('support.show')
+        return view ('supports.show')
             ->with(compact('user', 'support', 'profilePosts','profileExtensions'))
             ->with('photoPath', $photoPath);
     }
@@ -138,7 +145,35 @@ class SupportController extends Controller
      */
     public function edit($id)
     {
-        //
+        //Get Support requested for editing
+        $support = $this->support->findOrFail($id);
+
+        $types =
+            [
+                'User' => 'User',
+                'Beacon' => 'Beacon',
+                'Sponsor' => 'Sponsor',
+                'Intolerance' => 'Intolerance',
+                'Other' => 'Other'
+            ];
+
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view('supports.edit')
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'support', 'types'))
+            ->with('photoPath', $photoPath);
     }
 
     /**
@@ -150,7 +185,11 @@ class SupportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $support = $this->support->findOrFail($id);
+        $support->update($request->all());
+        flash()->overlay('Support has been updated');
+
+        return redirect('supports/'. $support->id);
     }
 
     /**
@@ -161,6 +200,10 @@ class SupportController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $support = Support::findOrFail($id);
+        $support->delete();
+
+        flash()->overlay('Support has been deleted');
+        return redirect('supports');
     }
 }

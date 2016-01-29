@@ -1,6 +1,7 @@
 <div id = "createOptions">
     <h2>Support Request</h2>
-    <div id = "centerTextContent">
+    <div id = "createOptions">
+        {!! Form::label('type', 'Type:') !!}
         {!! Form::select('type', $types) !!}
         {!! Form::textarea('request', null, ['id' => 'createBodyText', 'placeholder' => 'What can we help with?:', 'rows' => '3%', 'maxlength' => '300']) !!}
     </div>

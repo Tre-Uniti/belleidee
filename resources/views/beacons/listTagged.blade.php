@@ -9,9 +9,9 @@
         <h2><a href={{ url('/beacons/'. $beacon->id)}}>{{$beacon->beacon_tag}}</a></h2>
         <table style="display: inline-block;">
             <tr>
-                <td><a href={{ url('/beacons/create')}}>Top Elevated</a></td>
-                <td><a href={{ url('/beacons/create')}}>Search</a></td>
-                <td><a href={{ url('/beacons/create')}}>Most Extended</a></td>
+                <td><a href={{ url('/posts/sortByElevation')}}>Top Elevated</a></td>
+                <td><a href={{ url('/indev')}}>Search</a></td>
+                <td><a href={{ url('/posts/sortByExtension')}}>Most Extended</a></td>
             </tr>
         </table>
     </div>

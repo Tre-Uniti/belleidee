@@ -7,5 +7,5 @@
     @include ('errors.list')
 
     {!! Form::open(['url' => 'support']) !!}
-    @include ('support._form', ['submitButtonText' => 'Create Support Request'])
+    @include ('supports._form', ['submitButtonText' => 'Create Support Request'])
 @stop

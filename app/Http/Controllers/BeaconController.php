@@ -127,6 +127,7 @@ class BeaconController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $beacon = $this->beacon->findOrFail($id);
+        $beaconPath = '1';
 
         //Get user photo
         if($user->photo_path == '')
@@ -140,7 +141,8 @@ class BeaconController extends Controller
         }
         return view ('beacons.show')
                     ->with(compact('user', 'beacon', 'profilePosts','profileExtensions'))
-                    ->with('photoPath', $photoPath);
+                    ->with('photoPath', $photoPath)
+                    ->with('beaconPath', $beaconPath);
     }
 
     /**
@@ -239,10 +241,12 @@ class BeaconController extends Controller
         {
             $photoPath = $user->photo_path;
         }
+        $beaconPath = '1';
 
         return view ('beacons.listTagged')
                     ->with(compact('user', 'posts', 'beacon', 'profilePosts','profileExtensions'))
-                    ->with('photoPath', $photoPath);
+                    ->with('photoPath', $photoPath)
+                    ->with('beaconPath', $beaconPath);
 
     }
 
