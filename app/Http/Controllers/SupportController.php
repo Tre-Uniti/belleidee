@@ -20,7 +20,7 @@ class SupportController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('admin', ['only' => 'delete']);
-        $this->middleware('supportOwner', ['only' => 'edit']);
+        $this->middleware('supportOwner', ['only' => ['show', 'edit']]);
         $this->support = $support;
     }
 

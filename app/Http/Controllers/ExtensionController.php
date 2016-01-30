@@ -659,6 +659,36 @@ class ExtensionController extends Controller
     }
 
     /**
+     * List Elevations for specific extension
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function listElevation($id)
+    {
+        //Get Extension associated with id
+        $extension = Extension::findOrFail($id);
+
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $elevations = Elevate::where('extension_id', $id)->latest('created_at')->paginate(10);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('extensions.listElevation')
+            ->with(compact('user', 'elevations', 'extension', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /**
      * Retrieve extensions of specific user.
      *
      * @param   $user_id

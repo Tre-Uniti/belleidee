@@ -425,6 +425,36 @@ class PostController extends Controller
         flash('Elevation successful');
         return redirect('posts/'. $post->id);
     }
+
+    /**
+     * List Elevations for specific post
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function listElevation($id)
+    {
+        //Get Post associated with id
+        $post = Post::findOrFail($id);
+
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $elevations = Elevate::where('post_id', $id)->latest('created_at')->paginate(10);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('posts.listElevation')
+            ->with(compact('user', 'elevations', 'post', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
     /**
      * List posts for a specific date
      * @param $date

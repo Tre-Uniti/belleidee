@@ -39,6 +39,7 @@ Route::get('posts/elevate/{id}', 'PostController@elevatePost');
 Route::get('posts/unlock/{id}', 'PostController@unlockPost');
 Route::get('posts/sortByElevation', 'PostController@sortByElevation');
 Route::get('posts/sortByExtension', 'PostController@sortByExtension');
+Route::get('posts/listElevation/{id}', 'PostController@listElevation');
 Route::resource('posts', 'PostController');
 
 //Draft Routes (Resource)
@@ -64,9 +65,11 @@ Route::get('extensions/post/{source}', 'ExtensionController@extendPost');
 Route::get('extensions/extenception/{source}', 'ExtensionController@extenception');
 Route::get('extensions/post/list/{id}', 'ExtensionController@postList');
 Route::get('extensions/extend/list/{id}', 'ExtensionController@extendList');
+Route::get('extensions/listElevation/{id}', 'ExtensionController@listElevation');
 Route::resource('extensions', 'ExtensionController');
 
 //Legacy Routes (Resource)
+Route::get('legacy/index/{name}', 'LegacyController@beliefIndex');
 Route::resource('legacy', 'LegacyController');
 
 //Question Routes (Resource)

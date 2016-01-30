@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\DB;
 class BeliefController extends Controller
 {
 
-
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -30,10 +28,6 @@ class BeliefController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-
-        //Add 12 beliefs into Legacy
-        //Add user_id on end to give permission and show user_id next to belief on index
-        $posts = Post::select('belief', 'title', 'id')->groupBy('belief')->get();
 
         if($user->photo_path == '')
         {

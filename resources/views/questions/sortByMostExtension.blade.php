@@ -5,7 +5,7 @@
 @section('centerText')
     <div>
     <h2><a href={{ url('/questions/'. $question->id)}}>{{$question->question}}</a></h2>
-
+        <p>Most Extended</p>
     <table style="display: inline-block;">
         <tr>
             <td><a href={{ url('/questions/sortByElevation/'. $question->id)}}>Top Elevated</a></td>

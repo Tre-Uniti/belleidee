@@ -38,7 +38,7 @@
                         <li><a href="{{ url('/users') }}">Users</a></li>
                         <li><a href="{{ url('/beacons') }}">Beacons</a></li>
                         <li><a href="{{ url('/beliefs') }}">Beliefs</a></li>
-                        <li><a href="{{ url('/indev') }}">Legacy</a></li>
+                        <li><a href="{{ url('/legacy') }}">Legacy</a></li>
                         <li><a href="{{ url('/sponsors') }}">Sponsors</a></li>
                     </ul>
                 </div>

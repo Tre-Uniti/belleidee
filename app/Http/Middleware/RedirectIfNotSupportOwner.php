@@ -20,8 +20,13 @@ class RedirectIfNotSupportOwner
         $response = $next($request);
         $id = $request->route('supports');
         $support = Support::findOrFail($id); // Fetch the Support
+        $user = Auth::user();
 
-        if($support->user_id == Auth::id())
+        if($support->user_id == $user->id)
+        {
+            return $response;
+        }
+        elseif($user->type > 1)
         {
             return $response;
         }

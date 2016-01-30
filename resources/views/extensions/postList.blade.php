@@ -11,15 +11,7 @@
     @else
         <h2>Extensions of <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></h2>
     @endif
-    <div>
-        <table style="display: inline-block;">
-            <tr>
-                <td><a href={{ url('/posts')}}>Top Elevated</a></td>
-                <td><a href={{ url('/posts')}}>Search</a></td>
-                <td><a href={{ url('/posts')}}>Most Extended</a></td>
-            </tr>
-        </table>
-    </div>
+
     <div style = "width: 50%; float: left;">
         <h4>Title</h4>
     </div>
