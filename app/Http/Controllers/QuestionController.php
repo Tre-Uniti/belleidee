@@ -351,10 +351,10 @@ class QuestionController extends Controller
     {
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->where('extenception', '=', NULL)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $question = Question::findOrFail($id);
-        $extensions = Extension::where('question_id', '=', $id)->orderBy('extension', 'desc')->paginate(10);
+        $extensions = Extension::where('question_id', '=', $id)->where('extenception', '=', NULL)->orderBy('extension', 'desc')->paginate(10);
         if($user->photo_path == '')
         {
             $photoPath = '';
