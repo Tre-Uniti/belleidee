@@ -530,7 +530,14 @@ class ExtensionController extends Controller
     //Used to setup extension of extension
     public function extendQuestion($id)
     {
+        $user = Auth::user();
         $sourceQuestion = Question::findOrFail($id);
+        if(Extension::where('user_id', '=', $user->id)->where('question_id', '=', $sourceQuestion->id)->where('extenception', '=', NULL)->exists())
+        {
+            $extension = Extension::where('user_id', '=', $user->id)->where('question_id', '=', $sourceQuestion->id)->where('extenception', '=', NULL)->first();
+            flash()->overlay('You may edit your weekly extension or extend another');
+            return redirect('extensions/'. $extension->id);
+        }
         $fullSource = ['type' => 'question', 'user_id' => $sourceQuestion->user_id, 'question_id' => $sourceQuestion->id, 'question' => $sourceQuestion->question];
         Session::put('sources', $fullSource);
 

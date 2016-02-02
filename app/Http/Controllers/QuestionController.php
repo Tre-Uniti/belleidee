@@ -64,7 +64,7 @@ class QuestionController extends Controller
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
-        $date = Carbon::today()->subDays(7);
+        $date = Carbon::today()->subDays(6);
 
         try
         {
@@ -124,7 +124,7 @@ class QuestionController extends Controller
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         $question = Question::findOrFail($id);
-        $extensions = Extension::where('question_id', '=', $id)->latest()->paginate(10);
+        $extensions = Extension::where('question_id', '=', $id)->where('extenception', '=', NULL)->latest()->paginate(10);
 
         if($user->photo_path == '')
         {
