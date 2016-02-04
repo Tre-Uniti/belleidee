@@ -178,6 +178,8 @@ class ExtensionController extends Controller
                 $extension->user()->associate($user);
                 $extension->save();
 
+                $mailer->sendExtenceptionNotification($extension);
+
                 flash()->overlay('Your extension has been created');
                 return redirect('extensions/'. $extension->id);
             }
