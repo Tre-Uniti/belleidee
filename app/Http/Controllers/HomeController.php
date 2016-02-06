@@ -6,6 +6,7 @@ use App\Elevate;
 use App\Extension;
 use App\Http\Requests\PhotoUploadRequest;
 use App\Post;
+use App\Question;
 use App\Sponsor;
 use App\Sponsorship;
 use App\User;
@@ -31,16 +32,9 @@ class HomeController extends Controller
         $posts = Post::where('user_id',$user->id )->count();
         $extensions = Extension::where('user_id',$user->id )->count();
 
-        $years =
-            [
-                '2015' => '2015',
-                '2016' => '2016',
-            ];
-        $days =
-            [
-                '1' => '1',
-                '2' => '2',
-            ];
+        $question = Question::orderBy('created_at', 'desc')->first();
+
+
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
@@ -55,7 +49,7 @@ class HomeController extends Controller
         }
 
         return view ('pages.home')
-                ->with(compact('user', 'posts', 'profilePosts', 'profileExtensions', 'years', 'days'))
+                ->with(compact('user', 'posts', 'profilePosts', 'profileExtensions', 'question'))
                 ->with('photoPath', $photoPath)
                 ->with('extensions', $extensions)
                 ->with('posts', $posts);

@@ -11,7 +11,7 @@
         <table align = "center">
             <tr>
                 <td><a href={{ url('/questions/sortByElevation/'. $question->id)}}>Top Elevated</a></td>
-                <td> <a href = {{ url('/indev') }}>{{ $question->created_at->format('M-d-Y') }}</a></td>
+                <td> <a href = {{ url('/users/'. $question->user_id) }}>{{ $question->user->handle }}</a></td>
                 <td><a href={{ url('/questions/sortByExtension/'. $question->id)}}>Most Extended</a></td>
             </tr>
         </table>

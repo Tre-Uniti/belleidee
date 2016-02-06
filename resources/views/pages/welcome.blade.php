@@ -15,6 +15,6 @@ Welcome!
 @section('footer')
         <!--Question of the Week:-->
             <h2>This week's question:</h2>
-                <p>What is an inspiration?</p>
+                <p>{{ $question->question }}</p>
         <!--Question of the Week:-->
 @stop

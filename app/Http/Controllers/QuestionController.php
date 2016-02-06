@@ -229,7 +229,7 @@ class QuestionController extends Controller
             return redirect('questions/'. $id);
         }
 
-        //Post approved for Elevation
+        //Question approved for Elevation
         else
         {
             //Start elevation of Question
@@ -246,7 +246,11 @@ class QuestionController extends Controller
             $elevation->user()->associate($user);
             $elevation->save();
 
-            //Elevate Post by 1
+            //Elevate User who asked Question by 1
+            $sourceUser->where('id', $sourceUser->id)
+                ->update(['elevation' => $sourceUser->elevation + 1]);
+
+            //Elevate Question by 1
             $question->where('id', $question->id)
                 ->update(['elevation' => $question->elevation + 1]);
 

@@ -5,7 +5,7 @@
 
 
 @section('centerText')
-    <h2>Home of {{$user->handle}}</h2>
+    <h2>Profile of {{$user->handle}}</h2>
     <table align = "center">
         <tr>
             <th colspan="2">Creations:</th>

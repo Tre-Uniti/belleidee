@@ -31,6 +31,12 @@
                 <a href="{{ url('/users/extendedBy/'. $user->id) }}"><button type = "button" class = "interactButton">Extended: {{ $user->extension }}</button></a>
             </td>
         </tr>
+        <tr>
+            <th colspan="2">Weekly Question:</th>
+        </tr>
+        <tr>
+            <td colspan="2"><a href = {{ url('questions/'. $question->id)}}><button type = "button" class = "interactButton">{{ $question->question }}</button></a></td>
+        </tr>
     </table>
 @stop
 @section('centerFooter')

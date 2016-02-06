@@ -32,4 +32,9 @@ class Elevate extends Model
     {
         return $this->belongsTo('App\Extension');
     }
+
+    public function question()
+    {
+        return $this->belongsTo('App\Question');
+    }
 }

@@ -204,6 +204,11 @@ class ExtensionController extends Controller
             $question->where('id', $question->id)
                 ->update(['extension' => $question->extension + 1]);
 
+            //Add 1 extension to source user of question
+            $sourceUser = User::findOrFail($question->user_id);
+            $sourceUser->where('id', $sourceUser->id)
+                ->update(['extension' => $sourceUser->extension + 1]);
+
             flash()->overlay('Your extension has been created!');
             return redirect('extensions/'. $extension->id);
         }
@@ -710,6 +715,7 @@ class ExtensionController extends Controller
         $user = User::findOrFail($user_id);
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
         $extensions = $this->extension->where('user_id', $user->id)->latest()->paginate(10);
 
         if($user->photo_path == '')

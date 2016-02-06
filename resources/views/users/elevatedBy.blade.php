@@ -27,6 +27,8 @@
                     <a href="{{ action('PostController@show', [$elevation->post_id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $elevation->post->title }}</button></a>
                 @elseif (isset($elevation->extension_id))
                     <a href="{{ action('ExtensionController@show', [$elevation->extension_id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $elevation->extension->title }}</button></a>
+                @elseif (isset($elevation->question_id))
+                    <a href="{{ action('QuestionController@show', [$elevation->question_id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $elevation->question->question }}</button></a>
                 @endif
             </div>
             <div class = "listResourceRight">
