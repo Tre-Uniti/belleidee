@@ -272,7 +272,6 @@ class QuestionController extends Controller
         $questions = $this->question->orderBy('extension', 'desc')->paginate(10);
         if($user->photo_path == '')
         {
-
             $photoPath = '';
         }
         else

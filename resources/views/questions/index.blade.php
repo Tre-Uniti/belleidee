@@ -5,7 +5,7 @@
 
 @section('centerText')
     <div>
-    <h2>Weekly Questions</h2>
+    <h2>Community Questions</h2>
     <table style="display: inline-block;">
         <tr>
             <td><a href={{ url('/questions/sortByElevation')}}>Top Elevated</a></td>

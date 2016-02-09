@@ -45,16 +45,19 @@
         <td colspan="3" style = "text-align: left;">How do I get started once I login?</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">1.  You may get started by exploring, elevating and extending the user posts especially Tre-Uniti's.</td>
+        <td colspan="3" style = "text-align: left;">1.  Explore, elevate, and extend the posts and extensions within the community.</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">2.  Choose a sponsor from the Idee directory to start your first sponsorship.</td>
+        <td colspan="3" style = "text-align: left;">2.  Bookmark a beacon from the Idee directory and then create your first post.</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">3.  Bookmark a beacon from the Idee directory and then create your first post.</td>
+        <td colspan="3" style = "text-align: left;">3.  Choose a sponsor from the Idee directory to start your first sponsorship.</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">4.  Ponder the current weekly question and when ready post extension/answer.</td>
+        <td colspan="3" style = "text-align: left;">4.  Ponder the current community question and when ready post an extension.</td>
+    </tr>
+    <tr>
+        <td colspan="3" style = "text-align: left;">*  By confirming you agree to receive emails from Idee regarding your activity in the community. *</td>
     </tr>
 
 @endsection

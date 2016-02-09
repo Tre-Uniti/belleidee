@@ -13,8 +13,8 @@ Welcome!
 @stop
 
 @section('footer')
-        <!--Question of the Week:-->
-            <h2>This week's question:</h2>
+        <!--Community Question:-->
+            <h2>Community Question:</h2>
                 <p>{{ $question->question }}</p>
-        <!--Question of the Week:-->
+        <!-- Community Question:-->
 @stop
