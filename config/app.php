@@ -149,6 +149,8 @@ return [
         App\Providers\ViewServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Fideloper\Proxy\TrustedProxyServiceProvider::class,
+        Spatie\SearchIndex\SearchIndexServiceProvider::class,
+
 
     ],
 
@@ -201,6 +203,7 @@ return [
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'Form'      => Illuminate\Html\FormFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
+        'SearchIndex' => Spatie\SearchIndex\SearchIndexFacade::class,
     ],
 
 ];

@@ -4,8 +4,9 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\SearchIndex\Searchable;
 
-class Post extends Model
+class Post extends Model implements Searchable
 {
     protected $fillable = [
         'title',
@@ -43,6 +44,46 @@ class Post extends Model
     {
         $query->where('created_at', '>=', Carbon::now());
     }
+
+    /**
+     * Returns an array with properties which must be indexed
+     *
+     * @return array
+     */
+    public function getSearchableBody()
+    {
+        $searchableProperties = [
+            'title' => $this->title,
+            'belief' => $this->belief,
+            'beacon_tag' => $this->beacon_tag,
+            'category' => $this->category
+        ];
+
+
+        return $searchableProperties;
+
+    }
+
+    /**
+     * Return the type of the searchable subject
+     *
+     * @return string
+     */
+    public function getSearchableType()
+    {
+        return 'post';
+    }
+
+    /**
+     * Return the id of the searchable subject
+     *
+     * @return string
+     */
+    public function getSearchableId()
+    {
+        return $this->id;
+    }
+
 
 
 }

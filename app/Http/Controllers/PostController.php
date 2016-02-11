@@ -22,6 +22,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Spatie\SearchIndex\SearchIndexFacade;
+use SearchIndex;
 
 class PostController extends Controller
 {
@@ -164,6 +166,10 @@ class PostController extends Controller
         $post = new Post($request->except('body'));
         $post->user()->associate($user);
         $post->save();
+
+        //Save into Index for ElasticSearch
+        SearchIndex::upsertToIndex($post);
+
         flash()->overlay('Your post has been created');
         return redirect('posts/'. $post->id);
     }
@@ -334,6 +340,8 @@ class PostController extends Controller
         }
         //Update database with new values
         $post->update($request->except('body', '_method', '_token'));
+
+        SearchIndex::upsertToIndex($post);
 
         flash()->overlay('Your post has been updated');
 
