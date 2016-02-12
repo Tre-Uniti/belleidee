@@ -360,6 +360,98 @@ class PostController extends Controller
     }
 
     /**
+     * Display the search page for posts.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('posts.search')
+            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /**
+     * Display the results page for a search on posts.
+     * @param  string  $title
+     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function results(Request $request)
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        //Get search title
+        $title = $request->input('title');
+        //$query =
+            [
+                'body' =>
+                    [
+                        'from' => 0,
+                        'size' => 500,
+                        'query' =>
+                            [
+                                'fuzzy_like_this' =>
+                                    [
+                                        '_all' =>
+                                            [
+                                                'like_text' => 'look for this',
+                                                'fuzziness' => 0.5,
+                                            ],
+                                    ],
+                            ],
+                    ]
+            ];
+
+        $query = [
+            'index' => 'main',
+            'type' => 'post',
+            'body' => [
+                'query' => [
+                    'match' => [
+                        'title' => $title,
+                    ]
+                ]
+            ]
+        ];
+
+        $results = SearchIndex::getResults($query);
+        //dd($results);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('posts.results')
+            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath)
+            ->with('results', $results);
+
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param  $user
@@ -512,7 +604,7 @@ class PostController extends Controller
             $photoPath = $user->photo_path;
         }
 
-        return view ('posts.sortByElevation')
+        return view ('posts.topElevated')
             ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
             ->with('photoPath', $photoPath);
     }
@@ -536,7 +628,7 @@ class PostController extends Controller
             $photoPath = $user->photo_path;
         }
 
-        return view ('posts.sortByExtension')
+        return view ('posts.mostExtended')
             ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
             ->with('photoPath', $photoPath);
     }

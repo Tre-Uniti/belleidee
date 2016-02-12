@@ -7,8 +7,8 @@
     <h2>Most Extended Posts</h2>
     <table style="display: inline-block;">
         <tr>
-            <td><a href={{ url('/posts/sortByElevation')}}>Top Elevated</a></td>
-            <td><a href={{ url('/indev')}}>Search</a></td>
+            <td><a href={{ url('/posts/topElevated')}}>Top Elevated</a></td>
+            <td><a href={{ url('/posts/search')}}>Search</a></td>
             <td><a href={{ url('/posts')}}>Most Recent</a></td>
         </tr>
     </table>

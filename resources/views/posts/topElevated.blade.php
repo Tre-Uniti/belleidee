@@ -11,8 +11,8 @@
     <table style="display: inline-block;">
         <tr>
             <td><a href={{ url('/posts')}}>Most Recent</a></td>
-            <td><a href={{ url('/indev')}}>Search</a></td>
-            <td><a href={{ url('/posts/sortByExtension')}}>Most Extended</a></td>
+            <td><a href={{ url('/posts/search')}}>Search</a></td>
+            <td><a href={{ url('/posts/mostExtended')}}>Most Extended</a></td>
         </tr>
     </table>
     </div>

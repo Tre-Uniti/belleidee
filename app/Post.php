@@ -56,9 +56,10 @@ class Post extends Model implements Searchable
             'title' => $this->title,
             'belief' => $this->belief,
             'beacon_tag' => $this->beacon_tag,
-            'category' => $this->category
+            'category' => $this->category,
+            'elevation' => $this->elevation,
+            'extension' => $this->extension
         ];
-
 
         return $searchableProperties;
 

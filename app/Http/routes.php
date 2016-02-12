@@ -37,8 +37,10 @@ Route::get('posts/user/{id}', 'PostController@userPosts');
 Route::get('posts/date/{date}', 'PostController@listDates');
 Route::get('posts/elevate/{id}', 'PostController@elevatePost');
 Route::get('posts/unlock/{id}', 'PostController@unlockPost');
-Route::get('posts/sortByElevation', 'PostController@sortByElevation');
-Route::get('posts/sortByExtension', 'PostController@sortByExtension');
+Route::get('posts/topElevated', 'PostController@sortByElevation');
+Route::get('posts/mostExtended', 'PostController@sortByExtension');
+Route::get('posts/search', 'PostController@search');
+Route::post('posts/results', 'PostController@results');
 Route::get('posts/listElevation/{id}', 'PostController@listElevation');
 Route::resource('posts', 'PostController');
 
