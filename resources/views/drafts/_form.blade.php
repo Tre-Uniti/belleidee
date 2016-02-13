@@ -40,6 +40,7 @@
                 <option value="Prayer" @if (old('category') == 'Prayer') selected="selected" @endif>Prayer</option>
                 <option value="Reflection" @if (old('category') == 'Reflection') selected="selected" @endif>Reflection</option>
                 <option value="Scholar" @if (old('category') == 'Scholar') selected="selected" @endif>Scholar</option>
+                <option value="Scripture" @if (old('category') == 'Scripture') selected="selected" @endif>Scripture</option>
                 <option value="Story" @if (old('category') == 'Story') selected="selected" @endif>Story</option>
                 <option value="Other" @if (old('category') == 'Other') selected="selected" @endif>Other</option>
             </select>

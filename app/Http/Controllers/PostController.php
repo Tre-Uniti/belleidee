@@ -174,7 +174,8 @@ class PostController extends Controller
             'category' => $post->category,
             'status' => $post->status,
             'handle' => $post->user->handle,
-            'user_id' => $post->user_id
+            'user_id' => $post->user_id,
+            'created_at' => $post->created_at
         ));
 
         flash()->overlay('Your post has been created');
@@ -356,7 +357,8 @@ class PostController extends Controller
             'category' => $post->category,
             'status' => $post->status,
             'handle' => $post->user->handle,
-            'user_id' => $post->user_id
+            'user_id' => $post->user_id,
+            'created_at' => $post->created_at
         ));
 
         flash()->overlay('Your post has been updated');
@@ -414,9 +416,14 @@ class PostController extends Controller
 
         //Get search title
         $title = $request->input('title');
-        $results = Search::search('title', $title)->get();
+        $results = Search::index('posts')->search('title', $title)
+                    ->get();
 
-        //dd($results);
+        if($results == null)
+        {
+            flash()->overlay('No posts with this title');
+        }
+       //dd($results);
 
         if($user->photo_path == '')
         {

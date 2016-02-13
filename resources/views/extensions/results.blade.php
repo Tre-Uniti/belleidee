@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Search Posts
+    Search Extensions
 @stop
 
 
@@ -9,8 +9,8 @@
         <h2>Search Results</h2>
         <table style="display: inline-block;">
             <tr>
-                <td><a href={{ url('/posts/')}}>Recent Posts</a></td>
-                <td><a href={{ url('/posts/search')}}>Post Search</a></td>
+                <td><a href={{ url('/extensions/')}}>Recent Extensions</a></td>
+                <td><a href={{ url('/extensions/search')}}>Extension Search</a></td>
                 <td><a href={{ url('/search')}}>Global Search</a></td>
             </tr>
         </table>
@@ -24,7 +24,7 @@
         @foreach ($results as $result)
             <div class = "listResource">
                 <div class = "listResourceLeft">
-                    <a href="{{ action('PostController@show', [$result['id']])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result['title']}}</button></a>
+                    <a href="{{ action('ExtensionController@show', [$result['id']])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result['title']}}</button></a>
                 </div>
                 <div class = "listResourceRight">
                     <a href="{{ action('UserController@show', [$result['user_id']])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result['handle']}}</button></a>

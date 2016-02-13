@@ -129,6 +129,13 @@ class AuthController extends Controller
                 ->withErrors([$error]);
         }
         $user = $this->create($request->all());
+
+        //Update ElasticSearch Index
+        Search::index('users')->insert($user->id, array(
+            'handle' => $user->handle,
+            'type' => $user->type,
+            'created_at' => $user->created_at
+        ));
         $mailer->sendEmailConfirmationTo($user);
         $invite->delete();
         flash()->success('Registration Successful');

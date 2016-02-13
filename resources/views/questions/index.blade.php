@@ -9,7 +9,7 @@
     <table style="display: inline-block;">
         <tr>
             <td><a href={{ url('/questions/sortByElevation')}}>Top Elevated</a></td>
-            <td><a href={{ url('/indev')}}>Search</a></td>
+            <td><a href={{ url('/questions/search')}}>Search</a></td>
             <td><a href={{ url('/questions/sortByExtension')}}>Most Extended</a></td>
         </tr>
     </table>

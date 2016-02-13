@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Search;
 
 class UserController extends Controller
 
@@ -131,7 +132,78 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        //Update ElasticSearch Index
+        Search::index('user')->insert($user->id, array(
+            'handle' => $user->handle,
+            'type' => $user->type,
+            'created_at' => $user->created_at
+        ));
+    }
+
+    /**
+     * Display the search page for users.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('users.search')
+            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /**
+     * Display the results page for a search on users.
+     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function results(Request $request)
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        //Get search title
+        $title = $request->input('title');
+        $results = Search::index('users')->search('title', $title)
+            ->get();
+
+        if($results == null)
+        {
+            flash()->overlay('No users with this handle');
+        }
+        //dd($results);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('users.results')
+            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath)
+            ->with('results', $results);
+
     }
 
     /**

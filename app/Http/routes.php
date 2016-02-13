@@ -14,6 +14,8 @@
 //User Routes (Resource)
 Route::get('users/sortByElevation', 'UserController@sortByElevation');
 Route::get('users/sortByExtension', 'UserController@sortByExtension');
+Route::get('users/search', 'UserController@search');
+Route::post('users/results', 'UserController@results');
 Route::get('users/extendedBy/{id}', 'UserController@extendedBy');
 Route::get('users/elevatedBy/{id}', 'UserController@elevatedBy');
 Route::get('users/beacons/{id}', 'UserController@beaconsOfUser');
@@ -60,6 +62,8 @@ Route::resource('supports', 'SupportController');
 //Extension Routes (Resource)
 Route::get('extensions/sortByElevation', 'ExtensionController@sortByElevation');
 Route::get('extensions/sortByExtension', 'ExtensionController@sortByExtension');
+Route::get('extensions/search', 'ExtensionController@search');
+Route::post('extensions/results', 'ExtensionController@results');
 Route::get('extensions/user/{id}', 'ExtensionController@userExtensions');
 Route::get('extensions/elevate/{id}', 'ExtensionController@elevateExtension');
 Route::get('extensions/question/{source}', 'ExtensionController@extendQuestion');
@@ -76,6 +80,8 @@ Route::resource('legacy', 'LegacyController');
 
 //Question Routes (Resource)
 Route::get('questions/elevate/{id}', 'QuestionController@elevateQuestion');
+Route::get('questions/search', 'QuestionController@search');
+Route::post('questions/results', 'QuestionController@results');
 Route::get('questions/sortByElevation', 'QuestionController@sortByElevation');
 Route::get('questions/sortByExtension', 'QuestionController@sortByExtension');
 Route::get('questions/sortByElevation/{id}', 'QuestionController@sortByExtensionElevation');

@@ -1,13 +1,12 @@
 @extends('app')
 @section('siteTitle')
-    Search Posts
+    Search Extensions
 @stop
-
 
 @section('centerText')
     <div>
-        <h2>Search Posts</h2>
-        {!! Form::open(['url' => 'posts/results']) !!}
+        <h2>Search Extensions</h2>
+        {!! Form::open(['url' => 'extensions/results']) !!}
         <table align = "center">
             <tr>
                 <th>Title:</th>
@@ -23,8 +22,8 @@
     </div>
 @stop
 @section('centerFooter')
-            <a href="{{ url('/posts/') }}"><button type = "button" class = "navButton">Recent Posts</button></a>
-            <a href="{{ url('/Global Search') }}"><button type = "button" class = "navButton">Global Search</button></a>
+            <a href="{{ url('/extensions/') }}"><button type = "button" class = "navButton">Recent Extensions</button></a>
+            <a href="{{ url('/search') }}"><button type = "button" class = "navButton">Global Search</button></a>
 @stop
 
 

@@ -17,6 +17,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Search;
 
 class ExtensionController extends Controller
 {
@@ -231,9 +232,24 @@ class ExtensionController extends Controller
                 ->update(['extension' => $postUser->extension + 1]);
         }
 
+
+
         $extension = new Extension($request->except('body'));
         $extension->user()->associate($user);
         $extension->save();
+
+        //Update ElasticSearch Index
+        Search::index('extensions')->insert($extension->id, array(
+            'title' => $extension->title,
+            'belief' => $extension->belief,
+            'beacon_tag' => $extension->beacon_tag,
+            'category' => $extension->category,
+            'status' => $extension->status,
+            'handle' => $extension->user->handle,
+            'user_id' => $extension->user_id,
+            'created_at' => $extension->created_at
+        ));
+
 
         //Notify user of post of this extension
         $mailer->sendExtensionNotification($extension);
@@ -475,9 +491,86 @@ class ExtensionController extends Controller
             Storage::put($path, $inspiration);
         }
 
+        //Update ElasticSearch Index
+        Search::index('extensions')->insert($extension->id, array(
+            'title' => $extension->title,
+            'belief' => $extension->belief,
+            'beacon_tag' => $extension->beacon_tag,
+            'category' => $extension->category,
+            'status' => $extension->status,
+            'handle' => $extension->user->handle,
+            'user_id' => $extension->user_id,
+            'created_at' => $extension->created_at
+        ));
+
         $extension->update($request->except('body', '_method', '_token'));
 
         return redirect('extensions/'.$id);
+    }
+
+    /**
+     * Display the search page for extensions.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('extensions.search')
+            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /**
+     * Display the results page for a search on extensions.
+     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function results(Request $request)
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        //Get search title
+        $title = $request->input('title');
+        $results = Search::index('extensions')->search('title', $title)
+            ->get();
+
+        if($results == null)
+        {
+            flash()->overlay('No extensions with this title');
+        }
+        //dd($results);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('extensions.results')
+            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath)
+            ->with('results', $results);
+
     }
 
     /**

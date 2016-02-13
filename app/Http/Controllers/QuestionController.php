@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Search;
 
 class QuestionController extends Controller
 {
@@ -107,6 +108,13 @@ class QuestionController extends Controller
         $question->user()->associate($request['user_id']);
         $question->save();
 
+        //Update ElasticSearch Index
+        Search::index('questions')->insert($question->id, array(
+            'question' => $question->question,
+            'created_at' => $question->created_at,
+            'asked_by' => $question->user->handle
+        ));
+
         flash()->overlay('Weekly Question posted');
         return redirect('questions/'. $question->id);
     }
@@ -195,8 +203,82 @@ class QuestionController extends Controller
         $question->update($request->all());
         flash()->overlay('Question has been updated');
 
+        //Update ElasticSearch Index
+        Search::index('questions')->insert($question->id, array(
+            'question' => $question->question,
+            'created_at' => $question->created_at,
+            'asked_by' => $question->user->handle
+        ));
+
         return redirect('questions/'. $question->id);
     }
+
+    /**
+     * Display the search page for extensions.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('questions.search')
+            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /**
+     * Display the results page for a search on questions.
+     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function results(Request $request)
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        //Get search title
+        $question = $request->input('title');
+        $results = Search::index('questions')->search('question', $question)
+            ->get();
+
+        if($results == null)
+        {
+            flash()->overlay('No questions with this wording');
+        }
+        //dd($results);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('questions.results')
+            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath)
+            ->with('results', $results);
+
+    }
+
+
 
     /**
      * Remove the specified resource from storage.

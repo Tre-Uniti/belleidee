@@ -38,6 +38,7 @@
                     <option value="Prayer" @if (old('category') == 'Prayer') selected="selected" @elseif($post->category == 'Prayer' & (old('category') == '')) selected="selected"  @endif>Prayer</option>
                     <option value="Reflection" @if (old('category') == 'Reflection') selected="selected" @elseif($post->category == 'Reflection' & (old('category') == '')) selected="selected"  @endif>Reflection</option>
                     <option value="Scholar" @if (old('category') == 'Scholar') selected="selected" @elseif($post->category == 'Scholar' & (old('category') == '')) selected="selected" @endif>Scholar</option>
+                    <option value="Scripture" @if (old('category') == 'Scripture') selected="selected" @elseif($post->category == 'Scripture' & (old('category') == '')) selected="selected" @endif>Scripture</option>
                     <option value="Story" @if (old('category') == 'Story') selected="selected" @elseif($post->category == 'Story' & (old('category') == '')) selected="selected" @endif>Story</option>
                     <option value="Other" @if (old('category') == 'Other') selected="selected" @elseif($post->category == 'Other' & (old('category') == '')) selected="selected" @endif>Other</option>
                 </select>
