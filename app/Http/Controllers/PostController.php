@@ -22,8 +22,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Spatie\SearchIndex\SearchIndexFacade;
-use SearchIndex;
+use Search;
 
 class PostController extends Controller
 {
@@ -168,7 +167,15 @@ class PostController extends Controller
         $post->save();
 
         //Save into Index for ElasticSearch
-        SearchIndex::upsertToIndex($post);
+        Search::index('posts')->insert($post->id, array(
+            'title' => $post->title,
+            'belief' => $post->belief,
+            'beacon_tag' => $post->beacon_tag,
+            'category' => $post->category,
+            'status' => $post->status,
+            'handle' => $post->user->handle,
+            'user_id' => $post->user_id
+        ));
 
         flash()->overlay('Your post has been created');
         return redirect('posts/'. $post->id);
@@ -299,7 +306,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  EditPostRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -341,7 +348,16 @@ class PostController extends Controller
         //Update database with new values
         $post->update($request->except('body', '_method', '_token'));
 
-        SearchIndex::upsertToIndex($post);
+        //Save into Index for ElasticSearch
+        Search::index('posts')->insert($post->id, array(
+            'title' => $post->title,
+            'belief' => $post->belief,
+            'beacon_tag' => $post->beacon_tag,
+            'category' => $post->category,
+            'status' => $post->status,
+            'handle' => $post->user->handle,
+            'user_id' => $post->user_id
+        ));
 
         flash()->overlay('Your post has been updated');
 
@@ -387,7 +403,6 @@ class PostController extends Controller
 
     /**
      * Display the results page for a search on posts.
-     * @param  string  $title
      * @return \Illuminate\Http\Response
      * @param  \Illuminate\Http\Request  $request
      */
@@ -399,39 +414,8 @@ class PostController extends Controller
 
         //Get search title
         $title = $request->input('title');
-        //$query =
-            [
-                'body' =>
-                    [
-                        'from' => 0,
-                        'size' => 500,
-                        'query' =>
-                            [
-                                'fuzzy_like_this' =>
-                                    [
-                                        '_all' =>
-                                            [
-                                                'like_text' => 'look for this',
-                                                'fuzziness' => 0.5,
-                                            ],
-                                    ],
-                            ],
-                    ]
-            ];
+        $results = Search::search('title', $title)->get();
 
-        $query = [
-            'index' => 'main',
-            'type' => 'post',
-            'body' => [
-                'query' => [
-                    'match' => [
-                        'title' => $title,
-                    ]
-                ]
-            ]
-        ];
-
-        $results = SearchIndex::getResults($query);
         //dd($results);
 
         if($user->photo_path == '')
