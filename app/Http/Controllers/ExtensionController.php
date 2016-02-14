@@ -505,6 +505,8 @@ class ExtensionController extends Controller
 
         $extension->update($request->except('body', '_method', '_token'));
 
+        flash()->overlay('Extension has been updated');
+
         return redirect('extensions/'.$id);
     }
 
