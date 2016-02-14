@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Elevate;
 use App\Extension;
+use App\Notification;
 use App\Post;
 use App\Question;
 use App\User;
@@ -337,6 +338,17 @@ class QuestionController extends Controller
                 ->update(['elevation' => $question->elevation + 1]);
 
         }
+
+        //Create Notification for Source user
+        $notification = new Notification();
+        $notification->type = 'Elevated';
+        $notification->source_type = 'Question';
+        $notification->source_id = $question->id;
+        $notification->title = $question->question;
+        $notification->source_user = $sourceUser->id;
+        $notification->user()->associate($user);
+        $notification->save();
+
         flash('Elevation of Question successful');
         return redirect('questions/'. $question->id);
     }

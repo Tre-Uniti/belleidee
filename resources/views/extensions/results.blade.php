@@ -3,7 +3,6 @@
     Search Extensions
 @stop
 
-
 @section('centerText')
     <div>
         <h2>Search Results</h2>
@@ -11,7 +10,7 @@
             <tr>
                 <td><a href={{ url('/extensions/')}}>Recent Extensions</a></td>
                 <td><a href={{ url('/extensions/search')}}>Extension Search</a></td>
-                <td><a href={{ url('/search')}}>Global Search</a></td>
+                <td><a href={{ url('/indev')}}>Global Search</a></td>
             </tr>
         </table>
     </div>

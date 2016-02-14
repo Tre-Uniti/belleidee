@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Elevate;
 use App\Mailers\NotificationMailer;
+use App\Notification;
 use App\Post;
 use App\Question;
 use Illuminate\Http\Request;
@@ -227,9 +228,9 @@ class ExtensionController extends Controller
                 ->update(['extension' => $post->extension + 1]);
 
             //Add 1 extension to user of post
-            $postUser = User::findOrFail($post->user_id);
-            $postUser->where('id', $postUser->id)
-                ->update(['extension' => $postUser->extension + 1]);
+            $sourceUser = User::findOrFail($post->user_id);
+            $sourceUser->where('id', $sourceUser->id)
+                ->update(['extension' => $sourceUser->extension + 1]);
         }
 
 
@@ -249,6 +250,16 @@ class ExtensionController extends Controller
             'user_id' => $extension->user_id,
             'created_at' => $extension->created_at
         ));
+
+        //Create Notification for Source user
+        $notification = new Notification();
+        $notification->type = 'Extended';
+        $notification->source_type = 'Extension';
+        $notification->source_id = $extension->id;
+        $notification->title = $extension->title;
+        $notification->source_user = $sourceUser->id;
+        $notification->user()->associate($user);
+        $notification->save();
 
 
         //Notify user of post of this extension
@@ -763,6 +774,17 @@ class ExtensionController extends Controller
 
 
         }
+
+        //Create Notification for Source user
+        $notification = new Notification();
+        $notification->type = 'Elevated';
+        $notification->source_type = 'Extension';
+        $notification->source_id = $extension->id;
+        $notification->title = $extension->title;
+        $notification->source_user = $sourceUser->id;
+        $notification->user()->associate($user);
+        $notification->save();
+
         //Successful elevation of User and Extension :)
 
         flash('Elevation successful');

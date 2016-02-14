@@ -7,6 +7,7 @@ use App\Bookmark;
 use App\Elevate;
 use App\Intolerance;
 use App\Moderation;
+use App\Notification;
 use App\Sponsor;
 use App\Sponsorship;
 use App\User;
@@ -509,9 +510,18 @@ class PostController extends Controller
             //Elevate User of Post by 1
             $sourceUser->where('id', $sourceUser->id)
                 ->update(['elevation' => $sourceUser->elevation + 1]);
-
-
         }
+
+        //Create Notification for Source user
+        $notification = new Notification();
+        $notification->type = 'Elevated';
+        $notification->source_type = 'Post';
+        $notification->source_id = $post->id;
+        $notification->title = $post->title;
+        $notification->source_user = $sourceUser->id;
+        $notification->user()->associate($user);
+        $notification->save();
+
         //Successful elevation of User and Post :)
         flash('Elevation successful');
         return redirect('posts/'. $post->id);

@@ -86,7 +86,6 @@ Route::get('questions/sortByElevation', 'QuestionController@sortByElevation');
 Route::get('questions/sortByExtension', 'QuestionController@sortByExtension');
 Route::get('questions/sortByElevation/{id}', 'QuestionController@sortByExtensionElevation');
 Route::get('questions/sortByExtension/{id}', 'QuestionController@sortByMostExtensions');
-
 Route::resource('questions', 'QuestionController');
 
 //Invite Routes (Resource)
@@ -104,6 +103,12 @@ Route::resource('moderations', 'ModerationController');
 //Adjudication routes (resource)
 Route::get('adjudications/moderation/{source}', 'AdjudicationController@moderation');
 Route::resource('adjudications', 'AdjudicationController');
+
+//Notification routes (resource)
+Route::get('notifications/post/{id}', 'NotificationController@post');
+Route::get('notifications/extension/{id}', 'NotificationController@extension');
+Route::get('notifications/question/{id}', 'NotificationController@question');
+Route::resource('notifications', 'NotificationController');
 
 
 //Password Route (Laravel)

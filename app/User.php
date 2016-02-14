@@ -87,6 +87,11 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Adjudication');
     }
 
+    public function notifications()
+    {
+        return $this->hasMany('App\Notification');
+    }
+
     /*
      * Get the bookmarks associated with the user
      *

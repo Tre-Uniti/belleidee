@@ -11,7 +11,7 @@
             <tr>
                 <td><a href={{ url('/posts/')}}>Recent Posts</a></td>
                 <td><a href={{ url('/posts/search')}}>Post Search</a></td>
-                <td><a href={{ url('/search')}}>Global Search</a></td>
+                <td><a href={{ url('/indev')}}>Global Search</a></td>
             </tr>
         </table>
     </div>

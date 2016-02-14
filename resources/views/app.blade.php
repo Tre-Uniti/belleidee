@@ -57,6 +57,11 @@
 
                 </div>
             </li>
+            @if($notifyCount > 0)
+            <li>
+                <a href = "{{ url('/notifications') }}">/{{$notifyCount}}\</a>
+            </li>
+            @endif
         </ul>
     </nav>
     <!-- Left --- --- -->

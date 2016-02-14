@@ -32,7 +32,7 @@
                             @elseif($sources['type'] === 'posts')
                                 <p>Extends: <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></p>
                             @elseif($sources['type'] === 'question')
-                                <p>Extends: <a href = {{ action('QuestionController@show', [$sources['question_id']])}}> Weekly Question</a></p>
+                                <p>Extends: <a href = {{ action('QuestionController@show', [$sources['question_id']])}}> Community Question</a></p>
                             @endif
                             <table align = "center">
                                 <tr>
