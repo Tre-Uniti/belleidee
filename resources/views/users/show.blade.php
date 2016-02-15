@@ -38,7 +38,9 @@
 
 @section('centerFooter')
     <div id = "centerFooter">
-
+        @if(Auth::user()->type > 1)
+            <a href="{{ url('users/'. $user->id . '/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+        @endif
     </div>
 @stop
 

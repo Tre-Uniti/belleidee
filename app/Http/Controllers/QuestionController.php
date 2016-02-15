@@ -66,14 +66,14 @@ class QuestionController extends Controller
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
-        $date = Carbon::today()->subDays(6);
+        $date = Carbon::today()->subDays(13);
 
         try
         {
             $lastQuestion = Question::orderBy('created_at', 'desc')->firstOrFail();
             if($lastQuestion != null & $lastQuestion->created_at->gt($date))
             {
-                flash()->overlay('Only one question per week');
+                flash()->overlay('Only one question per 2 weeks');
                 return redirect('questions/'.$lastQuestion->id);
             }
         }
@@ -113,10 +113,11 @@ class QuestionController extends Controller
         Search::index('questions')->insert($question->id, array(
             'question' => $question->question,
             'created_at' => $question->created_at,
-            'asked_by' => $question->user->handle
+            'asked_by' => $question->user->handle,
+            'user_id' => $question->user->id
         ));
 
-        flash()->overlay('Weekly Question posted');
+        flash()->overlay('Community Question posted');
         return redirect('questions/'. $question->id);
     }
 
@@ -208,8 +209,11 @@ class QuestionController extends Controller
         Search::index('questions')->insert($question->id, array(
             'question' => $question->question,
             'created_at' => $question->created_at,
-            'asked_by' => $question->user->handle
+            'asked_by' => $question->user->handle,
+            'user_id' => $question->user->id,
         ));
+
+        flash()->overlay('Community Question updated');
 
         return redirect('questions/'. $question->id);
     }

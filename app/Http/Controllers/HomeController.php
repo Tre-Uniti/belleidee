@@ -14,9 +14,10 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Search;
 
 class HomeController extends Controller
 {
@@ -172,5 +173,107 @@ class HomeController extends Controller
 
         flash()->overlay('Image upload successful');
         return redirect('home');
+    }
+
+    /**
+     * Display the search page for Global Search.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        if($user->photo_path == '')
+        {
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        $types =
+            [
+                'Post' => 'Post',
+                'Extension' => 'Extension',
+                'Question' => 'Question',
+                'User' => 'User'
+            ];
+
+        return view ('pages.search')
+            ->with(compact('user', 'profilePosts','profileExtensions', 'types'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /**
+     * Display the results page for a global search.
+     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function results(Request $request)
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        //Get search title
+        $identifier = $request->input('identifier');
+        $type = $request->input('type');
+        if($type == 'Post')
+        {
+            $results = Search::index('posts')->search('title', $identifier)
+                ->get();
+            $type = 'Posts';
+        }
+        elseif($type == 'Extension')
+        {
+            $results = Search::index('extensions')->search('title', $identifier)
+                ->get();
+            $type = 'Extensions';
+        }
+        elseif($type == 'Question')
+        {
+            $results = Search::index('questions')->search('question', $identifier)
+                ->get();
+            $type = 'Questions';
+        }
+        elseif($type == 'User')
+        {
+            $results = Search::index('users')->search('handle', $identifier)
+                ->get();
+            $type = 'Users';
+
+        }
+        else
+        {
+            $results = null;
+        }
+
+
+        if($results == null)
+        {
+            flash()->overlay('No '. $type . ' found for this search');
+        }
+        //dd($results);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('pages.results')
+            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath)
+            ->with('type', $type)
+            ->with('results', $results);
+
     }
 }

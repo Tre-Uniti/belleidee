@@ -772,7 +772,6 @@ class ExtensionController extends Controller
             $sourceUser->where('id', $sourceUser->id)
                 ->update(['elevation' => $sourceUser->elevation + 1]);
 
-
         }
 
         //Create Notification for Source user

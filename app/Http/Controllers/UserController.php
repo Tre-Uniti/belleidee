@@ -25,6 +25,7 @@ class UserController extends Controller
     public function __construct(User $user)
     {
         $this->middleware('auth');
+        $this->middleware('admin', ['only' => ['edit', 'update', 'delete', 'ascend', 'descend']]);
         $this->user = $user;
     }
     /**
@@ -120,7 +121,22 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = $this->user->findorFail($id);
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        //Get user photo
+        if($user->photo_path == '')
+        {
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view('users.edit')
+            ->with(compact('user', 'profilePosts', 'profileExtensions' ))
+            ->with('photoPath', $photoPath);
     }
 
     /**
@@ -133,13 +149,72 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
+
         //Update ElasticSearch Index
-        Search::index('user')->insert($user->id, array(
+        Search::index('users')->insert($user->id, array(
             'handle' => $user->handle,
             'type' => $user->type,
             'created_at' => $user->created_at
         ));
+
+        $user->update($request->all());
+
+        flash()->overlay('User: '. $user->handle . ' updated');
+
+        return redirect('users/'. $user->id);
     }
+
+    /**
+     * Ascend User by 1.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function ascend($id)
+    {
+        $user = User::findOrFail($id);
+
+        //Update ElasticSearch Index
+        Search::index('users')->insert($user->id, array(
+            'handle' => $user->handle,
+            'type' => $user->type,
+            'created_at' => $user->created_at
+        ));
+
+        $user->type = $user->type + 1;
+        $user->update();
+
+        flash()->overlay('User: '. $user->handle . ' ascended');
+
+        return redirect('users/'. $user->id);
+    }
+
+    /**
+     * Descend User by 1.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function descend($id)
+    {
+        $user = User::findOrFail($id);
+
+        //Update ElasticSearch Index
+        Search::index('users')->insert($user->id, array(
+            'handle' => $user->handle,
+            'type' => $user->type,
+            'created_at' => $user->created_at
+        ));
+
+        $user->type = $user->type - 1;
+        $user->update();
+
+        flash()->overlay('User: '. $user->handle . ' descended');
+
+        return redirect('users/'. $user->id);
+    }
+
+
 
     /**
      * Display the search page for users.
@@ -198,6 +273,7 @@ class UserController extends Controller
         {
             $photoPath = $user->photo_path;
         }
+        //dd($results);
 
         return view ('users.results')
             ->with(compact('user', 'profilePosts','profileExtensions'))

@@ -41,8 +41,11 @@
 @stop
 
 @section('centerFooter')
+    <a href="{{ url('/search') }}"><button type = "button" class = "navButton">Search</button></a>
     <a href="{{ url('/bookmarks/personal') }}"><button type = "button" class = "navButton">Bookmarks</button></a>
-        <a href="{{ url('/auth/logout') }}"><button type = "button" class = "navButton">Logout</button></a>
+    <a href="{{ url('/auth/logout') }}"><button type = "button" class = "navButton">Logout</button></a>
+
+
 @stop
 
 @section('rightSideBar')

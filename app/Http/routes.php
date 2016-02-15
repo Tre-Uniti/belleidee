@@ -16,6 +16,8 @@ Route::get('users/sortByElevation', 'UserController@sortByElevation');
 Route::get('users/sortByExtension', 'UserController@sortByExtension');
 Route::get('users/search', 'UserController@search');
 Route::post('users/results', 'UserController@results');
+Route::get('users/ascend/{id}', 'UserController@ascend');
+Route::get('users/descend/{id}', 'UserController@descend');
 Route::get('users/extendedBy/{id}', 'UserController@extendedBy');
 Route::get('users/elevatedBy/{id}', 'UserController@elevatedBy');
 Route::get('users/beacons/{id}', 'UserController@beaconsOfUser');
@@ -138,6 +140,9 @@ Route::get('settings', 'HomeController@getSettings');
 Route::get('indev', 'HomeController@getIndev');
 Route::get('photo', 'HomeController@userPhoto');
 Route::post('storePhoto', 'HomeController@storePhoto');
+Route::get('search', 'HomeController@search');
+Route::post('results', 'HomeController@results');
+
 
 //Admin routes
 Route::get('admin', 'AdminController@portal');

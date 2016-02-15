@@ -2,8 +2,6 @@
 @section('siteTitle')
     Search Posts
 @stop
-
-
 @section('centerText')
     <div>
         <h2>Search Posts</h2>
@@ -24,7 +22,7 @@
 @stop
 @section('centerFooter')
             <a href="{{ url('/posts/') }}"><button type = "button" class = "navButton">Recent Posts</button></a>
-            <a href="{{ url('/Global Search') }}"><button type = "button" class = "navButton">Global Search</button></a>
+            <a href="{{ url('/search') }}"><button type = "button" class = "navButton">Global Search</button></a>
 @stop
 
 
