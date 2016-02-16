@@ -41,8 +41,8 @@ class InviteController extends Controller
         }
 
         return view('invites.invite')
-                ->with(compact('user', 'profilePosts', 'profileExtensions', 'invites'))
-                ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'invites'))
+            ->with('photoPath', $photoPath);
     }
 
     /**
@@ -67,14 +67,14 @@ class InviteController extends Controller
         }
 
         return view('invites.create')
-                    ->with(compact('user', 'profilePosts', 'profileExtensions'))
-                    ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts', 'profileExtensions'))
+            ->with('photoPath', $photoPath);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  CreateInviteRequest $request
      * @param UserMailer $mailer
      * @return \Illuminate\Http\Response
      */
