@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bookmark extends Model
 {
+
+    protected $fillable = [
+        'title',
+        'pointer',
+        'type',
+
+    ];
     /*
      * Get the Users associated with a specific bookmark
      *

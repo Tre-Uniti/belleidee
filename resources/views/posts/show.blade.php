@@ -29,6 +29,9 @@
                                 <td> <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a></td>
                                 <td><a href={{ url('/extensions/post/list/'.$post->id)}}>Extension</a></td>
                             </tr>
+                            <tr>
+                                <td colspan="3"><a href="{{ url('/intolerances/post/'.$post->id) }}">Report Intolerance</a></td>
+                            </tr>
                         </table>
                     </div>
                 </li>
@@ -52,7 +55,7 @@
             @else
                 <a href="{{ url('/posts/elevate/'.$post->id) }}"><button type = "button" class = "navButton">{{ $elevation }}</button></a>
             @endif
-            <a href="{{ url('/intolerances/post/'.$post->id) }}"><button type = "button" class = "navButton">Report</button></a>
+            <a href="{{ url('/bookmarks/posts/'.$post->id) }}"><button type = "button" class = "navButton">Bookmark</button></a>
         @endif
         <a href="{{ url('/extensions/post/'. $post->id) }}"><button type = "button" class = "navButton">Extend</button></a>
     </div>

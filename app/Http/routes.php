@@ -32,8 +32,8 @@ Route::get('beliefs', 'BeliefController@index');
 Route::get('belief/index/{name}', 'BeliefController@beliefIndex');
 
 //Bookmark Routes (Resources)
-Route::get('bookmarks/personal', 'BookmarkController@listPersonal');
 Route::get('bookmarks/beacons/{beacon_tag}', 'BookmarkController@bookmarkBeacon');
+Route::get('bookmarks/posts/{id}', 'BookmarkController@bookmarkPost');
 Route::resource('bookmarks', 'BookmarkController');
 
 //Post Routes (Resource)

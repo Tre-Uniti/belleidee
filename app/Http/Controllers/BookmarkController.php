@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Beacon;
 use App\Bookmark;
 use App\Extension;
 use App\Post;
@@ -34,7 +35,8 @@ class BookmarkController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $bookmarks = $this->bookmark->latest()->paginate(10);
+        //$bookmarks = $this->bookmark->latest()->paginate(10);
+        $bookmarks = $user->bookmarks()->paginate(10);
         //Get user photo
         if($user->photo_path == '')
         {
@@ -125,6 +127,8 @@ class BookmarkController extends Controller
      */
     public function bookmarkBeacon($beacon_tag)
     {
+        $beacon = Beacon::where('beacon_tag', '=', $beacon_tag)->first();
+
         if($beacon_tag == 'No-Beacon')
         {
             flash()->overlay('No-Beacon cannot be bookmarked');
@@ -133,7 +137,7 @@ class BookmarkController extends Controller
         $user = Auth::user();
 
         //Check if bookmark already exists
-        $bookmark = Bookmark::where('pointer', '=', $beacon_tag)->where('type', '=', 'beacon')->first();
+        $bookmark = Bookmark::where('pointer', '=', $beacon_tag)->where('type', '=', 'Beacon')->first();
         if(count($bookmark))
         {
             $bookmark_user = DB::table('bookmark_user')->where('user_id', $user->id)->where('bookmark_id', $bookmark->id)->first();
@@ -147,14 +151,15 @@ class BookmarkController extends Controller
 
             //Notify user bookmark was successful
             flash()->overlay('You have successfully bookmarked this beacon');
-            return redirect('bookmarks');
+            return redirect('/beacons/'. $beacon->id);
         }
         else
         {
             //Create new bookmark
             $newBookmark = new Bookmark;
-            $newBookmark->pointer = $beacon_tag;
-            $newBookmark->type = 'beacon';
+            $newBookmark->pointer = $beacon->beacon_tag;
+            $newBookmark->title = $beacon->name;
+            $newBookmark->type = 'Beacon';
             $newBookmark->save();
 
             //Add beacon_tag to user's bookmarks
@@ -162,37 +167,56 @@ class BookmarkController extends Controller
 
             //Notify user bookmark was successful
             flash()->overlay('You have successfully bookmarked this beacon');
-            return redirect('bookmarks');
+            return redirect('/beacons/'. $beacon->id);
         }
     }
+
     /**
-     * List personal bookmarks of user
+     * Bookmark specific post for user
      *
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function listPersonal()
+    public function bookmarkPost($id)
     {
+
         $user = Auth::user();
-        $bookmarks = $user->bookmarks;
 
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        //$bookmarks = $this->bookmark->latest()->paginate(10);
+        $post = Post::findOrFail($id);
 
-        //Get user photo
-        if($user->photo_path == '')
+        //Check if bookmark already exists
+        $bookmark = Bookmark::where('pointer', '=', $id)->where('type', '=', 'Post')->first();
+        if(count($bookmark))
         {
+            $bookmark_user = DB::table('bookmark_user')->where('user_id', $user->id)->where('bookmark_id', $bookmark->id)->first();
+            if(count($bookmark_user))
+            {
+                flash()->overlay('You have already bookmarked this Post');
+                return redirect()->back();
+            }
+            //Add beacon_tag to user's bookmarks
+            $user->bookmarks()->attach($bookmark->id);
 
-            $photoPath = '';
+            //Notify user bookmark was successful
+            flash()->overlay('You have successfully bookmarked this Post');
+            return redirect('posts/'. $post->id);
         }
         else
         {
-            $photoPath = $user->photo_path;
+            //Create new bookmark
+            $newBookmark = new Bookmark;
+            $newBookmark->pointer = $post->id;
+            $newBookmark->title = $post->title;
+            $newBookmark->type = 'Post';
+            $newBookmark->save();
+
+            //Add beacon_tag to user's bookmarks
+            $user->bookmarks()->attach($newBookmark->id);
+
+            //Notify user bookmark was successful
+            flash()->overlay('You have successfully bookmarked this Post');
+            return redirect('posts/'. $post->id);
         }
-
-        return view ('bookmarks.index')
-                    ->with(compact('user', 'bookmarks', 'profilePosts','profileExtensions'))
-                    ->with('photoPath', $photoPath);
-
     }
+
 }
