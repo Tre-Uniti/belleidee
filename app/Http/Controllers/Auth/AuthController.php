@@ -9,7 +9,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Search;
+
 class AuthController extends Controller
 {
     /*
@@ -131,12 +131,7 @@ class AuthController extends Controller
         }
         $user = $this->create($request->all());
 
-        //Update ElasticSearch Index
-        Search::index('users')->insert($user->id, array(
-            'handle' => $user->handle,
-            'type' => $user->type,
-            'created_at' => $user->created_at
-        ));
+
         $mailer->sendEmailConfirmationTo($user);
         $invite->delete();
         flash()->success('Registration Successful');
