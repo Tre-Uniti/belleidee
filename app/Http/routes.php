@@ -32,8 +32,15 @@ Route::get('beliefs', 'BeliefController@index');
 Route::get('belief/index/{name}', 'BeliefController@beliefIndex');
 
 //Bookmark Routes (Resources)
+Route::get('bookmarks/users/', 'BookmarkController@listUsers');
+Route::get('bookmarks/beacons/', 'BookmarkController@listBeacons');
+Route::get('bookmarks/posts/', 'BookmarkController@listPosts');
+Route::get('bookmarks/extensions/', 'BookmarkController@listExtensions');
+Route::get('bookmarks/users/{id}', 'BookmarkController@bookmarkUser');
 Route::get('bookmarks/beacons/{beacon_tag}', 'BookmarkController@bookmarkBeacon');
 Route::get('bookmarks/posts/{id}', 'BookmarkController@bookmarkPost');
+Route::get('bookmarks/extensions/{id}', 'BookmarkController@bookmarkExtension');
+Route::get('bookmarks/remove/{id}', 'BookmarkController@remove');
 Route::resource('bookmarks', 'BookmarkController');
 
 //Post Routes (Resource)

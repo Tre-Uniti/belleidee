@@ -40,6 +40,11 @@
                                     <td> <a href = {{ url('/posts/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a></td>
                                     <td><a href={{ url('/extensions/extend/list/'.$extension->id)}}>Extension</a></td>
                                 </tr>
+                                @if($extension->user_id != Auth::id())
+                                <tr>
+                                    <td colspan = "3"><a href="{{ url('/intolerances/extension/'.$extension->id) }}">Report Intolerance</a></td>
+                                </tr>
+                                @endif
                             </table>
 
                         </div>
@@ -63,7 +68,7 @@
             @else
                 <a href="{{ url('/extensions/elevate/'.$extension->id) }}"><button type = "button" class = "navButton">{{ $elevation }}</button></a>
             @endif
-                <a href="{{ url('/intolerances/extension/'.$extension->id) }}"><button type = "button" class = "navButton">Report</button></a>
+            <a href="{{ url('/bookmarks/extensions/'.$extension->id) }}"><button type = "button" class = "navButton">Bookmark</button></a>
             @endif
             <a href="{{ url('/extensions/extenception/'. $extension->id) }}"><button type = "button" class = "navButton">Extend</button></a>
 

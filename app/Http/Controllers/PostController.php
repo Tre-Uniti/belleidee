@@ -118,7 +118,7 @@ class PostController extends Controller
         }
 
         //Populate Beacon options with user's bookmarked beacons
-        $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
+        $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
 
@@ -283,11 +283,10 @@ class PostController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->take(7)->get();
 
-        //
         $date = $post->created_at->format('M-d-Y');
 
         //Populate Beacon options with user's bookmarked beacons
-        $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
+        $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
         if($user->photo_path == '')

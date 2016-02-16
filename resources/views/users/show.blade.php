@@ -3,7 +3,6 @@
     Show Post
 @stop
 
-
 @section('centerText')
     <h2>Profile of {{$user->handle}}</h2>
     <table align = "center">
@@ -40,6 +39,9 @@
     <div id = "centerFooter">
         @if(Auth::user()->type > 1)
             <a href="{{ url('users/'. $user->id . '/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+        @endif
+        @if(Auth::id() != $user->id)
+            <a href="{{ url('/bookmarks/users/'.$user->id) }}"><button type = "button" class = "navButton">Bookmark</button></a>
         @endif
     </div>
 @stop

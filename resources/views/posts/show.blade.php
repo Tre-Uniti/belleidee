@@ -29,9 +29,11 @@
                                 <td> <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a></td>
                                 <td><a href={{ url('/extensions/post/list/'.$post->id)}}>Extension</a></td>
                             </tr>
+                            @if($post->user_id != Auth::id())
                             <tr>
                                 <td colspan="3"><a href="{{ url('/intolerances/post/'.$post->id) }}">Report Intolerance</a></td>
                             </tr>
+                            @endif
                         </table>
                     </div>
                 </li>

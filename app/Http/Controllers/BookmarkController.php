@@ -45,7 +45,7 @@ class BookmarkController extends Controller
         }
         else
         {
-            $photoPath = env('S3_BUCKET') .$user->photo_path;
+            $photoPath = $user->photo_path;
         }
 
         return view ('bookmarks.index')
@@ -116,7 +116,185 @@ class BookmarkController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function remove($id)
+    {
+        //Get User
+        $user = Auth::user();
+        //Get bookmark to be removed
+
+        //Find Specific bookmark for user and detach
+        $user->bookmarks()->detach($id);
+
+        flash()->overlay('Bookmark has been removed.');
+
+        return redirect('bookmarks');
+    }
+
+
+
+    /**
+     * Display a listing of the bookmarked users.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listUsers()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $bookmarks = $user->bookmarks()->where('type', '=', 'User')->paginate(10);
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('bookmarks.users')
+            ->with(compact('user', 'bookmarks', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /**
+     * Display a listing of the bookmarked beacons.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listBeacons()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $bookmarks = $user->bookmarks()->where('type', '=', 'Beacon')->paginate(10);
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('bookmarks.beacons')
+            ->with(compact('user', 'bookmarks', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /**
+     * Display a listing of the bookmarked Posts.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listPosts()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $bookmarks = $user->bookmarks()->where('type', '=', 'Post')->paginate(10);
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('bookmarks.posts')
+            ->with(compact('user', 'bookmarks', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /**
+     * Display a listing of the bookmarked extensions.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listExtensions()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $bookmarks = $user->bookmarks()->where('type', '=', 'Extension')->paginate(10);
+        //Get user photo
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('bookmarks.extensions')
+            ->with(compact('user', 'bookmarks', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath);
+    }
+
+    /**
+     * Bookmark specific extension for user
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function bookmarkUser($id)
+    {
+
+        $user = Auth::user();
+
+        $sourceUser = User::findOrFail($id);
+
+        //Check if bookmark already exists
+        $bookmark = Bookmark::where('pointer', '=', $id)->where('type', '=', 'User')->first();
+        if(count($bookmark))
+        {
+            $bookmark_user = DB::table('bookmark_user')->where('user_id', $user->id)->where('bookmark_id', $bookmark->id)->first();
+            if(count($bookmark_user))
+            {
+                flash()->overlay('You have already bookmarked this User');
+                return redirect()->back();
+            }
+            //Add beacon_tag to user's bookmarks
+            $user->bookmarks()->attach($bookmark->id);
+
+            //Notify user bookmark was successful
+            flash()->overlay('You have successfully bookmarked this User');
+            return redirect('users/'. $sourceUser->id);
+        }
+        else
+        {
+            //Create new bookmark
+            $newBookmark = new Bookmark;
+            $newBookmark->pointer = $sourceUser->id;
+            $newBookmark->title = $sourceUser->handle;
+            $newBookmark->type = 'User';
+            $newBookmark->save();
+
+            //Add beacon_tag to user's bookmarks
+            $user->bookmarks()->attach($newBookmark->id);
+
+            //Notify user bookmark was successful
+            flash()->overlay('You have successfully bookmarked this User');
+            return redirect('users/'. $user->id);
+        }
     }
 
     /**
@@ -216,6 +394,54 @@ class BookmarkController extends Controller
             //Notify user bookmark was successful
             flash()->overlay('You have successfully bookmarked this Post');
             return redirect('posts/'. $post->id);
+        }
+    }
+
+    /**
+     * Bookmark specific extension for user
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function bookmarkExtension($id)
+    {
+
+        $user = Auth::user();
+
+        $extension = Extension::findOrFail($id);
+
+        //Check if bookmark already exists
+        $bookmark = Bookmark::where('pointer', '=', $id)->where('type', '=', 'Extension')->first();
+        if(count($bookmark))
+        {
+            $bookmark_user = DB::table('bookmark_user')->where('user_id', $user->id)->where('bookmark_id', $bookmark->id)->first();
+            if(count($bookmark_user))
+            {
+                flash()->overlay('You have already bookmarked this Extension');
+                return redirect()->back();
+            }
+            //Add beacon_tag to user's bookmarks
+            $user->bookmarks()->attach($bookmark->id);
+
+            //Notify user bookmark was successful
+            flash()->overlay('You have successfully bookmarked this Extension');
+            return redirect('extensions/'. $extension->id);
+        }
+        else
+        {
+            //Create new bookmark
+            $newBookmark = new Bookmark;
+            $newBookmark->pointer = $extension->id;
+            $newBookmark->title = $extension->title;
+            $newBookmark->type = 'Extension';
+            $newBookmark->save();
+
+            //Add beacon_tag to user's bookmarks
+            $user->bookmarks()->attach($newBookmark->id);
+
+            //Notify user bookmark was successful
+            flash()->overlay('You have successfully bookmarked this Extension');
+            return redirect('extensions/'. $extension->id);
         }
     }
 

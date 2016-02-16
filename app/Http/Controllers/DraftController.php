@@ -67,7 +67,7 @@ class DraftController extends Controller
         $date = Carbon::now()->format('M-d-Y');
 
         //Populate Beacon options with user's bookmarked beacons
-        $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
+        $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
         if($user->photo_path == '')
@@ -184,7 +184,7 @@ class DraftController extends Controller
         $date = $draft->created_at->format('M-d-Y');
 
         //Populate Beacon options with user's bookmarked beacons
-        $beacons = $user->bookmarks->where('type', 'beacon')->lists('pointer', 'pointer');
+        $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
         $types =
