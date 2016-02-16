@@ -83,7 +83,7 @@ class InviteController extends Controller
         // Load user from Auth facade.
         $user = Auth::user();
 
-        // Create Invite, associate with user, save.
+        // Create Invite and associate with user, save.
         $invite = new Invite($request->all());
         $invite->user()->associate($user);
         $invite->save();
