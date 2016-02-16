@@ -125,7 +125,7 @@ class InviteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // This is
     }
 
     /**
