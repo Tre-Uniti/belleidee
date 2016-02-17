@@ -46,6 +46,7 @@ Route::resource('bookmarks', 'BookmarkController');
 //Post Routes (Resource)
 Route::get('posts/user/{id}', 'PostController@userPosts');
 Route::get('posts/date/{date}', 'PostController@listDates');
+Route::get('posts/source/{source}', 'PostController@listSources');
 Route::get('posts/elevate/{id}', 'PostController@elevatePost');
 Route::get('posts/unlock/{id}', 'PostController@unlockPost');
 Route::get('posts/topElevated', 'PostController@sortByElevation');

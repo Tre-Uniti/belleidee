@@ -29,7 +29,7 @@ class CreatePostRequest extends Request
             'title' => 'required|min:5|max:40',
             'body'  => 'required|min:10|max:3500',
             'belief'=> 'required',
-            'category' => 'required'
+            'source' => 'required'
         ];
     }
 }

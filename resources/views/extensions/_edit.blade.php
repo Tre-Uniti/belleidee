@@ -14,7 +14,7 @@
         <tr>
             <td style = "border-color: #E8E8E8;">
                 <select name = 'belief' required >
-                    <option value="" disabled selected hidden>Belief:</option>
+                    <option value="" disabled selected>Belief:</option>
                     <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @elseif($extension->belief == 'Adaptia' & (old('belief') == '')) selected="selected" @endif>Adaptia</option>
                     <option value="Atheism" @if (old('belief') == 'Atheism') selected="selected" @elseif($extension->belief == 'Atheism' & (old('belief') == '')) selected="selected" @endif>Atheism</option>
                     <option value="Ba Gua"  @if (old('belief') == 'Ba Gua') selected="selected" @elseif($extension->belief == 'Ba Gua' & (old('belief') == '')) selected="selected" @endif>Ba Gua</option>
@@ -36,16 +36,15 @@
                 {!! Form::select('beacon_tag', $beacons) !!}
             </td>
             <td style = "border-color: #E8E8E8;">
-                <select name = 'category' required>
-                    <option value="" disabled selected hidden>Category:</option>
-                    <option value="Opinion" @if (old('category') == 'Opinion') selected="selected" @elseif($extension->category == 'Opinion' & (old('category') == '')) selected="selected"  @endif>Opinion</option>
-                    <option value="Poem" @if (old('category') == 'Poem') selected="selected" @elseif($extension->category == 'Poem' & (old('category') == '')) selected="selected"  @endif>Poem</option>
-                    <option value="Prayer" @if (old('category') == 'Prayer') selected="selected" @elseif($extension->category == 'Prayer' & (old('category') == '')) selected="selected"  @endif>Prayer</option>
-                    <option value="Reflection" @if (old('category') == 'Reflection') selected="selected" @elseif($extension->category == 'Reflection' & (old('category') == '')) selected="selected"  @endif>Reflection</option>
-                    <option value="Scholar" @if (old('category') == 'Scholar') selected="selected" @elseif($extension->category == 'Scholar' & (old('category') == '')) selected="selected" @endif>Scholar</option>
-                    <option value="Scripture" @if (old('category') == 'Scripture') selected="selected" @elseif($extension->category == 'Scripture' & (old('category') == '')) selected="selected" @endif>Scripture</option>
-                    <option value="Story" @if (old('category') == 'Story') selected="selected" @elseif($extension->category == 'Story' & (old('category') == '')) selected="selected" @endif>Story</option>
-                    <option value="Other" @if (old('category') == 'Other') selected="selected" @elseif($extension->category == 'Other' & (old('category') == '')) selected="selected"@endif>Other</option>
+                <select name = 'source' required>
+                    <option  disabled>Source:</option>
+                    @if(isset($sources['extenception']))
+                        <option value="Extension" @if (old('source') == 'Extension') selected="selected" @elseif($extension->source == 'Extension' & (old('category') == '')) selected="selected" @endif>Extension</option>
+                    @elseif(isset($sources['post_id']))
+                        <option value="Post" @if (old('source') == 'Post') @elseif($extension->source == 'Post' & (old('category') == '')) selected="selected" @endif>Post</option>
+                    @elseif(isset($sources['question_id']))
+                        <option value="Question" @if (old('source') == 'Question') selected="selected" @elseif($extension->source == 'Question' & (old('category') == '')) @endif>Question</option>
+                    @endif
                 </select>
             </td>
         </tr>

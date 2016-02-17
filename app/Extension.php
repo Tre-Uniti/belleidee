@@ -11,7 +11,7 @@ class Extension extends Model
         'body',
         'belief',
         'beacon_tag',
-        'category',
+        'source',
         'extension_path',
         'post_id',
         'source_user',

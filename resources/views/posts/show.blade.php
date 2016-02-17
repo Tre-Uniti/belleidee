@@ -12,7 +12,7 @@
             <tr>
                 <td><a href="{{ action('BeliefController@beliefIndex', $post->belief) }}">{{ $post->belief }}</a></td>
                 <td><a href="{{ url('/beacons/tags/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a></td>
-                <td><a href="{{ url('/posts') }}">{{ $post->category }}</a></td>
+                <td><a href="{{ url('/posts/source/'. $post->source) }}">{{ $post->source }}</a></td>
             </tr>
         </table>
     </div>

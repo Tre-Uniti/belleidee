@@ -187,17 +187,7 @@ class DraftController extends Controller
         $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-        $types =
-            [
-                'Type' => 'Type',
-                'Opinion' => 'Opinion',
-                'Poem' => 'Poem',
-                'Prayer' => 'Prayer',
-                'Question' => 'Question',
-                'Reflection' => 'Reflection',
-                'Scholar' => 'Scholar',
-                'Story' => 'Story',
-            ];
+
         if($user->photo_path == '')
         {
 
@@ -209,7 +199,7 @@ class DraftController extends Controller
         }
 
         return view('drafts.edit')
-            ->with(compact('user', 'draft', 'profilePosts', 'profileExtensions', 'beacons', 'types', 'date'))
+            ->with(compact('user', 'draft', 'profilePosts', 'profileExtensions', 'beacons', 'date'))
             ->with('photoPath', $photoPath);
     }
 
@@ -315,14 +305,12 @@ class DraftController extends Controller
 
         //Add contents of draft to Amazon under new post and
         Storage::put($path, $inspiration);
-        //delete old draft
-        //Storage::delete($path);
 
         $post = new Post;
         $post->title = $draft->title;
         $post->belief = $draft->belief;
         $post->beacon_tag = $draft->beacon_tag;
-        $post->category = $draft->category;
+        $post->source = $draft->source;
         $post->post_path = $path;
         $post->user()->associate($draft->user_id);
         $post->save();

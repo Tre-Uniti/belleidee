@@ -378,6 +378,35 @@ class PostController extends Controller
     }
 
     /**
+     * Retrieve posts of specific source.
+     *
+     * @param   $source
+     * @return \Illuminate\Http\Response
+     */
+    public function listSources($source)
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $posts = $this->post->where('source', $source)->latest()->paginate(10);
+
+        if($user->photo_path == '')
+        {
+
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('posts.listSources')
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+            ->with('photoPath', $photoPath)
+            ->with('source', $source);
+    }
+
+    /**
      * Display the search page for posts.
      *
      * @return \Illuminate\Http\Response

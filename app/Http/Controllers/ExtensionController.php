@@ -136,18 +136,28 @@ class ExtensionController extends Controller
                     ->update(['extension' => $question->extension + 1]);
 
                 //Add 1 extension to source extension and user
-                $extension = Extension::findOrFail($sources['extenception']);
-                $extension->where('id', $extension->id)
-                    ->update(['extension' => $extension->extension + 1]);
+                $sourceExtension = Extension::findOrFail($sources['extenception']);
+                $sourceExtension->where('id', $sourceExtension->id)
+                    ->update(['extension' => $sourceExtension->extension + 1]);
 
                 //Add 1 extension to source user of extension
-                $sourceUser = User::findOrFail($extension->user_id);
+                $sourceUser = User::findOrFail($sourceExtension->user_id);
                 $sourceUser->where('id', $sourceUser->id)
                     ->update(['extension' => $sourceUser->extension + 1]);
 
                 $extension = new Extension($request->except('body'));
                 $extension->user()->associate($user);
                 $extension->save();
+
+                //Create Notification for Source user
+                $notification = new Notification();
+                $notification->type = 'Extended';
+                $notification->source_type = 'Extension';
+                $notification->source_id = $extension->id;
+                $notification->title = $extension->title;
+                $notification->source_user = $sourceUser->id;
+                $notification->user()->associate($user);
+                $notification->save();
 
                 $mailer->sendExtenceptionNotification($extension);
 
@@ -168,12 +178,12 @@ class ExtensionController extends Controller
 
 
                 //Add 1 extension to source extension
-                $extension = Extension::findOrFail($sources['extenception']);
-                $extension->where('id', $extension->id)
-                    ->update(['extension' => $extension->extension + 1]);
+                $sourceExtension = Extension::findOrFail($sources['extenception']);
+                $sourceExtension->where('id', $sourceExtension->id)
+                    ->update(['extension' => $sourceExtension->extension + 1]);
 
                 //Add 1 extension to source user of extension
-                $sourceUser = User::findOrFail($extension->user_id);
+                $sourceUser = User::findOrFail($sourceExtension->user_id);
                 $sourceUser->where('id', $sourceUser->id)
                     ->update(['extension' => $sourceUser->extension + 1]);
 
@@ -181,6 +191,16 @@ class ExtensionController extends Controller
                 $extension = new Extension($request->except('body'));
                 $extension->user()->associate($user);
                 $extension->save();
+
+                //Create Notification for Source user
+                $notification = new Notification();
+                $notification->type = 'Extended';
+                $notification->source_type = 'Extension';
+                $notification->source_id = $extension->id;
+                $notification->title = $extension->title;
+                $notification->source_user = $sourceUser->id;
+                $notification->user()->associate($user);
+                $notification->save();
 
                 $mailer->sendExtenceptionNotification($extension);
 

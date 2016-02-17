@@ -11,7 +11,3 @@
 @stop
 
 
-
-@include('posts.rightSide')
-
-

@@ -16,7 +16,13 @@
                 <tr>
                     <td><a href="{{ action('BeliefController@beliefIndex', $extension->belief) }}">{{ $extension->belief }}</a></td>
                     <td><a href="{{ url('/beacons/tags/'.$extension->beacon_tag) }}">{{ $extension->beacon_tag }}</a></td>
-                    <td><a href="{{ url('/extensions') }}">{{ $extension->category }}</a></td>
+                    @if($extension->source === 'Post')
+                        <td><a href="{{ url('/posts/'.$extension->post_id ) }}">{{ $extension->source }}</a></td>
+                    @elseif($extension->source === 'Extension')
+                        <td><a href="{{ url('/extensions/'.$extension->extenception ) }}">{{ $extension->source }}</a></td>
+                    @elseif($extension->source === 'Question')
+                        <td><a href="{{ url('/questions/'.$extension->question_id ) }}">{{ $extension->source }}</a></td>
+                    @endif
                 </tr>
             </table>
         </div>
@@ -27,13 +33,6 @@
                     <li>
                         <p class = "extras">/-\</p>
                         <div>
-                            @if($sources['type'] === 'extensions')
-                                <p>Extends: <a href = {{ action('ExtensionController@show', [$sources['extenception']])}}> {{ $sources['extension_title'] }}</a></p>
-                            @elseif($sources['type'] === 'posts')
-                                <p>Extends: <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></p>
-                            @elseif($sources['type'] === 'question')
-                                <p>Extends: <a href = {{ action('QuestionController@show', [$sources['question_id']])}}> Community Question</a></p>
-                            @endif
                             <table align = "center">
                                 <tr>
                                     <td><a href={{ url('/extensions/listElevation/'. $extension->id)}}>Elevation</a></td>
@@ -46,7 +45,6 @@
                                 </tr>
                                 @endif
                             </table>
-
                         </div>
                     </li>
                 </ul>
@@ -75,5 +73,4 @@
     </div>
 @stop
 
-@include('extensions.rightSide')
 

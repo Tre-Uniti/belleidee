@@ -9,7 +9,7 @@
         <tr>
             <td style = "border-color: #E8E8E8;">
                 <select name = 'belief' required >
-                    <option value="" disabled selected hidden>Belief:</option>
+                    <option value="" disabled selected>Belief:</option>
                     <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @elseif($post->belief == 'Adaptia' & (old('belief') == '')) selected="selected" @endif>Adaptia</option>
                     <option value="Atheism" @if (old('belief') == 'Atheism') selected="selected" @elseif($post->belief == 'Atheism' & (old('belief') == '')) selected="selected" @endif>Atheism</option>
                     <option value="Ba Gua"  @if (old('belief') == 'Ba Gua') selected="selected" @elseif($post->belief == 'Ba Gua' & (old('belief') == '')) selected="selected" @endif>Ba Gua</option>
@@ -31,16 +31,12 @@
                 {!! Form::select('beacon_tag', $beacons) !!}
             </td>
             <td style = "border-color: #E8E8E8;">
-                <select name = 'category' required>
-                    <option value="" disabled selected hidden>Category:</option>
-                    <option value="Opinion" @if (old('category') == 'Opinion') selected="selected" @elseif($post->category == 'Opinion' & (old('category') == '')) selected="selected"  @endif>Opinion</option>
-                    <option value="Poem" @if (old('category') == 'Poem') selected="selected" @elseif($post->category == 'Poem' & (old('category') == '')) selected="selected"  @endif>Poem</option>
-                    <option value="Prayer" @if (old('category') == 'Prayer') selected="selected" @elseif($post->category == 'Prayer' & (old('category') == '')) selected="selected"  @endif>Prayer</option>
-                    <option value="Reflection" @if (old('category') == 'Reflection') selected="selected" @elseif($post->category == 'Reflection' & (old('category') == '')) selected="selected"  @endif>Reflection</option>
-                    <option value="Scholar" @if (old('category') == 'Scholar') selected="selected" @elseif($post->category == 'Scholar' & (old('category') == '')) selected="selected" @endif>Scholar</option>
-                    <option value="Scripture" @if (old('category') == 'Scripture') selected="selected" @elseif($post->category == 'Scripture' & (old('category') == '')) selected="selected" @endif>Scripture</option>
-                    <option value="Story" @if (old('category') == 'Story') selected="selected" @elseif($post->category == 'Story' & (old('category') == '')) selected="selected" @endif>Story</option>
-                    <option value="Other" @if (old('category') == 'Other') selected="selected" @elseif($post->category == 'Other' & (old('category') == '')) selected="selected" @endif>Other</option>
+                <select name = 'source' required>
+                    <option value="" disabled selected>Source:</option>
+                    <option value="Reflection" @if (old('source') == 'Reflection') selected="selected" @elseif($post->source == 'Reflection' & (old('Reflection') == '')) selected="selected"  @endif>Reflection</option>
+                    <option value="Writings" @if (old('source') == 'Writings') selected="selected" @elseif($post->source == 'Writings' & (old('category') == '')) selected="selected"  @endif>Writings</option>
+                    <option value="Nature" @if (old('source') == 'Nature') selected="selected" @elseif($post->source == 'Nature' & (old('category') == '')) selected="selected"  @endif>Nature</option>
+                    <option value="Other" @if (old('source') == 'Other') selected="selected" @elseif($post->source == 'Other' & (old('category') == '')) selected="selected"  @endif>Other</option>
                 </select>
             </td>
         </tr>

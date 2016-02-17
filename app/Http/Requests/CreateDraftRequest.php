@@ -26,7 +26,9 @@ class CreateDraftRequest extends Request
     {
         return [
             'title' => 'required|min:5|max:40|unique:drafts',
-            'body'  => 'required|min:10|max:3500'
+            'body'  => 'required|min:10|max:3500',
+            'belief'=> 'required',
+            'source' => 'required'
         ];
     }
 }

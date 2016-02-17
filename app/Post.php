@@ -13,7 +13,7 @@ class Post extends Model
         'published_at',
         'belief',
         'beacon_tag',
-        'category',
+        'source',
         'post_path',
     ];
 

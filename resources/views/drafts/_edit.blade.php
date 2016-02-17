@@ -31,16 +31,12 @@
                 {!! Form::select('beacon_tag', $beacons) !!}
             </td>
             <td style = "border-color: #E8E8E8;">
-                <select name = 'category' required>
-                    <option value="" disabled selected hidden>Category:</option>
-                    <option value="Opinion" @if (old('category') == 'Opinion') selected="selected" @elseif($draft->category == 'Opinion' & (old('category') == '')) selected="selected"  @endif>Opinion</option>
-                    <option value="Poem" @if (old('category') == 'Poem') selected="selected" @elseif($draft->category == 'Poem' & (old('category') == '')) selected="selected"  @endif>Poem</option>
-                    <option value="Prayer" @if (old('category') == 'Prayer') selected="selected" @elseif($draft->category == 'Prayer' & (old('category') == '')) selected="selected"  @endif>Prayer</option>
-                    <option value="Reflection" @if (old('category') == 'Reflection') selected="selected" @elseif($draft->category == 'Reflection' & (old('category') == '')) selected="selected"  @endif>Reflection</option>
-                    <option value="Scholar" @if (old('category') == 'Scholar') selected="selected" @elseif($draft->category == 'Scholar' & (old('category') == '')) selected="selected" @endif>Scholar</option>
-                    <option value="Scripture" @if (old('category') == 'Scripture') selected="selected" @elseif($draft->category == 'Scripture' & (old('category') == '')) selected="selected" @endif>Scripture</option>
-                    <option value="Story" @if (old('category') == 'Story') selected="selected" @elseif($draft->category == 'Story' & (old('category') == '')) selected="selected" @endif>Story</option>
-                    <option value="Other" @if (old('category') == 'Other') selected="selected" @elseif($draft->category == 'Other' & (old('category') == '')) selected="selected" @endif>Other</option>
+                <select name = 'source' required>
+                    <option value="" disabled selected >Source:</option>
+                    <option value="Reflection" @if (old('source') == 'Reflection') selected="selected" @elseif($draft->source == 'Reflection' & (old('Reflection') == '')) selected="selected"  @endif>Reflection</option>
+                    <option value="Writings" @if (old('source') == 'Writings') selected="selected" @elseif($draft->source == 'Writings' & (old('category') == '')) selected="selected"  @endif>Writings</option>
+                    <option value="Nature" @if (old('source') == 'Nature') selected="selected" @elseif($draft->source == 'Nature' & (old('category') == '')) selected="selected"  @endif>Nature</option>
+                    <option value="Other" @if (old('source') == 'Other') selected="selected" @elseif($draft->source == 'Other' & (old('category') == '')) selected="selected"  @endif>Other</option>
                 </select>
             </td>
         </tr>
