@@ -37,7 +37,7 @@
                                 <tr>
                                     <td><a href={{ url('/extensions/listElevation/'. $extension->id)}}>Elevation</a></td>
                                     <td> <a href = {{ url('/posts/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a></td>
-                                    <td><a href={{ url('/extensions/extend/list/'.$extension->id)}}>Extension</a></td>
+                                    <td><a href={{ url('/extensions/extend/list/'.$extension->id)}}>Extensions</a></td>
                                 </tr>
                                 @if($extension->user_id != Auth::id())
                                 <tr>

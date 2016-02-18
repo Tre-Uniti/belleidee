@@ -24,6 +24,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('admin', ['only' => 'indexer']);
     }
     public function getHome()
     {
@@ -275,5 +276,73 @@ class HomeController extends Controller
             ->with('type', $type)
             ->with('results', $results);
 
+    }
+
+
+    /**
+     * Index All posts, extensions, and users.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexer()
+    {
+        $posts = Post::latest('created_at')->get();
+        $extensions = Extension::latest('created_at')->get();
+        $users = User::latest('created_at')->get();
+        $questions = Question::latest('created_at')->get();
+
+        foreach($posts as $post)
+        {
+            //Save into Index for ElasticSearch
+            Search::index('posts')->insert($post->id, array(
+                'title' => $post->title,
+                'belief' => $post->belief,
+                'beacon_tag' => $post->beacon_tag,
+                'category' => $post->category,
+                'status' => $post->status,
+                'handle' => $post->user->handle,
+                'user_id' => $post->user_id,
+                'created_at' => $post->created_at
+            ));
+        }
+
+        foreach($extensions as $extension)
+        {
+            //Update ElasticSearch Index
+            Search::index('extensions')->insert($extension->id, array(
+                'title' => $extension->title,
+                'belief' => $extension->belief,
+                'beacon_tag' => $extension->beacon_tag,
+                'category' => $extension->category,
+                'status' => $extension->status,
+                'handle' => $extension->user->handle,
+                'user_id' => $extension->user_id,
+                'created_at' => $extension->created_at
+            ));
+        }
+
+        foreach($users as $user)
+        {
+            //Update ElasticSearch Index
+            Search::index('users')->insert($user->id, array(
+                'handle' => $user->handle,
+                'type' => $user->type,
+                'created_at' => $user->created_at
+            ));
+        }
+
+        foreach($questions as $question)
+        {
+            //Update ElasticSearch Index
+            Search::index('questions')->insert($question->id, array(
+                'question' => $question->question,
+                'created_at' => $question->created_at,
+                'asked_by' => $question->user->handle,
+                'user_id' => $question->user->id
+            ));
+        }
+
+        flash()->overlay('Index complete');
+        return redirect('/home');
     }
 }

@@ -150,6 +150,7 @@ Route::get('photo', 'HomeController@userPhoto');
 Route::post('storePhoto', 'HomeController@storePhoto');
 Route::get('search', 'HomeController@search');
 Route::post('results', 'HomeController@results');
+Route::get('indexer', 'HomeController@indexer');
 
 
 //Admin routes
