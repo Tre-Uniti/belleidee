@@ -159,18 +159,6 @@ class ExtensionController extends Controller
                 $notification->user()->associate($user);
                 $notification->save();
 
-                //Update ElasticSearch Index
-                Search::index('extensions')->insert($extension->id, array(
-                    'title' => $extension->title,
-                    'belief' => $extension->belief,
-                    'beacon_tag' => $extension->beacon_tag,
-                    'category' => $extension->category,
-                    'status' => $extension->status,
-                    'handle' => $extension->user->handle,
-                    'user_id' => $extension->user_id,
-                    'created_at' => $extension->created_at
-                ));
-
                 $mailer->sendExtenceptionNotification($extension);
 
                 flash()->overlay('Your extension has been created');
