@@ -199,13 +199,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        //Update ElasticSearch Index
-        Search::index('users')->insert($user->id, array(
-            'handle' => $user->handle,
-            'type' => $user->type,
-            'created_at' => $user->created_at
-        ));
-
         $user->type = $user->type - 1;
         $user->update();
 
@@ -254,9 +247,11 @@ class UserController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         //Get search title
-        $title = $request->input('title');
-        $results = Search::index('users')->search('title', $title)
-            ->get();
+        $handle = $request->input('title');
+
+        //Search DB for uses like search
+        $results = User::where('handle', 'LIKE', '%'.$handle.'%')->paginate(10);
+
 
         if($results == null)
         {
@@ -276,9 +271,9 @@ class UserController extends Controller
         //dd($results);
 
         return view ('users.results')
-            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
             ->with('photoPath', $photoPath)
-            ->with('results', $results);
+            ->with('handle', $handle);
 
     }
 

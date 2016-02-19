@@ -167,18 +167,6 @@ class PostController extends Controller
         $post->user()->associate($user);
         $post->save();
 
-        //Save into Index for ElasticSearch
-        Search::index('posts')->insert($post->id, array(
-            'title' => $post->title,
-            'belief' => $post->belief,
-            'beacon_tag' => $post->beacon_tag,
-            'category' => $post->category,
-            'status' => $post->status,
-            'handle' => $post->user->handle,
-            'user_id' => $post->user_id,
-            'created_at' => $post->created_at
-        ));
-
         flash()->overlay('Your post has been created');
         return redirect('posts/'. $post->id);
     }
@@ -349,17 +337,6 @@ class PostController extends Controller
         //Update database with new values
         $post->update($request->except('body', '_method', '_token'));
 
-        //Save into Index for ElasticSearch
-        Search::index('posts')->insert($post->id, array(
-            'title' => $post->title,
-            'belief' => $post->belief,
-            'beacon_tag' => $post->beacon_tag,
-            'category' => $post->category,
-            'status' => $post->status,
-            'handle' => $post->user->handle,
-            'user_id' => $post->user_id,
-            'created_at' => $post->created_at
-        ));
 
         flash()->overlay('Your post has been updated');
 
@@ -445,8 +422,7 @@ class PostController extends Controller
 
         //Get search title
         $title = $request->input('title');
-        $results = Search::index('posts')->search('title', $title)
-                    ->get();
+        $results = Post::where('title', 'LIKE', '%'.$title.'%')->paginate(10);
 
         if($results == null)
         {
@@ -456,7 +432,6 @@ class PostController extends Controller
 
         if($user->photo_path == '')
         {
-
             $photoPath = '';
         }
         else
@@ -465,10 +440,9 @@ class PostController extends Controller
         }
 
         return view ('posts.results')
-            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
             ->with('photoPath', $photoPath)
-            ->with('results', $results);
-
+            ->with('title', $title);
     }
 
     /**

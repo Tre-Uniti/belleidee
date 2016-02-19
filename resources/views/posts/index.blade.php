@@ -37,6 +37,5 @@
     {!! $posts->render() !!}
 @stop
 
-@include('posts.rightSide')
 
 

@@ -6,7 +6,7 @@
 @section('centerText')
     <div>
         <h2>Search Extensions</h2>
-        {!! Form::open(['url' => 'extensions/results']) !!}
+        {!! Form::open(['url' => 'extensions/results', 'method' => 'GET']) !!}
         <table align = "center">
             <tr>
                 <th>Title:</th>

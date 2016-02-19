@@ -10,7 +10,7 @@
             <tr>
                 <td><a href={{ url('/extensions/')}}>Recent Extensions</a></td>
                 <td><a href={{ url('/extensions/search')}}>Extension Search</a></td>
-                <td><a href={{ url('/indev')}}>Global Search</a></td>
+                <td><a href={{ url('/search')}}>Global Search</a></td>
             </tr>
         </table>
     </div>
@@ -23,17 +23,16 @@
         @foreach ($results as $result)
             <div class = "listResource">
                 <div class = "listResourceLeft">
-                    <a href="{{ action('ExtensionController@show', [$result['id']])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result['title']}}</button></a>
+                    <a href="{{ action('ExtensionController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->title}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('UserController@show', [$result['user_id']])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result['handle']}}</button></a>
+                    <a href="{{ action('UserController@show', [$result->user_id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->user->handle}}</button></a>
                 </div>
             </div>
         @endforeach
-
 @stop
 @section('centerFooter')
-
+    {!! $results->appends(['title' => $title])->render() !!}
 @stop
 
 

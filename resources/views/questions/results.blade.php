@@ -23,17 +23,17 @@
         @foreach ($results as $result)
             <div class = "listResource">
                 <div class = "listResourceLeft">
-                    <a href="{{ action('QuestionController@show', [$result['id']])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result['question']}}</button></a>
+                    <a href="{{ action('QuestionController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->question}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('QuestionController@show', [$result['id']])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result['asked_by']}}</button></a>
+                    <a href="{{ action('UserController@show', [$result->user_id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->user->handle}}</button></a>
                 </div>
             </div>
         @endforeach
 
 @stop
 @section('centerFooter')
-
+    {!! $results->appends(['title' => $question])->render() !!}
 @stop
 
 

@@ -3,7 +3,6 @@
     Search Users
 @stop
 
-
 @section('centerText')
     <div>
         <h2>Search Results</h2>
@@ -21,20 +20,20 @@
         <div style = "width: 50%; float: right;">
             <h4>Joined</h4>
         </div>
-        @foreach ($results as $result)
-            <div class = "listResource">
-                <div class = "listResourceLeft">
-                    <a href="{{ action('UserController@show', [$result['id']])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result['handle']}}</button></a>
-                </div>
-                <div class = "listResourceRight">
-                    <a href="{{ action('UserController@show', [$result['id']])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result['created_at']}}</button></a>
-                </div>
+    @foreach ($results as $result)
+        <div class = "listResource">
+            <div class = "listResourceLeft">
+                <a href="{{ action('UserController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->handle}}</button></a>
             </div>
-        @endforeach
+            <div class = "listResourceRight">
+                <a href="{{ action('UserController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->created_at->format('M-d-Y')}}</button></a>
+            </div>
+        </div>
+    @endforeach
 
 @stop
 @section('centerFooter')
-
+    {!! $results->appends(['title' => $handle])->render() !!}
 @stop
 
 

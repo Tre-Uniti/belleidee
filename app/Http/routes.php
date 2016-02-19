@@ -15,7 +15,7 @@
 Route::get('users/sortByElevation', 'UserController@sortByElevation');
 Route::get('users/sortByExtension', 'UserController@sortByExtension');
 Route::get('users/search', 'UserController@search');
-Route::post('users/results', 'UserController@results');
+Route::get('users/results', 'UserController@results');
 Route::get('users/ascend/{id}', 'UserController@ascend');
 Route::get('users/descend/{id}', 'UserController@descend');
 Route::get('users/extendedBy/{id}', 'UserController@extendedBy');
@@ -52,7 +52,7 @@ Route::get('posts/unlock/{id}', 'PostController@unlockPost');
 Route::get('posts/topElevated', 'PostController@sortByElevation');
 Route::get('posts/mostExtended', 'PostController@sortByExtension');
 Route::get('posts/search', 'PostController@search');
-Route::post('posts/results', 'PostController@results');
+Route::get('posts/results', 'PostController@results');
 Route::get('posts/listElevation/{id}', 'PostController@listElevation');
 Route::resource('posts', 'PostController');
 
@@ -73,7 +73,7 @@ Route::resource('supports', 'SupportController');
 Route::get('extensions/sortByElevation', 'ExtensionController@sortByElevation');
 Route::get('extensions/sortByExtension', 'ExtensionController@sortByExtension');
 Route::get('extensions/search', 'ExtensionController@search');
-Route::post('extensions/results', 'ExtensionController@results');
+Route::get('extensions/results', 'ExtensionController@results');
 Route::get('extensions/user/{id}', 'ExtensionController@userExtensions');
 Route::get('extensions/elevate/{id}', 'ExtensionController@elevateExtension');
 Route::get('extensions/question/{source}', 'ExtensionController@extendQuestion');
@@ -91,7 +91,7 @@ Route::resource('legacy', 'LegacyController');
 //Question Routes (Resource)
 Route::get('questions/elevate/{id}', 'QuestionController@elevateQuestion');
 Route::get('questions/search', 'QuestionController@search');
-Route::post('questions/results', 'QuestionController@results');
+Route::get('questions/results', 'QuestionController@results');
 Route::get('questions/sortByElevation', 'QuestionController@sortByElevation');
 Route::get('questions/sortByExtension', 'QuestionController@sortByExtension');
 Route::get('questions/sortByElevation/{id}', 'QuestionController@sortByExtensionElevation');
@@ -149,13 +149,10 @@ Route::get('indev', 'HomeController@getIndev');
 Route::get('photo', 'HomeController@userPhoto');
 Route::post('storePhoto', 'HomeController@storePhoto');
 Route::get('search', 'HomeController@search');
-Route::post('results', 'HomeController@results');
-Route::get('indexer', 'HomeController@indexer');
-
+Route::get('results', 'HomeController@results');
 
 //Admin routes
 Route::get('admin', 'AdminController@portal');
-
 
 //Moderator routes
 Route::get('moderator', 'ModeratorController@portal');

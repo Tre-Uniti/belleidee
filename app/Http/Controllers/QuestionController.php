@@ -109,14 +109,6 @@ class QuestionController extends Controller
         $question->user()->associate($request['user_id']);
         $question->save();
 
-        //Update ElasticSearch Index
-        Search::index('questions')->insert($question->id, array(
-            'question' => $question->question,
-            'created_at' => $question->created_at,
-            'asked_by' => $question->user->handle,
-            'user_id' => $question->user->id
-        ));
-
         flash()->overlay('Community Question posted');
         return redirect('questions/'. $question->id);
     }
@@ -203,15 +195,6 @@ class QuestionController extends Controller
         $question = $this->question->findOrFail($id);
         $question->user()->associate($request['user_id']);
         $question->update($request->all());
-        flash()->overlay('Question has been updated');
-
-        //Update ElasticSearch Index
-        Search::index('questions')->insert($question->id, array(
-            'question' => $question->question,
-            'created_at' => $question->created_at,
-            'asked_by' => $question->user->handle,
-            'user_id' => $question->user->id,
-        ));
 
         flash()->overlay('Community Question updated');
 
@@ -257,14 +240,13 @@ class QuestionController extends Controller
 
         //Get search title
         $question = $request->input('title');
-        $results = Search::index('questions')->search('question', $question)
-            ->get();
+
+        $results = Question::where('question', 'LIKE', '%'.$question.'%')->paginate(10);
 
         if($results == null)
         {
             flash()->overlay('No questions with this wording');
         }
-        //dd($results);
 
         if($user->photo_path == '')
         {
@@ -277,13 +259,11 @@ class QuestionController extends Controller
         }
 
         return view ('questions.results')
-            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
             ->with('photoPath', $photoPath)
-            ->with('results', $results);
+            ->with('question', $question);
 
     }
-
-
 
     /**
      * Remove the specified resource from storage.

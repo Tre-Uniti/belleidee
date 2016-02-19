@@ -31,7 +31,7 @@
             <div class = "listResource">
                 <div class = "listResourceLeft" style = "padding-left: 10%;">
                     @if($bookmark['type'] === 'User')
-                        <a href="{{ action('UserController@show', [$bookmark['id']])}}">
+                        <a href="{{ action('UserController@show', [$bookmark['pointer']])}}">
                             <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark['title'] }}</button></a>
                     @elseif($bookmark['type'] === 'Beacon')
                         <a href="{{ action('BeaconController@show', [$bookmark['id']])}}">

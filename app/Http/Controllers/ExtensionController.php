@@ -214,18 +214,6 @@ class ExtensionController extends Controller
                 $notification->user()->associate($user);
                 $notification->save();
 
-                //Update ElasticSearch Index
-                Search::index('extensions')->insert($extension->id, array(
-                    'title' => $extension->title,
-                    'belief' => $extension->belief,
-                    'beacon_tag' => $extension->beacon_tag,
-                    'category' => $extension->category,
-                    'status' => $extension->status,
-                    'handle' => $extension->user->handle,
-                    'user_id' => $extension->user_id,
-                    'created_at' => $extension->created_at
-                ));
-
                 $mailer->sendExtenceptionNotification($extension);
 
                 flash()->overlay('Your extension has been created');
@@ -245,17 +233,6 @@ class ExtensionController extends Controller
             $extension->user()->associate($user);
             $extension->save();
 
-            //Update ElasticSearch Index
-            Search::index('extensions')->insert($extension->id, array(
-                'title' => $extension->title,
-                'belief' => $extension->belief,
-                'beacon_tag' => $extension->beacon_tag,
-                'category' => $extension->category,
-                'status' => $extension->status,
-                'handle' => $extension->user->handle,
-                'user_id' => $extension->user_id,
-                'created_at' => $extension->created_at
-            ));
 
             //Add 1 extension to original question
             $question = Question::findOrFail($sources['question_id']);
@@ -289,23 +266,9 @@ class ExtensionController extends Controller
                 ->update(['extension' => $sourceUser->extension + 1]);
         }
 
-
-
         $extension = new Extension($request->except('body'));
         $extension->user()->associate($user);
         $extension->save();
-
-        //Update ElasticSearch Index
-        Search::index('extensions')->insert($extension->id, array(
-            'title' => $extension->title,
-            'belief' => $extension->belief,
-            'beacon_tag' => $extension->beacon_tag,
-            'category' => $extension->category,
-            'status' => $extension->status,
-            'handle' => $extension->user->handle,
-            'user_id' => $extension->user_id,
-            'created_at' => $extension->created_at
-        ));
 
         //Create Notification for Source user
         $notification = new Notification();
@@ -558,18 +521,6 @@ class ExtensionController extends Controller
             Storage::put($path, $inspiration);
         }
 
-        //Update ElasticSearch Index
-        Search::index('extensions')->insert($extension->id, array(
-            'title' => $extension->title,
-            'belief' => $extension->belief,
-            'beacon_tag' => $extension->beacon_tag,
-            'category' => $extension->category,
-            'status' => $extension->status,
-            'handle' => $extension->user->handle,
-            'user_id' => $extension->user_id,
-            'created_at' => $extension->created_at
-        ));
-
         $extension->update($request->except('body', '_method', '_token'));
 
         flash()->overlay('Extension has been updated');
@@ -616,8 +567,7 @@ class ExtensionController extends Controller
 
         //Get search title
         $title = $request->input('title');
-        $results = Search::index('extensions')->search('title', $title)
-            ->get();
+        $results = Extension::where('title', 'LIKE', '%'.$title.'%')->paginate(10);
 
         if($results == null)
         {
@@ -636,9 +586,9 @@ class ExtensionController extends Controller
         }
 
         return view ('extensions.results')
-            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'profilePosts','profileExtensions','results'))
             ->with('photoPath', $photoPath)
-            ->with('results', $results);
+            ->with('title', $title);
 
     }
 

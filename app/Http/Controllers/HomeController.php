@@ -16,6 +16,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Search;
 
@@ -222,29 +223,31 @@ class HomeController extends Controller
 
         //Get search title
         $identifier = $request->input('identifier');
+
         $type = $request->input('type');
+
         if($type == 'Post')
         {
-            $results = Search::index('posts')->search('title', $identifier)
-                ->get();
+            $results = Post::where('title', 'LIKE', '%'.$identifier.'%')->paginate(10);
+            $results->appends($request->all());
             $type = 'Posts';
         }
         elseif($type == 'Extension')
         {
-            $results = Search::index('extensions')->search('title', $identifier)
-                ->get();
+            $results = Extension::where('title', 'LIKE', '%'.$identifier.'%')->paginate(10);
+            $results->appends($request->all());
             $type = 'Extensions';
         }
         elseif($type == 'Question')
         {
-            $results = Search::index('questions')->search('question', $identifier)
-                ->get();
+            $results = Question::where('question', 'LIKE', '%'.$identifier.'%')->paginate(10);
+            $results->appends($request->all());
             $type = 'Questions';
         }
         elseif($type == 'User')
         {
-            $results = Search::index('users')->search('handle', $identifier)
-                ->get();
+            $results = User::where('handle', 'LIKE', '%'.$identifier.'%')->paginate(10);
+            $results->appends($request->all());
             $type = 'Users';
 
         }
@@ -271,78 +274,10 @@ class HomeController extends Controller
         }
 
         return view ('pages.results')
-            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
             ->with('photoPath', $photoPath)
             ->with('type', $type)
-            ->with('results', $results);
+            ->with('identifier', $identifier);
 
-    }
-
-
-    /**
-     * Index All posts, extensions, and users.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexer()
-    {
-        $posts = Post::latest('created_at')->get();
-        $extensions = Extension::latest('created_at')->get();
-        $users = User::latest('created_at')->get();
-        $questions = Question::latest('created_at')->get();
-
-        foreach($posts as $post)
-        {
-            //Save into Index for ElasticSearch
-            Search::index('posts')->insert($post->id, array(
-                'title' => $post->title,
-                'belief' => $post->belief,
-                'beacon_tag' => $post->beacon_tag,
-                'category' => $post->category,
-                'status' => $post->status,
-                'handle' => $post->user->handle,
-                'user_id' => $post->user_id,
-                'created_at' => $post->created_at
-            ));
-        }
-
-        foreach($extensions as $extension)
-        {
-            //Update ElasticSearch Index
-            Search::index('extensions')->insert($extension->id, array(
-                'title' => $extension->title,
-                'belief' => $extension->belief,
-                'beacon_tag' => $extension->beacon_tag,
-                'category' => $extension->category,
-                'status' => $extension->status,
-                'handle' => $extension->user->handle,
-                'user_id' => $extension->user_id,
-                'created_at' => $extension->created_at
-            ));
-        }
-
-        foreach($users as $user)
-        {
-            //Update ElasticSearch Index
-            Search::index('users')->insert($user->id, array(
-                'handle' => $user->handle,
-                'type' => $user->type,
-                'created_at' => $user->created_at
-            ));
-        }
-
-        foreach($questions as $question)
-        {
-            //Update ElasticSearch Index
-            Search::index('questions')->insert($question->id, array(
-                'question' => $question->question,
-                'created_at' => $question->created_at,
-                'asked_by' => $question->user->handle,
-                'user_id' => $question->user->id
-            ));
-        }
-
-        flash()->overlay('Index complete');
-        return redirect('/home');
     }
 }
