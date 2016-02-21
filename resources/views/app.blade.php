@@ -71,10 +71,12 @@
                 <h2><a href="{{ action('UserController@show', [$user->id])}}">{{$user->handle}}</a></h2>
 
                 <div class = "innerPhotos">
-                    @if($photoPath === '')
-                        <a href="/"><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "97%" width = "85%"></a>
-                    @else
+                    @if(isset($sourcePhotoPath))
+                        <a href={{ url('/users/'. $user->id) }}><img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $sourcePhotoPath) }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
+                    @elseif(isset($photoPath))
                         <a href={{ url('/users/'. $user->id) }}><img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $photoPath) }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
+                    @else
+                        <a href="/"><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "97%" width = "85%"></a>
                     @endif
                 </div>
             </div>
@@ -134,8 +136,8 @@
         <div id = "rightSide">
             <h2>Hosted:</h2>
             <div class = "innerPhotos">
-                @if(isset($beaconPath))
-                    <a href="/"><img src= {{ asset('img/US-SW-IHOM.jpg') }} alt="idee" height = "97%" width = "85%"></a>
+                @if(isset($subBeacon))
+                    <a href={{ url('/beacons/'. $subBeacon->id) }}><<img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $subBeacon->photo_path) }} alt="{{$subBeacon->name}}" height = "97%" width = "85%"></a>
                 @elseif(isset($sponsor))
                     <a href={{ url('/sponsors/'. $sponsor->id) }}><img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $sponsor->photo_path) }} alt="{{$sponsor->name}}" height = "97%" width = "85%"></a>
                 @else

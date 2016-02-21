@@ -33,7 +33,7 @@
         <td colspan="3">{{ $extension->title }}</td>
     </tr>
     <tr>
-        <td colspan="3">{{ $extension->belief }} - {{ $extension->beacon_tag }} - {{ $extension->category }} </td>
+        <td colspan="3">{{ $extension->belief }} - {{ $extension->beacon_tag }} - {{ $extension->source }} </td>
     </tr>
 
 @endsection

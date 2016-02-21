@@ -18,7 +18,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Search;
 
 class ExtensionController extends Controller
 {
@@ -373,7 +372,7 @@ class ExtensionController extends Controller
         return view('extensions.show')
             ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'sources' ))
             ->with ('elevation', $elevation)
-            ->with ('photoPath', $photoPath);
+            ->with ('sourcePhotoPath', $photoPath);
     }
 
     /**
@@ -527,19 +526,8 @@ class ExtensionController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
-
         return view ('extensions.search')
-            ->with(compact('user', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts','profileExtensions'));
     }
 
     /**
@@ -644,7 +632,7 @@ class ExtensionController extends Controller
         if(Extension::where('user_id', '=', $user->id)->where('question_id', '=', $sourceQuestion->id)->where('extenception', '=', NULL)->exists())
         {
             $extension = Extension::where('user_id', '=', $user->id)->where('question_id', '=', $sourceQuestion->id)->where('extenception', '=', NULL)->first();
-            flash()->overlay('You may edit your weekly extension or extend another');
+            flash()->overlay('You may edit your community extension or extend another');
             return redirect('extensions/'. $extension->id);
         }
         $fullSource = ['type' => 'question', 'user_id' => $sourceQuestion->user_id, 'question_id' => $sourceQuestion->id, 'question' => $sourceQuestion->question];

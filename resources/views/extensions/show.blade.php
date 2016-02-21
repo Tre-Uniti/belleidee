@@ -3,7 +3,6 @@
     Show Extension
 @stop
 
-
 @section('centerMenu')
     <h2>{{ $extension->title }}</h2>
 

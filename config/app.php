@@ -149,7 +149,7 @@ return [
         App\Providers\ViewServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Fideloper\Proxy\TrustedProxyServiceProvider::class,
-        Mmanos\Search\SearchServiceProvider::class,
+        Laravel\Cashier\CashierServiceProvider::class,
     ],
 
     /*
@@ -201,7 +201,6 @@ return [
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'Form'      => Illuminate\Html\FormFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
-        'Search'    => Mmanos\Search\Facade::class,
     ],
 
 ];

@@ -15,12 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('app', function($view) {
-            $userID = Auth::id();
-            $notifyCount = Notification::where('source_user', $userID)->count();
-            //dd($userID);
-            $view->with('notifyCount', $notifyCount);
-        });
+
     }
 
     /**

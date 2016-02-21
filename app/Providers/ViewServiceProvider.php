@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Notification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
 class ViewServiceProvider extends ServiceProvider
@@ -13,10 +15,21 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('app', function ($view)
-        {
-            //$view->with('bookmarkedBeacons', )
+        view()->composer('app', function($view) {
+            $user = Auth::user();
+            $notifyCount = Notification::where('source_user', $user->id)->count();
+            if($user->photo_path == '')
+            {
+                $photoPath = '';
+            }
+            else
+            {
+                $photoPath = $user->photo_path;
+            }
+            $view->with('notifyCount', $notifyCount);
+            $view->with('photoPath', $photoPath);
         });
+
     }
 
     /**
