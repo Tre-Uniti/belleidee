@@ -10,7 +10,7 @@
         <li>Supported by sponsors with promotions</li>
         <li>Powered by Laravel & Open Source</li>
         <li>Moderated based on respect and tolerance</li>
-        <li>Community Question revolving around beliefs.</li>
+        <li>Community Questions around beliefs.</li>
         <li>Maintained by Tre-Uniti LLC</li>
     </ul>
     <a href="{{ url('/demo') }}"><button type = "button" class = "navButton">View Demo Page</button></a>

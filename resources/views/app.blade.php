@@ -139,7 +139,7 @@
             <div class = "innerPhotos">
                 @if(isset($beacon))
                     @if($beacon != NULL)
-                    <a href={{ url('/beacons/'. $beacon->id) }}><img src= {{ url('https://https://d3ekayvyzr0uoc.cloudfront.net'. $beacon->photo_path) }} alt="{{$beacon->name}}" height = "97%" width = "85%"></a>
+                    <a href={{ url('/beacons/'. $beacon->id) }}><img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $beacon->photo_path) }} alt="{{$beacon->name}}" height = "97%" width = "85%"></a>
                     @endif
                 @elseif(isset($sponsor))
                     @if($sponsor != NULL)
