@@ -39,19 +39,8 @@ class UserController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $users = $this->user->latest()->paginate(10);
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
-
         return view ('users.index')
-            ->with(compact('user', 'users', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'users', 'profilePosts','profileExtensions'));
     }
 
     /**
@@ -97,17 +86,17 @@ class UserController extends Controller
         if($user->photo_path == '')
         {
 
-            $photoPath = '';
+            $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $sourcePhotoPath = $user->photo_path;
         }
 
 
         return view('users.show')
             ->with(compact('user', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath)
+            ->with('sourcePhotoPath', $sourcePhotoPath)
             ->with('extensions', $extensions)
             ->with('posts', $posts);
     }
@@ -126,16 +115,16 @@ class UserController extends Controller
         //Get user photo
         if($user->photo_path == '')
         {
-            $photoPath = '';
+            $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $sourcePhotoPath = $user->photo_path;
         }
 
         return view('users.edit')
             ->with(compact('user', 'profilePosts', 'profileExtensions' ))
-            ->with('photoPath', $photoPath);
+            ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
     /**
@@ -148,13 +137,6 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-
-        //Update ElasticSearch Index
-        Search::index('users')->insert($user->id, array(
-            'handle' => $user->handle,
-            'type' => $user->type,
-            'created_at' => $user->created_at
-        ));
 
         $user->update($request->all());
 
@@ -172,13 +154,6 @@ class UserController extends Controller
     public function ascend($id)
     {
         $user = User::findOrFail($id);
-
-        //Update ElasticSearch Index
-        Search::index('users')->insert($user->id, array(
-            'handle' => $user->handle,
-            'type' => $user->type,
-            'created_at' => $user->created_at
-        ));
 
         $user->type = $user->type + 1;
         $user->update();
@@ -256,7 +231,6 @@ class UserController extends Controller
         {
             flash()->overlay('No users with this handle');
         }
-        //dd($results);
 
         if($user->photo_path == '')
         {
@@ -267,7 +241,6 @@ class UserController extends Controller
         {
             $photoPath = $user->photo_path;
         }
-        //dd($results);
 
         return view ('users.results')
             ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
@@ -297,19 +270,11 @@ class UserController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $users = $this->user->orderBy('elevation', 'desc')->paginate(10);
-        if($user->photo_path == '')
-        {
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
         return view ('users.sortByElevation')
-            ->with(compact('user', 'users', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'users', 'profilePosts','profileExtensions'));
+
     }
     /**
      * Sort and show all users by highest Extension
@@ -321,19 +286,9 @@ class UserController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $users = $this->user->orderBy('extension', 'desc')->paginate(10);
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
         return view ('users.sortByExtension')
-            ->with(compact('user', 'users', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'users', 'profilePosts','profileExtensions'));
     }
 
 
@@ -354,15 +309,15 @@ class UserController extends Controller
         if($user->photo_path == '')
         {
 
-            $photoPath = '';
+            $sourcePhotoPath = '';
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $sourcePhotoPath = $user->photo_path;
         }
         return view ('users.extendedBy')
             ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
     /*
@@ -382,15 +337,15 @@ class UserController extends Controller
         if($user->photo_path == '')
         {
 
-            $photoPath = '';
+            $sourcePhotoPath = '';
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $sourcePhotoPath = $user->photo_path;
         }
         return view ('users.elevatedBy')
             ->with(compact('user', 'elevations', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
     /*
@@ -410,15 +365,15 @@ class UserController extends Controller
         if($user->photo_path == '')
         {
 
-            $photoPath = '';
+            $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $sourcePhotoPath = $user->photo_path;
         }
         return view ('users.beacons')
             ->with(compact('user', 'bookmarks', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
 
