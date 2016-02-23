@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Beacon;
 use App\Elevate;
 use App\Mailers\NotificationMailer;
 use App\Notification;
 use App\Post;
 use App\Question;
+use App\Sponsor;
+use App\Sponsorship;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateExtensionRequest;
 use App\Http\Requests\EditExtensionRequest;
@@ -297,6 +300,48 @@ class ExtensionController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
 
+        //Check if Beacon pays for promotions
+        if($extension->beacon_tag == 'No-Beacon')
+        {
+            //No Beacon defaults to user's sponsor
+            if(Sponsorship::where('user_id', '=', $extension->user_id)->exists())
+            {
+                $sponsorship = Sponsorship::where('user_id', '=', $extension->user_id)->first();
+                $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            }
+            else
+            {
+                $sponsor = NULL;
+            }
+            $beacon = NULL;
+        }
+        else
+        {
+            $extensionBeacon = Beacon::where('beacon_tag', '=', $extension->beacon_tag)->first();
+
+            if($extensionBeacon->tier > 1)
+            {
+                //Beacon pays subscription for promotions
+                $beacon = $extensionBeacon;
+                $sponsor = NULL;
+            }
+            else
+            {
+
+                //Beacon does not subscribe for promotion, default to sponsor
+                if(Sponsorship::where('user_id', '=', $extension->user_id)->exists())
+                {
+                    $sponsorship = Sponsorship::where('user_id', '=', $extension->user_id)->first();
+                    $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+                }
+                else
+                {
+                    $sponsor = NULL;
+                }
+
+                $beacon = NULL;
+            }
+        }
         //Get Source info of extension
         if(isset($extension->post_id))
         {
@@ -359,20 +404,23 @@ class ExtensionController extends Controller
             $elevation = 'Elevate';
         }
 
+        //Set Source User photo path
         if($user->photo_path == '')
         {
 
-            $photoPath = '';
+            $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $sourcePhotoPath = $user->photo_path;
         }
 
         return view('extensions.show')
             ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'sources' ))
             ->with ('elevation', $elevation)
-            ->with ('sourcePhotoPath', $photoPath);
+            ->with ('sourcePhotoPath', $sourcePhotoPath)
+            ->with('beacon', $beacon)
+            ->with('sponsor', $sponsor);
     }
 
     /**

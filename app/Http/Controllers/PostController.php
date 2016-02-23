@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Adjudication;
+use App\Beacon;
 use App\Bookmark;
 use App\Elevate;
 use App\Intolerance;
@@ -197,39 +198,61 @@ class PostController extends Controller
         //Get other Extensions of User
         $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->take(7)->get();
 
-        //Get Sponsorship of user
-        if(Sponsorship::where('user_id', $user->id)->exists())
+        //Check if Beacon pays for promotions
+        if($post->beacon_tag == 'No-Beacon')
         {
-            $sponsorship = Sponsorship::where('user_id', $user->id)->first();
-            $sponsor = Sponsor::where('id', $sponsorship->sponsor_id)->first();
+            //No Beacon defaults to user's sponsor
+            if(Sponsorship::where('user_id', '=', $post->user_id)->exists())
+            {
+                $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
+                $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            }
+            else
+            {
+                $sponsor = NULL;
+            }
+            $beacon = NULL;
         }
         else
         {
-            $sponsor = Sponsor::where('id', 1)->first();
-        }
-        //Get user photo
-        if($user->photo_path == '')
-        {
+            $postBeacon = Beacon::where('beacon_tag', '=', $post->beacon_tag)->first();
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
+            if ($postBeacon->tier > 1)
+            {
+                //Beacon pays subscription for promotions
+                $beacon = $postBeacon;
+                $sponsor = NULL;
+            }
+            else
+            {
+                //Beacon does not subscribe for promotion, default to sponsor
+                if (Sponsorship::where('user_id', '=', $post->user_id)->exists())
+                {
+                    $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
+                    $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+                }
+                else
+                {
+                    $sponsor = NULL;
+                }
+
+                $beacon = NULL;
+            }
         }
 
         //Check if Post is intolerant and User hasn't unlocked
         if(isset($post->status))
         {
             $unlock = Session::get('unlock');
-            if($unlock['post_id'] != $post->id || $unlock['confirmed'] != 'Yes' || $unlock['user_id'] != $user->id)
+            if($unlock['post_id'] != $post->id || $unlock['confirmed'] != 'Yes' || $unlock['user_id'] != $viewUser->id)
             {
                 $intolerance = Intolerance::where('post_id', $id)->first();
                 $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
                 $adjudication = Adjudication::where('moderation_id', $moderation->id)->first();
                 return view('posts.locked')
                     ->with(compact('user', 'post', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
-                    ->with('photoPath', $photoPath);
+                    ->with('beacon', $beacon)
+                    ->with('sponsor', $sponsor);
             }
         }
 
@@ -243,10 +266,22 @@ class PostController extends Controller
             $elevation = 'Elevate';
         }
 
+        //Set Source User photo path
+        if($user->photo_path == '')
+        {
+
+            $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
+        }
+        else
+        {
+            $sourcePhotoPath = $user->photo_path;
+        }
+
         return view('posts.show')
             ->with(compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'))
             ->with('elevation', $elevation)
-            ->with('photoPath', $photoPath)
+            ->with('beacon', $beacon)
+            ->with('sourcePhotoPath', $sourcePhotoPath)
             ->with('sponsor', $sponsor);
     }
 

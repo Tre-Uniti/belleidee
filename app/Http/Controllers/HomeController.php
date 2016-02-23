@@ -164,7 +164,7 @@ class HomeController extends Controller
 
         $image = $request->file('image');
 
-        $userName = str_replace(' ', '_', $user->name);
+        $userName = str_replace(' ', '_', $user->handle);
         $imageFileName = $userName . '.' . $image->getClientOriginalExtension();
         $path = '/user_photos/'. $user->id . '/' .$imageFileName;
 

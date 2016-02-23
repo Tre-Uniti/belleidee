@@ -26,8 +26,10 @@ class ViewServiceProvider extends ServiceProvider
             {
                 $photoPath = $user->photo_path;
             }
+            $profileBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
             $view->with('notifyCount', $notifyCount);
             $view->with('photoPath', $photoPath);
+            $view->with('profileBeacons', $profileBeacons);
         });
 
     }

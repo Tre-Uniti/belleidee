@@ -116,7 +116,7 @@
                     </table>
 
                     <table style="display: inline-block;">
-                        <tr><td><a href="{{ url('/demo') }}">Category</a></td>
+                        <tr><td><a href="{{ url('/demo') }}">Source</a></td>
                         </tr>
                     </table>
                 </div>

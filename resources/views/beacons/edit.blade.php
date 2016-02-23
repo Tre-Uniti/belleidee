@@ -1,20 +1,17 @@
 @extends('app')
 @section('siteTitle')
-    Edit
+    Edit Beacon
 @stop
-
 
 @section('centerText')
     <div class = "errors">
         @include ('errors.list')
     </div>
 
-    {!! Form::model($beacon, ['route' => ['beacons.update', $beacon->id], 'method' => 'patch']) !!}
+    {!! Form::model($beacon, ['route' => ['beacons.update', $beacon->id], 'method' => 'patch', 'files' => true]) !!}
     @include ('beacons._form', ['submitButtonText' => 'Update Beacon'])
 
 @stop
 
 @section('centerFooter')
 @stop
-
-@include('posts.rightSide')

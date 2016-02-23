@@ -56,6 +56,30 @@
             {!! Form::text('address', null, ['class' => 'createTitleText']) !!}
         </td>
     </tr>
+    <tr>
+        <td>
+            {!! Form::label('guide', 'Beacon Guide') !!}
+        </td>
+        <td>
+            {!! Form::text('guide', null, ['class' => 'createTitleText']) !!}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {!! Form::label('tier', 'Tier') !!}
+        </td>
+        <td>
+            {!! Form::text('tier', null, ['class' => 'createTitleText']) !!}
+        </td>
+    </tr>
+    <tr>
+        <td>{!! Form::file('image', null, ['class' => 'navButton']) !!}</td>
+    </tr>
+    <tr>
+        <td>
+            {!! Form::label('Max Upload size: 2MB') !!}
+        </td>
+    </tr>
 </table>
     @section('centerFooter')
         {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}

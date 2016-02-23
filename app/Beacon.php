@@ -26,7 +26,9 @@ class Beacon extends Model
         'website',
         'phone',
         'email',
-        'address'
+        'address',
+        'tier',
+        'guide',
     ];
 
 }

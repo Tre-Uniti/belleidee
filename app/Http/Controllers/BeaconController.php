@@ -66,6 +66,24 @@ class BeaconController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         //Get user photo
+        $beliefs =
+            [
+                'Adaptia' => 'Adaptia',
+                'Atheism' => 'Atheism',
+                'Ba Gua' => 'Ba Gua',
+                'Buddhism' => 'Buddhism',
+                'Christianity' => 'Christianity',
+                'Druze' => 'Druze',
+                'Hinduism' => 'Hinduism',
+                'Islam' => 'Islam',
+                'Indigenous' => 'Indigenous',
+                'Judaism' => 'Judaism',
+                'Shinto' => 'Shinto',
+                'Sikhism' => 'Sikhism',
+                'Taoism' => 'Taoism',
+                'Urantia' => 'Urantia',
+                'Other' => 'Other'
+            ];
         if($user->photo_path == '')
         {
 
@@ -78,7 +96,8 @@ class BeaconController extends Controller
 
         return view('beacons.create')
                     ->with(compact('user', 'profilePosts', 'profileExtensions'))
-                    ->with('photoPath', $photoPath);
+                    ->with('photoPath', $photoPath)
+                    ->with('beliefs', $beliefs);
     }
 
     /**
@@ -170,9 +189,29 @@ class BeaconController extends Controller
             $photoPath = $user->photo_path;
         }
 
+        $beliefs =
+            [
+                'Adaptia' => 'Adaptia',
+                'Atheism' => 'Atheism',
+                'Ba Gua' => 'Ba Gua',
+                'Buddhism' => 'Buddhism',
+                'Christianity' => 'Christianity',
+                'Druze' => 'Druze',
+                'Hinduism' => 'Hinduism',
+                'Islam' => 'Islam',
+                'Indigenous' => 'Indigenous',
+                'Judaism' => 'Judaism',
+                'Shinto' => 'Shinto',
+                'Sikhism' => 'Sikhism',
+                'Taoism' => 'Taoism',
+                'Urantia' => 'Urantia',
+                'Other' => 'Other'
+            ];
+
         return view('beacons.edit')
             ->with(compact('user', 'profilePosts', 'profileExtensions', 'beacon'))
-            ->with('photoPath', $photoPath);
+            ->with('photoPath', $photoPath)
+            ->with('beliefs', $beliefs);
     }
 
     /**
@@ -185,7 +224,28 @@ class BeaconController extends Controller
     public function update(Request $request, $id)
     {
         $beacon = $this->beacon->findOrFail($id);
+
+        if($request->hasFile('image'))
+        {
+            if(!$request->file('image')->isValid())
+            {
+                $error = "Image File invalid.";
+                return redirect()
+                    ->back()
+                    ->withErrors([$error]);
+            }
+            $image = $request->file('image');
+
+            $beaconName = str_replace(' ', '_', $beacon->name);
+            $imageFileName = $beaconName . '.' . $image->getClientOriginalExtension();
+            $path = '/beacon_photos/'. $beacon->id . '/' .$imageFileName;
+
+            Storage::put($path, file_get_contents($image));
+            $beacon->photo_path = $path;
+        }
+
         $beacon->update($request->all());
+
         flash()->overlay('Beacon has been updated');
 
         return redirect('beacons/'. $beacon->id);

@@ -72,11 +72,12 @@
 
                 <div class = "innerPhotos">
                     @if(isset($sourcePhotoPath))
+                    <!--Replace for push https://d3ekayvyzr0uoc.cloudfront.net-->
                         <a href={{ url('/users/'. $user->id) }}><img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $sourcePhotoPath) }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
-                    @elseif(isset($photoPath))
+                    @elseif($photoPath != NULL)
                         <a href={{ url('/users/'. $user->id) }}><img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $photoPath) }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
                     @else
-                        <a href="/"><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "97%" width = "85%"></a>
+                        <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "97%" width = "85%"></a>
                     @endif
                 </div>
             </div>
@@ -136,25 +137,36 @@
         <div id = "rightSide">
             <h2>Hosted:</h2>
             <div class = "innerPhotos">
-                @if(isset($subBeacon))
-                    <a href={{ url('/beacons/'. $subBeacon->id) }}><<img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $subBeacon->photo_path) }} alt="{{$subBeacon->name}}" height = "97%" width = "85%"></a>
+                @if(isset($beacon))
+                    @if($beacon != NULL)
+                    <a href={{ url('/beacons/'. $beacon->id) }}><img src= {{ url('https://https://d3ekayvyzr0uoc.cloudfront.net'. $beacon->photo_path) }} alt="{{$beacon->name}}" height = "97%" width = "85%"></a>
+                    @endif
                 @elseif(isset($sponsor))
+                    @if($sponsor != NULL)
                     <a href={{ url('/sponsors/'. $sponsor->id) }}><img src= {{ url('https://d3ekayvyzr0uoc.cloudfront.net'. $sponsor->photo_path) }} alt="{{$sponsor->name}}" height = "97%" width = "85%"></a>
+                    @endif
                 @else
-                    <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/tre-uniti.png') }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
+                    <a href={{ url('/sponsors/1') }}><img src= {{ asset('img/tre-uniti.png') }} alt="Tre-Uniti" height = "97%" width = "85%"></a>
                 @endif
             </div>
             <nav class = "profileNav">
                 <ul>
-                    @if ($profilePosts->isEmpty())
+                    @if ($profileBeacons->isEmpty())
                         <li><a href="{{url('/beacons')}}">Beacons</a></li>
                     @else
                         <li>
                             <a href="{{url('/beacons')}}">Beacons</a>
                             <div>
                                 <ul>
-                                    <li><a href="{{url('/beacons/tags/US-SW-ACE')}}">US-SW-ACE</a></li>
-                                    <li><a href="{{url('/beacons/tags/US-SW-IHOM')}}">US-SW-IHOM</a></li>
+                                    @if(isset($userBeacons))
+                                        @foreach($userBeacons as $userBeacon)
+                                            <li><a href={{ action('BeaconController@listTagged', [$userBeacon->beacon_tag])}}>{{ $userBeacon->beacon_tag }}</a></li>
+                                        @endforeach
+                                    @else
+                                        @foreach($profileBeacons as $profileBeacon)
+                                            <li><a href={{ action('BeaconController@listTagged', [$profileBeacon->pointer])}}>{{ $profileBeacon->pointer }}</a></li>
+                                        @endforeach
+                                    @endif
                                 </ul>
                             </div>
                         </li>

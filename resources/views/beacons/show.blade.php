@@ -38,12 +38,13 @@
             </tr>
     </table>
         <hr/>
-        <h2>Shepherd Posts:</h2>
+
         </div>
 @stop
 
 @section('centerFooter')
     <div id = "centerFooter">
+        <a href = {{ url('/users/'. $beacon->guide) }}><button type = "button" class = "navButton">Beacon Guide</button></a>
         @if($user->type > 1)
             <a href="{{ url('/beacons/'.$beacon->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
         @endif
@@ -52,6 +53,4 @@
         @endif
     </div>
 @stop
-
-@include('beacons.rightSide')
 

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddGuideToBeacons extends Migration
+class AddBeaconPhotoGuide extends Migration
 {
     /**
      * Run the migrations.
@@ -14,6 +14,7 @@ class AddGuideToBeacons extends Migration
     {
         Schema::table('beacons', function (Blueprint $table) {
             $table->integer('guide')->unsigned()->nullable();
+            $table->string('photo_path');
         });
     }
 
@@ -26,6 +27,7 @@ class AddGuideToBeacons extends Migration
     {
         Schema::table('beacons', function (Blueprint $table) {
             $table->dropColumn('guide');
+            $table->dropColumn('photo_path');
         });
     }
 }
