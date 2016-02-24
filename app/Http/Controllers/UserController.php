@@ -6,6 +6,8 @@ use App\Bookmark;
 use App\Elevate;
 use App\Extension;
 use App\Post;
+use App\Sponsor;
+use App\Sponsorship;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -93,12 +95,25 @@ class UserController extends Controller
             $sourcePhotoPath = $user->photo_path;
         }
 
+        //Get and set user's sponsor logo
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            $sponsor->where('id', $sponsor->id)
+                ->update(['views' => $sponsor->views + 1]);
+        }
+        else
+        {
+            $sponsor = NULL;
+        }
 
         return view('users.show')
             ->with(compact('user', 'profilePosts', 'profileExtensions'))
             ->with('sourcePhotoPath', $sourcePhotoPath)
             ->with('extensions', $extensions)
-            ->with('posts', $posts);
+            ->with('posts', $posts)
+            ->with('sponsor', $sponsor);
     }
 
     /**
@@ -121,9 +136,22 @@ class UserController extends Controller
         {
             $sourcePhotoPath = $user->photo_path;
         }
+        //Get and set user's sponsor logo
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            $sponsor->where('id', $sponsor->id)
+                ->update(['views' => $sponsor->views + 1]);
+        }
+        else
+        {
+            $sponsor = NULL;
+        }
 
         return view('users.edit')
             ->with(compact('user', 'profilePosts', 'profileExtensions' ))
+            ->with('sponsor', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -194,19 +222,9 @@ class UserController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
-
         return view ('users.search')
-            ->with(compact('user', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts','profileExtensions'));
+
     }
 
     /**
@@ -232,19 +250,9 @@ class UserController extends Controller
             flash()->overlay('No users with this handle');
         }
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
         return view ('users.results')
             ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
-            ->with('photoPath', $photoPath)
             ->with('handle', $handle);
 
     }
@@ -271,10 +279,8 @@ class UserController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $users = $this->user->orderBy('elevation', 'desc')->paginate(10);
 
-
         return view ('users.sortByElevation')
             ->with(compact('user', 'users', 'profilePosts','profileExtensions'));
-
     }
     /**
      * Sort and show all users by highest Extension
@@ -315,8 +321,21 @@ class UserController extends Controller
         {
             $sourcePhotoPath = $user->photo_path;
         }
+        //Get and set user's sponsor logo
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            $sponsor->where('id', $sponsor->id)
+                ->update(['views' => $sponsor->views + 1]);
+        }
+        else
+        {
+            $sponsor = NULL;
+        }
         return view ('users.extendedBy')
             ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions'))
+            ->with('sponosr', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -343,8 +362,21 @@ class UserController extends Controller
         {
             $sourcePhotoPath = $user->photo_path;
         }
+        //Get and set user's sponsor logo
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            $sponsor->where('id', $sponsor->id)
+                ->update(['views' => $sponsor->views + 1]);
+        }
+        else
+        {
+            $sponsor = NULL;
+        }
         return view ('users.elevatedBy')
             ->with(compact('user', 'elevations', 'profilePosts', 'profileExtensions'))
+            ->with('sponsor', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -359,20 +391,31 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $bookmarks = $user->bookmarks;
-        //$bookmarks = Bookmark::where('user_id', $user->id)->latest('created_at')->paginate(10);
+        $bookmarks = $user->bookmarks()->where('type', '=', 'Beacon')->paginate(10);
 
         if($user->photo_path == '')
         {
-
             $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
         }
         else
         {
             $sourcePhotoPath = $user->photo_path;
         }
+        //Get and set user's sponsor logo
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            $sponsor->where('id', $sponsor->id)
+                ->update(['views' => $sponsor->views + 1]);
+        }
+        else
+        {
+            $sponsor = NULL;
+        }
         return view ('users.beacons')
             ->with(compact('user', 'bookmarks', 'profilePosts', 'profileExtensions'))
+            ->with('sponsor', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 

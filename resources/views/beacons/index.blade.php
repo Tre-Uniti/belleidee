@@ -3,7 +3,6 @@
     Beacons
 @stop
 
-
 @section('centerText')
     <div>
     <h2>Beacon Directory</h2>
@@ -22,13 +21,13 @@
         <h4>Tag</h4>
     </div>
 
-        @foreach ($beacons as $beacon)
+        @foreach ($beacons as $beaconIndex)
             <div class = "listResource">
             <div class = "listResourceLeft">
-            <a href="{{ action('BeaconController@show', [$beacon->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $beacon->name }}</button></a>
+            <a href="{{ action('BeaconController@show', [$beaconIndex->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $beaconIndex->name }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('BeaconController@listTagged', [$beacon->beacon_tag])}}"><button type = "button" class = "interactButton">{{ $beacon->beacon_tag }}</button></a>
+                <a href="{{ action('BeaconController@listTagged', [$beaconIndex->beacon_tag])}}"><button type = "button" class = "interactButton">{{ $beaconIndex->beacon_tag }}</button></a>
             </div>
             </div>
         @endforeach
@@ -38,6 +37,5 @@
     {!! $beacons->render() !!}
 @stop
 
-@include('posts.rightSide')
 
 

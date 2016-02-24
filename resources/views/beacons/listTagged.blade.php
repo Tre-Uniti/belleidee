@@ -2,16 +2,14 @@
 @section('siteTitle')
     Beacons
 @stop
-
-
 @section('centerText')
     <div>
-        <h2><a href={{ url('/beacons/'. $beacon->id)}}>{{$beacon->beacon_tag}}</a></h2>
+        <h2><a href={{ url('/beacons/'. $beacon->id)}}>Posts of {{$beacon->beacon_tag}}</a></h2>
         <table style="display: inline-block;">
             <tr>
-                <td><a href={{ url('/posts/sortByElevation')}}>Top Elevated</a></td>
-                <td><a href={{ url('/indev')}}>Search</a></td>
-                <td><a href={{ url('/posts/sortByExtension')}}>Most Extended</a></td>
+                <td><a href={{ url('/beacons/'. $beacon->id)}}>Profile</a></td>
+                <td><a href={{ url('/users/'.$beacon->guide)}}>Guide</a></td>
+                <td><a href={{ url('/extensions/beacon/'. $beacon->id)}}>Extensions</a></td>
             </tr>
         </table>
     </div>
@@ -21,7 +19,6 @@
     <div style = "width: 50%; float: right;">
         <h4>User</h4>
     </div>
-
     @foreach ($posts as $post)
         <div class = "listResource">
             <div class = "listResourceLeft">
@@ -32,12 +29,9 @@
             </div>
         </div>
     @endforeach
-
 @stop
 @section('centerFooter')
     {!! $posts->render() !!}
 @stop
-
-@include('beacons.rightSide')
 
 

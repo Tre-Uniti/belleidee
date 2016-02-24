@@ -31,7 +31,7 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <a href="{{ $sponsor->website }}">Sponsor Website</a>
+                    <a href="{{ $sponsor->website }}" target="_blank">Sponsor Website</a>
                 </td>
             </tr>
         </table>

@@ -39,20 +39,8 @@ class BeaconController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $beacons = $this->beacon->latest()->paginate(10);
 
-        //Get user photo
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
-
         return view ('beacons.index')
-                    ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'))
-                    ->with('photoPath', $photoPath);
+                    ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'));
     }
 
     /**
@@ -84,19 +72,9 @@ class BeaconController extends Controller
                 'Urantia' => 'Urantia',
                 'Other' => 'Other'
             ];
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
         return view('beacons.create')
                     ->with(compact('user', 'profilePosts', 'profileExtensions'))
-                    ->with('photoPath', $photoPath)
                     ->with('beliefs', $beliefs);
     }
 
@@ -130,8 +108,67 @@ class BeaconController extends Controller
         $beacon->status = 'requested';
         $beacon->user_id = $user->id;
         $beacon->save();
+
+        if($request->hasFile('image'))
+        {
+            if(!$request->file('image')->isValid())
+            {
+                $error = "Image File invalid.";
+                return redirect()
+                    ->back()
+                    ->withErrors([$error]);
+            }
+            $image = $request->file('image');
+
+            $beaconName = str_replace(' ', '_', $beacon->name);
+            $imageFileName = $beaconName . '.' . $image->getClientOriginalExtension();
+            $path = '/beacon_photos/'. $beacon->id . '/' .$imageFileName;
+
+            Storage::put($path, file_get_contents($image));
+            $beacon->where('id', $beacon->id)
+                    ->update(['photo_path' => $path]);
+        }
+
+
         flash()->overlay('Your beacon request has been created');
-        return redirect('beacons');
+        return redirect('beacons/signup/'. $beacon->id);
+    }
+
+    /**
+     * Gather card details for beacon subscription
+     *
+     * @param  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function signup($id)
+    {
+        $beacon = Beacon::findOrFail($id);
+
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        return view ('beacons.signup')
+            ->with(compact('user', 'beacon', 'profilePosts','profileExtensions'));
+    }
+
+    /**
+     * Gather card details for beacon subscription
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function subscribe(Request $request)
+    {
+        $id = $request['beacon'];
+        $beacon = Beacon::findOrFail($id);
+
+        $beacon->subscription($request['subscription'])->create($request['stripeToken'],
+                ['email' => $beacon->email, 'description' => $beacon->name]);
+
+        flash()->overlay('Level '. $request['subscription'] . ' subscription started for '. $beacon->name);
+        return redirect('beacons/'. $beacon->id);
+
     }
 
     /**
@@ -146,22 +183,13 @@ class BeaconController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $beacon = $this->beacon->findOrFail($id);
-        $beaconPath = '1';
+        $beaconPath = $beacon->photo_path;
+        $usage = Post::where('beacon_tag', '=', $beacon->beacon_tag)->count();
 
-        //Get user photo
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
         return view ('beacons.show')
                     ->with(compact('user', 'beacon', 'profilePosts','profileExtensions'))
-                    ->with('photoPath', $photoPath)
-                    ->with('beaconPath', $beaconPath);
+                    ->with('beaconPath', $beaconPath)
+                    ->with('usage', $usage);
     }
 
     /**
@@ -178,16 +206,6 @@ class BeaconController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        //Get user photo
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
         $beliefs =
             [
@@ -210,7 +228,6 @@ class BeaconController extends Controller
 
         return view('beacons.edit')
             ->with(compact('user', 'profilePosts', 'profileExtensions', 'beacon'))
-            ->with('photoPath', $photoPath)
             ->with('beliefs', $beliefs);
     }
 
@@ -271,7 +288,6 @@ class BeaconController extends Controller
      */
     public function listTagged($beacon_tag)
     {
-
         //Check if Beacon_tag belongs to an Idee Beacon
         try
         {
@@ -291,23 +307,14 @@ class BeaconController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        //Get user photo
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
-        $beaconPath = '1';
+        $beaconPath = $beacon->photo_path;
 
         return view ('beacons.listTagged')
                     ->with(compact('user', 'posts', 'beacon', 'profilePosts','profileExtensions'))
-                    ->with('photoPath', $photoPath)
                     ->with('beaconPath', $beaconPath);
 
     }
+
+
 
 }

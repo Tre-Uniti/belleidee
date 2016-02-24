@@ -24,8 +24,13 @@ Route::get('users/beacons/{id}', 'UserController@beaconsOfUser');
 Route::resource('users', 'UserController');
 
 //Beacon Routes (Resource)
-Route::resource('beacons', 'BeaconController');
 Route::get('beacons/tags/{source}', 'BeaconController@listTagged');
+Route::get('beacons/signup/{id}', 'BeaconController@signup');
+Route::post('beacons/subscribe', 'BeaconController@subscribe')->name('subscribe');
+Route::get('beacons/payment/{id}', 'BeaconController@payment');
+Route::get('beacons/subscription/{id}', 'BeaconController@subscription');
+Route::resource('beacons', 'BeaconController');
+
 
 //Belief Routes
 Route::get('beliefs', 'BeliefController@index');
@@ -62,8 +67,6 @@ Route::resource('drafts', 'DraftController');
 
 //Sponsor Routes (Resource)
 Route::get('sponsors/sponsorship/{id}', 'SponsorController@sponsorship');
-Route::get('sponsors/photo/{id}', 'SponsorController@sponsorPhoto');
-Route::post('sponsors/storePhoto/{id}', 'SponsorController@storePhoto');
 Route::resource('sponsors', 'SponsorController');
 
 //Support Routes (Resource)
@@ -75,6 +78,7 @@ Route::get('extensions/sortByExtension', 'ExtensionController@sortByExtension');
 Route::get('extensions/search', 'ExtensionController@search');
 Route::get('extensions/results', 'ExtensionController@results');
 Route::get('extensions/user/{id}', 'ExtensionController@userExtensions');
+Route::get('extensions/beacon/{id}', 'ExtensionController@beaconExtensions');
 Route::get('extensions/elevate/{id}', 'ExtensionController@elevateExtension');
 Route::get('extensions/question/{source}', 'ExtensionController@extendQuestion');
 Route::get('extensions/post/{source}', 'ExtensionController@extendPost');
@@ -119,7 +123,6 @@ Route::get('notifications/post/{id}', 'NotificationController@post');
 Route::get('notifications/extension/{id}', 'NotificationController@extension');
 Route::get('notifications/question/{id}', 'NotificationController@question');
 Route::resource('notifications', 'NotificationController');
-
 
 //Password Route (Laravel)
 Route::controllers(['password' => 'Auth\PasswordController',]);

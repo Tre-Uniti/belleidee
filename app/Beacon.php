@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Cashier\Billable;
+use Laravel\Cashier\Contracts\Billable as BillableContract;
 
-class Beacon extends Model
+class Beacon extends Model implements BillableContract
 {
+
+    use Billable;
 
     /**
      * New Beacons don't need to provide a card right away.
@@ -13,6 +17,8 @@ class Beacon extends Model
      * @var bool
      */
     protected $cardUpFront = false;
+    protected $dates = ['trial_ends_at', 'subscription_ends_at'];
+
 
     /**
      * The table associated with the model.

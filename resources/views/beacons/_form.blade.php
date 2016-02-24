@@ -73,11 +73,11 @@
         </td>
     </tr>
     <tr>
-        <td>{!! Form::file('image', null, ['class' => 'navButton']) !!}</td>
-    </tr>
-    <tr>
         <td>
             {!! Form::label('Max Upload size: 2MB') !!}
+        </td>
+        <td>
+            {!! Form::file('image', null, ['class' => 'navButton']) !!}
         </td>
     </tr>
 </table>

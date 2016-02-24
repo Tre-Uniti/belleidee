@@ -33,7 +33,8 @@ class SponsorRequest extends Request
             'country' => 'required|max:50',
             'city'  => 'required|max:75',
             'budget' => 'required|min:1|max:15',
-            'email' => 'required|email|max:255|unique:sponsors'
+            'email' => 'required|email|max:255|unique:sponsors',
+            'image' => 'mimes:jpeg,jpg,png|max:8000'
         ];
     }
 }

@@ -63,5 +63,3 @@
     </div>
 @stop
 
-@include('posts.rightSide')
-

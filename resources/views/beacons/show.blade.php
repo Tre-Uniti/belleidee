@@ -3,8 +3,6 @@
     Show Beacon
 @stop
 
-
-
 @section('centerMenu')
     <h2>{{ $beacon->name }}</h2>
 @stop
@@ -20,7 +18,7 @@
                 <a href="{{ url('/beacons') }}">Tag</a>
             </th>
             <th>
-                <a href="{{ url('/beacons') }}">Usage</a>
+                <a href="{{ url('/beacons/'. $beacon->id) }}">Usage</a>
             </th>
         </tr>
             <tr>
@@ -33,12 +31,10 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <a href="{{ $beacon->website }}">Beacon Website</a>
+                    <a href="{{ $beacon->website }}" target="_blank">Beacon Website</a>
                 </td>
             </tr>
     </table>
-        <hr/>
-
         </div>
 @stop
 

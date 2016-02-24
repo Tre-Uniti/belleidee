@@ -86,7 +86,7 @@ class SponsorController extends Controller
      * @param  \App\Http\Requests\SponsorRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SponsorRequest $request)
     {
         $sponsor = new Sponsor;
         $sponsor->name = $request['name'];
@@ -100,6 +100,28 @@ class SponsorController extends Controller
         $sponsor->views = 0;
         $sponsor->triggers = 0;
         $sponsor->save();
+
+        //Save Sponsor image and update path in DB
+        if($request->hasFile('image'))
+        {
+            if(!$request->file('image')->isValid())
+            {
+                $error = "Image File invalid.";
+                return redirect()
+                    ->back()
+                    ->withErrors([$error]);
+            }
+            $image = $request->file('image');
+
+            $sponsorName = str_replace(' ', '_', $sponsor->name);
+            $imageFileName = $sponsorName . '.' . $image->getClientOriginalExtension();
+            $path = '/sponsor_photos/'. $sponsor->id . '/' .$imageFileName;
+
+            Storage::put($path, file_get_contents($image));
+            $sponsor->where('id', $sponsor->id)
+                ->update(['photo_path' => $path]);
+        }
+
         flash()->overlay('Sponsor has been created.');
         return redirect('sponsors/photo/'. $sponsor->id);
     }
@@ -172,10 +194,28 @@ class SponsorController extends Controller
     public function update(Request $request, $id)
     {
         $sponsor = $this->sponsor->findOrFail($id);
+        if($request->hasFile('image'))
+        {
+            if(!$request->file('image')->isValid())
+            {
+                $error = "Image File invalid.";
+                return redirect()
+                    ->back()
+                    ->withErrors([$error]);
+            }
+            $image = $request->file('image');
+
+            $sponsorName = str_replace(' ', '_', $sponsor->name);
+            $imageFileName = $sponsorName . '.' . $image->getClientOriginalExtension();
+            $path = '/sponsor_photos/'. $sponsor->id . '/' .$imageFileName;
+
+            Storage::put($path, file_get_contents($image));
+            $sponsor->photo_path = $path;
+        }
         $sponsor->update($request->all());
         flash()->overlay('Sponsor has been updated');
 
-        return redirect('sponsors/photo/'. $sponsor->id);
+        return redirect('sponsors/'. $sponsor->id);
     }
 
     /**
@@ -225,73 +265,5 @@ class SponsorController extends Controller
             flash()->overlay('Your sponsorship has started!');
         }
         return redirect('users/'. $user->id);
-    }
-
-    /**
-     * Display options to change a sponsor's photo.
-     *
-     * @param  int  $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function sponsorPhoto($id)
-    {
-        $sponsor = Sponsor::findOrFail($id);
-        $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
-
-        return view('sponsors.photo')
-            ->with(compact('user', 'profilePosts', 'profileExtensions','sponsor'))
-            ->with('photoPath', $photoPath);
-    }
-    /**
-     * Upload sponsor photo to S3 and set in database.
-     *  @param  int  $id
-     *  @param  PhotoUploadRequest $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function storePhoto($id, PhotoUploadRequest $request)
-    {
-        $sponsor = Sponsor::findOrFail($id);
-        if(!$request->hasFile('image'))
-        {
-            $error = "No File uploaded.";
-            return redirect()
-                ->back()
-                ->withErrors([$error]);
-        }
-
-        if(!$request->file('image')->isValid())
-        {
-            $error = "Image File invalid.";
-            return redirect()
-                ->back()
-                ->withErrors([$error]);
-        }
-
-        $image = $request->file('image');
-        $sponsorName = str_replace(' ', '_', $sponsor->name);
-        $imageFileName = $sponsorName . '.' . $image->getClientOriginalExtension();
-
-        $path = '/sponsor_photos/'. $sponsor->id . '/' .$imageFileName;
-
-        Storage::put($path, file_get_contents($image));
-
-        $sponsor->where('id', $sponsor->id)
-            ->update(['photo_path' => $path]);
-
-        flash()->overlay('Image upload successful');
-        return redirect('/sponsors/'. $sponsor->id);
     }
 }

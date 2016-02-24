@@ -880,6 +880,37 @@ class ExtensionController extends Controller
     }
 
     /**
+     * Retrieve extensions of specific beacon.
+     *
+     * @param   $id
+     * @return \Illuminate\Http\Response
+     */
+    public function beaconExtensions($id)
+    {
+        $beacon = Beacon::findOrFail($id);
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        $extensions = $this->extension->where('beacon_tag', $beacon->beacon_tag)->latest()->paginate(10);
+
+        if($user->photo_path == '')
+        {
+
+            $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
+        }
+        else
+        {
+            $sourcePhotoPath = $user->photo_path;
+        }
+
+        return view ('extensions.beaconExtensions')
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
+            ->with('sourcePhotoPath', $sourcePhotoPath)
+            ->with('beacon', $beacon);
+    }
+
+    /**
      * Sort and show all extensions by highest Elevation
      * @return \Illuminate\Http\Response
      */
