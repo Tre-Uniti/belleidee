@@ -104,6 +104,7 @@ a:active {
   padding: 0px;
   color: #000000;
   width: auto;
+  cursor: pointer;
 }
 
 .extras:hover,
