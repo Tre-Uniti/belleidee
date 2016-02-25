@@ -30,7 +30,7 @@
         @foreach ($bookmarks as $bookmark)
             <div class = "listResource">
                 <div class = "listResourceLeft" style = " text-align: center; padding-left: 7%;">
-                    <a href="{{ action('UserController@show', [$bookmark['id']])}}">
+                    <a href="{{ action('UserController@show', [$bookmark['pointer']])}}">
                         <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark['title'] }}</button></a>
                 </div>
                 <div style = "width: 50%; float: right;">

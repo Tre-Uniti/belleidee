@@ -27,6 +27,11 @@ class Post extends Model
         return $this->hasMany('App\Elevate');
     }
 
+    public function extensions()
+    {
+        return $this->hasMany('App\Extension');
+    }
+
     /**
      * Additional fields to treat as Carbon instances.
      *

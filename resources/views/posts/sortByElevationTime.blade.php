@@ -8,7 +8,7 @@
     <h2>Top Elevated Posts ({{ $filter }})</h2>
     <table style="display: inline-block;">
         <tr>
-            <td><a href={{ url('/posts')}}>Most Recent</a></td>
+            <td><a href={{ url('/posts')}}>New Posts</a></td>
             <td><a href={{ url('/posts/search')}}>Search</a></td>
             <td><a href={{ url('/posts/extensionTime/'. $time)}}>Most Extended</a></td>
         </tr>
@@ -18,31 +18,7 @@
         <nav class = "infoNav">
             <ul>
                 <li>
-                    <p class = "extras">/-\</p>
-                    <div>
-                        <table align = "center">
-                            <tr>
-                                <td><a href = {{ url('/posts/elevation') }}>Recent</a></td>
-                                @if($time == 'Today')
-                                    <td><a href = {{ url('/posts/elevationTime/Month') }}>Month</a></td>
-                                    <td><a href={{ url('/posts/elevationTime/Year')}}>Year</a></td>
-                                    <td><a href={{ url('/posts/elevationTime/All')}}>All-time</a></td>
-                                @elseif($time == 'Month')
-                                    <td><a href={{ url('/posts/elevationTime/Today')}}>Today</a></td>
-                                    <td><a href={{ url('/posts/elevationTime/Year')}}>Year</a></td>
-                                    <td><a href={{ url('/posts/elevationTime/All')}}>All-time</a></td>
-                                @elseif($time == 'Year')
-                                    <td><a href={{ url('/posts/elevationTime/Today')}}>Today</a></td>
-                                    <td><a href = {{ url('/posts/elevationTime/Month') }}>Month</a></td>
-                                    <td><a href={{ url('/posts/elevationTime/All')}}>All-time</a></td>
-                                @elseif($time == 'All')
-                                    <td><a href={{ url('/posts/elevationTime/Today')}}>Today</a></td>
-                                    <td><a href = {{ url('/posts/elevationTime/Month') }}>Month</a></td>
-                                    <td><a href={{ url('/posts/elevationTime/Year')}}>Year</a></td>
-                                @endif
-                            </tr>
-                        </table>
-                    </div>
+                    <a href = {{ url('/posts/elevation') }}><p class = "extras">/Recent\</p></a>
                 </li>
             </ul>
         </nav>

@@ -19,31 +19,39 @@
     <nav class = "infoNav">
         <ul>
             <li>
-                <p class = "extras">/-\</p>
+                <a href = {{ url('/extensions') }}>/Back\</a>
+                <!--
                 <div>
                     <table align = "center">
                         <tr>
-                            <td><a href = {{ url('/extensions') }}>Recent</a></td>
+
                             @if($time == 'Today')
+                                <td><a href = {{ url('/extensions/timeFilter/Today') }}><b>Today</b></a></td>
                                 <td><a href = {{ url('/extensions/timeFilter/Month') }}>Month</a></td>
                                 <td><a href={{ url('/extensions/timeFilter/Year')}}>Year</a></td>
                                 <td><a href={{ url('/extensions/timeFilter/All')}}>All-time</a></td>
                             @elseif($time == 'Month')
                                 <td><a href={{ url('/extensions/timeFilter/Today')}}>Today</a></td>
+                                <td><a href = {{ url('/extensions/timeFilter/Month') }}><b>Month</b></a></td>
                                 <td><a href={{ url('/extensions/timeFilter/Year')}}>Year</a></td>
                                 <td><a href={{ url('/extensions/timeFilter/All')}}>All-time</a></td>
                             @elseif($time == 'Year')
                                 <td><a href={{ url('/extensions/timeFilter/Today')}}>Today</a></td>
                                 <td><a href = {{ url('/extensions/timeFilter/Month') }}>Month</a></td>
+                                <td><a href = {{ url('/extensions/timeFilter/Year') }}><b>Year</b></a></td>
                                 <td><a href={{ url('/extensions/timeFilter/All')}}>All-time</a></td>
                             @elseif($time == 'All')
                                 <td><a href={{ url('/extensions/timeFilter/Today')}}>Today</a></td>
                                 <td><a href = {{ url('/extensions/timeFilter/Month') }}>Month</a></td>
                                 <td><a href={{ url('/extensions/timeFilter/Year')}}>Year</a></td>
+                                <td><a href = {{ url('/extensions/timeFilter/All') }}><b>All-Time</b></a></td>
                             @endif
+
                         </tr>
                     </table>
+
                 </div>
+                -->
             </li>
         </ul>
     </nav>

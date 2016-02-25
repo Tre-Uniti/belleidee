@@ -8,7 +8,7 @@
         <h2>Top Elevated Extensions ({{ $filter }})</h2>
         <table style="display: inline-block;">
             <tr>
-                <td><a href={{ url('/extensions')}}>Most Recent</a></td>
+                <td><a href={{ url('/extensions')}}>New Extensions</a></td>
                 <td><a href={{ url('/extensions/search')}}>Search</a></td>
                 <td><a href={{ url('/extensions/extensionTime/'. $time)}}>Most Extended</a></td>
             </tr>
@@ -18,31 +18,7 @@
         <nav class = "infoNav">
             <ul>
                 <li>
-                    <p class = "extras">/-\</p>
-                    <div>
-                        <table align = "center">
-                            <tr>
-                                <td><a href = {{ url('/extensions/elevation') }}>Recent</a></td>
-                                @if($time == 'Today')
-                                    <td><a href = {{ url('/extensions/elevationTime/Month') }}>Month</a></td>
-                                    <td><a href={{ url('/extensions/elevationTime/Year')}}>Year</a></td>
-                                    <td><a href={{ url('/extensions/elevationTime/All')}}>All-time</a></td>
-                                @elseif($time == 'Month')
-                                    <td><a href={{ url('/extensions/elevationTime/Today')}}>Today</a></td>
-                                    <td><a href={{ url('/extensions/elevationTime/Year')}}>Year</a></td>
-                                    <td><a href={{ url('/extensions/elevationTime/All')}}>All-time</a></td>
-                                @elseif($time == 'Year')
-                                    <td><a href={{ url('/extensions/elevationTime/Today')}}>Today</a></td>
-                                    <td><a href = {{ url('/extensions/elevationTime/Month') }}>Month</a></td>
-                                    <td><a href={{ url('/extensions/elevationTime/All')}}>All-time</a></td>
-                                @elseif($time == 'All')
-                                    <td><a href={{ url('/extensions/elevationTime/Today')}}>Today</a></td>
-                                    <td><a href = {{ url('/extensions/elevationTime/Month') }}>Month</a></td>
-                                    <td><a href={{ url('/extensions/elevationTime/Year')}}>Year</a></td>
-                                @endif
-                            </tr>
-                        </table>
-                    </div>
+                    <a href = {{ url('/extensions/elevation') }}><p class = "extras">/Recent\</p></a>
                 </li>
             </ul>
         </nav>
@@ -53,7 +29,6 @@
     <div style = "width: 50%; float: right;">
         <h4>User</h4>
     </div>
-
     @foreach ($extensions as $extension)
 
         <div class = "listResource">
@@ -65,11 +40,8 @@
         </div>
         </div>
     @endforeach
-
 @stop
 
 @section('centerFooter')
     {!! $extensions->render() !!}
 @stop
-
-@include('extensions.rightSide')

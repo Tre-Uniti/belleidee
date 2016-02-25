@@ -18,31 +18,7 @@
     <nav class = "infoNav">
         <ul>
             <li>
-                <p class = "extras">/-\</p>
-                <div>
-                    <table align = "center">
-                        <tr>
-                            <td><a href = {{ url('/posts') }}>Recent</a></td>
-                            @if($time == 'Today')
-                                <td><a href = {{ url('/posts/timeFilter/Month') }}>Month</a></td>
-                                <td><a href={{ url('/posts/timeFilter/Year')}}>Year</a></td>
-                                <td><a href={{ url('/posts/timeFilter/All')}}>All-time</a></td>
-                            @elseif($time == 'Month')
-                                <td><a href={{ url('/posts/timeFilter/Today')}}>Today</a></td>
-                                <td><a href={{ url('/posts/timeFilter/Year')}}>Year</a></td>
-                                <td><a href={{ url('/posts/timeFilter/All')}}>All-time</a></td>
-                            @elseif($time == 'Year')
-                                <td><a href={{ url('/posts/timeFilter/Today')}}>Today</a></td>
-                                <td><a href = {{ url('/posts/timeFilter/Month') }}>Month</a></td>
-                                <td><a href={{ url('/posts/timeFilter/All')}}>All-time</a></td>
-                            @elseif($time == 'All')
-                                <td><a href={{ url('/posts/timeFilter/Today')}}>Today</a></td>
-                                <td><a href = {{ url('/posts/timeFilter/Month') }}>Month</a></td>
-                                <td><a href={{ url('/posts/timeFilter/Year')}}>Year</a></td>
-                            @endif
-                        </tr>
-                    </table>
-                </div>
+                <a href = {{ url('/posts') }}><p class = "extras">/Recent\</p></a>
             </li>
         </ul>
     </nav>

@@ -8,9 +8,9 @@
         <h2>Recent Extensions</h2>
         <table style="display: inline-block;">
             <tr>
-                <td><a href={{ url('/extensions/elevation')}}>Top Elevated</a></td>
+                <td><a href={{ url('/extensions/elevation')}}>Elevated</a></td>
                 <td><a href={{ url('/extensions/search')}}>Search</a></td>
-                <td><a href={{ url('/extensions/extension')}}>Most Extended</a></td>
+                <td><a href={{ url('/extensions/extension')}}>Extended</a></td>
             </tr>
         </table>
     </div>
@@ -54,5 +54,4 @@
 @stop
 
 @section('centerFooter')
-    {!! $extensions->render() !!}
 @stop

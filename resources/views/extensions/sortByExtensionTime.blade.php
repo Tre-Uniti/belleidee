@@ -8,40 +8,16 @@
         <h2>Most Extended Extensions ({{ $filter }})</h2>
         <table style="display: inline-block;">
             <tr>
-                <td><a href={{ url('/extensions/sortByElevationTime/'. $time)}}>Top Elevated</a></td>
+                <td><a href={{ url('/extensions/elevationTime/'. $time)}}>Top Elevated</a></td>
                 <td><a href={{ url('/extensions/search')}}>Search</a></td>
-                <td><a href={{ url('/extensions')}}>Most Recent</a></td>
+                <td><a href={{ url('/extensions')}}>New Extensions</a></td>
             </tr>
         </table>
         <div id = "centerTextContent">
             <nav class = "infoNav">
                 <ul>
                     <li>
-                        <p class = "extras">/-\</p>
-                        <div>
-                            <table align = "center">
-                                <tr>
-                                    <td><a href = {{ url('/extensions/extension') }}>Recent</a></td>
-                                    @if($time == 'Today')
-                                        <td><a href = {{ url('/extensions/extensionTime/Month') }}>Month</a></td>
-                                        <td><a href={{ url('/extensions/extensionTime/Year')}}>Year</a></td>
-                                        <td><a href={{ url('/extensions/extensionTime/All')}}>All-time</a></td>
-                                    @elseif($time == 'Month')
-                                        <td><a href={{ url('/extensions/extensionTime/Today')}}>Today</a></td>
-                                        <td><a href={{ url('/extensions/extensionTime/Year')}}>Year</a></td>
-                                        <td><a href={{ url('/extensions/extensionTime/All')}}>All-time</a></td>
-                                    @elseif($time == 'Year')
-                                        <td><a href={{ url('/extensions/extensionTime/Today')}}>Today</a></td>
-                                        <td><a href = {{ url('/extensions/extensionTime/Month') }}>Month</a></td>
-                                        <td><a href={{ url('/extensions/extensionTime/All')}}>All-time</a></td>
-                                    @elseif($time == 'All')
-                                        <td><a href={{ url('/extensions/extensionTime/Today')}}>Today</a></td>
-                                        <td><a href = {{ url('/extensions/extensionTime/Month') }}>Month</a></td>
-                                        <td><a href={{ url('/extensions/extensionTime/Year')}}>Year</a></td>
-                                    @endif
-                                </tr>
-                            </table>
-                        </div>
+                        <a href = {{ url('/extensions/extension') }}><p class = "extras">/Recent\</p></a>
                     </li>
                 </ul>
             </nav>
@@ -51,9 +27,8 @@
         <h4>Title</h4>
     </div>
     <div style = "width: 50%; float: right;">
-        <h4>User</h4>
+        <h4>Extended By</h4>
     </div>
-
 
     @foreach ($extensions as $extension)
 

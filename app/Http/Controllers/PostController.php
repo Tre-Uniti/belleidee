@@ -42,7 +42,7 @@ class PostController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $posts = $this->post->whereNull('status')->latest('created_at')->paginate(10);
+        $posts = $this->post->whereNull('status')->latest('created_at')->take(10)->get();
 
 
         if($user->photo_path == '')
@@ -630,11 +630,10 @@ class PostController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $posts = $this->post->orderBy('elevation', 'desc')->paginate(10);
-
+        $elevations = Elevate::where('post_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
 
         return view ('posts.sortByElevation')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'elevations', 'profilePosts','profileExtensions'));
     }
 
     /**
@@ -683,10 +682,11 @@ class PostController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $posts = $this->post->orderBy('extension', 'desc')->paginate(10);
+
+        $extensions = Extension::where('post_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
 
         return view ('posts.sortByExtension')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'));
     }
 
     /**

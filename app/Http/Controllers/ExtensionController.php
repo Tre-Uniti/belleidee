@@ -43,20 +43,11 @@ class ExtensionController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
-        $extensions = $this->extension->whereNull('status')->where('created_at', '>=', Carbon::today()->subDays(60))->latest()->paginate(10);
+        $extensions = $this->extension->whereNull('status')->latest('created_at')->take(10)->get();
 
-        if($user->photo_path == '')
-        {
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
         return view ('extensions.index')
-                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions'))
-                    ->with('photoPath', $photoPath);
+                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions'));
     }
 
     /**
@@ -910,7 +901,7 @@ class ExtensionController extends Controller
     }
 
     /**
-     * Sort and show all extensions by highest Elevation
+     * Sort and show last 10 extensions by recent Elevation
      * @return \Illuminate\Http\Response
      */
     public function sortByElevation()
@@ -918,10 +909,10 @@ class ExtensionController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $extensions = $this->extension->orderBy('elevation', 'desc')->paginate(10);
+        $elevations = Elevate::where('extension_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('extension_id')->take(10)->get();
 
         return view ('extensions.sortByElevation')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'elevations', 'profilePosts','profileExtensions'));
 
     }
 
@@ -971,11 +962,10 @@ class ExtensionController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $extensions = $this->extension->orderBy('extension', 'desc')->paginate(10);
+        $extensions = Extension::where('extenception', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('extenception')->take(10)->get();
 
         return view ('extensions.sortByExtension')
             ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'));
-
     }
 
     /**

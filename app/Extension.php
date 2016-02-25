@@ -28,4 +28,17 @@ class Extension extends Model
     {
         return $this->hasMany('App\Elevate');
     }
+
+    public function post()
+    {
+        return $this->belongsTo('App\Post');
+    }
+
+    //Return title of extenception
+    public function extenceptionTitle($id)
+    {
+        $extension = Extension::findOrFail($id);
+        return $extension->title;
+    }
+
 }
