@@ -44,7 +44,7 @@
             <a href="{{ action('ExtensionController@show', [$elevation->extension_id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $elevation->extension->title }}</button></a>
         </div>
         <div class = "listResourceRight">
-            <a href="{{ action('ExtensionController@listElevation', [$elevation->id])}}"><button type = "button" class = "interactButton">{{ $elevation->extension->elevation }}</button></a>
+            <a href="{{ action('ExtensionController@listElevation', [$elevation->extension_id])}}"><button type = "button" class = "interactButton">{{ $elevation->extension->elevation }}</button></a>
         </div>
         </div>
     @endforeach
