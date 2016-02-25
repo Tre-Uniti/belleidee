@@ -1,17 +1,36 @@
 @extends('app')
 @section('siteTitle')
-    Posts
+    Extended Posts
 @stop
 @section('centerText')
     <div>
     <h2>Most Extended Posts</h2>
     <table style="display: inline-block;">
         <tr>
-            <td><a href={{ url('/posts/topElevated')}}>Top Elevated</a></td>
+            <td><a href={{ url('/posts/elevation')}}>Top Elevated</a></td>
             <td><a href={{ url('/posts/search')}}>Search</a></td>
             <td><a href={{ url('/posts')}}>Most Recent</a></td>
         </tr>
     </table>
+    </div>
+    <div id = "centerTextContent">
+        <nav class = "infoNav">
+            <ul>
+                <li>
+                    <p class = "extras">/-\</p>
+                    <div>
+                        <table align = "center">
+                            <tr>
+                                <td><a href={{ url('/posts/extensionTime/Today')}}>Today</a></td>
+                                <td><a href = {{ url('/posts/extensionTime/Month') }}>Month</a></td>
+                                <td><a href={{ url('/posts/extensionTime/Year')}}>Year</a></td>
+                                <td><a href={{ url('/posts/extensionTime/All')}}>All-time</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+            </ul>
+        </nav>
     </div>
     <div style = "width: 50%; float: left;">
         <h4>Title</h4>
@@ -36,6 +55,5 @@
     {!! $posts->render() !!}
 @stop
 
-@include('posts.rightSide')
 
 

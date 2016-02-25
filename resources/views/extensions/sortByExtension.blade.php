@@ -10,11 +10,30 @@
         <h2>Most Extended Extensions</h2>
         <table style="display: inline-block;">
             <tr>
-                <td><a href={{ url('/extensions/sortByElevation')}}>Top Elevated</a></td>
-                <td><a href={{ url('/indev')}}>Search</a></td>
+                <td><a href={{ url('/extensions/elevation')}}>Top Elevated</a></td>
+                <td><a href={{ url('/extensions/search')}}>Search</a></td>
                 <td><a href={{ url('/extensions')}}>Most Recent</a></td>
             </tr>
         </table>
+    </div>
+    <div id = "centerTextContent">
+        <nav class = "infoNav">
+            <ul>
+                <li>
+                    <p class = "extras">/-\</p>
+                    <div>
+                        <table align = "center">
+                            <tr>
+                                <td><a href={{ url('/extensions/extensionTime/Today')}}>Today</a></td>
+                                <td><a href = {{ url('/extensions/extensionTime/Month') }}>Month</a></td>
+                                <td><a href={{ url('/extensions/extensionTime/Year')}}>Year</a></td>
+                                <td><a href={{ url('/extensions/extensionTime/All')}}>All-time</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+            </ul>
+        </nav>
     </div>
     <div style = "width: 50%; float: left;">
         <h4>Title</h4>
@@ -41,5 +60,3 @@
 @section('centerFooter')
     {!! $extensions->render() !!}
 @stop
-
-@include('extensions.rightSide')

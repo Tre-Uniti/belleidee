@@ -631,20 +631,49 @@ class PostController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->orderBy('elevation', 'desc')->paginate(10);
-        if($user->photo_path == '')
-        {
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
-        return view ('posts.topElevated')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+        return view ('posts.sortByElevation')
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'));
     }
+
+    /**
+     * Sort and show all posts by highest Elevation given time
+     *
+     * @param $time
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByElevationTime($time)
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        if($time == 'Today')
+        {
+            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->today())->orderBy('elevation', 'desc')->paginate(10);
+            $filter = Carbon::now()->today()->format('l');
+        }
+        elseif($time == 'Month')
+        {
+            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfMonth())->orderBy('elevation', 'desc')->paginate(10);
+            $filter = Carbon::now()->startOfMonth()->format('F');
+        }
+        elseif($time == 'Year')
+        {
+            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfYear())->orderBy('elevation', 'desc')->paginate(10);
+            $filter = Carbon::now()->startOfYear()->format('Y');
+        }
+        elseif($time == 'All')
+        {
+            $posts = $this->post->whereNull('status')->orderBy('elevation', 'desc')->paginate(10);
+            $filter = 'All';
+        }
+        return view ('posts.sortByElevationTime')
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+            ->with('filter', $filter)
+            ->with('time', $time);
+    }
+
     /**
      * Sort and show all posts by highest Extension
      * @return \Illuminate\Http\Response
@@ -655,22 +684,87 @@ class PostController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->orderBy('extension', 'desc')->paginate(10);
-        if($user->photo_path == '')
-        {
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
-
-        return view ('posts.mostExtended')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+        return view ('posts.sortByExtension')
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'));
     }
 
-    //Used to setup extension of post
+    /**
+     * Sort and show all posts by highest Extension given time
+     *
+     * @param $time
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByExtensionTime($time)
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        if($time == 'Today')
+        {
+            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->today())->orderBy('extension', 'desc')->paginate(10);
+            $filter = Carbon::now()->today()->format('l');
+        }
+        elseif($time == 'Month')
+        {
+            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfMonth())->orderBy('extension', 'desc')->paginate(10);
+            $filter = Carbon::now()->startOfMonth()->format('F');
+        }
+        elseif($time == 'Year')
+        {
+            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfYear())->orderBy('extension', 'desc')->paginate(10);
+            $filter = Carbon::now()->startOfYear()->format('Y');
+        }
+        elseif($time == 'All')
+        {
+            $posts = $this->post->whereNull('status')->orderBy('extension', 'desc')->paginate(10);
+            $filter = 'All';
+        }
+        return view ('posts.sortByExtensionTime')
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+            ->with('filter', $filter)
+            ->with('time', $time);
+    }
+
+    /**
+     * Sort and show all extensions by selected time
+     *
+     * @param $time
+     * @return \Illuminate\Http\Response
+     */
+    public function timeFilter($time)
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        if($time == 'Today')
+        {
+            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->today())->latest()->paginate(10);
+            $filter = Carbon::now()->today()->format('l');
+        }
+        elseif($time == 'Month')
+        {
+            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfMonth())->latest()->paginate(10);
+            $filter = Carbon::now()->startOfMonth()->format('F');
+        }
+        elseif($time == 'Year')
+        {
+            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfYear())->latest()->paginate(10);
+            $filter = Carbon::now()->startOfYear()->format('Y');
+        }
+        elseif($time == 'All')
+        {
+            $posts = $this->post->whereNull('status')->latest('created_at')->paginate(10);
+            $filter = 'All';
+        }
+
+        return view ('posts.timeFilter')
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+            ->with('filter', $filter)
+            ->with('time', $time);
+    }
+
+    //Unlock Intolerant Post
     public function unlockPost($id)
     {
         $post = Post::findOrFail($id);

@@ -49,13 +49,16 @@ Route::get('bookmarks/remove/{id}', 'BookmarkController@remove');
 Route::resource('bookmarks', 'BookmarkController');
 
 //Post Routes (Resource)
+Route::get('posts/elevationTime/{time}', 'PostController@sortByElevationTime');
+Route::get('posts/extensionTime/{time}', 'PostController@sortByExtensionTime');
+Route::get('posts/timeFilter/{time}', 'PostController@timeFilter');
 Route::get('posts/user/{id}', 'PostController@userPosts');
 Route::get('posts/date/{date}', 'PostController@listDates');
 Route::get('posts/source/{source}', 'PostController@listSources');
 Route::get('posts/elevate/{id}', 'PostController@elevatePost');
 Route::get('posts/unlock/{id}', 'PostController@unlockPost');
-Route::get('posts/topElevated', 'PostController@sortByElevation');
-Route::get('posts/mostExtended', 'PostController@sortByExtension');
+Route::get('posts/elevation', 'PostController@sortByElevation');
+Route::get('posts/extension', 'PostController@sortByExtension');
 Route::get('posts/search', 'PostController@search');
 Route::get('posts/results', 'PostController@results');
 Route::get('posts/listElevation/{id}', 'PostController@listElevation');
@@ -73,8 +76,11 @@ Route::resource('sponsors', 'SponsorController');
 Route::resource('supports', 'SupportController');
 
 //Extension Routes (Resource)
-Route::get('extensions/sortByElevation', 'ExtensionController@sortByElevation');
-Route::get('extensions/sortByExtension', 'ExtensionController@sortByExtension');
+Route::get('extensions/elevation', 'ExtensionController@sortByElevation');
+Route::get('extensions/extension', 'ExtensionController@sortByExtension');
+Route::get('extensions/elevationTime/{time}', 'ExtensionController@sortByElevationTime');
+Route::get('extensions/extensionTime/{time}', 'ExtensionController@sortByExtensionTime');
+Route::get('extensions/timeFilter/{time}', 'ExtensionController@timeFilter');
 Route::get('extensions/search', 'ExtensionController@search');
 Route::get('extensions/results', 'ExtensionController@results');
 Route::get('extensions/user/{id}', 'ExtensionController@userExtensions');

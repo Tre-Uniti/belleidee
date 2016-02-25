@@ -3,18 +3,35 @@
     Top Elevated
 @stop
 
-
-
 @section('centerText')
     <div>
         <h2>Top Elevated Extensions</h2>
         <table style="display: inline-block;">
             <tr>
                 <td><a href={{ url('/extensions')}}>Most Recent</a></td>
-                <td><a href={{ url('/indev')}}>Search</a></td>
+                <td><a href={{ url('/extensions/search')}}>Search</a></td>
                 <td><a href={{ url('/extensions/sortByExtension')}}>Most Extended</a></td>
             </tr>
         </table>
+    </div>
+    <div id = "centerTextContent">
+        <nav class = "infoNav">
+            <ul>
+                <li>
+                    <p class = "extras">/-\</p>
+                    <div>
+                        <table align = "center">
+                            <tr>
+                                <td><a href={{ url('/extensions/elevationTime/Today')}}>Today</a></td>
+                                <td><a href = {{ url('/extensions/elevationTime/Month') }}>Month</a></td>
+                                <td><a href={{ url('/extensions/elevationTime/Year')}}>Year</a></td>
+                                <td><a href={{ url('/extensions/elevationTime/All')}}>All-time</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+            </ul>
+        </nav>
     </div>
     <div style = "width: 50%; float: left;">
         <h4>Title</h4>
@@ -22,10 +39,7 @@
     <div style = "width: 50%; float: right;">
         <h4>User</h4>
     </div>
-
-
     @foreach ($extensions as $extension)
-
         <div class = "listResource">
         <div class = "listResourceLeft">
             <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $extension->title }}</button></a>
@@ -41,5 +55,3 @@
 @section('centerFooter')
     {!! $extensions->render() !!}
 @stop
-
-@include('extensions.rightSide')
