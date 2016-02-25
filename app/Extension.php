@@ -41,4 +41,18 @@ class Extension extends Model
         return $extension->title;
     }
 
+    //Return # of extensions of extenception
+    public function extenceptionExtension($id)
+    {
+        $extension = Extension::findOrFail($id);
+        return $extension->extension;
+    }
+
+    //Return # of elevation of extenception
+    public function extenceptionElevation($id)
+    {
+        $extension = Extension::findOrFail($id);
+        return $extension->elevation;
+    }
+
 }

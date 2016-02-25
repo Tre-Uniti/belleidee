@@ -36,7 +36,7 @@
         <h4>Title</h4>
     </div>
     <div style = "width: 50%; float: right;">
-        <h4>Elevated by</h4>
+        <h4>Elevation</h4>
     </div>
     @foreach ($elevations as $elevation)
         <div class = "listResource">
@@ -44,7 +44,7 @@
             <a href="{{ action('ExtensionController@show', [$elevation->extension_id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $elevation->extension->title }}</button></a>
         </div>
         <div class = "listResourceRight">
-            <a href="{{ action('UserController@show', [$elevation->user_id])}}"><button type = "button" class = "interactButton">{{ $elevation->user->handle }}</button></a>
+            <a href="{{ action('ExtensionController@listElevation', [$elevation->id])}}"><button type = "button" class = "interactButton">{{ $elevation->extension->elevation }}</button></a>
         </div>
         </div>
     @endforeach

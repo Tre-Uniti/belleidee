@@ -39,17 +39,17 @@
         <h4>Title</h4>
     </div>
     <div style = "width: 50%; float: right;">
-        <h4>User</h4>
+        <h4>Extensions</h4>
     </div>
 
     @foreach ($extensions as $extension)
 
         <div class = "listResource">
         <div class = "listResourceLeft">
-            <a href="{{ action('ExtensionController@show', [$extension->extenception])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $extension->extenceptionTitle($extension->id) }}</button></a>
+            <a href="{{ action('ExtensionController@show', [$extension->extenception])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $extension->extenceptionTitle($extension->extenception) }}</button></a>
         </div>
         <div class = "listResourceRight">
-            <a href="{{ action('UserController@show', [$extension->user_id])}}"><button type = "button" class = "interactButton">{{ $extension->user->handle }}</button></a>
+            <a href="{{ action('ExtensionController@extendList', [$extension->extenception])}}"><button type = "button" class = "interactButton">{{ $extension->extenceptionExtension($extension->extenception) }}</button></a>
         </div>
         </div>
     @endforeach

@@ -27,7 +27,7 @@
         <h4>Title</h4>
     </div>
     <div style = "width: 50%; float: right;">
-        <h4>Extended By</h4>
+        <h4>Extensions</h4>
     </div>
 
     @foreach ($extensions as $extension)
@@ -37,7 +37,7 @@
             <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $extension->title }}</button></a>
         </div>
         <div class = "listResourceRight">
-            <a href="{{ action('UserController@show', [$extension->user_id])}}"><button type = "button" class = "interactButton">{{ $extension->user->handle }}</button></a>
+            <a href="{{ action('ExtensionController@extendList', [$extension->id])}}"><button type = "button" class = "interactButton">{{ $extension->extension }}</button></a>
         </div>
         </div>
     @endforeach
