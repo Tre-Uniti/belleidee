@@ -69,6 +69,8 @@ Route::get('drafts/convert/{id}', 'DraftController@convert');
 Route::resource('drafts', 'DraftController');
 
 //Sponsor Routes (Resource)
+Route::get('sponsors/pay/{id}', 'SponsorController@pay');
+Route::post('sponsors/payment', 'SponsorController@payment')->name('payment');;
 Route::get('sponsors/sponsorship/{id}', 'SponsorController@sponsorship');
 Route::resource('sponsors', 'SponsorController');
 

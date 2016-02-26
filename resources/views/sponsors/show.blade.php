@@ -44,6 +44,9 @@
     @if($user->type > 1)
         <a href="{{ url('/sponsors/'.$sponsor->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
     @endif
+    @if($user->type > 1 || $user->id == $sponsor->user_id)
+        <a href="{{ url('/sponsors/pay/'. $sponsor->id) }}"><button type = "button" class = "navButton">Pay</button></a>
+    @endif
         <a href="{{ url('/sponsors/sponsorship/'.$sponsor->id) }}"><button type = "button" class = "navButton">Start Sponsorship</button></a>
 @stop
 
