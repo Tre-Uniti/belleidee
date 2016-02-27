@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
+use Stripe;
 
 class SponsorController extends Controller
 {
@@ -276,92 +277,92 @@ class SponsorController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
+        if ($sponsor->customer_id != NULL) {
+            $stripe = [
+                'secret_key' => env('STRIPE_SECRET'),
+                'publishable_key' => env('STRIPE_KEY')
+            ];
+            \Stripe\Stripe::setApiKey($stripe['secret_key']);
+            $charge = \Stripe\Charge::create(array(
+                'customer' => $sponsor->customer_id,
+                'amount' => $sponsor->views * 5,
+                'currency' => 'usd',
+                'description' => $sponsor->name
+            ));
+
+            //Update sponsor with new views, missed and status to live
+            $sponsor->where('id', $sponsor->id)
+                ->update(['views' => 0, 'missed' => 0, 'status' => 'Live']);
+
+            flash()->overlay('Payment successful, views and missed restarted');
+
+            return redirect('sponsors/' . $sponsor->id);
+        }
+
         return view('sponsors.pay')
             ->with(compact('user', 'profilePosts', 'profileExtensions', 'sponsor'));
 
     }
 
-    //Handle payment of sponsor
+    /**
+     * Charge monthly use for Sponsor
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function payment(Request $request)
     {
-        $messageTitle = '';
-        $message = '';
+        $token = $request['stripeToken'];
+        $sponsorId = $request['sponsor'];
 
-        if (Input::has('stripeToken')) {
-            $token = Input::get('stripeToken');
-            if (Input::has('email')) {
-                $email = Input::get('email');
-                if (Input::has('amount')) {
-                    $amount = Input::get('amount');
-                    if (Input::has('description')) {
-                        $description = Input::get('description');
-                        try {
-                            $customerList = Stripe_Customer::all();
-                            $customers = $customerList->data;
-                            $customer = null;
+        $sponsor = Sponsor::findOrFail($sponsorId);
 
-                            if (!empty($customers)) {
-                                foreach ($customers as $person) {
-                                    if ($person->email == $email) {
-                                        $customer = $person;
-                                    }
-                                }
-                                if (empty($customer)) {
-                                    $customer = Stripe_Customer::create(array(
-                                        'email' => $email,
-                                        'card' => $token
-                                    ));
-                                }
-                            } else {
-                                $customer = Stripe_Customer::create(array(
-                                    'email' => $email,
-                                    'card' => $token
-                                ));
-                            }
-                            $charge = Stripe_Charge::create(array(
-                                'customer' => $customer->id,
-                                'amount' => ($amount * 100),
-                                'currency' => 'usd',
-                                'description' => $description
-                            ));
-                        } catch (Stripe_CardError $e) {
-                            $messageTitle = 'Card Declined';
-                            // Since it's a decline, Stripe_CardError will be caught
-                            $body = $e->getJsonBody();
-                            $err = $body['error'];
-                            $message = $err['message'];
-                        } catch (Stripe_InvalidRequestError $e) {
-                            // Invalid parameters were supplied to Stripe's API
-                            $messageTitle = 'Oops...';
-                            $message = 'It looks like my payment processor encountered an error with the payment information. Please contact me before re-trying.';
-                        } catch (Stripe_AuthenticationError $e) {
-                            // Authentication with Stripe's API failed
-                            // (maybe you changed API keys recently)
-                            $messageTitle = 'Oops...';
-                            $message = 'It looks like my payment processor API encountered an error. Please contact me before re-trying.';
-                        } catch (Stripe_ApiConnectionError $e) {
-                            // Network communication with Stripe failed
-                            $messageTitle = 'Oops...';
-                            $message = 'It looks like my payment processor encountered a network error. Please contact me before re-trying.';
-                        } catch (Stripe_Error $e) {
-                            // Display a very generic error to the user, and maybe send
-                            // yourself an email
-                            $messageTitle = 'Oops...';
-                            $message = 'It looks like my payment processor encountered an error. Please contact me before re-trying.';
-                        } catch (Exception $e) {
-                            // Something else happened, completely unrelated to Stripe
-                            $messageTitle = 'Oops...';
-                            $message = 'It appears that something went wrong with your payment. Please contact me before re-trying.';
-                        }
-                    } else {
-                        $messageTitle = 'You must enter a payment description.';
-                    }
-                } else {
-                    $messageTitle = 'You must enter a valid amount.';
-                }
-            } else {
-                $messageTitle = 'You must enter a valid email address.';
-            }
+        $stripe = [
+            'secret_key'      => env('STRIPE_SECRET'),
+            'publishable_key' => env('STRIPE_KEY')
+        ];
+
+        \Stripe\Stripe::setApiKey($stripe['secret_key']);
+
+        //Calcuate amount per view (5 cents)
+        $amount = $sponsor->views * 5;
+
+        if ($sponsor->customer_id == NULL)
+        {
+            $customer = \Stripe\Customer::create(array(
+                'email' => $sponsor->email,
+                'card'  => $token
+
+            ));
+            //dd($customer);
+            $charge = \Stripe\Charge::create(array(
+                'customer' => $customer->id,
+                'amount'   => $amount,
+                'currency' => 'usd',
+                'description' => $sponsor->name
+            ));
+
+            //Update sponsor with new views, missed, status to live and stripe customer id
+            $sponsor->where('id', $sponsor->id)
+                ->update(['views' => 0, 'missed' => 0, 'status' => 'Live', 'customer_id' => $customer->id]);
         }
+        else
+        {
+            $charge = \Stripe\Charge::create(array(
+                'customer' => $sponsor->customer_id,
+                'amount'   => $amount,
+                'currency' => 'usd',
+                'description' => $sponsor->name
+            ));
+
+            //Update sponsor with new views, missed and status to live
+            $sponsor->where('id', $sponsor->id)
+                ->update(['views' => 0, 'missed' => 0, 'status' => 'Live']);
+        }
+
+        flash()->overlay('Payment successful, views and missed restarted');
+
+        return redirect('sponsors/'. $sponsor->id);
     }
+
 }

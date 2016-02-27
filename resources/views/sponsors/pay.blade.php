@@ -46,6 +46,10 @@
     </div>
     <table align = "center">
         <tr>
+            <td>{!! Form::label('sponsor', 'Sponsor ID') !!}</td>
+            <td>{!! Form::text('sponsor', $sponsor->id)!!}</td>
+        </tr>
+        <tr>
             <td>Views:</td><td> {{ $sponsor->views }}</td>
         </tr>
         <tr>

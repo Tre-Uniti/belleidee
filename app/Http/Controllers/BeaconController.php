@@ -153,7 +153,7 @@ class BeaconController extends Controller
     }
 
     /**
-     * Gather card details for beacon subscription
+     * Start subscription for beacon
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -167,6 +167,24 @@ class BeaconController extends Controller
                 ['email' => $beacon->email, 'description' => $beacon->name]);
 
         flash()->overlay('Level '. $request['subscription'] . ' subscription started for '. $beacon->name);
+        return redirect('beacons/'. $beacon->id);
+
+    }
+
+    /**
+     * Swap subscription
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function swap(Request $request)
+    {
+        $id = $request['beacon'];
+        $beacon = Beacon::findOrFail($id);
+
+        $beacon->subscription($request['subscription'])->swap();
+
+        flash()->overlay('Level '. $request['subscription'] . ' subscription updated for '. $beacon->name);
         return redirect('beacons/'. $beacon->id);
 
     }

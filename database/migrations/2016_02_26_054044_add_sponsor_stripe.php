@@ -13,7 +13,7 @@ class AddSponsorStripe extends Migration
     public function up()
     {
         Schema::table('sponsors', function (Blueprint $table) {
-            $table->integer('customer_id')->unsigned()->nullable();
+            $table->string('customer_id')->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->dropColumn('triggers');
         });

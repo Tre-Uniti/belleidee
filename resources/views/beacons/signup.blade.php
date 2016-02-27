@@ -8,7 +8,7 @@
     <script type="text/javascript">
         Stripe.setPublishableKey('pk_test_5UQPslTg5VlQSDkE64mtG7TJ');
         var stripeResponseHandler = function(status, response) {
-            var $form = $('#payment-form');
+            var $form = $('#subscription-form');
             if (response.error) {
                 // Show the errors on the form
                 $form.find('.payment-errors').text(response.error.message);
@@ -23,7 +23,7 @@
             }
         };
         jQuery(function($) {
-            $('#payment-form').submit(function(e) {
+            $('#subscription-form').submit(function(e) {
                 var $form = $(this);
                 // Disable the submit button to prevent repeated clicks
                 $form.find('button').prop('disabled', true);
