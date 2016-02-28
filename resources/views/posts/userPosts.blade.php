@@ -3,15 +3,14 @@
     Your Posts
 @stop
 
-
 @section('centerText')
     <div>
         <h2>Posts by <a href={{ url('/users/'. $user->id)}}>{{ $user->handle }}</a></h2>
         <table style="display: inline-block;">
             <tr>
-                <td><a href={{ url('/posts')}}>Top Elevated</a></td>
+                <td><a href={{ url('/posts/elevation')}}>Top Elevated</a></td>
                 <td><a href={{ url('/posts')}}>Search</a></td>
-                <td><a href={{ url('/posts')}}>Most Extended</a></td>
+                <td><a href={{ url('/posts/extension')}}>Most Extended</a></td>
             </tr>
         </table>
     </div>
@@ -23,7 +22,6 @@
     </div>
 
     @foreach ($posts as $post)
-
         <div class = "listResource">
             <div class = "listResourceLeft">
                 <a href="{{ action('PostController@show', [$post->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $post->title }}</button></a>
@@ -40,6 +38,5 @@
     {!! $posts->render() !!}
 @stop
 
-@include('posts.rightSide')
 
 

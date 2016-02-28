@@ -9,9 +9,9 @@
         <h2>Posts by {{ $user->handle }}</h2>
         <table style="display: inline-block;">
             <tr>
-                <td><a href={{ url('/posts')}}>Top Elevated</a></td>
+                <td><a href={{ url('/posts/elevation')}}>Top Elevated</a></td>
                 <td><a href={{ url('/posts')}}>Search</a></td>
-                <td><a href={{ url('/posts')}}>Most Extended</a></td>
+                <td><a href={{ url('/posts/extension')}}>Most Extended</a></td>
             </tr>
         </table>
     </div>

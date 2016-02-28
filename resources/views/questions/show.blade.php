@@ -45,8 +45,6 @@
         @endif
         @if($user->type > 1)
                 <a href="{{ url('/questions/'.$question->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
-            @else
-            <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Report</button></a>
         @endif
         <a href="{{ url('/extensions/question/'. $question->id) }}"><button type = "button" class = "navButton">Your Answer</button></a>
     </div>
