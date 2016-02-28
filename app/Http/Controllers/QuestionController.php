@@ -194,13 +194,11 @@ class QuestionController extends Controller
      * @param NotificationMailer $mailer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id,  NotificationMailer $mailer)
+    public function update(Request $request, $id)
     {
         $question = $this->question->findOrFail($id);
         $question->user()->associate($request['user_id']);
         $question->update($request->all());
-
-        $mailer->sendCommunityQuestionNotification($question);
 
         flash()->overlay('Community Question updated');
 
