@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Show Post
+    Show User
 @stop
 
 @section('centerText')

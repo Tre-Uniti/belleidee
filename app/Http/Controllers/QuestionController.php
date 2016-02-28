@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Elevate;
 use App\Extension;
+use App\Mailers\NotificationMailer;
 use App\Notification;
 use App\Post;
 use App\Question;
@@ -99,14 +100,17 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     * @param NotificationMailer $mailer
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, NotificationMailer $mailer)
     {
         $question = new Question($request->all());
         $question->user()->associate($request['user_id']);
         $question->save();
+
+        $mailer->sendCommunityQuestionNotification($question);
 
         flash()->overlay('Community Question posted');
         return redirect('questions/'. $question->id);
