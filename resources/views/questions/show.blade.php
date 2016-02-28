@@ -48,7 +48,7 @@
             @else
             <a href="{{ url('/indev') }}"><button type = "button" class = "navButton">Report</button></a>
         @endif
-        <a href="{{ url('/extensions/question/'. $question->id) }}"><button type = "button" class = "navButton">Extend</button></a>
+        <a href="{{ url('/extensions/question/'. $question->id) }}"><button type = "button" class = "navButton">Your Answer</button></a>
     </div>
 @stop
 
