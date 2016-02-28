@@ -189,15 +189,18 @@ class QuestionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @param NotificationMailer $mailer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id,  NotificationMailer $mailer)
     {
         $question = $this->question->findOrFail($id);
         $question->user()->associate($request['user_id']);
         $question->update($request->all());
+
+        $mailer->sendCommunityQuestionNotification($question);
 
         flash()->overlay('Community Question updated');
 
