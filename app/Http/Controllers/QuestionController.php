@@ -191,7 +191,6 @@ class QuestionController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @param NotificationMailer $mailer
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)

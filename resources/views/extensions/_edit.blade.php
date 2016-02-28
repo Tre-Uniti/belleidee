@@ -4,7 +4,7 @@
     @elseif(isset($sources['post_id']))
         <p>Extension of: <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></p>
     @elseif(isset($sources['question_id']))
-        <p>Extension of: <a href = {{ action('QuestionController@show', [$sources['question_id']])}}> {{ $sources['question'] }}</a></p>
+        <p>Answer to: <a href = {{ action('QuestionController@show', [$sources['question_id']])}}> {{ $sources['question'] }}</a></p>
     @endif
 
     <table align = "center" style = "margin-bottom: 7px;">
@@ -50,13 +50,18 @@
         </tr>
     </table>
 
-
     <!-- Body Form Input -->
-    <div id = "centerTextContent">
-        {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Continue your extension here:', 'rows' => '18%', 'maxlength' => '3500']) !!}
-    </div>
-    @section('centerFooter')
-        {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
-        <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
-    @stop
+        @if(isset($sources['question_id']))
+            {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Answer the question here:', 'rows' => '18%', 'maxlength' => '3500']) !!}
+        @else
+            {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Continue your extension here:', 'rows' => '18%', 'maxlength' => '3500']) !!}
+        @endif
+        @section('centerFooter')
+            @if(isset($sources['question_id']))
+                {!! Form::submit('Update Answer', ['class' => 'navButton']) !!}
+            @else
+                {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
+            @endif
+            <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
+        @stop
 </div>

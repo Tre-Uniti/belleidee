@@ -45,7 +45,6 @@ class ExtensionController extends Controller
         $profileExtensions = $this->getProfileExtensions($user);
         $extensions = $this->extension->whereNull('status')->latest('created_at')->take(10)->get();
 
-
         return view ('extensions.index')
                     ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions'));
     }
@@ -68,19 +67,8 @@ class ExtensionController extends Controller
         $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
-
         return view('extensions.create')
-                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources'))
-                    ->with('photoPath', $photoPath);
+                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources'));
     }
 
     /**
@@ -224,7 +212,7 @@ class ExtensionController extends Controller
             $sourceUser->where('id', $sourceUser->id)
                 ->update(['extension' => $sourceUser->extension + 1]);
 
-            flash()->overlay('Your extension has been created!');
+            flash()->overlay('Your answer has been created!');
             return redirect('extensions/'. $extension->id);
         }
         elseif(isset($sources['post_id']))
@@ -548,7 +536,14 @@ class ExtensionController extends Controller
 
         $extension->update($request->except('body', '_method', '_token'));
 
-        flash()->overlay('Extension has been updated');
+        if($extension->question_id != '' && $extension->extenception == '')
+        {
+            flash()->overlay('Your answer has been updated');
+        }
+        else
+        {
+            flash()->overlay('Extension has been updated');
+        }
 
         return redirect('extensions/'.$id);
     }
@@ -670,7 +665,7 @@ class ExtensionController extends Controller
         if(Extension::where('user_id', '=', $user->id)->where('question_id', '=', $sourceQuestion->id)->where('extenception', '=', NULL)->exists())
         {
             $extension = Extension::where('user_id', '=', $user->id)->where('question_id', '=', $sourceQuestion->id)->where('extenception', '=', NULL)->first();
-            flash()->overlay('You may edit your community extension or extend another');
+            flash()->overlay('You may edit your answer or extend another');
             return redirect('extensions/'. $extension->id);
         }
         $fullSource = ['type' => 'question', 'user_id' => $sourceQuestion->user_id, 'question_id' => $sourceQuestion->id, 'question' => $sourceQuestion->question];

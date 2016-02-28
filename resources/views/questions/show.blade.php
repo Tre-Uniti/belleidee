@@ -17,7 +17,7 @@
         </table>
 
     <div style = "width: 50%; float: left;">
-        <h4>Extension</h4>
+        <h4>Answers</h4>
     </div>
     <div style = "width: 50%; float: right;">
         <h4>Handle</h4>
