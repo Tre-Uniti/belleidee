@@ -8,8 +8,8 @@
     <h2>Beacon Directory</h2>
         <table style="display: inline-block;">
             <tr>
-                <td><a href={{ url('/indev')}}>Top Beacons</a></td>
-                <td><a href={{ url('/indev')}}>Search</a></td>
+                <td><a href={{ url('/beacons/top')}}>Top Beacons</a></td>
+                <td><a href={{ url('/beacons/search')}}>Search</a></td>
                 <td><a href={{ url('/beacons/create')}}>Request New</a></td>
             </tr>
         </table>

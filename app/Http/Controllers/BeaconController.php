@@ -23,7 +23,7 @@ class BeaconController extends Controller
     public function __construct(Beacon $beacon)
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['only' => 'create']);
+        $this->middleware('admin', ['only' => 'create', 'update']);
         $this->beacon = $beacon;
     }
 
@@ -331,6 +331,81 @@ class BeaconController extends Controller
                     ->with(compact('user', 'posts', 'beacon', 'profilePosts','profileExtensions'))
                     ->with('beaconPath', $beaconPath);
 
+    }
+
+    /**
+     * Display the search page for Beacons.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $types = [
+            'Name' => 'Name',
+            'Tag' => 'Beacon Tag'
+        ];
+
+        return view ('beacons.search')
+            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with('types', $types);
+    }
+
+    /**
+     * Display the results page for a search on beacons.
+     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function results(Request $request)
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        //Get type
+        $type = $request->input('type');
+        $identifier = $request->input('identifier');
+
+        if($type == 'Name')
+        {
+            $results = Beacon::where('name', 'LIKE', '%'.$identifier.'%')->paginate(10);
+        }
+        elseif($type == 'Tag')
+        {
+            $results = Beacon::where('beacon_tag', 'LIKE', '%'.$identifier.'%')->paginate(10);
+        }
+        else
+        {
+            $results = null;
+        }
+
+        if($results == null)
+        {
+            flash()->overlay('No beacons with this name');
+        }
+
+        return view ('beacons.results')
+            ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
+            ->with('type', $type)
+            ->with('identifier', $identifier);
+    }
+
+    /**
+     * Display a top beacons by usage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function topUsage()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $beacons = $this->beacon->orderBy('tag_usage', 'desc')->paginate(10);
+
+        return view ('beacons.top')
+            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'));
     }
 
 

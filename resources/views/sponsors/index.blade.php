@@ -8,8 +8,8 @@
     <h2>Sponsor Directory</h2>
     <table style="display: inline-block;">
         <tr>
-            <td><a href={{ url('/indev')}}></a>Most Views</td>
-            <td><a href={{ url('/indev')}}>Search</a></td>
+            <td><a href={{ url('/sponsors/top')}}>Most Views</a></td>
+            <td><a href={{ url('/sponsors/search')}}>Search</a></td>
             <td><a href={{ url('/sponsors/create')}}>New Sponsor</a></td>
         </tr>
     </table>

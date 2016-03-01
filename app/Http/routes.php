@@ -25,6 +25,9 @@ Route::resource('users', 'UserController');
 
 //Beacon Routes (Resource)
 Route::get('beacons/tags/{source}', 'BeaconController@listTagged');
+Route::get('beacons/search', 'BeaconController@search');
+Route::get('beacons/results', 'BeaconController@results');
+Route::get('beacons/top', 'BeaconController@topUsage');
 Route::get('beacons/signup/{id}', 'BeaconController@signup');
 Route::post('beacons/subscribe', 'BeaconController@subscribe')->name('subscribe');
 Route::get('beacons/payment/{id}', 'BeaconController@payment');
@@ -70,7 +73,10 @@ Route::resource('drafts', 'DraftController');
 
 //Sponsor Routes (Resource)
 Route::get('sponsors/pay/{id}', 'SponsorController@pay');
-Route::post('sponsors/payment', 'SponsorController@payment')->name('payment');;
+Route::post('sponsors/payment', 'SponsorController@payment')->name('payment');
+Route::get('sponsors/search', 'SponsorController@search');
+Route::get('sponsors/results', 'SponsorController@results');
+Route::get('sponsors/top', 'SponsorController@topUsage');
 Route::get('sponsors/sponsorship/{id}', 'SponsorController@sponsorship');
 Route::resource('sponsors', 'SponsorController');
 

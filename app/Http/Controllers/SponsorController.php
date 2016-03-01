@@ -25,7 +25,7 @@ class SponsorController extends Controller
     public function __construct(Sponsor $sponsor)
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['except' => ['index', 'show', 'sponsorship']]);
+        $this->middleware('admin', ['except' => ['index', 'show', 'sponsorship', 'search', 'results', 'topUsage']]);
         $this->sponsor = $sponsor;
     }
     /**
@@ -98,9 +98,8 @@ class SponsorController extends Controller
         $sponsor->budget = $request['budget'];
         $sponsor->country = $request['country'];
         $sponsor->city = $request['city'];
-        $sponsor->status = 'Active';
+        $sponsor->status = 'Live';
         $sponsor->views = 0;
-        $sponsor->triggers = 0;
         $sponsor->save();
 
         //Save Sponsor image and update path in DB
@@ -363,6 +362,81 @@ class SponsorController extends Controller
         flash()->overlay('Payment successful, views and missed restarted');
 
         return redirect('sponsors/'. $sponsor->id);
+    }
+
+    /**
+     * Display the search page for Sponsors.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $types = [
+            'Name' => 'Name',
+            'Location' => 'Location'
+        ];
+
+        return view ('sponsors.search')
+            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with('types', $types);
+    }
+
+    /**
+     * Display the results page for a search on Sponsors.
+     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function results(Request $request)
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        //Get type
+        $type = $request->input('type');
+        $identifier = $request->input('identifier');
+
+        if($type == 'Name')
+        {
+            $results = Sponsor::where('name', 'LIKE', '%'.$identifier.'%')->paginate(10);
+        }
+        elseif($type == 'Location')
+        {
+            $results = Sponsor::where('country', 'LIKE', '%'.$identifier.'%')->orWhere('city', 'LIKE', '%'.$identifier.'%')->paginate(10);
+        }
+        else
+        {
+            $results = null;
+        }
+
+        if($results == null)
+        {
+            flash()->overlay('No Sponsors with this name or location');
+        }
+
+        return view ('sponsors.results')
+            ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
+            ->with('type', $type)
+            ->with('identifier', $identifier);
+    }
+
+    /**
+     * Display a top beacons by usage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function topUsage()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $sponsors = $this->sponsor->orderBy('views', 'desc')->paginate(10);
+
+        return view ('sponsors.top')
+            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions'));
     }
 
 }

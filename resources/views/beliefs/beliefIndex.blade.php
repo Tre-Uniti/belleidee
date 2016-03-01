@@ -8,9 +8,9 @@
     <h2>{{ $belief }} Posts</h2>
     <table style="display: inline-block;">
         <tr>
-            <td><a href={{ url('/posts/topElevated')}}>Top Elevated</a></td>
-            <td><a href={{ url('/indev')}}>Search</a></td>
-            <td><a href={{ url('/posts/mostExtended')}}>Most Extended</a></td>
+            <td><a href={{ url('/posts/elevation')}}>Top Elevated</a></td>
+            <td><a href={{ url('/search')}}>Search</a></td>
+            <td><a href={{ url('/posts/extension')}}>Most Extended</a></td>
         </tr>
     </table>
     </div>
