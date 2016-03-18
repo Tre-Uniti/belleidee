@@ -4,8 +4,9 @@
 @stop
 @section('centerText')
     <h2>Settings of {{ $user->handle}}</h2>
-    <a href="{{ url('photo') }}"><button type = "button" class = "navButton">Change Profile Photo</button></a>
-    <a href="{{ url('/sponsors') }}"><button type = "button" class = "navButton">Change Sponsor</button></a>
+    <a href="{{ url('photo') }}"><button type = "button" class = "navButton">Profile Photo</button></a>
+    <a href="{{ url('/training') }}"><button type = "button" class = "navButton">Training</button></a>
+    <a href="{{ url('/workshops') }}"><button type = "button" class = "navButton">Workshops</button></a>
     <hr/>
     <table align = "center">
         <thead>
@@ -20,9 +21,8 @@
             <td>{{ $sponsor->status }}</td>
         </tr>
         <tr>
-            <td colspan = 3" ><a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "interactButton">View Sponsor Page</button></a>
-
-            </td>
+            <td colspan = 2" ><a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "interactButton">View Sponsor </button></a>
+            <td><a href="{{ url('/sponsors') }}"><button type = "button" class = "interactButton">Change Sponsor</button></a></td>
         </tr>
         </tbody>
     </table>

@@ -167,12 +167,15 @@ Route::get('photo', 'HomeController@userPhoto');
 Route::post('storePhoto', 'HomeController@storePhoto');
 Route::get('search', 'HomeController@search');
 Route::get('results', 'HomeController@results');
+Route::get('training', 'HomeController@training');
+Route::get('workshops', 'HomeController@workshops');
 
 //Admin routes
 Route::get('admin', 'AdminController@portal');
 
 //Moderator routes
 Route::get('moderator', 'ModeratorController@portal');
+
 
 
 

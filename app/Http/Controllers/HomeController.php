@@ -261,7 +261,6 @@ class HomeController extends Controller
         {
             flash()->overlay('No '. $type . ' found for this search');
         }
-        //dd($results);
 
         if($user->photo_path == '')
         {
@@ -278,6 +277,25 @@ class HomeController extends Controller
             ->with('photoPath', $photoPath)
             ->with('type', $type)
             ->with('identifier', $identifier);
+    }
 
+    public function training()
+    {
+        $user = Auth::user();
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
+
+        return view ('pages.training')
+                ->with(compact('user', 'profilePosts', 'profileExtensions'));
+    }
+
+    public function workshops()
+    {
+        $user = Auth::user();
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
+
+        return view ('pages.workshops')
+            ->with(compact('user', 'profilePosts', 'profileExtensions'));
     }
 }
