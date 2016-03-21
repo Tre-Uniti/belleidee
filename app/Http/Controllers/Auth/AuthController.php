@@ -46,7 +46,7 @@ class AuthController extends Controller
             'handle' => 'required|max:14',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:8',
-            'betaToken' => 'required|exists:invites,betaToken',
+            //'betaToken' => 'required|exists:invites,betaToken',
         ]);
     }
     /**
@@ -67,17 +67,21 @@ class AuthController extends Controller
     {
         return view ('auth.verify');
     }
+
     /**
      * Confirm a user's email address.
      *
      * @param  string $token
+     * @param UserMailer $mailer
      * @return mixed
      */
-    public function confirmEmail($token)
+    public function confirmEmail($token, UserMailer $mailer)
     {
         try
         {
-            User::whereemailtoken($token)->firstOrFail()->confirmemail();
+            $user = User::whereemailtoken($token)->firstOrFail();
+            $user->confirmemail();
+            $mailer->sendEmailConfirmeduser($user);
         }
         catch(ModelNotFoundException $e)
         {
@@ -115,7 +119,7 @@ class AuthController extends Controller
                 $request, $validator
             );
         }
-        //Invite, betaToken.  Delete or commit out after Beta finishes
+        /*Invite, betaToken.  Delete or commit out after Beta finishes
         try
         {
             $betaToken = $request->input('betaToken');
@@ -128,12 +132,20 @@ class AuthController extends Controller
                 ->back()
                 ->withInput()
                 ->withErrors([$error]);
+        }*/
+
+        //Delete invite if user was invited by another user
+        if(Invite::where('email', '=', $request->input('email'))->exists())
+        {
+            $invite = Invite::where('email', '=', $request->input('email'))->firstOrFail();
+            $invite->delete();
         }
+
+        //Create the new user
         $user = $this->create($request->all());
 
-
+        //Email the confirmation email to the new user
         $mailer->sendEmailConfirmationTo($user);
-        $invite->delete();
         flash()->success('Registration Successful');
         return redirect('/auth/verify');
     }

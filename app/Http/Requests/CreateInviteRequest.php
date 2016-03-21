@@ -25,7 +25,6 @@ class CreateInviteRequest extends Request
     public function rules()
     {
         return [
-            'betaToken' => 'required|min:7|max:7|unique:invites',
             'email' => 'required|email|unique:invites',
         ];
     }

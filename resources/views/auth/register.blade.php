@@ -18,9 +18,6 @@
             </tr>
             <tr><td><label for = "password_confirmation" class = "login">Confirm Password</label></td>
                     <td><input type="password" id = "password_confirmation" name="password_confirmation" class = "welcomeInputText"></td></tr>
-                <tr><td><label for = "betaToken" class = "login">Beta-Token</label></td>
-                    <td><input type = "text" name = "betaToken" id = "betaToken" class = "welcomeInputText"/></td>
-                </tr>
             </table>
                 <button type="submit" class = "navButton">Register</button>
             </form>
@@ -28,7 +25,7 @@
 @stop
 @section('footer')
     <h4>Guidelines:</h4>
-    <p>Beta-Token was sent in invitational email</p>
     <p>Handle (username) can be real or anonymous, max-length (14)</p>
+    <p>Passwords must be 8 characters long</p>
 @stop
 

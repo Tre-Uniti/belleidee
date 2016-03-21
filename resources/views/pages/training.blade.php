@@ -24,7 +24,6 @@
     //Legacy extension and users
     //Intolerance reporting
     //Create and manage support tickets-->
-    <p>Please check our workshop schedule for local live trainings</p>
 @stop
 @section('centerFooter')
         <a href="{{ url('/workshops') }}"><button type = "button" class = "navButton">Workshops</button></a>

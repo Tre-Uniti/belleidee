@@ -5,25 +5,15 @@
         <td colspan="3"><h3>Invitation to Belle-Idee</h3></td>
     </tr>
     <tr>
-        <td colspan="3">Greetings! This is a message from Tre-Uniti and we welcome you to join our community!</td>
+        <td colspan="3">Greetings!</td>
     </tr>
     <tr>
         <td colspan="3">One of your friends has invited you to join Belle-Idee.</td>
     </tr>
     <tr>
-        <td colspan="3">Belle-Idee is a community who respectfully discuss their beliefs</td>
+        <td colspan="3">Belle-Idee is a community who respectfully discuss our ideas and beliefs</td>
     </tr>
-    <tr>
-        <td colspan="3">-</td>
-    </tr>
-    <tr>
-        <td colspan="3">You may register with the beta token below:</td>
-    </tr>
-    <tr>
-        <td colspan="3" style="background-color: #E0E0E0">
-            {{$invite->betaToken}}
-        </td>
-    </tr>
+
     <tr>
         <td colspan="3">
             <a href="{{ url('/tour') }}"><button type = "button" style = "padding: 8px 13px;

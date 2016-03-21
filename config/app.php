@@ -26,8 +26,8 @@ return [
     |
     */
 
-    'url' => 'https://belle-idee.org',
-    //'url' => 'https://belle-idee.dev',
+    'url' => env('APP_URL', 'https://belle-idee.org'),
+
 
     /*
     |--------------------------------------------------------------------------

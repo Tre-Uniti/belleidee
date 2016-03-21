@@ -14,7 +14,7 @@
     @include('errors.list')
 @stop
 @section('centerText')
-    <h2>Send Invites:</h2>
+    <h2>Send <a href = {{url('/invites')}}>Invites:</a></h2>
     {!! Form::open(['url' => 'invites']) !!}
     <table align = "center">
         <tr>
@@ -22,19 +22,12 @@
         </tr>
         <tr>
             <td>{!! Form::text('email', null, ['class' => 'createAttributes', 'placeholder' => 'To whom?']) !!}</td>
-            {!! Form::hidden('betaToken', str_random(7), ['class' => 'createAttributes']) !!}
+            <!--{!! Form::hidden('betaToken', str_random(7), ['class' => 'createAttributes']) !!}-->
         </tr>
     </table>
     <div class = "createSubmit">
         {!! Form::submit('Send Invite', ['class' => 'navButton']) !!}
         {!! Form::close()   !!}
-    </div>
-@stop
 
-@section('rightSideBar')
-    <h2>Hosted</h2>
-
-    <div class = "innerPhotos">
-        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "97%" width = "85%"></a>
     </div>
 @stop

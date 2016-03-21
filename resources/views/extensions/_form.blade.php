@@ -52,7 +52,7 @@
 
 <!-- Body Form Input -->
     <div id = "centerTextContent">
-        @if(isset($sources['question_id']))
+        @if(($sources['type'] == 'question'))
             {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Answer the question here:', 'rows' => '18%', 'maxlength' => '3500']) !!}
         @else
             {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Continue your extension here:', 'rows' => '18%', 'maxlength' => '3500']) !!}
@@ -60,7 +60,7 @@
 
     </div>
     @section('centerFooter')
-        @if(isset($sources['question_id']))
+        @if(($sources['type'] == 'question'))
             {!! Form::submit('Answer', ['class' => 'navButton']) !!}
         @else
             {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}

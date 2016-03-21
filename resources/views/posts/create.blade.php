@@ -7,7 +7,7 @@
     @include ('errors.list')
 
     {!! Form::open(['url' => 'posts']) !!}
-    @include ('posts._form', ['submitButtonText' => 'Post Belief'])
+    @include ('posts._form', ['submitButtonText' => 'Post'])
 @stop
 
 

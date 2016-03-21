@@ -312,9 +312,9 @@ class UserController extends Controller
 
         $extensions = Extension::where('source_user', $user->id)->latest('created_at')->paginate(10);
 
+        //Set sourcePhotoPath so the viewing user's photo is replaced with this user's photo
         if($user->photo_path == '')
         {
-
             $sourcePhotoPath = '';
         }
         else

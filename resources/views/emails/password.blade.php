@@ -8,7 +8,7 @@
    <tr>
        <td colspan="3">
            <a href="{{ url('password/reset/'.$token) }}"><button type = "button" style = "padding: 8px 13px;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-family: 'Open Sans', Arial, serif;
     font-size: 100%;
     border-radius: 4px;
     -moz-border-radius: 4px;

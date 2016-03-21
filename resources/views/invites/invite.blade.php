@@ -2,16 +2,7 @@
 @section('siteTitle')
     List Invites
 @stop
-@section('leftSideBar')
-    <div>
-        <h2>{{$user->handle}}</h2>
 
-        <div class = "innerPhotos">
-            <a href="/"><img src={{asset('img/backgroundLandscape.jpg')}} alt="idee" height = "97%" width = "85%"></a>
-        </div>
-
-    </div>
-@stop
 @section('centerMenu')
 @include('errors.list')
 @stop
@@ -33,14 +24,3 @@
     @endif
 @stop
 
-@section('centerFooter')
-
-@stop
-
-@section('rightSideBar')
-    <h2>Hosted</h2>
-
-    <div class = "innerPhotos">
-        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "97%" width = "85%"></a>
-    </div>
-@stop

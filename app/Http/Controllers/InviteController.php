@@ -29,20 +29,9 @@ class InviteController extends Controller
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         $invites = $user->invites()->latest('created_at')->take(7)->get();
-        //Get user photo
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
         return view('invites.invite')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'invites'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'invites'));
     }
 
     /**
@@ -56,19 +45,15 @@ class InviteController extends Controller
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
-        if($user->photo_path == '')
+        $count = Invite::where('user_id', '=', $user->id)->count();
+        if($count > 9)
         {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
+            flash()->overlay('You may only have 10 invites at a time');
+            return redirect()->back();
         }
 
         return view('invites.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts', 'profileExtensions'));
     }
 
     /**
@@ -125,7 +110,7 @@ class InviteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // This is
+        //
     }
 
     /**

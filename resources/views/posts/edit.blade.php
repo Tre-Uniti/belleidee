@@ -16,5 +16,3 @@
 
 @section('centerFooter')
 @stop
-
-@include('posts.rightSide')

@@ -72,8 +72,11 @@
 
                 <div class = "innerPhotos">
                     @if(isset($sourcePhotoPath))
-                    <!--Replace for push https://d3ekayvyzr0uoc.cloudfront.net-->
+                        @if($sourcePhotoPath != NULL)
                         <a href={{ url('/users/'. $user->id) }}><img src= {{ url(env('IMAGE_LINK'). $sourcePhotoPath) }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
+                        @else
+                            <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "97%" width = "85%"></a>
+                        @endif
                     @elseif($photoPath != NULL)
                         <a href={{ url('/users/'. $user->id) }}><img src= {{ url(env('IMAGE_LINK'). $photoPath) }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
                     @else

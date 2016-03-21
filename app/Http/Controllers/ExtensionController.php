@@ -1037,5 +1037,4 @@ class ExtensionController extends Controller
             ->with('filter', $filter)
             ->with('time', $time);
     }
-
 }
