@@ -25,7 +25,7 @@ class CreateInviteRequest extends Request
     public function rules()
     {
         return [
-            'email' => 'required|email|unique:invites',
+            'email' => 'required|email|unique:invites|unique:users',
         ];
     }
 }
