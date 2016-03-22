@@ -34,6 +34,9 @@ Route::get('beacons/payment/{id}', 'BeaconController@payment');
 Route::get('beacons/subscription/{id}', 'BeaconController@subscription');
 Route::resource('beacons', 'BeaconController');
 
+//Beacon Request Routes (Resource)
+Route::resource('beaconRequests', 'BeaconRequestController');
+
 
 //Belief Routes
 Route::get('beliefs', 'BeliefController@index');
@@ -172,6 +175,9 @@ Route::get('workshops', 'HomeController@workshops');
 
 //Admin routes
 Route::get('admin', 'AdminController@portal');
+Route::get('admin/beacon/requests', 'AdminController@indexBeaconRequests');
+Route::get('admin/beacon/review/{id}', 'AdminController@reviewBeaconRequest');
+Route::get('admin/sponsorRequests', 'AdminController@indexSponsorsRequests');
 
 //Moderator routes
 Route::get('moderator', 'ModeratorController@portal');

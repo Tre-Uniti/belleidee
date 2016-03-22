@@ -10,7 +10,7 @@
             <tr>
                 <td><a href={{ url('/beacons/top')}}>Top Beacons</a></td>
                 <td><a href={{ url('/beacons/search')}}>Search</a></td>
-                <td><a href={{ url('/beacons/create')}}>Request New</a></td>
+                <td><a href={{ url('/beaconRequests')}}>New Requests</a></td>
             </tr>
         </table>
     </div>

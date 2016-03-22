@@ -130,7 +130,7 @@ class BeaconController extends Controller
         }
 
 
-        flash()->overlay('Your beacon request has been created');
+        flash()->overlay('Your beacon has been created');
         return redirect('beacons/signup/'. $beacon->id);
     }
 
@@ -407,7 +407,4 @@ class BeaconController extends Controller
         return view ('beacons.top')
             ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'));
     }
-
-
-
 }
