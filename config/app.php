@@ -150,6 +150,7 @@ return [
         Laracasts\Flash\FlashServiceProvider::class,
         Fideloper\Proxy\TrustedProxyServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
+        GeneaLabs\LaravelCaffeine\LaravelCaffeineServiceProvider::class,
     ],
 
     /*

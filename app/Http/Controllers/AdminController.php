@@ -70,4 +70,41 @@ class AdminController extends Controller
             ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions'));
     }
 
+    /**
+     * Add extra fields for conversion of Request.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function convertBeaconRequest($id)
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $beaconRequest = BeaconRequest::findOrFail($id);
+
+        $beliefs =
+            [
+                'Adaptia' => 'Adaptia',
+                'Atheism' => 'Atheism',
+                'Ba Gua' => 'Ba Gua',
+                'Buddhism' => 'Buddhism',
+                'Christianity' => 'Christianity',
+                'Druze' => 'Druze',
+                'Hinduism' => 'Hinduism',
+                'Islam' => 'Islam',
+                'Indigenous' => 'Indigenous',
+                'Judaism' => 'Judaism',
+                'Shinto' => 'Shinto',
+                'Sikhism' => 'Sikhism',
+                'Taoism' => 'Taoism',
+                'Urantia' => 'Urantia',
+                'Other' => 'Other'
+            ];
+
+        return view('admin.convertBeacon')
+            ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions'))
+            ->with('beliefs', $beliefs);
+    }
+
 }

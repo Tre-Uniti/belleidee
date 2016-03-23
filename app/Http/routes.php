@@ -35,6 +35,7 @@ Route::get('beacons/subscription/{id}', 'BeaconController@subscription');
 Route::resource('beacons', 'BeaconController');
 
 //Beacon Request Routes (Resource)
+Route::post('beaconRequests/convertBeacon', 'BeaconRequestController@convert')->name('convertBeacon');
 Route::resource('beaconRequests', 'BeaconRequestController');
 
 
@@ -177,6 +178,7 @@ Route::get('workshops', 'HomeController@workshops');
 Route::get('admin', 'AdminController@portal');
 Route::get('admin/beacon/requests', 'AdminController@indexBeaconRequests');
 Route::get('admin/beacon/review/{id}', 'AdminController@reviewBeaconRequest');
+Route::get('admin/beacon/convert/{id}', 'AdminController@convertBeaconRequest');
 Route::get('admin/sponsorRequests', 'AdminController@indexSponsorsRequests');
 
 //Moderator routes

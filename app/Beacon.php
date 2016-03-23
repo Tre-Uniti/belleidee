@@ -35,6 +35,7 @@ class Beacon extends Model implements BillableContract
         'address',
         'tier',
         'guide',
+        'manager',
     ];
 
 }

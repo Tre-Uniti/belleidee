@@ -28,10 +28,10 @@ class CreateBeaconRequest extends Request
     {
         return [
             'name' => 'required|min:5|max:50',
-            'beacon_tag'  => 'required|min:7|max:12',
+            'beacon_tag'  => 'required|min:7|max:12|unique:beacons',
             'belief' => 'required',
             'website' => 'min:10|max:275',
-            'phone' => 'required|min: 10|max:15',
+            'phone' => 'required|min: 10|max:18',
             'email' => 'required|email|max:255|unique:beacons',
             'tier' => 'required',
             'guide' => 'required',

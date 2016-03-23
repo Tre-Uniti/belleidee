@@ -49,7 +49,10 @@
     <div id = "centerFooter">
         @if($user->type > 1)
             <a href="{{ url('/admin/beacon/convert/'.$beaconRequest->id) }}"><button type = "button" class = "navButton">Convert to Beacon</button></a>
-            <a href="{{ url('/admin/beacon/delete/'.$beaconRequest->id) }}"><button type = "button" class = "navButton">Delete</button></a>
+                {!! Form::open(['method' => 'DELETE', 'route' => ['beaconRequests.destroy', $beaconRequest->id]]) !!}
+                {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
+                {!! Form::close() !!}
+
         @endif
     </div>
 @stop

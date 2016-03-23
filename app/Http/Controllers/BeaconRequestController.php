@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Beacon;
 use App\Extension;
 use App\Http\Requests\CreateBasicBeaconRequest;
+use App\Http\Requests\CreateBeaconRequest;
+use App\Mailers\NotificationMailer;
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 use App\BeaconRequest;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BeaconRequestController extends Controller
 {
@@ -20,7 +24,7 @@ class BeaconRequestController extends Controller
     public function __construct(BeaconRequest $beaconRequest)
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['only' => 'convert']);
+        $this->middleware('admin', ['only' => 'convert', 'destroy']);
         $this->middleware('beaconRequestOwner', ['only' => 'show', 'edit']);
         $this->beaconRequest = $beaconRequest;
     }
@@ -169,11 +173,67 @@ class BeaconRequestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
+     * @param NotificationMailer $mailer
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, NotificationMailer $mailer)
     {
-        //
+        $beaconRequest = BeaconRequest::findOrFail($id);
+        $user = User::findOrFail($beaconRequest->user_id);
+        $beaconName = $beaconRequest->name;
+        $beaconRequest->delete();
+
+        $mailer->sendBeaconDeletedNotification($user, $beaconName);
+
+        flash()->overlay('Beacon Request has been deleted');
+        return redirect('admin/beacon/requests');
+    }
+
+    /**
+     * Convert request to Beacon.
+     *
+     * @param CreateBeaconRequest $request
+     * @param NotificationMailer $mailer
+     * @return \Illuminate\Http\Response
+     * @internal param int $id
+     */
+    public function convert(CreateBeaconRequest $request, NotificationMailer $mailer)
+    {
+        $beaconRequest = BeaconRequest::findOrFail($request['beaconRequestId']);
+        $user = User::findOrFail($beaconRequest->user_id);
+
+        $beacon = new Beacon($request->except('beaconRequestId'));
+        $beacon->status = 'active';
+        $beacon->save();
+
+        if($request->hasFile('image'))
+        {
+            if(!$request->file('image')->isValid())
+            {
+                $error = "Image File invalid.";
+                return redirect()
+                    ->back()
+                    ->withErrors([$error]);
+            }
+            $image = $request->file('image');
+
+            $beaconName = str_replace(' ', '_', $beacon->name);
+            $imageFileName = $beaconName . '.' . $image->getClientOriginalExtension();
+            $path = '/beacon_photos/'. $beacon->id . '/' .$imageFileName;
+
+            Storage::put($path, file_get_contents($image));
+            $beacon->where('id', $beacon->id)
+                ->update(['photo_path' => $path]);
+        }
+
+        //Notify requester their request is now a Beacon!
+        $mailer->sendBeaconCreatedNotification($user, $beacon);
+
+        //Delete beacon request as it is now a beacon
+        $beaconRequest->delete();
+
+        flash()->overlay('Beacon Request has been converted');
+        return redirect('beacons/signup/'. $beacon->id);
     }
 }

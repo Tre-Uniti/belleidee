@@ -23,7 +23,7 @@ class BeaconController extends Controller
     public function __construct(Beacon $beacon)
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['only' => 'create', 'update']);
+        $this->middleware('admin', ['only' => 'create', 'update', 'edit']);
         $this->beacon = $beacon;
     }
 
@@ -89,24 +89,8 @@ class BeaconController extends Controller
         $user = Auth::user();
 
         //$request = array_add($request, 'tier', 3);
-        $beacon = new Beacon;
-        $beacon->name = $request['name'];
-        $beacon->beacon_tag = $request['beacon_tag'];
-        $beacon->belief = $request['belief'];
-        $beacon->email = $request['email'];
-        if(isset($request['website']))
-        {
-            $beacon->website = $request['website'];
-        }
-        else
-        {
-            $beacon->website = 'N/A';
-        }
-        $beacon->phone = $request['phone'];
-        $beacon->address = $request['address'];
-        $beacon->tier = 1;
-        $beacon->status = 'requested';
-        $beacon->user_id = $user->id;
+        $beacon = new Beacon($request->all());
+        $beacon->status = 'active';
         $beacon->save();
 
         if($request->hasFile('image'))

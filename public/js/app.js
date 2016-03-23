@@ -12,7 +12,7 @@
 
   $(function() {
     $('#delete').click(function() {
-      if (confirm('Are you sure you want to discard this intolerance?')) {
+      if (confirm('Are you sure you want to delete?')) {
         return true;
       } else {
         return false;

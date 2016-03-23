@@ -2,6 +2,8 @@
 
 namespace App\Mailers;
 
+use App\Beacon;
+use App\BeaconRequest;
 use App\Extension;
 use App\Question;
 use App\Support;
@@ -60,5 +62,23 @@ class NotificationMailer extends Mailer
             $data = compact('question', 'askedBy', 'user');
             $this->sendTo($user, $subject, $view, $data);
         }
+    }
+
+    //Send email to owner of request the Beacon was deleted
+    public function sendBeaconDeletedNotification(User $user, $beaconTitle)
+    {
+        $view = 'emails.beaconDeleted';
+        $data = compact('user','beaconTitle');
+        $subject = 'Your beacon request did not become an Idee Beacon.';
+        $this->sendTo($user, $subject, $view, $data);
+    }
+
+    //Send email to owner of request the Beacon was created
+    public function sendBeaconCreatedNotification(User $user, Beacon $beacon)
+    {
+        $view = 'emails.beaconCreated';
+        $data = compact('beacon', 'user');
+        $subject = 'Your beacon request has become an Idee Beacon!';
+        $this->sendTo($user, $subject, $view, $data);
     }
 }

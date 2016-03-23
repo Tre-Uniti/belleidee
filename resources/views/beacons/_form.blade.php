@@ -66,6 +66,14 @@
     </tr>
     <tr>
         <td>
+            {!! Form::label('manager', 'Manager') !!}
+        </td>
+        <td>
+            {!! Form::text('manager', null, ['class' => 'createTitleText']) !!}
+        </td>
+    </tr>
+    <tr>
+        <td>
             {!! Form::label('tier', 'Tier') !!}
         </td>
         <td>
