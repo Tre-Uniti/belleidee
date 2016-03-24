@@ -8,7 +8,6 @@ use App\Bookmark;
 use App\Elevate;
 use App\Events\BeaconViewed;
 use App\Events\SponsorViewed;
-use function App\Http\getSponsor;
 use App\Intolerance;
 use App\Moderation;
 use App\Notification;
@@ -29,6 +28,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Event;
+use function App\Http\getBeacon;
+use function App\Http\getSponsor;
 
 class PostController extends Controller
 {
@@ -185,55 +186,22 @@ class PostController extends Controller
         //Get other Extensions of User
         $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->take(7)->get();
 
-        //Check if post has been localized
+        //Determine if beacon or sponsor shows and update
         if($post->beacon_tag == 'No-Beacon')
         {
-            //No Beacon defaults to user's sponsor
-            if(Sponsorship::where('user_id', '=', $post->user_id)->exists())
-            {
-                $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
-                $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-                if($sponsor->views >= $sponsor->budget)
-                {
-                    $sponsor = NULL;
-                }
-                Event::fire(new SponsorViewed($sponsor));
-            }
-            else
-            {
-                $sponsor = NULL;
-            }
+            $sponsor = getSponsor($user);
             $beacon = NULL;
         }
         else
         {
-            $postBeacon = Beacon::where('beacon_tag', '=', $post->beacon_tag)->first();
-
-            if ($postBeacon->tier > 1)
+            $beacon = getBeacon($post);
+            if($beacon == NULL)
             {
-                //Beacon pays subscription for promotions
-                $beacon = $postBeacon;
-                $sponsor = NULL;
-                Event::fire(new BeaconViewed($beacon));
+                $sponsor = getSponsor($user);
             }
             else
             {
-                //Beacon does not subscribe for promotion, default to sponsor
-                if (Sponsorship::where('user_id', '=', $post->user_id)->exists())
-                {
-                    $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
-                    $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-                    if($sponsor->views >= $sponsor->budget)
-                    {
-                        $sponsor = NULL;
-                    }
-                    Event::fire(new SponsorViewed($sponsor));
-                }
-                else
-                {
-                    $sponsor = NULL;
-                }
-                $beacon = NULL;
+                $sponsor = NULL;
             }
         }
 
@@ -308,56 +276,22 @@ class PostController extends Controller
         $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-        //Check if post has been localized
+        //Determine if beacon or sponsor shows and update
         if($post->beacon_tag == 'No-Beacon')
         {
-            //No Beacon defaults to user's sponsor
-            if(Sponsorship::where('user_id', '=', $post->user_id)->exists())
-            {
-                $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
-                $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-                if($sponsor->views >= $sponsor->budget)
-                {
-                    $sponsor = NULL;
-                }
-                Event::fire(new SponsorViewed($sponsor));
-            }
-            else
-            {
-                $sponsor = NULL;
-            }
+            $sponsor = getSponsor($user);
             $beacon = NULL;
         }
         else
         {
-            $postBeacon = Beacon::where('beacon_tag', '=', $post->beacon_tag)->first();
-
-            if ($postBeacon->tier > 1)
+            $beacon = getBeacon($post);
+            if($beacon == NULL)
             {
-                //Beacon pays subscription for promotions
-                $beacon = $postBeacon;
-                Event::fire(new BeaconViewed($beacon));
-                $sponsor = NULL;
+                $sponsor = getSponsor($user);
             }
             else
             {
-                //Beacon does not subscribe for promotion, default to sponsor
-                if (Sponsorship::where('user_id', '=', $post->user_id)->exists())
-                {
-                    $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
-                    $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-                    if($sponsor->views >= $sponsor->budget)
-                    {
-                        $sponsor = NULL;
-                    }
-                    Event::fire(new SponsorViewed($sponsor));
-                }
-                else
-                {
-                    $sponsor = NULL;
-                }
-
-                $beacon = NULL;
+                $sponsor = NULL;
             }
         }
 
@@ -441,16 +375,7 @@ class PostController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->where('source', $source)->latest()->paginate(10);
 
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            if($sponsor->views >= $sponsor->budget)
-            {
-                $sponsor = NULL;
-            }
-            Event::fire(new SponsorViewed($sponsor));
-        }
+        $sponsor = getSponsor($user);
 
         return view ('posts.listSources')
             ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
@@ -468,20 +393,7 @@ class PostController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            if($sponsor->views >= $sponsor->budget)
-            {
-                $sponsor = NULL;
-            }
-            Event::fire(new SponsorViewed($sponsor));
-        }
-        else
-        {
-            $sponsor = null;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('posts.search')
             ->with(compact('user', 'profilePosts','profileExtensions', 'sponsor'));
@@ -507,20 +419,7 @@ class PostController extends Controller
             flash()->overlay('No posts with this title');
         }
 
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            if($sponsor->views >= $sponsor->budget)
-            {
-                $sponsor = NULL;
-            }
-            Event::fire(new SponsorViewed($sponsor));
-        }
-        else
-        {
-            $sponsor = NULL;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('posts.results')
             ->with(compact('user', 'profilePosts','profileExtensions', 'results', 'sponsor'))
@@ -636,55 +535,22 @@ class PostController extends Controller
             $sourcePhotoPath = $user->photo_path;
         }
 
-        //Check if post has been localized
+        //Determine if beacon or sponsor shows and update
         if($post->beacon_tag == 'No-Beacon')
         {
-            //No Beacon defaults to user's sponsor
-            if(Sponsorship::where('user_id', '=', $post->user_id)->exists())
-            {
-                $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
-                $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-                if($sponsor->views >= $sponsor->budget)
-                {
-                    $sponsor = NULL;
-                }
-                Event::fire(new SponsorViewed($sponsor));
-            }
-            else
-            {
-                $sponsor = NULL;
-            }
+            $sponsor = getSponsor($user);
             $beacon = NULL;
         }
         else
         {
-            $postBeacon = Beacon::where('beacon_tag', '=', $post->beacon_tag)->first();
-
-            if ($postBeacon->tier > 1)
+            $beacon = getBeacon($post);
+            if($beacon == NULL)
             {
-                //Beacon pays subscription for promotions
-                $beacon = $postBeacon;
-                $sponsor = NULL;
-                Event::fire(new BeaconViewed($beacon));
+                $sponsor = getSponsor($user);
             }
             else
             {
-                //Beacon does not subscribe for promotion, default to sponsor
-                if (Sponsorship::where('user_id', '=', $post->user_id)->exists())
-                {
-                    $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
-                    $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-                    if($sponsor->views >= $sponsor->budget)
-                    {
-                        $sponsor = NULL;
-                    }
-                    Event::fire(new SponsorViewed($sponsor));
-                }
-                else
-                {
-                    $sponsor = NULL;
-                }
-                $beacon = NULL;
+                $sponsor = NULL;
             }
         }
 
@@ -705,20 +571,7 @@ class PostController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->whereDate('created_at', '=', $queryDate)->latest()->paginate(10);
 
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            if($sponsor->views >= $sponsor->budget)
-            {
-                $sponsor = NULL;
-            }
-            Event::fire(new SponsorViewed($sponsor));
-        }
-        else
-        {
-            $sponsor = NULL;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('posts.listDates')
                 ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
@@ -736,20 +589,7 @@ class PostController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $elevations = Elevate::where('post_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
 
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            if($sponsor->views >= $sponsor->budget)
-            {
-                $sponsor = NULL;
-            }
-            Event::fire(new SponsorViewed($sponsor));
-        }
-        else
-        {
-            $sponsor = NULL;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('posts.sortByElevation')
             ->with(compact('user', 'elevations', 'profilePosts','profileExtensions', 'sponsor'));
@@ -786,21 +626,12 @@ class PostController extends Controller
             $posts = $this->post->whereNull('status')->orderBy('elevation', 'desc')->paginate(10);
             $filter = 'All';
         }
-
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            if($sponsor->views >= $sponsor->budget)
-            {
-                $sponsor = NULL;
-            }
-            Event::fire(new SponsorViewed($sponsor));
-        }
         else
         {
-            $sponsor = NULL;
+            $filter = 'All';
         }
+
+        $sponsor = getSponsor($user);
 
         return view ('posts.sortByElevationTime')
             ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
@@ -820,20 +651,7 @@ class PostController extends Controller
 
         $extensions = Extension::where('post_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
 
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            if($sponsor->views >= $sponsor->budget)
-            {
-                $sponsor = NULL;
-            }
-            Event::fire(new SponsorViewed($sponsor));
-        }
-        else
-        {
-            $sponsor = NULL;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('posts.sortByExtension')
             ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'));
@@ -870,21 +688,12 @@ class PostController extends Controller
             $posts = $this->post->whereNull('status')->orderBy('extension', 'desc')->paginate(10);
             $filter = 'All';
         }
-
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            if($sponsor->views >= $sponsor->budget)
-            {
-                $sponsor = NULL;
-            }
-            Event::fire(new SponsorViewed($sponsor));
-        }
         else
         {
-            $sponsor = NULL;
+            $filter = 'All';
         }
+
+        $sponsor = getSponsor($user);
 
         return view ('posts.sortByExtensionTime')
             ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
@@ -923,21 +732,12 @@ class PostController extends Controller
             $posts = $this->post->whereNull('status')->latest('created_at')->paginate(10);
             $filter = 'All';
         }
-
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            if($sponsor->views >= $sponsor->budget)
-            {
-                $sponsor = NULL;
-            }
-            Event::fire(new SponsorViewed($sponsor));
-        }
         else
         {
-            $sponsor = NULL;
+            $filter = 'All';
         }
+
+        $sponsor = getSponsor($user);
 
         return view ('posts.timeFilter')
             ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
@@ -955,8 +755,6 @@ class PostController extends Controller
 
         return redirect('posts/'. $post->id);
     }
-
-
 
 }
 

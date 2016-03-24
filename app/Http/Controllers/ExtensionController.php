@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Beacon;
 use App\Elevate;
+use App\Events\BeaconViewed;
 use App\Events\SponsorViewed;
 use App\Mailers\NotificationMailer;
 use App\Notification;
@@ -23,6 +24,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Event;
+use function App\Http\getBeacon;
+use function App\Http\getSponsor;
 
 class ExtensionController extends Controller
 {
@@ -47,8 +50,10 @@ class ExtensionController extends Controller
         $profileExtensions = $this->getProfileExtensions($user);
         $extensions = $this->extension->whereNull('status')->latest('created_at')->take(10)->get();
 
+        $sponsor = getSponsor($user);
+
         return view ('extensions.index')
-                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions'));
+                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sponsor'));
     }
 
     /**
@@ -67,14 +72,11 @@ class ExtensionController extends Controller
 
         //Populate Beacon options with user's bookmarked beacons
         $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
+        $beacons = array_add($beacons, $sources['beacon_tag'], $sources['beacon_tag']);
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $userSponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            Event::fire(new SponsorViewed($userSponsor));
-        }
+
+        $sponsor = getSponsor($user);
 
         return view('extensions.create')
                     ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sponsor'));
@@ -287,50 +289,25 @@ class ExtensionController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
 
-        //Check if Beacon pays for promotions
+        //Determine if beacon or sponsor shows and update
         if($extension->beacon_tag == 'No-Beacon')
         {
-            //No Beacon defaults to user's sponsor
-            if(Sponsorship::where('user_id', '=', $extension->user_id)->exists())
-            {
-                $sponsorship = Sponsorship::where('user_id', '=', $extension->user_id)->first();
-                $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-                Event::fire(new SponsorViewed($sponsor));
-            }
-            else
-            {
-                $sponsor = NULL;
-            }
+            $sponsor = getSponsor($user);
             $beacon = NULL;
         }
         else
         {
-            $extensionBeacon = Beacon::where('beacon_tag', '=', $extension->beacon_tag)->first();
-
-            if($extensionBeacon->tier > 1)
+            $beacon = getBeacon($extension);
+            if($beacon == NULL)
             {
-                //Beacon pays subscription for promotions
-                $beacon = $extensionBeacon;
-                $sponsor = NULL;
+                $sponsor = getSponsor($user);
             }
             else
             {
-
-                //Beacon does not subscribe for promotion, default to sponsor
-                if(Sponsorship::where('user_id', '=', $extension->user_id)->exists())
-                {
-                    $sponsorship = Sponsorship::where('user_id', '=', $extension->user_id)->first();
-                    $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-                    Event::fire(new SponsorViewed($sponsor));
-                }
-                else
-                {
-                    $sponsor = NULL;
-                }
-
-                $beacon = NULL;
+                $sponsor = NULL;
             }
         }
+
         //Get Source info of extension
         if(isset($extension->post_id))
         {
@@ -426,13 +403,11 @@ class ExtensionController extends Controller
         $extension = array_add($extension, 'body', $contents);
 
         //Get Source info of extension
-        if(isset($extension->post_id))
-        {
+        if (isset($extension->post_id)) {
             $post_id = $extension->post_id;
             $post = Post::findOrFail($post_id);
 
-            if(isset($extension->extenception))
-            {
+            if (isset($extension->extenception)) {
                 $extenception = Extension::findOrFail($extension->extenception);
                 $sources = [
                     'type' => 'extensions',
@@ -441,18 +416,14 @@ class ExtensionController extends Controller
                     'extension_title' => $extenception->title,
                     'post_title' => $post->title
                 ];
-            }
-            else
-            {
+            } else {
                 $sources = [
                     'type' => 'posts',
                     'post_id' => $post->id,
                     'post_title' => $post->title
                 ];
             }
-        }
-        elseif(isset($extension->question_id))
-        {
+        } elseif (isset($extension->question_id)) {
             $question_id = $extension->question_id;
             $question = Question::findOrFail($question_id);
 
@@ -473,7 +444,6 @@ class ExtensionController extends Controller
             }
         }
 
-
         //Get other Posts of User
         $user_id = $extension->user_id;
         $user = User::findOrFail($user_id);
@@ -486,11 +456,27 @@ class ExtensionController extends Controller
         $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-
-
+        //Determine if beacon or sponsor shows and update
+        if ($extension->beacon_tag == 'No-Beacon')
+        {
+            $sponsor = getSponsor($user);
+            $beacon = NULL;
+        }
+        else
+        {
+            $beacon = getBeacon($extension);
+            if ($beacon == NULL)
+            {
+                $sponsor = getSponsor($user);
+            }
+            else
+            {
+                $sponsor = NULL;
+            }
+        }
 
         return view('extensions.edit')
-                    ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sponsor', 'beacon');
+                    ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sponsor', 'beacon'));
     }
 
     /**
@@ -561,8 +547,10 @@ class ExtensionController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
+        $sponsor = getSponsor($user);
+
         return view ('extensions.search')
-            ->with(compact('user', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'profilePosts','profileExtensions', 'sponsor'));
     }
 
     /**
@@ -584,23 +572,12 @@ class ExtensionController extends Controller
         {
             flash()->overlay('No extensions with this title');
         }
-        //dd($results);
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('extensions.results')
-            ->with(compact('user', 'profilePosts','profileExtensions','results'))
-            ->with('photoPath', $photoPath)
+            ->with(compact('user', 'profilePosts','profileExtensions','results', 'sponsor'))
             ->with('title', $title);
-
     }
 
     /**
@@ -617,6 +594,7 @@ class ExtensionController extends Controller
     /**
      * Display the recent posts of the user.
      *
+     * @param $user
      * @return \Illuminate\Http\Response
      */
     public function getProfilePosts($user)
@@ -625,6 +603,12 @@ class ExtensionController extends Controller
         return $profilePosts;
     }
 
+    /**
+     * Display the recent extensions of the user.
+     *
+     * @param $user
+     * @return \Illuminate\Http\Response
+     */
     public function getProfileExtensions($user)
     {
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
@@ -635,7 +619,7 @@ class ExtensionController extends Controller
     public function extendPost($id)
     {
         $sourcePost = Post::findOrFail($id);
-        $fullSource = ['type' => 'posts', 'user_id' => $sourcePost->user_id,  'post_id' => $sourcePost->id, 'post_title' => $sourcePost->title];
+        $fullSource = ['type' => 'posts', 'user_id' => $sourcePost->user_id,  'post_id' => $sourcePost->id, 'post_title' => $sourcePost->title, 'beacon_tag' => $sourcePost->beacon_tag];
         Session::put('sources', $fullSource);
 
         return redirect('extensions/create');
@@ -647,11 +631,11 @@ class ExtensionController extends Controller
         $sourceExtension = Extension::findOrFail($id);
         if(isset($sourceExtension->post_id))
         {
-            $fullSource = ['type' => 'extensions', 'user_id' => $sourceExtension->user_id, 'post_id' => $sourceExtension->post_id,   'extenception' => $id, 'extension_title' => $sourceExtension->title];
+            $fullSource = ['type' => 'extensions', 'user_id' => $sourceExtension->user_id, 'post_id' => $sourceExtension->post_id,   'extenception' => $id, 'extension_title' => $sourceExtension->title, 'beacon_tag' => $sourceExtension->beacon_tag];
         }
         elseif(isset($sourceExtension->question_id))
         {
-            $fullSource = ['type' => 'extensions', 'user_id' => $sourceExtension->user_id, 'question_id' => $sourceExtension->question_id,   'extenception' => $id, 'extension_title' => $sourceExtension->title];
+            $fullSource = ['type' => 'extensions', 'user_id' => $sourceExtension->user_id, 'question_id' => $sourceExtension->question_id,   'extenception' => $id, 'extension_title' => $sourceExtension->title, 'beacon_tag' => $sourceExtension->beacon_tag];
         }
 
         Session::put('sources', $fullSource);
@@ -700,16 +684,35 @@ class ExtensionController extends Controller
         if($user->photo_path == '')
         {
 
-            $photoPath = '';
+            $sourcePhotoPath = '';
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $sourcePhotoPath = $user->photo_path;
+        }
+
+        //Determine if beacon or sponsor shows and update
+        if($post->beacon_tag == 'No-Beacon')
+        {
+            $sponsor = getSponsor($user);
+            $beacon = NULL;
+        }
+        else
+        {
+            $beacon = getBeacon($post);
+            if($beacon == NULL)
+            {
+                $sponsor = getSponsor($user);
+            }
+            else
+            {
+                $sponsor = NULL;
+            }
         }
 
         return view('extensions.postList')
-                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources'))
-                    ->with('photoPath', $photoPath);
+                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources', 'beacon', 'sponsor'))
+                    ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
 
@@ -738,16 +741,35 @@ class ExtensionController extends Controller
         if($user->photo_path == '')
         {
 
-            $photoPath = '';
+            $sourcePhotoPath = '';
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $sourcePhotoPath = $user->photo_path;
+        }
+
+        //Determine if beacon or sponsor shows and update
+        if($extension->beacon_tag == 'No-Beacon')
+        {
+            $sponsor = getSponsor($user);
+            $beacon = NULL;
+        }
+        else
+        {
+            $beacon = getBeacon($extension);
+            if($beacon == NULL)
+            {
+                $sponsor = getSponsor($user);
+            }
+            else
+            {
+                $sponsor = NULL;
+            }
         }
 
         return view('extensions.postList')
-                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources'))
-                    ->with('photoPath', $photoPath);
+                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources', 'beacon', 'sponsor'))
+                    ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
     /**
@@ -817,7 +839,7 @@ class ExtensionController extends Controller
         //Get Extension associated with id
         $extension = Extension::findOrFail($id);
 
-        $user = Auth::user();
+        $user = User::findOrFail($extension->user_id);
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $elevations = Elevate::where('extension_id', $id)->latest('created_at')->paginate(10);
@@ -825,16 +847,35 @@ class ExtensionController extends Controller
         if($user->photo_path == '')
         {
 
-            $photoPath = '';
+            $sourcePhotoPath = '';
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $sourcePhotoPath = $user->photo_path;
+        }
+
+        //Determine if beacon or sponsor shows and update
+        if($extension->beacon_tag == 'No-Beacon')
+        {
+            $sponsor = getSponsor($user);
+            $beacon = NULL;
+        }
+        else
+        {
+            $beacon = getBeacon($extension);
+            if($beacon == NULL)
+            {
+                $sponsor = getSponsor($user);
+            }
+            else
+            {
+                $sponsor = NULL;
+            }
         }
 
         return view ('extensions.listElevation')
-            ->with(compact('user', 'elevations', 'extension', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'elevations', 'extension', 'profilePosts','profileExtensions', 'beacon', 'sponsor'))
+            ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
     /**
@@ -861,8 +902,10 @@ class ExtensionController extends Controller
             $sourcePhotoPath = $user->photo_path;
         }
 
+        $sponsor = getSponsor($user);
+
         return view ('extensions.userExtensions')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -881,19 +924,10 @@ class ExtensionController extends Controller
 
         $extensions = $this->extension->where('beacon_tag', $beacon->beacon_tag)->latest()->paginate(10);
 
-        if($user->photo_path == '')
-        {
-
-            $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
-        }
-        else
-        {
-            $sourcePhotoPath = $user->photo_path;
-        }
+        Event::fire(New BeaconViewed($beacon));
 
         return view ('extensions.beaconExtensions')
             ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
-            ->with('sourcePhotoPath', $sourcePhotoPath)
             ->with('beacon', $beacon);
     }
 
@@ -908,8 +942,10 @@ class ExtensionController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $elevations = Elevate::where('extension_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('extension_id')->take(10)->get();
 
+        $sponsor = getSponsor($user);
+
         return view ('extensions.sortByElevation')
-            ->with(compact('user', 'elevations', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'elevations', 'profilePosts','profileExtensions', 'sponsor'));
 
     }
 
@@ -944,8 +980,15 @@ class ExtensionController extends Controller
             $extensions = $this->extension->whereNull('status')->orderBy('elevation', 'desc')->paginate(10);
             $filter = 'All';
         }
+        else
+        {
+            $filter = 'All';
+        }
+
+        $sponsor = getSponsor($user);
+
         return view ('extensions.sortByElevationTime')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions','sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -961,8 +1004,10 @@ class ExtensionController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $extensions = Extension::where('extenception', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('extenception')->take(10)->get();
 
+        $sponsor = getSponsor($user);
+
         return view ('extensions.sortByExtension')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'));
     }
 
     /**
@@ -996,8 +1041,15 @@ class ExtensionController extends Controller
             $extensions = $this->extension->whereNull('status')->orderBy('extension', 'desc')->paginate(10);
             $filter = 'All';
         }
+        else
+        {
+            $filter = 'All';
+        }
+
+        $sponsor = getSponsor($user);
+
         return view ('extensions.sortByExtensionTime')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -1033,9 +1085,15 @@ class ExtensionController extends Controller
             $extensions = $this->extension->whereNull('status')->latest('created_at')->paginate(10);
             $filter = 'All';
         }
+        else
+        {
+            $filter = 'All';
+        }
+
+        $sponsor = getSponsor($user);
 
         return view ('extensions.timeFilter')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }

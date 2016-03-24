@@ -34,60 +34,27 @@ function getSponsor($user)
     return $sponsor;
 }
 
-function getBeaconSponsor($content)
+/*
+ * Get the beacon of a given content and return if beacon pays subscription
+ *
+ * @param content
+ */
+function getBeacon($content)
 {
-    //Check if post has been localized
-    if($content->beacon_tag == 'No-Beacon')
+
+    $beacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
+
+    if ($beacon->tier >= 1)
     {
-        //No Beacon defaults to user's sponsor
-        if(Sponsorship::where('user_id', '=', $content->user_id)->exists())
-        {
-            $sponsorship = Sponsorship::where('user_id', '=', $content->user_id)->first();
-            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            if($sponsor->views >= $sponsor->budget)
-            {
-                $sponsor = NULL;
-            }
-            Event::fire(new SponsorViewed($sponsor));
-        }
-        else
-        {
-            $sponsor = NULL;
-        }
-        return $sponsor;
+        //Beacon pays subscription for promotions
+        Event::fire(new BeaconViewed($beacon));
     }
     else
     {
-        $postBeacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
-
-        if ($postBeacon->tier > 1)
-        {
-            //Beacon pays subscription for promotions
-            $beacon = $postBeacon;
-            Event::fire(new BeaconViewed($beacon));
-
-            return $beacon;
-        }
-        else
-        {
-            //Beacon does not subscribe for promotion, default to sponsor
-            if (Sponsorship::where('user_id', '=', $content->user_id)->exists())
-            {
-                $sponsorship = Sponsorship::where('user_id', '=', $content->user_id)->first();
-                $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-                if($sponsor->views >= $sponsor->budget)
-                {
-                    $sponsor = NULL;
-                }
-                Event::fire(new SponsorViewed($sponsor));
-            }
-            else
-            {
-                $sponsor = NULL;
-            }
-        }
+        $beacon = NULL;
     }
-    return $sponsor;
+
+    return $beacon;
 }
 
 
