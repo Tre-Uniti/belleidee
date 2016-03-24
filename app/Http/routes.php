@@ -38,7 +38,6 @@ Route::resource('beacons', 'BeaconController');
 Route::post('beaconRequests/convertBeacon', 'BeaconRequestController@convert')->name('convertBeacon');
 Route::resource('beaconRequests', 'BeaconRequestController');
 
-
 //Belief Routes
 Route::get('beliefs', 'BeliefController@index');
 Route::get('belief/index/{name}', 'BeliefController@beliefIndex');
@@ -83,6 +82,10 @@ Route::get('sponsors/results', 'SponsorController@results');
 Route::get('sponsors/top', 'SponsorController@topUsage');
 Route::get('sponsors/sponsorship/{id}', 'SponsorController@sponsorship');
 Route::resource('sponsors', 'SponsorController');
+
+//Sponsor Request Routes (Resource)
+Route::post('sponsorRequests/convertSponsor', 'SponsorRequestController@convert')->name('convertSponsor');
+Route::resource('sponsorRequests', 'SponsorRequestController');
 
 //Support Routes (Resource)
 Route::resource('supports', 'SupportController');
@@ -179,7 +182,9 @@ Route::get('admin', 'AdminController@portal');
 Route::get('admin/beacon/requests', 'AdminController@indexBeaconRequests');
 Route::get('admin/beacon/review/{id}', 'AdminController@reviewBeaconRequest');
 Route::get('admin/beacon/convert/{id}', 'AdminController@convertBeaconRequest');
-Route::get('admin/sponsorRequests', 'AdminController@indexSponsorsRequests');
+Route::get('admin/sponsor/requests', 'AdminController@indexSponsorRequests');
+Route::get('admin/sponsor/review/{id}', 'AdminController@reviewSponsorRequest');
+Route::get('admin/sponsor/convert/{id}', 'AdminController@convertSponsorRequest');
 
 //Moderator routes
 Route::get('moderator', 'ModeratorController@portal');

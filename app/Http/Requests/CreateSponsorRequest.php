@@ -6,7 +6,7 @@ use App\Http\Requests\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
-class SponsorRequest extends Request
+class CreateSponsorRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,10 +28,11 @@ class SponsorRequest extends Request
     {
         return [
             'name' => 'required|min:3|max:50|unique:sponsors',
+            'address' => 'required|min: 5',
             'website'  => 'required|min:10|max:275|unique:sponsors',
             'phone' => 'required|min: 10|max:15',
             'country' => 'required|max:50',
-            'city'  => 'required|max:75',
+            'location'  => 'required|max:75',
             'budget' => 'required|min:1|max:15',
             'email' => 'required|email|max:255|unique:sponsors',
             'image' => 'mimes:jpeg,jpg,png|max:8000'

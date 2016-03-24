@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SponsorViewed;
 use App\Extension;
 use App\Http\Requests\SponsorRequest;
 use App\Http\Requests\PhotoUploadRequest;
@@ -9,7 +10,6 @@ use App\Post;
 use App\Sponsor;
 use App\Sponsorship;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Stripe;
+use Event;
 
 class SponsorController extends Controller
 {
@@ -40,20 +41,15 @@ class SponsorController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $sponsors = $this->sponsor->latest()->paginate(10);
 
-        //Get user photo
-        if($user->photo_path == '')
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
         {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $userSponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            Event::fire(new SponsorViewed($userSponsor));
         }
 
         return view ('sponsors.index')
-            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions', 'userSponsor'));
     }
 
     /**
@@ -85,13 +81,14 @@ class SponsorController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\SponsorRequest  $request
+     * @param  \App\Http\Requests\CreateSponsorRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SponsorRequest $request)
+    public function store(CreateSponsorRequest $request)
     {
         $sponsor = new Sponsor;
         $sponsor->name = $request['name'];
+        $sponsor->address = $request['address'];
         $sponsor->website = $request['website'];
         $sponsor->phone = $request['phone'];
         $sponsor->email = $request['email'];
@@ -139,6 +136,7 @@ class SponsorController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $sponsor = $this->sponsor->findOrFail($id);
+        Event::fire(new SponsorViewed($sponsor));
 
         //Get user photo
         if($user->photo_path == '')
@@ -265,7 +263,7 @@ class SponsorController extends Controller
 
             flash()->overlay('Your sponsorship has started!');
         }
-        return redirect('users/'. $user->id);
+        return redirect('sponsors/'. $sponsor->id);
     }
 
     //Page to supply sponsor payments

@@ -9,7 +9,7 @@
     <a href="{{ url('questions/create') }}"><button type = "button" class = "navButton">Questions</button></a>
     <a href="{{ url('/') }}"><button type = "button" class = "navButton">Legacy</button></a>
     <a href="{{ url('/admin/beacon/requests') }}"><button type = "button" class = "navButton">Beacons</button></a>
-    <a href="{{ url('/admin/sponsors') }}"><button type = "button" class = "navButton">Sponsors</button></a>
+    <a href="{{ url('/admin/sponsor/requests') }}"><button type = "button" class = "navButton">Sponsors</button></a>
 
     <hr/>
     <div style = "width: 50%; float: left;">

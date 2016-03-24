@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\PostExtended' => [
             'App\Listeners\UserPostNotification',
         ],
+        'App\Events\SponsorViewed' => [
+            'App\Listeners\ChargeSponsor',
+        ]
     ];
 
     /**

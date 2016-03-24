@@ -39,9 +39,7 @@
                 </li>
             </ul>
         </nav>
-            <p>
                 {!! nl2br(e($post->body)) !!}
-            </p>
         </div>
 
 @stop

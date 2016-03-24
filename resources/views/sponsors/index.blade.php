@@ -10,7 +10,7 @@
         <tr>
             <td><a href={{ url('/sponsors/top')}}>Most Views</a></td>
             <td><a href={{ url('/sponsors/search')}}>Search</a></td>
-            <td><a href={{ url('/sponsors/create')}}>New Sponsor</a></td>
+            <td><a href={{ url('/sponsorRequests')}}>Sponsor Requests</a></td>
         </tr>
     </table>
     </div>
@@ -31,12 +31,9 @@
         </div>
     @endforeach
 
-
 @stop
 @section('centerFooter')
     {!! $sponsors->render() !!}
 @stop
-
-@include('sponsors.rightSide')
 
 

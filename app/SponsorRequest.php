@@ -4,18 +4,21 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sponsor extends Model
+class SponsorRequest extends Model
 {
     protected $fillable = [
         'name',
-        'website',
-        'address',
-        'phone',
-        'photo_path',
-        'budget',
         'adult',
+        'website',
+        'phone',
+        'email',
+        'address',
         'country',
         'location',
-        'email',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

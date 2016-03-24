@@ -8,14 +8,14 @@
             <td>
                 {!! Form::label('name', 'Name') !!}
             </td>
-            <td colspan="2">{!! Form::text('name', null, ['class' => 'createTitleText', 'autofocus']) !!}</td>
+            <td colspan="2">{!! Form::text('name', $sponsorRequest->name, ['class' => 'createTitleText', 'autofocus']) !!}</td>
         </tr>
         <tr>
             <td>
                 {!! Form::label('address', 'Address') !!}
             </td>
             <td>
-                {!! Form::text('address', null, ['class' => 'createTitleText']) !!}
+                {!! Form::text('address', $sponsorRequest->address, ['class' => 'createTitleText']) !!}
             </td>
         </tr>
         <tr>
@@ -23,7 +23,7 @@
                 {!! Form::label('country', 'Country') !!}
             </td>
             <td>
-                {!! Form::text('country', null, ['class' => 'createTitleText']) !!}
+                {!! Form::text('country', $sponsorRequest->country, ['class' => 'createTitleText']) !!}
             </td>
         </tr>
         <tr>
@@ -31,7 +31,7 @@
                 {!! Form::label('location', 'City or Region') !!}
             </td>
             <td>
-                {!! Form::text('location', null, ['class' => 'createTitleText']) !!}
+                {!! Form::text('location', $sponsorRequest->location, ['class' => 'createTitleText']) !!}
             </td>
         </tr>
         <tr>
@@ -39,7 +39,7 @@
                 {!! Form::label('website', 'Website') !!}
             </td>
             <td>
-                {!! Form::text('website', null, ['class' => 'createTitleText']) !!}
+                {!! Form::text('website', $sponsorRequest->website, ['class' => 'createTitleText']) !!}
             </td>
         </tr>
         <tr>
@@ -47,7 +47,7 @@
                 {!! Form::label('phone', 'Phone #') !!}
             </td>
             <td>
-                {!! Form::text('phone', null, ['class' => 'createTitleText']) !!}
+                {!! Form::text('phone', $sponsorRequest->phone, ['class' => 'createTitleText']) !!}
             </td>
         </tr>
         <tr>
@@ -55,7 +55,7 @@
                 {!! Form::label('email', 'Email') !!}
             </td>
             <td>
-                {!! Form::email('email', null, ['class' => 'createTitleText']) !!}
+                {!! Form::email('email', $sponsorRequest->email, ['class' => 'createTitleText']) !!}
             </td>
         </tr>
         <tr>
@@ -63,7 +63,7 @@
                 {!! Form::label('budget', 'Monthly Budget') !!}
             </td>
             <td>
-                {!! Form::text('budget', null, ['class' => 'createTitleText']) !!}
+                {!! Form::text('budget', $sponsorRequest->budget, ['class' => 'createTitleText']) !!}
             </td>
         </tr>
 
@@ -82,12 +82,13 @@
             <td>
                 {!! Form::file('image', null, ['class' => 'navButton']) !!}
             </td>
+            {!! Form::hidden('sponsorRequestId', $sponsorRequest->id) !!}
         </tr>
     </table>
     @section('centerFooter')
-    {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
-    <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>
-    {!! Form::close()   !!}
+        {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
+        <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>
+        {!! Form::close()   !!}
     @stop
 
 </div>

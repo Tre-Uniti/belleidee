@@ -7,6 +7,7 @@ use App\Extension;
 use App\Intolerance;
 use App\Moderation;
 use App\Post;
+use App\SponsorRequest;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -105,6 +106,57 @@ class AdminController extends Controller
         return view('admin.convertBeacon')
             ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions'))
             ->with('beliefs', $beliefs);
+    }
+
+    /**
+     * Display a listing of Beacon Requests.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexSponsorRequests()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $sponsorRequests = SponsorRequest::latest()->paginate(10);
+
+        return view ('admin.sponsorRequests')
+            ->with(compact('user', 'sponsorRequests', 'profilePosts','profileExtensions'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function reviewSponsorRequest($id)
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $sponsorRequest = SponsorRequest::findOrFail($id);
+
+        return view('admin.sponsorReview')
+            ->with(compact('user', 'sponsorRequest', 'profilePosts', 'profileExtensions'));
+    }
+
+    /**
+     * Add extra fields for conversion of Request.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function convertSponsorRequest($id)
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $sponsorRequest = SponsorRequest::findOrFail($id);
+
+
+        return view('admin.convertSponsor')
+            ->with(compact('user', 'sponsorRequest', 'profilePosts', 'profileExtensions'));
     }
 
 }

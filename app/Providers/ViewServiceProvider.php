@@ -29,23 +29,11 @@ class ViewServiceProvider extends ServiceProvider
                 $photoPath = $user->photo_path;
             }
 
-            //Get and set user's sponsor logo
-            if(Sponsorship::where('user_id', '=', $user->id)->exists())
-            {
-                $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-                $userSponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-                $userSponsor->where('id', $userSponsor->id)
-                            ->update(['views' => $userSponsor->views + 1]);
-            }
-            else
-            {
-                $userSponsor = NULL;
-            }
             $profileBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
             $view->with('notifyCount', $notifyCount);
             $view->with('photoPath', $photoPath);
             $view->with('profileBeacons', $profileBeacons);
-            $view->with('userSponsor', $userSponsor);
+
         });
 
     }

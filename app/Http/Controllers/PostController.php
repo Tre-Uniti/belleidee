@@ -6,6 +6,7 @@ use App\Adjudication;
 use App\Beacon;
 use App\Bookmark;
 use App\Elevate;
+use App\Events\SponsorViewed;
 use App\Intolerance;
 use App\Moderation;
 use App\Notification;
@@ -24,6 +25,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Event;
 
 class PostController extends Controller
 {
@@ -198,7 +200,7 @@ class PostController extends Controller
         //Get other Extensions of User
         $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->take(7)->get();
 
-        //Check if Beacon pays for promotions
+        //Check if post has been localized
         if($post->beacon_tag == 'No-Beacon')
         {
             //No Beacon defaults to user's sponsor
@@ -206,6 +208,7 @@ class PostController extends Controller
             {
                 $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
                 $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+                Event::fire(new SponsorViewed($sponsor));
             }
             else
             {
@@ -230,6 +233,7 @@ class PostController extends Controller
                 {
                     $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
                     $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+                    Event::fire(new SponsorViewed($sponsor));
                 }
                 else
                 {

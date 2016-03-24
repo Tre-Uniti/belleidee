@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CreateBasicBeaconRequest extends Request
+class CreateBasicSponsorRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,13 +26,12 @@ class CreateBasicBeaconRequest extends Request
     {
         return [
             'name' => 'required|min:3|max:50',
-            'belief' => 'required',
             'address' => 'required|min: 5',
             'country' => 'required|min: 2',
             'location' => 'required|min: 2',
             'website' => 'min:10|max:275',
             'phone' => 'required|min: 10|max:18',
-            'email' => 'required|email|max:255|unique:beacon_requests|unique:beacons',
+            'email' => 'required|email|max:255|unique:sponsor_requests|unique:sponsors',
         ];
     }
 }

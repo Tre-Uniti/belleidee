@@ -39,6 +39,7 @@ class Kernel extends HttpKernel
         'draftOwner' => \App\Http\Middleware\RedirectIfNotDraftOwner::class,
         'supportOwner' => \App\Http\Middleware\RedirectIfNotSupportOwner::class,
         'notificationOwner' => \App\Http\Middleware\RedirectIfNotNotificationOwner::class,
-        'beaconRequestOwner' => \App\Http\Middleware\RedirectIfNotBeaconRequestOwner::class
+        'beaconRequestOwner' => \App\Http\Middleware\RedirectIfNotBeaconRequestOwner::class,
+        'sponsorRequestOwner' => \App\Http\Middleware\RedirectIfNotSponsorRequestOwner::class
     ];
 }
