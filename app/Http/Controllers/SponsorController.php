@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\SponsorViewed;
 use App\Extension;
+use App\Http\Requests\CreateSponsorRequest;
 use App\Http\Requests\SponsorRequest;
 use App\Http\Requests\PhotoUploadRequest;
 use App\Post;
@@ -62,20 +63,9 @@ class SponsorController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        //Get user photo
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
         return view('sponsors.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts', 'profileExtensions'));
     }
 
     /**

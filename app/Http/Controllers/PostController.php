@@ -6,7 +6,9 @@ use App\Adjudication;
 use App\Beacon;
 use App\Bookmark;
 use App\Elevate;
+use App\Events\BeaconViewed;
 use App\Events\SponsorViewed;
+use function App\Http\getSponsor;
 use App\Intolerance;
 use App\Moderation;
 use App\Notification;
@@ -22,6 +24,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -35,7 +38,7 @@ class PostController extends Controller
     public function __construct(Post $post)
     {
         $this->middleware('auth');
-        $this->middleware('postOwner', ['only' => 'edit']);
+        $this->middleware('postOwner', ['only' => 'edit', 'update']);
         $this->post = $post;
     }
 
@@ -46,20 +49,10 @@ class PostController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->whereNull('status')->latest('created_at')->take(10)->get();
 
-
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('posts.index')
-                    ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
-                    ->with('photoPath', $photoPath);
+                    ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'));
     }
 
     /**
@@ -85,8 +78,10 @@ class PostController extends Controller
             $sourcePhotoPath = $user->photo_path;
         }
 
+        $sponsor = getSponsor($user);
+
         return view ('posts.userPosts')
-                ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+                ->with(compact('user', 'posts', 'profilePosts','profileExtensions','sponsor'))
                 ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -123,20 +118,10 @@ class PostController extends Controller
         $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         return view('posts.create')
-                ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons'))
-                ->with('photoPath', $photoPath);
+                ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sponsor'));
     }
 
     /**
@@ -208,6 +193,10 @@ class PostController extends Controller
             {
                 $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
                 $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+                if($sponsor->views >= $sponsor->budget)
+                {
+                    $sponsor = NULL;
+                }
                 Event::fire(new SponsorViewed($sponsor));
             }
             else
@@ -225,6 +214,7 @@ class PostController extends Controller
                 //Beacon pays subscription for promotions
                 $beacon = $postBeacon;
                 $sponsor = NULL;
+                Event::fire(new BeaconViewed($beacon));
             }
             else
             {
@@ -233,13 +223,16 @@ class PostController extends Controller
                 {
                     $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
                     $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+                    if($sponsor->views >= $sponsor->budget)
+                    {
+                        $sponsor = NULL;
+                    }
                     Event::fire(new SponsorViewed($sponsor));
                 }
                 else
                 {
                     $sponsor = NULL;
                 }
-
                 $beacon = NULL;
             }
         }
@@ -315,18 +308,61 @@ class PostController extends Controller
         $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-        if($user->photo_path == '')
+        //Check if post has been localized
+        if($post->beacon_tag == 'No-Beacon')
         {
-            $photoPath = '';
+            //No Beacon defaults to user's sponsor
+            if(Sponsorship::where('user_id', '=', $post->user_id)->exists())
+            {
+                $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
+                $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+                if($sponsor->views >= $sponsor->budget)
+                {
+                    $sponsor = NULL;
+                }
+                Event::fire(new SponsorViewed($sponsor));
+            }
+            else
+            {
+                $sponsor = NULL;
+            }
+            $beacon = NULL;
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $postBeacon = Beacon::where('beacon_tag', '=', $post->beacon_tag)->first();
+
+            if ($postBeacon->tier > 1)
+            {
+                //Beacon pays subscription for promotions
+                $beacon = $postBeacon;
+                Event::fire(new BeaconViewed($beacon));
+                $sponsor = NULL;
+            }
+            else
+            {
+                //Beacon does not subscribe for promotion, default to sponsor
+                if (Sponsorship::where('user_id', '=', $post->user_id)->exists())
+                {
+                    $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
+                    $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+                    if($sponsor->views >= $sponsor->budget)
+                    {
+                        $sponsor = NULL;
+                    }
+                    Event::fire(new SponsorViewed($sponsor));
+                }
+                else
+                {
+                    $sponsor = NULL;
+                }
+
+                $beacon = NULL;
+            }
         }
 
         return view('posts.edit')
-                ->with(compact('user', 'post', 'profilePosts', 'profileExtensions', 'beacons', 'date'))
-                ->with('photoPath', $photoPath);
+                ->with(compact('user', 'post', 'profilePosts', 'profileExtensions', 'beacons', 'date', 'sponsor', 'beacon'));
 
     }
 
@@ -405,19 +441,19 @@ class PostController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->where('source', $source)->latest()->paginate(10);
 
-        if($user->photo_path == '')
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
         {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            if($sponsor->views >= $sponsor->budget)
+            {
+                $sponsor = NULL;
+            }
+            Event::fire(new SponsorViewed($sponsor));
         }
 
         return view ('posts.listSources')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath)
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('source', $source);
     }
 
@@ -432,19 +468,23 @@ class PostController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        if($user->photo_path == '')
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
         {
-
-            $photoPath = '';
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            if($sponsor->views >= $sponsor->budget)
+            {
+                $sponsor = NULL;
+            }
+            Event::fire(new SponsorViewed($sponsor));
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $sponsor = null;
         }
 
         return view ('posts.search')
-            ->with(compact('user', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts','profileExtensions', 'sponsor'));
     }
 
     /**
@@ -466,20 +506,24 @@ class PostController extends Controller
         {
             flash()->overlay('No posts with this title');
         }
-       //dd($results);
 
-        if($user->photo_path == '')
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
         {
-            $photoPath = '';
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            if($sponsor->views >= $sponsor->budget)
+            {
+                $sponsor = NULL;
+            }
+            Event::fire(new SponsorViewed($sponsor));
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $sponsor = NULL;
         }
 
         return view ('posts.results')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
-            ->with('photoPath', $photoPath)
+            ->with(compact('user', 'profilePosts','profileExtensions', 'results', 'sponsor'))
             ->with('title', $title);
     }
 
@@ -577,7 +621,7 @@ class PostController extends Controller
         //Get Post associated with id
         $post = Post::findOrFail($id);
 
-        $user = Auth::user();
+        $user = User::findOrFail($post->user_id);
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $elevations = Elevate::where('post_id', $id)->latest('created_at')->paginate(10);
@@ -585,16 +629,68 @@ class PostController extends Controller
         if($user->photo_path == '')
         {
 
-            $photoPath = '';
+            $sourcePhotoPath = '';
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $sourcePhotoPath = $user->photo_path;
+        }
+
+        //Check if post has been localized
+        if($post->beacon_tag == 'No-Beacon')
+        {
+            //No Beacon defaults to user's sponsor
+            if(Sponsorship::where('user_id', '=', $post->user_id)->exists())
+            {
+                $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
+                $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+                if($sponsor->views >= $sponsor->budget)
+                {
+                    $sponsor = NULL;
+                }
+                Event::fire(new SponsorViewed($sponsor));
+            }
+            else
+            {
+                $sponsor = NULL;
+            }
+            $beacon = NULL;
+        }
+        else
+        {
+            $postBeacon = Beacon::where('beacon_tag', '=', $post->beacon_tag)->first();
+
+            if ($postBeacon->tier > 1)
+            {
+                //Beacon pays subscription for promotions
+                $beacon = $postBeacon;
+                $sponsor = NULL;
+                Event::fire(new BeaconViewed($beacon));
+            }
+            else
+            {
+                //Beacon does not subscribe for promotion, default to sponsor
+                if (Sponsorship::where('user_id', '=', $post->user_id)->exists())
+                {
+                    $sponsorship = Sponsorship::where('user_id', '=', $post->user_id)->first();
+                    $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+                    if($sponsor->views >= $sponsor->budget)
+                    {
+                        $sponsor = NULL;
+                    }
+                    Event::fire(new SponsorViewed($sponsor));
+                }
+                else
+                {
+                    $sponsor = NULL;
+                }
+                $beacon = NULL;
+            }
         }
 
         return view ('posts.listElevation')
-            ->with(compact('user', 'elevations', 'post', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'elevations', 'post', 'profilePosts','profileExtensions', 'sponsor', 'beacon'))
+            ->with('sourcePhotoPath', $sourcePhotoPath);
     }
     /**
      * List posts for a specific date
@@ -609,20 +705,24 @@ class PostController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->whereDate('created_at', '=', $queryDate)->latest()->paginate(10);
 
-        if($user->photo_path == '')
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
         {
-
-            $photoPath = '';
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            if($sponsor->views >= $sponsor->budget)
+            {
+                $sponsor = NULL;
+            }
+            Event::fire(new SponsorViewed($sponsor));
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $sponsor = NULL;
         }
 
         return view ('posts.listDates')
-                ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
-                ->with('date', $queryDate)
-                ->with('photoPath', $photoPath);
+                ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+                ->with('date', $queryDate);
     }
 
     /**
@@ -636,8 +736,23 @@ class PostController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $elevations = Elevate::where('post_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
 
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            if($sponsor->views >= $sponsor->budget)
+            {
+                $sponsor = NULL;
+            }
+            Event::fire(new SponsorViewed($sponsor));
+        }
+        else
+        {
+            $sponsor = NULL;
+        }
+
         return view ('posts.sortByElevation')
-            ->with(compact('user', 'elevations', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'elevations', 'profilePosts','profileExtensions', 'sponsor'));
     }
 
     /**
@@ -671,8 +786,24 @@ class PostController extends Controller
             $posts = $this->post->whereNull('status')->orderBy('elevation', 'desc')->paginate(10);
             $filter = 'All';
         }
+
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            if($sponsor->views >= $sponsor->budget)
+            {
+                $sponsor = NULL;
+            }
+            Event::fire(new SponsorViewed($sponsor));
+        }
+        else
+        {
+            $sponsor = NULL;
+        }
+
         return view ('posts.sortByElevationTime')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -689,8 +820,23 @@ class PostController extends Controller
 
         $extensions = Extension::where('post_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
 
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            if($sponsor->views >= $sponsor->budget)
+            {
+                $sponsor = NULL;
+            }
+            Event::fire(new SponsorViewed($sponsor));
+        }
+        else
+        {
+            $sponsor = NULL;
+        }
+
         return view ('posts.sortByExtension')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'));
     }
 
     /**
@@ -724,8 +870,24 @@ class PostController extends Controller
             $posts = $this->post->whereNull('status')->orderBy('extension', 'desc')->paginate(10);
             $filter = 'All';
         }
+
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            if($sponsor->views >= $sponsor->budget)
+            {
+                $sponsor = NULL;
+            }
+            Event::fire(new SponsorViewed($sponsor));
+        }
+        else
+        {
+            $sponsor = NULL;
+        }
+
         return view ('posts.sortByExtensionTime')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -762,8 +924,23 @@ class PostController extends Controller
             $filter = 'All';
         }
 
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            if($sponsor->views >= $sponsor->budget)
+            {
+                $sponsor = NULL;
+            }
+            Event::fire(new SponsorViewed($sponsor));
+        }
+        else
+        {
+            $sponsor = NULL;
+        }
+
         return view ('posts.timeFilter')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -778,6 +955,8 @@ class PostController extends Controller
 
         return redirect('posts/'. $post->id);
     }
+
+
 
 }
 

@@ -87,8 +87,8 @@ class NotificationMailer extends Mailer
     public function sendSponsorDeletedNotification(User $user, $sponsorTitle)
     {
         $view = 'emails.sponsorDeleted';
-        $data = compact('user','beaconTitle');
-        $subject = 'Your sponsor request did not become an Idee Beacon.';
+        $data = compact('user','sponsorTitle');
+        $subject = 'Your sponsor request did not become an Idee Sponsor.';
         $this->sendTo($user, $subject, $view, $data);
     }
 

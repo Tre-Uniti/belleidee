@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Beacon;
 use App\Elevate;
+use App\Events\SponsorViewed;
 use App\Mailers\NotificationMailer;
 use App\Notification;
 use App\Post;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Event;
 
 class ExtensionController extends Controller
 {
@@ -67,8 +69,15 @@ class ExtensionController extends Controller
         $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $userSponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            Event::fire(new SponsorViewed($userSponsor));
+        }
+
         return view('extensions.create')
-                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources'));
+                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sponsor'));
     }
 
     /**
@@ -286,6 +295,7 @@ class ExtensionController extends Controller
             {
                 $sponsorship = Sponsorship::where('user_id', '=', $extension->user_id)->first();
                 $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+                Event::fire(new SponsorViewed($sponsor));
             }
             else
             {
@@ -311,6 +321,7 @@ class ExtensionController extends Controller
                 {
                     $sponsorship = Sponsorship::where('user_id', '=', $extension->user_id)->first();
                     $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+                    Event::fire(new SponsorViewed($sponsor));
                 }
                 else
                 {
@@ -475,20 +486,11 @@ class ExtensionController extends Controller
         $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-        if($user->photo_path == '')
-        {
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
 
         return view('extensions.edit')
-                    ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'sources'))
-                    ->with('photoPath', $photoPath);
+                    ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sponsor', 'beacon');
     }
 
     /**

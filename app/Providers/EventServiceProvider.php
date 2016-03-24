@@ -18,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\SponsorViewed' => [
             'App\Listeners\ChargeSponsor',
+        ],
+        'App\Events\BeaconViewed' => [
+            'App\Listeners\UpdateBeaconUsage'
         ]
     ];
 
