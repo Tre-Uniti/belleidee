@@ -654,7 +654,7 @@ class ExtensionController extends Controller
             flash()->overlay('You may edit your answer or extend another');
             return redirect('extensions/'. $extension->id);
         }
-        $fullSource = ['type' => 'question', 'user_id' => $sourceQuestion->user_id, 'question_id' => $sourceQuestion->id, 'question' => $sourceQuestion->question];
+        $fullSource = ['type' => 'question', 'user_id' => $sourceQuestion->user_id, 'question_id' => $sourceQuestion->id, 'question' => $sourceQuestion->question, 'beacon_tag' => 'No-Beacon'];
         Session::put('sources', $fullSource);
 
         return redirect('extensions/create');
