@@ -27,7 +27,7 @@ class SponsorController extends Controller
     public function __construct(Sponsor $sponsor)
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['except' => ['index', 'show', 'sponsorship', 'search', 'results', 'topUsage']]);
+        $this->middleware('admin', ['except' => ['index', 'show', 'sponsorship', 'search', 'results', 'topUsage', 'click']]);
         $this->sponsor = $sponsor;
     }
     /**
