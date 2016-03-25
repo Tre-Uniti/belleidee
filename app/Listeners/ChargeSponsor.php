@@ -28,9 +28,8 @@ class ChargeSponsor
     public function handle(SponsorViewed $event)
     {
         $sponsor = Sponsor::findOrFail($event->sponsor->id);
-        $budget = $sponsor->budget;
 
-        if($sponsor->views < $budget)
+        if($sponsor->views < $sponsor->view_budget)
         {
             $sponsor->where('id', $sponsor->id)
                 ->update(['views' => $sponsor->views + 1]);

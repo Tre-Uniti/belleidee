@@ -76,6 +76,7 @@ Route::resource('drafts', 'DraftController');
 
 //Sponsor Routes (Resource)
 Route::get('sponsors/pay/{id}', 'SponsorController@pay');
+Route::get('sponsors/click/{id}', 'SponsorController@click');
 Route::post('sponsors/payment', 'SponsorController@payment')->name('payment');
 Route::get('sponsors/search', 'SponsorController@search');
 Route::get('sponsors/results', 'SponsorController@results');
@@ -143,6 +144,7 @@ Route::resource('adjudications', 'AdjudicationController');
 Route::get('notifications/post/{id}', 'NotificationController@post');
 Route::get('notifications/extension/{id}', 'NotificationController@extension');
 Route::get('notifications/question/{id}', 'NotificationController@question');
+Route::get('notifications/clear', 'NotificationController@clearAll');
 Route::resource('notifications', 'NotificationController');
 
 //Password Route (Laravel)

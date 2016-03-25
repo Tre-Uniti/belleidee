@@ -18,15 +18,15 @@
                     <a href="{{ url('/sponsors') }}">Views</a>
                 </th>
                 <th>
-                    <a href="{{ url('/sponsors') }}">Status</a>
+                    <a href="{{ url('/sponsors') }}">Clicks</a>
                 </th>
             </tr>
             <tr>
-                <td><a href="{{ url('/indev') }}">{{ $sponsor->country }}-{{ $sponsor->city }}</a>
+                <td><a href="{{ url('/indev') }}">{{ $sponsor->country }}-{{ $sponsor->location }}</a>
                 </td>
                 <td><a href="{{ url('/indev') }}">{{ $sponsor->views }}</a>
                 </td>
-                <td><a href="{{ url('/indev') }}">{{ $sponsor->status }}
+                <td><a href="{{ url('/indev') }}">{{ $sponsor->clicks }}
                 </td>
             </tr>
             <tr>

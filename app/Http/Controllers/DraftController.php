@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Draft;
 use App\Extension;
+use function App\Http\getBeacon;
+use function App\Http\getSponsor;
 use App\Http\Requests\CreateDraftRequest;
 use App\Http\Requests\EditDraftRequest;
 use App\Post;
@@ -40,18 +42,10 @@ class DraftController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $drafts = $this->draft->where('user_id', $user->id)->latest()->paginate(10);
 
-        if($user->photo_path == '')
-        {
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('drafts.index')
-            ->with(compact('user', 'drafts', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'drafts', 'profilePosts','profileExtensions', 'sponsor'));
     }
 
     /**
@@ -70,19 +64,10 @@ class DraftController extends Controller
         $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         return view('drafts.create')
-            ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sponsor'));
     }
 
     /**
@@ -115,7 +100,7 @@ class DraftController extends Controller
         $draft->user()->associate($user);
         $draft->save();
         flash()->overlay('Your draft has been created');
-        return redirect('drafts');
+        return redirect('drafts/'. $draft->id);
     }
 
     /**
@@ -144,20 +129,28 @@ class DraftController extends Controller
         $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->take(7)->get();
 
 
-        //Get user photo
-        if($user->photo_path == '')
+        //Determine if beacon or sponsor shows and update
+        if($draft->beacon_tag == 'No-Beacon')
         {
-
-            $photoPath = '';
+            $sponsor = getSponsor($user);
+            $beacon = NULL;
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $beacon = getBeacon($draft);
+            if($beacon == NULL)
+            {
+                $sponsor = getSponsor($user);
+            }
+            else
+            {
+                $sponsor = NULL;
+            }
         }
 
+
         return view('drafts.show')
-            ->with(compact('user', 'draft', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'draft', 'profilePosts', 'profileExtensions', 'beacon', 'sponsor'));
     }
 
     /**
@@ -188,19 +181,27 @@ class DraftController extends Controller
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
 
-        if($user->photo_path == '')
+        //Determine if beacon or sponsor shows and update
+        if($draft->beacon_tag == 'No-Beacon')
         {
-
-            $photoPath = '';
+            $sponsor = getSponsor($user);
+            $beacon = NULL;
         }
         else
         {
-            $photoPath = $user->photo_path;
+            $beacon = getBeacon($draft);
+            if($beacon == NULL)
+            {
+                $sponsor = getSponsor($user);
+            }
+            else
+            {
+                $sponsor = NULL;
+            }
         }
 
         return view('drafts.edit')
-            ->with(compact('user', 'draft', 'profilePosts', 'profileExtensions', 'beacons', 'date'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'draft', 'profilePosts', 'profileExtensions', 'beacons', 'date', 'beacon', 'sponsor'));
     }
 
     /**

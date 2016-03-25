@@ -33,7 +33,8 @@ class CreateSponsorRequest extends Request
             'phone' => 'required|min: 10|max:15',
             'country' => 'required|max:50',
             'location'  => 'required|max:75',
-            'budget' => 'required|min:1|max:15',
+            'view_budget' => 'required|min:1|max:15',
+            'click_budget' => 'required|min:1|max:15',
             'email' => 'required|email|max:255|unique:sponsors',
             'image' => 'mimes:jpeg,jpg,png|max:8000'
         ];

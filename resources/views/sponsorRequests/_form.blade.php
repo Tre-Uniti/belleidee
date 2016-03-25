@@ -60,7 +60,7 @@
             {!! Form::label('adult', 'Adult 21+') !!}
         </td>
         <td>
-            {!! Form::checkbox('adult') !!}
+            Yes: {!! Form::checkbox('adult') !!}
         </td>
     </tr>
 

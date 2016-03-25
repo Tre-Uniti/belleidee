@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Elevate;
 use App\Extension;
+use function App\Http\getSponsor;
 use App\Mailers\NotificationMailer;
 use App\Notification;
 use App\Post;
@@ -40,19 +41,10 @@ class QuestionController extends Controller
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
         $questions = $this->question->latest()->paginate(10);
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('questions.index')
-            ->with(compact('user', 'questions', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'questions', 'profilePosts', 'profileExtensions', 'sponsor'));
     }
 
     /**
@@ -82,19 +74,10 @@ class QuestionController extends Controller
             flash()->overlay('First Question:');
         }
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('questions.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'sponsor'));
     }
 
     /**
@@ -131,15 +114,7 @@ class QuestionController extends Controller
         $question = Question::findOrFail($id);
         $extensions = Extension::where('question_id', '=', $id)->where('extenception', '=', NULL)->latest()->paginate(10);
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         //Check if viewing user has already elevated question
         if(Elevate::where('question_id', $question->id)->where('user_id', $user->id)->exists())
@@ -152,9 +127,8 @@ class QuestionController extends Controller
         }
 
         return view ('questions.show')
-            ->with(compact('user', 'question', 'extensions', 'profilePosts', 'profileExtensions'))
-            ->with('elevation', $elevation)
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'question', 'extensions', 'profilePosts', 'profileExtensions', 'sponsor'))
+            ->with('elevation', $elevation);
 
     }
 
@@ -171,19 +145,8 @@ class QuestionController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $question = $this->question->findOrFail($id);
 
-        //Get user photo
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
         return view ('questions.edit')
-            ->with(compact('user', 'question', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'question', 'profilePosts','profileExtensions'));
     }
 
     /**
@@ -215,19 +178,10 @@ class QuestionController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('questions.search')
-            ->with(compact('user', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts','profileExtensions', 'sponsor'));
     }
 
     /**
@@ -251,19 +205,10 @@ class QuestionController extends Controller
             flash()->overlay('No questions with this wording');
         }
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('questions.results')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
-            ->with('photoPath', $photoPath)
+            ->with(compact('user', 'profilePosts','profileExtensions', 'results', 'sponsor'))
             ->with('question', $question);
 
     }
@@ -351,18 +296,11 @@ class QuestionController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $questions = $this->question->orderBy('extension', 'desc')->paginate(10);
-        if($user->photo_path == '')
-        {
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+
+        $sponsor = getSponsor($user);
 
         return view ('questions.sortByElevation')
-            ->with(compact('user', 'questions', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'questions', 'profilePosts','profileExtensions', 'sponsor'));
     }
     /**
      * Sort Questions by highest Extension
@@ -376,19 +314,11 @@ class QuestionController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $questions = $this->question->orderBy('elevation', 'desc')->paginate(10);
-        if($user->photo_path == '')
-        {
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('questions.sortByExtension')
-            ->with(compact('user', 'questions', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'questions', 'profilePosts','profileExtensions', 'sponsor'));
     }
 
     /**
@@ -404,14 +334,8 @@ class QuestionController extends Controller
 
         $question = Question::findOrFail($id);
         $extensions = Extension::where('question_id', '=', $id)->where('extenception', '=', NULL)->orderBy('elevation', 'desc')->paginate(10);
-        if($user->photo_path == '')
-        {
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+
+        $sponsor = getSponsor($user);
 
         if(Elevate::where('question_id', $question->id)->where('user_id', $user->id)->exists())
         {
@@ -423,8 +347,7 @@ class QuestionController extends Controller
         }
 
         return view ('questions.sortByExtensionElevation')
-            ->with(compact('user', 'question', 'extensions', 'profilePosts','profileExtensions', 'elevation'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'question', 'extensions', 'profilePosts','profileExtensions', 'elevation', 'sponsor'));
     }
     /**
      * Sort and show all extensions of Question by highest Extension
@@ -439,14 +362,8 @@ class QuestionController extends Controller
 
         $question = Question::findOrFail($id);
         $extensions = Extension::where('question_id', '=', $id)->where('extenception', '=', NULL)->orderBy('extension', 'desc')->paginate(10);
-        if($user->photo_path == '')
-        {
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+
+        $sponsor = getSponsor($user);
 
         if(Elevate::where('question_id', $question->id)->where('user_id', $user->id)->exists())
         {
@@ -458,8 +375,7 @@ class QuestionController extends Controller
         }
         
         return view ('questions.sortByMostExtension')
-            ->with(compact('user', 'question', 'extensions', 'profilePosts','profileExtensions', 'elevation'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'question', 'extensions', 'profilePosts','profileExtensions', 'elevation', 'sponsor'));
     }
 
 

@@ -21,7 +21,7 @@ function getSponsor($user)
         $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
         $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
         Event::fire(new SponsorViewed($sponsor));
-        if($sponsor->views >= $sponsor->budget)
+        if($sponsor->views >= $sponsor->view_budget || $sponsor->clicks >= $sponsor->click_budget)
         {
             $sponsor = NULL;
         }

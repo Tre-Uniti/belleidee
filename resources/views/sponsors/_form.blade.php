@@ -60,10 +60,18 @@
         </tr>
         <tr>
             <td>
-                {!! Form::label('budget', 'Monthly Budget') !!}
+                {!! Form::label('view_budget', 'View Budget') !!}
             </td>
             <td>
-                {!! Form::text('budget', null, ['class' => 'createTitleText']) !!}
+                {!! Form::text('view_budget', null, ['class' => 'createTitleText']) !!}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {!! Form::label('click_budget', 'Click Budget') !!}
+            </td>
+            <td>
+                {!! Form::text('click_budget', null, ['class' => 'createTitleText']) !!}
             </td>
         </tr>
 

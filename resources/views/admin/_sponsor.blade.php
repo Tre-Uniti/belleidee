@@ -60,10 +60,18 @@
         </tr>
         <tr>
             <td>
-                {!! Form::label('budget', 'Monthly Budget') !!}
+                {!! Form::label('view_budget', 'View Budget') !!}
             </td>
             <td>
-                {!! Form::text('budget', $sponsorRequest->budget, ['class' => 'createTitleText']) !!}
+                {!! Form::text('view_budget', $sponsorRequest->budget, ['class' => 'createTitleText']) !!}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {!! Form::label('click_budget', 'Click Budget') !!}
+            </td>
+            <td>
+                {!! Form::text('click_budget', $sponsorRequest->budget, ['class' => 'createTitleText']) !!}
             </td>
         </tr>
 
@@ -72,7 +80,7 @@
                 {!! Form::label('adult', 'Adult 21+') !!}
             </td>
             <td>
-                {!! Form::checkbox('adult') !!}
+                Yes:{!! Form::checkbox('adult') !!}
             </td>
         </tr>
         <tr>

@@ -146,11 +146,11 @@
                     @endif
                 @elseif(isset($sponsor))
                     @if($sponsor != NULL)
-                    <a href={{ url('/sponsors/'. $sponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $sponsor->photo_path) }} alt="{{$sponsor->name}}" height = "97%" width = "85%"></a>
+                    <a href={{ url('/sponsors/click/'. $sponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $sponsor->photo_path) }} alt="{{$sponsor->name}}" height = "97%" width = "85%"></a>
                     @endif
                 @elseif(isset($userSponsor))
                     @if($userSponsor != NULL)
-                        <a href={{ url('/sponsors/'. $userSponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $userSponsor->photo_path) }} alt="{{$userSponsor->name}}" height = "97%" width = "85%"></a>
+                        <a href={{ url('/sponsors/click/'. $userSponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $userSponsor->photo_path) }} alt="{{$userSponsor->name}}" height = "97%" width = "85%"></a>
                     @endif
                 @else
                     <a href={{ url('/sponsors/1') }}><img src= {{ asset('img/tre-uniti.png') }} alt="Tre-Uniti" height = "97%" width = "85%"></a>

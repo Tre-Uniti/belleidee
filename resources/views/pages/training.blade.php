@@ -4,7 +4,7 @@
 @stop
 @section('centerText')
     <h2>Idee Training</h2>
-    <p>Welcome below are our training videos</p>
+    <h2>Coming Soon!</h2>
 
     <h4>Starter:</h4>
     <!--//How to create a draft and convert

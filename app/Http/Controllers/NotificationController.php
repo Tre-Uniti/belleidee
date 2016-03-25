@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Extension;
+use function App\Http\getSponsor;
 use App\Notification;
 use App\Post;
 use App\Question;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -35,19 +37,10 @@ class NotificationController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $notifications = $this->notification->where('source_user', $user->id)->latest()->paginate(10);
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('notifications.index')
-            ->with(compact('user', 'notifications', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'notifications', 'profilePosts', 'profileExtensions', 'sponsor'));
 
     }
 
@@ -176,5 +169,20 @@ class NotificationController extends Controller
         $notification->delete();
 
         return redirect('questions/'. $question->id);
+    }
+
+    /*
+     * Clear all notification for a given user
+     */
+    public function clearAll()
+    {
+        $user = Auth::user();
+        $notifications = Notification::where('source_user', '=', $user->id)->get();
+        foreach($notifications as $notification)
+        {
+            $notification->delete();
+        }
+
+        return redirect('notifications');
     }
 }

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Beacon;
 use App\Elevate;
+use App\Events\SponsorViewed;
 use App\Extension;
+use function App\Http\getSponsor;
 use App\Http\Requests\PhotoUploadRequest;
 use App\Post;
 use App\Question;
@@ -18,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Search;
+use Event;
 
 class HomeController extends Controller
 {
@@ -41,19 +44,10 @@ class HomeController extends Controller
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('pages.home')
-                ->with(compact('user', 'posts', 'profilePosts', 'profileExtensions', 'question'))
-                ->with('photoPath', $photoPath)
+                ->with(compact('user', 'posts', 'profilePosts', 'profileExtensions', 'question', 'sponsor'))
                 ->with('extensions', $extensions)
                 ->with('posts', $posts);
     }
@@ -61,11 +55,13 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         //Get Sponsorship of user
+
         if(Sponsorship::where('user_id', $user->id)->exists())
         {
             $sponsorship = Sponsorship::where('user_id', $user->id)->first();
             $sponsor = Sponsor::where('id', $sponsorship->sponsor_id)->first();
             $days = Carbon::now()->diffInDays(new Carbon($sponsorship->created_at));
+            Event::fire(new SponsorViewed($sponsor));
         }
         else
         {
@@ -73,21 +69,11 @@ class HomeController extends Controller
             $days = 0;
         }
 
-
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
-        if($user->photo_path == '')
-        {
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
         return view ('pages.settings')
                     ->with(compact('user', 'profilePosts', 'profileExtensions', 'sponsor'))
-                    ->with('photoPath', $photoPath)
                     ->with('days', $days);
     }
 
@@ -97,19 +83,9 @@ class HomeController extends Controller
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
         return view ('pages.indev')
-                    ->with(compact('user', 'profilePosts', 'profileExtensions'))
-                    ->with('photoPath', $photoPath);
+                    ->with(compact('user', 'profilePosts', 'profileExtensions'));
     }
 
     /**
@@ -122,19 +98,11 @@ class HomeController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        if($user->photo_path == '')
-        {
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         return view('pages.photo')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts', 'profileExtensions'));
     }
     /**
      * Upload profile photo to S3 and set in database.
@@ -188,26 +156,20 @@ class HomeController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        if($user->photo_path == '')
-        {
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         $types =
             [
-                'Post' => 'Post',
+                'Beacon' => 'Beacon',
                 'Extension' => 'Extension',
+                'Post' => 'Post',
                 'Question' => 'Question',
+                'Sponsor' => 'Sponsor',
                 'User' => 'User'
             ];
 
         return view ('pages.search')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'types'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts','profileExtensions', 'types', 'sponsor'));
     }
 
     /**
@@ -251,6 +213,20 @@ class HomeController extends Controller
             $type = 'Users';
 
         }
+        elseif($type == 'Beacon')
+        {
+            $results = Beacon::where('name', 'LIKE', '%'.$identifier.'%')->paginate(10);
+            $results->appends($request->all());
+            $type = 'Beacons';
+
+        }
+        elseif($type == 'Sponsor')
+        {
+            $results = Sponsor::where('name', 'LIKE', '%'.$identifier.'%')->paginate(10);
+            $results->appends($request->all());
+            $type = 'Sponsors';
+
+        }
         else
         {
             $results = null;
@@ -262,19 +238,10 @@ class HomeController extends Controller
             flash()->overlay('No '. $type . ' found for this search');
         }
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $sponsor = getSponsor($user);
 
         return view ('pages.results')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
-            ->with('photoPath', $photoPath)
+            ->with(compact('user', 'profilePosts','profileExtensions', 'results', 'sponsor'))
             ->with('type', $type)
             ->with('identifier', $identifier);
     }

@@ -9,7 +9,7 @@
     <table align = "center">
         <tr>
             <td><a href={{ url('/users/elevatedBy/'. $user->id)}}>Elevation</a></td>
-            <td><a href="{{url('/indev')}}">Clear All</a></td>
+            <td><a href="{{url('/notifications/clear')}}">Clear All</a></td>
             <td><a href={{ url('/users/extendedBy/'. $user->id)}}>Extended</a></td>
         </tr>
     </table>

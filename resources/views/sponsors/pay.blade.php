@@ -53,6 +53,9 @@
             <td>Views:</td><td> {{ $sponsor->views }}</td>
         </tr>
         <tr>
+            <td>Clicks:</td><td> {{ $sponsor->clicks }}</td>
+        </tr>
+        <tr>
             <td>{!! Form::label('email', 'Email') !!}</td>
             <td>{!! Form::email('email', $sponsor->email, [ 'placeholder' => 'Email' ]) !!}</td>
         </tr>
@@ -71,7 +74,10 @@
             <td>{!! Form::text('cvc', '', ['data-stripe' => 'cvc' ]) !!}</td>
         </tr>
         <tr>
-            <td colspan = "3">{!! Form::button('Pay Views', [ 'type' => 'submit', 'id'  => 'btn-signup', 'class' => 'navButton'] ) !!}</td>
+            <td>Total Due:</td><td>${{ $sponsor->views * .01 + $sponsor->clicks * .05 }}</td>
+        </tr>
+        <tr>
+            <td colspan = "3">{!! Form::button('Pay', [ 'type' => 'submit', 'id'  => 'btn-signup', 'class' => 'navButton'] ) !!}</td>
         </tr>
     </table>
     {!! Form::close()  !!}

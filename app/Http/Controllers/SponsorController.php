@@ -264,6 +264,7 @@ class SponsorController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
+        //Customer exists charge card on file
         if ($sponsor->customer_id != NULL) {
             $stripe = [
                 'secret_key' => env('STRIPE_SECRET'),
@@ -272,16 +273,16 @@ class SponsorController extends Controller
             \Stripe\Stripe::setApiKey($stripe['secret_key']);
             $charge = \Stripe\Charge::create(array(
                 'customer' => $sponsor->customer_id,
-                'amount' => $sponsor->views * 5,
+                'amount' => $sponsor->views * 1 + $sponsor->clicks * 5,
                 'currency' => 'usd',
                 'description' => $sponsor->name
             ));
 
             //Update sponsor with new views, missed and status to live
             $sponsor->where('id', $sponsor->id)
-                ->update(['views' => 0, 'missed' => 0, 'status' => 'Live']);
+                ->update(['views' => 0, 'clicks' => 0, 'missed' => 0,  'status' => 'Live']);
 
-            flash()->overlay('Payment successful, views and missed restarted');
+            flash()->overlay('Payment successful: views, clicks, missed reset');
 
             return redirect('sponsors/' . $sponsor->id);
         }
@@ -311,8 +312,8 @@ class SponsorController extends Controller
 
         \Stripe\Stripe::setApiKey($stripe['secret_key']);
 
-        //Calcuate amount per view (5 cents)
-        $amount = $sponsor->views * 5;
+        //Calculate amount per view (5 cents)
+        $amount = $sponsor->views * 1 + $sponsor->clicks * 5;
 
         if ($sponsor->customer_id == NULL)
         {
@@ -321,7 +322,6 @@ class SponsorController extends Controller
                 'card'  => $token
 
             ));
-            //dd($customer);
             $charge = \Stripe\Charge::create(array(
                 'customer' => $customer->id,
                 'amount'   => $amount,
@@ -331,7 +331,7 @@ class SponsorController extends Controller
 
             //Update sponsor with new views, missed, status to live and stripe customer id
             $sponsor->where('id', $sponsor->id)
-                ->update(['views' => 0, 'missed' => 0, 'status' => 'Live', 'customer_id' => $customer->id]);
+                ->update(['views' => 0, 'clicks' => 0, 'missed' => 0, 'status' => 'Live', 'customer_id' => $customer->id]);
         }
         else
         {
@@ -344,10 +344,10 @@ class SponsorController extends Controller
 
             //Update sponsor with new views, missed and status to live
             $sponsor->where('id', $sponsor->id)
-                ->update(['views' => 0, 'missed' => 0, 'status' => 'Live']);
+                ->update(['views' => 0, 'clicks' => 0, 'missed' => 0, 'status' => 'Live']);
         }
 
-        flash()->overlay('Payment successful, views and missed restarted');
+        flash()->overlay('Payment successful: views, clicks, missed restarted');
 
         return redirect('sponsors/'. $sponsor->id);
     }
@@ -425,6 +425,20 @@ class SponsorController extends Controller
 
         return view ('sponsors.top')
             ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions'));
+    }
+
+    /*
+     * Charge Sponsor for a click and redirect to their page
+     *
+     * @param $id
+     */
+    public function click($id)
+    {
+        $sponsor = Sponsor::findOrFail($id);
+        $sponsor->where('id', $sponsor->id)
+            ->update(['clicks' => $sponsor->clicks + 1]);
+
+        return redirect('sponsors/'. $sponsor->id);
     }
 
 }

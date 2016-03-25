@@ -10,7 +10,7 @@
     <hr/>
     <table align = "center">
         <thead>
-        <tr><th>Sponsor Name</th>
+        <tr><th>Sponsor</th>
             <th># Days</th>
             <th>Status</th>
         </tr>

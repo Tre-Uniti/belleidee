@@ -74,6 +74,28 @@
                 </div>
             </div>
         @endforeach
+    @elseif($type == 'Beacons')
+        @foreach ($results as $result)
+            <div class = "listResource">
+                <div class = "listResourceLeft">
+                    <a href="{{ action('BeaconController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->name}}</button></a>
+                </div>
+                <div class = "listResourceRight">
+                    <a href="{{ action('BeaconController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->created_at->format('M-d-Y')}}</button></a>
+                </div>
+            </div>
+        @endforeach
+    @elseif($type == 'Sponsors')
+        @foreach ($results as $result)
+            <div class = "listResource">
+                <div class = "listResourceLeft">
+                    <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->name}}</button></a>
+                </div>
+                <div class = "listResourceRight">
+                    <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->created_at->format('M-d-Y')}}</button></a>
+                </div>
+            </div>
+        @endforeach
     @endif
 @stop
 @section('centerFooter')
