@@ -115,6 +115,7 @@ a:active {
 .hover {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
+  -ms-user-select: none;
 }
 
 .topNav {
@@ -1067,6 +1068,7 @@ article {
     max-height: 185px;
     padding-left: 3px;
     padding-right: 3px;
+    z-index: 0;
   }
 
   #createBodyText {
