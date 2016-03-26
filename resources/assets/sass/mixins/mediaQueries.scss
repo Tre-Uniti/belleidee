@@ -214,6 +214,8 @@
       height: auto;
       visibility: visible;
       left: .7em;
+      width: 21%;
+      font-size: 100%;
     }
     #rightSide
     {
@@ -221,6 +223,8 @@
       height: auto;
       visibility: visible;
       right: .7em;
+      width: 21%;
+      font-size: 100%;
     }
     .innerProfileMenus
     {
@@ -456,14 +460,18 @@
     #leftSide {
       top: 3%;
       height: auto;
+      width: 20%;
       visibility: visible;
       left: .1em;
+      font-size: 100%;
     }
     #rightSide {
       top: 3%;
       height: auto;
+      width: 20%;
       visibility: visible;
       right: .1em;
+      font-size: 100%;
     }
     .innerProfileMenus {
       height: 70px;
