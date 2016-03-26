@@ -45,7 +45,7 @@
 
     <!-- Body Form Input -->
     <div id = "centerTextContent">
-        {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Continue your extension here:', 'rows' => '18%', 'maxlength' => '3500']) !!}
+        {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your idea or belief here:', 'rows' => '18%', 'maxlength' => '3500']) !!}
     </div>
     @section('centerFooter')
         {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}

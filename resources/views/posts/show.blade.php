@@ -2,46 +2,40 @@
 @section('siteTitle')
     Show Post
 @stop
-@section('centerMenu')
-    <h2>{{ $post->title }}</h2>
-@stop
 
 @section('centerText')
-    <div>
-        <table align = "center">
-            <tr>
-                <td><a href="{{ action('BeliefController@beliefIndex', $post->belief) }}">{{ $post->belief }}</a></td>
-                <td><a href="{{ url('/beacons/tags/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a></td>
-                <td><a href="{{ url('/posts/source/'. $post->source) }}">{{ $post->source }}</a></td>
-            </tr>
-        </table>
-    </div>
-
-    <div id = "centerTextContent">
-        <nav class = "infoNav">
-            <ul>
-                <li>
-                    <p class = "extras">/-\</p>
-                    <div>
-                        <table align = "center">
-                            <tr>
-                                <td><a href={{ url('/posts/listElevation/'.$post->id)}}>Elevation</a></td>
-                                <td> <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a></td>
-                                <td><a href={{ url('/extensions/post/list/'.$post->id)}}>Extensions</a></td>
-                            </tr>
-                            @if($post->user_id != Auth::id())
+    <h2>{{ $post->title }}</h2>
+    <table align = "center">
+        <tr>
+            <td><a href="{{ action('BeliefController@beliefIndex', $post->belief) }}">{{ $post->belief }}</a></td>
+            <td><a href="{{ url('/beacons/tags/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a></td>
+            <td><a href="{{ url('/posts/source/'. $post->source) }}">{{ $post->source }}</a></td>
+        </tr>
+    </table>
+    <nav class = "infoNav">
+        <ul>
+            <li>
+                <p class = "extras">/-\</p>
+                <div>
+                    <table align = "center">
+                        <tr>
+                            <td><a href={{ url('/posts/listElevation/'.$post->id)}}>Elevation</a></td>
+                            <td> <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a></td>
+                            <td><a href={{ url('/extensions/post/list/'.$post->id)}}>Extensions</a></td>
+                        </tr>
+                        @if($post->user_id != Auth::id())
                             <tr>
                                 <td colspan="3"><a href="{{ url('/intolerances/post/'.$post->id) }}">Report Intolerance</a></td>
                             </tr>
-                            @endif
-                        </table>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-                {!! nl2br(e($post->body)) !!}
+                        @endif
+                    </table>
+                </div>
+            </li>
+        </ul>
+    </nav>
+        <div id = "centerTextContent">
+            {!! nl2br(e($post->body)) !!}
         </div>
-
 @stop
 
 @section('centerFooter')

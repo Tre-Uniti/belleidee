@@ -322,7 +322,6 @@ a:active {
   width: 100%;
   margin: 0 auto;
   text-align: center;
-  font-size: 90%;
 }
 .infoNav > ul
 {
@@ -643,20 +642,15 @@ article
   margin: 5px auto;
   width: 99%;
   height: auto;
-  max-height: 630px;
+  max-height: 610px;
   overflow: auto;
 }
 #centerTextContent
 {
   text-align: left;
   font-size: 110%;
-  margin: .5% auto;
   padding-left: 15px;
   padding-right: 15px;
-  height: auto;
-  max-height: 350px;
-  overflow:auto;
-  position: relative;
 }
 
 

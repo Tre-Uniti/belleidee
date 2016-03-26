@@ -4,13 +4,12 @@
 @stop
 
 @section('centerMenu')
-    <h2>{{ $extension->title }}</h2>
+
 
 @stop
 
 @section('centerText')
-    <div>
-        <div>
+    <h2>{{ $extension->title }}</h2>
             <table align = "center">
                 <tr>
                     <td><a href="{{ action('BeliefController@beliefIndex', $extension->belief) }}">{{ $extension->belief }}</a></td>
@@ -24,9 +23,7 @@
                     @endif
                 </tr>
             </table>
-        </div>
-    </div>
-        <div id = "centerTextContent">
+
             <nav class = "infoNav">
                 <ul>
                     <li>
@@ -48,11 +45,10 @@
                     </li>
                 </ul>
             </nav>
-            <p>
-                {!! nl2br(e($extension->body)) !!}
-            </p>
+    <div id = "centerTextContent">
+            {!! nl2br(e($extension->body)) !!}
+    </div>
 
-        </div>
 @stop
 
 @section('centerFooter')
