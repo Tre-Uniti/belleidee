@@ -32,7 +32,7 @@ class CreateBasicBeaconRequest extends Request
             'location' => 'required|min: 2',
             'website' => 'min:10|max:275',
             'phone' => 'required|min: 10|max:18',
-            'email' => 'required|email|max:255|unique:beacon_requests|unique:beacons',
+            'email' => 'email|max:255|unique:beacon_requests|unique:beacons',
         ];
     }
 }

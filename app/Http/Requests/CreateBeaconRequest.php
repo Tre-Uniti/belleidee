@@ -32,7 +32,7 @@ class CreateBeaconRequest extends Request
             'belief' => 'required',
             'website' => 'min:10|max:275',
             'phone' => 'required|min: 10|max:18',
-            'email' => 'required|email|max:255|unique:beacons',
+            'email' => 'email|max:255|unique:beacons',
             'tier' => 'required',
             'guide' => 'required',
             'image' => 'mimes:jpeg,jpg,png|max:8000'

@@ -191,6 +191,8 @@ Route::get('admin/sponsor/convert/{id}', 'AdminController@convertSponsorRequest'
 //Moderator routes
 Route::get('moderator', 'ModeratorController@portal');
 
+//Cashier
+Route::post('stripe/webhook', '\Laravel\Cashier\WebhookController@handleWebhook');
 
 
 
