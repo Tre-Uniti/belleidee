@@ -632,7 +632,6 @@ td {
   width: 50%;
   height: 80%;
   font-family: "Open Sans", Arial, serif;
-  z-index: 2;
   margin: 1.5% auto;
 }
 
@@ -1068,7 +1067,6 @@ article {
     max-height: 185px;
     padding-left: 3px;
     padding-right: 3px;
-    z-index: 0;
   }
 
   #createBodyText {

@@ -262,6 +262,7 @@
     }
     #centerText {
       max-height: 320px;
+      //position: fixed;
     }
     .createTitleText {
       width: 250px;
@@ -271,7 +272,7 @@
       padding-left: 3px;
       padding-right: 3px;
       //-webkit-overflow-scrolling: touch;
-      z-index: 0;
+      //z-index: 0;
     }
     #createBodyText {
       padding-left: 1px;
