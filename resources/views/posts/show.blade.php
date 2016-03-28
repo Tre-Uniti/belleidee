@@ -4,6 +4,19 @@
 @stop
 
 @section('centerText')
+        <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <!-- Load Twitter script -->
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
     <h2>{{ $post->title }}</h2>
     <table align = "center">
         <tr>
@@ -23,11 +36,20 @@
                             <td> <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a></td>
                             <td><a href={{ url('/extensions/post/list/'.$post->id)}}>Extensions</a></td>
                         </tr>
-                        @if($post->user_id != Auth::id())
-                            <tr>
-                                <td colspan="3"><a href="{{ url('/intolerances/post/'.$post->id) }}">Report Intolerance</a></td>
-                            </tr>
-                        @endif
+                        <tr>
+                            <td><!-- Your Facebook share button code -->
+                                <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button"></div></td>
+                            @if($post->user_id != Auth::id())
+                                <td><a href="{{ url('/intolerances/post/'.$post->id) }}">Report Intolerance</a></td>
+                            @elseif ($post->status < 1)
+                                <td><a href="{{ url('/posts/'.$post->id) }}">Status: Tolerant</a></td>
+                            @else
+                                <td><a href="{{ url('/posts/'. $post->id) }}">Status: Intolerant</a></td>
+                            @endif
+                            <td> <!-- Twitter share button code -->
+                                <a href="{{ Request::url() }}" class="twitter-share-button">Tweet</a>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </li>

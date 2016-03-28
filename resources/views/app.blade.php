@@ -8,6 +8,16 @@
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="/js/app.js"></script>
+
+    <!-- You can use Open Graph tags to customize link previews.
+    Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+    <meta property="og:url"           content= "{{ Request::url() }}"/>
+    <meta property="og:type"          content="website"/>
+    <meta property="og:title"         content="Belle-Idee"/>
+    <meta property="og:description"   content="A community for idea, inspiration, and belief sharing."/>
+    <meta property="og:image"         content="https://belle-idee.org/img/idee.png"/>
+
+
     <!--
        This code is maintained by the Tre-Uniti development ops
        Feature & Pull Requests decided at Belle-Creatori.org
@@ -15,6 +25,7 @@
     -->
 </head>
 <body>
+
 <div id = "container">
     <nav class = "topNav">
         <ul>
