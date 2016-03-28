@@ -13,8 +13,6 @@
                 <td><a href={{ url('/extensions/extension')}}>Extended</a></td>
             </tr>
         </table>
-    </div>
-    <div id = "centerTextContent">
         <nav class = "infoNav">
             <ul>
                 <li>
@@ -31,6 +29,9 @@
                     </div>
             </ul>
         </nav>
+    </div>
+    <div id = "centerTextContent">
+
     </div>
     <div style = "width: 50%; float: left;">
         <h4>Title</h4>

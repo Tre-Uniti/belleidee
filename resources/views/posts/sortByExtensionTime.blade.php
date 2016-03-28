@@ -12,8 +12,6 @@
             <td><a href={{ url('/posts')}}>New Posts</a></td>
         </tr>
     </table>
-    </div>
-    <div id = "centerTextContent">
         <nav class = "infoNav">
             <ul>
                 <li>
@@ -21,6 +19,9 @@
                 </li>
             </ul>
         </nav>
+    </div>
+    <div id = "centerTextContent">
+
     </div>
     <div style = "width: 50%; float: left;">
         <h4>Title</h4>

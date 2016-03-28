@@ -3,8 +3,6 @@
     Show Beacon
 @stop
 
-
-
 @section('centerMenu')
     <h2>Support Request</h2>
     <table align = "center">

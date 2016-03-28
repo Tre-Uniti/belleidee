@@ -13,14 +13,15 @@
                 <td><a href={{ url('/extensions')}}>New Extensions</a></td>
             </tr>
         </table>
+        <nav class = "infoNav">
+            <ul>
+                <li>
+                    <a href = {{ url('/extensions/extension') }}><p class = "extras">/Recent\</p></a>
+                </li>
+            </ul>
+        </nav>
         <div id = "centerTextContent">
-            <nav class = "infoNav">
-                <ul>
-                    <li>
-                        <a href = {{ url('/extensions/extension') }}><p class = "extras">/Recent\</p></a>
-                    </li>
-                </ul>
-            </nav>
+
         </div>
     </div>
     <div style = "width: 50%; float: left;">

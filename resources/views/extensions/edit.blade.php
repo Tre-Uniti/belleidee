@@ -13,5 +13,3 @@
 
 @section('centerFooter')
 @stop
-
-@include('extensions.rightSide')

@@ -3,8 +3,6 @@
     Extensions
 @stop
 
-
-
 @section('centerText')
     @if(isset($sources['extenception']))
         <h2>Extensions of <a href = {{ action('ExtensionController@show', [$sources['extenception']])}}> {{ $sources['extension_title'] }}</a></h2>

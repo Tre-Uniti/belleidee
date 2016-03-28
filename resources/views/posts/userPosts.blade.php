@@ -32,7 +32,6 @@
         </div>
     @endforeach
 
-
 @stop
 @section('centerFooter')
     {!! $posts->render() !!}

@@ -14,47 +14,16 @@
                 <td><a href={{ url('/extensions/extensionTime/'.$time)}}>Most Extended</a></td>
             </tr>
         </table>
+        <nav class = "infoNav">
+            <ul>
+                <li>
+                    <a href = {{ url('/extensions') }}>/Back\</a>
+                </li>
+            </ul>
+        </nav>
     </div>
     <div id = "centerTextContent">
-    <nav class = "infoNav">
-        <ul>
-            <li>
-                <a href = {{ url('/extensions') }}>/Back\</a>
-                <!--
-                <div>
-                    <table align = "center">
-                        <tr>
 
-                            @if($time == 'Today')
-                                <td><a href = {{ url('/extensions/timeFilter/Today') }}><b>Today</b></a></td>
-                                <td><a href = {{ url('/extensions/timeFilter/Month') }}>Month</a></td>
-                                <td><a href={{ url('/extensions/timeFilter/Year')}}>Year</a></td>
-                                <td><a href={{ url('/extensions/timeFilter/All')}}>All-time</a></td>
-                            @elseif($time == 'Month')
-                                <td><a href={{ url('/extensions/timeFilter/Today')}}>Today</a></td>
-                                <td><a href = {{ url('/extensions/timeFilter/Month') }}><b>Month</b></a></td>
-                                <td><a href={{ url('/extensions/timeFilter/Year')}}>Year</a></td>
-                                <td><a href={{ url('/extensions/timeFilter/All')}}>All-time</a></td>
-                            @elseif($time == 'Year')
-                                <td><a href={{ url('/extensions/timeFilter/Today')}}>Today</a></td>
-                                <td><a href = {{ url('/extensions/timeFilter/Month') }}>Month</a></td>
-                                <td><a href = {{ url('/extensions/timeFilter/Year') }}><b>Year</b></a></td>
-                                <td><a href={{ url('/extensions/timeFilter/All')}}>All-time</a></td>
-                            @elseif($time == 'All')
-                                <td><a href={{ url('/extensions/timeFilter/Today')}}>Today</a></td>
-                                <td><a href = {{ url('/extensions/timeFilter/Month') }}>Month</a></td>
-                                <td><a href={{ url('/extensions/timeFilter/Year')}}>Year</a></td>
-                                <td><a href = {{ url('/extensions/timeFilter/All') }}><b>All-Time</b></a></td>
-                            @endif
-
-                        </tr>
-                    </table>
-
-                </div>
-                -->
-            </li>
-        </ul>
-    </nav>
     </div>
     <div style = "width: 50%; float: left;">
         <h4>Title</h4>

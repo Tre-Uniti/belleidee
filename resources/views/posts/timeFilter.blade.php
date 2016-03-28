@@ -13,15 +13,16 @@
                 <td><a href={{ url('/posts/extensionTime/'.$time)}}>Most Extended</a></td>
             </tr>
         </table>
+        <nav class = "infoNav">
+            <ul>
+                <li>
+                    <a href = {{ url('/posts') }}><p class = "extras">/Recent\</p></a>
+                </li>
+            </ul>
+        </nav>
     </div>
     <div id = "centerTextContent">
-    <nav class = "infoNav">
-        <ul>
-            <li>
-                <a href = {{ url('/posts') }}><p class = "extras">/Recent\</p></a>
-            </li>
-        </ul>
-    </nav>
+
     </div>
     <div style = "width: 50%; float: left;">
         <h4>Title</h4>

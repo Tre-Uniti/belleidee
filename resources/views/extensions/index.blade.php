@@ -13,25 +13,26 @@
                 <td><a href={{ url('/extensions/extension')}}>Extended</a></td>
             </tr>
         </table>
+        <nav class = "infoNav">
+            <ul>
+                <li>
+                    <p class = "extras">/-\</p>
+                    <div>
+                        <table align = "center">
+                            <tr>
+                                <td><a href={{ url('/extensions/timeFilter/Today')}}>Today</a></td>
+                                <td><a href = {{ url('/extensions/timeFilter/Month') }}>Month</a></td>
+                                <td><a href={{ url('/extensions/timeFilter/Year')}}>Year</a></td>
+                                <td><a href={{ url('/extensions/timeFilter/All')}}>All-time</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+            </ul>
+        </nav>
     </div>
     <div id = "centerTextContent">
-    <nav class = "infoNav">
-        <ul>
-            <li>
-                <p class = "extras">/-\</p>
-                <div>
-                    <table align = "center">
-                        <tr>
-                            <td><a href={{ url('/extensions/timeFilter/Today')}}>Today</a></td>
-                            <td><a href = {{ url('/extensions/timeFilter/Month') }}>Month</a></td>
-                            <td><a href={{ url('/extensions/timeFilter/Year')}}>Year</a></td>
-                            <td><a href={{ url('/extensions/timeFilter/All')}}>All-time</a></td>
-                        </tr>
-                    </table>
-                </div>
-            </li>
-        </ul>
-    </nav>
+
     </div>
     <div style = "width: 50%; float: left;">
         <h4>Title</h4>
