@@ -20,7 +20,7 @@
         <td colspan="3" style = "text-align: left;">4.  Bookmark a <a href="{{ url("/beacons") }}" style = "color: black;">beacon</a> from the Idee directory and then create your first post.</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">4.  If you don't feel ready to publicly post you can always create your first draft (private) and later convert it to a post.</td>
+        <td colspan="3" style = "text-align: left;">4.  If you don't feel ready to publicly post you can always create your first <a href="{{ url("/drafts") }}" style = "color: black;">draft</a> (private) and later convert it to a post.</td>
     </tr>
     <tr>
         <td colspan="3" style = "text-align: left;">5.  Choose a <a href="{{ url("/sponsors") }}" style = "color: black;">sponsor</a> from the Idee directory to start your first sponsorship.</td>
@@ -29,7 +29,7 @@
         <td colspan="3" style = "text-align: left;">6.  Ponder the current <a href="{{ url("/questions") }}" style = "color: black;">Community Question</a> and when ready post an extension.</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">*  By confirming you agree to receive emails from Idee regarding your activity in the community. *</td>
+        <td colspan="3" style = "text-align: left;">7.  Start exploring the various <a href="{{ url("/beliefs") }}" style = "color: black;">beliefs</a> within the site to expand your understanding. </td>
     </tr>
 
 @endsection

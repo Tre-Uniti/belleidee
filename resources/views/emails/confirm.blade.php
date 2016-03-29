@@ -36,6 +36,9 @@
     <tr>
         <td colspan="3" style = "text-align: left;">3.  <b>Sponsors</b> are chosen by each user to sponsor them and receive promotions.</td>
     </tr>
+    <tr>
+        <td colspan="3" style = "text-align: left;">*  By confirming you agree to receive emails from Idee regarding your activity in the community. *</td>
+    </tr>
 
 @endsection
 @section('messageType')
