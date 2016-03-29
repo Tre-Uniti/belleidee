@@ -151,6 +151,7 @@ return [
         Fideloper\Proxy\TrustedProxyServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
         GeneaLabs\LaravelCaffeine\LaravelCaffeineServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
     ],
 
     /*
