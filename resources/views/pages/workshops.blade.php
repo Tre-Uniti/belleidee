@@ -7,7 +7,7 @@
     <p>Here are our upcoming workshops:</p>
 
 
-    <h4>Immaculate Heart of Mary @12:30pm 4/3/16 </h4>
+    <h4>Coming Soon! </h4>
 
 @stop
 @section('centerFooter')

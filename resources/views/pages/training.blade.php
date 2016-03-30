@@ -4,9 +4,9 @@
 @stop
 @section('centerText')
     <h2>Idee Training</h2>
-    <h2>Coming Soon!</h2>
 
     <h4>Starter:</h4>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/jsHOJHLGruo" frameborder="0" allowfullscreen></iframe>
     <!--//How to create a draft and convert
     //How to extend a post and view extensions
     //How to elevate and view elevations (+rankings)

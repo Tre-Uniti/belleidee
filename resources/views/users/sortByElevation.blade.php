@@ -26,7 +26,7 @@
                 <a href="{{ action('UserController@show', [$user2->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $user2->handle }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('UserController@show', [$user2->id])}}"><button type = "button" class = "interactButton">{{ $user2->created_at->format('d-M-y') }}</button></a>
+                <a href="{{ action('UserController@show', [$user2->id])}}"><button type = "button" class = "interactButton">{{ $user2->created_at->format('M-d-Y') }}</button></a>
             </div>
         </div>
     @endforeach
