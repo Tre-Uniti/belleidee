@@ -34,7 +34,7 @@
                 <div>
                     <table align = "center">
                         <tr>
-                            <td><a href={{ url('/posts/listElevation/'.$post->id)}}>Elevation</a></td>
+                            <td><a href={{ url('/posts/listElevation/'.$post->id)}}>Elevations</a></td>
                             <td> <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a></td>
                             <td><a href={{ url('/extensions/post/list/'.$post->id)}}>Extensions</a></td>
                         </tr>

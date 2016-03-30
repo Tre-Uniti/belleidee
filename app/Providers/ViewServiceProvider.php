@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Notification;
 use App\Sponsor;
 use App\Sponsorship;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,7 +19,16 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('app', function($view) {
-            $user = Auth::user();
+            if(Auth::user())
+            {
+                $user = Auth::user();
+            }
+            else
+            {
+                //Set user equal to the Transferred user with no access (for external views)
+                $user = User::findOrFail(20);
+            }
+
             $notifyCount = Notification::where('source_user', $user->id)->count();
             if($user->photo_path == '')
             {

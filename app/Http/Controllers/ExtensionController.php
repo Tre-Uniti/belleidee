@@ -33,7 +33,7 @@ class ExtensionController extends Controller
 
     public function __construct(Extension $extension)
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'show']);
         $this->middleware('extensionOwner', ['only' => 'edit']);
         $this->extension = $extension;
     }
@@ -360,13 +360,22 @@ class ExtensionController extends Controller
         }
 
         //Check if viewing user has already elevated extension
-        $viewUserID = Auth::id();
-        if(Elevate::where('extension_id', $extension->id)->where('user_id', $viewUserID)->exists())
+        if(Auth::user())
         {
-            $elevation = 'Elevated';
+            $viewUserID = Auth::id();
+            if(Elevate::where('extension_id', $extension->id)->where('user_id', $viewUserID)->exists())
+            {
+                $elevation = 'Elevated';
+            }
+            else
+            {
+                $elevation = 'Elevate';
+            }
         }
         else
         {
+            //Set user to Transferred for outside user (non-registered)
+            $viewUserID = 20;
             $elevation = 'Elevate';
         }
 

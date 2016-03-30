@@ -5,7 +5,7 @@
 
 @section('centerText')
     <div>
-        <h2>Elevation of  <a href={{ url('/extensions/'. $extension->id)}}>{{ $extension->title }}</a></h2>
+        <h2>Elevations of  <a href={{ url('/extensions/'. $extension->id)}}>{{ $extension->title }}</a></h2>
 
     </div>
     <div style = "width: 50%; float: left;">

@@ -49,6 +49,7 @@ return [
              */
             'disks' => [
                 'local',
+                's3',
             ],
         ],
     ],
@@ -104,7 +105,7 @@ return [
     'monitorBackups' => [
         [
             'name' => env('APP_URL'),
-            'disks' => ['local'],
+            'disks' => ['local', 's3'],
             'newestBackupsShouldNotBeOlderThanDays' => 1,
             'storageUsedMayNotBeHigherThanMegabytes' => 5000,
         ],

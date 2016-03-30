@@ -38,7 +38,7 @@ class PostController extends Controller
 
     public function __construct(Post $post)
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'show']);
         $this->middleware('postOwner', ['only' => 'edit', 'update']);
         $this->post = $post;
     }
@@ -169,7 +169,15 @@ class PostController extends Controller
     public function show($id)
     {
         //Get requested post and add body
-        $viewUser = Auth::user();
+        if(Auth::user())
+        {
+            $viewUser = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $viewUser = User::findOrFail(20);
+        }
 
         $post = $this->post->findOrFail($id);
 
