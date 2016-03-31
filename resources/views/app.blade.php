@@ -63,10 +63,18 @@
                         <li><a href="{{ url('/settings') }}">Personal</a></li>
                         <li><a href="{{ url('/supports') }}">Support</a></li>
                         <li><a href="{{ url('/invites') }}">Invite Friends</a></li>
-                        @if($user->type > 0)
-                        <li><a href="{{ url('/moderator') }}">Moderator</a></li>
+                        @if(isset($viewUser))
+                            @if($viewUser->type > 0)
+                                <li><a href="{{ url('/moderator') }}">Moderator</a></li>
+                            @endif
+                        @elseif($user->type > 0)
+                                    <li><a href="{{ url('/moderator') }}">Moderator</a></li>
                         @endif
-                        @if($user->type > 1)
+                        @if(isset($viewUser))
+                            @if($viewUser->type > 0)
+                                <li><a href="{{ url('/admin') }}">Admin</a></li>
+                            @endif
+                        @elseif($user->type > 1)
                         <li><a href="{{ url('/admin') }}">Admin</a></li>
                         @endif
                         <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
