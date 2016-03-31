@@ -10,7 +10,7 @@
     <tr>
         <td>{{ $support->user_id }} - </td>
         <td>{{ $support->created_at->format('M-d-Y') }} - </td>
-        <td>{{ $support->type }}</td>
+        <td>Idee-{{ $support->type }}</td>
 
     </tr>
     <tr>

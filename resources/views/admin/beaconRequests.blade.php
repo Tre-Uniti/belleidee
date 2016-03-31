@@ -25,7 +25,7 @@
                 <a href="{{ action('AdminController@reviewBeaconRequest', [$request->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $request->name }} </button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('AdminController@reviewBeaconRequest', [$request->id])}}"><button type = "button" class = "interactButton">{{ $request->created_at->format('M-d-Y')}}</button></a>
+                <a href="{{ action('AdminController@reviewBeaconRequest', [$request->id])}}"><button type = "button" class = "interactButton">{{ $request->status}}</button></a>
             </div>
         </div>
     @endforeach

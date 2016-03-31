@@ -15,10 +15,23 @@ class SponsorRequest extends Model
         'address',
         'country',
         'location',
+        'status',
+        'admin',
     ];
 
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($sponsorRequest)
+        {
+            $sponsorRequest->status = 'Requested';
+            $sponsorRequest->admin = 'Tre-Uniti';
+        });
     }
 }

@@ -66,9 +66,85 @@ class AdminController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $beaconRequest = BeaconRequest::findOrFail($id);
+        
+        $admins = User::where('type', '>', 1)->get();
+        $status = [
+            'Requested' => 'Requested',
+            'Open' => 'Open',
+            'Contacted' => 'Contacted',
+            'Meeting' => 'Meeting',
+            'Signup' => 'Signup',
+        ];
 
         return view('admin.beaconReview')
-            ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions', 'admins', 'status'));
+    }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editBeaconRequest($id)
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $beaconRequest = BeaconRequest::findOrFail($id);
+
+        //Get list of Admin users and format for drop-down list
+        $users = User::where('type', '>', 1)->get();
+        $admins = array('Tre-Uniti' => 'Tre-Uniti');
+        foreach ($users as $user)
+        {
+            $admins = array_add($admins, $user->handle, $user->handle);
+        }
+
+        $status = [
+            'Requested' => 'Requested',
+            'Open' => 'Open',
+            'Contacted' => 'Contacted',
+            'Meeting' => 'Meeting',
+            'Signup' => 'Signup',
+        ];
+        $beliefs =
+            [
+                'Adaptia' => 'Adaptia',
+                'Atheism' => 'Atheism',
+                'Ba Gua' => 'Ba Gua',
+                'Buddhism' => 'Buddhism',
+                'Christianity' => 'Christianity',
+                'Druze' => 'Druze',
+                'Hinduism' => 'Hinduism',
+                'Islam' => 'Islam',
+                'Indigenous' => 'Indigenous',
+                'Judaism' => 'Judaism',
+                'Shinto' => 'Shinto',
+                'Sikhism' => 'Sikhism',
+                'Taoism' => 'Taoism',
+                'Urantia' => 'Urantia',
+                'Other' => 'Other'
+            ];
+
+        return view('admin.editBeaconRequest')
+            ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions', 'admins', 'status', 'beliefs'));
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateBeaconRequest(Request $request, $id)
+    {
+        //$beaconRequest = BeaconRequest::findOrFail($request['beaconRequestId']);
+        $beaconRequest = BeaconRequest::findOrFail($id);
+        $beaconRequest->update($request->all());
+
+        flash()->overlay('Beacon Request has been updated');
+
+        return redirect('admin/beacon/review/'. $beaconRequest->id);
     }
 
     /**

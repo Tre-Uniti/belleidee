@@ -15,10 +15,23 @@ class BeaconRequest extends Model
         'address',
         'country',
         'location',
+        'status',
+        'admin',
     ];
 
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($beaconRequest)
+        {
+            $beaconRequest->status = 'Requested';
+            $beaconRequest->admin = 'Tre-Uniti';
+        });
     }
 }

@@ -35,7 +35,7 @@ class CreateBeaconRequest extends Request
             'email' => 'email|max:255|unique:beacons',
             'tier' => 'required',
             'guide' => 'required',
-            'image' => 'mimes:jpeg,jpg,png|max:8000'
+            'image' => 'mimes:jpeg,jpg,png|max:8000',
         ];
     }
 }

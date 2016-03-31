@@ -183,9 +183,13 @@ Route::get('workshops', 'HomeController@workshops');
 Route::get('admin', 'AdminController@portal');
 Route::get('admin/beacon/requests', 'AdminController@indexBeaconRequests');
 Route::get('admin/beacon/review/{id}', 'AdminController@reviewBeaconRequest');
+Route::get('admin/beacon/edit/{id}', 'AdminController@editBeaconRequest');
+Route::patch('admin/beacon/update/{id}', 'AdminController@updateBeaconRequest')->name('updateBeaconRequest');
 Route::get('admin/beacon/convert/{id}', 'AdminController@convertBeaconRequest');
 Route::get('admin/sponsor/requests', 'AdminController@indexSponsorRequests');
 Route::get('admin/sponsor/review/{id}', 'AdminController@reviewSponsorRequest');
+Route::get('admin/sponsor/edit/{id}', 'AdminController@editSponsorRequest');
+Route::patch('admin/sponsor/update/{id}', 'AdminController@updateSponsorRequest')->name('updateSponsorRequest');
 Route::get('admin/sponsor/convert/{id}', 'AdminController@convertSponsorRequest');
 
 //Moderator routes
