@@ -1,5 +1,4 @@
 <div id = "createOptions">
-
 <table align = "center" style = "margin-bottom: 7px;">
     <tr>
         <th colspan="3" style = "border-color: #E8E8E8;">{!! Form::label('title', 'Post Title:') !!}</th>
@@ -7,8 +6,9 @@
     <tr>
         <td colspan="3" style = "border-color: #E8E8E8;">{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}</td>
     </tr>
-    <tr>
-        <td style = "border-color: #E8E8E8;">
+    </table>
+    <div style = "width: 100%; padding-bottom: 3px;">
+
             <select name = 'belief' required >
                 <option value="" disabled selected>Belief:</option>
                 <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @endif>Adaptia</option>
@@ -27,11 +27,10 @@
                 <option value="Urantia" @if (old('belief') == 'Urantia') selected="selected" @endif>Urantia</option>
                 <option value="Other" @if (old('belief') == 'Other') selected="selected" @endif>Other</option>
             </select>
-        </td>
-        <td style = "border-color: #E8E8E8;">
+
+
+
             {!! Form::select('beacon_tag', $beacons) !!}
-        </td>
-        <td style = "border-color: #E8E8E8;">
             <select name = 'source' required>
                 <option value="" disabled selected>Source:</option>
                 <option value="Reflection" @if (old('source') == 'Reflection') selected="selected" @endif>Reflection</option>
@@ -39,9 +38,7 @@
                 <option value="Nature" @if (old('source') == 'Nature') selected="selected" @endif>Nature</option>
                 <option value="Other" @if (old('source') == 'Other') selected="selected" @endif>Other</option>
             </select>
-        </td>
-    </tr>
-</table>
+    </div>
 
 <!-- Body Form Input -->
     <div id = "centerTextContent">

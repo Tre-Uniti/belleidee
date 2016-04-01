@@ -246,7 +246,7 @@
 }
 //Mobile Portrait
 @mixin mobile($mobileBackground) {
-  @media screen and (max-width: 419px) and (min-height: 481px) {
+  @media screen and (max-width: 419px) and (min-height: 581px) {
     html {
       background-image: url($mobileBackground);
       background-color: black;
@@ -327,7 +327,7 @@
   }
 
   //Small screen mobile portrait
-  @media screen and (max-width: 320px) and (max-height: 480px) {
+  @media screen and (max-width: 465px) and (max-height: 560px) {
     html {
       background-image: url($mobileBackground);
       background-color: black;
@@ -408,7 +408,7 @@
   }
 
   //Small screen mobile landscape
-  @media screen and (min-width: 420px) and (max-width: 851px) and (max-height: 499px)
+  @media screen and (min-width: 467px) and (max-width: 851px) and (max-height: 499px)
   {
     html {
       background-image: url($mobileBackground);
@@ -418,7 +418,7 @@
       font-size: 90%;
     }
     .topNav {
-      max-width: 55%;
+      max-width: 95%;
       display: none;
     }
     .topNav > ul > li > a {
@@ -445,7 +445,7 @@
       width: 250px;
     }
     #centerTextContent {
-      max-height: 105px;
+      max-height: 115px;
       padding-left: 3px;
       padding-right: 3px;
     }
@@ -501,4 +501,89 @@
     }
 
   }
+  //Writing screens
+  @media screen and (max-width: 465px) and (max-height: 260px) {
+    html {
+      background-image: url($mobileBackground);
+      background-color: black;
+    }
+    .topNav {
+      max-width: 97%;
+      visibility: hidden;
+      max-height: .01%;
+    }
+    .topNav > ul > li > a {
+      padding: 0 1px;
+    }
+    .topNav > ul > li > p {
+      padding: 0 1px;
+    }
+    .topNav > ul > li > div {
+      width: 92px;
+    }
+    .topNav > ul > li > div ul > li > a {
+      padding: 7px 1px;
+    }
+    #centerContent {
+      width: 97%;
+      height: 99%;
+      margin: 0.0% auto;
+    }
+    #centerText {
+      max-height: 200px;
+    }
+    .createTitleText {
+      width: 190px;
+    }
+    #centerTextContent {
+      max-height: 105px;
+      padding-left: 3px;
+      padding-right: 3px;
+    }
+    #createBodyText {
+      padding-left: 1px;
+      padding-right: 1px;
+    }
+    #createOptions {
+      max-height: 190px;
+    }
+    #leftSide {
+      top: 80%;
+      height: 0%;
+      width: 0%;
+      visibility: hidden;
+      left: .01em;
+      font-size: 0%;
+
+    }
+    #rightSide {
+      top: 80%;
+      height: 0%;
+      width: 0%;
+      visibility: hidden;
+      right: .01em;
+      font-size: 0%;
+    }
+    .innerProfileMenus {
+      height: 70px;
+    }
+    .innerPhotos {
+      height: 100px;
+    }
+    .listResourceLeft {
+      padding-left: 1%;
+      width: 45%;
+    }
+    .interactButton
+    {
+      padding: 3px 1px;
+    }
+    .profileNav > ul > li > div ul > li
+    {
+      display: block;
+    }
+  }
+
+
 }
+

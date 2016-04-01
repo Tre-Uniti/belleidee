@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.17.2",
+            "version": "3.17.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "433e03ce2d52485e6267bf9cc702ada210833768"
+                "reference": "4d70cbe397c03e84907e10436358f627aab428e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/433e03ce2d52485e6267bf9cc702ada210833768",
-                "reference": "433e03ce2d52485e6267bf9cc702ada210833768",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/4d70cbe397c03e84907e10436358f627aab428e6",
+                "reference": "4d70cbe397c03e84907e10436358f627aab428e6",
                 "shasum": ""
             },
             "require": {
@@ -85,7 +85,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-03-24 19:15:32"
+            "time": "2016-03-29 22:53:44"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -1312,16 +1312,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.1.31",
+            "version": "v5.1.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "d899fbda59bf3ffcde11a9b443c01043b76f40b3"
+                "reference": "bdb01c499305ede9d6f8caec57649bbaca4dd5e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/d899fbda59bf3ffcde11a9b443c01043b76f40b3",
-                "reference": "d899fbda59bf3ffcde11a9b443c01043b76f40b3",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/bdb01c499305ede9d6f8caec57649bbaca4dd5e3",
+                "reference": "bdb01c499305ede9d6f8caec57649bbaca4dd5e3",
                 "shasum": ""
             },
             "require": {
@@ -1335,7 +1335,7 @@
                 "monolog/monolog": "~1.11",
                 "mtdowling/cron-expression": "~1.0",
                 "nesbot/carbon": "~1.19",
-                "paragonie/random_compat": "~1.1",
+                "paragonie/random_compat": "~1.4",
                 "php": ">=5.5.9",
                 "psy/psysh": "0.7.*",
                 "swiftmailer/swiftmailer": "~5.1",
@@ -1436,7 +1436,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-02-24 15:13:21"
+            "time": "2016-04-01 18:52:14"
         },
         {
             "name": "league/flysystem",
@@ -2263,16 +2263,16 @@
         },
         {
             "name": "spatie/laravel-backup",
-            "version": "3.2.2",
+            "version": "3.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-backup.git",
-                "reference": "f260aa878978035b9343ead4740d53c3ec057e32"
+                "reference": "6f314a16cb5b8113ea791998125bc47c88c441c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/f260aa878978035b9343ead4740d53c3ec057e32",
-                "reference": "f260aa878978035b9343ead4740d53c3ec057e32",
+                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/6f314a16cb5b8113ea791998125bc47c88c441c5",
+                "reference": "6f314a16cb5b8113ea791998125bc47c88c441c5",
                 "shasum": ""
             },
             "require": {
@@ -2321,20 +2321,20 @@
                 "laravel-backup",
                 "spatie"
             ],
-            "time": "2016-03-16 21:48:53"
+            "time": "2016-04-01 13:39:49"
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v3.11.0",
+            "version": "v3.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "830879e7984f22a9ed9085d674e5f8d5c4512fc6"
+                "reference": "7e18efb09bc8ec6a43c1705796e1e0b2ae6f0d21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/830879e7984f22a9ed9085d674e5f8d5c4512fc6",
-                "reference": "830879e7984f22a9ed9085d674e5f8d5c4512fc6",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/7e18efb09bc8ec6a43c1705796e1e0b2ae6f0d21",
+                "reference": "7e18efb09bc8ec6a43c1705796e1e0b2ae6f0d21",
                 "shasum": ""
             },
             "require": {
@@ -2376,7 +2376,7 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2016-03-22 20:40:11"
+            "time": "2016-03-31 21:40:54"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4542,16 +4542,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.0.3",
+            "version": "v3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "b5ba64cd67ecd6887f63868fa781ca094bd1377c"
+                "reference": "0047c8366744a16de7516622c5b7355336afae96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/b5ba64cd67ecd6887f63868fa781ca094bd1377c",
-                "reference": "b5ba64cd67ecd6887f63868fa781ca094bd1377c",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/0047c8366744a16de7516622c5b7355336afae96",
+                "reference": "0047c8366744a16de7516622c5b7355336afae96",
                 "shasum": ""
             },
             "require": {
@@ -4587,7 +4587,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-02-23 15:16:06"
+            "time": "2016-03-04 07:55:57"
         }
     ],
     "aliases": [],
