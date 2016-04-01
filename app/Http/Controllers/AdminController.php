@@ -106,6 +106,7 @@ class AdminController extends Controller
             'Contacted' => 'Contacted',
             'Meeting' => 'Meeting',
             'Signup' => 'Signup',
+            'Refused' => 'Refused',
         ];
         $beliefs =
             [
