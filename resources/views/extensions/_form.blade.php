@@ -40,11 +40,14 @@
 
             {!! Form::select('beacon_tag', $beacons) !!}
             <select name = 'source' required>
-                <option value="" disabled selected>Source:</option>
-                <option value="Reflection" @if (old('source') == 'Reflection') selected="selected" @endif>Reflection</option>
-                <option value="Writings" @if (old('source') == 'Writings') selected="selected" @endif>Writings</option>
-                <option value="Nature" @if (old('source') == 'Nature') selected="selected" @endif>Nature</option>
-                <option value="Other" @if (old('source') == 'Other') selected="selected" @endif>Other</option>
+                <option  disabled>Source:</option>
+                @if(isset($sources['extenception']))
+                    <option value="Extension" @if (old('source') == 'Extension') selected="selected" @endif>Extension</option>
+                @elseif(isset($sources['post_id']))
+                    <option value="Post" @if (old('source') == 'Post') selected="selected" @endif>Post</option>
+                @elseif(isset($sources['question_id']))
+                    <option value="Question" @if (old('source') == 'Question') selected="selected" @endif>Question</option>
+                @endif
             </select>
         </div>
 
