@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Adjudication;
 use App\Extension;
 use App\Http\Requests\AdjudicationRequest;
 use App\Http\Requests\CreateModerationRequest;
@@ -208,6 +209,13 @@ class ModerationController extends Controller
     public function destroy($id)
     {
         $moderation = Moderation::findOrFail($id);
+        //dd($moderation);
+        
+        //Check if moderation has been used in an Adjudication
+        if($adjudication = Adjudication::where('moderation_id', '=', $moderation->id)->first())
+        {
+            return redirect('adjudications/'. $adjudication->id);
+        }
         $moderation->delete();
 
         flash()->overlay('Moderation has been deleted');
@@ -218,6 +226,13 @@ class ModerationController extends Controller
     public function intolerance($id)
     {
         $intoleranceId = $id;
+
+        if($moderation = Moderation::where('intolerance_id', '=', $intoleranceId)->first())
+        {
+            flash()->overlay('Moderation has already been created');
+            return redirect ('moderations/'. $moderation->id);
+        }
+
         Session::put('intoleranceId', $intoleranceId);
 
         return redirect('moderations/create');

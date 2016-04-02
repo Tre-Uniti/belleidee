@@ -18,7 +18,6 @@
             </th>
         </tr>
         <tr>
-            <td>{{ $support->id }}</td>
             <td>{{ $support->type }}</td>
             <td>{{ $support->status }}</td>
         </tr>

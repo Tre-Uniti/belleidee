@@ -94,6 +94,7 @@ Route::resource('supports', 'SupportController');
 //Extension Routes (Resource)
 Route::get('extensions/elevation', 'ExtensionController@sortByElevation');
 Route::get('extensions/extension', 'ExtensionController@sortByExtension');
+Route::get('extensions/unlock/{id}', 'ExtensionController@unlockExtension');
 Route::get('extensions/elevationTime/{time}', 'ExtensionController@sortByElevationTime');
 Route::get('extensions/extensionTime/{time}', 'ExtensionController@sortByExtensionTime');
 Route::get('extensions/timeFilter/{time}', 'ExtensionController@timeFilter');
@@ -133,6 +134,7 @@ Route::get('intolerances/extension/{source}', 'IntoleranceController@intolerantE
 Route::resource('intolerances', 'IntoleranceController');
 
 //Moderation routes (resource)
+Route::get('moderator', 'ModeratorController@portal');
 Route::get('moderations/intolerance/{source}', 'ModerationController@intolerance');
 Route::resource('moderations', 'ModerationController');
 
@@ -192,8 +194,6 @@ Route::get('admin/sponsor/edit/{id}', 'AdminController@editSponsorRequest');
 Route::patch('admin/sponsor/update/{id}', 'AdminController@updateSponsorRequest')->name('updateSponsorRequest');
 Route::get('admin/sponsor/convert/{id}', 'AdminController@convertSponsorRequest');
 
-//Moderator routes
-Route::get('moderator', 'ModeratorController@portal');
 
 //Cashier
 Route::post('stripe/webhook', '\Laravel\Cashier\WebhookController@handleWebhook');

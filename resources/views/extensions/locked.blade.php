@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Show Post
+    Show Extension
 @stop
 @section('centerMenu')
     <h2>Locked for Intolerance</h2>
@@ -27,7 +27,7 @@
 
 @section('centerFooter')
     <div id = "centerFooter">
-        <a href="{{ url('/posts/unlock/'. $post->id) }}"><button type = "button" class = "navButton">Unlock and View</button></a>
+        <a href="{{ url('/extensions/unlock/'. $extension->id) }}"><button type = "button" class = "navButton">Unlock and View</button></a>
         @if($user->type > 1)
             {!! Form::open(['method' => 'DELETE', 'route' => ['adjudications.destroy', $adjudication->id]]) !!}
             {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
