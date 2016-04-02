@@ -15,7 +15,7 @@
     <meta property="og:type"          content="website"/>
     <meta property="og:title"         content="Belle-Idee"/>
     <meta property="og:description"   content="A community for idea, inspiration, and belief sharing."/>
-    <meta property="og:image"         content="https://belle-idee.org/img/idee.png"/>
+    <meta property="og:image"         content="https://belle-idee.org/img/idee-med.png"/>
     @yield('pageHeader')
 
 
