@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Adjudication;
 use App\Extension;
 use App\Http\Requests\CreateIntoleranceRequest;
 use App\Http\Requests\EditIntoleranceRequest;
 use App\Intolerance;
 use App\Legacy;
+use App\Moderation;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -226,7 +228,21 @@ class IntoleranceController extends Controller
     public function destroy($id)
     {
         $intolerance = Intolerance::findOrFail($id);
-        $intolerance->delete();
+
+        //Check if intolerance has been moderated or adjudicated
+
+        if($moderation = Moderation::where('intolerance_id', '=', $intolerance->id)->first())
+        {
+            return redirect('moderations/'. $moderation->id);
+        }
+        elseif($adjudication = Adjudication::where('intolerance_id', '=', $intolerance->id)->first())
+        {
+            return redirect('adjudications/'. $adjudication->id);
+        }
+        else
+        {
+            $intolerance->delete();
+        }
 
         flash()->overlay('Intolerance has been deleted');
         return redirect('intolerances');

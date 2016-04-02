@@ -6,8 +6,10 @@ use App\Adjudication;
 use App\Extension;
 use App\Http\Requests\AdjudicationRequest;
 use App\Intolerance;
+use App\Legacy;
 use App\Moderation;
 use App\Post;
+use App\Question;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -141,13 +143,6 @@ class AdjudicationController extends Controller
         $moderation = Moderation::where('id', $adjudication->moderation_id)->first();
         $intolerance = Intolerance::where('id', $moderation->intolerance_id)->first();
 
-        //Check if user requesting is the one who created the intolerance
-        if($adjudication->user_id != $user->id)
-        {
-            flash()->overlay('This moderation belongs to another user');
-            return redirect()->back();
-        }
-
         //Get user photo
         if($user->photo_path == '')
         {
@@ -220,10 +215,63 @@ class AdjudicationController extends Controller
     public function destroy($id)
     {
         $adjudication = Adjudication::findOrFail($id);
-        $adjudication->delete();
+        $moderation = Moderation::where('id', '=', $adjudication->moderation_id);
+        $intolerance = Intolerance::where('id', '=', $adjudication->intolerance_id);
+        if (isset($intolerance->question_id))
+        {
+            if($question = Question::where('id', '=', $intolerance->question_id)->first())
+            {
+                //$question-> Does this need to be implemented?
+            }
 
-        flash()->overlay('Adjudication has been deleted');
-        return redirect('adjudications');
+        }
+        elseif (isset($intolerance->post_id))
+        {
+            if ($post = Post::where('id', '=', $intolerance->post_id)->first())
+            {
+                $post->status = NULL;
+            } else
+            {
+                flash()->overlay('Post not found');
+                return redirect('intolerances/' . $intolerance->id);
+            }
+        }
+        elseif (isset($intolerance->extension_id))
+        {
+            if ($extension = Post::where('id', '=', $intolerance->post_id)->first()) {
+                $extension->status = NULL;
+            }
+            else
+            {
+                flash()->overlay('Extension not found');
+                return redirect('intolerances/' . $intolerance->id);
+            }
+        }
+        elseif (isset($intolerance->legacy_post_id))
+        {
+            if ($legacy = Legacy::where('id', '=', $intolerance->legacy_post_id)->first()) {
+                $legacy->status = NULL;
+            }
+            else
+            {
+                flash()->overlay('Legacy not found');
+                return redirect('intolerances/' . $intolerance->id);
+            }
+        }
+        else
+        {
+            //Post is no longer intolerant, remove reports
+            $adjudication->delete();
+            $moderation->delete();
+            $intolerance->delete();
+
+            flash()->overlay('Adjudication has been deleted');
+            return redirect('adjudications');
+        }
+
+        flash()->overlay('Deletion failed');
+        return redirect('adjudications/'.$adjudication->id );
+
     }
 
     //Used to setup moderation of intolerance

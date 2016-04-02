@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Adjudication;
 use App\Beacon;
 use App\Elevate;
 use App\Events\BeaconViewed;
 use App\Events\SponsorViewed;
+use App\Intolerance;
 use App\Mailers\NotificationMailer;
+use App\Moderation;
 use App\Notification;
 use App\Post;
 use App\Question;
@@ -276,6 +279,16 @@ class ExtensionController extends Controller
     public function show($id)
     {
         //Get requested post and add body
+        if(Auth::user())
+        {
+            $viewUser = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $viewUser = User::findOrFail(20);
+        }
+        //Get requested post and add body
         $extension = $this->extension->findOrFail($id);
         $extension_path = $extension->extension_path;
         $contents = Storage::get($extension_path);
@@ -284,6 +297,8 @@ class ExtensionController extends Controller
         //Get other Posts and Extensions of User
         $user_id = $extension->user_id;
         $user = User::findOrFail($user_id);
+
+
 
         //Get Posts and Extensions of user
         $profilePosts = $this->getProfilePosts($user);
@@ -359,11 +374,33 @@ class ExtensionController extends Controller
             }
         }
 
+        //Check if Post is intolerant and User hasn't unlocked
+        if(isset($extension->status))
+        {
+            $unlock = Session::get('unlock');
+            if($unlock['extension_id'] != $extension->id || $unlock['confirmed'] != 'Yes' || $unlock['user_id'] != $viewUser->id)
+            {
+                $intolerances = Intolerance::where('extension_id', $id)->get();
+                foreach($intolerances as $intolerance)
+                {
+                    $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
+                    if($adjudication = Adjudication::where('moderation_id', $moderation->id)->first())
+                    {
+                        return view('extensions.locked')
+                            ->with(compact('user', 'extension', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
+                            ->with('beacon', $beacon)
+                            ->with('sponsor', $sponsor);
+                    }
+                }
+
+            }
+        }
+
         //Check if viewing user has already elevated extension
         if(Auth::user())
         {
-            $viewUserID = Auth::id();
-            if(Elevate::where('extension_id', $extension->id)->where('user_id', $viewUserID)->exists())
+
+            if(Elevate::where('extension_id', $extension->id)->where('user_id', $viewUser->id)->exists())
             {
                 $elevation = 'Elevated';
             }
@@ -374,8 +411,6 @@ class ExtensionController extends Controller
         }
         else
         {
-            //Set user to Transferred for outside user (non-registered)
-            $viewUserID = 20;
             $elevation = 'Elevate';
         }
 
@@ -391,7 +426,7 @@ class ExtensionController extends Controller
         }
 
         return view('extensions.show')
-            ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'sources' ))
+            ->with(compact('user', 'viewUser', 'extension', 'profilePosts', 'profileExtensions', 'sources' ))
             ->with ('elevation', $elevation)
             ->with ('sourcePhotoPath', $sourcePhotoPath)
             ->with('beacon', $beacon)
@@ -1105,5 +1140,16 @@ class ExtensionController extends Controller
             ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
+    }
+
+    //Unlock Intolerant Extensions
+    public function unlockExtension($id)
+    {
+        $extension = Extension::findOrFail($id);
+        $userId = Auth::id();
+        $unlock = ['user_id' => $userId, 'extension_id' => $extension->id, 'confirmed' => 'Yes'];
+        Session::put('unlock', $unlock);
+
+        return redirect('extensions/'. $extension->id);
     }
 }

@@ -37,6 +37,5 @@
     {!! $intolerances->render() !!}
 @stop
 
-@include('posts.rightSide')
 
 
