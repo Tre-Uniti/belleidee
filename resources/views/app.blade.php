@@ -71,7 +71,7 @@
                                     <li><a href="{{ url('/moderator') }}">Moderator</a></li>
                         @endif
                         @if(isset($viewUser))
-                            @if($viewUser->type > 0)
+                            @if($viewUser->type > 1)
                                 <li><a href="{{ url('/admin') }}">Admin</a></li>
                             @endif
                         @elseif($user->type > 1)

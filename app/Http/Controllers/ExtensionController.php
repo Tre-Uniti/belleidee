@@ -378,22 +378,25 @@ class ExtensionController extends Controller
         if(isset($extension->status))
         {
             $unlock = Session::get('unlock');
-            if($unlock['extension_id'] != $extension->id || $unlock['confirmed'] != 'Yes' || $unlock['user_id'] != $viewUser->id)
+            if(isset($unlock['extension_id']))
             {
-                $intolerances = Intolerance::where('extension_id', $id)->get();
-                foreach($intolerances as $intolerance)
+                if($unlock['extension_id'] != $extension->id || $unlock['confirmed'] != 'Yes' || $unlock['user_id'] != $viewUser->id)
                 {
-                    $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
-                    if($adjudication = Adjudication::where('moderation_id', $moderation->id)->first())
+                    $intolerances = Intolerance::where('extension_id', $id)->get();
+                    foreach($intolerances as $intolerance)
                     {
-                        return view('extensions.locked')
-                            ->with(compact('user', 'extension', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
-                            ->with('beacon', $beacon)
-                            ->with('sponsor', $sponsor);
+                        $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
+                        if($adjudication = Adjudication::where('moderation_id', $moderation->id)->first())
+                        {
+                            return view('extensions.locked')
+                                ->with(compact('user', 'extension', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
+                                ->with('beacon', $beacon)
+                                ->with('sponsor', $sponsor);
+                        }
                     }
                 }
-
             }
+
         }
 
         //Check if viewing user has already elevated extension

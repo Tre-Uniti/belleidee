@@ -217,16 +217,20 @@ class PostController extends Controller
         if(isset($post->status))
         {
             $unlock = Session::get('unlock');
-            if($unlock['post_id'] != $post->id || $unlock['confirmed'] != 'Yes' || $unlock['user_id'] != $viewUser->id)
+            if(isset($unlock['post_id']))
             {
-                $intolerance = Intolerance::where('post_id', $id)->first();
-                $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
-                $adjudication = Adjudication::where('moderation_id', $moderation->id)->first();
-                return view('posts.locked')
-                    ->with(compact('user', 'post', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
-                    ->with('beacon', $beacon)
-                    ->with('sponsor', $sponsor);
+                if($unlock['post_id'] != $post->id && $unlock['confirmed'] != 'Yes')
+                {
+                    $intolerance = Intolerance::where('post_id', $id)->first();
+                    $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
+                    $adjudication = Adjudication::where('moderation_id', $moderation->id)->first();
+                    return view('posts.locked')
+                        ->with(compact('user', 'post', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
+                        ->with('beacon', $beacon)
+                        ->with('sponsor', $sponsor);
+                }
             }
+
         }
 
         //Check if viewing user has already elevated post

@@ -28,7 +28,7 @@
 @section('centerFooter')
     <div id = "centerFooter">
         <a href="{{ url('/posts/unlock/'. $post->id) }}"><button type = "button" class = "navButton">Unlock and View</button></a>
-        @if($user->type > 1)
+        @if($viewUser->type > 1)
             {!! Form::open(['method' => 'DELETE', 'route' => ['adjudications.destroy', $adjudication->id]]) !!}
             {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
             {!! Form::close() !!}
