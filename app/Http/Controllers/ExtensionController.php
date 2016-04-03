@@ -374,31 +374,6 @@ class ExtensionController extends Controller
             }
         }
 
-        //Check if Post is intolerant and User hasn't unlocked
-        if(isset($extension->status))
-        {
-            $unlock = Session::get('unlock');
-            if(isset($unlock['extension_id']))
-            {
-                if($unlock['extension_id'] != $extension->id || $unlock['confirmed'] != 'Yes' || $unlock['user_id'] != $viewUser->id)
-                {
-                    $intolerances = Intolerance::where('extension_id', $id)->get();
-                    foreach($intolerances as $intolerance)
-                    {
-                        $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
-                        if($adjudication = Adjudication::where('moderation_id', $moderation->id)->first())
-                        {
-                            return view('extensions.locked')
-                                ->with(compact('user', 'extension', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
-                                ->with('beacon', $beacon)
-                                ->with('sponsor', $sponsor);
-                        }
-                    }
-                }
-            }
-
-        }
-
         //Check if viewing user has already elevated extension
         if(Auth::user())
         {
@@ -427,6 +402,55 @@ class ExtensionController extends Controller
         {
             $sourcePhotoPath = $user->photo_path;
         }
+
+        //Check if Post is intolerant and User hasn't unlocked
+        if(isset($extension->status))
+        {
+            $unlock = Session::get('unlock');
+            if(isset($unlock['extension_id']))
+            {
+                if($unlock['extension_id'] != $extension->id || $unlock['confirmed'] != 'Yes' || $unlock['user_id'] != $viewUser->id)
+                {
+                    $intolerances = Intolerance::where('extension_id', $id)->get();
+                    foreach($intolerances as $intolerance)
+                    {
+                        $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
+                        if($adjudication = Adjudication::where('moderation_id', $moderation->id)->first())
+                        {
+                            return view('extensions.locked')
+                                ->with(compact('user', 'viewUser', 'extension', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
+                                ->with('beacon', $beacon)
+                                ->with('sponsor', $sponsor);
+                        }
+                        else
+                        {
+                            return view('extensions.show')
+                                ->with(compact('user', 'viewUser', 'extension', 'profilePosts', 'profileExtensions', 'sources' ))
+                                ->with ('elevation', $elevation)
+                                ->with ('sourcePhotoPath', $sourcePhotoPath)
+                                ->with('beacon', $beacon)
+                                ->with('sponsor', $sponsor);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                $intolerances = Intolerance::where('extension_id', $id)->get();
+                foreach($intolerances as $intolerance) {
+                    $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
+                    if ($adjudication = Adjudication::where('moderation_id', $moderation->id)->first()) {
+                        return view('extensions.locked')
+                            ->with(compact('user', 'viewUser', 'extension', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
+                            ->with('beacon', $beacon)
+                            ->with('sponsor', $sponsor);
+                    }
+                }
+            }
+
+        }
+
+
 
         return view('extensions.show')
             ->with(compact('user', 'viewUser', 'extension', 'profilePosts', 'profileExtensions', 'sources' ))

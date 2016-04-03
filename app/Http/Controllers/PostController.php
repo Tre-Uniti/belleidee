@@ -213,26 +213,6 @@ class PostController extends Controller
             }
         }
 
-        //Check if Post is intolerant and User hasn't unlocked
-        if(isset($post->status))
-        {
-            $unlock = Session::get('unlock');
-            if(isset($unlock['post_id']))
-            {
-                if($unlock['post_id'] != $post->id && $unlock['confirmed'] != 'Yes')
-                {
-                    $intolerance = Intolerance::where('post_id', $id)->first();
-                    $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
-                    $adjudication = Adjudication::where('moderation_id', $moderation->id)->first();
-                    return view('posts.locked')
-                        ->with(compact('user', 'post', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
-                        ->with('beacon', $beacon)
-                        ->with('sponsor', $sponsor);
-                }
-            }
-
-        }
-
         //Check if viewing user has already elevated post
         if(Elevate::where('post_id', $post->id)->where('user_id', $viewUser->id)->exists())
         {
@@ -252,6 +232,56 @@ class PostController extends Controller
         else
         {
             $sourcePhotoPath = $user->photo_path;
+        }
+
+        //Check if Post is intolerant and User hasn't unlocked
+        if(isset($post->status))
+        {
+            $unlock = Session::get('unlock');
+
+            if(isset($unlock['post_id']))
+            {
+                if($unlock['post_id'] != $post->id)
+                {
+
+                    $intolerances = Intolerance::where('post_id', $id)->get();
+                    foreach($intolerances as $intolerance)
+                    {
+
+                        $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
+                        $adjudication = Adjudication::where('moderation_id', $moderation->id)->first();
+
+                        return view('posts.locked')
+                            ->with(compact('user', 'viewUser', 'post', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
+                            ->with('beacon', $beacon)
+                            ->with('sponsor', $sponsor);
+                    }
+
+                }
+                elseif($unlock['post_id'] != $post->id && $unlock['confirmed'] != 'Yes' )
+                {
+                    return view('posts.show')
+                        ->with(compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'))
+                        ->with('elevation', $elevation)
+                        ->with('beacon', $beacon)
+                        ->with('sourcePhotoPath', $sourcePhotoPath)
+                        ->with('sponsor', $sponsor);
+                }
+            }
+            else
+            {
+                $intolerances = Intolerance::where('post_id', $id)->get();
+                foreach($intolerances as $intolerance) {
+                    $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
+                    if ($adjudication = Adjudication::where('moderation_id', $moderation->id)->first()) {
+                        return view('posts.locked')
+                            ->with(compact('user', 'viewUser', 'post', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
+                            ->with('beacon', $beacon)
+                            ->with('sponsor', $sponsor);
+                    }
+                }
+            }
+
         }
 
         return view('posts.show')
