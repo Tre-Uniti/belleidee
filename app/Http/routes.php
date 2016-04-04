@@ -180,6 +180,7 @@ Route::get('search', 'HomeController@search');
 Route::get('results', 'HomeController@results');
 Route::get('training', 'HomeController@training');
 Route::get('workshops', 'HomeController@workshops');
+Route::get('nymi', 'HomeController@nymi');
 
 //Admin routes
 Route::get('admin', 'AdminController@portal');

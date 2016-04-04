@@ -21,7 +21,7 @@
 @stop
 @section('footer')
     <h4>Other Options:</h4>
-    <a href="{{ secure_url('/auth/login') }}"><button type = "button" class = "navButton">Nymi</button></a>
+    <a href="{{ secure_url('/nymi') }}"><button type = "button" class = "navButton">Nymi</button></a>
     <a href="{{ secure_url('/tour') }}"><button type = "button" class = "navButton">Register</button></a><br/>
     <a class="btn btn-link" href="{{ secure_url('/password/email') }}">Forgot Your Password?</a>
 @stop
