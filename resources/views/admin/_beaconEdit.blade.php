@@ -78,7 +78,7 @@
                 {!! Form::label('status', 'Status') !!}
             </td>
             <td>
-                {!! Form::select('status', $status, ['class' => 'createTitleText']) !!}
+                {!! Form::select('status', $status, array('status' => $beaconRequest->status)) !!}
             </td>
         </tr>
 

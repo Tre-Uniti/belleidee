@@ -22,12 +22,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Event;
+use Response;
 
 class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'privacy']);
         $this->middleware('admin', ['only' => 'indexer']);
     }
     public function getHome()
@@ -275,4 +276,20 @@ class HomeController extends Controller
         return view ('pages.nymi')
             ->with(compact('user', 'profilePosts', 'profileExtensions'));
     }
+
+    /*
+     * Return the Belle-Idee Privacy statement
+     */
+    public function privacy()
+    {
+        $filename = 'PrivacyPolicy.pdf';
+        $path = '/docs/'. $filename;
+        $content = Storage::get($path);
+        return Response::make($content, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; '.$filename,
+        ]);
+    }
+
+
 }
