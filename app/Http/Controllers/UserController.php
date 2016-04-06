@@ -265,7 +265,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //Transfer all user's posts, extensions, questions, elevations, intolerance, beacon/sponsor_requests to Transferred
+
+        //Delete all Notifications, Support Requests, Drafts
+
+        //Delete User
     }
 
     /**

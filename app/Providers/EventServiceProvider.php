@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\BeaconViewed' => [
             'App\Listeners\UpdateBeaconUsage'
+        ],
+        'App\Events\TransferUser' => [
+            'App\Listeners\TransferUserContent'
         ]
     ];
 
