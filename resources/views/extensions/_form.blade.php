@@ -9,10 +9,7 @@
 
         <table align = "center" style = "margin-bottom: 7px;">
             <tr>
-                <th colspan="3" style = "border-color: #E8E8E8;">{!! Form::label('title', 'Post Title:') !!}</th>
-            </tr>
-            <tr>
-                <td colspan="3" style = "border-color: #E8E8E8;">{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}</td>
+                <td colspan="3" style = "border-color: #E8E8E8;">{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Your Extension Title']) !!}</td>
             </tr>
         </table>
         <div style = "width: 100%; padding-bottom: 3px;">

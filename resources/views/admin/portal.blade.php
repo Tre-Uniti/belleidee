@@ -4,14 +4,18 @@
 @stop
 @section('centerText')
     <h2>Admin Portal</h2>
-    <a href="{{ url('adjudications') }}"><button type = "button" class = "navButton">Adjudications</button></a>
-    <a href="{{ url('moderations') }}"><button type = "button" class = "navButton">Moderations</button></a>
-    <a href="{{ url('questions/create') }}"><button type = "button" class = "navButton">Questions</button></a>
-    <a href="{{ url('/') }}"><button type = "button" class = "navButton">Legacy</button></a>
-    <a href="{{ url('/admin/beacon/requests') }}"><button type = "button" class = "navButton">Beacons</button></a>
-    <a href="{{ url('/admin/sponsor/requests') }}"><button type = "button" class = "navButton">Sponsors</button></a>
-
-    <hr/>
+    <table align = 'center'>
+        <tr>
+            <td><a href="{{ url('adjudications') }}"><button type = "button" class = "navButton">Adjudications</button></a></td>
+            <td><a href="{{ url('moderations') }}"><button type = "button" class = "navButton">Moderations</button></a></td>
+            <td><a href="{{ url('intolerances') }}"><button type = "button" class = "navButton">Intolerances</button></a></td>
+        </tr>
+        <tr>
+            <td><a href="{{ url('questions/create') }}"><button type = "button" class = "navButton">Questions</button></a></td>
+            <td><a href="{{ url('/admin/beacon/requests') }}"><button type = "button" class = "navButton">Beacons</button></a></td>
+            <td><a href="{{ url('/admin/sponsor/requests') }}"><button type = "button" class = "navButton">Sponsors</button></a></td>
+        </tr>
+    </table>
     <div style = "width: 50%; float: left;">
         <h4>Admins</h4>
     </div>

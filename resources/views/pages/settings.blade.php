@@ -4,10 +4,16 @@
 @stop
 @section('centerText')
     <h2>Settings of {{ $user->handle}}</h2>
-    <a href="{{ url('photo') }}"><button type = "button" class = "navButton">Profile Photo</button></a>
-    <a href="{{ url('/training') }}"><button type = "button" class = "navButton">Training</button></a>
-    <a href="{{ url('/workshops') }}"><button type = "button" class = "navButton">Workshops</button></a>
-    <hr/>
+    <table align = "center">
+        <tr>
+            <td><a href="{{ url('/training') }}"><button type = "button" class = "interactButton">Training</button></a></td>
+            <td><a href="{{ url('/workshops') }}"><button type = "button" class = "interactButton">Workshops</button></a></td>
+        </tr>
+        <tr>
+            <td><a href="{{ url('photo') }}"><button type = "button" class = "interactButton">Profile Photo</button></a></td>
+            <td><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Email Frequency</button></a></td>
+        </tr>
+    </table>
     <table align = "center">
         <thead>
         <tr><th>Sponsor</th>
@@ -26,6 +32,14 @@
         </tr>
         </tbody>
     </table>
+    <table align = "center">
+        <tr>
+            <td>{!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) !!}
+                {!! Form::submit('Delete Account', ['class' => 'interactButton', 'id' => 'delete']) !!}
+                {!! Form::close() !!}</td>
+            <td><a href="{{ url('/workshops') }}"><button type = "button" class = "interactButton">Download Posts</button></a></td>
+        </tr>
+    </table>
 
     <table align = "center" style = "margin: 15px auto">
         <tr>
@@ -40,6 +54,8 @@
         </td>
         </tr>
     </table>
+
+
 
 
 @stop

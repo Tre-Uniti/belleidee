@@ -17,6 +17,7 @@ use App\Post;
 use App\Question;
 use App\Sponsor;
 use App\SponsorRequest;
+use App\Sponsorship;
 use App\Support;
 use App\User;
 use Illuminate\Queue\InteractsWithQueue;
@@ -48,8 +49,10 @@ class TransferUserContent
         //Get all content by user->id for transfer
         $posts = Post::where('user_id', '=', $user->id)->get();
         $extensions = Extension::where('user_id', '=', $user->id)->get();
+        $sourceExtensions = Extension::where('source_user', '=', $user->id)->get();
         $questions = Question::where('user_id', '=', $user->id)->get();
         $elevations = Elevate::where('user_id', '=', $user->id)->get();
+        $sourceElevations = Elevate::where('source_user', '=', $user->id)->get();
         $intolerances = Intolerance::where('user_id', '=', $user->id)->get();
         $moderations = Moderation::where('user_id', '=', $user->id)->get();
         $adjudications = Adjudication::where('user_id', '=', $user->id)->get();
@@ -59,67 +62,100 @@ class TransferUserContent
         $invites = Invite::where('user_id', '=', $user->id)->get();
         $supports = Support::where('user_id', '=', $user->id)->get();
         $notifications = Notification::where('user_id', '=', $user->id)->get();
-        $beacons = Beacon::where('user_id', '=', $user->id)->get();
+        $sourceNotifications = Notification::where('source_user', '=', $user->id)->get();
+        $beacons = Beacon::where('manager', '=', $user->id)->get();
         $beaconGuides = Beacon::where('guide', '=', $user->id)->get();
         $sponsors = Sponsor::where('user_id', '=', $user->id)->get();
+        $sponsorships = Sponsorship::where('user_id', '=', $user->id)->get();
 
         //Transfer all Content to Transferred User
         foreach($posts as $post)
         {
-            $post->user_id = $transferred->id;
+            $post->where('id', $post->id)
+                ->update(['user_id' => $transferred->id]);
         }
         foreach($extensions as $extension)
         {
-            $extension->user_id = $transferred->id;
+            $extension->where('id', $extension->id)
+                ->update(['user_id' => $transferred->id]);
+        }
+        foreach($sourceExtensions as $sourceExtension)
+        {
+            $sourceExtension->where('id', $sourceExtension->id)
+                ->update(['source_user' => $transferred->id]);
         }
         foreach($questions as $question)
         {
-            $question->user_id = $transferred->id;
+            $question->where('id', $question->id)
+                ->update(['user_id' => $transferred->id]);
         }
         foreach($elevations as $elevation)
         {
-            $elevation->user_id = $transferred->id;
+            $elevation->where('id', $elevation->id)
+                ->update(['user_id' => $transferred->id]);
+        }
+        foreach($sourceElevations as $sourceElevation)
+        {
+            $sourceElevation->where('id', $sourceElevation->id)
+                ->update(['source_user' => $transferred->id]);
         }
         foreach($intolerances as $intolerance)
         {
-            $intolerance->user_id = $transferred->id;
+            $intolerance->where('id', $intolerance->id)
+                ->update(['user_id' => $transferred->id]);
         }
         foreach($moderations as $moderation)
         {
-            $moderation->user_id = $transferred->id;
+            $moderation->where('id', $moderation->id)
+                ->update(['user_id' => $transferred->id]);
         }
         foreach($adjudications as $adjudication)
         {
-            $adjudication->user_id = $transferred->id;
+            $adjudication->where('id', $adjudication->id)
+                ->update(['user_id' => $transferred->id]);
         }
         foreach($invites as $invite)
         {
-            $invite->user_id = $transferred->id;
+            $invite->where('id', $invite->id)
+                ->update(['user_id' => $transferred->id]);
         }
         foreach($supports as $support)
         {
-            $support->user_id = $transferred->id;
+            $support->where('id', $support->id)
+                ->update(['user_id' => $transferred->id]);
         }
         foreach($beaconRequests as $beaconRequest)
         {
-            $beaconRequest->user_id = $transferred->id;
+            $beaconRequest->where('id', $beaconRequest->id)
+                ->update(['user_id' => $transferred->id]);
         }
         foreach($sponsorRequests as $sponsorRequest)
         {
-            $sponsorRequest->user_id = $transferred->id;
+            $sponsorRequest->where('id', $sponsorRequest->id)
+                ->update(['user_id' => $transferred->id]);
         }
         foreach($beacons as $beacon)
         {
-            $beacon->user_id = $transferred->id;
+            $beacon->where('id', $beacon->id)
+                ->update(['manager' => $transferred->id]);
         }
         foreach($beaconGuides as $beaconGuide)
         {
-            $beaconGuide->user_id = $transferred->id;
+            $beaconGuide->where('id', $beaconGuide->id)
+                ->update(['guide' => $transferred->id]);
         }
         foreach($sponsors as $sponsor)
         {
-            $sponsor->user_id = $transferred->id;
+            $sponsor->where('id', $sponsor->id)
+                ->update(['user_id' => $transferred->id]);
         }
+        //Delete all notifications for user
+        foreach($sourceNotifications as $sourceNotification)
+        {
+            $sourceNotification->where('id', $sourceNotification->id)
+                ->update(['user_id' => $transferred->id]);
+        }
+
 
         //Delete all drafts for user
         foreach($drafts as $draft)
@@ -132,6 +168,18 @@ class TransferUserContent
         {
             $notification->delete();
         }
+        //Update all notifications for other users
+        foreach($notifications as $notification)
+        {
+            $notification->delete();
+        }
+
+        
+        //Delete all Sponsorships
+        foreach($sponsorships as $sponsorship)
+        {
+            $sponsorship->delete();
+        }
 
         //Detach all bookmarks
         $bookmarks = $user->bookmarks()->get();
@@ -140,5 +188,8 @@ class TransferUserContent
             $user->bookmarks()->detach($bookmark->id);
         }
 
+
+        //Delete User
+        $user->delete();
     }
 }

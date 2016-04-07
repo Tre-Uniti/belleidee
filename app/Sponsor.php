@@ -18,5 +18,6 @@ class Sponsor extends Model
         'country',
         'location',
         'email',
+        'user_id',
     ];
 }

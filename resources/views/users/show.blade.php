@@ -37,12 +37,17 @@
 
 @section('centerFooter')
     <div id = "centerFooter">
-        @if(Auth::user()->type > 1)
-            <a href="{{ url('users/'. $user->id . '/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
-        @endif
+
         @if(Auth::id() != $user->id)
             <a href="{{ url('/bookmarks/users/'.$user->id) }}"><button type = "button" class = "navButton">Bookmark</button></a>
         @endif
+            @if(Auth::user()->type > 1)
+                <a href="{{ url('users/'. $user->id . '/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+                {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) !!}
+                {!! Form::submit('Delete User', ['class' => 'navButton', 'id' => 'delete']) !!}
+                {!! Form::close() !!}
+
+            @endif
     </div>
 @stop
 

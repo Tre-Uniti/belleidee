@@ -74,6 +74,14 @@
                 {!! Form::text('click_budget', null, ['class' => 'createTitleText']) !!}
             </td>
         </tr>
+        <tr>
+            <td>
+                {!! Form::label('user_id', 'Manager') !!}
+            </td>
+            <td>
+                {!! Form::text('user_id', null, ['class' => 'createTitleText']) !!}
+            </td>
+        </tr>
 
         <tr>
             <td>

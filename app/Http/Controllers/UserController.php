@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Bookmark;
 use App\Elevate;
+use App\Events\TransferUser;
 use App\Extension;
 use App\Listeners\TransferUserContent;
 use App\Post;
@@ -16,6 +17,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Event;
 
 
 class UserController extends Controller
@@ -210,9 +212,7 @@ class UserController extends Controller
 
         return redirect('users/'. $user->id);
     }
-
-
-
+    
     /**
      * Display the search page for users.
      *
@@ -269,10 +269,9 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         //Transfer all user's posts, extensions, questions, elevations, intolerance, beacon/sponsor_requests to Transferred
-        Event::fire(new TransferUserContent($user));
-        //Delete all Notifications, Support Requests, Drafts
-        $user->delete();
-        //Delete User
+        Event::fire(new TransferUser($user));
+
+
         flash()->overlay('User has been deleted and content transferred');
 
         return redirect ('users/'. 20);
