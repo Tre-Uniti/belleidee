@@ -19,19 +19,25 @@ class UserDeletion
     {
         $response = $next($request);
         $id = $request->route('users');
-        $user = User::findOrFail($id); // Fetch the Support
-        $viewUser = Auth::user();
-
-        if($user->id == $viewUser->id)
+        if(Auth::user())
         {
-            return $response;
+            $viewUser = Auth::user();
+            if($id == $viewUser->id)
+            {
+                return $response;
+            }
+            elseif($viewUser->type > 1)
+            {
+                return $response;
+            }
         }
-        elseif($viewUser->type > 1)
+        else
         {
-            return $response;
+            flash()->overlay('Please register or login to continue');
+            return redirect('/');
         }
 
         flash()->overlay('You must be this user or an admin to delete');
-        return redirect('users/'. $user->id); // Not the Owner! Redirect back.
+        return redirect('users/'. $id); // Not the Owner! Redirect back.
     }
 }

@@ -6,8 +6,16 @@
     <h2>Settings of {{ $user->handle}}</h2>
     <table align = "center">
         <tr>
+            <th colspan="2">Resources:</th>
+        </tr>
+        <tr>
             <td><a href="{{ url('/training') }}"><button type = "button" class = "interactButton">Training</button></a></td>
             <td><a href="{{ url('/workshops') }}"><button type = "button" class = "interactButton">Workshops</button></a></td>
+        </tr>
+    </table>
+    <table align = 'center'>
+        <tr>
+            <th colspan="2">User Preferences:</th>
         </tr>
         <tr>
             <td><a href="{{ url('photo') }}"><button type = "button" class = "interactButton">Profile Photo</button></a></td>
@@ -15,31 +23,25 @@
         </tr>
     </table>
     <table align = "center">
-        <thead>
-        <tr><th>Sponsor</th>
-            <th># Days</th>
-            <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr><td>{{ $sponsor->name }}</td>
-            <td>{{ $days }}</td>
-            <td>{{ $sponsor->status }}</td>
+        <tr>
+            <th colspan="2">Account:</th>
         </tr>
         <tr>
-            <td colspan = 2" ><a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "interactButton">View Sponsor </button></a>
-            <td><a href="{{ url('/sponsors') }}"><button type = "button" class = "interactButton">Change Sponsor</button></a></td>
+            <td><a href = "{{ url('/users/deletion') }}"><button type = "button" class = "interactButton">Delete Account</button></a></td>
+            <td><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Download Posts</button></a></td>
         </tr>
-        </tbody>
     </table>
+
     <table align = "center">
         <tr>
-            <td>{!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) !!}
-                {!! Form::submit('Delete Account', ['class' => 'interactButton', 'id' => 'delete']) !!}
-                {!! Form::close() !!}</td>
-            <td><a href="{{ url('/workshops') }}"><button type = "button" class = "interactButton">Download Posts</button></a></td>
+            <th colspan="2">Sponsor</th>
+        </tr>
+        <tr>
+            <td><a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "interactButton">{{$sponsor->name}}</button></a>
+            <td><a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "interactButton">Sponsorship: {{ $days }} days</button></a></td>
         </tr>
     </table>
+
 
     <table align = "center" style = "margin: 15px auto">
         <tr>

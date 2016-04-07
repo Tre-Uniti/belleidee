@@ -22,6 +22,8 @@ use App\Support;
 use App\User;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TransferUserContent
 {
@@ -116,8 +118,7 @@ class TransferUserContent
         }
         foreach($invites as $invite)
         {
-            $invite->where('id', $invite->id)
-                ->update(['user_id' => $transferred->id]);
+            $invite->delete();
         }
         foreach($supports as $support)
         {
@@ -160,6 +161,7 @@ class TransferUserContent
         //Delete all drafts for user
         foreach($drafts as $draft)
         {
+            Storage::delete($draft->draft_path);
             $draft->delete();
         }
 
@@ -187,9 +189,6 @@ class TransferUserContent
         {
             $user->bookmarks()->detach($bookmark->id);
         }
-
-
-        //Delete User
-        $user->delete();
+        
     }
 }

@@ -43,7 +43,7 @@ class UserController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $users = $this->user->latest()->paginate(10);
+        $users = $this->user->where('verified', '=', 1)->latest()->paginate(10);
 
         return view ('users.index')
             ->with(compact('user', 'users', 'profilePosts','profileExtensions'));
@@ -260,6 +260,21 @@ class UserController extends Controller
     }
 
     /**
+     * Confirm User wants to delete account.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function confirmDeletion()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        
+        return view ('users.confirmDeletion')
+            ->with(compact('user', 'profilePosts','profileExtensions'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -271,7 +286,21 @@ class UserController extends Controller
         //Transfer all user's posts, extensions, questions, elevations, intolerance, beacon/sponsor_requests to Transferred
         Event::fire(new TransferUser($user));
 
+        if($user->id = Auth::id())
+        {
 
+            Auth::logout();
+            
+            if($user->delete())
+            {
+                flash()->overlay('You have successfully deleted your account');
+                return redirect ('/');
+            }
+        }
+        else
+        {
+            $user->delete();
+        }
         flash()->overlay('User has been deleted and content transferred');
 
         return redirect ('users/'. 20);

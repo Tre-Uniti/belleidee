@@ -1312,16 +1312,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.1.33",
+            "version": "v5.1.34",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "42157b919decb74acf02c554838136ae05346672"
+                "reference": "0e73cba565b0ef5b158da62f641dc6770b806102"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/42157b919decb74acf02c554838136ae05346672",
-                "reference": "42157b919decb74acf02c554838136ae05346672",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0e73cba565b0ef5b158da62f641dc6770b806102",
+                "reference": "0e73cba565b0ef5b158da62f641dc6770b806102",
                 "shasum": ""
             },
             "require": {
@@ -1436,7 +1436,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-04-05 14:05:37"
+            "time": "2016-04-07 14:12:37"
         },
         {
             "name": "league/flysystem",
@@ -2263,16 +2263,16 @@
         },
         {
             "name": "spatie/laravel-backup",
-            "version": "3.4.0",
+            "version": "3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-backup.git",
-                "reference": "7e215940f2c60ec9994ef0c71d240fda6777609c"
+                "reference": "1793179e6a18395f62dee558c4bf99805e65c7b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/7e215940f2c60ec9994ef0c71d240fda6777609c",
-                "reference": "7e215940f2c60ec9994ef0c71d240fda6777609c",
+                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/1793179e6a18395f62dee558c4bf99805e65c7b0",
+                "reference": "1793179e6a18395f62dee558c4bf99805e65c7b0",
                 "shasum": ""
             },
             "require": {
@@ -2321,7 +2321,7 @@
                 "laravel-backup",
                 "spatie"
             ],
-            "time": "2016-04-03 21:18:17"
+            "time": "2016-04-07 07:58:29"
         },
         {
             "name": "stripe/stripe-php",
