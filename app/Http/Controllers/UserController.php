@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Bookmark;
 use App\Elevate;
 use App\Extension;
+use App\Listeners\TransferUserContent;
 use App\Post;
 use App\Sponsor;
 use App\Sponsorship;
@@ -27,6 +28,7 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('admin', ['only' => ['edit', 'update', 'delete', 'ascend', 'descend']]);
+        $this->middleware('userDeletion', ['only' => ['destroy']]);
         $this->user = $user;
     }
     /**
@@ -265,11 +267,15 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $user = User::findOrFail($id);
         //Transfer all user's posts, extensions, questions, elevations, intolerance, beacon/sponsor_requests to Transferred
-
+        Event::fire(new TransferUserContent($user));
         //Delete all Notifications, Support Requests, Drafts
-
+        $user->delete();
         //Delete User
+        flash()->overlay('User has been deleted and content transferred');
+
+        return redirect ('users/'. 20);
     }
 
     /**
