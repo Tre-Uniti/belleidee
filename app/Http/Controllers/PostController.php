@@ -39,7 +39,7 @@ class PostController extends Controller
     public function __construct(Post $post)
     {
         $this->middleware('auth', ['except' => 'show']);
-        $this->middleware('postOwner', ['only' => 'edit', 'update']);
+        $this->middleware('postOwner', ['only' => 'edit', 'update', 'destroy']);
         $this->post = $post;
     }
 
@@ -401,7 +401,20 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        if($post->elevation > 0 || $post->extension > 0)
+        {
+            flash()->overlay('Post contains community activity, cannot delete');
+            return redirect('posts/'. $post->id);
+        }
+        else
+        {
+            Storage::delete($post->post_path);
+            $post->delete();
+        }
+
+        flash()->overlay('Post has been deleted');
+        return redirect('posts');
     }
 
     /**

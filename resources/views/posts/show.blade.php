@@ -76,6 +76,11 @@
             <a href="{{ url('/bookmarks/posts/'.$post->id) }}"><button type = "button" class = "navButton">Bookmark</button></a>
         @endif
         <a href="{{ url('/extensions/post/'. $post->id) }}"><button type = "button" class = "navButton">Extend</button></a>
+        @if($post->elevation == 0 && $post->extension == 0 && $post->user_id == $viewUser->id)
+                {!! Form::open(['method' => 'DELETE', 'route' => ['posts.destroy', $post->id]]) !!}
+                {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
+                {!! Form::close() !!}
+            @endif
     </div>
 @stop
 
