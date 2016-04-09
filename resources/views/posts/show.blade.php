@@ -40,17 +40,25 @@
                         </tr>
                         <tr>
                             <td><!-- Your Facebook share button code -->
-                                <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button"></div></td>
-                            @if($post->user_id != Auth::id())
-                                <td><a href="{{ url('/intolerances/post/'.$post->id) }}">Report Intolerance</a></td>
-                            @elseif ($post->status < 1)
-                                <td><a href="{{ url('/posts/'.$post->id) }}">Status: Tolerant</a></td>
-                            @else
-                                <td><a href="{{ url('/posts/'. $post->id) }}">Status: Intolerant</a></td>
-                            @endif
-                            <td> <!-- Twitter share button code -->
+                                <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button"></div>
+                             </td>
+                            <td>
+                                <!-- G+ share button code -->
+                                <script src="https://apis.google.com/js/platform.js" async defer></script>
+                                <div class="g-plus" data-action="share" data-annotation="none" data-align="left" data-width="100px;"></div>
+                            </td>
+                            <td><!-- Twitter share button code -->
                                 <a href="{{ Request::url() }}" class="twitter-share-button">Tweet</a>
                             </td>
+                        </tr>
+                        <tr>
+                        @if($post->user_id != Auth::id())
+                            <td colspan="3"><a href="{{ url('/intolerances/post/'.$post->id) }}">Report Intolerance</a></td>
+                        @elseif ($post->status < 1)
+                            <td><a href="{{ url('/posts/'.$post->id) }}">Status: Tolerant</a></td>
+                        @else
+                            <td><a href="{{ url('/posts/'. $post->id) }}">Status: Intolerant</a></td>
+                        @endif
                         </tr>
                     </table>
                 </div>

@@ -425,6 +425,12 @@ a:active {
   visibility: visible;
 }
 
+//Force browsers to render buttons
+.fb-share-button span, .fb-share-button iframe {
+  min-width: 50px !important;
+  min-height: 20px !important;
+}
+
 //Pagination
 .pagination {
   display: inline-block;
