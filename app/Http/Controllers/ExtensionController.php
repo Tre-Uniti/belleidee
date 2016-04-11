@@ -37,7 +37,7 @@ class ExtensionController extends Controller
     public function __construct(Extension $extension)
     {
         $this->middleware('auth', ['except' => 'show']);
-        $this->middleware('extensionOwner', ['only' => 'edit']);
+        $this->middleware('extensionOwner', ['only' => 'edit', 'update', 'destroy']);
         $this->extension = $extension;
     }
 
@@ -396,7 +396,7 @@ class ExtensionController extends Controller
         if($user->photo_path == '')
         {
 
-            $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
+            $sourcePhotoPath = '';
         }
         else
         {
@@ -659,7 +659,20 @@ class ExtensionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $extension = Extension::findOrFail($id);
+        if($extension->elevation > 0 || $extension->extension > 0)
+        {
+            flash()->overlay('Extension contains community activity, cannot delete');
+            return redirect('extensions/'. $extension->id);
+        }
+        else
+        {
+            Storage::delete($extension->extension_path);
+            $extension->delete();
+        }
+
+        flash()->overlay('Extension has been deleted');
+        return redirect('extensions');
     }
 
     /**

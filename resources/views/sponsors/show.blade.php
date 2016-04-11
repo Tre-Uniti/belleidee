@@ -12,13 +12,13 @@
         <table style="display: inline-block;">
             <tr>
                 <th>
-                    <a href="{{ url('/sponsors') }}">Location</a>
+                    Location
                 </th>
                 <th>
-                    <a href="{{ url('/sponsors') }}">Views</a>
+                    Views
                 </th>
                 <th>
-                    <a href="{{ url('/sponsors') }}">Clicks</a>
+                    Clicks
                 </th>
             </tr>
             <tr>

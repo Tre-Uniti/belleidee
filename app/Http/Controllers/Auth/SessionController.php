@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Session;
 class SessionController extends Controller
 {
     use RedirectsUsers, ThrottlesLogins;
-    protected $redirectTo = '/posts';
+    protected $redirectTo = '/gettingStarted';
 
     /**
      * Create a new authentication controller instance.
@@ -97,6 +97,7 @@ class SessionController extends Controller
             return $this->authenticated($request, Auth::user());
         }
 
+        flash()->overlay('Welcome '. Auth::user()->handle . ', you have successfully logged in');
         return redirect()->intended($this->redirectPath());
     }
 

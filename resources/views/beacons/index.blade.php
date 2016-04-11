@@ -6,6 +6,7 @@
 @section('centerText')
     <div>
     <h2>Beacon Directory</h2>
+        <p>A beacon is a place of worship or thought</p>
         <table style="display: inline-block;">
             <tr>
                 <td><a href={{ url('/beacons/top')}}>Top Beacons</a></td>

@@ -10,6 +10,7 @@ use App\Http\Requests\PhotoUploadRequest;
 use App\Post;
 use App\Sponsor;
 use App\Sponsorship;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -102,7 +103,7 @@ class SponsorController extends Controller
             $image = $request->file('image');
 
             $sponsorName = str_replace(' ', '_', $sponsor->name);
-            $imageFileName = $sponsorName . '.' . $image->getClientOriginalExtension();
+            $imageFileName = $sponsorName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
             $path = '/sponsor_photos/'. $sponsor->id . '/' .$imageFileName;
 
             Storage::put($path, file_get_contents($image));
@@ -195,10 +196,16 @@ class SponsorController extends Controller
             $image = $request->file('image');
 
             $sponsorName = str_replace(' ', '_', $sponsor->name);
-            $imageFileName = $sponsorName . '.' . $image->getClientOriginalExtension();
+            $imageFileName = $sponsorName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
             $path = '/sponsor_photos/'. $sponsor->id . '/' .$imageFileName;
 
+            //Add new photo
             Storage::put($path, file_get_contents($image));
+
+            //Remove old photo from storage (S3)
+            Storage::delete($sponsor->photo_path);
+
+            //Set new path for database
             $sponsor->photo_path = $path;
         }
         $sponsor->update($request->all());

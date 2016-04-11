@@ -18,7 +18,6 @@
     <meta property="og:image"         content="https://belle-idee.org/img/idee-med.png"/>
     @yield('pageHeader')
 
-
     <!--
        This code is maintained by the Tre-Uniti development ops
        Feature & Pull Requests decided at Belle-Creatori.org

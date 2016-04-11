@@ -1,7 +1,7 @@
 <div id = "createOptions">
     <table align = "center" style = "margin-bottom: 7px;">
         <tr>
-            <th colspan="3" style = "border-color: #E8E8E8;">{!! Form::label('title', 'Post Title:') !!}</th>
+            <th colspan="3" style = "border-color: #E8E8E8;">{!! Form::label('title', 'Draft Title:') !!}</th>
         </tr>
         <tr>
             <td colspan="3" style = "border-color: #E8E8E8;">{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}</td>

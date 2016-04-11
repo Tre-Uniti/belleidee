@@ -31,6 +31,10 @@ class HomeController extends Controller
         $this->middleware('auth', ['except' => 'privacy']);
         $this->middleware('admin', ['only' => 'indexer']);
     }
+
+    /*
+    * Return the home page for the logged in user
+    */
     public function getHome()
     {
         $user = Auth::user();
@@ -78,6 +82,9 @@ class HomeController extends Controller
                     ->with('days', $days);
     }
 
+    /*
+    * Show the in development screen for pages under dev
+    */
     public function getIndev()
     {
         $user = Auth::user();
@@ -134,11 +141,19 @@ class HomeController extends Controller
         $image = $request->file('image');
 
         $userName = str_replace(' ', '_', $user->handle);
-        $imageFileName = $userName . '.' . $image->getClientOriginalExtension();
+        $imageFileName = $userName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension() ;
         $path = '/user_photos/'. $user->id . '/' .$imageFileName;
 
+        //If user has existing profile photo, then delete from Storage
+        if($user->photo_path != NULL)
+        {
+            Storage::delete($user->photo_path);
+        }
+
+        //Store new photo in storage (S3)
         Storage::put($path, file_get_contents($image));
 
+        //Update User with new photo path
         $user->where('id', $user->id)
             ->update(['photo_path' => $path]);
 
@@ -246,17 +261,22 @@ class HomeController extends Controller
             ->with('type', $type)
             ->with('identifier', $identifier);
     }
-
-    public function training()
+    /*
+    * Return the training page with video tutorials
+    */
+    public function tutorials()
     {
         $user = Auth::user();
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
-        return view ('pages.training')
+        return view ('pages.tutorials')
                 ->with(compact('user', 'profilePosts', 'profileExtensions'));
     }
 
+    /*
+    * Display the current workshops page
+    */
     public function workshops()
     {
         $user = Auth::user();
@@ -267,6 +287,9 @@ class HomeController extends Controller
             ->with(compact('user', 'profilePosts', 'profileExtensions'));
     }
 
+    /*
+    * Return the Nymi temporary page
+    */
     public function nymi()
     {
         $user = Auth::user();
@@ -274,6 +297,19 @@ class HomeController extends Controller
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         return view ('pages.nymi')
+            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+    }
+
+    /*
+    * Return the Directions page (used for after login and quick links)
+    */
+    public function gettingStarted()
+    {
+        $user = Auth::user();
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
+
+        return view ('pages.gettingStarted')
             ->with(compact('user', 'profilePosts', 'profileExtensions'));
     }
 

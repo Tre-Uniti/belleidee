@@ -227,7 +227,7 @@ class PostController extends Controller
         if($user->photo_path == '')
         {
 
-            $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
+            $sourcePhotoPath = '';
         }
         else
         {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Bookmark;
 use App\Http\Requests\CreateBeaconRequest;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\User;
@@ -105,7 +106,7 @@ class BeaconController extends Controller
             $image = $request->file('image');
 
             $beaconName = str_replace(' ', '_', $beacon->name);
-            $imageFileName = $beaconName . '.' . $image->getClientOriginalExtension();
+            $imageFileName = $beaconName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
             $path = '/beacon_photos/'. $beacon->id . '/' .$imageFileName;
 
             Storage::put($path, file_get_contents($image));
@@ -256,10 +257,16 @@ class BeaconController extends Controller
             $image = $request->file('image');
 
             $beaconName = str_replace(' ', '_', $beacon->name);
-            $imageFileName = $beaconName . '.' . $image->getClientOriginalExtension();
+            $imageFileName = $beaconName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
             $path = '/beacon_photos/'. $beacon->id . '/' .$imageFileName;
 
+            //Add new photo
             Storage::put($path, file_get_contents($image));
+
+            //Remove old photo from storage (S3)
+            Storage::delete($beacon->photo_path);
+
+            //Set new path for database
             $beacon->photo_path = $path;
         }
 

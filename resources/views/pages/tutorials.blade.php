@@ -1,9 +1,9 @@
 @extends('app')
 @section('siteTitle')
-    Training
+    Tutorials
 @stop
 @section('centerText')
-    <h2>Idee Training</h2>
+    <h2>Idee Tutorials</h2>
 
     <h4>Starter:</h4>
     <iframe width="560" height="315" src="https://www.youtube.com/embed/b3ZHp36LaRk" frameborder="0" allowfullscreen></iframe>
@@ -26,5 +26,6 @@
     //Create and manage support tickets-->
 @stop
 @section('centerFooter')
-        <a href="{{ url('/workshops') }}"><button type = "button" class = "navButton">Workshops</button></a>
+
+        <a href="{{ url('/gettingStarted') }}"><button type = "button" class = "navButton">Getting Started</button></a>
 @stop

@@ -4,10 +4,11 @@
 @stop
 
 @section('centerMenu')
-    <h2>{{ $question->question }}</h2>
+
 @stop
 
 @section('centerText')
+    <h2>{{ $question->question }}</h2>
         <table align = "center">
             <tr>
                 <td><a href={{ url('/questions/sortByElevation/'. $question->id)}}>Top Elevated</a></td>

@@ -45,11 +45,3 @@
     <a href="{{ url('/bookmarks') }}"><button type = "button" class = "navButton">Bookmarks</button></a>
     <a href="{{ url('/auth/logout') }}"><button type = "button" class = "navButton">Logout</button></a>
 @stop
-
-@section('rightSideBar')
-    <h2>Hosted</h2>
-
-    <div class = "innerPhotos">
-        <a href="/"><img src={{asset('img/idee.png')}} alt="idee" height = "97%" width = "85%"></a>
-    </div>
-@stop

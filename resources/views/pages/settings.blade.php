@@ -4,15 +4,7 @@
 @stop
 @section('centerText')
     <h2>Settings of {{ $user->handle}}</h2>
-    <table align = "center">
-        <tr>
-            <th colspan="2">Resources:</th>
-        </tr>
-        <tr>
-            <td><a href="{{ url('/training') }}"><button type = "button" class = "interactButton">Training</button></a></td>
-            <td><a href="{{ url('/workshops') }}"><button type = "button" class = "interactButton">Workshops</button></a></td>
-        </tr>
-    </table>
+
     <table align = 'center'>
         <tr>
             <th colspan="2">User Preferences:</th>
@@ -41,7 +33,15 @@
             <td><a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "interactButton">Sponsorship: {{ $days }} days</button></a></td>
         </tr>
     </table>
-
+    <table align = "center">
+        <tr>
+            <th colspan="3">Resources:</th>
+        </tr>
+        <tr>
+            <td><a href="{{ url('/started') }}"><button type = "button" class = "interactButton">Getting Started</button></a></td>
+            <td><a href="{{ url('/tutorials') }}"><button type = "button" class = "interactButton">Tutorials</button></a></td>
+        </tr>
+    </table>
 
     <table align = "center" style = "margin: 15px auto">
         <tr>

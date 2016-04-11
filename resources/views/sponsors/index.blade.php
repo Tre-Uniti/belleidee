@@ -6,6 +6,7 @@
 @section('centerText')
     <div>
     <h2>Sponsor Directory</h2>
+        <p>A sponsor is a business or non-profit promoting within Idee</p>
     <table style="display: inline-block;">
         <tr>
             <td><a href={{ url('/sponsors/top')}}>Most Views</a></td>

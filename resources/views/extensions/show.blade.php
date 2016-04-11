@@ -3,18 +3,8 @@
     Show Extension
 @stop
 @section('pageHeader')
-        <!-- Load Facebook SDK for JavaScript -->
+    <script src="/js/social.js"></script>
     <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <!-- Load Twitter script -->
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 @stop
 
 @section('centerText')
@@ -46,17 +36,31 @@
                                 </tr>
                                 <tr>
                                     <td><!-- Your Facebook share button code -->
-                                        <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button"></div></td>
-                                    @if($extension->user_id != Auth::id())
-                                        <td><a href="{{ url('/intolerances/extension/'.$extension->id) }}">Report Intolerance</a></td>
-                                    @elseif ($extension->status < 1)
-                                        <td><a href="{{ url('/extensions/'.$extension->id) }}">Status: Tolerant</a></td>
-                                    @else
-                                        <td><a href="{{ url('/extensions/'. $extension->id) }}">Status: Intolerant</a></td>
-                                    @endif
-                                    <td> <!-- Twitter share button code -->
-                                        <a href="{{ Request::url() }}" class="twitter-share-button">Tweet</a>
+                                        <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title={{$extension->title}}"
+                                           onclick="return shareSocial(this.href);">
+                                            <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
                                     </td>
+                                    <td>
+                                        <!-- G+ share button code -->
+                                        <a href="https://plus.google.com/share?url={{Request::url()}}"
+                                           onclick="return shareSocial(this.href);">
+                                            <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
+                                    </td>
+                                    <td><!-- Twitter share button code -->
+                                        <a href="http://twitter.com/intent/tweet?status={{$extension->title}} - {{Request::url()}}"
+                                           onclick="return shareSocial(this.href)">
+                                            <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
+                                    </td>
+                                </tr>
+                                <tr>
+
+                                    @if($extension->user_id != Auth::id())
+                                        <td colspan="3"><a href="{{ url('/intolerances/extension/'.$extension->id) }}">Report Intolerance</a></td>
+                                    @elseif ($extension->status < 1)
+                                        <td colspan="3"><a href="{{ url('/extensions/'.$extension->id) }}">Status: Tolerant</a></td>
+                                    @else
+                                        <td colspan="3"><a href="{{ url('/extensions/'. $extension->id) }}">Status: Intolerant</a></td>
+                                    @endif
                                 </tr>
                             </table>
                         </div>
@@ -82,7 +86,11 @@
             <a href="{{ url('/bookmarks/extensions/'.$extension->id) }}"><button type = "button" class = "navButton">Bookmark</button></a>
             @endif
             <a href="{{ url('/extensions/extenception/'. $extension->id) }}"><button type = "button" class = "navButton">Extend</button></a>
-
+            @if($extension->elevation == 0 && $extension->extension == 0 && $extension->user_id == $viewUser->id)
+                {!! Form::open(['method' => 'DELETE', 'route' => ['extensions.destroy', $extension->id]]) !!}
+                {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
+                {!! Form::close() !!}
+            @endif
     </div>
 @stop
 

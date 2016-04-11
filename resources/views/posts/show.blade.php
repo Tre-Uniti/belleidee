@@ -3,18 +3,9 @@
     Show Post
 @stop
 @section('pageHeader')
-        <!-- Load Facebook SDK for JavaScript -->
+    <script src="/js/social.js"></script>
     <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <!-- Load Twitter script -->
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
 @stop
 
 @section('centerText')
@@ -40,24 +31,30 @@
                         </tr>
                         <tr>
                             <td><!-- Your Facebook share button code -->
-                                <div class="fb-share-button" data-href="{{ Request::url() }}" data-layout="button"></div>
+                                <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title={{$post->title}}"
+                                   onclick="return shareSocial(this.href);">
+                                    <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
+
                              </td>
                             <td>
                                 <!-- G+ share button code -->
-                                <script src="https://apis.google.com/js/platform.js" async defer></script>
-                                <div class="g-plus" data-action="share" data-annotation="none" data-align="left" data-width="100px;"></div>
+                                <a href="https://plus.google.com/share?url={{Request::url()}}"
+                                   onclick="return shareSocial(this.href);">
+                                    <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
                             </td>
                             <td><!-- Twitter share button code -->
-                                <a href="{{ Request::url() }}" class="twitter-share-button">Tweet</a>
+                                <a href="http://twitter.com/intent/tweet?status={{$post->title}} - {{Request::url()}}"
+                                   onclick="return shareSocial(this.href)">
+                                    <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
                             </td>
                         </tr>
                         <tr>
                         @if($post->user_id != Auth::id())
                             <td colspan="3"><a href="{{ url('/intolerances/post/'.$post->id) }}">Report Intolerance</a></td>
                         @elseif ($post->status < 1)
-                            <td><a href="{{ url('/posts/'.$post->id) }}">Status: Tolerant</a></td>
+                            <td colspan="3"><a href="{{ url('/posts/'.$post->id) }}">Status: Tolerant</a></td>
                         @else
-                            <td><a href="{{ url('/posts/'. $post->id) }}">Status: Intolerant</a></td>
+                            <td colspan="3"><a href="{{ url('/posts/'. $post->id) }}">Status: Intolerant</a></td>
                         @endif
                         </tr>
                     </table>
@@ -88,7 +85,7 @@
                 {!! Form::open(['method' => 'DELETE', 'route' => ['posts.destroy', $post->id]]) !!}
                 {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}
-            @endif
+        @endif
     </div>
 @stop
 

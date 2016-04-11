@@ -179,10 +179,11 @@ Route::get('photo', 'HomeController@userPhoto');
 Route::post('storePhoto', 'HomeController@storePhoto');
 Route::get('search', 'HomeController@search');
 Route::get('results', 'HomeController@results');
-Route::get('training', 'HomeController@training');
+Route::get('tutorials', 'HomeController@tutorials');
 Route::get('workshops', 'HomeController@workshops');
 Route::get('privacy', 'HomeController@privacy');
 Route::get('nymi', 'HomeController@nymi');
+Route::get('gettingStarted', 'HomeController@gettingStarted');
 
 //Admin routes
 Route::get('admin', 'AdminController@portal');
