@@ -37,7 +37,7 @@
         <td colspan="3" style = "text-align: left;">3.  <b>Sponsors</b> are chosen by each user to sponsor them and receive promotions.</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">*  By confirming you agree to our <a href="{{ url("/privacy") }}" style = "color: black;">Privacy Policy</a> including receiving emails from Belle-Idee regarding your activity in the community. *</td>
+        <td colspan="3" style = "text-align: left;">*  By confirming you agree to our <a href="{{ url("/privacy") }}" style = "color: black;">Privacy Policy</a> and <a href="{{ url("/terms") }}" style = "color: black;">Terms of Use</a>. *</td>
     </tr>
 
 @endsection

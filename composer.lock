@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "62a63d63aa7e4a378bb459ede1f370b6",
-    "content-hash": "b303e60aee4855a5f9971c2f4eb92494",
+    "hash": "088f40071b765751a7599bcc96c09278",
+    "content-hash": "1ed599bd3b09087da57780340434b50e",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.17.5",
+            "version": "3.17.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "1cef9b334729b3564c9aef15481a55561c54b53f"
+                "reference": "d5a5145263da88c9ba870b579c3d4f648b82d2a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/1cef9b334729b3564c9aef15481a55561c54b53f",
-                "reference": "1cef9b334729b3564c9aef15481a55561c54b53f",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d5a5145263da88c9ba870b579c3d4f648b82d2a9",
+                "reference": "d5a5145263da88c9ba870b579c3d4f648b82d2a9",
                 "shasum": ""
             },
             "require": {
@@ -85,7 +85,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-04-07 22:44:13"
+            "time": "2016-04-11 17:36:01"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -1567,6 +1567,52 @@
             ],
             "description": "Flysystem adapter for the AWS S3 SDK v3.x",
             "time": "2015-11-19 08:44:16"
+        },
+        {
+            "name": "league/flysystem-ziparchive",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem-ziparchive.git",
+                "reference": "ab2e804c6c121e30f8ccb0c996bf418c3c8ccab8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-ziparchive/zipball/ab2e804c6c121e30f8ccb0c996bf418c3c8ccab8",
+                "reference": "ab2e804c6c121e30f8ccb0c996bf418c3c8ccab8",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "~1.0@alpha",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\ZipArchive\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frenky.net"
+                }
+            ],
+            "description": "Flysystem adapter for ZipArchive's",
+            "time": "2015-04-21 12:14:28"
         },
         {
             "name": "mmanos/laravel-search",

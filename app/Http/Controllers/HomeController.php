@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use League\Flysystem\Filesystem;
+use League\Flysystem\ZipArchive\ZipArchiveAdapter as Adapter;
 use Event;
 use Response;
 
@@ -28,7 +30,7 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => 'privacy']);
+        $this->middleware('auth', ['except' => ['terms', 'privacy']]);
         $this->middleware('admin', ['only' => 'indexer']);
     }
 
@@ -325,6 +327,44 @@ class HomeController extends Controller
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; '.$filename,
         ]);
+    }
+
+    /*
+    * Return the Belle-Idee Terms of Use
+    */
+    public function terms()
+    {
+        $filename = 'TermsOfUse.pdf';
+        $path = '/docs/'. $filename;
+        $content = Storage::get($path);
+        return Response::make($content, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; '.$filename,
+        ]);
+    }
+
+    /*
+     * Retrieve and zip all content for user (Posts and Extensions)
+     *
+     * @param $id
+     */
+    public function getContent($id)
+    {
+        $user = User::findOrFail($id);
+        //Retrieve all posts by user
+        $post_path = 'posts/'. $user->id;
+        //dd($post_path);
+        $posts = Storage::files($post_path);
+        //dd($posts);
+        $zip = new ZipArchive();
+
+        $filesystem = new Filesystem(new Adapter($posts[0]));
+
+        dd($filesystem);
+        $filesystem->getAdapter()->getArchive()->close();
+
+        return Response::download($filesystem);
+
     }
 
 

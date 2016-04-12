@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <td><a href = "{{ url('/users/deletion') }}"><button type = "button" class = "interactButton">Delete Account</button></a></td>
-            <td><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Download Posts</button></a></td>
+            <td><a href="{{ url('/getContent/'. $user->id) }}"><button type = "button" class = "interactButton">Download Posts</button></a></td>
         </tr>
     </table>
 
@@ -38,7 +38,7 @@
             <th colspan="3">Resources:</th>
         </tr>
         <tr>
-            <td><a href="{{ url('/started') }}"><button type = "button" class = "interactButton">Getting Started</button></a></td>
+            <td><a href="{{ url('/gettingStarted') }}"><button type = "button" class = "interactButton">Getting Started</button></a></td>
             <td><a href="{{ url('/tutorials') }}"><button type = "button" class = "interactButton">Tutorials</button></a></td>
         </tr>
     </table>

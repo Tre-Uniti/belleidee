@@ -8,6 +8,8 @@
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/social.js"></script>
+
     <!--
        This code is maintained by the Tre-Uniti development ops
        Feature & Pull Requests decided at Belle-Creatori.org
@@ -16,41 +18,41 @@
 </head>
 <body>
 <div id = "container">
+    <div id="fb-root"></div>
     <nav class = "topNav">
         <ul>
-            <li><a href={{ url('/home') }}>Home</a></li>
+            <li><a href={{ url('/demo') }}>Home</a></li>
             <li>
-                <a href="{{ url('/posts') }}">Posts<span class="caret"></span></a>
+                <p onclick="" style = "cursor:pointer">Posts<span class="caret"></span></p>
                 <div>
                     <ul>
                         <li><a href={{ url('/demo') }}>Create</a></li>
                         <li><a href={{ url('/demo') }}>Discover</a></li>
                         <li><a href="{{ url('/demo') }}">Drafts</a></li>
                         <li><a href="{{ url('/demo') }}">Extensions</a></li>
-                        <li><a href="{{ url('/demo') }}">Legacy</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <a href="{{ url('/indev') }}">Directory<span class="caret"></span></a>
-                <div>
-                    <ul>
-                        <li><a href="{{ url('/demo') }}">Beliefs</a></li>
                         <li><a href="{{ url('/demo') }}">Questions</a></li>
-                        <li><a href="{{ url('/demo') }}">Beacons</a></li>
-                        <li><a href="{{ url('/demo') }}">Sponsors</a></li>
-                        <li><a href="{{ url('/demo') }}">Bookmarks</a></li>
                     </ul>
                 </div>
             </li>
             <li>
-                <a href="{{ url('/settings') }}">Settings<span class="caret"></span></a>
+                <p onclick="" style = "cursor:pointer">Directory<span class="caret"></span></p>
                 <div>
                     <ul>
-                        <li><a href="{{ url('/demo') }}">Modify</a></li>
+                        <li><a href="{{ url('/demo') }}">Users</a></li>
+                        <li><a href="{{ url('/demo') }}">Beacons</a></li>
+                        <li><a href="{{ url('/demo') }}">Beliefs</a></li>
+                        <li><a href="{{ url('/demo') }}">Legacy</a></li>
+                        <li><a href="{{ url('/demo') }}">Sponsors</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <p onclick="" style = "cursor:pointer">Settings<span class="caret"></span></p>
+                <div>
+                    <ul>
+                        <li><a href="{{ url('/demo') }}">Personal</a></li>
                         <li><a href="{{ url('/demo') }}">Support</a></li>
                         <li><a href="{{ url('/demo') }}">Invite Friends</a></li>
-                        <li><a href="https://tre-uniti.org">Tre-Uniti</a></li>
                         <li><a href="{{ url('/demo') }}">Logout</a></li>
                     </ul>
                 </div>
@@ -129,11 +131,33 @@
                                 <div>
                                     <table align = "center">
                                         <tr>
-                                            <td><a href={{ url('/demo')}}>Elevation</a></td>
-                                            <td> <a href = {{ url('/demo') }}>Date of Post</a></td>
-                                            <td><a href={{ url('/demo')}}>Extension</a></td>
+                                            <td><a href={{ url('/demo')}}>Elevations</a></td>
+                                            <td> <a href = {{ url('/demo') }}>Creation Date</a></td>
+                                            <td><a href={{ url('/demo')}}>Extensions</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><!-- Your Facebook share button code -->
+                                                <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title=Demo"
+                                                   onclick="return shareSocial(this.href);">
+                                                    <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
+                                            </td>
+                                            <td>
+                                                <!-- G+ share button code -->
+                                                <a href="https://plus.google.com/share?url={{Request::url()}}"
+                                                   onclick="return shareSocial(this.href);">
+                                                    <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
+                                            </td>
+                                            <td><!-- Twitter share button code -->
+                                                <a href="http://twitter.com/intent/tweet?status= - {{Request::url()}}"
+                                                   onclick="return shareSocial(this.href)">
+                                                    <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"><a href="{{ url('/demo') }}">Report Intolerance</a></td>
                                         </tr>
                                     </table>
+
                                 </div>
                             </li>
                         </ul>

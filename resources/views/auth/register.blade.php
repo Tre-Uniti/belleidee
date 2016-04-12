@@ -27,5 +27,6 @@
     <h4>Guidelines:</h4>
     <p>Handle (username) can be real or anonymous, max-length (14)</p>
     <p>Passwords must be 8 characters long</p>
+    <p><a href = "/privacy" target="_blank">Privacy Policy</a> - <a href="/terms" target="_blank">Terms of Use</a></p>
 @stop
 

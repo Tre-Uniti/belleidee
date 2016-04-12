@@ -54,7 +54,8 @@ class Handler extends ExceptionHandler
         }
         if($e instanceof FileNotFoundException)
         {
-            flash()->overlay('Post does not exist please contact Zoko@belle-idee.org');
+            // Content not found flash notification to user to contact support
+            flash()->overlay('Content does not exist please contact Tre-Uniti@belle-idee.org');
             return redirect()->back();
         }
         return parent::render($request, $e);

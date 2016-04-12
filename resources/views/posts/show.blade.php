@@ -4,12 +4,12 @@
 @stop
 @section('pageHeader')
     <script src="/js/social.js"></script>
-    <div id="fb-root"></div>
+
 
 @stop
 
 @section('centerText')
-
+    <div id="fb-root"></div>
     <h2>{{ $post->title }}</h2>
     <table align = "center">
         <tr>
@@ -34,7 +34,6 @@
                                 <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title={{$post->title}}"
                                    onclick="return shareSocial(this.href);">
                                     <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
-
                              </td>
                             <td>
                                 <!-- G+ share button code -->

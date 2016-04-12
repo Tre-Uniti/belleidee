@@ -17,7 +17,8 @@
         "mmanos/laravel-search": "dev-master",
         "laravel/cashier": "~5.0",
         "genealabs/laravel-caffeine": "~0.2.0",
-        "spatie/laravel-backup": "^3.2"
+        "spatie/laravel-backup": "^3.2",
+        "league/flysystem-ziparchive": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

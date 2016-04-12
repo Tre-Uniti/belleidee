@@ -182,8 +182,10 @@ Route::get('results', 'HomeController@results');
 Route::get('tutorials', 'HomeController@tutorials');
 Route::get('workshops', 'HomeController@workshops');
 Route::get('privacy', 'HomeController@privacy');
+Route::get('terms', 'HomeController@terms');
 Route::get('nymi', 'HomeController@nymi');
 Route::get('gettingStarted', 'HomeController@gettingStarted');
+Route::get('getContent/{id}', 'HomeController@getContent');
 
 //Admin routes
 Route::get('admin', 'AdminController@portal');
