@@ -8,7 +8,7 @@
 
     <table align = "center">
         <tr>
-            <td><a href="{{ url('/home') }}"><button type = "button" class = "interactButton">Cancel</button></a></td>
+            <td><a href="{{ url('/settings') }}"><button type = "button" class = "interactButton">Cancel</button></a></td>
             <td>{!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) !!}
                 {!! Form::submit('Delete Account', ['class' => 'interactButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}</td>

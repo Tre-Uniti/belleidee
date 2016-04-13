@@ -13,6 +13,7 @@
         <li>Community Questions about ideas & beliefs</li>
         <li>Maintained by Tre-Uniti LLC</li>
     </ul>
+    <a href="{{ url('/auth/register') }}"><button type = "button" class = "navButton">Register</button></a>
     <a href="{{ url('/demo') }}"><button type = "button" class = "navButton">View Demo Page</button></a>
 @stop
 @section('footer')

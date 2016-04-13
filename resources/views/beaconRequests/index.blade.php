@@ -9,6 +9,7 @@
     <table align = "center">
         <tr>
             <td><a href={{ url('/beaconRequests/create')}}>New Beacon Request</a></td>
+            <td><a href="{{ url('/beaconRequests/agreement')}}" target ="_blank">Beacon Agreement</a></td>
         </tr>
     </table>
     </div>

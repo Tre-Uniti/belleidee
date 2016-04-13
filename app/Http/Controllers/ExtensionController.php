@@ -153,7 +153,11 @@ class ExtensionController extends Controller
                 $notification->user()->associate($user);
                 $notification->save();
 
-                $mailer->sendExtenceptionNotification($extension);
+                //Send mail to source user if their frequency is Null or above 1
+                if($sourceUser->frequency > 1)
+                {
+                    $mailer->sendExtenceptionNotification($extension);
+                }
 
                 flash()->overlay('Your extension has been created');
                 return redirect('extensions/'. $extension->id);
@@ -196,7 +200,11 @@ class ExtensionController extends Controller
                 $notification->user()->associate($user);
                 $notification->save();
 
-                $mailer->sendExtenceptionNotification($extension);
+                //Send mail to source user if their frequency is Null or above 1
+                if($sourceUser->frequency > 1)
+                {
+                    $mailer->sendExtenceptionNotification($extension);
+                }
 
                 flash()->overlay('Your extension has been created');
                 return redirect('extensions/'. $extension->id);
@@ -229,6 +237,8 @@ class ExtensionController extends Controller
             flash()->overlay('Your answer has been created!');
             return redirect('extensions/'. $extension->id);
         }
+        
+        //Extension is directly off of Post (no extenception)
         elseif(isset($sources['post_id']))
         {
             $sourceId = $sources['post_id'];
@@ -264,7 +274,12 @@ class ExtensionController extends Controller
 
 
         //Notify user of post of this extension
-        $mailer->sendExtensionNotification($extension);
+        //Send mail to source user if their frequency is Null or above 1
+        if($sourceUser->frequency > 1)
+        {
+            $mailer->sendExtensionNotification($extension);
+        }
+        
 
         flash()->overlay('Your extension has been created');
         return redirect('extensions/'. $extension->id);
@@ -449,8 +464,6 @@ class ExtensionController extends Controller
             }
 
         }
-
-
 
         return view('extensions.show')
             ->with(compact('user', 'viewUser', 'extension', 'profilePosts', 'profileExtensions', 'sources' ))

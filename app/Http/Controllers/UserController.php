@@ -91,8 +91,7 @@ class UserController extends Controller
         //First check user has submitted their own photo otherwise default to medium background image
         if($user->photo_path == '')
         {
-
-            $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
+            $sourcePhotoPath = '';
         }
         else
         {
@@ -153,8 +152,14 @@ class UserController extends Controller
             $sponsor = NULL;
         }
 
+        $frequencies = [
+            '1' => 'Only Required (Least)',
+            '2' => '+Notifications (Often)',
+            '3' => '+Sponsorships (Most)'
+        ];
+
         return view('users.edit')
-            ->with(compact('user', 'profilePosts', 'profileExtensions' ))
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'frequencies' ))
             ->with('sponsor', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }

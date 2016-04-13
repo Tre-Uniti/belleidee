@@ -184,6 +184,7 @@
         </article>
         <div id = "centerFooter">
             <a href="{{ url('/auth/register') }}"><button type = "button" class = "navButton">Register</button></a>
+            <a href="{{ url('/tour') }}"><button type = "button" class = "navButton">Tour</button></a>
         </div>
     </div>
 

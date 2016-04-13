@@ -11,7 +11,7 @@
         </tr>
         <tr>
             <td><a href="{{ url('photo') }}"><button type = "button" class = "interactButton">Profile Photo</button></a></td>
-            <td><a href="{{ url('/indev') }}"><button type = "button" class = "interactButton">Email Frequency</button></a></td>
+            <td><a href="{{ url('/frequency') }}"><button type = "button" class = "interactButton">Email Frequency</button></a></td>
         </tr>
     </table>
     <table align = "center">
@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <td><a href = "{{ url('/users/deletion') }}"><button type = "button" class = "interactButton">Delete Account</button></a></td>
-            <td><a href="{{ url('/getContent/'. $user->id) }}"><button type = "button" class = "interactButton">Download Posts</button></a></td>
+            <td><a href="{{ url('/home') }}"><button type = "button" class = "interactButton">Joined: {{$user->created_at->format('M-d-Y')}}</button></a></td>
         </tr>
     </table>
 

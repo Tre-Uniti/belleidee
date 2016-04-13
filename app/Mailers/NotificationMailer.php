@@ -56,7 +56,7 @@ class NotificationMailer extends Mailer
         $question = Question::findOrFail($question->id);
         $view = 'emails.question';
 
-        $users = User::where('verified', '=', 1)->get();
+        $users = User::where('verified', '=', 1)->where('frequency', '>', 1)->get();
         foreach($users as $user)
         {
             $subject = 'New Community Question';

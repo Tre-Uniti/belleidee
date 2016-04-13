@@ -36,6 +36,7 @@ Route::get('beacons/subscription/{id}', 'BeaconController@subscription');
 Route::resource('beacons', 'BeaconController');
 
 //Beacon Request Routes (Resource)
+Route::get('beaconRequests/agreement', 'BeaconRequestController@agreement');
 Route::post('beaconRequests/convertBeacon', 'BeaconRequestController@convert')->name('convertBeacon');
 Route::resource('beaconRequests', 'BeaconRequestController');
 
@@ -86,6 +87,7 @@ Route::get('sponsors/sponsorship/{id}', 'SponsorController@sponsorship');
 Route::resource('sponsors', 'SponsorController');
 
 //Sponsor Request Routes (Resource)
+Route::get('sponsorRequests/agreement', 'SponsorRequestController@agreement');
 Route::post('sponsorRequests/convertSponsor', 'SponsorRequestController@convert')->name('convertSponsor');
 Route::resource('sponsorRequests', 'SponsorRequestController');
 
@@ -169,8 +171,6 @@ Route::get('/', 'WelcomeController@getWelcome');
 Route::get('demo', 'WelcomeController@getDemo');
 Route::get('tour', 'WelcomeController@getTour');
 
-Route::get('navGuide', 'WelcomeController@getNavGuide');
-
 // Home routes
 Route::get('home', 'HomeController@getHome');
 Route::get('settings', 'HomeController@getSettings');
@@ -184,8 +184,9 @@ Route::get('workshops', 'HomeController@workshops');
 Route::get('privacy', 'HomeController@privacy');
 Route::get('terms', 'HomeController@terms');
 Route::get('nymi', 'HomeController@nymi');
+Route::get('frequency', 'HomeController@frequency');
 Route::get('gettingStarted', 'HomeController@gettingStarted');
-Route::get('getContent/{id}', 'HomeController@getContent');
+//Route::get('getContent/{id}', 'HomeController@getContent');
 
 //Admin routes
 Route::get('admin', 'AdminController@portal');
@@ -200,14 +201,5 @@ Route::get('admin/sponsor/edit/{id}', 'AdminController@editSponsorRequest');
 Route::patch('admin/sponsor/update/{id}', 'AdminController@updateSponsorRequest')->name('updateSponsorRequest');
 Route::get('admin/sponsor/convert/{id}', 'AdminController@convertSponsorRequest');
 
-
 //Cashier
 Route::post('stripe/webhook', '\Laravel\Cashier\WebhookController@handleWebhook');
-
-
-
-
-
-
-
-

@@ -14,6 +14,13 @@
             <td colspan="3" style = "border: none;">{!! Form::text('email', null, ['class' => 'createTitleText']) !!}</td>
         </tr>
         <tr>
+            <th colspan="3">{!! Form::label('frequency', 'Select Frequency') !!}</th>
+        </tr>
+        <tr>
+            <td colspan="3">
+                {!! Form::select('frequency', $frequencies, array('frequency' => $user->frequency)) !!}
+            </td>
+        <tr>
             <td colspan="3" style = "border: none;">Type: {{ $user->type }}</td>
         </tr>
         <tr>

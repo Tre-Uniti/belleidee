@@ -46,7 +46,7 @@
                             <tr><th>Email Opt Out</th></tr>
                             <tr><td>Reply to this email</td></tr>
                             <tr><td>Or</td></tr>
-                            <tr><td>Change settings <a href ="http://belle-idee.org/settings">here</a></td></tr>
+                            <tr><td>Change settings <a href ="http://belle-idee.org/frequency">here</a></td></tr>
                         </table>
                     </td>
                     <td>

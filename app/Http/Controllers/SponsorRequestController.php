@@ -11,11 +11,11 @@ use App\Sponsor;
 use App\SponsorRequest;
 use App\User;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Response;
 
 class SponsorRequestController extends Controller
 {
@@ -23,7 +23,7 @@ class SponsorRequestController extends Controller
 
     public function __construct(SponsorRequest $sponsorRequest)
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'agreement']);
         $this->middleware('admin', ['only' => 'convert', 'destroy']);
         $this->middleware('sponsorRequestOwner', ['only' => 'show', 'edit']);
         $this->sponsorRequest = $sponsorRequest;
@@ -196,5 +196,19 @@ class SponsorRequestController extends Controller
 
         flash()->overlay('Sponsor Request has been converted');
         return redirect('sponsors/'. $sponsor->id);
+    }
+
+    /*
+    * Return the Belle-Idee Sponsor Agreement
+    */
+    public function agreement()
+    {
+        $filename = 'SponsorAgreement.pdf';
+        $path = '/docs/'. $filename;
+        $content = Storage::get($path);
+        return Response::make($content, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; '.$filename,
+        ]);
     }
 }

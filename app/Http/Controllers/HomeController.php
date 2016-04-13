@@ -24,7 +24,10 @@ use Illuminate\Support\Facades\Storage;
 use League\Flysystem\Filesystem;
 use League\Flysystem\ZipArchive\ZipArchiveAdapter as Adapter;
 use Event;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use Response;
+use ZipArchive;
 
 class HomeController extends Controller
 {
@@ -342,30 +345,77 @@ class HomeController extends Controller
             'Content-Disposition' => 'inline; '.$filename,
         ]);
     }
+    
+    /*
+     * Display email frequency options
+     */
+    public function frequency()
+    {
+        $user = Auth::user();
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
+        $frequencies = [
+            '1' => 'Least',
+            '2' => 'Often',
+            '3' => 'Most'
+        ];
+
+        return view ('pages.frequency')
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'frequencies'));
+        
+    }
 
     /*
      * Retrieve and zip all content for user (Posts and Extensions)
+     * This feature is currently disabled as it does not correctly fill the zip folder
      *
      * @param $id
      */
     public function getContent($id)
     {
         $user = User::findOrFail($id);
-        //Retrieve all posts by user
+
         $post_path = 'posts/'. $user->id;
-        //dd($post_path);
-        $posts = Storage::files($post_path);
-        //dd($posts);
+
+        $files = Storage::files($post_path);
+        //Create temporary public folder for content
+        Storage::disk('local')->makeDirectory('zips/'. $user->id);
+        foreach ($files as $file)
+        {
+            $content = Storage::get($file);
+            Storage::disk('local')->put('zips/'. $user->id . '/' . $file, $content);
+        }
+
+        $zipname = $user->handle . '-files.zip';
         $zip = new ZipArchive();
+        if ($zip->open($zipname, ZipArchive::CREATE) !== TRUE) {
+            die ("Could not open archive");
+        }
+        // initialize an iterator
+        // pass it the directory to be processed
+        $dirList = new RecursiveDirectoryIterator(storage_path().'/app/zips/'. $user->id . '/posts'. '/' . $user->id);
+        $fileList = new RecursiveIteratorIterator($dirList);
+        // iterate over the directory
+        // add each file found to the archive
+        foreach ($fileList as $key) {
+            if (!preg_match('/\/\.{1,2}$/',$key)){
+                $new_filename = substr($key,strrpos($key,'/') + 1);
+                $zip->addFile($key, $new_filename) or die ("ERROR: Could not add file: $key");
+                echo ($key);
+                echo ($new_filename);
 
-        $filesystem = new Filesystem(new Adapter($posts[0]));
+            }
+        }
+        // close and save archive
+        $zip->close();
+        echo "Archive created successfully.";
+        dd($zip);
 
-        dd($filesystem);
-        $filesystem->getAdapter()->getArchive()->close();
-
-        return Response::download($filesystem);
-
+            // Download .zip file.
+            return Response::download(public_path() . '/' . $zipname);
+        
     }
+
 
 
 }

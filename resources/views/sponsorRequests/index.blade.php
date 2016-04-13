@@ -9,6 +9,7 @@
     <table align = "center">
         <tr>
             <td><a href={{ url('/sponsorRequests/create')}}>New Sponsor Request</a></td>
+            <td><a href="{{ url('/sponsorRequests/agreement')}}" target="_blank">Sponsor Agreement</a></td>
         </tr>
     </table>
     </div>

@@ -16,6 +16,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Response;
 
 class BeaconRequestController extends Controller
 {
@@ -23,7 +24,7 @@ class BeaconRequestController extends Controller
 
     public function __construct(BeaconRequest $beaconRequest)
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'agreement']);
         $this->middleware('admin', ['only' => 'convert', 'destroy']);
         $this->middleware('beaconRequestOwner', ['only' => 'show', 'edit']);
         $this->beaconRequest = $beaconRequest;
@@ -235,5 +236,19 @@ class BeaconRequestController extends Controller
 
         flash()->overlay('Beacon Request has been converted');
         return redirect('beacons/signup/'. $beacon->id);
+    }
+
+    /*
+    * Return the Belle-Idee Beacon Agreement
+    */
+    public function agreement()
+    {
+        $filename = 'BeaconAgreement.pdf';
+        $path = '/docs/'. $filename;
+        $content = Storage::get($path);
+        return Response::make($content, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; '.$filename,
+        ]);
     }
 }

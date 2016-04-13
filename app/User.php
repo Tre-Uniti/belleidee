@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['handle', 'email', 'password'];
+    protected $fillable = ['handle', 'email', 'password','frequency'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -125,6 +125,7 @@ class User extends Model implements AuthenticatableContract,
     {
         $this->verified = true;
         $this->emailToken = null;
+        $this->frequency = 3;
         $this->save();
     }
 }
