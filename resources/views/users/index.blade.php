@@ -6,7 +6,7 @@
 @section('centerText')
     <div>
         <h2>User Directory</h2>
-        <table style="display: inline-block;">
+        <table class = "tableIndex">
             <tr>
                 <td><a href={{ url('/users/sortByElevation')}}>Top Elevated</a></td>
                 <td><a href={{ url('/users/search')}}>Search</a></td>
@@ -14,10 +14,10 @@
             </tr>
         </table>
     </div>
-    <div style = "width: 50%; float: left;">
+    <div class = "indexLeft">
         <h4>Handle</h4>
     </div>
-    <div style = "width: 50%; float: right;">
+    <div class = "indexRight">
         <h4>Joined</h4>
     </div>
     @foreach ($users as $user2)

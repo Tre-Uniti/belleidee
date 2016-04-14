@@ -99,6 +99,10 @@ a:active {
   color: #00CC33;
 }
 
+.pNav {
+  cursor: pointer;
+}
+
 .extras {
   margin: 0px;
   padding: 0px;
@@ -333,6 +337,43 @@ a:active {
   background-color: #303030;
 }
 
+.indexLeft {
+  width: 50%;
+  float: left;
+}
+
+.indexRight {
+  width: 50%;
+  float: right;
+}
+
+.bookmarkLeft {
+  width: 60%;
+  float: left;
+}
+
+.bookmarkRight {
+  width: 40%;
+  float: right;
+}
+
+.tableIndex {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+#indexNav {
+  margin: 0 auto;
+}
+
+.indexButton {
+  padding: 8px 13px;
+  font-family: "Open Sans", Arial, serif;
+  border-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+}
+
 .infoNav {
   width: 100%;
   margin: 0 auto;
@@ -550,6 +591,14 @@ td {
   width: 35%;
   float: left;
   text-align: left;
+  overflow: auto;
+  padding-left: 10%;
+}
+
+.listResourceBookmarkLeft {
+  width: 35%;
+  float: left;
+  text-align: left;
   padding-left: 12%;
   overflow: auto;
 }
@@ -558,6 +607,12 @@ td {
   width: 50%;
   float: right;
   overflow: auto;
+}
+
+.listResourceBookmarkRight {
+  width: 60%;
+  overflow: auto;
+  float: left;
 }
 
 .flash-info {
@@ -769,6 +824,26 @@ article {
 }
 
 .interactButton:hover {
+  color: #FFFFFF;
+  background: linear-gradient(#000000, #33FF33);
+}
+
+.indexButton {
+  padding: 8px 13px;
+  font-family: "Open Sans", Arial, serif;
+  border-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  color: #000000;
+  outline: none;
+  background-color: Transparent;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  border: solid 1px;
+}
+
+.indexButton:hover {
   color: #FFFFFF;
   background: linear-gradient(#000000, #33FF33);
 }
@@ -1020,7 +1095,7 @@ article {
   }
 
   .innerPhotos {
-    height: 150px;
+    height: 155px;
   }
 
   .topNav > ul > li > a {
@@ -1127,6 +1202,107 @@ article {
   }
 }
 
+@media screen and (min-width: 419px) and (max-width: 751px) and (max-height: 450px) {
+  html {
+    background-image: url("/img/backgroundPortrait.jpg");
+    background-color: black;
+    font-size: 80%;
+  }
+
+  .topNav {
+    max-width: 56%;
+  }
+
+  .topNav > ul > li > a {
+    padding: 0 1px;
+  }
+
+  .topNav > ul > li > p {
+    padding: 0 1px;
+  }
+
+  .topNav > ul > li > div {
+    width: 92px;
+  }
+
+  .topNav > ul > li > div ul > li > a {
+    padding: 7px 1px;
+  }
+
+  #centerContent {
+    width: 57%;
+    height: 95%;
+    margin: 1.5% auto;
+  }
+
+  #centerText {
+    max-height: 250px;
+  }
+
+  .createTitleText {
+    width: 230px;
+  }
+
+  #centerTextContent {
+    max-height: 150px;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+
+  #createBodyText {
+    padding-left: 1px;
+    padding-right: 1px;
+  }
+
+  #createOptions {
+    max-height: 250px;
+  }
+
+  #leftSide {
+    top: 18%;
+    height: auto;
+    width: 20%;
+    visibility: visible;
+    left: .1em;
+  }
+
+  #rightSide {
+    top: 18%;
+    height: auto;
+    width: 20%;
+    visibility: visible;
+    right: .1em;
+  }
+
+  .innerProfileMenus {
+    height: 70px;
+  }
+
+  .innerPhotos {
+    height: 120px;
+  }
+
+  .listResourceLeft {
+    padding-left: 1%;
+    width: 45%;
+  }
+
+  .interactButton {
+    padding: 3px 1px;
+  }
+
+  .profileNav > ul > li > a {
+    color: #202020;
+    display: block;
+    line-height: 45px;
+    padding: 1px 10px;
+  }
+
+  .profileNav > ul > li:hover > div {
+    visibility: hidden;
+  }
+}
+
 @media screen and (max-width: 465px) and (max-height: 560px) {
   html {
     background-image: url("/img/backgroundPortrait.jpg");
@@ -1222,19 +1398,15 @@ article {
   }
 }
 
-@media screen and (min-width: 467px) and (max-width: 851px) and (max-height: 499px) {
+@media screen and (min-width: 467px) and (max-width: 751px) and (max-height: 400px) {
   html {
     background-image: url("/img/backgroundPortrait.jpg");
     background-color: black;
-  }
-
-  h2 {
-    font-size: 90%;
+    font-size: 80%;
   }
 
   .topNav {
-    max-width: 95%;
-    display: none;
+    max-width: 56%;
   }
 
   .topNav > ul > li > a {
@@ -1255,20 +1427,20 @@ article {
 
   #centerContent {
     width: 57%;
-    height: 92%;
+    height: 85%;
     margin: 1.5% auto;
   }
 
   #centerText {
-    max-height: 215px;
+    max-height: 180px;
   }
 
   .createTitleText {
-    width: 250px;
+    width: 230px;
   }
 
   #centerTextContent {
-    max-height: 115px;
+    max-height: 100px;
     padding-left: 3px;
     padding-right: 3px;
   }
@@ -1279,25 +1451,31 @@ article {
   }
 
   #createOptions {
-    max-height: 240px;
+    max-height: 210px;
   }
 
   #leftSide {
-    top: 3%;
+    top: 22%;
     height: auto;
     width: 20%;
     visibility: visible;
     left: .1em;
-    font-size: 100%;
+  }
+
+  #leftSide h2 {
+    display: none;
   }
 
   #rightSide {
-    top: 3%;
+    top: 22%;
     height: auto;
     width: 20%;
     visibility: visible;
     right: .1em;
-    font-size: 100%;
+  }
+
+  #rightSide h2 {
+    display: none;
   }
 
   .innerProfileMenus {
@@ -1305,7 +1483,7 @@ article {
   }
 
   .innerPhotos {
-    height: 100px;
+    height: 120px;
   }
 
   .listResourceLeft {

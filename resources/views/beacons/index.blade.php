@@ -15,10 +15,10 @@
             </tr>
         </table>
     </div>
-    <div style = "width: 50%; float: left;">
+    <div class = "indexLeft">
         <h4>Name</h4>
     </div>
-    <div style = "width: 50%; float: right;">
+    <div class = "indexRight">
         <h4>Tag</h4>
     </div>
 

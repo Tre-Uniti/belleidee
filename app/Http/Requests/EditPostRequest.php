@@ -29,7 +29,7 @@ class EditPostRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|min:5|max:40',
+            'title' => 'required|min:1|max:40',
             'body'  => 'required|min:5|max:3500',
             'belief'=> 'required',
             'source' => 'required'

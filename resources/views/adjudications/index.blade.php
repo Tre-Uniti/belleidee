@@ -6,7 +6,7 @@
 @section('centerText')
     <div>
     <h2>Recent Adjudications</h2>
-    <table style="display: inline-block;">
+    <table class = "tableIndex">
         <tr>
             <td><a href={{ url('/indev')}}></a>Sort by Oldest</td>
             <td><a href={{ url('/indev')}}>Search</a></td>
@@ -14,10 +14,10 @@
         </tr>
     </table>
     </div>
-    <div style = "width: 50%; float: left;">
+    <div class = "indexLeft">
         <h4>Submitter</h4>
     </div>
-    <div style = "width: 50%; float: right;">
+    <div class = "indexRight">
         <h4>Date</h4>
     </div>
     @foreach ($adjudications as $adjudication)

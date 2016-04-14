@@ -79,6 +79,7 @@ class UserController extends Controller
     public function show($id)
     {
         //Get requested post and add body
+        $viewUser = Auth::user();
         $user = User::findOrFail($id);
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         //Get other Extensions of User
@@ -112,7 +113,7 @@ class UserController extends Controller
         }
 
         return view('users.show')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user', 'viewUser', 'profilePosts', 'profileExtensions'))
             ->with('sourcePhotoPath', $sourcePhotoPath)
             ->with('extensions', $extensions)
             ->with('posts', $posts)
@@ -350,6 +351,7 @@ class UserController extends Controller
     public function extendedBy($id)
     {
         $user = User::findOrFail($id);
+        $viewUser = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
@@ -377,7 +379,7 @@ class UserController extends Controller
             $sponsor = NULL;
         }
         return view ('users.extendedBy')
-            ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user', 'viewUser', 'extensions', 'profilePosts', 'profileExtensions'))
             ->with('sponosr', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
@@ -391,6 +393,7 @@ class UserController extends Controller
     public function elevatedBy($id)
     {
         $user = User::findOrFail($id);
+        $viewUser = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
@@ -418,7 +421,7 @@ class UserController extends Controller
             $sponsor = NULL;
         }
         return view ('users.elevatedBy')
-            ->with(compact('user', 'elevations', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user', 'viewUser', 'elevations', 'profilePosts', 'profileExtensions'))
             ->with('sponsor', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
@@ -432,6 +435,7 @@ class UserController extends Controller
     public function beaconsOfUser($id)
     {
         $user = User::findOrFail($id);
+        $viewUser = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $bookmarks = $user->bookmarks()->where('type', '=', 'Beacon')->paginate(10);
@@ -457,7 +461,7 @@ class UserController extends Controller
             $sponsor = NULL;
         }
         return view ('users.beacons')
-            ->with(compact('user', 'bookmarks', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user', 'viewUser', 'bookmarks', 'profilePosts', 'profileExtensions'))
             ->with('sponsor', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }

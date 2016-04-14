@@ -2,12 +2,9 @@
 @section('siteTitle')
     Show Extension
 @stop
-@section('pageHeader')
-    <script src="/js/social.js"></script>
-    <div id="fb-root"></div>
-@stop
 
 @section('centerText')
+    <div id="fb-root"></div>
     <h2>{{ $extension->title }}</h2>
             <table align = "center">
                 <tr>
@@ -36,19 +33,16 @@
                                 </tr>
                                 <tr>
                                     <td><!-- Your Facebook share button code -->
-                                        <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title={{$extension->title}}"
-                                           onclick="return shareSocial(this.href);">
+                                        <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title={{$extension->title}}" target="_blank">
                                             <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
                                     </td>
                                     <td>
                                         <!-- G+ share button code -->
-                                        <a href="https://plus.google.com/share?url={{Request::url()}}"
-                                           onclick="return shareSocial(this.href);">
+                                        <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank">
                                             <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
                                     </td>
                                     <td><!-- Twitter share button code -->
-                                        <a href="http://twitter.com/intent/tweet?status={{$extension->title}} - {{Request::url()}}"
-                                           onclick="return shareSocial(this.href)">
+                                        <a href="http://twitter.com/intent/tweet?status={{$extension->title}} - {{Request::url()}}" target="_blank">
                                             <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
                                     </td>
                                 </tr>

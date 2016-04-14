@@ -15,21 +15,21 @@
         </tr>
     </table>
     </div>
-    <div style = "width: 50%; float: left;">
+    <div class = "indexLeft">
         <h4>Bookmark</h4>
     </div>
-    <div style = "width: 50%; float: right">
-        <div style = "width: 60%; float: left;">
+    <div class = "indexRight">
+        <div class = "bookmarkLeft">
             <h4>Type</h4>
         </div>
-        <div style = "width: 40%; float: right;">
+        <div class = "bookmarkRight">
             <h4>Remove</h4>
         </div>
     </div>
 
         @foreach ($bookmarks as $bookmark)
             <div class = "listResource">
-                <div class = "listResourceLeft" style = "padding-left: 10%;">
+                <div class = "listResourceBookmarkLeft">
                     @if($bookmark['type'] === 'User')
                         <a href="{{ action('UserController@show', [$bookmark['pointer']])}}">
                             <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark['title'] }}</button></a>
@@ -44,8 +44,8 @@
                             <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark['title'] }}</button></a>
                     @endif
                 </div>
-                <div style = "width: 50%; float: right;">
-                <div class = "listResourceRight" style = "float: left; width: 60%;" >
+                <div class = "listResourceRight">
+                <div class = "listResourceBookmarkRight" >
                     @if($bookmark['type'] === 'User')
                         <a href="{{ action('UserController@show', [$bookmark['pointer']])}}">
                             <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark['type'] }}</button></a>
@@ -61,12 +61,10 @@
                     @endif
 
                 </div>
-                    <div style = "float: right; width: 40%; ">
-                        <a href="{{ action('BookmarkController@remove', [$bookmark['id']])}}">
-                            <button type = "button" class = "interactButton">/x\</button></a>
-                    </div>
-                </div>
+                    <a href="{{ action('BookmarkController@remove', [$bookmark['id']])}}">
+                        <button type = "button" class = "interactButton">/x\</button></a>
 
+                </div>
             </div>
         @endforeach
 @stop

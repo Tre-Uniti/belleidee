@@ -97,7 +97,7 @@ class SessionController extends Controller
             return $this->authenticated($request, Auth::user());
         }
 
-        flash()->overlay('Welcome '. Auth::user()->handle . ', you have successfully logged in');
+        flash()->overlay('Welcome '. Auth::user()->handle . ', login successful1');
         return redirect()->intended($this->redirectPath());
     }
 

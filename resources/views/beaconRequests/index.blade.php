@@ -6,17 +6,16 @@
 @section('centerText')
     <div>
     <h2>Recent Beacon Requests</h2>
-    <table align = "center">
-        <tr>
-            <td><a href={{ url('/beaconRequests/create')}}>New Beacon Request</a></td>
-            <td><a href="{{ url('/beaconRequests/agreement')}}" target ="_blank">Beacon Agreement</a></td>
-        </tr>
-    </table>
+    <div id = "indexNav">
+        <a href={{ url('/beaconRequests/create')}}><button type = "button" class = "indexButton">New Beacon Request</button></a>
+        <a href="{{ url('/beaconRequests/agreement')}}" target ="_blank"><button type = "button" class = "indexButton">Beacon Agreement</button></a>
     </div>
-    <div style = "width: 50%; float: left;">
+
+    </div>
+    <div class = "indexLeft">
         <h4>Name</h4>
     </div>
-    <div style = "width: 50%; float: right;">
+    <div class = "indexRight">
         <h4>Created</h4>
     </div>
     @foreach ($beaconRequests as $request)

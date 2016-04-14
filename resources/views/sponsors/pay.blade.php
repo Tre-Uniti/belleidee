@@ -5,34 +5,7 @@
 
 @section('centerText')
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <script type="text/javascript">
-        Stripe.setPublishableKey('pk_test_5UQPslTg5VlQSDkE64mtG7TJ');
-        var stripeResponseHandler = function(status, response) {
-            var $form = $('#payment-form');
-            if (response.error) {
-                // Show the errors on the form
-                $form.find('.payment-errors').text(response.error.message);
-                $form.find('button').prop('disabled', false);
-            } else {
-                // token contains id, last4, and card type
-                var token = response.id;
-                // Insert the token into the form so it gets submitted to the server
-                $form.append($('<input type="hidden" name="stripeToken" />').val(token));
-                // and re-submit
-                $form.get(0).submit();
-            }
-        };
-        jQuery(function($) {
-            $('#payment-form').submit(function(e) {
-                var $form = $(this);
-                // Disable the submit button to prevent repeated clicks
-                $form.find('button').prop('disabled', true);
-                Stripe.card.createToken($form, stripeResponseHandler);
-                // Prevent the form from submitting with the default action
-                return false;
-            });
-        });
-    </script>
+    <script src="/js/stripe.js"></script>
 
     @include ('errors.list')
 
@@ -66,7 +39,7 @@
         <tr>
             <td>{!! Form::label('expiration', 'Expiration date') !!}</td>
             <td>{!! Form::selectMonth('month', 'junuary', ['data-stripe' => 'exp-month' ]) !!}
-                {!! Form::selectRange('year', 2015, 2022, 2015, ['data-stripe' => 'exp-year' ]) !!}
+                {!! Form::selectRange('year', 2016, 2022, 2016, ['data-stripe' => 'exp-year' ]) !!}
             </td>
         </tr>
         <tr>
@@ -74,7 +47,7 @@
             <td>{!! Form::text('cvc', '', ['data-stripe' => 'cvc' ]) !!}</td>
         </tr>
         <tr>
-            <td>Total Due:</td><td>${{ $sponsor->views * .01 + $sponsor->clicks * .05 }}</td>
+            <td>Total Due:</td><td>${{ $sponsor->views * .005 + $sponsor->clicks * .05 }}</td>
         </tr>
         <tr>
             <td colspan = "3">{!! Form::button('Pay', [ 'type' => 'submit', 'id'  => 'btn-signup', 'class' => 'navButton'] ) !!}</td>

@@ -1,7 +1,6 @@
 // Utilities
 @import "utility/siteVars";
 // Base Imports
-@import 'pages/layoutDivs';
 @import 'pages/welcome';
 
 //Navigation Mixins
@@ -44,6 +43,11 @@ a:hover {
 a:active {
   color: #00CC33;
 
+}
+
+.pNav
+{
+  cursor:pointer
 }
 .extras
 {
@@ -316,6 +320,45 @@ a:active {
   background-color: #303030;
 }
 
+//Index Navigation
+.indexLeft
+{
+  width: 50%;
+  float: left;
+}
+
+.indexRight
+{
+  width: 50%;
+  float: right;
+}
+
+.bookmarkLeft
+{
+  width: 60%;
+  float: left;
+}
+.bookmarkRight
+{
+  width: 40%;
+  float: right;
+}
+
+.tableIndex
+{
+  display: inline-block;
+  margin: 0 auto;
+}
+#indexNav
+{
+  margin: 0 auto;
+}
+.indexButton
+{
+  @include baseButton
+
+}
+
 //Post and Extension footer Nav
 .infoNav
 {
@@ -548,6 +591,14 @@ td
   width: 35%;
   float: left;
   text-align: left;
+  overflow: auto;
+  padding-left: 10%;
+}
+.listResourceBookmarkLeft
+{
+  width: 35%;
+  float: left;
+  text-align: left;
   padding-left: 12%;
   overflow: auto;
 }
@@ -556,6 +607,12 @@ td
   width: 50%;
   float: right;
   overflow: auto;
+}
+.listResourceBookmarkRight
+{
+  width: 60%;
+  overflow: auto;
+  float: left;
 }
 
 //Flash Messages:
@@ -738,6 +795,21 @@ article
     background: -moz-linear-gradient($actHoverColor1, $actHoverColor2);
     background: linear-gradient($actHoverColor1, $actHoverColor2);
   }
+}
+
+.indexButton
+{
+  @include baseButton;
+  @include colorActButton($actButtonColor1, $actButtonColor2, $actTextColor);
+  &:hover
+  {
+    color: $actTextHoverColor;
+    background: -webkit-linear-gradient($actHoverColor1, $actHoverColor2);
+    background: -o-linear-gradient($actHoverColor1, $actHoverColor2);
+    background: -moz-linear-gradient($actHoverColor1, $actHoverColor2);
+    background: linear-gradient($actHoverColor1, $actHoverColor2);
+  }
+  border: solid 1px ;
 }
 
 //Include Media Queries

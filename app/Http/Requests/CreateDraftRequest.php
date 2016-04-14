@@ -25,7 +25,7 @@ class CreateDraftRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|min:5|max:40|unique:drafts',
+            'title' => 'required|min:1|max:40|unique:drafts',
             'body'  => 'required|min:10|max:3500',
             'belief'=> 'required',
             'source' => 'required'

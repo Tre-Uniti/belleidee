@@ -984,6 +984,7 @@ class ExtensionController extends Controller
     public function userExtensions($user_id)
     {
         $user = User::findOrFail($user_id);
+        $viewUser = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
@@ -992,7 +993,7 @@ class ExtensionController extends Controller
         if($user->photo_path == '')
         {
 
-            $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
+            $sourcePhotoPath = '';
         }
         else
         {
@@ -1002,7 +1003,7 @@ class ExtensionController extends Controller
         $sponsor = getSponsor($user);
 
         return view ('extensions.userExtensions')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'viewUser', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 

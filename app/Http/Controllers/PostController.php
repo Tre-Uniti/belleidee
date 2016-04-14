@@ -65,6 +65,7 @@ class PostController extends Controller
     public function userPosts($user_id)
     {
         $user = User::findOrFail($user_id);
+        $viewUser = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->where('user_id', $user->id)->latest()->paginate(10);
@@ -82,7 +83,7 @@ class PostController extends Controller
         $sponsor = getSponsor($user);
 
         return view ('posts.userPosts')
-                ->with(compact('user', 'posts', 'profilePosts','profileExtensions','sponsor'))
+                ->with(compact('user', 'viewUser', 'posts', 'profilePosts','profileExtensions','sponsor'))
                 ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 

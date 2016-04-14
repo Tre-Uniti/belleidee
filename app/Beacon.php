@@ -19,6 +19,10 @@ class Beacon extends Model implements BillableContract
     protected $cardUpFront = false;
     protected $dates = ['trial_ends_at', 'subscription_ends_at'];
 
+    public function getTaxPercent() {
+        return 8.25;
+    }
+
 
     /**
      * The table associated with the model.

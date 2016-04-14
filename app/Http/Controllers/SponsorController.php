@@ -272,6 +272,8 @@ class SponsorController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         //Customer exists charge card on file
+        $amount = $sponsor->views * .5 + $sponsor->clicks * 5;
+        $amount = floor($amount * 1);
         if ($sponsor->customer_id != NULL) {
             $stripe = [
                 'secret_key' => env('STRIPE_SECRET'),
@@ -280,7 +282,7 @@ class SponsorController extends Controller
             \Stripe\Stripe::setApiKey($stripe['secret_key']);
             $charge = \Stripe\Charge::create(array(
                 'customer' => $sponsor->customer_id,
-                'amount' => $sponsor->views * 1 + $sponsor->clicks * 5,
+                'amount' => $amount,
                 'currency' => 'usd',
                 'description' => $sponsor->name
             ));
@@ -319,8 +321,11 @@ class SponsorController extends Controller
 
         \Stripe\Stripe::setApiKey($stripe['secret_key']);
 
-        //Calculate amount per view (5 cents)
-        $amount = $sponsor->views * 1 + $sponsor->clicks * 5;
+        //Calculate amount per view (.5 cents) + per click (5 cents)
+        $amount = $sponsor->views * .5 + $sponsor->clicks * 5;
+        $amount = floor($amount * 1);
+        //Add 8.25% sales tax for Washington State
+        //$taxes = $amount * .0825;
 
         if ($sponsor->customer_id == NULL)
         {
@@ -329,6 +334,7 @@ class SponsorController extends Controller
                 'card'  => $token
 
             ));
+            //dd($customer);
             $charge = \Stripe\Charge::create(array(
                 'customer' => $customer->id,
                 'amount'   => $amount,
@@ -342,6 +348,7 @@ class SponsorController extends Controller
         }
         else
         {
+
             $charge = \Stripe\Charge::create(array(
                 'customer' => $sponsor->customer_id,
                 'amount'   => $amount,
