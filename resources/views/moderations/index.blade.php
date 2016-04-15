@@ -6,24 +6,22 @@
 @section('centerText')
     <div>
     <h2>Recent Moderations</h2>
-    <table style="display: inline-block;">
-        <tr>
-            <td><a href={{ url('/indev')}}></a>Sort by Oldest</td>
-            <td><a href={{ url('/indev')}}>Search</a></td>
-            <td><a href={{ url('/drafts/create')}}>Create Draft</a></td>
-        </tr>
-    </table>
+    <div class = "indexNav">
+         <a href={{ url('/indev')}}><button type = "button" class = "indexButton">Sort by Oldest</a>
+           <a href={{ url('/search')}}><button type = "button" class = "indexButton">Search</a>
+          <a href={{ url('/drafts/create')}}><button type = "button" class = "indexButton">?</a>
+
     </div>
-    <div style = "width: 50%; float: left;">
+    <div class = "indexLeft">
         <h4>Submitter</h4>
     </div>
-    <div style = "width: 50%; float: right;">
+    <div class = "indexRight">
         <h4>Date</h4>
     </div>
     @foreach ($moderations as $moderation)
         <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('ModerationController@show', [$moderation->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $moderation->user->handle }}</button></a>
+                <a href="{{ action('ModerationController@show', [$moderation->id])}}"><button type = "button" class = "interactButtonLeft">{{ $moderation->user->handle }}</button></a>
             </div>
             <div class = "listResourceRight">
                 <a href="{{ action('ModerationController@show', [$moderation->id])}}"><button type = "button" class = "interactButton">{{ $moderation->created_at->format('M-d-Y')}}</button></a>

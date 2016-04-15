@@ -4,38 +4,31 @@
 @stop
 
 @section('centerText')
-    <div>
-            <h2>{{ $filter }} Extensions</h2>
+    <h2>{{ $filter }} Extensions</h2>
 
-        <table style="display: inline-block;">
-            <tr>
-                <td><a href={{ url('/extensions/elevationTime/'. $time)}}>Top Elevated</a></td>
-                <td><a href={{ url('/extensions/search')}}>Search</a></td>
-                <td><a href={{ url('/extensions/extensionTime/'.$time)}}>Most Extended</a></td>
-            </tr>
-        </table>
+        <div class = "indexNav">
+            <a href={{ url('/extensions/elevationTime/'. $time)}}><button type = "button" class = "indexButton">Top Elevated</button></a>
+            <a href={{ url('/extensions/search')}}><button type = "button" class = "indexButton">Search</button></a>
+            <a href={{ url('/extensions/extensionTime/'.$time)}}><button type = "button" class = "indexButton">Most Extended</button></a>
+        </div>
         <nav class = "infoNav">
             <ul>
                 <li>
-                    <a href = {{ url('/extensions') }}>/Back\</a>
+                    <a href = {{ url('/extensions') }}><button type = "button" class = "indexButton">Recent Extensions</button></a>
                 </li>
             </ul>
         </nav>
-    </div>
-    <div id = "centerTextContent">
-
-    </div>
-    <div style = "width: 50%; float: left;">
+    <div class = "indexLeft">
         <h4>Title</h4>
     </div>
-    <div style = "width: 50%; float: right;">
+    <div class = "indexRight">
         <h4>Handle</h4>
     </div>
 
     @foreach ($extensions as $extension)
         <div class = "listResource">
         <div class = "listResourceLeft">
-            <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $extension->title }}</button></a>
+            <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButtonLeft">{{ $extension->title }}</button></a>
         </div>
         <div class = "listResourceRight">
             <a href="{{ action('UserController@show', [$extension->user_id])}}"><button type = "button" class = "interactButton">{{ $extension->user->handle }}</button></a>

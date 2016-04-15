@@ -3,23 +3,17 @@
     User Extensions
 @stop
 
-
-
 @section('centerText')
-    <div>
-        <h2>Extensions by <a href={{ url('/users/'. $user->id)}}>{{ $user->handle }}</a></h2>
-        <table style="display: inline-block;">
-            <tr>
-                <td><a href={{ url('/indev')}}>Top Elevated</a></td>
-                <td><a href={{ url('/indev')}}>Search</a></td>
-                <td><a href={{ url('/indev')}}>Most Extended</a></td>
-            </tr>
-        </table>
+    <h2>Extensions by <a href={{ url('/users/'. $user->id)}}>{{ $user->handle }}</a></h2>
+        <div class = "indexNav">
+            <a href={{ url('extensions/user/elevated/'. $user->id)}}><button type = "button" class = "indexButton">Top Elevated</button></a>
+            <a href={{ url('/extensions/search')}}><button type = "button" class = "indexButton">Search</button></a>
+            <a href={{ url('extensions/user/extended/'. $user->id)}}><button type = "button" class = "indexButton">Most Extended</button></a>
     </div>
-    <div style = "width: 50%; float: left;">
+    <div class = "indexLeft">
         <h4>Title</h4>
     </div>
-    <div style = "width: 50%; float: right;">
+    <div class = "indexRight">
         <h4>Date</h4>
     </div>
 
@@ -27,7 +21,7 @@
 
         <div class = "listResource">
         <div class = "listResourceLeft">
-            <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $extension->title }}</button></a>
+            <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButtonLeft">{{ $extension->title }}</button></a>
         </div>
         <div class = "listResourceRight">
             <a href="{{ action('PostController@listDates', [$extension->created_at->format('M-d-Y')])}}"><button type = "button" class = "interactButton">{{ $extension->created_at->format('M-d-Y') }}</button></a>

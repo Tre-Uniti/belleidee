@@ -11,9 +11,6 @@
         {!! Form::textarea('user_ruling', null, ['id' => 'createBodyText', 'placeholder' => 'Why is this intolerant?:', 'rows' => '3%', 'maxlength' => '300']) !!}
     </div>
 
-
-    <!-- Body Form Input -->
-
     @section('centerFooter')
         {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
         <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>

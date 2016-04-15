@@ -30,6 +30,7 @@
             <a href="{{ url('/moderations/'.$moderation->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
         @endif
         @if($user->type > 1)
+                <a href="{{ url('moderations/userIndex/'. $user->id) }}"><button type = "button" class = "navButton">Others</button></a>
                 <a href="{{ url('/adjudications/moderation/'. $moderation->id) }}"><button type = "button" class = "navButton">Adjudicate</button></a>
                 {!! Form::open(['method' => 'DELETE', 'route' => ['moderations.destroy', $moderation->id]]) !!}
                 {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}

@@ -9,7 +9,7 @@
     <table style="display: inline-block;">
         <tr>
             <td><a href={{ url('/posts/sortByElevation')}}>Top Elevated</a></td>
-            <td><a href={{ url('/indev')}}>Search</a></td>
+            <td><a href={{ url('/search')}}>Search</a></td>
             <td><a href={{ url('/posts/sortByExtension')}}>Most Extended</a></td>
         </tr>
     </table>
@@ -37,6 +37,5 @@
     {!! $posts->render() !!}
 @stop
 
-@include('posts.rightSide')
 
 

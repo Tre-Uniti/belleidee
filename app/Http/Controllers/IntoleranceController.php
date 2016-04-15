@@ -10,6 +10,7 @@ use App\Intolerance;
 use App\Legacy;
 use App\Moderation;
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -288,4 +289,5 @@ class IntoleranceController extends Controller
 
         return redirect('intolerances/create');
     }
+    
 }

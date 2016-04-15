@@ -1006,6 +1006,70 @@ class ExtensionController extends Controller
             ->with(compact('user', 'viewUser', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
+    
+    /**
+     * Retrieve extensions of specific user (Top Elevated).
+     *
+     * @param   $user_id
+     * @return \Illuminate\Http\Response
+     */
+    public function userTopElevated($user_id)
+    {
+        $user = User::findOrFail($user_id);
+        $viewUser = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        $extensions = $this->extension->where('user_id', $user->id)->orderBy('elevation', 'desc')->latest()->paginate(10);
+
+        if($user->photo_path == '')
+        {
+
+            $sourcePhotoPath = '';
+        }
+        else
+        {
+            $sourcePhotoPath = $user->photo_path;
+        }
+
+        $sponsor = getSponsor($user);
+
+        return view ('extensions.userTopElevated')
+            ->with(compact('user', 'viewUser', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with('sourcePhotoPath', $sourcePhotoPath);
+    }
+    
+    /**
+     * Retrieve extensions of specific user (Top Extended).
+     *
+     * @param   $user_id
+     * @return \Illuminate\Http\Response
+     */
+    public function userMostExtended($user_id)
+    {
+        $user = User::findOrFail($user_id);
+        $viewUser = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        $extensions = $this->extension->where('user_id', $user->id)->orderBy('extension', 'desc')->latest()->paginate(10);
+
+        if($user->photo_path == '')
+        {
+
+            $sourcePhotoPath = '';
+        }
+        else
+        {
+            $sourcePhotoPath = $user->photo_path;
+        }
+
+        $sponsor = getSponsor($user);
+
+        return view ('extensions.userMostExtended')
+            ->with(compact('user', 'viewUser', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with('sourcePhotoPath', $sourcePhotoPath);
+    }
 
     /**
      * Retrieve extensions of specific beacon.

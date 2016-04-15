@@ -8,44 +8,31 @@
     <h2>Legacy Directory</h2>
     </div>
     <p>Legacy posts will appear when more Users become Admins.</p>
-    <nav class = "beliefNav">
-        <ul>
-            <li>
-                <table align = "center">
-                    <tr>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Adaptia') }}"><button type = "button" class = "interactButton">Adaptia</button></a></td>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Atheism') }}"><button type = "button" class = "interactButton">Atheism</button></a></td>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Ba Gua') }}"><button type = "button" class = "interactButton">Ba Gua</button></a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Buddhism') }}"><button type = "button" class = "interactButton">Buddhism</button></a></td>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Christianity') }}"><button type = "button" class = "interactButton">Christianity</button></a></td>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Druze') }}"><button type = "button" class = "interactButton">Druze</button></a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Hinduism') }}"><button type = "button" class = "interactButton">Hinduism</button></a></td>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Islam') }}"><button type = "button" class = "interactButton">Islam</button></a></td>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Indigenous') }}"><button type = "button" class = "interactButton">Indigenous</button></a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Judaism') }}"><button type = "button" class = "interactButton">Judaism</button></a></td>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Shinto') }}"><button type = "button" class = "interactButton">Shinto</button></a></td>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Sikhism') }}"><button type = "button" class = "interactButton">Sikhism</button></a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Taoism') }}"><button type = "button" class = "interactButton">Taoism</button></a></td>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Urantia') }}"><button type = "button" class = "interactButton">Urantia</button></a></td>
-                        <td><a href="{{ action('LegacyController@beliefIndex', 'Other') }}"><button type = "button" class = "interactButton">Other</button></a></td>
-                    </tr>
-                </table>
-            </li>
-        </ul>
-    </nav>
+    <div class = "indexNav">
+        <a href="{{ action('BeliefController@beliefIndex', 'Adaptia') }}"><button type = "button" class = "indexButton">Adaptia</button></a>
+        <a href="{{ action('BeliefController@beliefIndex', 'Atheism') }}"><button type = "button" class = "indexButton">Atheism</button></a>
+        <a href="{{ action('BeliefController@beliefIndex', 'Ba Gua') }}"><button type = "button" class = "indexButton">Ba Gua</button></a>
+        <a href="{{ action('BeliefController@beliefIndex', 'Buddhism') }}"><button type = "button" class = "indexButton">Buddhism</button></a>
+    </div>
+    <div class = "indexNav">
+        <a href="{{ action('BeliefController@beliefIndex', 'Christianity') }}"><button type = "button" class = "indexButton">Christianity</button></a>
+        <a href="{{ action('BeliefController@beliefIndex', 'Druze') }}"><button type = "button" class = "indexButton">Druze</button></a>
+        <a href="{{ action('BeliefController@beliefIndex', 'Hinduism') }}"><button type = "button" class = "indexButton">Hinduism</button></a>
+        <a href="{{ action('BeliefController@beliefIndex', 'Islam') }}"><button type = "button" class = "indexButton">Islam</button></a>
+    </div>
+    <div class = "indexNav">
+        <a href="{{ action('BeliefController@beliefIndex', 'Indigenous') }}"><button type = "button" class = "indexButton">Indigenous</button></a>
+        <a href="{{ action('BeliefController@beliefIndex', 'Judaism') }}"><button type = "button" class = "indexButton">Judaism</button></a>
+        <a href="{{ action('BeliefController@beliefIndex', 'Shinto') }}"><button type = "button" class = "indexButton">Shinto</button></a>
+        <a href="{{ action('BeliefController@beliefIndex', 'Sikhism') }}"><button type = "button" class = "indexButton">Sikhism</button></a>
+    </div>
+    <div class = "indexNav">
+        <a href="{{ action('BeliefController@beliefIndex', 'Taoism') }}"><button type = "button" class = "indexButton">Taoism</button></a>
+        <a href="{{ action('BeliefController@beliefIndex', 'Urantia') }}"><button type = "button" class = "indexButton">Urantia</button></a>
+        <a href="{{ action('BeliefController@beliefIndex', 'Other') }}"><button type = "button" class = "indexButton">Other</button></a>
+    </div>
 
 @stop
-@section('centerFooter')
-@stop
 
-@include('posts.rightSide')
 
 

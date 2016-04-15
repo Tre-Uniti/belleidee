@@ -10,6 +10,7 @@ use App\Http\Requests\EditModerationRequest;
 use App\Intolerance;
 use App\Moderation;
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -236,6 +237,33 @@ class ModerationController extends Controller
         Session::put('intoleranceId', $intoleranceId);
 
         return redirect('moderations/create');
+    }
+
+    /*
+     * List the moderations for a given user
+     * 
+     * @param $id
+     */
+    public function userIndex($id)
+    {
+        $user = User::findOrFail($id);
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $moderations = $this->moderation->where('user_id', '=', $user->id)->latest()->paginate(10);
+
+        if($user->photo_path == '')
+        {
+            $photoPath = '';
+        }
+        else
+        {
+            $photoPath = $user->photo_path;
+        }
+
+        return view ('moderations.userIndex')
+            ->with(compact('user', 'moderations', 'profilePosts', 'profileExtensions'))
+            ->with('photoPath', $photoPath);
+
     }
 
 

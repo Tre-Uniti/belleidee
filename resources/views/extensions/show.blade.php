@@ -6,57 +6,46 @@
 @section('centerText')
     <div id="fb-root"></div>
     <h2>{{ $extension->title }}</h2>
-            <table align = "center">
+            <div class = "indexNav">
                 <tr>
-                    <td><a href="{{ action('BeliefController@beliefIndex', $extension->belief) }}">{{ $extension->belief }}</a></td>
-                    <td><a href="{{ url('/beacons/tags/'.$extension->beacon_tag) }}">{{ $extension->beacon_tag }}</a></td>
+                    <a href="{{ action('BeliefController@beliefIndex', $extension->belief) }}"><button type = "button" class = "indexButton">{{ $extension->belief }}</button></a>
+                   <a href="{{ url('/beacons/tags/'.$extension->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $extension->beacon_tag }}</button></a>
                     @if($extension->source === 'Post')
-                        <td><a href="{{ url('/posts/'.$extension->post_id ) }}">{{ $extension->source }}</a></td>
+                       <a href="{{ url('/posts/'.$extension->post_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
                     @elseif($extension->source === 'Extension')
-                        <td><a href="{{ url('/extensions/'.$extension->extenception ) }}">{{ $extension->source }}</a></td>
+                       <a href="{{ url('/extensions/'.$extension->extenception ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
                     @elseif($extension->source === 'Question')
-                        <td><a href="{{ url('/questions/'.$extension->question_id ) }}">{{ $extension->source }}</a></td>
+                        <a href="{{ url('/questions/'.$extension->question_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
                     @endif
-                </tr>
-            </table>
+
+            </div>
 
             <nav class = "infoNav">
                 <ul>
                     <li>
                         <p class = "extras">/-\</p>
-                        <div>
-                            <table align = "center">
-                                <tr>
-                                    <td><a href={{ url('/extensions/listElevation/'. $extension->id)}}>Elevations</a></td>
-                                    <td> <a href = {{ url('/posts/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a></td>
-                                    <td><a href={{ url('/extensions/extend/list/'.$extension->id)}}>Extensions</a></td>
-                                </tr>
-                                <tr>
-                                    <td><!-- Your Facebook share button code -->
-                                        <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title={{$extension->title}}" target="_blank">
-                                            <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
-                                    </td>
-                                    <td>
-                                        <!-- G+ share button code -->
-                                        <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank">
-                                            <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
-                                    </td>
-                                    <td><!-- Twitter share button code -->
-                                        <a href="http://twitter.com/intent/tweet?status={{$extension->title}} - {{Request::url()}}" target="_blank">
-                                            <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
-                                    </td>
-                                </tr>
-                                <tr>
+                        <div class = "indexNav">
 
-                                    @if($extension->user_id != Auth::id())
-                                        <td colspan="3"><a href="{{ url('/intolerances/extension/'.$extension->id) }}">Report Intolerance</a></td>
-                                    @elseif ($extension->status < 1)
-                                        <td colspan="3"><a href="{{ url('/extensions/'.$extension->id) }}">Status: Tolerant</a></td>
-                                    @else
-                                        <td colspan="3"><a href="{{ url('/extensions/'. $extension->id) }}">Status: Intolerant</a></td>
-                                    @endif
-                                </tr>
-                            </table>
+                            <a href={{ url('/extensions/listElevation/'. $extension->id)}}><button type = "button" class = "indexButton">Elevations</button></a>
+                            <a href = {{ url('/posts/date/'.$extension->created_at->format('M-d-Y')) }}><button type = "button" class = "indexButton">{{ $extension->created_at->format('M-d-Y') }}</button></a>
+                            <a href={{ url('/extensions/extend/list/'.$extension->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
+                        </div>
+                        <div class = "indexNav">
+                            @if($extension->user_id != Auth::id())
+                                <a href="{{ url('/intolerances/extension/'.$extension->id) }}"><button type = "button" class = "indexButton">Report Intolerance</button></a>
+                            @elseif ($extension->status < 1)
+                                <a href="{{ url('/extensions/'.$extension->id) }}"><button type = "button" class = "indexButton">Status: Tolerant</button></a>
+                            @else
+                                <a href="{{ url('/extensions/'. $extension->id) }}"><button type = "button" class = "indexButton">Status: Intolerant</button></a>
+                            @endif
+                        </div>
+                        <div class = "indexNav">
+                            <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title={{$extension->title}}" target="_blank">
+                                <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
+                            <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank">
+                                <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
+                            <a href="http://twitter.com/intent/tweet?status={{$extension->title}} - {{Request::url()}}" target="_blank">
+                                <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
                         </div>
                     </li>
                 </ul>

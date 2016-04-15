@@ -12,10 +12,10 @@
         <a href="{{ url('/invites/create')}}"><button type = "button" class = "interactButton">Create New</button></a>
     @else
         @foreach ($invites as $invite)
-            <div style = "width: 35%; float: left; text-align: left; padding-left: 12%; overflow: auto;">
+            <div class = "listResourceLeft">
                 <a href="{{ url('/invites')}}"><button type = "button" class = "interactButton">{{ $invite->email }}</button></a>
             </div>
-            <div style = "width: 50%; float: right;">
+            <div class = "listResourceRight">
                 <a href="{{ url('/invites')}}"><button type = "button" class = "interactButton">{{ $invite->created_at->format('M-d-Y') }}</button></a>
             </div>
 

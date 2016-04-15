@@ -16,7 +16,7 @@
 @section('centerText')
     <h2>Send <a href = {{url('/invites')}}>Invites:</a></h2>
     {!! Form::open(['url' => 'invites']) !!}
-    <table align = "center">
+    <table class = "formData">
         <tr>
             <th> {!! Form::label('email', 'Email') !!}</th>
         </tr>

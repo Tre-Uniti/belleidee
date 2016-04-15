@@ -104,6 +104,8 @@ Route::get('extensions/timeFilter/{time}', 'ExtensionController@timeFilter');
 Route::get('extensions/search', 'ExtensionController@search');
 Route::get('extensions/results', 'ExtensionController@results');
 Route::get('extensions/user/{id}', 'ExtensionController@userExtensions');
+Route::get('extensions/user/elevated/{id}', 'ExtensionController@userTopElevated');
+Route::get('extensions/user/extended/{id}', 'ExtensionController@userMostExtended');
 Route::get('extensions/beacon/{id}', 'ExtensionController@beaconExtensions');
 Route::get('extensions/elevate/{id}', 'ExtensionController@elevateExtension');
 Route::get('extensions/question/{source}', 'ExtensionController@extendQuestion');
@@ -134,11 +136,13 @@ Route::resource('invites', 'InviteController');
 //Intolerance routes (resource)
 Route::get('intolerances/post/{source}', 'IntoleranceController@intolerantPost');
 Route::get('intolerances/extension/{source}', 'IntoleranceController@intolerantExtension');
+Route::get('intolerances/userIndex/{id}', 'IntoleranceController@userIndex');
 Route::resource('intolerances', 'IntoleranceController');
 
 //Moderation routes (resource)
 Route::get('moderator', 'ModeratorController@portal');
 Route::get('moderations/intolerance/{source}', 'ModerationController@intolerance');
+Route::get('moderations/userIndex/{id}', 'ModerationController@userIndex');
 Route::resource('moderations', 'ModerationController');
 
 //Adjudication routes (resource)
