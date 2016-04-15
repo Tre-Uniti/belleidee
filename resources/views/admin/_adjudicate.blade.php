@@ -12,7 +12,6 @@
         <p>{{ $moderation->mod_ruling }}</p>
         {!! Form::textarea('admin_ruling', null, ['id' => 'createBodyText', 'placeholder' => 'Is this intolerant?:', 'rows' => '3%', 'maxlength' => '300']) !!}
     </div>
-    <!-- Body Form Input -->
 
     @section('centerFooter')
         {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}

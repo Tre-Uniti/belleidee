@@ -7,7 +7,7 @@
         <p>Answer to: <a href = {{ action('QuestionController@show', [$sources['question_id']])}}> {{ $sources['question'] }}</a></p>
     @endif
 
-    <table align = "center" style = "margin-bottom: 7px;">
+    <table class = "formData">
         <tr>
             <td colspan="3" style = "border-color: #E8E8E8;">{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}</td>
         </tr>

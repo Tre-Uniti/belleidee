@@ -12,5 +12,3 @@
 
 @stop
 
-@section('centerFooter')
-@stop

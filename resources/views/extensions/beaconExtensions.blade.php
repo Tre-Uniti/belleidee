@@ -3,23 +3,17 @@
     User Extensions
 @stop
 
-
-
 @section('centerText')
-    <div>
-        <h2>Extensions of <a href={{ url('/beacons/tags/'. $beacon->beacon_tag)}}>{{ $beacon->beacon_tag }}</a></h2>
-        <table style="display: inline-block;">
-            <tr>
-                <td><a href={{ url('/beacons/'. $beacon->id)}}>Profile</a></td>
-                <td><a href={{ url('/users/'. $beacon->guide)}}>Guide</a></td>
-                <td><a href={{ url('/beacons/tags/'.$beacon->beacon_tag)}}>Posts</a></td>
-            </tr>
-        </table>
-    </div>
-    <div style = "width: 50%; float: left;">
+    <h2>Extensions of <a href={{ url('/beacons/tags/'. $beacon->beacon_tag)}}>{{ $beacon->beacon_tag }}</a></h2>
+        <div class = "indexNav">
+            <a href={{ url('/beacons/'. $beacon->id)}}><button type = "button" class = "indexButton">Profile</button></a>
+            <a href={{ url('/users/'. $beacon->guide)}}><button type = "button" class = "indexButton">Guide</button></a>
+            <a href={{ url('/beacons/tags/'.$beacon->beacon_tag)}}><button type = "button" class = "indexButton">Posts</button></a>
+        </div>
+    <div class = "indexLeft">
         <h4>Title</h4>
     </div>
-    <div style = "width: 50%; float: right;">
+    <div class = "indexRight">
         <h4>Handle</h4>
     </div>
 
@@ -27,7 +21,7 @@
 
         <div class = "listResource">
         <div class = "listResourceLeft">
-            <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $extension->title }}</button></a>
+            <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButtonLeft">{{ $extension->title }}</button></a>
         </div>
         <div class = "listResourceRight">
             <a href="{{ action('UserController@show', [$extension->user_id])}}"><button type = "button" class = "interactButton">{{ $extension->user->handle }}</button></a>
@@ -40,5 +34,3 @@
 @section('centerFooter')
     {!! $extensions->render() !!}
 @stop
-
-@include('extensions.rightSide')

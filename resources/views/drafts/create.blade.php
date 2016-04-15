@@ -10,6 +10,4 @@
     @include ('drafts._form', ['submitButtonText' => 'Create Draft'])
 @stop
 
-@include('drafts.rightSide')
-
 

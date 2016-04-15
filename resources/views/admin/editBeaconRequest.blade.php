@@ -1,11 +1,9 @@
 @extends('app')
 @section('siteTitle')
-    Create Beacon
+    Edit Beacon Request
 @stop
-
 @section('centerText')
     @include ('errors.list')
-
     {!! Form::model($beaconRequest, ['route' => ['updateBeaconRequest', $beaconRequest->id], 'method' => 'patch']) !!}
     @include ('admin._beaconEdit', ['submitButtonText' => 'Update Request'])
 @stop

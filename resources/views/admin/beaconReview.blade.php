@@ -9,7 +9,7 @@
 
 @section('centerText')
     <div>
-        <table style="display: inline-block;">
+        <table class = "formData">
             <tr>
                 <td><b>Belief: </b></td>
                 <td>{{ $beaconRequest->belief }}</td>
@@ -61,7 +61,6 @@
                 {!! Form::open(['method' => 'DELETE', 'route' => ['beaconRequests.destroy', $beaconRequest->id]]) !!}
                 {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}
-
         @endif
     </div>
 @stop

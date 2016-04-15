@@ -4,7 +4,7 @@
     <h3>Reset Password</h3>
     @if (session('status'))
     <div class = "flash-success">
-        <table align="center">
+        <table class = "formData">
             <tr>
                 <td>{{ session('status') }}</td>
             </tr>
@@ -27,5 +27,5 @@
 
 @stop
 @section('footer')
-    <h5>You may email Zoko@belle-idee.org if login problems persist.</h5>
+    <h5>You may email tre-uniti@belle-idee.org if login problems persist.</h5>
 @stop

@@ -12,6 +12,3 @@
     @include ('beacons._form', ['submitButtonText' => 'Update Beacon'])
 
 @stop
-
-@section('centerFooter')
-@stop

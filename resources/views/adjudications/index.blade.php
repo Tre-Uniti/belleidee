@@ -2,17 +2,12 @@
 @section('siteTitle')
     Adjudications
 @stop
-
 @section('centerText')
-    <div>
     <h2>Recent Adjudications</h2>
-    <table class = "tableIndex">
-        <tr>
-            <td><a href={{ url('/indev')}}></a>Sort by Oldest</td>
-            <td><a href={{ url('/indev')}}>Search</a></td>
-            <td><a href={{ url('/indev')}}>In Dev</a></td>
-        </tr>
-    </table>
+    <div class = "indexNav">
+        <a href={{ url('/indev')}}><button type = "button" class = "indexButton">Sort by Oldest</button></a>
+        <a href={{ url('/indev')}}><button type = "button" class = "indexButton">Search</button></a>
+        <a href={{ url('/indev')}}><button type = "button" class = "indexButton">In Dev</button></a>
     </div>
     <div class = "indexLeft">
         <h4>Submitter</h4>
@@ -30,8 +25,6 @@
             </div>
         </div>
     @endforeach
-
-
 @stop
 @section('centerFooter')
     {!! $adjudications->render() !!}

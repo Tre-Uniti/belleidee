@@ -31,7 +31,7 @@
         <ul>
             <li><a href={{ url('/home') }}>Home</a></li>
             <li>
-                <p onclick="" class = "pNav">Posts<span class="caret"></span></p>
+                <p onclick="" class = "nav">Posts<span class="caret"></span></p>
                 <div>
                     <ul>
                         <li><a href={{ url('/posts/create') }}>Create</a></li>
@@ -43,7 +43,7 @@
                 </div>
             </li>
             <li>
-                <p onclick="" class = "pNav">Directory<span class="caret"></span></p>
+                <p onclick="" class = "nav">Directory<span class="caret"></span></p>
                 <div>
                     <ul>
                         <li><a href="{{ url('/users') }}">Users</a></li>
@@ -55,7 +55,7 @@
                 </div>
             </li>
             <li>
-                <p onclick="" class = "pNav">Settings<span class="caret"></span></p>
+                <p onclick="" class = "nav">Settings<span class="caret"></span></p>
                 <div>
 
                     <ul>

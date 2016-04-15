@@ -4,16 +4,13 @@
 @stop
 
 @section('centerText')
-    <div>
+
     <h2>Bookmarks of {{ $user->handle  }}</h2>
-    <table style="display: inline-block;">
-        <tr>
-            <td><a href={{ url('/bookmarks/users')}}>Users</a></td>
-            <td><a href={{ url('/bookmarks/beacons')}}>Beacons</a></td>
-            <td><a href={{ url('/bookmarks/posts')}}>Posts</a></td>
-            <td><a href={{ url('/bookmarks/extensions')}}>Extensions</a></td>
-        </tr>
-    </table>
+    <div class = "indexNav">
+        <a href={{ url('/bookmarks/users')}}><button type = "button" class = "indexButton">Users</button></a>
+        <a href={{ url('/bookmarks/beacons')}}><button type = "button" class = "indexButton">Beacons</button></a>
+        <a href={{ url('/bookmarks/posts')}}><button type = "button" class = "indexButton">Posts</button></a>
+        <a href={{ url('/bookmarks/extensions')}}><button type = "button" class = "indexButton">Extensions</button></a>
     </div>
     <div class = "indexLeft">
         <h4>Bookmark</h4>
@@ -32,32 +29,32 @@
                 <div class = "listResourceBookmarkLeft">
                     @if($bookmark['type'] === 'User')
                         <a href="{{ action('UserController@show', [$bookmark['pointer']])}}">
-                            <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark['title'] }}</button></a>
+                            <button type = "button" class = "interactButtonLeft">{{ $bookmark['title'] }}</button></a>
                     @elseif($bookmark['type'] === 'Beacon')
                         <a href="{{ action('BeaconController@show', [$bookmark['id']])}}">
-                           <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark['title'] }}</button></a>
+                           <button type = "button" class = "interactButtonLeft">{{ $bookmark['title'] }}</button></a>
                     @elseif($bookmark['type'] === 'Post')
                         <a href="{{ action('PostController@show', [$bookmark['pointer']])}}">
-                             <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark['title'] }}</button></a>
+                             <button type = "button" class = "interactButtonLeft">{{ $bookmark['title'] }}</button></a>
                     @elseif($bookmark['type'] === 'Extension')
                         <a href="{{ action('ExtensionController@show', [$bookmark['pointer']])}}">
-                            <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark['title'] }}</button></a>
+                            <button type = "button" class = "interactButtonLeft">{{ $bookmark['title'] }}</button></a>
                     @endif
                 </div>
                 <div class = "listResourceRight">
-                <div class = "listResourceBookmarkRight" >
+                <div class = "listResourceBookmarkRight">
                     @if($bookmark['type'] === 'User')
                         <a href="{{ action('UserController@show', [$bookmark['pointer']])}}">
-                            <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark['type'] }}</button></a>
+                            <button type = "button" class = "interactButtonLeft">{{ $bookmark['type'] }}</button></a>
                     @elseif($bookmark['type'] === 'Beacon')
                         <a href="{{ action('BeaconController@listTagged', [$bookmark['pointer']])}}">
-                            <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark['type'] }}</button></a>
+                            <button type = "button" class = "interactButtonLeft">{{ $bookmark['type'] }}</button></a>
                     @elseif($bookmark['type'] === 'Post')
                         <a href="{{ action('PostController@show', [$bookmark['pointer']])}}">
-                            <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark['type'] }}</button></a>
+                            <button type = "button" class = "interactButtonLeft">{{ $bookmark['type'] }}</button></a>
                     @elseif($bookmark['type'] === 'Extension')
                         <a href="{{ action('ExtensionController@show', [$bookmark['pointer']])}}">
-                            <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark['type'] }}</button></a>
+                            <button type = "button" class = "interactButtonLeft">{{ $bookmark['type'] }}</button></a>
                     @endif
 
                 </div>

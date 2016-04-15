@@ -9,9 +9,6 @@
     @include ('extensions._form', ['submitButtonText' => 'Post Extension'])
 @stop
 
-@section('centerFooter')
-
-@stop
 
 
 

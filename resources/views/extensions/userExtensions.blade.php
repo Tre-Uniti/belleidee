@@ -40,5 +40,3 @@
 @section('centerFooter')
     {!! $extensions->render() !!}
 @stop
-
-@include('extensions.rightSide')

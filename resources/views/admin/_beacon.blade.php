@@ -1,6 +1,6 @@
 <div id = "createOptions">
 
-    <table align = "center" style = "margin-bottom: 7px;">
+    <table class = "formData">
         <tr>
             <th colspan= "2">{!! Form::label('name', 'Beacon Name') !!}</th>
         </tr>

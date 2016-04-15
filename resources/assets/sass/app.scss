@@ -44,10 +44,13 @@ a:active {
   color: #00CC33;
 
 }
-
-.pNav
+p.verify
 {
-  cursor:pointer
+  color: #000000;
+}
+p.nav
+{
+  cursor: pointer;
 }
 .extras
 {
@@ -344,7 +347,7 @@ a:active {
   float: right;
 }
 
-.tableIndex
+.formData
 {
   display: inline-block;
   margin: 0 auto;
@@ -352,11 +355,6 @@ a:active {
 #indexNav
 {
   margin: 0 auto;
-}
-.indexButton
-{
-  @include baseButton
-
 }
 
 //Post and Extension footer Nav
@@ -466,12 +464,6 @@ a:active {
   display: block;
   opacity: 1;
   visibility: visible;
-}
-
-//Force browsers to render buttons
-.fb-share-button span, .fb-share-button iframe {
-  min-width: 60px !important;
-  min-height: 25px !important;
 }
 
 //Pagination
@@ -619,14 +611,29 @@ td
 .flash-info
 {
   color: #009900;
+  background-color: #101010;
+  margin: 0 auto;
+  padding: 7px;
+  border-radius: 10px;
+  display: inline-block;
 }
 .flash-success
 {
   color: #009900;
+  background-color: #101010;
+  margin: 0 auto;
+  padding: 7px;
+  border-radius: 10px;
+  display: inline-block;
 }
 .flash-danger
 {
   color: red;
+  background-color: #FFFFFF;
+  margin: 0 auto;
+  padding: 7px;
+  border-radius: 10px;
+  display: inline-block;
 }
 
 //Errors
@@ -634,6 +641,12 @@ td
 {
   background-color: #202020;
   opacity: .9;
+}
+.listErrors
+{
+  color: #33FF33;
+  text-align: left;
+  padding-bottom: 3px;
 }
 
 //Sides
@@ -795,6 +808,20 @@ article
     background: -moz-linear-gradient($actHoverColor1, $actHoverColor2);
     background: linear-gradient($actHoverColor1, $actHoverColor2);
   }
+}
+.interactButtonLeft
+{
+  @include baseButton;
+  @include colorActButton($actButtonColor1, $actButtonColor2, $actTextColor);
+  &:hover
+  {
+    color: $actTextHoverColor;
+    background: -webkit-linear-gradient($actHoverColor1, $actHoverColor2);
+    background: -o-linear-gradient($actHoverColor1, $actHoverColor2);
+    background: -moz-linear-gradient($actHoverColor1, $actHoverColor2);
+    background: linear-gradient($actHoverColor1, $actHoverColor2);
+  }
+  text-align: left;
 }
 
 .indexButton

@@ -9,7 +9,7 @@
 
 @section('centerText')
     <div>
-        <table style="display: inline-block;">
+        <table class = "formData">
             <tr>
                 <td><b>Address: </b></td>
                 <td>{{ $sponsorRequest->address }}</td>

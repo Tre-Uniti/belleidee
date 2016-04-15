@@ -52,5 +52,4 @@
     </div>
 @stop
 
-@include('drafts.rightSide')
 

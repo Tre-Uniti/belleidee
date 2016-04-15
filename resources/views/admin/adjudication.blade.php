@@ -3,7 +3,6 @@
     Adjudication
 @stop
 
-
 @section('centerText')
     <div class = "errors">
         @include ('errors.list')
@@ -11,8 +10,4 @@
 
     {!! Form::model($moderation, ['route' => ['moderations.update', $moderation->id], 'method' => 'patch']) !!}
     @include ('admin._adjudicate', ['submitButtonText' => 'Adjudicate'])
-
-@stop
-
-@section('centerFooter')
 @stop

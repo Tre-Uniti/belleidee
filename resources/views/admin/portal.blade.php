@@ -4,29 +4,25 @@
 @stop
 @section('centerText')
     <h2>Admin Portal</h2>
-    <table align = 'center'>
-        <tr>
-            <td><a href="{{ url('adjudications') }}"><button type = "button" class = "navButton">Adjudications</button></a></td>
-            <td><a href="{{ url('moderations') }}"><button type = "button" class = "navButton">Moderations</button></a></td>
-            <td><a href="{{ url('intolerances') }}"><button type = "button" class = "navButton">Intolerances</button></a></td>
-        </tr>
-        <tr>
-            <td><a href="{{ url('questions/create') }}"><button type = "button" class = "navButton">Questions</button></a></td>
-            <td><a href="{{ url('/admin/beacon/requests') }}"><button type = "button" class = "navButton">Beacons</button></a></td>
-            <td><a href="{{ url('/admin/sponsor/requests') }}"><button type = "button" class = "navButton">Sponsors</button></a></td>
-        </tr>
-    </table>
-    <div style = "width: 50%; float: left;">
+    <div class = "indexNav">
+        <a href="{{ url('adjudications') }}"><button type = "button" class = "indexButton">Adjudications</button></a>
+        <a href="{{ url('moderations') }}"><button type = "button" class = "indexButton">Moderations</button></a>
+        <a href="{{ url('intolerances') }}"><button type = "button" class = "indexButton">Intolerances</button></a>
+        <a href="{{ url('questions/create') }}"><button type = "button" class = "indexButton">Questions</button></a>
+        <a href="{{ url('/admin/beacon/requests') }}"><button type = "button" class = "indexButton">Beacons</button></a>
+        <a href="{{ url('/admin/sponsor/requests') }}"><button type = "button" class = "indexButton">Sponsors</button></a>
+    </div>
+    <div class = "indexLeft">
         <h4>Admins</h4>
     </div>
-    <div style = "width: 50%; float: right;">
+    <div class = "indexRight">
         <h4>Joined</h4>
     </div>
 
     @foreach ($admins as $admin)
         <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('UserController@show', [$admin->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $admin->handle }}</button></a>
+                <a href="{{ action('UserController@show', [$admin->id])}}"><button type = "button" class = "interactButton">{{ $admin->handle }}</button></a>
             </div>
             <div class = "listResourceRight">
                 <a href="{{ action('UserController@show', [$admin->id])}}"><button type = "button" class = "interactButton">{{ $admin->created_at->format('M-d-Y') }}</button></a>

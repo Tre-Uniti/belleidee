@@ -1,6 +1,6 @@
 <div id = "createOptions">
 
-    <table align = "center" style = "margin-bottom: 7px;">
+    <table class = "formData">
         <tr>
             <th colspan= "2">Sponsor</th>
         </tr>

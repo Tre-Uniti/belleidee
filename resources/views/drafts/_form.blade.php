@@ -1,5 +1,5 @@
 <div id = "createOptions">
-    <table align = "center" style = "margin-bottom: 7px;">
+    <table class = "formData">
         <tr>
             <th colspan="3" style = "border-color: #E8E8E8;">{!! Form::label('title', 'Draft Title:') !!}</th>
         </tr>

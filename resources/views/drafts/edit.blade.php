@@ -1,8 +1,7 @@
 @extends('app')
 @section('siteTitle')
-    Create
+    Edit Draft
 @stop
-
 
 @section('centerText')
     <div class = "errors">
@@ -14,7 +13,3 @@
 
 @stop
 
-@section('centerFooter')
-@stop
-
-@include('drafts.rightSide')

@@ -4,17 +4,13 @@
 @stop
 
 @section('centerText')
-    <div>
     <h2>Beacon Directory</h2>
         <p>A beacon is a place of worship or thought</p>
-        <table style="display: inline-block;">
-            <tr>
-                <td><a href={{ url('/beacons/top')}}>Top Beacons</a></td>
-                <td><a href={{ url('/beacons/search')}}>Search</a></td>
-                <td><a href={{ url('/beaconRequests')}}>New Requests</a></td>
-            </tr>
-        </table>
-    </div>
+        <div class = "indexNav">
+            <a href={{ url('/beacons/top')}}><button type = "button" class = "indexButton">Top Beacons</button></a>
+            <a href={{ url('/beacons/search')}}><button type = "button" class = "indexButton">Search</button></a>
+            <a href={{ url('/beaconRequests')}}><button type = "button" class = "indexButton">New Requests</button></a>
+        </div>
     <div class = "indexLeft">
         <h4>Name</h4>
     </div>
@@ -25,7 +21,7 @@
         @foreach ($beacons as $beaconIndex)
             <div class = "listResource">
             <div class = "listResourceLeft">
-            <a href="{{ action('BeaconController@show', [$beaconIndex->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $beaconIndex->name }}</button></a>
+            <a href="{{ action('BeaconController@show', [$beaconIndex->id])}}"><button type = "button" class = "interactButtonLeft">{{ $beaconIndex->name }}</button></a>
             </div>
             <div class = "listResourceRight">
                 <a href="{{ action('BeaconController@listTagged', [$beaconIndex->beacon_tag])}}"><button type = "button" class = "interactButton">{{ $beaconIndex->beacon_tag }}</button></a>

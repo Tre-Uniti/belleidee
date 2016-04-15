@@ -7,13 +7,12 @@
         <p>Answer to: <a href = {{ action('QuestionController@show', [$sources['question_id']])}}> {{ $sources['question'] }}</a></p>
     @endif
 
-        <table align = "center" style = "margin-bottom: 7px;">
+        <table class = "formData">
             <tr>
-                <td colspan="3" style = "border-color: #E8E8E8;">{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Your Extension Title']) !!}</td>
+                <td colspan="3">{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Your Extension Title']) !!}</td>
             </tr>
         </table>
-        <div style = "width: 100%; padding-bottom: 3px;">
-
+        <div>
             <select name = 'belief' required >
                 <option value="" disabled selected>Belief:</option>
                 <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @endif>Adaptia</option>
@@ -32,8 +31,6 @@
                 <option value="Urantia" @if (old('belief') == 'Urantia') selected="selected" @endif>Urantia</option>
                 <option value="Other" @if (old('belief') == 'Other') selected="selected" @endif>Other</option>
             </select>
-
-
 
             {!! Form::select('beacon_tag', $beacons) !!}
             <select name = 'source' required>

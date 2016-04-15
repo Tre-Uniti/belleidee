@@ -99,7 +99,11 @@ a:active {
   color: #00CC33;
 }
 
-.pNav {
+p.verify {
+  color: #000000;
+}
+
+p.nav {
   cursor: pointer;
 }
 
@@ -357,21 +361,13 @@ a:active {
   float: right;
 }
 
-.tableIndex {
+.formData {
   display: inline-block;
   margin: 0 auto;
 }
 
 #indexNav {
   margin: 0 auto;
-}
-
-.indexButton {
-  padding: 8px 13px;
-  font-family: "Open Sans", Arial, serif;
-  border-radius: 7px;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
 }
 
 .infoNav {
@@ -465,12 +461,6 @@ a:active {
   display: block;
   opacity: 1;
   visibility: visible;
-}
-
-.fb-share-button span,
-.fb-share-button iframe {
-  min-width: 60px !important;
-  min-height: 25px !important;
 }
 
 .pagination {
@@ -617,19 +607,40 @@ td {
 
 .flash-info {
   color: #009900;
+  background-color: #101010;
+  margin: 0 auto;
+  padding: 7px;
+  border-radius: 10px;
+  display: inline-block;
 }
 
 .flash-success {
   color: #009900;
+  background-color: #101010;
+  margin: 0 auto;
+  padding: 7px;
+  border-radius: 10px;
+  display: inline-block;
 }
 
 .flash-danger {
   color: red;
+  background-color: #FFFFFF;
+  margin: 0 auto;
+  padding: 7px;
+  border-radius: 10px;
+  display: inline-block;
 }
 
 .errors {
   background-color: #202020;
   opacity: .9;
+}
+
+.listErrors {
+  color: #33FF33;
+  text-align: left;
+  padding-bottom: 3px;
 }
 
 #leftSide {
@@ -824,6 +835,26 @@ article {
 }
 
 .interactButton:hover {
+  color: #FFFFFF;
+  background: linear-gradient(#000000, #33FF33);
+}
+
+.interactButtonLeft {
+  padding: 8px 13px;
+  font-family: "Open Sans", Arial, serif;
+  border-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  color: #000000;
+  outline: none;
+  background-color: Transparent;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  text-align: left;
+}
+
+.interactButtonLeft:hover {
   color: #FFFFFF;
   background: linear-gradient(#000000, #33FF33);
 }

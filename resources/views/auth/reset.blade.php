@@ -30,6 +30,6 @@
     </form>
 @stop
 @section('footer')
-    <h5>You may email Zoko@belle-idee.org if login problems persist.</h5>
+    <h5>You may email tre-uniti@belle-idee.org if login problems persist.</h5>
 @stop
 
