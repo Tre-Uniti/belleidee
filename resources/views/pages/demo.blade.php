@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Idee /-\ @yield('siteTitle')</title>
+    <title>Idee /-\ Demo</title>
     <link rel = "stylesheet" href = "/css/normalize.css">
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="/js/app.js"></script>
-    <script src="/js/social.js"></script>
 
     <!--
        This code is maintained by the Tre-Uniti development ops
@@ -23,7 +22,7 @@
         <ul>
             <li><a href={{ url('/demo') }}>Home</a></li>
             <li>
-                <p onclick="" style = "cursor:pointer">Posts<span class="caret"></span></p>
+                <p onclick="" class = "nav">Posts<span class="caret"></span></p>
                 <div>
                     <ul>
                         <li><a href={{ url('/demo') }}>Create</a></li>
@@ -35,7 +34,7 @@
                 </div>
             </li>
             <li>
-                <p onclick="" style = "cursor:pointer">Directory<span class="caret"></span></p>
+                <p onclick="" class = "nav">Directory<span class="caret"></span></p>
                 <div>
                     <ul>
                         <li><a href="{{ url('/demo') }}">Users</a></li>
@@ -47,7 +46,7 @@
                 </div>
             </li>
             <li>
-                <p onclick="" style = "cursor:pointer">Settings<span class="caret"></span></p>
+                <p onclick="" class = "nav">Settings<span class="caret"></span></p>
                 <div>
                     <ul>
                         <li><a href="{{ url('/demo') }}">Personal</a></li>
@@ -104,71 +103,39 @@
             <h2>Demo View</h2>
             <div id = "centerText">
 
-                <div>
-                    <table style="display: inline-block;">
-                        <tr>
-                            <td><a href="{{ url('/demo') }}">Belief</a>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <table style="display: inline-block;">
-                        <tr><td><a href="{{ url('/demo') }}">Beacon Tag</a></td>
-                        </tr>
-                    </table>
-
-                    <table style="display: inline-block;">
-                        <tr><td><a href="{{ url('/demo') }}">Source</a></td>
-                        </tr>
-                    </table>
+                <div class = "indexNav">
+                    <a href="{{ url('/demo') }}"><button type = "button" class = "indexButton">Belief</button></a>
+                    <a href="{{ url('/demo') }}"><button type = "button" class = "indexButton">Beacon Tag</button></a>
+                    <a href="{{ url('/demo') }}"><button type = "button" class = "indexButton">Source</button></a>
                 </div>
-
-                <div id = "centerTextContent">
                     <nav class = "infoNav">
                         <ul>
                             <li>
                                 <p class = "extras">/-\</p>
-                                <div>
-                                    <table align = "center">
-                                        <tr>
-                                            <td><a href={{ url('/demo')}}>Elevations</a></td>
-                                            <td> <a href = {{ url('/demo') }}>Creation Date</a></td>
-                                            <td><a href={{ url('/demo')}}>Extensions</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td><!-- Your Facebook share button code -->
-                                                <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title=Demo"
-                                                   onclick="return shareSocial(this.href);">
-                                                    <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
-                                            </td>
-                                            <td>
-                                                <!-- G+ share button code -->
-                                                <a href="https://plus.google.com/share?url={{Request::url()}}"
-                                                   onclick="return shareSocial(this.href);">
-                                                    <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
-                                            </td>
-                                            <td><!-- Twitter share button code -->
-                                                <a href="http://twitter.com/intent/tweet?status= - {{Request::url()}}"
-                                                   onclick="return shareSocial(this.href)">
-                                                    <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3"><a href="{{ url('/demo') }}">Report Intolerance</a></td>
-                                        </tr>
-                                    </table>
-
+                                <div class = "indexNav">
+                                    <a href={{ url('/demo')}}><button type = "button" class = "indexButton">Elevations</button></a>
+                                    <a href = {{ url('/demo') }}><button type = "button" class = "indexButton">Creation Date</button></a>
+                                    <a href={{ url('/demo')}}><button type = "button" class = "indexButton">Extensions</button></a>
+                                </div>
+                                <div class = "indexNav">
+                                    <a href="{{ url('/demo') }}"><button type = "button" class = "indexButton">Report Intolerance</button></a>
+                                </div>
+                                <div class = "indexNav">
+                                        <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title=Idee" target="_blank">
+                                            <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
+                                        <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank">
+                                            <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
+                                        <a href="http://twitter.com/intent/tweet?status= Idee - {{Request::url()}}" target="_blank">
+                                            <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
                                 </div>
                             </li>
                         </ul>
                     </nav>
+                <div id = "centerTextContent">
                     <p>
-                        Welcome to Belle-Idee!
+                        Welcome to Belle-Idee, this is a demo view of posts and extensions.
                     </p>
                     <p>
-                        This is a demo view of what posts and extensions look like within Idee.
-                        <br/>
-                        <br/>
                         Left side: Links to user activity including their profile picture and most recent posts and extensions.
                         <br/>
                         Center: Contains the main text content posted by the user
@@ -178,9 +145,9 @@
                     <p>
                         These terms and features are more fully explained in the tutorials and posts of the Tre-Uniti user.
                     </p>
+                </div>
 
                 </div>
-            </div>
         </article>
         <div id = "centerFooter">
             <a href="{{ url('/auth/register') }}"><button type = "button" class = "navButton">Register</button></a>
@@ -199,27 +166,21 @@
 
             <nav class = "profileNav">
                 <ul>
-                        <li>
-                            <a href="{{url('/demo')}}">Beacons</a>
-                            <div>
-                                <ul>
-                                    <li><a href="{{url('/demo')}}">US-SW-ACE</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <a href={{ url('/demo') }}>Legacy</a>
-                            <div>
-                                <ul>
-                                </ul>
-                            </div>
-                        </li>
+                    <li>
+                        <a href="{{url('/demo')}}">Beacons</a>
+                        <div>
+                            <ul>
+                                <li><a href="{{url('/demo')}}">US-SW-ACE</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href={{ url('/demo') }}>Legacy</a>
+                    </li>
                 </ul>
             </nav>
-
         </div>
     </div>
 </div>
-
 </body>
 </html>

@@ -4,10 +4,10 @@
 @stop
 @section('centerText')
     <h2>Email Frequency:</h2>
-    <p>You may select how often you want to recieve emails from Idee</p>
+    <p>You may select how often you want to receive emails from Idee</p>
 
     {!! Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'patch']) !!}
-    <table align = 'center'>
+    <table class = "formData">
         <tr>
             <th colspan="2">{!! Form::label('frequency', 'Select Frequency') !!}</th>
         </tr>

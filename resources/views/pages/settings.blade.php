@@ -4,58 +4,45 @@
 @stop
 @section('centerText')
     <h2>Settings of {{ $user->handle}}</h2>
+<div class = "indexNav">
+    <b>User Preferences:</b>
+</div>
+    <div class = "indexNav">
+        <a href="{{ url('photo') }}"><button type = "button" class = "indexButton">Profile Photo</button></a>
+        <a href="{{ url('/frequency') }}"><button type = "button" class = "indexButton">Email Frequency</button></a>
+    </div>
+    <div class = "indexNav">
+        <b>Account:</b>
+    </div>
+    <div class = "indexNav">
+        <a href = "{{ url('/users/deletion') }}"><button type = "button" class = "indexButton">Delete Account</button></a>
+        <a href="{{ url('/home') }}"><button type = "button" class = "indexButton">Joined: {{$user->created_at->format('M-d-Y')}}</button></a>
+    </div>
+    <div class = "indexNav">
+        <b>Sponsor</b>
+    </div>
+    <div class = "indexNav">
+        <a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "indexButton">{{$sponsor->name}}</button></a>
+        <a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "indexButton">Sponsorship: {{ $days }} days</button></a>
+    </div>
+    <div class = "indexNav">
+        <b>Resources:</b>
+    </div>
+    <div class = "indexNav">
+        <a href="{{ url('/gettingStarted') }}"><button type = "button" class = "indexButton">Getting Started</button></a>
+        <a href="{{ url('/tutorials') }}"><button type = "button" class = "indexButton">Tutorials</button></a>
+    </div>
 
-    <table align = 'center'>
-        <tr>
-            <th colspan="2">User Preferences:</th>
-        </tr>
-        <tr>
-            <td><a href="{{ url('photo') }}"><button type = "button" class = "interactButton">Profile Photo</button></a></td>
-            <td><a href="{{ url('/frequency') }}"><button type = "button" class = "interactButton">Email Frequency</button></a></td>
-        </tr>
-    </table>
-    <table align = "center">
-        <tr>
-            <th colspan="2">Account:</th>
-        </tr>
-        <tr>
-            <td><a href = "{{ url('/users/deletion') }}"><button type = "button" class = "interactButton">Delete Account</button></a></td>
-            <td><a href="{{ url('/home') }}"><button type = "button" class = "interactButton">Joined: {{$user->created_at->format('M-d-Y')}}</button></a></td>
-        </tr>
-    </table>
+    <div class = "indexNav">
+        <b>Security Settings:</b>
+        </div>
+    <div class = "indexNav">
+      <a href="#" onclick="window.open('https://www.sitelock.com/verify.php?site=www.belle-idee.org','SiteLock','width=600,height=500,left=160,top=170');" >
+          <img alt="SiteLock" title="SiteLock" src="//shield.sitelock.com/shield/www.belle-idee.org"/></a>
 
-    <table align = "center">
-        <tr>
-            <th colspan="2">Sponsor</th>
-        </tr>
-        <tr>
-            <td><a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "interactButton">{{$sponsor->name}}</button></a>
-            <td><a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "interactButton">Sponsorship: {{ $days }} days</button></a></td>
-        </tr>
-    </table>
-    <table align = "center">
-        <tr>
-            <th colspan="3">Resources:</th>
-        </tr>
-        <tr>
-            <td><a href="{{ url('/gettingStarted') }}"><button type = "button" class = "interactButton">Getting Started</button></a></td>
-            <td><a href="{{ url('/tutorials') }}"><button type = "button" class = "interactButton">Tutorials</button></a></td>
-        </tr>
-    </table>
-
-    <table align = "center" style = "margin: 15px auto">
-        <tr>
-            <th>Scanner:</th><th>Certificate:</th>
-        </tr>
-        <tr>
-        <td><a href="#" onclick="window.open('https://www.sitelock.com/verify.php?site=www.belle-idee.org','SiteLock','width=600,height=500,left=160,top=170');" >
-                <img alt="SiteLock" title="SiteLock" src="//shield.sitelock.com/shield/www.belle-idee.org"/></a></td>
-        <td>
-            <a href="https://ssl.comodo.com/ev-ssl-certificates.php">
-                <img src="https://ssl.comodo.com/images/comodo_secure_113x59_white.png" alt="EV SSL Certificate" width="113" height="59" style="border: 0px;"></a>
-        </td>
-        </tr>
-    </table>
+        <a href="https://ssl.comodo.com/ev-ssl-certificates.php">
+            <img src="https://ssl.comodo.com/images/comodo_secure_113x59_white.png" alt="EV SSL Certificate" width="115" height="65"></a>
+  </div>
 
 
 

@@ -5,39 +5,26 @@
 
 @section('centerText')
     <h2>Home of {{$user->handle}}</h2>
-    <table align = "center">
-        <tr>
-            <th colspan="2">Creations:</th>
-        </tr>
-        <tr>
-            <td>
-                <a href="{{ url('/posts/user/'. $user->id) }}"><button type = "button" class = "interactButton">Posts: {{ $posts }}</button></a>
-            </td>
-            <td>
-                <a href="{{ url('/extensions/user/'. $user->id) }}"><button type = "button" class = "interactButton">Extensions: {{ $extensions }}</button></a>
-            </td>
-        </tr>
-        <tr>
-
-        </tr>
-        <tr>
-            <th colspan="2">Inspires Others:</th>
-        </tr>
-        <tr>
-            <td>
-                <a href="{{ url('/users/elevatedBy/'. $user->id) }}"><button type = "button" class = "interactButton">Elevated: {{ $user->elevation }}</button></a>
-            </td>
-            <td>
-                <a href="{{ url('/users/extendedBy/'. $user->id) }}"><button type = "button" class = "interactButton">Extended: {{ $user->extension }}</button></a>
-            </td>
-        </tr>
-        <tr>
-            <th colspan="2">Community Question:</th>
-        </tr>
-        <tr>
-            <td colspan="2"><a href = {{ url('questions/'. $question->id)}}><button type = "button" class = "interactButton">{{ $question->question }}</button></a></td>
-        </tr>
-    </table>
+    <div class = "indexNav">
+            <b>Creations:</b>
+    </div>
+    <div class = "indexNav">
+        <a href="{{ url('/posts/user/'. $user->id) }}"><button type = "button" class = "indexButton">Posts: {{ $posts }}</button></a>
+        <a href="{{ url('/extensions/user/'. $user->id) }}"><button type = "button" class = "indexButton">Extensions: {{ $extensions }}</button></a>
+    </div>
+    <div class = "indexNav">
+        <b>Inspires Others:</b>
+        </div>
+    <div class = "indexNav">
+        <a href="{{ url('/users/elevatedBy/'. $user->id) }}"><button type = "button" class = "indexButton">Elevated: {{ $user->elevation }}</button></a>
+        <a href="{{ url('/users/extendedBy/'. $user->id) }}"><button type = "button" class = "indexButton">Extended: {{ $user->extension }}</button></a>
+    </div>
+    <div class = "indexNav">
+        <b>Community Question:</b>
+        </div>
+    <div class = "indexNav">
+        <a href = {{ url('questions/'. $question->id)}}><button type = "button" class = "indexButton">{{ $question->question }}</button></a>
+    </div>
 @stop
 
 @section('centerFooter')

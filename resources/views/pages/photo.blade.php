@@ -7,7 +7,7 @@
     <h2>Change Profile Photo</h2>
 
     {!! Form::open(['url' => 'storePhoto', 'files' => true]) !!}
-<table align = "center">
+<table class = "formData">
 
     <tr>
         <td>{!! Form::file('image', null, ['class' => 'navButton']) !!}</td>
@@ -25,8 +25,5 @@
     </tr>
 </table>
     {!! Form::close() !!}
-
 @stop
-@section('centerFooter')
 
-@stop

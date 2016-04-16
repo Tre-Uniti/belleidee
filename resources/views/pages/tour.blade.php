@@ -4,7 +4,7 @@
 @stop
 @section('login')
     <h3>What is Belle-Idee?</h3>
-    <ul style = "color: white; text-align: left;">
+    <ul class = "tour">
         <li>A community of idea & belief journeyers</li>
         <li>Integrated with localized Beacons</li>
         <li>Powered by Laravel & Open Source</li>

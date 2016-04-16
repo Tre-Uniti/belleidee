@@ -4,13 +4,11 @@
 @stop
 
 @section('centerText')
-    <div>
     <h2>Recent Moderations</h2>
     <div class = "indexNav">
-         <a href={{ url('/indev')}}><button type = "button" class = "indexButton">Sort by Oldest</a>
-           <a href={{ url('/search')}}><button type = "button" class = "indexButton">Search</a>
-          <a href={{ url('/drafts/create')}}><button type = "button" class = "indexButton">?</a>
-
+         <a href={{ url('/indev')}}><button type = "button" class = "indexButton">Sort by Oldest</button></a>
+           <a href={{ url('/search')}}><button type = "button" class = "indexButton">Search</button></a>
+          <a href={{ url('/drafts/create')}}><button type = "button" class = "indexButton">?</button></a>
     </div>
     <div class = "indexLeft">
         <h4>Submitter</h4>

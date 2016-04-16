@@ -126,6 +126,11 @@ p.nav {
   -ms-user-select: none;
 }
 
+ul.tour {
+  color: white;
+  text-align: left;
+}
+
 .topNav {
   font-family: "Open Sans", Arial, serif;
   background-color: #101010;

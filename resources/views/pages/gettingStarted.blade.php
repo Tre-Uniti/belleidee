@@ -5,35 +5,29 @@
 
 @section('centerText')
     <h2>Getting Started</h2>
-    <table align = "center">
-        <tr>
-            <th colspan="2">Create:</th>
-        </tr>
-        <tr>
-            <td><a href="{{ url('/posts/create') }}"><button type = "button" class = "interactButton">Public post</button></a></td>
-            <td><a href="{{ url('/drafts/create') }}"><button type = "button" class = "interactButton">Private draft</button></a></td>
+    <div class = "indexNav">
+            <b>Create:</b>
+    </div>
+    <div class = "indexNav">
+        <a href="{{ url('/posts/create') }}"><button type = "button" class = "indexButton">Public post</button></a>
+        <a href="{{ url('/drafts/create') }}"><button type = "button" class = "indexButton">Private draft</button></a>
+    </div>
 
-        </tr>
-    </table>
-    <table align = 'center'>
-        <tr>
-            <th colspan="2">Discover:</th>
-        </tr>
-        <tr>
-            <td><a href="{{ url('/posts') }}"><button type = "button" class = "interactButton">New Posts</button></a></td>
-            <td><a href="{{ url('/extensions') }}"><button type = "button" class = "interactButton">New Extensions</button></a></td>
-        </tr>
-    </table>
-    <table align = "center">
-        <tr>
-            <th colspan="3">Community:</th>
-        </tr>
-        <tr>
-            <td><a href="{{ url('/beacons') }}"><button type = "button" class = "interactButton">Beacons</button></a></td>
-            <td><a href = "{{ url('/questions') }}"><button type = "button" class = "interactButton">Questions</button></a></td>
-            <td><a href="{{ url('/sponsors') }}"><button type = "button" class = "interactButton">Sponsors</button></a></td>
-        </tr>
-    </table>
+    <div class = "indexNav">
+            <b>Discover:</b>
+    </div>
+    <div class = "indexNav">
+           <a href="{{ url('/posts') }}"><button type = "button" class = "indexButton">New Posts</button></a>
+            <a href="{{ url('/extensions') }}"><button type = "button" class = "indexButton">New Extensions</button></a>
+    </div>
+    <div class = "indexNav">
+            <b>Community:</b>
+    </div>
+    <div class = "indexNav">
+            <a href="{{ url('/beacons') }}"><button type = "button" class = "indexButton">Beacons</button></a>
+            <a href = "{{ url('/questions') }}"><button type = "button" class = "indexButton">Questions</button></a>
+            <a href="{{ url('/sponsors') }}"><button type = "button" class = "indexButton">Sponsors</button></a>
+    </div>
 @stop
 
 @section('centerFooter')

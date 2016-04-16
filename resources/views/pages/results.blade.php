@@ -4,15 +4,11 @@
 @stop
 
 @section('centerText')
-    <div>
         <h2>Search Results for {{$type}}</h2>
-        <table style="display: inline-block;">
-            <tr>
-                <td><a href={{ url('/search')}}>New Global Search</a></td>
-            </tr>
-        </table>
-    </div>
-        <div style = "width: 50%; float: left;">
+        <div class = "indexNav">
+              <a href={{ url('/search')}}><button type = "button" class = "indexButton">New Global Search</button></a>
+        </div>
+        <div class = "indexLeft">
             @if($type == 'Users')
                 <h4>Handle</h4>
             @elseif($type == 'Questions')
@@ -21,7 +17,7 @@
                 <h4>Title</h4>
             @endif
         </div>
-        <div style = "width: 50%; float: right;">
+        <div class = "indexRight">
             @if($type == 'Users')
                 <h4>Joined</h4>
             @elseif($type == 'Questions')
@@ -34,10 +30,10 @@
         @foreach ($results as $result)
             <div class = "listResource">
                 <div class = "listResourceLeft">
-                    <a href="{{ action('PostController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->title}}</button></a>
+                    <a href="{{ action('PostController@show', [$result->id])}}"><button type = "button" class = "interactButtonLeft">{{$result->title}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('UserController@show', [$result->user_id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->user->handle}}</button></a>
+                    <a href="{{ action('UserController@show', [$result->user_id])}}"><button type = "button" class = "interactButton">{{$result->user->handle}}</button></a>
                 </div>
             </div>
         @endforeach
@@ -45,10 +41,10 @@
         @foreach ($results as $result)
             <div class = "listResource">
                 <div class = "listResourceLeft">
-                    <a href="{{ action('ExtensionController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->title}}</button></a>
+                    <a href="{{ action('ExtensionController@show', [$result->id])}}"><button type = "button" class = "interactButtonLeft">{{$result->title}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('UserController@show', [$result->user_id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->user->handle}}</button></a>
+                    <a href="{{ action('UserController@show', [$result->user_id])}}"><button type = "button" class = "interactButton">{{$result->user->handle}}</button></a>
                 </div>
             </div>
         @endforeach
@@ -56,10 +52,10 @@
         @foreach ($results as $result)
             <div class = "listResource">
                 <div class = "listResourceLeft">
-                    <a href="{{ action('QuestionController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->question}}</button></a>
+                    <a href="{{ action('QuestionController@show', [$result->id])}}"><button type = "button" class = "interactButton">{{$result->question}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('UserController@show', [$result->user_id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->user->handle}}</button></a>
+                    <a href="{{ action('UserController@show', [$result->user_id])}}"><button type = "button" class = "interactButton">{{$result->user->handle}}</button></a>
                 </div>
             </div>
         @endforeach
@@ -67,10 +63,10 @@
         @foreach ($results as $result)
             <div class = "listResource">
                 <div class = "listResourceLeft">
-                    <a href="{{ action('UserController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->handle}}</button></a>
+                    <a href="{{ action('UserController@show', [$result->id])}}"><button type = "button" class = "interactButtonLeft">{{$result->handle}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('UserController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->created_at->format('M-d-Y')}}</button></a>
+                    <a href="{{ action('UserController@show', [$result->id])}}"><button type = "button" class = "interactButton">{{$result->created_at->format('M-d-Y')}}</button></a>
                 </div>
             </div>
         @endforeach
@@ -78,10 +74,10 @@
         @foreach ($results as $result)
             <div class = "listResource">
                 <div class = "listResourceLeft">
-                    <a href="{{ action('BeaconController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->name}}</button></a>
+                    <a href="{{ action('BeaconController@show', [$result->id])}}"><button type = "button" class = "interactButtonLeft">{{$result->name}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('BeaconController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->created_at->format('M-d-Y')}}</button></a>
+                    <a href="{{ action('BeaconController@show', [$result->id])}}"><button type = "button" class = "interactButton">{{$result->created_at->format('M-d-Y')}}</button></a>
                 </div>
             </div>
         @endforeach
@@ -89,10 +85,10 @@
         @foreach ($results as $result)
             <div class = "listResource">
                 <div class = "listResourceLeft">
-                    <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->name}}</button></a>
+                    <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButtonLeft">{{$result->name}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->created_at->format('M-d-Y')}}</button></a>
+                    <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButton">{{$result->created_at->format('M-d-Y')}}</button></a>
                 </div>
             </div>
         @endforeach

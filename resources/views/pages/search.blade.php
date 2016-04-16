@@ -7,7 +7,7 @@
     <div>
         <h2>Global Search</h2>
         {!! Form::open(['url' => '/results', 'method' =>  'GET']) !!}
-        <table align = "center">
+        <table class = "formData">
             <tr>
                 <th>
                     {!!  Form::label('type', 'Type:') !!}
@@ -26,8 +26,6 @@
         {!! Form:: close() !!}
     </div>
 @stop
-@section('centerFooter')
 
-@stop
 
 
