@@ -4,29 +4,26 @@
 @stop
 
 @section('centerText')
-    <div>
-        <h2>Search Results</h2>
-        <table style="display: inline-block;">
-            <tr>
-                <td><a href={{ url('/sponsors/')}}>All Sponsors</a></td>
-                <td><a href={{ url('/sponsors/search')}}>Sponsor Search</a></td>
-                <td><a href={{ url('/search')}}>Global Search</a></td>
-            </tr>
-        </table>
+    <h2>Search Results</h2>
+        <div class = "indexNav">
+          <a href={{ url('/sponsors/')}}><button type = "button" class = "indexButton">All Sponsors</button></a>
+              <a href={{ url('/sponsors/search')}}><button type = "button" class = "indexButton">Sponsor Search</button></a>
+             <a href={{ url('/search')}}><button type = "button" class = "indexButton">Global Search</button></a>
+
     </div>
-        <div style = "width: 50%; float: left;">
+        <div class = "indexLeft">
             <h4>Sponsor</h4>
         </div>
-        <div style = "width: 50%; float: right;">
+        <div class = "indexRight">
             <h4>Views</h4>
         </div>
         @foreach ($results as $result)
             <div class = "listResource">
                 <div class = "listResourceLeft">
-                    <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->name}}</button></a>
+                    <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButtonLeft">{{$result->name}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->views}}</button></a>
+                    <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButton">{{$result->views}}</button></a>
                 </div>
             </div>
         @endforeach

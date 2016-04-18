@@ -7,23 +7,17 @@
     <h2>Change Profile Photo</h2>
 
     {!! Form::open(['url' => 'storePhoto', 'files' => true]) !!}
-<table class = "formData">
+<div class = "formInput">
+    {!! Form::file('image', null, ['class' => 'navButton']) !!}
+    {!! Form::label('Max Upload size: 2MB') !!}
+</div>
+    <div class = "formInput">
 
-    <tr>
-        <td>{!! Form::file('image', null, ['class' => 'navButton']) !!}</td>
-    </tr>
-    <tr>
-        <td>
-            {!! Form::label('Max Upload size: 2MB') !!}
-        </td>
-    </tr>
-    <tr>
-        <td>
-            {!! Form::submit('Upload Photo', ['class' => 'navButton']) !!}
-            <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>
-        </td>
-    </tr>
-</table>
+    </div>
+<div class = "formInput">
+    {!! Form::submit('Upload Photo', ['class' => 'navButton']) !!}
+    <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>
+</div>
     {!! Form::close() !!}
 @stop
 

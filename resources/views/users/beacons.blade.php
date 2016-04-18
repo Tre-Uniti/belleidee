@@ -5,15 +5,13 @@
 
 
 @section('centerText')
-    <div>
+
     <h2>Beacons of <a href={{ url('/users/'.$user->id)}}>{{$user->handle}}</a></h2>
-    <table style="display: inline-block;">
-        <tr>
-            <td><a href={{ url('/users/elevatedBy/'. $user->id)}}>Elevations</a></td>
-            <td><a href={{ url('/users/'.$user->id)}}>Profile</a></td>
-            <td><a href={{ url('/users/extendedBy/'. $user->id)}}>Extensions</a></td>
-        </tr>
-    </table>
+    <div class = "indexNav">
+        <a href={{ url('/users/elevatedBy/'. $user->id)}}><button type = "button" class = "indexButton">Elevations</button></a>
+          <a href={{ url('/users/'.$user->id)}}><button type = "button" class = "indexButton">Profile</button></a>
+          <a href={{ url('/users/extendedBy/'. $user->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
+
     </div>
     <div class = "indexLeft">
         <h4>Beacon Tag</h4>
@@ -25,22 +23,17 @@
         @foreach ($bookmarks as $bookmark)
 
             <div class = "listResource">
-                <div style = "width: 50%; text-align: center; float: left; overflow: auto;">
+                <div class = "listResourceLeft">
                         <a href="{{ action('BeaconController@listTagged', $bookmark->pointer)}}">
-                            <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark->pointer }}</button></a>
+                            <button type = "button" class = "interactButtonLeft">{{ $bookmark->pointer }}</button></a>
                 </div>
                 <div class = "listResourceRight">
                         <a href="{{ action('BeaconController@listTagged', $bookmark->pointer)}}">
-                            <button type = "button" class = "interactButton" style = "text-align: left;">{{ $bookmark->created_at->format('M-d-Y') }}</button></a>
+                            <button type = "button" class = "interactButton">{{ $bookmark->created_at->format('M-d-Y') }}</button></a>
                 </div>
             </div>
         @endforeach
     </div>
 @stop
 
-@section('centerFooter')
-    <div id = "centerFooter">
-
-    </div>
-@stop
 

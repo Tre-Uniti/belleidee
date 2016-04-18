@@ -355,8 +355,14 @@ ul.tour
 
 .formData
 {
-  display: inline-block;
   margin: 0 auto;
+}
+
+.formInput
+{
+  margin: 0 auto;
+  clear: both;
+  padding: 3px;
 }
 #indexNav
 {

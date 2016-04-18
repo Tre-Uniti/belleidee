@@ -8,18 +8,16 @@
     <div>
         <h2>Search Users</h2>
         {!! Form::open(['url' => 'users/results', 'method' => 'GET']) !!}
-        <table align = "center">
-            <tr>
-                <th>Title:</th>
-            </tr>
-            <tr>
-                <td>{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}</td>
-            </tr>
-            <tr>
-                <td>{!! Form::submit('Search', ['class' => 'navButton']) !!}</td>
-            </tr>
-        </table>
-        {!! Form:: close() !!}
+            <div class = "formInput">
+                <b>Handle:</b>
+            </div>
+            <div class = "indexNav">
+                {!! Form::text('identifier', null, ['class' => 'createTitleText', 'autofocus']) !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::submit('Search', ['class' => 'navButton']) !!}
+                {!! Form:: close() !!}
+            </div>
     </div>
 @stop
 @section('centerFooter')

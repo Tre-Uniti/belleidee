@@ -1,16 +1,14 @@
 <div id = "createOptions">
-<table align = "center" style = "margin-bottom: 7px;">
-    <tr>
-        <th colspan="3" style = "border-color: #E8E8E8;">{!! Form::label('title', 'Post Title:') !!}</th>
-    </tr>
-    <tr>
-        <td colspan="3" style = "border-color: #E8E8E8;">{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}</td>
-    </tr>
-    </table>
-    <div style = "width: 100%; padding-bottom: 3px;">
+<div class = "formInput">
+{!! Form::label('title', 'Post Title:') !!}
+</div>
+    <div class = "formInput">
+        {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
+    </div>
 
+    <div class = "formInput">
             <select name = 'belief' required >
-                <option value="" disabled selected>Belief:</option>
+                <option value="" disabled selected>Belief or Way:</option>
                 <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @endif>Adaptia</option>
                 <option value="Atheism" @if (old('belief') == 'Atheism') selected="selected" @endif>Atheism</option>
                 <option value="Ba Gua"  @if (old('belief') == 'Ba Gua') selected="selected" @endif>Ba Gua</option>
@@ -25,14 +23,15 @@
                 <option value="Sikhism" @if (old('belief') == 'Sikhism') selected="selected" @endif>Sikhism</option>
                 <option value="Taoism" @if (old('belief') == 'Taoism') selected="selected" @endif>Taoism</option>
                 <option value="Urantia" @if (old('belief') == 'Urantia') selected="selected" @endif>Urantia</option>
+                <option value="Zoroastrianism" @if (old('belief') == 'Zoroastrianism') selected="selected" @endif>Zoroastrianism</option>
                 <option value="Other" @if (old('belief') == 'Other') selected="selected" @endif>Other</option>
             </select>
 
-
-
             {!! Form::select('beacon_tag', $beacons) !!}
+
             <select name = 'source' required>
                 <option value="" disabled selected>Source:</option>
+                <option value="Discussion" @if (old('source') == 'Discussion') selected="selected" @endif>Discussion</option>
                 <option value="Reflection" @if (old('source') == 'Reflection') selected="selected" @endif>Reflection</option>
                 <option value="Writings" @if (old('source') == 'Writings') selected="selected" @endif>Writings</option>
                 <option value="Nature" @if (old('source') == 'Nature') selected="selected" @endif>Nature</option>
@@ -49,5 +48,4 @@
         <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
     {!! Form::close()   !!}
     @stop
-
 </div>

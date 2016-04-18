@@ -6,7 +6,7 @@
     <h2>Extended Extensions</h2>
         <div class = "indexNav">
 
-            <a href={{ url('/extensions/elevation')}}><button type = "button" class = "indexButton">Top Elevated</button></a>
+            <a href={{ url('/extensions/elevation')}}><button type = "button" class = "indexButton">Elevated</button></a>
             <a href={{ url('/extensions/search')}}><button type = "button" class = "indexButton">Search</button></a>
             <a href={{ url('/extensions')}}><button type = "button" class = "indexButton">Recent</button></a>
         </div>

@@ -4,29 +4,25 @@
 @stop
 
 @section('centerText')
-    <div>
         <h2>Search Results</h2>
-        <table style="display: inline-block;">
-            <tr>
-                <td><a href={{ url('/questions/')}}>Recent Questions</a></td>
-                <td><a href={{ url('/questions/search')}}>Question Search</a></td>
-                <td><a href={{ url('/search')}}>Global Search</a></td>
-            </tr>
-        </table>
-    </div>
-        <div style = "width: 50%; float: left;">
+        <div class = "indexNav">
+            <a href={{ url('/questions/')}}><button type = "button" class = "indexButton">Recent Questions</button></a>
+            <a href={{ url('/questions/search')}}><button type = "button" class = "indexButton">Question Search</button></a>
+            <a href={{ url('/search')}}><button type = "button" class = "indexButton">Global Search</button></a>
+        </div>
+        <div class = "indexLeft">
             <h4>Question</h4>
         </div>
-        <div style = "width: 50%; float: right;">
+        <div class = "indexRight">
             <h4>Asked by</h4>
         </div>
         @foreach ($results as $result)
             <div class = "listResource">
                 <div class = "listResourceLeft">
-                    <a href="{{ action('QuestionController@show', [$result->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->question}}</button></a>
+                    <a href="{{ action('QuestionController@show', [$result->id])}}"><button type = "button" class = "interactButtonLeft">{{$result->question}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('UserController@show', [$result->user_id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$result->user->handle}}</button></a>
+                    <a href="{{ action('UserController@show', [$result->user_id])}}"><button type = "button" class = "interactButton">{{$result->user->handle}}</button></a>
                 </div>
             </div>
         @endforeach

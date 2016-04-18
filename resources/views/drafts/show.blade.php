@@ -8,36 +8,26 @@
 @stop
 
 @section('centerText')
-    <div>
-        <table align = "center">
-            <tr>
-                <td><a href="{{ action('BeliefController@beliefIndex', $draft->belief) }}">{{ $draft->belief }}</a></td>
-                <td><a href="{{ url('/beacons/tags/'.$draft->beacon_tag) }}">{{ $draft->beacon_tag }}</a></td>
-                <td><a href="{{ url('/posts') }}">{{ $draft->source }}</a></td>
-            </tr>
-        </table>
+    <div class = "indexNav">
+        <a href="{{ action('BeliefController@beliefIndex', $draft->belief) }}"><button type = "button" class = "indexButton">{{ $draft->belief }}</button></a>
+        <a href="{{ url('/beacons/tags/'.$draft->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $draft->beacon_tag }}</button></a>
+        <a href="{{ url('/posts') }}"><button type = "button" class = "indexButton">{{ $draft->source }}</button></a>
     </div>
-
-    <div id = "centerTextContent">
         <nav class = "infoNav">
             <ul>
                 <li>
                     <p class = "extras">/-\</p>
-                    <div>
-                        <table align = "center">
-                            <tr>
-                                <td> <a href = {{ url('/indev') }}>{{ $draft->created_at->format('M-d-Y') }}</a></td>
-                            </tr>
-                        </table>
+                    <div class = "indexNav">
+                        <a href = {{ url('/indev') }}><button type = "button" class = "indexButton">{{ $draft->created_at->format('M-d-Y') }}</button></a>
                     </div>
                 </li>
             </ul>
         </nav>
+    <div id = "centerTextContent">
             <p>
                 {!! nl2br(e($draft->body)) !!}
             </p>
-        </div>
-
+    </div>
 @stop
 
 @section('centerFooter')

@@ -3,28 +3,24 @@
     Question Most Extended
 @stop
 @section('centerText')
-    <div>
     <h2><a href={{ url('/questions/'. $question->id)}}>{{$question->question}}</a></h2>
-        <p>Most Extended</p>
-    <table style="display: inline-block;">
-        <tr>
-            <td><a href={{ url('/questions/sortByElevation/'. $question->id)}}>Top Elevated</a></td>
-            <td> <a href = {{ url('/users/'. $question->user_id) }}>{{ $question->user->handle }}</a></td>
-            <td><a href={{ url('/questions/'. $question->id)}}>Most Recent</a></td>
-        </tr>
-    </table>
+    <div class = "indexNav">
+        <a href={{ url('/questions/sortByElevation/'. $question->id)}}><button type = "button" class = "indexButton">Top Elevated</button></a>
+        <a href = {{ url('/users/'. $question->user_id) }}><button type = "button" class = "indexButton">{{ $question->user->handle }}</button></a>
+        <a href={{ url('/questions/'. $question->id)}}><button type = "button" class = "indexButton">Most Recent</button></a>
     </div>
-    <div style = "width: 50%; float: left;">
+    <p>(Most Extended)</p>
+    <div class = "indexLeft">
         <h4>Question</h4>
     </div>
-    <div style = "width: 50%; float: right;">
+    <div class = "indexRight">
         <h4>Handle</h4>
     </div>
         @foreach ($extensions as $extension)
 
             <div class = "listResource">
             <div class = "listResourceLeft">
-            <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $extension->title }}</button></a>
+            <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButtonLeft">{{ $extension->title }}</button></a>
             </div>
             <div class = "listResourceRight">
                 <a href="{{ action('UserController@show', [$extension->user_id])}}"><button type = "button" class = "interactButton">{{ $extension->user->handle }}</button></a>

@@ -16,18 +16,17 @@
 @section('centerText')
     <h2>Send <a href = {{url('/invites')}}>Invites:</a></h2>
     {!! Form::open(['url' => 'invites']) !!}
-    <table class = "formData">
-        <tr>
-            <th> {!! Form::label('email', 'Email') !!}</th>
-        </tr>
-        <tr>
-            <td>{!! Form::text('email', null, ['class' => 'createAttributes', 'placeholder' => 'To whom?']) !!}</td>
-            <!--{!! Form::hidden('betaToken', str_random(7), ['class' => 'createAttributes']) !!}-->
-        </tr>
-    </table>
+    <div class = "formInput">
+           <b>{!! Form::label('email', 'Email') !!}</b>
+  </div>
+    <div class = "formInput">
+        {!! Form::text('email', null, ['class' => 'createAttributes', 'placeholder' => 'To whom?']) !!}
+    </div>
+
+    <!--{!! Form::hidden('betaToken', str_random(7), ['class' => 'createAttributes']) !!}-->
+
     <div class = "createSubmit">
         {!! Form::submit('Send Invite', ['class' => 'navButton']) !!}
         {!! Form::close()   !!}
-
     </div>
 @stop

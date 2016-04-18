@@ -93,11 +93,10 @@
         <div id = "leftSide">
             <div>
                 <h2><a href="{{ action('UserController@show', [$user->id])}}">{{$user->handle}}</a></h2>
-
                 <div class = "innerPhotos">
                     @if(isset($sourcePhotoPath))
                         @if($sourcePhotoPath != NULL)
-                        <a href={{ url('/users/'. $user->id) }}><img src= {{ url(env('IMAGE_LINK'). $sourcePhotoPath) }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
+                            <a href={{ url('/users/'. $user->id) }}><img src= {{ url(env('IMAGE_LINK'). $sourcePhotoPath) }} alt="{{$user->handle}}" height = "97%" width = "85%"></a>
                         @else
                             <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "97%" width = "85%"></a>
                         @endif

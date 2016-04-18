@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Create
+    Edit Sponsor
 @stop
 
 

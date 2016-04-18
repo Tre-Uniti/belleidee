@@ -4,27 +4,24 @@
 @stop
 
 @section('centerText')
-    <div>
+
     <h2>Sponsor Directory</h2>
         <p>A sponsor is a business or non-profit promoting within Idee</p>
-    <table style="display: inline-block;">
-        <tr>
-            <td><a href={{ url('/sponsors/top')}}>Most Views</a></td>
-            <td><a href={{ url('/sponsors/search')}}>Search</a></td>
-            <td><a href={{ url('/sponsorRequests')}}>Sponsor Requests</a></td>
-        </tr>
-    </table>
+    <div class = "indexNav">
+        <a href={{ url('/sponsors/top')}}><button type = "button" class = "indexButton">Most Views</button></a>
+        <a href={{ url('/sponsors/search')}}><button type = "button" class = "indexButton">Search</button></a>
+        <a href={{ url('/sponsorRequests')}}><button type = "button" class = "indexButton">Sponsor Requests</button></a>
     </div>
-    <div style = "width: 50%; float: left;">
+    <div class = "indexLeft">
         <h4>Name</h4>
     </div>
-    <div style = "width: 50%; float: right;">
+    <div class = "indexRight">
         <h4>Views</h4>
     </div>
     @foreach ($sponsors as $Sponsor)
         <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('SponsorController@show', [$Sponsor->id])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{ $Sponsor->name }}</button></a>
+                <a href="{{ action('SponsorController@show', [$Sponsor->id])}}"><button type = "button" class = "interactButtonLeft">{{ $Sponsor->name }}</button></a>
             </div>
             <div class = "listResourceRight">
                 <a href="{{ action('SponsorController@show', [$Sponsor->id])}}"><button type = "button" class = "interactButton">{{ $Sponsor->views}}</button></a>

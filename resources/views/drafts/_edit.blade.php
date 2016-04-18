@@ -24,6 +24,7 @@
                     <option value="Sikhism" @if (old('belief') == 'Sikhism') selected="selected" @elseif($draft->belief == 'Sikhism' & (old('belief') == '')) selected="selected" @endif>Sikhism</option>
                     <option value="Taoism" @if (old('belief') == 'Taoism') selected="selected" @elseif($draft->belief == 'Taoism'& (old('belief') == '')) selected="selected" @endif>Taoism</option>
                     <option value="Urantia" @if (old('belief') == 'Urantia') selected="selected" @elseif($draft->belief == 'Urantia' & (old('belief') == '')) selected="selected" @endif>Urantia</option>
+                    <option value="Zoroastrianism" @if (old('belief') == 'Zoroastrianism') selected="selected" @elseif($draft->belief == 'Zoroastrianism' & (old('belief') == '')) selected="selected" @endif>Zoroastrianism</option>
                     <option value="Other" @if (old('belief') == 'Other') selected="selected" @elseif($draft->belief == 'Other' & (old('belief') == '')) selected="selected" @endif>Other</option>
                 </select>
             </td>
@@ -33,6 +34,7 @@
             <td style = "border-color: #E8E8E8;">
                 <select name = 'source' required>
                     <option value="" disabled selected >Source:</option>
+                    <option value="Discussion" @if (old('source') == 'Discussion') selected="selected" @elseif($draft->source == 'Discussion' & (old('Discussion') == '')) selected="selected"  @endif>Discussion</option>
                     <option value="Reflection" @if (old('source') == 'Reflection') selected="selected" @elseif($draft->source == 'Reflection' & (old('Reflection') == '')) selected="selected"  @endif>Reflection</option>
                     <option value="Writings" @if (old('source') == 'Writings') selected="selected" @elseif($draft->source == 'Writings' & (old('category') == '')) selected="selected"  @endif>Writings</option>
                     <option value="Nature" @if (old('source') == 'Nature') selected="selected" @elseif($draft->source == 'Nature' & (old('category') == '')) selected="selected"  @endif>Nature</option>

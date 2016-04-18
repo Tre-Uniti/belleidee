@@ -1,15 +1,13 @@
 <div id = "createOptions">
-    <table align = "center" style = "margin-bottom: 7px;">
-        <tr>
-            <th colspan="3" style = "border: none;">{!! Form::label('title', 'Post Title:') !!}</th>
-        </tr>
-        <tr>
-            <td colspan="3" style = "border-color: #E8E8E8;">{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}</td>
-        </tr>
-        <tr>
-            <td style = "border-color: #E8E8E8;">
+    <div class = "formInput">
+        {!! Form::label('title', 'Post Title:') !!}
+    </div>
+     <div class = "formInput">
+            {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
+     </div>
+       <div class = "formInput">
                 <select name = 'belief' required >
-                    <option value="" disabled selected>Belief:</option>
+                    <option value="" disabled selected>Belief or Way</option>
                     <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @elseif($post->belief == 'Adaptia' & (old('belief') == '')) selected="selected" @endif>Adaptia</option>
                     <option value="Atheism" @if (old('belief') == 'Atheism') selected="selected" @elseif($post->belief == 'Atheism' & (old('belief') == '')) selected="selected" @endif>Atheism</option>
                     <option value="Ba Gua"  @if (old('belief') == 'Ba Gua') selected="selected" @elseif($post->belief == 'Ba Gua' & (old('belief') == '')) selected="selected" @endif>Ba Gua</option>
@@ -24,23 +22,21 @@
                     <option value="Sikhism" @if (old('belief') == 'Sikhism') selected="selected" @elseif($post->belief == 'Sikhism' & (old('belief') == '')) selected="selected" @endif>Sikhism</option>
                     <option value="Taoism" @if (old('belief') == 'Taoism') selected="selected" @elseif($post->belief == 'Taoism'& (old('belief') == '')) selected="selected" @endif>Taoism</option>
                     <option value="Urantia" @if (old('belief') == 'Urantia') selected="selected" @elseif($post->belief == 'Urantia' & (old('belief') == '')) selected="selected" @endif>Urantia</option>
+                    <option value="Zoroastrianism" @if (old('belief') == 'Zoroastrianism') selected="selected" @elseif($post->belief == 'Zoroastrianism' & (old('belief') == '')) selected="selected" @endif>Zoroastrianism</option>
                     <option value="Other" @if (old('belief') == 'Other') selected="selected" @elseif($post->belief == 'Other' & (old('belief') == '')) selected="selected" @endif>Other</option>
                 </select>
-            </td>
-            <td style = "border-color: #E8E8E8;">
+
                 {!! Form::select('beacon_tag', $beacons) !!}
-            </td>
-            <td style = "border-color: #E8E8E8;">
+
                 <select name = 'source' required>
                     <option value="" disabled selected>Source:</option>
+                    <option value="Discussion" @if (old('source') == 'Discussion') selected="selected" @elseif($post->source == 'Discussion' & (old('Discussion') == '')) selected="selected"  @endif>Discussion</option>
                     <option value="Reflection" @if (old('source') == 'Reflection') selected="selected" @elseif($post->source == 'Reflection' & (old('Reflection') == '')) selected="selected"  @endif>Reflection</option>
                     <option value="Writings" @if (old('source') == 'Writings') selected="selected" @elseif($post->source == 'Writings' & (old('category') == '')) selected="selected"  @endif>Writings</option>
                     <option value="Nature" @if (old('source') == 'Nature') selected="selected" @elseif($post->source == 'Nature' & (old('category') == '')) selected="selected"  @endif>Nature</option>
                     <option value="Other" @if (old('source') == 'Other') selected="selected" @elseif($post->source == 'Other' & (old('category') == '')) selected="selected"  @endif>Other</option>
                 </select>
-            </td>
-        </tr>
-    </table>
+       </div>
 
 
     <!-- Body Form Input -->

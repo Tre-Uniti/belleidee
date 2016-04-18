@@ -3,21 +3,18 @@
     Extensions of Question
 @stop
 @section('centerText')
-    <div>
         <h2>Recent Extensions</h2>
         <p>Question: <a href={{ url('/questions/'. $question->id)}}>{{$question->question}}</a></p>
-        <table style="display: inline-block;">
-            <tr>
-                <td><a href={{ url('/questions/sortByElevation/'. $question->id)}}>Top Elevated</a></td>
-                <td> <a href = {{ url('/users/'. $question->user_id) }}>{{ $question->user->handle }}</a></td>
-                <td><a href={{ url('/questions/sortByExtension/'.$question->id)}}>Most Extended</a></td>
-            </tr>
-        </table>
+
+    <div class = "indexNav">
+        <a href={{ url('/questions/sortByElevation/'. $question->id)}}><button type = "button" class = "indexButton">Most Recent</button></a>
+        <a href = {{ url('/users/'. $question->user_id) }}><button type = "button" class = "indexButton">{{ $question->user->handle }}</button></a>
+        <a href={{ url('/questions/sortByExtension/'.$question->id)}}><button type = "button" class = "indexButton">Most Extended</button></a>
     </div>
-    <div style = "width: 50%; float: left;">
+    <div class = "indexLeft">
         <h4>Extension</h4>
     </div>
-    <div style = "width: 50%; float: right;">
+    <div class = "indexRight">
         <h4>Handle</h4>
     </div>
     @foreach ($extensions as $extension)
@@ -32,12 +29,8 @@
         </div>
 
     @endforeach
-
-
 @stop
-@section('centerFooter')
 
-@stop
 
 
 

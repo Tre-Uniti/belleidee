@@ -7,14 +7,13 @@
         <p>Answer to: <a href = {{ action('QuestionController@show', [$sources['question_id']])}}> {{ $sources['question'] }}</a></p>
     @endif
 
-    <table class = "formData">
-        <tr>
-            <td colspan="3" style = "border-color: #E8E8E8;">{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}</td>
-        </tr>
-        <tr>
-            <td style = "border-color: #E8E8E8;">
+    <div class = "formInput">
+            {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
+        </div>
+
+            <div class = "formInput">
                 <select name = 'belief' required >
-                    <option value="" disabled selected>Belief:</option>
+                    <option value="" disabled selected>Belief or Way:</option>
                     <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @elseif($extension->belief == 'Adaptia' & (old('belief') == '')) selected="selected" @endif>Adaptia</option>
                     <option value="Atheism" @if (old('belief') == 'Atheism') selected="selected" @elseif($extension->belief == 'Atheism' & (old('belief') == '')) selected="selected" @endif>Atheism</option>
                     <option value="Ba Gua"  @if (old('belief') == 'Ba Gua') selected="selected" @elseif($extension->belief == 'Ba Gua' & (old('belief') == '')) selected="selected" @endif>Ba Gua</option>
@@ -29,13 +28,14 @@
                     <option value="Sikhism" @if (old('belief') == 'Sikhism') selected="selected" @elseif($extension->belief == 'Sikhism' & (old('belief') == '')) selected="selected" @endif>Sikhism</option>
                     <option value="Taoism" @if (old('belief') == 'Taoism') selected="selected" @elseif($extension->belief == 'Taoism'& (old('belief') == '')) selected="selected" @endif>Taoism</option>
                     <option value="Urantia" @if (old('belief') == 'Urantia') selected="selected" @elseif($extension->belief == 'Urantia' & (old('belief') == '')) selected="selected" @endif>Urantia</option>
+                    <option value="Zoroastrianism" @if (old('belief') == 'Zoroastrianism') selected="selected" @elseif($extension->belief == 'Zoroastrianism' & (old('belief') == '')) selected="selected" @endif>Zoroastrianism</option>
                     <option value="Other" @if (old('belief') == 'Other') selected="selected" @elseif($extension->belief == 'Other' & (old('belief') == '')) selected="selected" @endif>Other</option>
                 </select>
-            </td>
-            <td style = "border-color: #E8E8E8;">
+
+
                 {!! Form::select('beacon_tag', $beacons) !!}
-            </td>
-            <td style = "border-color: #E8E8E8;">
+
+
                 <select name = 'source' required>
                     <option  disabled>Source:</option>
                     @if(isset($sources['extenception']))
@@ -46,9 +46,7 @@
                         <option value="Question" @if (old('source') == 'Question') selected="selected" @elseif($extension->source == 'Question' & (old('category') == '')) @endif>Question</option>
                     @endif
                 </select>
-            </td>
-        </tr>
-    </table>
+        </div>
 
     <!-- Body Form Input -->
         @if(($sources['type'] == 'question'))

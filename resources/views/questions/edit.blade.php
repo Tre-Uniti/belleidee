@@ -13,6 +13,3 @@
     @include ('questions._edit', ['submitButtonText' => 'Update Question'])
 
 @stop
-
-@section('centerFooter')
-@stop

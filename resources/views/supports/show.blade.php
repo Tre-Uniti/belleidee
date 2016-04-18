@@ -5,28 +5,13 @@
 
 @section('centerMenu')
     <h2>Support Request</h2>
-    <table align = "center">
-        <tr>
-            <th>
-                ID
-            </th>
-            <th>
-                Type
-            </th>
-            <th>
-                Status
-            </th>
-        </tr>
-        <tr>
-            <td>{{ $support->type }}</td>
-            <td>{{ $support->status }}</td>
-        </tr>
-    </table>
+    <div class = "indexNav">
+    <b>Type:</b> {{ $support->type }} <b>Status:</b> {{ $support->status }}
+    </div>
 @stop
 
 @section('centerText')
     <div id = "centerTextContent">
-
         <p>
             {{ $support->request }}
         </p>

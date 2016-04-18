@@ -8,7 +8,6 @@
 
 @section('centerText')
     <div id = "centerTextContent">
-
         <p><b>User: </b></p>
         <p>
             {{ $intolerance->user_ruling }}
@@ -22,7 +21,6 @@
             {{ $adjudication->admin_ruling }}
         </p>
     </div>
-
 @stop
 
 @section('centerFooter')

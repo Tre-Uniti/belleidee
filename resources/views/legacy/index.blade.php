@@ -29,6 +29,7 @@
     <div class = "indexNav">
         <a href="{{ action('BeliefController@beliefIndex', 'Taoism') }}"><button type = "button" class = "indexButton">Taoism</button></a>
         <a href="{{ action('BeliefController@beliefIndex', 'Urantia') }}"><button type = "button" class = "indexButton">Urantia</button></a>
+        <a href="{{ action('BeliefController@beliefIndex', 'Zoroastrianism') }}"><button type = "button" class = "indexButton">Zoroastrianism</button></a>
         <a href="{{ action('BeliefController@beliefIndex', 'Other') }}"><button type = "button" class = "indexButton">Other</button></a>
     </div>
 

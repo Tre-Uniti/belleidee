@@ -8,37 +8,33 @@
 @stop
 
 @section('centerText')
-    <div>
-        <table style="display: inline-block;">
-            <tr>
-                <td><b>Address: </b></td>
-                <td>{{ $sponsorRequest->address }}</td>
-            </tr>
-            <tr>
-                <td><b>Country:</b> </td>
-                <td>{{ $sponsorRequest->country }}</td>
-            </tr>
-            <tr>
-                <td><b>City or Region:</b> </td>
-                <td>{{ $sponsorRequest->location }}</td>
-            </tr>
-            <tr>
-                <td><b>Phone:</b> </td>
-                <td>{{ $sponsorRequest->phone }}</td>
-            <tr>
-                <td><b>Email:</b> </td>
-                <td>{{ $sponsorRequest->email }}</td>
-            </tr>
-            <tr>
-                <td><b>Website:</b> </td>
-                <td>{{ $sponsorRequest->website }}</td>
-            </tr>
-            <tr>
-                <td><b>Adult: </b></td>
-                <td>{{ $sponsorRequest->adult }}</td>
-            </tr>
-    </table>
-        </div>
+    <div class = "formInput">
+        <b>Address:</b>
+        {{ $sponsorRequest->address }}
+    </div>
+    <div class = "formInput">
+        <b>Country:</b>
+        {{ $sponsorRequest->country }}
+    </div>
+    <div class = "formInput">
+        <b>City or Region:</b>
+        {{ $sponsorRequest->location }}
+    </div>
+    <div class = "formInput">
+        <b>Phone:</b>
+        {{ $sponsorRequest->phone }}
+    </div>
+    <div class = "formInput">
+        <b>Email:</b>
+        {{ $sponsorRequest->email }}
+    </div>
+    <div class = "formInput">
+        <b>Website:</b>
+        {{ $sponsorRequest->website }}
+    </div>
+    <div class = "formInput">
+        <b>Adult:</b>  {{ $sponsorRequest->adult }}
+    </div>
 @stop
 
 @section('centerFooter')

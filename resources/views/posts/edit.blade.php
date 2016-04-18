@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Create
+    Edit Post
 @stop
 
 
@@ -14,5 +14,3 @@
 
 @stop
 
-@section('centerFooter')
-@stop

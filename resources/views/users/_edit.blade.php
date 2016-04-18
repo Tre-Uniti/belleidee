@@ -1,36 +1,31 @@
 <div id = "createOptions">
 
-    <table align = "center" style = "margin-bottom: 7px;">
-        <tr>
-            <th colspan="3" style = "border: none;">{!! Form::label('handle', 'Handle') !!}</th>
-        </tr>
-        <tr>
-            <td colspan="3" style = "border: none;">{!! Form::text('handle', null, ['class' => 'createTitleText', 'autofocus']) !!}</td>
-        </tr>
-        <tr>
-            <th colspan="3" style = "border: none;">{!! Form::label('email', 'Email') !!}</th>
-        </tr>
-        <tr>
-            <td colspan="3" style = "border: none;">{!! Form::text('email', null, ['class' => 'createTitleText']) !!}</td>
-        </tr>
-        <tr>
-            <th colspan="3">{!! Form::label('frequency', 'Select Frequency') !!}</th>
-        </tr>
-        <tr>
-            <td colspan="3">
-                {!! Form::select('frequency', $frequencies, array('frequency' => $user->frequency)) !!}
-            </td>
-        <tr>
-            <td colspan="3" style = "border: none;">Type: {{ $user->type }}</td>
-        </tr>
-        <tr>
-            <td><a href="{{ url('users/descend/'. $user->id) }}"><button type = "button" class = "navButton">Descend</button></a></td>
-            <td><a href="{{ url('users/ascend/'. $user->id) }}"><button type = "button" class = "navButton">Ascend</button></a></td>
-        </tr>
+    <div class = "formInput">
+        <b>{!! Form::label('handle', 'Handle:') !!}</b>
+    </div>
+    <div class = "formInput">
+        {!! Form::text('handle', null, ['class' => 'createTitleText', 'autofocus']) !!}
+    </div>
+    <div class = "formInput">
+        <b>{!! Form::label('email', 'Email:') !!}</b>
+    </div>
+    <div class = "formInput">
+        {!! Form::text('email', null, ['class' => 'createTitleText']) !!}
+    </div>
+    <div class = "formInput">
+        <b>{!! Form::label('frequency', 'Select Frequency:') !!}</b>
+    </div>
+    <div class = "formInput">
+        {!! Form::select('frequency', $frequencies, array('frequency' => $user->frequency)) !!}
+    </div>
+    <div class = "formInput">
+        <b>Type: {{ $user->type }}</b>
+    </div>
+    <div class = "formInput">
+        <a href="{{ url('users/descend/'. $user->id) }}"><button type = "button" class = "navButton">Descend</button></a>
+        <a href="{{ url('users/ascend/'. $user->id) }}"><button type = "button" class = "navButton">Ascend</button></a>
+    </div>
 
-    </table>
-
-    <!-- Body Form Input -->
     @section('centerFooter')
         {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
         <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>

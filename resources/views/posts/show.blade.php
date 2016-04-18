@@ -6,50 +6,37 @@
 @section('centerText')
     <div id="fb-root"></div>
     <h2>{{ $post->title }}</h2>
-    <table align = "center">
-        <tr>
-            <td><a href="{{ action('BeliefController@beliefIndex', $post->belief) }}">{{ $post->belief }}</a></td>
-            <td><a href="{{ url('/beacons/tags/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a></td>
-            <td><a href="{{ url('/posts/source/'. $post->source) }}">{{ $post->source }}</a></td>
-        </tr>
-    </table>
+    <div class = "indexNav">
+            <a href="{{ action('BeliefController@beliefIndex', $post->belief) }}"><button type = "button" class = "indexButton">{{ $post->belief }}</button></a>
+           <a href="{{ url('/beacons/tags/'.$post->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $post->beacon_tag }}</button></a>
+            <a href="{{ url('/posts/source/'. $post->source) }}"><button type = "button" class = "indexButton">{{ $post->source }}</button></a>
+    </div>
     <nav class = "infoNav">
         <ul>
             <li>
                 <p class = "extras">/-\</p>
-                <div>
-                    <table align = "center">
-                        <tr>
-                            <td><a href={{ url('/posts/listElevation/'.$post->id)}}>Elevations</a></td>
-                            <td> <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a></td>
-                            <td><a href={{ url('/extensions/post/list/'.$post->id)}}>Extensions</a></td>
-                        </tr>
-                        <tr>
-                            <td><!-- Your Facebook share button code -->
-                                <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title={{$post->title}}" target="_blank">
-                                    <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
-                             </td>
-                            <td>
-                                <!-- G+ share button code -->
-                                <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank">
-                                    <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
-                            </td>
-                            <td><!-- Twitter share button code -->
-                                <a href="http://twitter.com/intent/tweet?status={{$post->title}} - {{Request::url()}}" target="_blank">
-                                    <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
-                            </td>
-                        </tr>
-                        <tr>
-                        @if($post->user_id != Auth::id())
-                            <td colspan="3"><a href="{{ url('/intolerances/post/'.$post->id) }}">Report Intolerance</a></td>
-                        @elseif ($post->status < 1)
-                            <td colspan="3"><a href="{{ url('/posts/'.$post->id) }}">Status: Tolerant</a></td>
-                        @else
-                            <td colspan="3"><a href="{{ url('/posts/'. $post->id) }}">Status: Intolerant</a></td>
-                        @endif
-                        </tr>
-                    </table>
+                <div class = "indexNav">
+                    <a href={{ url('/posts/listElevation/'.$post->id)}}><button type = "button" class = "indexButton">Elevations</button></a>
+                    <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}><button type = "button" class = "indexButton">{{ $post->created_at->format('M-d-Y') }}</button></a>
+                    <a href={{ url('/extensions/post/list/'.$post->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
                 </div>
+                <div class = "indexNav">
+                    @if($post->user_id != Auth::id())
+                        <a href="{{ url('/intolerances/post/'.$post->id) }}"><button type = "button" class = "indexButton">Report Intolerance</button></a>
+                    @elseif ($post->status < 1)
+                        <a href="{{ url('/posts/'.$post->id) }}"><button type = "button" class = "indexButton">Status: Tolerant</button></a>
+                    @else
+                        <a href="{{ url('/posts/'. $post->id) }}"><button type = "button" class = "indexButton">Status: Intolerant</button></a>
+                    @endif
+                </div>
+                    <div class = "indexNav">
+                        <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title={{$post->title}}" target="_blank">
+                            <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
+                        <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank">
+                            <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
+                        <a href="http://twitter.com/intent/tweet?status={{$post->title}} - {{Request::url()}}" target="_blank">
+                            <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
+                       </div>
             </li>
         </ul>
     </nav>

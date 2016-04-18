@@ -7,16 +7,15 @@
     <div id="fb-root"></div>
     <h2>{{ $extension->title }}</h2>
             <div class = "indexNav">
-                <tr>
-                    <a href="{{ action('BeliefController@beliefIndex', $extension->belief) }}"><button type = "button" class = "indexButton">{{ $extension->belief }}</button></a>
-                   <a href="{{ url('/beacons/tags/'.$extension->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $extension->beacon_tag }}</button></a>
-                    @if($extension->source === 'Post')
-                       <a href="{{ url('/posts/'.$extension->post_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
-                    @elseif($extension->source === 'Extension')
-                       <a href="{{ url('/extensions/'.$extension->extenception ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
-                    @elseif($extension->source === 'Question')
-                        <a href="{{ url('/questions/'.$extension->question_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
-                    @endif
+                <a href="{{ action('BeliefController@beliefIndex', $extension->belief) }}"><button type = "button" class = "indexButton">{{ $extension->belief }}</button></a>
+                <a href="{{ url('/beacons/tags/'.$extension->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $extension->beacon_tag }}</button></a>
+                @if($extension->source === 'Post')
+                    <a href="{{ url('/posts/'.$extension->post_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
+                @elseif($extension->source === 'Extension')
+                    <a href="{{ url('/extensions/'.$extension->extenception ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
+                @elseif($extension->source === 'Question')
+                    <a href="{{ url('/questions/'.$extension->question_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
+                @endif
 
             </div>
 

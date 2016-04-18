@@ -13,6 +13,3 @@
     @include ('supports._form', ['submitButtonText' => 'Update Support Request'])
 
 @stop
-
-@section('centerFooter')
-@stop

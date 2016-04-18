@@ -3,26 +3,22 @@
     Search Posts
 @stop
 @section('centerText')
-    <div>
-        <h2>Search Posts</h2>
+    <h2>Search Posts</h2>
+    <div class = "formInput">
         {!! Form::open(['url' => 'posts/results', 'method' => 'GET']) !!}
-        <table align = "center">
-            <tr>
-                <th>Title:</th>
-            </tr>
-            <tr>
-                <td>{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}</td>
-            </tr>
-            <tr>
-                <td>{!! Form::submit('Search', ['class' => 'navButton']) !!}</td>
-            </tr>
-        </table>
+        <b>Title:</b>
+          </div>
+    <div class = "formInput">
+        {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
+        </div>
+    <div class = "formInput">
+        {!! Form::submit('Search', ['class' => 'navButton']) !!}
         {!! Form:: close() !!}
     </div>
 @stop
 @section('centerFooter')
-            <a href="{{ url('/posts/') }}"><button type = "button" class = "navButton">Recent Posts</button></a>
-            <a href="{{ url('/search') }}"><button type = "button" class = "navButton">Global Search</button></a>
+    <a href="{{ url('/posts/') }}"><button type = "button" class = "navButton">Recent Posts</button></a>
+    <a href="{{ url('/search') }}"><button type = "button" class = "navButton">Global Search</button></a>
 @stop
 
 

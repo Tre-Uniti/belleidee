@@ -9,7 +9,7 @@
   filter:alpha(opacity=75);
   border: 2px solid;
   border-radius: 25px;
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: "Open Sans", Arial, serif;
   text-align: center;
 }
 #login
@@ -46,4 +46,24 @@ label.login
 .welcomeInputText
 {
   width: 14em;
+}
+
+.welcomeLink
+{
+  color: black;
+}
+/* visited link */
+.welcomeLink:visited {
+  color: white;
+
+}
+/* mouse over link */
+.welcomeLink:hover {
+  color: #009900;
+}
+
+/* selected link */
+.welcomeLink:active {
+  color: #00CC33;
+
 }
