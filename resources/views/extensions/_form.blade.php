@@ -4,13 +4,20 @@
 
 <div id = "createOptions">
     @if(isset($sources['extenception']))
-        <p>Extension of: <a href = {{ action('ExtensionController@show', [$sources['extenception']])}}> {{ $sources['extension_title'] }}</a></p>
+        <p><button type = "button" class = "interactButton" id = "content">Show Source Text</button></p>
+        <div class = "extensionContent" id = "hiddenContent">{!! nl2br(e($content)) !!}
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
     @elseif(isset($sources['post_id']))
-        <p><button type = "button" class = "interactButton" id = "content">Show Post</button>  <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></p>
-        <div class = "extensionContent" id = "hiddenContent">{!! nl2br(e($content)) !!}</div>
+        <p><button type = "button" class = "interactButton" id = "content">Show Source Text</button></p>
+        <div class = "extensionContent" id = "hiddenContent">{!! nl2br(e($content)) !!}
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
     @elseif(isset($sources['question_id']))
-        <p>Answer to: <a href = {{ action('QuestionController@show', [$sources['question_id']])}}> {{ $sources['question'] }}</a></p>
+        <p><button type = "button" class = "interactButton" id = "content">Show Source Text</button></p>
+        <div class = "extensionContent" id = "hiddenContent">
+            {!! nl2br(e($content)) !!}
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
     @endif
+
 
         <div class = "formInput">
             {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Your Extension Title']) !!}

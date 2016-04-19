@@ -68,16 +68,37 @@ class ExtensionController extends Controller
     {
         $user = Auth::user();
         $sources = Session::get('sources');
-        if(isset($sources['post_id']))
+        if(isset($sources['extenception']))
+        {
+            $extension = Extension::findOrFail($sources['extenception']);
+            $sourceUser=
+                [
+                    'id' => $extension->user_id,
+                    'handle' => $extension->user->handle
+                ];
+            $content = Storage::get($extension->extension_path);
+        }
+        elseif(isset($sources['post_id']))
         {
             $post = Post::findOrFail($sources['post_id']);
+            $sourceUser=
+                [
+                    'id' => $post->user_id,
+                    'handle' => $post->user->handle
+                ];
             $content = Storage::get($post->post_path);
         }
-        else
+        elseif(isset($sources['question_id']))
         {
-            $content = 'temp';
+            $question = Question::findOrFail($sources['question_id']);
+            $sourceUser=
+            [
+                'id' => $question->user_id,
+                'handle' => $question->user->handle
+            ];
+            $content = $question->question;
         }
-
+        
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
         $date = Carbon::now()->format('M-d-Y');
@@ -91,7 +112,7 @@ class ExtensionController extends Controller
         $sponsor = getSponsor($user);
 
         return view('extensions.create')
-                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sponsor', 'content'));
+                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sourceUser', 'sponsor', 'content'));
     }
 
     /**
