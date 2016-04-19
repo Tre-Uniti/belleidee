@@ -32,13 +32,14 @@
 
 @section('centerFooter')
     <div id = "centerFooter">
-
+        <a href="{{ url('/drafts/convert/'. $draft->id) }}"><button type = "button" class = "navButton">Convert to Post</button></a>
         @if($draft->user_id == Auth::id())
             <a href="{{ url('/drafts/'.$draft->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+            {!! Form::open(['method' => 'DELETE', 'route' => ['drafts.destroy', $draft->id]]) !!}
+            {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
+            {!! Form::close() !!}
         @else
-
         @endif
-        <a href="{{ url('/drafts/convert/'. $draft->id) }}"><button type = "button" class = "navButton">Convert to Post</button></a>
     </div>
 @stop
 

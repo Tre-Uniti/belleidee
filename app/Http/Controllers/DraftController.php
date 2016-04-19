@@ -27,7 +27,7 @@ class DraftController extends Controller
     public function __construct(Draft $draft)
     {
         $this->middleware('auth');
-        $this->middleware('draftOwner', ['only' => ['edit', 'show']]);
+        $this->middleware('draftOwner', ['only' => 'show', 'edit', 'update', 'destroy']);
         $this->draft = $draft;
     }
     /**
@@ -261,7 +261,13 @@ class DraftController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $draft = Draft::findOrFail($id);
+ 
+        Storage::delete($draft->draft_path);
+        $draft->delete();
+        
+        flash()->overlay('Draft has been deleted');
+        return redirect('drafts');
     }
 
     /**
