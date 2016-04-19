@@ -19,12 +19,13 @@
         <a href="{{ url('/home') }}"><button type = "button" class = "indexButton">Joined: {{$user->created_at->format('M-d-Y')}}</button></a>
     </div>
     <div class = "indexNav">
-        <b>Sponsor</b>
+        <b>Sponsor:</b>
     </div>
     <div class = "indexNav">
         <a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "indexButton">{{$sponsor->name}}</button></a>
         <a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "indexButton">Sponsorship: {{ $days }} days</button></a>
     </div>
+
     <div class = "indexNav">
         <b>Resources:</b>
     </div>
@@ -32,6 +33,18 @@
         <a href="{{ url('/gettingStarted') }}"><button type = "button" class = "indexButton">Getting Started</button></a>
         <a href="{{ url('/tutorials') }}"><button type = "button" class = "indexButton">Tutorials</button></a>
     </div>
+    <div class = "indexNav">
+        <b>Location:</b>
+    </div>
+    <div class = "indexNav">
+        {!! Form::open(['url' => 'location']) !!}
+        {!! Form::submit('Local', ['class' => 'navButton']) !!}
+        {!! Form::close() !!}
+        <button type = "button" class = "indexButton" id = "global">Global</button>
+
+    </div>
+    <p id="listLocation"></p>
+
 
     <div class = "indexNav">
         <b>Security Settings:</b>

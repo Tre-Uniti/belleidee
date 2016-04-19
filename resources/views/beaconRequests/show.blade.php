@@ -8,37 +8,59 @@
 @stop
 
 @section('centerText')
-    <div>
-        <table class = "formData">
-            <tr>
-                <td><b>Belief: </b></td>
-                <td>{{ $beaconRequest->belief }}</td>
-            </tr>
-            <tr>
-                <td><b>Address: </b></td>
-                <td>{{ $beaconRequest->address }}</td>
-            </tr>
-            <tr>
-                <td><b>Country:</b> </td>
-                <td>{{ $beaconRequest->country }}</td>
-            </tr>
-            <tr>
-                <td><b>City or Region:</b> </td>
-                <td>{{ $beaconRequest->location }}</td>
-            </tr>
-            <tr>
-                <td><b>Phone:</b> </td>
-                <td>{{ $beaconRequest->phone }}</td>
-            <tr>
-                <td><b>Email:</b> </td>
-                <td>{{ $beaconRequest->email }}</td>
-            </tr>
-            <tr>
-                <td><b>Website:</b> </td>
-                <td>{{ $beaconRequest->website }}</td>
-            </tr>
-    </table>
+    <div class = "formDataContainer">
+        <div class = "formInput">
+            <b>Belief: </b>
+            {{ $beaconRequest->belief }}
         </div>
+        <div class = "formInput">
+            <b>Country:</b>
+            {{ $beaconRequest->country }}
+        </div>
+        <div class = "formInput">
+            <b>Address: </b>
+            {{ $beaconRequest->address }}
+        </div>
+        <div class = "formInput">
+            <b>City or Region:</b>
+            {{ $beaconRequest->location }}
+        </div>
+        <div class = "formInput">
+            <b>Phone:</b>
+            {{ $beaconRequest->phone }}
+        </div>
+        <div class = "formInput">
+            <b>Email:</b>
+            {{ $beaconRequest->email }}
+        </div>
+        <div class = "formInput">
+            <b>Website:</b>
+            {{ $beaconRequest->website }}
+        </div>
+        <div class = "formInput">
+
+        </div>
+        <div class = "formInput">
+
+        </div>
+        <div class = "formInput">
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
 @stop
 
 @section('centerFooter')

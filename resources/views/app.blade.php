@@ -8,6 +8,7 @@
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/location.js"></script>
 
     <!-- You can use Open Graph tags to customize link previews.
     Learn more: https://developers.facebook.com/docs/sharing/webmasters -->

@@ -8,6 +8,7 @@
 @stop
 
 @section('centerText')
+    <div class = "formDataContainer">
     <div class = "formInput">
         <b>Address:</b>
         {{ $sponsorRequest->address }}
@@ -17,7 +18,7 @@
         {{ $sponsorRequest->country }}
     </div>
     <div class = "formInput">
-        <b>City or Region:</b>
+        <b>City:</b>
         {{ $sponsorRequest->location }}
     </div>
     <div class = "formInput">
@@ -34,6 +35,7 @@
     </div>
     <div class = "formInput">
         <b>Adult:</b>  {{ $sponsorRequest->adult }}
+    </div>
     </div>
 @stop
 

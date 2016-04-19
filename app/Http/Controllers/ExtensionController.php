@@ -68,6 +68,15 @@ class ExtensionController extends Controller
     {
         $user = Auth::user();
         $sources = Session::get('sources');
+        if(isset($sources['post_id']))
+        {
+            $post = Post::findOrFail($sources['post_id']);
+            $content = Storage::get($post->post_path);
+        }
+        else
+        {
+            $content = 'temp';
+        }
 
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
@@ -82,7 +91,7 @@ class ExtensionController extends Controller
         $sponsor = getSponsor($user);
 
         return view('extensions.create')
-                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sponsor'));
+                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sponsor', 'content'));
     }
 
     /**

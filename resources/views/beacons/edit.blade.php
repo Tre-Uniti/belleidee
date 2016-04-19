@@ -9,6 +9,6 @@
     </div>
 
     {!! Form::model($beacon, ['route' => ['beacons.update', $beacon->id], 'method' => 'patch', 'files' => true]) !!}
-    @include ('beacons._form', ['submitButtonText' => 'Update Beacon'])
+    @include ('beacons._edit', ['submitButtonText' => 'Update Beacon'])
 
 @stop

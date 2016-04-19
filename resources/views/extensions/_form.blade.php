@@ -1,8 +1,13 @@
+@section('pageHeader')
+    <script src = "/js/extension.js"></script>
+@stop
+
 <div id = "createOptions">
     @if(isset($sources['extenception']))
         <p>Extension of: <a href = {{ action('ExtensionController@show', [$sources['extenception']])}}> {{ $sources['extension_title'] }}</a></p>
     @elseif(isset($sources['post_id']))
-        <p>Extension of: <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></p>
+        <p><button type = "button" class = "interactButton" id = "content">Show Post</button>  <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></p>
+        <div class = "extensionContent" id = "hiddenContent">{!! nl2br(e($content)) !!}</div>
     @elseif(isset($sources['question_id']))
         <p>Answer to: <a href = {{ action('QuestionController@show', [$sources['question_id']])}}> {{ $sources['question'] }}</a></p>
     @endif

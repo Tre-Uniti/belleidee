@@ -265,7 +265,7 @@
 'South Africa' => 'South Africa',
 'Zambia' => 'Zambia',
 'Zimbabwe' => 'Zimbabwe'
-), null) !!}
+), $beacon->country) !!}
     </div>
     <div class = "formInput">
         {!! Form::label('address', 'Address:') !!}

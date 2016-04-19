@@ -388,8 +388,25 @@ ul.tour {
   float: right;
 }
 
+.extensionContent {
+  text-align: left;
+  font-size: 100%;
+  padding: 10px;
+  border: 2px solid;
+  border-color: #202020;
+  border-radius: 12px;
+  display: none;
+}
+
+.formDataContainer {
+  margin: 0 auto;
+  text-align: left;
+  display: inline-block;
+}
+
 .formData {
   margin: 0 auto;
+  text-align: center;
 }
 
 .formInput {
