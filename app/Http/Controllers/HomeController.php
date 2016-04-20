@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use League\Flysystem\Filesystem;
 use League\Flysystem\ZipArchive\ZipArchiveAdapter as Adapter;
 use Event;
@@ -143,20 +144,33 @@ class HomeController extends Controller
                 ->withErrors([$error]);
         }
 
+        //Get image from request
         $image = $request->file('image');
 
+        //Create image file name
         $userName = str_replace(' ', '_', $user->handle);
-        $imageFileName = $userName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension() ;
+        $imageFileName = $userName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
+
+        //Resize the image
+        //$imageRezied = Image::make($image->getRealPath())->crop(300, 300);
+        $imageRezied = Image::make($image);
+        $imageRezied->resize(350, 250, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        });
+        $imageRezied = $imageRezied->stream();
+        //dd($img);
+
         $path = '/user_photos/'. $user->id . '/' .$imageFileName;
 
         //If user has existing profile photo, then delete from Storage
-        if($user->photo_path != NULL)
+        //if($user->photo_path != NULL)
         {
             Storage::delete($user->photo_path);
         }
 
         //Store new photo in storage (S3)
-        Storage::put($path, file_get_contents($image));
+        Storage::put($path,  $imageRezied->__toString());
 
         //Update User with new photo path
         $user->where('id', $user->id)
