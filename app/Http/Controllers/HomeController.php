@@ -150,9 +150,15 @@ class HomeController extends Controller
         //Create image file name
         $userName = str_replace(' ', '_', $user->handle);
         $imageFileName = $userName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
+        $path = '/user_photos/'. $user->id . '/' .$imageFileName;
+
+        //Check if the existing photo is the same day
+        if($user->photo_path == $path)
+        {
+            $path = '/user_photos/'. $user->id . '/' . '-'. $imageFileName;
+        }
 
         //Resize the image
-        //$imageRezied = Image::make($image->getRealPath())->crop(300, 300);
         $imageRezied = Image::make($image);
         $imageRezied->resize(450, 350, function ($constraint) {
             $constraint->aspectRatio();
@@ -161,7 +167,7 @@ class HomeController extends Controller
         $imageRezied = $imageRezied->stream();
         //dd($img);
 
-        $path = '/user_photos/'. $user->id . '/' .$imageFileName;
+
 
         //If user has existing profile photo, then delete from Storage
         //if($user->photo_path != NULL)
