@@ -154,7 +154,7 @@ class HomeController extends Controller
         //Resize the image
         //$imageRezied = Image::make($image->getRealPath())->crop(300, 300);
         $imageRezied = Image::make($image);
-        $imageRezied->resize(350, 250, function ($constraint) {
+        $imageRezied->resize(450, 350, function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
         });
@@ -352,6 +352,20 @@ class HomeController extends Controller
     public function terms()
     {
         $filename = 'TermsOfUse.pdf';
+        $path = '/docs/'. $filename;
+        $content = Storage::get($path);
+        return Response::make($content, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; '.$filename,
+        ]);
+    }
+
+    /*
+* Return the Belle-Idee Image Guidelines
+*/
+    public function images()
+    {
+        $filename = 'ImageGuide.pdf';
         $path = '/docs/'. $filename;
         $content = Storage::get($path);
         return Response::make($content, 200, [
