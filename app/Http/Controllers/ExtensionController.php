@@ -170,6 +170,16 @@ class ExtensionController extends Controller
                     ->update(['extension' => $sourceUser->extension + 1]);
 
                 $extension = new Extension($request->except('body'));
+                //If localized get Beacon coordinates and add to extension
+                if($request['beacon_tag'] != 'No-Beacon')
+                {
+                    $beacon = Beacon::where('beacon_tag', '=', $request['beacon_tag'])->firstOrFail();
+                    $lat = $beacon->lat;
+                    $long = $beacon->long;
+                    $extension->lat = $lat;
+                    $extension->long = $long;
+                }
+
                 $extension->user()->associate($user);
                 $extension->save();
 
@@ -217,6 +227,17 @@ class ExtensionController extends Controller
 
 
                 $extension = new Extension($request->except('body'));
+
+                //If localized get Beacon coordinates and add to extension
+                if($request['beacon_tag'] != 'No-Beacon')
+                {
+                    $beacon = Beacon::where('beacon_tag', '=', $request['beacon_tag'])->firstOrFail();
+                    $lat = $beacon->lat;
+                    $long = $beacon->long;
+                    $extension->lat = $lat;
+                    $extension->long = $long;
+                }
+
                 $extension->user()->associate($user);
                 $extension->save();
 
@@ -250,6 +271,17 @@ class ExtensionController extends Controller
             $request = array_add($request, 'question_id', $sources['question_id']);
             $request = array_add($request, 'source_user', $sources['user_id']);
             $extension = new Extension($request->except('body'));
+
+            //If localized get Beacon coordinates and add to extension
+            if($request['beacon_tag'] != 'No-Beacon')
+            {
+                $beacon = Beacon::where('beacon_tag', '=', $request['beacon_tag'])->firstOrFail();
+                $lat = $beacon->lat;
+                $long = $beacon->long;
+                $extension->lat = $lat;
+                $extension->long = $long;
+            }
+
             $extension->user()->associate($user);
             $extension->save();
 
@@ -289,6 +321,17 @@ class ExtensionController extends Controller
         }
 
         $extension = new Extension($request->except('body'));
+
+        //If localized get Beacon coordinates and add to extension
+        if($request['beacon_tag'] != 'No-Beacon')
+        {
+            $beacon = Beacon::where('beacon_tag', '=', $request['beacon_tag'])->firstOrFail();
+            $lat = $beacon->lat;
+            $long = $beacon->long;
+            $extension->lat = $lat;
+            $extension->long = $long;
+        }
+
         $extension->user()->associate($user);
         $extension->save();
 
@@ -634,6 +677,16 @@ class ExtensionController extends Controller
         {
             //Store updated body text with same title at AWS
             Storage::put($path, $inspiration);
+        }
+
+        //If localized get Beacon coordinates and add to extension
+        if($request['beacon_tag'] != 'No-Beacon')
+        {
+            $beacon = Beacon::where('beacon_tag', '=', $request['beacon_tag'])->firstOrFail();
+            $lat = $beacon->lat;
+            $long = $beacon->long;
+            $extension->lat = $lat;
+            $extension->long = $long;
         }
 
         $extension->update($request->except('body', '_method', '_token'));

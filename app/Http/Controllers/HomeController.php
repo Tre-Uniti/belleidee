@@ -14,6 +14,7 @@ use App\Sponsor;
 use App\Sponsorship;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -159,24 +160,23 @@ class HomeController extends Controller
         }
 
         //Resize the image
-        $imageRezied = Image::make($image);
-        $imageRezied->resize(450, 350, function ($constraint) {
+        $imageResized = Image::make($image);
+        $imageResized->resize(450, 350, function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
         });
-        $imageRezied = $imageRezied->stream();
-        //dd($img);
+        $imageResized = $imageResized->stream();
 
 
 
         //If user has existing profile photo, then delete from Storage
-        //if($user->photo_path != NULL)
+        if($user->photo_path != NULL)
         {
             Storage::delete($user->photo_path);
         }
 
         //Store new photo in storage (S3)
-        Storage::put($path,  $imageRezied->__toString());
+        Storage::put($path,  $imageResized->__toString());
 
         //Update User with new photo path
         $user->where('id', $user->id)
@@ -398,6 +398,47 @@ class HomeController extends Controller
             ->with(compact('user', 'profilePosts', 'profileExtensions', 'frequencies'));
         
     }
+    
+    /*
+    * Change user location to local (based off last post or extension)
+    */
+    public function local()
+    {
+        $user = Auth::user();
+        $user->location = 1;
+        $user->update();
+
+        //Get latest post or extension
+        try
+        {
+            $post = Post::where('user_id', '=', $user->id)->firstOrFail();
+        }
+
+        catch(ModelNotFoundException $e)
+        {
+
+            flash()->overlay('Please create at least 1 post and 1 extension to use local');
+        }
+
+        
+        flash()->overlay('Switched to Local content and filters');
+        return redirect ('settings');
+
+    }
+
+    /*
+    * Change user location to global (based off last post or extension)
+    */
+    public function globe()
+    {
+        $user = Auth::user();
+        $user->location = 0;
+        $user->update();
+
+        flash()->overlay('Switched to Global content and filters');
+        return redirect ('settings');
+
+    }
 
     /*
      * Retrieve and zip all content for user (Posts and Extensions)
@@ -449,7 +490,4 @@ class HomeController extends Controller
             return Response::download(public_path() . '/' . $zipname);
         
     }
-
-
-
 }

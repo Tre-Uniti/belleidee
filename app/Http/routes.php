@@ -191,6 +191,8 @@ Route::get('images', 'HomeController@images');
 Route::get('nymi', 'HomeController@nymi');
 Route::get('frequency', 'HomeController@frequency');
 Route::get('gettingStarted', 'HomeController@gettingStarted');
+Route::get('local', 'HomeController@local');
+Route::get('global', 'HomeController@globe');
 //Route::get('getContent/{id}', 'HomeController@getContent');
 
 //Admin routes

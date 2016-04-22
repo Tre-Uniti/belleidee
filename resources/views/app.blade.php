@@ -99,12 +99,12 @@
                         @if($sourcePhotoPath != NULL)
                             <a href={{ url('/users/'. $user->id) }}><img src= {{ url(env('IMAGE_LINK'). $sourcePhotoPath) }} alt="{{$user->handle}}" height = "95%" width = "95%"></a>
                         @else
-                            <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "97%" width = "85%"></a>
+                            <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "95%" width = "95%"></a>
                         @endif
                     @elseif($photoPath != NULL)
                         <a href={{ url('/users/'. $user->id) }}><img src= {{ url(env('IMAGE_LINK'). $photoPath) }} alt="{{$user->handle}}" height = "95%" width = "95%"></a>
                     @else
-                        <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "97%" width = "85%"></a>
+                        <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "95%" width = "95%"></a>
                     @endif
                 </div>
             </div>
@@ -166,18 +166,18 @@
             <div class = "innerPhotos">
                 @if(isset($beacon))
                     @if($beacon != NULL)
-                    <a href={{ url('/beacons/'. $beacon->id) }}><img src= {{ url(env('IMAGE_LINK'). $beacon->photo_path) }} alt="{{$beacon->name}}" height = "97%" width = "85%"></a>
+                    <a href={{ url('/beacons/'. $beacon->id) }}><img src= {{ url(env('IMAGE_LINK'). $beacon->photo_path) }} alt="{{$beacon->name}}" height = "95%" width = "95%"></a>
                     @endif
                 @elseif(isset($sponsor))
                     @if($sponsor != NULL)
-                    <a href={{ url('/sponsors/click/'. $sponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $sponsor->photo_path) }} alt="{{$sponsor->name}}" height = "97%" width = "85%"></a>
+                    <a href={{ url('/sponsors/click/'. $sponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $sponsor->photo_path) }} alt="{{$sponsor->name}}" height = "95%" width = "95%"></a>
                     @endif
                 @elseif(isset($userSponsor))
                     @if($userSponsor != NULL)
-                        <a href={{ url('/sponsors/click/'. $userSponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $userSponsor->photo_path) }} alt="{{$userSponsor->name}}" height = "97%" width = "85%"></a>
+                        <a href={{ url('/sponsors/click/'. $userSponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $userSponsor->photo_path) }} alt="{{$userSponsor->name}}" height = "95%" width = "95%"></a>
                     @endif
                 @else
-                    <a href={{ url('/sponsors/1') }}><img src= {{ asset('img/tre-uniti.png') }} alt="Tre-Uniti" height = "97%" width = "85%"></a>
+                    <a href={{ url('/sponsors/1') }}><img src= {{ asset('img/tre-uniti.png') }} alt="Tre-Uniti" height = "95%" width = "95%"></a>
                 @endif
             </div>
             <nav class = "profileNav">

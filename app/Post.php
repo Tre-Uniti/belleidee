@@ -15,6 +15,8 @@ class Post extends Model
         'beacon_tag',
         'source',
         'post_path',
+        'lat',
+        'long',
     ];
 
     public function user()

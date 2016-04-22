@@ -33,6 +33,9 @@
                 <td colspan="3">
                     <a href="{{ $beacon->website }}" target="_blank">Beacon Website</a>
                 </td>
+                <td>
+                    <a href = "{{ $location }}" target = "_blank">Location</a>
+                </td>
             </tr>
     </table>
         </div>

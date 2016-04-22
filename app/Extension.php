@@ -17,6 +17,8 @@ class Extension extends Model
         'source_user',
         'extenception',
         'question_id',
+        'lat',
+        'long',
     ];
 
     public function user()

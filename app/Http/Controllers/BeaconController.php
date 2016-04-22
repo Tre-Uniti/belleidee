@@ -16,6 +16,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class BeaconController extends Controller
 {
@@ -71,6 +72,7 @@ class BeaconController extends Controller
                 'Sikhism' => 'Sikhism',
                 'Taoism' => 'Taoism',
                 'Urantia' => 'Urantia',
+                'Zoroastrianism' => 'Zoroastrianism',
                 'Other' => 'Other'
             ];
 
@@ -82,13 +84,12 @@ class BeaconController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CreateBeaconRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateBeaconRequest $request)
     {
 
-        //$request = array_add($request, 'tier', 3);
         $beacon = new Beacon($request->all());
         $beacon->status = 'active';
         $beacon->save();
@@ -108,7 +109,21 @@ class BeaconController extends Controller
             $imageFileName = $beaconName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
             $path = '/beacon_photos/'. $beacon->id . '/' .$imageFileName;
 
-            Storage::put($path, file_get_contents($image));
+            //Resize the image
+            $imageResized = Image::make($image);
+            $imageResized->resize(450, 350, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $imageResized = $imageResized->stream();
+
+            //If beacon has existing profile photo, then delete from Storage
+            if($beacon->photo_path != NULL)
+            {
+                Storage::delete($beacon->photo_path);
+            }
+
+            Storage::put($path, $imageResized->__toString());
             $beacon->where('id', $beacon->id)
                     ->update(['photo_path' => $path]);
         }
@@ -187,11 +202,13 @@ class BeaconController extends Controller
         $beacon = $this->beacon->findOrFail($id);
         $beaconPath = $beacon->photo_path;
         $usage = Post::where('beacon_tag', '=', $beacon->beacon_tag)->count();
+        $location = 'http://www.google.com/maps/place/'. $beacon->lat . ','. $beacon->long;
 
         return view ('beacons.show')
                     ->with(compact('user', 'beacon', 'profilePosts','profileExtensions'))
                     ->with('beaconPath', $beaconPath)
-                    ->with('usage', $usage);
+                    ->with('usage', $usage)
+                    ->with('location' , $location);
     }
 
     /**
@@ -225,6 +242,7 @@ class BeaconController extends Controller
                 'Sikhism' => 'Sikhism',
                 'Taoism' => 'Taoism',
                 'Urantia' => 'Urantia',
+                'Zoroastrianism' => 'Zoroastrianism',
                 'Other' => 'Other'
             ];
 
@@ -259,11 +277,21 @@ class BeaconController extends Controller
             $imageFileName = $beaconName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
             $path = '/beacon_photos/'. $beacon->id . '/' .$imageFileName;
 
-            //Add new photo
-            Storage::put($path, file_get_contents($image));
+            //Resize the image
+            $imageResized = Image::make($image);
+            $imageResized->resize(450, 350, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $imageResized = $imageResized->stream();
 
-            //Remove old photo from storage (S3)
-            Storage::delete($beacon->photo_path);
+            //If beacon has existing profile photo, then delete from Storage
+            if($beacon->photo_path != NULL)
+            {
+                Storage::delete($beacon->photo_path);
+            }
+
+            Storage::put($path, $imageResized->__toString());
 
             //Set new path for database
             $beacon->photo_path = $path;

@@ -152,7 +152,19 @@ class PostController extends Controller
         //Store body text at AWS
         Storage::put($path, $inspiration);
         $request = array_add($request, 'post_path', $path);
+
         $post = new Post($request->except('body'));
+
+        //If localized get Beacon coordinates
+        if($request['beacon_tag'] != 'No-Beacon')
+        {
+            $beacon = Beacon::where('beacon_tag', '=', $request['beacon_tag'])->firstOrFail();
+            $lat = $beacon->lat;
+            $long = $beacon->long;
+            $post->lat = $lat;
+            $post->long = $long;
+        }
+
         $post->user()->associate($user);
         $post->save();
 
@@ -385,6 +397,17 @@ class PostController extends Controller
             //Store updated body text with same title at AWS
             Storage::put($path, $inspiration);
         }
+
+        //If localized get Beacon coordinates and add to post
+        if($request['beacon_tag'] != 'No-Beacon')
+        {
+            $beacon = Beacon::where('beacon_tag', '=', $request['beacon_tag'])->firstOrFail();
+            $lat = $beacon->lat;
+            $long = $beacon->long;
+            $post->lat = $lat;
+            $post->long = $long;
+        }
+
         //Update database with new values
         $post->update($request->except('body', '_method', '_token'));
 

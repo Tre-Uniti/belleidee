@@ -269,52 +269,55 @@
     </div>
     <div class = "formInput">
         {!! Form::label('address', 'Address:') !!}
-    </div>
-    <div class = "formInput">
         {!! Form::text('address', null, ['class' => 'createTitleText']) !!}
     </div>
     <div class = "formInput">
-        {!! Form::label('beacon_tag', 'Beacon Tag:') !!}
+        {!! Form::label('lat', 'Latitude:') !!}
+        {!! Form::text('lat', null) !!}
     </div>
     <div class = "formInput">
-        {!! Form::text('beacon_tag', null, ['class' => 'createTitleText', 'placeholder' => 'Country-City-Shortname']) !!}
-    </div>
-    <div class = "formInput">
-        {!! Form::label('website', 'Website:') !!}
-    </div>
-    <div class = "formInput">
-        {!! Form::text('website', null, ['class' => 'createTitleText']) !!}
-    </div>
-    <div class = "formInput">
-        {!! Form::label('phone', 'Phone #:') !!}
-    </div>
-    <div class = "formInput">
-        {!! Form::text('phone', null, ['class' => 'createTitleText']) !!}
-    </div>
-    <div class = "formInput">
-        {!! Form::label('email', 'Email:') !!}
-    </div>
-    <div class = "formInput">
-        {!! Form::email('email', null, ['class' => 'createTitleText']) !!}
+        {!! Form::label('long', 'Longitude:') !!}
+        {!! Form::text('long', null) !!}
     </div>
 
     <div class = "formInput">
-        {!! Form::label('guide', 'Beacon Guide:') !!}
+        {!! Form::label('beacon_tag', 'Beacon Tag:') !!}
+        {!! Form::text('beacon_tag', null, ['placeholder' => 'Country-City-Shortname']) !!}
+    </div>
+
+    <div class = "formInput">
+        {!! Form::label('website', 'Website:') !!}
+        {!! Form::text('website', null) !!}
     </div>
     <div class = "formInput">
-        {!! Form::text('guide', null, ['class' => 'createTitleText']) !!}
+
     </div>
+    <div class = "formInput">
+        {!! Form::label('phone', 'Phone #:') !!}
+        {!! Form::text('phone', null) !!}
+    </div>
+    <div class = "formInput">
+
+    </div>
+    <div class = "formInput">
+        {!! Form::label('email', 'Email:') !!}
+        {!! Form::email('email', null) !!}
+    </div>
+
+
+    <div class = "formInput">
+        {!! Form::label('guide', 'Beacon Guide:') !!}
+        {!! Form::text('guide', null) !!}
+    </div>
+
     <div class = "formInput">
         {!! Form::label('manager', 'Manager:') !!}
+        {!! Form::text('manager', null) !!}
     </div>
-    <div class = "formInput">
-        {!! Form::text('manager', null, ['class' => 'createTitleText']) !!}
-    </div>
+
     <div class = "formInput">
         {!! Form::label('tier', 'Tier:') !!}
-    </div>
-    <div class = "formInput">
-        {!! Form::text('tier', null, ['class' => 'createTitleText']) !!}
+        {!! Form::text('tier', null) !!}
     </div>
     <div class = "formInput">
         {!! Form::label('Max Upload size: 2MB') !!}

@@ -37,14 +37,9 @@
         <b>Location:</b>
     </div>
     <div class = "indexNav">
-        {!! Form::open(['url' => 'location']) !!}
-        {!! Form::submit('Local', ['class' => 'navButton']) !!}
-        {!! Form::close() !!}
-        <button type = "button" class = "indexButton" id = "global">Global</button>
-
+        <a href="{{ url('/local') }}"><button type = "button" class = "indexButton">Local</button></a>
+        <a href="{{ url('/global') }}"><button type = "button" class = "indexButton">Global</button></a>
     </div>
-    <p id="listLocation"></p>
-
 
     <div class = "indexNav">
         <b>Security Settings:</b>

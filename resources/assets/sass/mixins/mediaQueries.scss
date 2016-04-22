@@ -306,7 +306,11 @@
       right: .01em;
       font-size: 0%;
     }
-    .innerProfileMenus {
+
+    .infoNav > ul > li {
+      width: 100%;
+    }
+      .innerProfileMenus {
       height: 70px;
     }
     .innerPhotos {
@@ -478,6 +482,11 @@
       right: .01em;
       font-size: 0%;
     }
+
+    .infoNav > ul > li {
+      width: 100%;
+    }
+
     .innerProfileMenus {
       height: 70px;
     }

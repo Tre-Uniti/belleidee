@@ -14,7 +14,7 @@
     <nav class = "infoNav">
         <ul>
             <li>
-                <p class = "extras">/-\</p>
+                <button class = "interactButton">/-\</button>
                 <div class = "indexNav">
                     <a href={{ url('/posts/listElevation/'.$post->id)}}><button type = "button" class = "indexButton">Elevations</button></a>
                     <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}><button type = "button" class = "indexButton">{{ $post->created_at->format('M-d-Y') }}</button></a>

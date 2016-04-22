@@ -129,19 +129,6 @@ p.nav {
   cursor: pointer;
 }
 
-.extras {
-  margin: 0px;
-  padding: 5px;
-  color: #000000;
-  width: auto;
-  cursor: pointer;
-}
-
-.extras:hover,
-.extras.hover_effect {
-  color: #00CC33;
-}
-
 .hover {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
@@ -431,7 +418,8 @@ ul.tour {
 }
 
 .infoNav > ul > li {
-  width: auto;
+  width: 70%;
+  margin: 0 auto;
   list-style-type: none;
   border-radius: 4px;
   -moz-border-radius: 4px;
@@ -1260,6 +1248,10 @@ article {
     font-size: 0%;
   }
 
+  .infoNav > ul > li {
+    width: 100%;
+  }
+
   .innerProfileMenus {
     height: 70px;
   }
@@ -1454,6 +1446,10 @@ article {
     visibility: visible;
     right: .01em;
     font-size: 0%;
+  }
+
+  .infoNav > ul > li {
+    width: 100%;
   }
 
   .innerProfileMenus {

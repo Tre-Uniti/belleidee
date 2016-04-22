@@ -22,7 +22,7 @@
             <nav class = "infoNav">
                 <ul>
                     <li>
-                        <p class = "extras">/-\</p>
+                        <button class = "interactButton">/-\</button>
                         <div class = "indexNav">
 
                             <a href={{ url('/extensions/listElevation/'. $extension->id)}}><button type = "button" class = "indexButton">Elevations</button></a>
