@@ -1,6 +1,6 @@
 #welcome {
   width: 30%;
-  min-width: 305px;
+  min-width: 335px;
   height: auto;
   margin: 7.3% auto;
   background-color: #E8E8E8;
@@ -21,7 +21,7 @@
   filter: alpha(opacity=90);
   border: 2px solid;
   border-radius: 25px;
-  min-width: 297px;
+  min-width: 332px;
 }
 
 h3 {
@@ -44,7 +44,7 @@ label.login {
 }
 
 .welcomeInputText {
-  width: 14em;
+  width: 100%;
 }
 
 .welcomeLink {
@@ -386,20 +386,43 @@ ul.tour {
 }
 
 .formDataContainer {
+  width: 80%;
+  height: auto;
   margin: 0 auto;
-  text-align: left;
+  background-color: #808080;
+  opacity: 0.90;
+  filter: alpha(opacity=90);
+  border: 2px solid;
+  border-radius: 25px;
+  min-width: 132px;
+}
+
+.formShowData {
   display: inline-block;
+  width: 48%;
+  padding: 1px;
+  text-align: left;
 }
 
 .formData {
   margin: 0 auto;
-  text-align: center;
+  width: 100%;
+  overflow: hidden;
+  padding: 1px;
 }
 
 .formInput {
-  margin: 0 auto;
-  clear: both;
+  display: inline-block;
+  padding: 1px;
+  width: 58%;
+}
+
+.formLabel {
+  display: inline-block;
+  text-align: right;
+  width: 33%;
   padding: 3px;
+  font-weight: 500;
 }
 
 #indexNav {
@@ -802,7 +825,7 @@ article {
 }
 
 .createTitleText {
-  width: 350px;
+  width: 85%;
 }
 
 .createSubmit {
@@ -1021,8 +1044,15 @@ article {
     max-height: 425px;
   }
 
-  .createTitleText {
-    width: 350px;
+  .formDataContainer {
+    width: 98%;
+    height: auto;
+    margin: 0 auto;
+    background-color: #808080;
+    opacity: 0.90;
+    filter: alpha(opacity=90);
+    border: 2px solid;
+    border-radius: 25px;
   }
 
   .innerProfileMenus {
@@ -1139,6 +1169,17 @@ article {
     max-height: 520px;
   }
 
+  .formDataContainer {
+    width: 85%;
+    height: auto;
+    margin: 0 auto;
+    background-color: #808080;
+    opacity: 0.90;
+    filter: alpha(opacity=90);
+    border: 2px solid;
+    border-radius: 25px;
+  }
+
   #leftSide {
     top: 10.15%;
     height: auto;
@@ -1175,7 +1216,7 @@ article {
   }
 }
 
-@media screen and (max-width: 419px) and (min-height: 581px) {
+@media screen and (max-width: 419px) and (min-height: 561px) {
   html {
     background-image: url("/img/backgroundPortrait.jpg");
     background-color: black;
@@ -1201,18 +1242,21 @@ article {
     padding: 7px 1px;
   }
 
+  .formDataContainer {
+    width: 98%;
+    height: auto;
+    margin: 0 auto;
+    background-color: #808080;
+    opacity: 0.90;
+    filter: alpha(opacity=90);
+    border: 2px solid;
+    border-radius: 25px;
+  }
+
   #centerContent {
     width: 97%;
     height: 84%;
     margin: 1.5% auto;
-  }
-
-  #centerText {
-    max-height: 385px;
-  }
-
-  .createTitleText {
-    width: 250px;
   }
 
   #centerTextContent {
@@ -1307,12 +1351,15 @@ article {
     margin: 1.5% auto;
   }
 
-  #centerText {
-    max-height: 250px;
-  }
-
-  .createTitleText {
-    width: 230px;
+  .formDataContainer {
+    width: 98%;
+    height: auto;
+    margin: 0 auto;
+    background-color: #808080;
+    opacity: 0.90;
+    filter: alpha(opacity=90);
+    border: 2px solid;
+    border-radius: 25px;
   }
 
   #centerTextContent {
@@ -1407,18 +1454,21 @@ article {
     margin: 1.5% auto;
   }
 
-  #centerText {
-    max-height: 255px;
-  }
-
-  .createTitleText {
-    width: 250px;
-  }
-
   #centerTextContent {
     max-height: 135px;
     padding-left: 3px;
     padding-right: 3px;
+  }
+
+  .formDataContainer {
+    width: 98%;
+    height: auto;
+    margin: 0 auto;
+    background-color: #808080;
+    opacity: 0.90;
+    filter: alpha(opacity=90);
+    border: 2px solid;
+    border-radius: 25px;
   }
 
   #createBodyText {
@@ -1509,10 +1559,6 @@ article {
 
   #centerText {
     max-height: 180px;
-  }
-
-  .createTitleText {
-    width: 230px;
   }
 
   #centerTextContent {

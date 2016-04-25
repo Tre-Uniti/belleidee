@@ -5,7 +5,7 @@
 
 @section('centerText')
     <h2>Beacon Directory</h2>
-        <p>A beacon is a place of worship or thought</p>
+        <p>Beacon: A place of worship or thought</p>
         <div class = "indexNav">
             <a href={{ url('/beacons/top')}}><button type = "button" class = "indexButton">Top Beacons</button></a>
             <a href={{ url('/beacons/search')}}><button type = "button" class = "indexButton">Search</button></a>

@@ -4,24 +4,42 @@
 @stop
 @section('login')
         <h3>Register</h3>
-            <form role="form" method="POST" action="{{ url('/auth/register') }}">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <table align = "center">
-            <tr><td><label for = "handle" class = "login">Handle</label></td>
-            <td><input type="text" id = "handle" name="handle" value="{{ old('handle') }}" class = "welcomeInputText"></td>
-            </tr>
-            <tr><td><label for = "email" class = "login">E-Mail Address</label></td>
-                    <td><input type="email" id="email" name="email" value="{{ old('email') }}" class = "welcomeInputText"></td>
-            </tr>
-            <tr><td><label for = "password" class = "login">Password</label></td>
-                <td><input type = "password" name = "password" id = "password" class = "welcomeInputText"/></td>
-            </tr>
-            <tr><td><label for = "password_confirmation" class = "login">Confirm Password</label></td>
-                    <td><input type="password" id = "password_confirmation" name="password_confirmation" class = "welcomeInputText"></td></tr>
-            </table>
+        <form role="form" method="POST" action="{{ url('/auth/register') }}">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class = "formData">
+                    <div class = "formLabel">
+                        <label for = "handle" class = "login">Handle</label>
+                    </div>
+                    <div class = "formInput">
+                        <input type="text" id = "handle" name="handle" value="{{ old('handle') }}" class = "welcomeInputText">
+                    </div>
+                </div>
+            <div class = "formData">
+                <div class = "formLabel">
+                    <label for = "email" class = "login">Email Address</label>
+                </div>
+                <div class = "formInput">
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" class = "welcomeInputText">
+                </div>
+            </div>
+            <div class = "formData">
+                <div class = "formLabel">
+                    <label for = "password" class = "login">Password</label>
+                </div>
+                <div class = "formInput">
+                    <input type = "password" name = "password" id = "password" class = "welcomeInputText"/>
+                </div>
+            </div>
+            <div class = "formData">
+                <div class = "formLabel">
+                    <label for = "password_confirmation" class = "login">Confirm</label>
+                </div>
+                <div class = "formInput">
+                    <input type="password" id = "password_confirmation" name="password_confirmation" class = "welcomeInputText" placeholder="Repeat Password">
+                </div>
+            </div>
                 <button type="submit" class = "navButton">Register</button>
             </form>
-
 @stop
 @section('footer')
     <h4>Guidelines:</h4>

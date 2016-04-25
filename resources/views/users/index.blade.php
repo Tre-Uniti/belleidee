@@ -19,7 +19,7 @@
     @foreach ($users as $user2)
         <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('UserController@show', [$user2->id])}}"><button type = "button" class = "interactButtonLeft">{{ $user2->handle }}</button></a>
+                <a href="{{ action('UserController@show', [$user2->id])}}"><button type = "button" class = "interactButton">{{ $user2->handle }}</button></a>
             </div>
             <div class = "listResourceRight">
                 <a href="{{ action('UserController@show', [$user2->id])}}"><button type = "button" class = "interactButton">{{ $user2->created_at->format('M-d-Y') }}</button></a>

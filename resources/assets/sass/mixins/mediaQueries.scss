@@ -71,7 +71,6 @@
     .topNav {
       width: 67%;
     }
-
     .interactButton {
       font-size: 100%;
     }
@@ -89,8 +88,16 @@
     #createOptions {
       max-height: 425px;
     }
-    .createTitleText {
-      width: 350px;
+    .formDataContainer
+    {
+      width: 98%;
+      height: auto;
+      margin: 0 auto;
+      background-color: #808080;
+      opacity:0.90;
+      filter:alpha(opacity=90);
+      border: 2px solid;
+      border-radius: 25px;
     }
     .innerProfileMenus {
       height: 210px;
@@ -208,6 +215,18 @@
       max-height: 520px;
     }
 
+    .formDataContainer
+    {
+      width: 85%;
+      height: auto;
+      margin: 0 auto;
+      background-color: #808080;
+      opacity:0.90;
+      filter:alpha(opacity=90);
+      border: 2px solid;
+      border-radius: 25px;
+    }
+
     #leftSide
     {
       top: 10.15%;
@@ -246,7 +265,7 @@
 }
 //Mobile Portrait
 @mixin mobile($mobileBackground) {
-  @media screen and (max-width: 419px) and (min-height: 581px) {
+  @media screen and (max-width: 419px) and (min-height: 561px) {
     html {
       background-image: url($mobileBackground);
       background-color: black;
@@ -266,17 +285,24 @@
     .topNav > ul > li > div ul > li > a {
       padding: 7px 1px;
     }
+    .formDataContainer
+    {
+      width: 98%;
+      height: auto;
+      margin: 0 auto;
+      background-color: #808080;
+      opacity:0.90;
+      filter:alpha(opacity=90);
+      border: 2px solid;
+      border-radius: 25px;
+    }
+
     #centerContent {
       width: 97%;
       height: 84%;
       margin: 1.5% auto;
     }
-    #centerText {
-      max-height: 385px;
-    }
-    .createTitleText {
-      width: 250px;
-    }
+
     #centerTextContent {
       max-height: 185px;
       padding-left: 3px;
@@ -358,11 +384,17 @@
       height: 95%;
       margin: 1.5% auto;
     }
-    #centerText {
-      max-height: 250px;
-    }
-    .createTitleText {
-      width: 230px;
+
+    .formDataContainer
+    {
+      width: 98%;
+      height: auto;
+      margin: 0 auto;
+      background-color: #808080;
+      opacity:0.90;
+      filter:alpha(opacity=90);
+      border: 2px solid;
+      border-radius: 25px;
     }
     #centerTextContent {
       max-height: 150px;
@@ -447,17 +479,25 @@
       height: 84%;
       margin: 1.5% auto;
     }
-    #centerText {
-      max-height: 255px;
-    }
-    .createTitleText {
-      width: 250px;
-    }
+
     #centerTextContent {
       max-height: 135px;
       padding-left: 3px;
       padding-right: 3px;
     }
+
+    .formDataContainer
+    {
+      width: 98%;
+      height: auto;
+      margin: 0 auto;
+      background-color: #808080;
+      opacity:0.90;
+      filter:alpha(opacity=90);
+      border: 2px solid;
+      border-radius: 25px;
+    }
+
     #createBodyText {
       padding-left: 1px;
       padding-right: 1px;
@@ -538,9 +578,7 @@
     #centerText {
       max-height: 180px;
     }
-    .createTitleText {
-      width: 230px;
-    }
+
     #centerTextContent {
       max-height: 100px;
       padding-left: 3px;

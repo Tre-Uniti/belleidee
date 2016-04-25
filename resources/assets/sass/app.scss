@@ -54,7 +54,6 @@ p.nav
 
 }
 
-
 .hover {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
@@ -359,22 +358,48 @@ ul.tour
 
 .formDataContainer
 {
+  width: 80%;
+  height: auto;
   margin: 0 auto;
-  text-align: left;
+  background-color: #808080;
+  opacity:0.90;
+  filter:alpha(opacity=90);
+  border: 2px solid;
+  border-radius: 25px;
+  min-width: 132px;
+}
+
+.formShowData
+{
   display: inline-block;
+  width: 48%;
+  padding: 1px;
+  text-align: left;
 }
 
 .formData
 {
   margin: 0 auto;
-  text-align: center;
+  width: 100%;
+  overflow: hidden;
+  padding: 1px;
 }
 
 .formInput
 {
-  margin: 0 auto;
-  clear: both;
+  display: inline-block;
+  padding: 1px;
+  width: 58%;
+}
+
+.formLabel
+{
+  display: inline-block;
+  text-align: right;
+  width: 33%;
   padding: 3px;
+  font-weight: 500;
+
 }
 #indexNav
 {
@@ -777,7 +802,7 @@ article
 }
 .createTitleText
 {
-  width: 350px;
+  width: 85%;
 }
 .createSubmit
 {

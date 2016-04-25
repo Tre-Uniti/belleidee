@@ -8,43 +8,48 @@
 @stop
 
 @section('centerText')
-    <div class = "formDataContainer">
-        <div class = "formInput">
-            <b>Belief: </b>
+
+        <div class = "formLabel">
+            Belief:
+        </div>
+        <div class = "formShowData">
             {{ $beaconRequest->belief }}
         </div>
-        <div class = "formInput">
-            <b>Country:</b>
+        <div class = "formLabel">
+           Country:
+        </div>
+        <div class = "formShowData">
             {{ $beaconRequest->country }}
         </div>
-        <div class = "formInput">
-            <b>Address: </b>
+        <div class = "formLabel">
+            Address:
+        </div>
+        <div class = "formShowData">
             {{ $beaconRequest->address }}
         </div>
-        <div class = "formInput">
-            <b>City or Region:</b>
+        <div class = "formLabel">
+            City:
+        </div>
+        <div class = "formShowData">
             {{ $beaconRequest->location }}
         </div>
-        <div class = "formInput">
-            <b>Phone:</b>
+        <div class = "formLabel">
+            Phone:
+        </div>
+        <div class = "formShowData">
             {{ $beaconRequest->phone }}
         </div>
-        <div class = "formInput">
-            <b>Email:</b>
+        <div class = "formLabel">
+            Email:
+        </div>
+        <div class = "formShowData">
             {{ $beaconRequest->email }}
         </div>
-        <div class = "formInput">
-            <b>Website:</b>
+        <div class = "formLabel">
+            Website:
+        </div>
+        <div class = "formShowData">
             {{ $beaconRequest->website }}
-        </div>
-        <div class = "formInput">
-
-        </div>
-        <div class = "formInput">
-
-        </div>
-        <div class = "formInput">
-
         </div>
 
 
