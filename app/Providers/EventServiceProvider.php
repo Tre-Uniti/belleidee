@@ -24,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\TransferUser' => [
             'App\Listeners\TransferUserContent'
+        ],
+        'App\Events\SetLocation' => [
+            'App\Listeners\RetrieveLatestLocation'
         ]
     ];
 

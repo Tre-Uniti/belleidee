@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\SetLocation;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Event;
 
 class SessionController extends Controller
 {
@@ -97,7 +99,12 @@ class SessionController extends Controller
             return $this->authenticated($request, Auth::user());
         }
 
-        flash()->overlay('Welcome '. Auth::user()->handle . ', login successful');
+        $user = Auth::user();
+
+        flash()->overlay('Welcome '. $user->handle . ', login successful');
+
+        //Create event to set location
+        Event::fire(New SetLocation($user));
         return redirect()->intended($this->redirectPath());
     }
 

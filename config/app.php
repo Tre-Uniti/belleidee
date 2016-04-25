@@ -139,6 +139,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Illuminate\Html\HtmlServiceProvider::class,
 
+
         /*
          * Application Service Providers...
          */
@@ -153,6 +154,7 @@ return [
         GeneaLabs\LaravelCaffeine\LaravelCaffeineServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Huddle\Zendesk\Providers\ZendeskServiceProvider::class,
     ],
 
     /*
