@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Extension;
+use function App\Http\getCountries;
 use App\Http\Requests\CreateBasicSponsorRequest;
 use App\Http\Requests\CreateSponsorRequest;
 use App\Mailers\NotificationMailer;
@@ -56,8 +57,12 @@ class SponsorRequestController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
+        //Get countries for drop down select
+        $countries = getCountries();
+
         return view('sponsorRequests.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'profilePosts', 'profileExtensions'))
+            ->with('countries', $countries);
     }
 
     /**

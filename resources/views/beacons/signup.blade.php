@@ -16,39 +16,61 @@
 
     <div class="payment-errors"></div>
     <div id="signupalert" class="alert alert-danger">
-        <p>Error:</p>
+        <p></p>
         <span></span>
     </div>
-    <table align = "center">
-        <tr>
-            <td>{!! Form::label('subscription', 'Subscription plan') !!}</td>
-            <td>{!! Form::select('subscription' , [ '0' => 'Starter: Free', '1' => 'Small: (<500) 25$ per month', '2' => 'Medium: (<1000) $50 per month', '3' => 'Large: (>1000) $100 per month']) !!}</td>
-        </tr>
-        <tr>
-            <td>{!! Form::label('beacon', 'Beacon') !!}</td>
-            <td>{!! Form::text('beacon', $beacon->id, [ 'placeholder' => 'Beacon' ]) !!}</td>
-        </tr>
-        <tr>
-            <td>{!! Form::label('email', 'Email') !!}</td>
-            <td>{!! Form::email('email', $beacon->email, [ 'placeholder' => 'Email' ]) !!}</td>
-        </tr>
-        <tr>
-            <td>{!! Form::label('ccn', 'Credit card number') !!}</td>
-            <td>{!! Form::text('ccn', '', ['data-stripe' => 'number' ]) !!}</td>
-        </tr>
-        <tr>
-            <td>{!! Form::label('expiration', 'Expiration date') !!}</td>
-            <td>{!! Form::selectMonth('month', 'junuary', ['data-stripe' => 'exp-month' ]) !!}
+    <div class = "formDataContainer">
+        <div class = "formData">
+            <div class = "formLabel">
+                {!! Form::label('subscription', 'Subscription plan') !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::select('subscription' , [ '0' => 'Starter: Free', '1' => 'Small: (<500) 25$ per month', '2' => 'Medium: (<1000) $50 per month', '3' => 'Large: (>1000) $100 per month']) !!}
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                {!! Form::label('beacon', 'Beacon') !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::text('beacon', $beacon->id, [ 'placeholder' => 'Beacon' ]) !!}
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                {!! Form::label('email', 'Email') !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::email('email', $beacon->email, [ 'placeholder' => 'Email' ]) !!}
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                {!! Form::label('ccn', 'Credit card number') !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::text('ccn', '', ['data-stripe' => 'number']) !!}
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                {!! Form::label('expiration', 'Expiration date') !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::selectMonth('month', 'junuary', ['data-stripe' => 'exp-month' ]) !!}
                 {!! Form::selectRange('year', 2016, 2022, 2016, ['data-stripe' => 'exp-year' ]) !!}
-            </td>
-        </tr>
-        <tr>
-            <td>{!! Form::label('cvc', 'CVC number') !!}</td>
-            <td>{!! Form::text('cvc', '', ['data-stripe' => 'cvc' ]) !!}</td>
-        </tr>
-        <tr>
-            <td colspan = "3">{!! Form::button('Sign Up', [ 'type' => 'submit', 'id'  => 'btn-signup', 'class' => 'navButton'] ) !!}</td>
-        </tr>
-    </table>
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                {!! Form::label('cvc', 'CVC number') !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::text('cvc', '', ['data-stripe' => 'cvc' ]) !!}
+            </div>
+        </div>
+
+        {!! Form::button('Sign Up', [ 'type' => 'submit', 'id'  => 'btn-signup', 'class' => 'navButton'] ) !!}
+
     {!! Form::close()  !!}
 @stop

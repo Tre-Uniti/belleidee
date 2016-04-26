@@ -8,35 +8,49 @@
 @stop
 
 @section('centerText')
-    <div class = "formDataContainer">
-    <div class = "formInput">
-        <b>Address:</b>
+    <div class = "formLabel">
+        Address:
+    </div>
+    <div class = "formShowData">
         {{ $sponsorRequest->address }}
     </div>
-    <div class = "formInput">
-        <b>Country:</b>
+    <div class = "formLabel">
+        Country:
+    </div>
+    <div class = "formShowData">
         {{ $sponsorRequest->country }}
     </div>
-    <div class = "formInput">
-        <b>City:</b>
+    <div class = "formLabel">
+        City:
+    </div>
+    <div class = "formShowData">
         {{ $sponsorRequest->location }}
     </div>
-    <div class = "formInput">
-        <b>Phone:</b>
+    <div class = "formLabel">
+        Phone:
+    </div>
+    <div class = "formShowData">
         {{ $sponsorRequest->phone }}
     </div>
-    <div class = "formInput">
-        <b>Email:</b>
+    <div class = "formLabel">
+        Email:
+    </div>
+    <div class = "formShowData">
         {{ $sponsorRequest->email }}
     </div>
-    <div class = "formInput">
-        <b>Website:</b>
+    <div class = "formLabel">
+        Website:
+    </div>
+    <div class = "formShowData">
         {{ $sponsorRequest->website }}
     </div>
-    <div class = "formInput">
-        <b>Adult:</b>  {{ $sponsorRequest->adult }}
+    <div class = "formLabel">
+        Adult:
     </div>
+    <div class = "formShowData">
+        {{ $sponsorRequest->adult }}
     </div>
+
 @stop
 
 @section('centerFooter')

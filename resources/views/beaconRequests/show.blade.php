@@ -8,7 +8,6 @@
 @stop
 
 @section('centerText')
-
         <div class = "formLabel">
             Belief:
         </div>
@@ -52,20 +51,6 @@
             {{ $beaconRequest->website }}
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
 @stop
 
 @section('centerFooter')

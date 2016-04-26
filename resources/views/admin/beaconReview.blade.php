@@ -8,48 +8,65 @@
 @stop
 
 @section('centerText')
-    <div>
-        <table class = "formData">
-            <tr>
-                <td><b>Belief: </b></td>
-                <td>{{ $beaconRequest->belief }}</td>
-            </tr>
-            <tr>
-                <td><b>Address: </b></td>
-                <td>{{ $beaconRequest->address }}</td>
-            </tr>
-            <tr>
-                <td><b>Country:</b> </td>
-                <td>{{ $beaconRequest->country }}</td>
-            </tr>
-            <tr>
-                <td><b>City or Region:</b> </td>
-                <td>{{ $beaconRequest->location }}</td>
-            </tr>
-            <tr>
-                <td><b>Phone:</b> </td>
-                <td>{{ $beaconRequest->phone }}</td>
-            <tr>
-                <td><b>Email:</b> </td>
-                <td>{{ $beaconRequest->email }}</td>
-            </tr>
-            <tr>
-                <td><b>Website:</b> </td>
-                <td>{{ $beaconRequest->website }}</td>
-            </tr>
-            <tr>
-                <td><b>User:</b></td>
-                <td>{{ $beaconRequest->user->handle }}</td>
-            </tr>
-            <tr>
-                <td><b>Admin:</b></td>
-                <td>{{ $beaconRequest->admin }}</td>
-            </tr>
-            <tr>
-                <td><b>Status:</b></td>
-                <td>{{ $beaconRequest->status }}</td>
-            </tr>
-        </table>
+    <div class = "formLabel">
+        Belief:
+    </div>
+    <div class = "formShowData">
+        {{ $beaconRequest->belief }}
+    </div>
+    <div class = "formLabel">
+        Address:
+    </div>
+    <div class = "formShowData">
+        {{ $beaconRequest->address }}
+    </div>
+    <div class = "formLabel">
+        Country:
+    </div>
+    <div class = "formShowData">
+        {{ $beaconRequest->country }}
+    </div>
+    <div class = "formLabel">
+        City or Region:
+    </div>
+    <div class = "formShowData">
+        {{ $beaconRequest->location }}
+    </div>
+    <div class = "formLabel">
+        Phone:
+    </div>
+    <div class = "formShowData">
+        {{ $beaconRequest->phone }}
+    </div>
+    <div class = "formLabel">
+        Email:
+    </div>
+    <div class = "formShowData">
+        {{ $beaconRequest->email }}
+    </div>
+    <div class = "formLabel">
+        Website:
+    </div>
+    <div class = "formShowData">
+        {{ $beaconRequest->website }}
+    </div>
+    <div class = "formLabel">
+        User:
+    </div>
+    <div class = "formShowData">
+        {{ $beaconRequest->user->handle }}
+    </div>
+    <div class = "formLabel">
+        Admin:
+    </div>
+    <div class = "formShowData">
+        {{ $beaconRequest->admin }}
+    </div>
+    <div class = "formLabel">
+        Status:
+    </div>
+    <div class = "formShowData">
+        {{ $beaconRequest->status }}
     </div>
 @stop
 

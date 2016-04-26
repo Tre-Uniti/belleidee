@@ -1,86 +1,86 @@
-<div id = "createOptions">
-
-    <table class = "formData">
-        <tr>
-            <th colspan= "2">{!! Form::label('name', 'Beacon Name') !!}</th>
-        </tr>
-        <tr>
-            <td colspan="2">{!! Form::text('name', $beaconRequest->name, ['class' => 'createTitleText', 'autofocus']) !!}</td>
-        </tr>
-        <tr>
-            <td>
-                {!! Form::label('belief', 'Belief') !!}
-            </td>
-            <td>
-                {!! Form::select('belief', $beliefs, array('belief' => $beaconRequest->belief)) !!}
-            </td>
-        </tr>
-        <tr>
-            <td>
+<h2>Edit Beacon Request</h2>
+<div class = "formDataContainer">
+    <div class = "formData">
+        <div class = "formLabel">
+          {!! Form::label('name', 'Name') !!}
+        </div>
+        <div class = "formInput">
+            {!! Form::text('name', $beaconRequest->name, ['class' => 'createTitleText', 'autofocus']) !!}
+        </div>
+    </div>
+    <div class = "formData">
+        <div class = "formLabel">
+         {!! Form::label('belief', 'Belief') !!}
+        </div>
+     <div class = "formInput">
+            {!! Form::select('belief', $beliefs, array('belief' => $beaconRequest->belief)) !!}
+     </div>
+    </div>
+        <div class = "formData">
+            <div class = "formLabel">
                 {!! Form::label('address', 'Address') !!}
-            </td>
-            <td>
+            </div>
+            <div class = "formInput">
                 {!! Form::text('address', $beaconRequest->address, ['class' => 'createTitleText']) !!}
-            </td>
-        </tr>
-        <tr>
-            <td>
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
                 {!! Form::label('country', 'Country') !!}
-            </td>
-            <td>
+            </div>
+            <div class = "formInput">
                 {!! Form::text('country', $beaconRequest->country, ['class' => 'createTitleText']) !!}
-            </td>
-        </tr>
-        <tr>
-            <td>
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
                 {!! Form::label('location', 'City or Region') !!}
-            </td>
-            <td>
+            </div>
+            <div class = "formInput">
                 {!! Form::text('location', $beaconRequest->location, ['class' => 'createTitleText']) !!}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {!! Form::label('phone', 'Phone #') !!}
-            </td>
-            <td>
-                {!! Form::text('phone', $beaconRequest->phone, ['class' => 'createTitleText']) !!}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {!! Form::label('email', 'Email') !!}
-            </td>
-            <td>
-                {!! Form::email('email', $beaconRequest->email, ['class' => 'createTitleText']) !!}
-            </td>
-        </tr>
-        <tr>
-            <td>
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
                 {!! Form::label('website', 'Website') !!}
-            </td>
-            <td>
+            </div>
+            <div class = "formInput">
                 {!! Form::text('website', $beaconRequest->website, ['class' => 'createTitleText']) !!}
-            </td>
-        </tr>
-        <tr>
-            <td>
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                {!! Form::label('phone', 'Phone #') !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::text('phone', $beaconRequest->phone, ['class' => 'createTitleText']) !!}
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                {!! Form::label('email', 'Email') !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::email('email', $beaconRequest->email, ['class' => 'createTitleText']) !!}
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
                 {!! Form::label('admin', 'Admin') !!}
-            </td>
-            <td>
+            </div>
+            <div class = "formInput">
                 {!! Form::select('admin', $admins, ['class' => 'createTitleText']) !!}
-            </td>
-        </tr>
-        <tr>
-            <td>
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
                 {!! Form::label('status', 'Status') !!}
-            </td>
-            <td>
+            </div>
+            <div class = "formInput">
                 {!! Form::select('status', $status, array('status' => $beaconRequest->status)) !!}
-            </td>
-        </tr>
+            </div>
+        </div>
 
-    </table>
     @section('centerFooter')
         {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
         <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>

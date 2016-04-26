@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Stripe;
 use Event;
 
@@ -106,12 +107,20 @@ class SponsorController extends Controller
             $imageFileName = $sponsorName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
             $path = '/sponsor_photos/'. $sponsor->id . '/' .$imageFileName;
 
-            Storage::put($path, file_get_contents($image));
+            //Resize the image
+            $imageResized = Image::make($image);
+            $imageResized->resize(450, 350, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $imageResized = $imageResized->stream();
+
+            Storage::put($path, $imageResized->__toString());
             $sponsor->where('id', $sponsor->id)
                 ->update(['photo_path' => $path]);
         }
 
-        flash()->overlay('Sponsor has been created.');
+        flash()->overlay('Sponsor has been created');
         return redirect('sponsors/photo/'. $sponsor->id);
     }
 
@@ -199,8 +208,16 @@ class SponsorController extends Controller
             $imageFileName = $sponsorName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
             $path = '/sponsor_photos/'. $sponsor->id . '/' .$imageFileName;
 
+            //Resize the image
+            $imageResized = Image::make($image);
+            $imageResized->resize(450, 350, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $imageResized = $imageResized->stream();
+
             //Add new photo
-            Storage::put($path, file_get_contents($image));
+            Storage::put($path, $imageResized->__toString());
 
             //Remove old photo from storage (S3)
             Storage::delete($sponsor->photo_path);
