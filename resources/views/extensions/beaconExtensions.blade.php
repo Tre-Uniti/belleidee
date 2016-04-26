@@ -7,7 +7,9 @@
     <h2>Extensions of <a href={{ url('/beacons/tags/'. $beacon->beacon_tag)}}>{{ $beacon->beacon_tag }}</a></h2>
         <div class = "indexNav">
             <a href={{ url('/beacons/'. $beacon->id)}}><button type = "button" class = "indexButton">Profile</button></a>
+            @if($beacon->tier > 0)
             <a href={{ url('/users/'. $beacon->guide)}}><button type = "button" class = "indexButton">Guide</button></a>
+            @endif
             <a href={{ url('/beacons/tags/'.$beacon->beacon_tag)}}><button type = "button" class = "indexButton">Posts</button></a>
         </div>
     <div class = "indexLeft">

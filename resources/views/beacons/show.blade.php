@@ -8,42 +8,40 @@
 @stop
 
 @section('centerText')
-    <div>
-        <table class = "formData">
-        <tr>
-            <th>
-                <a href="{{ url('/beliefs') }}">Belief</a>
-            </th>
-            <th>
-                <a href="{{ url('/beacons') }}">Tag</a>
-            </th>
-            <th>
-                <a href="{{ url('/beacons/'. $beacon->id) }}">Usage</a>
-            </th>
-        </tr>
-            <tr>
-                <td><a href="{{ url('/belief/index/'. $beacon->belief) }}">{{ $beacon->belief }}</a>
-                </td>
-                <td><a href="{{ url('/beacons/tags/'.$beacon->beacon_tag) }}">{{ $beacon->beacon_tag }}</a>
-                </td>
-                <td><a href="{{ url('/posts/') }}">{{ $beacon->tag_usage }}</a>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <a href="{{ $beacon->website }}" target="_blank">Beacon Website</a>
-                </td>
-                <td>
-                    <a href = "{{ $location }}" target = "_blank">Location</a>
-                </td>
-            </tr>
-    </table>
+
+        <div class = "indexNav">
+            <a href="{{ url('/belief/index/'. $beacon->belief) }}"><button type = "button" class = "indexButton">{{ $beacon->belief }}</button></a>
+            <a href="{{ url('/beacons/tags/'.$beacon->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $beacon->beacon_tag }}</button></a>
+            <a href="{{ $beacon->website }}" target="_blank"><button type = "button" class = "indexButton">Website</button></a>
+            <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
         </div>
+
+
+        <div class = "indexLeft">
+            <h4>Top Posts</h4>
+        </div>
+        <div class = "indexRight">
+            <h4>Handle</h4>
+        </div>
+
+        @foreach ($posts as $post)
+            <div class = "listResource">
+                <div class = "listResourceLeft">
+                    <a href="{{ action('PostController@show', [$post->id])}}"><button type = "button" class = "interactButtonLeft">{{ $post->title }}</button></a>
+                </div>
+                <div class = "listResourceRight">
+                    <a href="{{ action('UserController@show', [$post->user_id])}}"><button type = "button" class = "interactButton">{{ $post->user->handle }}</button></a>
+                </div>
+            </div>
+        @endforeach
+
 @stop
 
 @section('centerFooter')
     <div id = "centerFooter">
-        <a href = {{ url('/users/'. $beacon->guide) }}><button type = "button" class = "navButton">Beacon Guide</button></a>
+        @if($beacon->tier > 0)
+            <a href = {{ url('/users/'. $beacon->guide) }}><button type = "button" class = "navButton">Beacon Guide</button></a>
+        @endif
         @if($user->type > 1)
             <a href="{{ url('/beacons/'.$beacon->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
         @endif

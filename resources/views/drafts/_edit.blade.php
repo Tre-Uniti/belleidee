@@ -12,7 +12,6 @@
                     <option value="" disabled selected hidden>Belief:</option>
                     <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @elseif($draft->belief == 'Adaptia' & (old('belief') == '')) selected="selected" @endif>Adaptia</option>
                     <option value="Atheism" @if (old('belief') == 'Atheism') selected="selected" @elseif($draft->belief == 'Atheism' & (old('belief') == '')) selected="selected" @endif>Atheism</option>
-                    <option value="Ba Gua"  @if (old('belief') == 'Ba Gua') selected="selected" @elseif($draft->belief == 'Ba Gua' & (old('belief') == '')) selected="selected" @endif>Ba Gua</option>
                     <option value="Buddhism" @if (old('belief') == 'Buddhism') selected="selected" @elseif($draft->belief == 'Buddhism' & (old('belief') == '')) selected="selected" @endif>Buddhism</option>
                     <option value="Christianity" @if (old('belief') == 'Christianity') selected="selected" @elseif($draft->belief == 'Christianity' & (old('belief') == '')) selected="selected" @endif>Christianity</option>
                     <option value="Druze" @if (old('belief') == 'Druze') selected="selected" @elseif($draft->belief == 'Druze' & (old('belief') == '')) selected="selected" @endif>Druze</option>

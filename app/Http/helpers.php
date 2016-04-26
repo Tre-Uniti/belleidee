@@ -66,7 +66,6 @@ function getBeliefs()
         [
             'Adaptia' => 'Adaptia',
             'Atheism' => 'Atheism',
-            'Ba Gua' => 'Ba Gua',
             'Buddhism' => 'Buddhism',
             'Christianity' => 'Christianity',
             'Druze' => 'Druze',

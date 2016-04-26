@@ -10,7 +10,6 @@
             <option value="" disabled selected>Belief or Way:</option>
             <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @endif>Adaptia</option>
             <option value="Atheism" @if (old('belief') == 'Atheism') selected="selected" @endif>Atheism</option>
-            <option value="Ba Gua"  @if (old('belief') == 'Ba Gua') selected="selected" @endif>Ba Gua</option>
             <option value="Buddhism" @if (old('belief') == 'Buddhism') selected="selected" @endif>Buddhism</option>
             <option value="Christianity" @if (old('belief') == 'Christianity') selected="selected" @endif>Christianity</option>
             <option value="Druze" @if (old('belief') == 'Druze') selected="selected" @endif>Druze</option>

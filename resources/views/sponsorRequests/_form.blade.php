@@ -57,14 +57,6 @@
             </div>
         </div>
         <div class = "formData">
-            <div class = "formLabel">
-
-            </div>
-            <div class = "formInput">
-
-            </div>
-        </div>
-        <div class = "formData">
             <div class = "formInput">
                 {!! Form::label('adult', 'Adult 21+') !!}
                 {!! Form::checkbox('adult') !!}

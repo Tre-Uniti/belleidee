@@ -5,19 +5,28 @@
 
 @section('centerText')
     <h2>Profile of {{$user->handle}}</h2>
-    <div class = "indexNav">
-        <b>Creations:</b>
+    <div class = "contentNav">
+        <div class = "contentNavTitle">
+           Creations
+        </div>
+        <div class = "contentNavLeft">
+            <a href="{{ url('/posts/user/'. $user->id) }}"><button type = "button" class = "indexButton">Posts: {{ $posts }}</button></a>
+        </div>
+        <div class = "contentNavLeft">
+            <a href="{{ url('/extensions/user/'. $user->id) }}"><button type = "button" class = "indexButton">Extensions: {{ $extensions }}</button></a>
+        </div>
     </div>
-    <div class = "indexNav">
-        <a href="{{ url('/posts/user/'. $user->id) }}"><button type = "button" class = "indexButton">Posts: {{ $posts }}</button></a>
-        <a href="{{ url('/extensions/user/'. $user->id) }}"><button type = "button" class = "indexButton">Extensions: {{ $extensions }}</button></a>
-    </div>
-    <div class = "indexNav">
-        <b>Inspires Others:</b>
-    </div>
-    <div class = "indexNav">
-        <a href="{{ url('/users/elevatedBy/'. $user->id) }}"><button type = "button" class = "indexButton">Elevated: {{ $user->elevation }}</button></a>
-        <a href="{{ url('/users/extendedBy/'. $user->id) }}"><button type = "button" class = "indexButton">Extended: {{ $user->extension }}</button></a>
+
+    <div class = "contentNav">
+        <div class = "contentNavTitleLeft">
+            Inspirations
+        </div>
+        <div class = "contentNavRight">
+            <a href="{{ url('/users/elevatedBy/'. $user->id) }}"><button type = "button" class = "indexButton">Elevated: {{ $user->elevation }}</button></a>
+        </div>
+        <div class = "contentNavRight">
+            <a href="{{ url('/users/extendedBy/'. $user->id) }}"><button type = "button" class = "indexButton">Extended: {{ $user->extension }}</button></a>
+        </div>
     </div>
 
 @stop

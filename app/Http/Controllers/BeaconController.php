@@ -189,13 +189,15 @@ class BeaconController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $beacon = $this->beacon->findOrFail($id);
         $beaconPath = $beacon->photo_path;
-        $usage = Post::where('beacon_tag', '=', $beacon->beacon_tag)->count();
+        
+        $posts = Post::where('beacon_tag', '=', $beacon->beacon_tag)->orderBy('elevation', 'desc')->take(7)->get();
+        
+        //Get location of beacon and setup link to Google maps
         $location = 'http://www.google.com/maps/place/'. $beacon->lat . ','. $beacon->long;
 
         return view ('beacons.show')
-                    ->with(compact('user', 'beacon', 'profilePosts','profileExtensions'))
+                    ->with(compact('user', 'beacon', 'profilePosts','profileExtensions', 'posts'))
                     ->with('beaconPath', $beaconPath)
-                    ->with('usage', $usage)
                     ->with('location' , $location);
     }
 
