@@ -46,6 +46,12 @@ class PostController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        //Check location setting and retrieve location
+        if($user->location == 1)
+        {
+            $location = session('coordinates');
+        }
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->whereNull('status')->latest('created_at')->take(10)->get();

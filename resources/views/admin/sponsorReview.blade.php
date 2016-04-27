@@ -8,41 +8,71 @@
 @stop
 
 @section('centerText')
-    <div>
-        <table class = "formData">
-            <tr>
-                <td><b>Address: </b></td>
-                <td>{{ $sponsorRequest->address }}</td>
-            </tr>
-            <tr>
-                <td><b>Country:</b> </td>
-                <td>{{ $sponsorRequest->country }}</td>
-            </tr>
-            <tr>
-                <td><b>City or Region:</b> </td>
-                <td>{{ $sponsorRequest->location }}</td>
-            </tr>
-            <tr>
-                <td><b>Phone:</b> </td>
-                <td>{{ $sponsorRequest->phone }}</td>
-            <tr>
-                <td><b>Email:</b> </td>
-                <td>{{ $sponsorRequest->email }}</td>
-            </tr>
-            <tr>
-                <td><b>Website:</b> </td>
-                <td>{{ $sponsorRequest->website }}</td>
-            </tr>
-            <tr>
-                <td><b>Adult: </b></td>
-                <td>{{ $sponsorRequest->adult }}</td>
-            </tr>
-            <tr>
-            <tr>
-                <td><b>User:</b></td>
-                <td>{{ $sponsorRequest->user->handle }}</td>
-            </tr>
-        </table>
+    <div class = "formDataContainer">
+        <div class = "formData">
+            <div class = "formLabel">
+                Address:
+            </div>
+            <div class = "formInput">
+                {{ $sponsorRequest->address }}
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                Country:
+            </div>
+            <div class = "formInput">
+                {{ $sponsorRequest->country }}
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                City:
+            </div>
+            <div class = "formInput">
+                {{ $sponsorRequest->location }}
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                Phone:
+            </div>
+            <div class = "formInput">
+                {{ $sponsorRequest->phone }}
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                Email:
+            </div>
+            <div class = "formInput">
+                {{ $sponsorRequest->email }}
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                Website:
+            </div>
+            <div class = "formInput">
+                {{ $sponsorRequest->website }}
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                Adult:
+            </div>
+            <div class = "formInput">
+                {{ $sponsorRequest->adult }}
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                User:
+            </div>
+            <div class = "formInput">
+                {{ $sponsorRequest->user->handle }}
+            </div>
+        </div>
     </div>
 @stop
 
@@ -53,7 +83,6 @@
                 {!! Form::open(['method' => 'DELETE', 'route' => ['sponsorRequests.destroy', $sponsorRequest->id]]) !!}
                 {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}
-
         @endif
     </div>
 @stop

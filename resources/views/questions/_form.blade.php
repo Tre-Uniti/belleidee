@@ -1,16 +1,19 @@
 <div id = "createOptions">
+    <h2>New Community Question</h2>
+    <div class = "formDataContainer">
 
-    <div class = "formInput">
-        {!! Form::label('title', 'Question of the Week:') !!}
+    <div class = "formLabel">
+        {!! Form::label('title', 'Community Question') !!}
     </div>
     <div class = "formInput">
         {!! Form::text('question', null, ['class' => 'createTitleText', 'autofocus']) !!}
     </div>
-    <div class = "formInput">
+    <div class = "formLabel">
         {!! Form::label('user_id', 'User ID') !!}
     </div>
     <div class = "formInput">
         {!! Form::text('user_id', null, ['class' => 'createTitleText']) !!}
+    </div>
     </div>
 
     @section('centerFooter')

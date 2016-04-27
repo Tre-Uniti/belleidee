@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\BeaconRequest;
 use App\Extension;
+use function App\Http\getBeliefs;
 use App\Intolerance;
 use App\Moderation;
 use App\Post;
@@ -108,24 +109,7 @@ class AdminController extends Controller
             'Signup' => 'Signup',
             'Refused' => 'Refused',
         ];
-        $beliefs =
-            [
-                'Adaptia' => 'Adaptia',
-                'Atheism' => 'Atheism',
-                'Ba Gua' => 'Ba Gua',
-                'Buddhism' => 'Buddhism',
-                'Christianity' => 'Christianity',
-                'Druze' => 'Druze',
-                'Hinduism' => 'Hinduism',
-                'Islam' => 'Islam',
-                'Indigenous' => 'Indigenous',
-                'Judaism' => 'Judaism',
-                'Shinto' => 'Shinto',
-                'Sikhism' => 'Sikhism',
-                'Taoism' => 'Taoism',
-                'Urantia' => 'Urantia',
-                'Other' => 'Other'
-            ];
+        $beliefs = getBeliefs();
 
         return view('admin.editBeaconRequest')
             ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions', 'admins', 'status', 'beliefs'));
@@ -161,25 +145,8 @@ class AdminController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $beaconRequest = BeaconRequest::findOrFail($id);
 
-        $beliefs =
-            [
-                'Adaptia' => 'Adaptia',
-                'Atheism' => 'Atheism',
-                'Ba Gua' => 'Ba Gua',
-                'Buddhism' => 'Buddhism',
-                'Christianity' => 'Christianity',
-                'Druze' => 'Druze',
-                'Hinduism' => 'Hinduism',
-                'Islam' => 'Islam',
-                'Indigenous' => 'Indigenous',
-                'Judaism' => 'Judaism',
-                'Shinto' => 'Shinto',
-                'Sikhism' => 'Sikhism',
-                'Taoism' => 'Taoism',
-                'Urantia' => 'Urantia',
-                'Other' => 'Other'
-            ];
-
+        $beliefs = getBeliefs();
+        
         return view('admin.convertBeacon')
             ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions'))
             ->with('beliefs', $beliefs);

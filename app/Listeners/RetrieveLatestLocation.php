@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\SetLocation;
+use App\Extension;
 use App\Post;
 use App\User;
 use Illuminate\Queue\InteractsWithQueue;
@@ -31,9 +32,29 @@ class RetrieveLatestLocation
         $user = User::findOrFail($event->user->id);
 
         $post = Post::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
-        $extension = Post::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
+        $extension = Extension::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
 
-        if($post->created_at->format('M-d-Y') >= $extension->created_at->format('M-d-Y'))
+        if (is_null($post) && is_null($extension))
+        {
+            $lat = NULL;
+            $long = NULL;
+            $coordinates = [
+                'lat' => $lat,
+                'long' => $long
+            ];
+            session()->put('coordinates', $coordinates);
+        }
+        elseif(is_null($post) && !is_null($extension))
+        {
+            $lat = $extension->lat;
+            $long = $extension->long;
+            $coordinates = [
+                'lat' => $lat,
+                'long' => $long
+            ];
+            session()->put('coordinates', $coordinates);
+        }
+        elseif(!is_null($post) && is_null($extension))
         {
             $lat = $post->lat;
             $long = $post->long;
@@ -43,7 +64,17 @@ class RetrieveLatestLocation
             ];
             session()->put('coordinates', $coordinates);
         }
-        elseif($post->created_at->format('M-d-Y') <= $extension->created_at->format('M-d-Y'))
+        elseif($post->created_at >= $extension->created_at)
+        {
+            $lat = $post->lat;
+            $long = $post->long;
+            $coordinates = [
+                'lat' => $lat,
+                'long' => $long
+            ];
+            session()->put('coordinates', $coordinates);
+        }
+        elseif($post->created_at <= $extension->created_at)
         {
             $lat = $extension->lat;
             $long = $extension->long;
@@ -64,6 +95,6 @@ class RetrieveLatestLocation
             session()->put('coordinates', $coordinates);
         }
 
-        flash()->overlay($lat);
+        //flash()->overlay('Data test' . $coordinates['lat']);
     }
 }

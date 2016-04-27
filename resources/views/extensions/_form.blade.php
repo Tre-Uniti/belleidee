@@ -21,7 +21,7 @@
 
         <div class = "formInput">
             {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Your Extension Title']) !!}
-
+            </div>
         <div class = "formInput">
             <select name = 'belief' required >
                 <option value="" disabled selected>Belief or Way:</option>

@@ -25,6 +25,10 @@
 
     <!--{!! Form::hidden('betaToken', str_random(7), ['class' => 'createAttributes']) !!}-->
 
+
+@stop
+
+@section('centerFooter')
     <div class = "createSubmit">
         {!! Form::submit('Send Invite', ['class' => 'navButton']) !!}
         {!! Form::close()   !!}

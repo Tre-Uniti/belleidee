@@ -7,22 +7,21 @@
     <div>
         <h2>Global Search</h2>
         {!! Form::open(['url' => '/results', 'method' =>  'GET']) !!}
-        <table class = "formData">
-            <tr>
-                <th>
-                    {!!  Form::label('type', 'Type:') !!}
-                </th>
-            </tr>
-            <tr>
-                <td>{!! Form::select('type', $types) !!}</td>
-            </tr>
-            <tr>
-                <td>{!! Form::text('identifier', null, ['class' => 'createTitleText']) !!}</td>
-            </tr>
-            <tr>
-                <td>{!! Form::submit('Search', ['class' => 'navButton']) !!}</td>
-            </tr>
-        </table>
+        <div class = "formDataContainer">
+            <div class = "formInput">
+                {!!  Form::label('type', 'Type:') !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::select('type', $types) !!}
+            </div>
+
+            <div class = "formInput">
+                {!! Form::text('identifier', null, ['class' => 'createTitleText', 'placeholder' => 'Search text']) !!}
+            </div>
+        </div>
+
+        {!! Form::submit('Search', ['class' => 'navButton']) !!}
+
         {!! Form:: close() !!}
     </div>
 @stop
