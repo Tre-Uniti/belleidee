@@ -200,9 +200,10 @@ class QuestionController extends Controller
 
         $results = Question::where('question', 'LIKE', '%'.$question.'%')->paginate(10);
 
-        if($results == null)
+        if(!count($results))
         {
             flash()->overlay('No questions with this wording');
+            return redirect()->back();
         }
 
         $sponsor = getSponsor($user);

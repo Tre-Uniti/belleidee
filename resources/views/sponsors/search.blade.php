@@ -5,18 +5,17 @@
 
 @section('centerText')
     <h2>Search Sponsors</h2>
+
+    <div class = "formDataContainer">
         {!! Form::open(['url' => 'sponsors/results', 'method' => 'GET']) !!}
         <div class = "formInput">
-            {!! Form::select('type', $types) !!}
-        </div>
-        <div class = "indexNav">
-            {!! Form::text('identifier', null, ['class' => 'createTitleText', 'autofocus']) !!}
+            {!!  Form::label('identifier', 'Name:') !!}
         </div>
         <div class = "formInput">
-        {!! Form::submit('Search', ['class' => 'navButton']) !!}
-        {!! Form:: close() !!}
+            {!! Form::text('identifier', null, ['class' => 'createTitleText', 'placeholder' => 'Search text']) !!}
         </div>
-
+    </div>
+    {!! Form::submit('Search', ['class' => 'navButton']) !!}
 @stop
 @section('centerFooter')
     <a href="{{ url('/sponsors/') }}"><button type = "button" class = "navButton">All Sponsors</button></a>

@@ -499,9 +499,10 @@ class PostController extends Controller
         $title = $request->input('title');
         $results = Post::where('title', 'LIKE', '%'.$title.'%')->paginate(10);
 
-        if($results == null)
+        if(!count($results))
         {
             flash()->overlay('No posts with this title');
+            return redirect()->back();
         }
 
         $sponsor = getSponsor($user);

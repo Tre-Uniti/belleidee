@@ -431,9 +431,10 @@ class SponsorController extends Controller
             $results = null;
         }
 
-        if($results == null)
+        if(!count($results))
         {
             flash()->overlay('No Sponsors with this name or location');
+            return redirect()->back();
         }
 
         return view ('sponsors.results')

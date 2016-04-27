@@ -7,17 +7,15 @@
     <div>
         <h2>Search Extensions</h2>
         {!! Form::open(['url' => 'extensions/results', 'method' => 'GET']) !!}
-        <table class = "formData">
-            <tr>
-                <th>Title:</th>
-            </tr>
-            <tr>
-                <td>{!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}</td>
-            </tr>
-            <tr>
-                <td>{!! Form::submit('Search', ['class' => 'navButton']) !!}</td>
-            </tr>
-        </table>
+        <div class = "formDataContainer">
+            <div class = "formInput">
+                {!!  Form::label('identifier', 'Title:') !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Search text']) !!}
+            </div>
+        </div>
+        {!! Form::submit('Search', ['class' => 'navButton']) !!}
         {!! Form:: close() !!}
     </div>
 @stop

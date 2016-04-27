@@ -375,9 +375,10 @@ class BeaconController extends Controller
             $results = null;
         }
 
-        if($results == null)
+        if(!count($results))
         {
             flash()->overlay('No beacons with this name');
+            return redirect()->back();
         }
 
         return view ('beacons.results')

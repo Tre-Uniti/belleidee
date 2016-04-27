@@ -6,7 +6,7 @@
 @section('centerText')
 
     <h2>Sponsor Directory</h2>
-        <p>A sponsor is a business or non-profit promoting within Idee</p>
+        <p>Sponsor: A business or non-profit promoting within Idee</p>
     <div class = "indexNav">
         <a href={{ url('/sponsors/top')}}><button type = "button" class = "indexButton">Most Views</button></a>
         <a href={{ url('/sponsors/search')}}><button type = "button" class = "indexButton">Search</button></a>

@@ -8,7 +8,7 @@
         <div class = "indexNav">
             <a href={{ url('/users/beacons/'. $user->id)}}><button type = "button" class = "indexButton">Beacons</button></a>
             <a href={{ url('/users/'.$user->id)}}><button type = "button" class = "indexButton">Profile</button></a>
-            <a href={{ url('/users/extendedBy/'. $user->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
+            <a href={{ url('/users/extendedBy/'. $user->id)}}><button type = "button" class = "indexButton">Extended By</button></a>
     </div>
     <div class =  "indexLeft">
         <h4>Post or Extension</h4>

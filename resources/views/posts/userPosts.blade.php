@@ -6,9 +6,9 @@
 @section('centerText')
     <h2>Posts by <a href={{ url('/users/'. $user->id)}}>{{ $user->handle }}</a></h2>
         <div class = "indexNav">
-            <a href={{ url('/posts/elevation')}}><button type = "button" class = "indexButton">Elevated</button></a>
-            <a href={{ url('/posts/search')}}><button type = "button" class = "indexButton">Search</button></a>
-            <a href={{ url('/posts/extension')}}><button type = "button" class = "indexButton">Extended</button></a>
+            <a href={{ url('/users/elevatedBy/'.$user->id)}}><button type = "button" class = "indexButton">Elevated By</button></a>
+            <a href={{ url('/users/'.$user->id)}}><button type = "button" class = "indexButton">Profile</button></a>
+            <a href={{ url('/extensions/user/'. $user->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
     </div>
     <div class = "indexLeft">
         <h4>Title</h4>

@@ -560,11 +560,13 @@ class ExtensionController extends Controller
         $extension = array_add($extension, 'body', $contents);
 
         //Get Source info of extension
-        if (isset($extension->post_id)) {
+        if (isset($extension->post_id))
+        {
             $post_id = $extension->post_id;
             $post = Post::findOrFail($post_id);
 
-            if (isset($extension->extenception)) {
+            if (isset($extension->extenception))
+            {
                 $extenception = Extension::findOrFail($extension->extenception);
                 $sources = [
                     'type' => 'extensions',
@@ -573,18 +575,36 @@ class ExtensionController extends Controller
                     'extension_title' => $extenception->title,
                     'post_title' => $post->title
                 ];
-            } else {
+                $sourceUser=
+                    [
+                        'id' => $extension->user_id,
+                        'handle' => $extension->user->handle
+                    ];
+                $content = Storage::get($extension->extension_path);
+            }
+            else
+            {
                 $sources = [
                     'type' => 'posts',
                     'post_id' => $post->id,
                     'post_title' => $post->title
                 ];
+                $sourceUser=
+                    [
+                        'id' => $post->user_id,
+                        'handle' => $post->user->handle
+                    ];
+                $content = Storage::get($post->post_path);
+
             }
-        } elseif (isset($extension->question_id)) {
+        }
+        elseif (isset($extension->question_id))
+        {
             $question_id = $extension->question_id;
             $question = Question::findOrFail($question_id);
 
-            if (isset($extension->extenception)) {
+            if (isset($extension->extenception))
+            {
                 $extenception = Extension::findOrFail($extension->extenception);
                 $sources = [
                     'type' => 'extensions',
@@ -592,13 +612,36 @@ class ExtensionController extends Controller
                     'extenception' => $extenception->id,
                     'extension_title' => $extenception->title,
                 ];
-            } else {
+                $sourceUser=
+                    [
+                        'id' => $extension->user_id,
+                        'handle' => $extension->user->handle
+                    ];
+                $content = Storage::get($extension->extension_path);
+            }
+            else
+            {
                 $sources = [
                     'type' => 'question',
                     'question_id' => $question->id,
                     'question' => $question->question
                 ];
+                $sourceUser=
+                    [
+                        'id' => $question->user_id,
+                        'handle' => $question->user->handle
+                    ];
+                $content = $question->question;
             }
+        }
+        else
+        {
+            $sourceUser=
+                [
+                    'id' => null,
+                    'handle' => null
+                ];
+            $content = null;
         }
 
         //Get other Posts of User
@@ -633,7 +676,7 @@ class ExtensionController extends Controller
         }
 
         return view('extensions.edit')
-                    ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sponsor', 'beacon'));
+                    ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sponsor', 'beacon', 'content', 'sourceUser'));
     }
 
     /**
@@ -735,9 +778,10 @@ class ExtensionController extends Controller
         $title = $request->input('title');
         $results = Extension::where('title', 'LIKE', '%'.$title.'%')->paginate(10);
 
-        if($results == null)
+        if(!count($results))
         {
             flash()->overlay('No extensions with this title');
+            return redirect()->back();
         }
 
         $sponsor = getSponsor($user);

@@ -274,9 +274,10 @@ class HomeController extends Controller
         }
 
 
-        if($results == null)
+        if(!count($results))
         {
             flash()->overlay('No '. $type . ' found for this search');
+            return redirect()->back();
         }
 
         $sponsor = getSponsor($user);

@@ -247,22 +247,20 @@ class UserController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         //Get search title
-        $handle = $request->input('title');
+        $handle = $request->input('identifier');
 
         //Search DB for uses like search
         $results = User::where('handle', 'LIKE', '%'.$handle.'%')->paginate(10);
 
-
-        if($results == null)
+        if(!count($results))
         {
             flash()->overlay('No users with this handle');
+            return redirect()->back();
         }
-
-
+        
         return view ('users.results')
             ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
             ->with('handle', $handle);
-
     }
 
     /**

@@ -1,4 +1,7 @@
 @extends('app')
+@section('pageHeader')
+    <script src = "/js/index.js"></script>
+@stop
 @section('siteTitle')
     Show Post
 @stop
@@ -11,15 +14,12 @@
            <a href="{{ url('/beacons/tags/'.$post->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $post->beacon_tag }}</button></a>
             <a href="{{ url('/posts/source/'. $post->source) }}"><button type = "button" class = "indexButton">{{ $post->source }}</button></a>
     </div>
-    <nav class = "infoNav">
-        <ul>
-            <li>
-                <button class = "interactButton">/-\</button>
-                <div class = "indexNav">
+    <button class = "interactButton" id = "hiddenIndex">More</button>
+    <div class = "indexContent" id = "hiddenContent">
                     <a href={{ url('/posts/listElevation/'.$post->id)}}><button type = "button" class = "indexButton">Elevations</button></a>
                     <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}><button type = "button" class = "indexButton">{{ $post->created_at->format('M-d-Y') }}</button></a>
                     <a href={{ url('/extensions/post/list/'.$post->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
-                </div>
+
                 <div class = "indexNav">
                     @if($post->user_id != Auth::id())
                         <a href="{{ url('/intolerances/post/'.$post->id) }}"><button type = "button" class = "indexButton">Report Intolerance</button></a>
@@ -37,9 +37,7 @@
                         <a href="http://twitter.com/intent/tweet?status={{$post->title}} - {{Request::url()}}" target="_blank">
                             <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
                        </div>
-            </li>
-        </ul>
-    </nav>
+    </div>
         <div id = "centerTextContent">
             {!! nl2br(e($post->body)) !!}
         </div>

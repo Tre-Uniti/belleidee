@@ -21,7 +21,6 @@
         </div>
 
         {!! Form::submit('Search', ['class' => 'navButton']) !!}
-
         {!! Form:: close() !!}
     </div>
 @stop
