@@ -935,7 +935,7 @@ class ExtensionController extends Controller
         }
 
         return view('extensions.postList')
-                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources', 'beacon', 'sponsor'))
+                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources', 'beacon', 'sponsor', 'post'))
                     ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -992,7 +992,7 @@ class ExtensionController extends Controller
         }
 
         return view('extensions.postList')
-                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources', 'beacon', 'sponsor'))
+                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources', 'beacon', 'sponsor', 'extension'))
                     ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 

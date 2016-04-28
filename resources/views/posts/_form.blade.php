@@ -5,8 +5,7 @@
     <div class = "formInput">
         {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
     </div>
-
-    <div class = "formInput">
+<div class = "formData">
             <select name = 'belief' required >
                 <option value="" disabled selected>Belief or Way:</option>
                 <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @endif>Adaptia</option>
@@ -37,6 +36,7 @@
                 <option value="Other" @if (old('source') == 'Other') selected="selected" @endif>Other</option>
             </select>
     </div>
+
 
 <!-- Body Form Input -->
     <div id = "centerTextContent">

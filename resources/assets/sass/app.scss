@@ -415,6 +415,11 @@ ul.tour
   font-weight: 500;
 }
 
+.formDeletion
+{
+  display: inline-block;
+}
+
 #indexNav
 {
   margin: 0 auto;
@@ -567,7 +572,7 @@ ul.tour
 .pagination {
   display: inline-block;
   padding-left: 0;
-  margin: 10px 0;
+  margin: 3px 0;
   border-radius: 4px;
 }
 .pagination > ul

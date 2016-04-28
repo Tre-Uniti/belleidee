@@ -19,5 +19,7 @@ class Sponsor extends Model
         'location',
         'email',
         'user_id',
+        'lat',
+        'long',
     ];
 }

@@ -47,6 +47,9 @@ class PostController extends Controller
     {
         $user = Auth::user();
 
+        //If user has local set then limit results to only local
+        //Search for beacon tag and compare Country-City like User's Country-City
+
         //Check location setting and retrieve location
         if($user->location == 1)
         {

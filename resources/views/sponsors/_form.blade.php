@@ -59,6 +59,22 @@
     <div class = "formInput">
         {!! Form::text('user_id', null, ['class' => 'createTitleText']) !!}
     </div>
+    <div class = "formData">
+        <div class = "formLabel">
+            {!! Form::label('lat', 'Latitude:') !!}
+        </div>
+        <div class = "formInput">
+            {!! Form::text('lat', null, ['class' => 'createTitleText']) !!}
+        </div>
+    </div>
+    <div class = "formData">
+        <div class = "formLabel">
+            {!! Form::label('long', 'Longitude:') !!}
+        </div>
+        <div class = "formInput">
+            {!! Form::text('long', null, ['class' => 'createTitleText']) !!}
+        </div>
+    </div>
     <div class = "formLabel">
         {!! Form::label('adult', 'Adult 21+') !!}
     </div>

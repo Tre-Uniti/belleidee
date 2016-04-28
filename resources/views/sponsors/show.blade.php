@@ -8,36 +8,16 @@
 @stop
 
 @section('centerText')
-    <div>
-        <table class = "formData">
-            <tr>
-                <th>
-                    Location
-                </th>
-                <th>
-                    Views
-                </th>
-                <th>
-                    Clicks
-                </th>
-            </tr>
-            <tr>
-                <td><a href="{{ url('/indev') }}">{{ $sponsor->country }}-{{ $sponsor->location }}</a>
-                </td>
-                <td><a href="{{ url('/indev') }}">{{ $sponsor->views }}</a>
-                </td>
-                <td><a href="{{ url('/indev') }}">{{ $sponsor->clicks }}
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <a href="{{ $sponsor->website }}" target="_blank">Sponsor Website</a>
-                </td>
-            </tr>
-        </table>
-        <hr/>
-        <h2>Promotions</h2>
-    </div>
+        <div class = "indexNav">
+            <a href="{{ url('/sponsors/'. $sponsor->id) }}" target="_blank"><button type = "button" class = "indexButton">Sponsorships: {{ $sponsorships }}</button></a>
+            <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
+            <a href="{{ $sponsor->website }}" target="_blank"><button type = "button" class = "indexButton">Website</button></a>
+        </div>
+
+    <h4>Sponsor Promotions:</h4>
+    <p>Sponsor promotions will start when there are more sponsors using Idee.</p>
+    <p>You may request a new sponsor <a href = {{ url('/sponsorRequests/create') }}>here</a></p>
+
 @stop
 
 @section('centerFooter')

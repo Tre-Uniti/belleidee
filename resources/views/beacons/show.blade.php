@@ -16,7 +16,6 @@
             <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
         </div>
 
-
         <div class = "indexLeft">
             <h4>Top Posts</h4>
         </div>
@@ -40,7 +39,7 @@
 @section('centerFooter')
     <div id = "centerFooter">
         @if($beacon->tier > 0)
-            <a href = {{ url('/users/'. $beacon->guide) }}><button type = "button" class = "navButton">Beacon Guide</button></a>
+            <a href = {{ url('/users/'. $beacon->guide) }}><button type = "button" class = "navButton">Guide</button></a>
         @endif
         @if($user->type > 1)
             <a href="{{ url('/beacons/'.$beacon->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>

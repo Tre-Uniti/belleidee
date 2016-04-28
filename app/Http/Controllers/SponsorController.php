@@ -137,20 +137,15 @@ class SponsorController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $sponsor = $this->sponsor->findOrFail($id);
         Event::fire(new SponsorViewed($sponsor));
+        
+        $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->count();
 
-        //Get user photo
-        if($user->photo_path == '')
-        {
+        $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
         return view ('sponsors.show')
             ->with(compact('user', 'sponsor', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with('location', $location)
+            ->with('sponsorships', $sponsorships);
     }
 
     /**

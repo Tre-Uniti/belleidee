@@ -4,8 +4,11 @@
 @stop
 
 @section('centerText')
-    <div>
-        <h2>Elevations of  <a href={{ url('/extensions/'. $extension->id)}}>{{ $extension->title }}</a></h2>
+    <h2>Elevations of  <a href={{ url('/extensions/'. $extension->id)}}>{{ $extension->title }}</a></h2>
+    <div class = "indexNav">
+        <a href={{ url('/extensions/'. $extension->id)}}><button type = "button" class = "indexButton">Back</button></a>
+        <a href={{ url('/extensions/'. $extension->id)}}><button type = "button" class = "indexButton">Total: {{ $extension->elevation }}</button></a>
+        <a href={{ url('/extensions/extend/list/'.$extension->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
     </div>
     <div class = "indexLeft">
         <h4>Date</h4>
