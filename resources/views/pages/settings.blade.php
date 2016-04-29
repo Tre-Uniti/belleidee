@@ -38,6 +38,7 @@
     </div>
     <div class = "indexNav">
         <a href="{{ url('/local') }}"><button type = "button" class = "indexButton">Local</button></a>
+        <a href="{{ url('/country') }}"><button type = "button" class = "indexButton">Country</button></a>
         <a href="{{ url('/global') }}"><button type = "button" class = "indexButton">Global</button></a>
     </div>
 

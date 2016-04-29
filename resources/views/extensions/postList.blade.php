@@ -8,14 +8,14 @@
         <h2>Extensions of <a href = {{ action('ExtensionController@show', [$sources['extenception']])}}> {{ $sources['extension_title'] }}</a></h2>
         <div class = "indexNav">
             <a href={{ url('/extensions/'. $extension->id)}}><button type = "button" class = "indexButton">Back</button></a>
-            <a href={{ url('/extensions/'. $extension->id)}}><button type = "button" class = "indexButton">Total: {{ $extension->elevation }}</button></a>
+            <a href={{ url('/extensions/'. $extension->id)}}><button type = "button" class = "indexButton">Total: {{ $extension->extension }}</button></a>
             <a href={{ url('/extensions/listElevation/'.$extension->id)}}><button type = "button" class = "indexButton">Elevations</button></a>
         </div>
     @else
         <h2>Extensions of <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></h2>
         <div class = "indexNav">
             <a href={{ url('/posts/'. $post->id)}}><button type = "button" class = "indexButton">Back</button></a>
-            <a href={{ url('/posts/'. $post->id)}}><button type = "button" class = "indexButton">Total: {{ $post->elevation }}</button></a>
+            <a href={{ url('/posts/'. $post->id)}}><button type = "button" class = "indexButton">Total: {{ $post->extension }}</button></a>
             <a href={{ url('/posts/listElevation/'.$post->id)}}><button type = "button" class = "indexButton">Elevations</button></a>
         </div>
     @endif

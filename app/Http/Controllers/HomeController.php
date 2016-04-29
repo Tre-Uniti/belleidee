@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Beacon;
 use App\Elevate;
+use App\Events\SetLocation;
 use App\Events\SponsorViewed;
 use App\Extension;
+use function App\Http\getCountries;
 use function App\Http\getSponsor;
 use App\Http\Requests\PhotoUploadRequest;
 use App\Post;
@@ -406,25 +408,76 @@ class HomeController extends Controller
     public function local()
     {
         $user = Auth::user();
+        $user->location = 0;
+        $user->update();
+
+        $post = Post::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
+        $extension = Extension::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
+
+        if(is_null($post) && is_null($extension))
+        {
+            $lat = NULL;
+            $long = NULL;
+            $country = NULL;
+            $local = NULL;
+            $coordinates = [
+                'lat' => $lat,
+                'long' => $long,
+                'country' => $country,
+                'local' => $local,
+                'location' => 3,
+            ];
+
+            flash()->overlay('Please select where you would like your location to be');
+            session()->put('coordinates', $coordinates);
+            return redirect ('newLocation');
+        }
+
+        Event::fire(New SetLocation($user));
+
+        return redirect ('gettingStarted');
+    }
+
+    /*
+*    Change user location to local (based off last post or extension)
+    */
+    public function country()
+    {
+        $user = Auth::user();
         $user->location = 1;
         $user->update();
 
-        //Get latest post or extension
-        try
+        $post = Post::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
+        $extension = Extension::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
+
+        if(is_null($post) && is_null($extension))
         {
-            $post = Post::where('user_id', '=', $user->id)->firstOrFail();
+            $lat = NULL;
+            $long = NULL;
+            $country = NULL;
+            $local = NULL;
+            $coordinates = [
+                'lat' => $lat,
+                'long' => $long,
+                'country' => $country,
+                'local' => $local,
+                'location' => 3,
+            ];
+
+            flash()->overlay('Please select where you would like your location to be');
+            session()->put('coordinates', $coordinates);
+            return redirect ('newLocation');
         }
 
-        catch(ModelNotFoundException $e)
+        Event::fire(New SetLocation($user));
+
+        $coordinates = session('coordinates');
+        if($coordinates['country'] == NULL)
         {
 
-            flash()->overlay('Please create at least 1 post and 1 extension to use local');
         }
 
-        
-        flash()->overlay('Switched to Local content and filters');
-        return redirect ('settings');
-
+        return redirect ('gettingStarted');
     }
 
     /*
@@ -433,12 +486,57 @@ class HomeController extends Controller
     public function globe()
     {
         $user = Auth::user();
-        $user->location = 0;
+        $user->location = 2;
         $user->update();
 
-        flash()->overlay('Switched to Global content and filters');
-        return redirect ('settings');
+        Event::fire(New SetLocation($user));
 
+        return redirect ('gettingStarted');
+
+    }
+
+    /*
+    * Show form for new user location
+    */
+    public function newLocation()
+    {
+        $user = Auth::user();
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
+
+        $countries = getCountries();
+
+        return view ('pages.newLocation')
+            ->with(compact('user', 'profilePosts', 'profileExtensions'))
+            ->with('countries', $countries);
+    }
+
+    /*
+    * Add location for user and redirect to getting started
+     *
+    */
+    public function addLocation(Request $request)
+    {
+        $user = Auth::user();
+        if($user->location == 0)
+        {
+            $city = $request['city'];
+        }
+        else
+        {
+            $city = NULL;
+        }
+        $coordinates = [
+            'lat' => NULL,
+            'long' => NULL,
+            'country' => $request['country'],
+            'local' => $request['country']. '-' . $city,
+            'location' => $user->location,
+        ];
+        flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $coordinates['local']);
+        session()->put('coordinates', $coordinates);
+
+        return redirect ('/gettingStarted');
     }
 
     /*

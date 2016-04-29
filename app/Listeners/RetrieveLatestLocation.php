@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Beacon;
 use App\Events\SetLocation;
 use App\Extension;
 use App\Post;
@@ -34,67 +35,108 @@ class RetrieveLatestLocation
         $post = Post::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
         $extension = Extension::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
 
-        if (is_null($post) && is_null($extension))
+        if(is_null($post) && is_null($extension))
         {
             $lat = NULL;
             $long = NULL;
+            $country = NULL;
+            $local = NULL;
             $coordinates = [
                 'lat' => $lat,
-                'long' => $long
+                'long' => $long,
+                'country' => $country,
+                'local' => $local,
+                'location' => 3,
             ];
+
+            flash()->overlay('Welcome ' . $user->handle . ' your location is set to: ' . 'Global');
             session()->put('coordinates', $coordinates);
         }
-        elseif(is_null($post) && !is_null($extension))
-        {
-            $lat = $extension->lat;
-            $long = $extension->long;
-            $coordinates = [
-                'lat' => $lat,
-                'long' => $long
-            ];
-            session()->put('coordinates', $coordinates);
-        }
+
+        //Set location of user based off of post location
         elseif(!is_null($post) && is_null($extension))
         {
-            $lat = $post->lat;
-            $long = $post->long;
-            $coordinates = [
-                'lat' => $lat,
-                'long' => $long
-            ];
-            session()->put('coordinates', $coordinates);
+            $this->setCoordinates($user, $post);
         }
+        //Set location of user based off of extension location
+        elseif(is_null($post) && !is_null($extension))
+        {
+            $this->setCoordinates($user, $extension);
+        }
+
+        //Set location if post was created before latest extension
         elseif($post->created_at >= $extension->created_at)
         {
-            $lat = $post->lat;
-            $long = $post->long;
-            $coordinates = [
-                'lat' => $lat,
-                'long' => $long
-            ];
-            session()->put('coordinates', $coordinates);
+            $this->setCoordinates($user, $post);
         }
+
+        //Set location if post was created after latest extension
         elseif($post->created_at <= $extension->created_at)
         {
-            $lat = $extension->lat;
-            $long = $extension->long;
+            $this->setCoordinates($user, $extension);
+        }
+    }
+
+    //Get beacon tag and set coordinates
+    public function setCoordinates($user, $content)
+    {
+        if($content->beacon_tag != 'No-Beacon')
+        {
+            $beacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
+            $country = $beacon->country_code;
+            $local = $beacon->country_code . '-' . $beacon->location_code;
             $coordinates = [
-                'lat' => $lat,
-                'long' => $long
+                'lat' => $content->lat,
+                'long' => $content->long,
+                'country' => $country,
+                'local' => $local,
+                'location' => $user->location,
             ];
+            $this->flashLocation($user, $coordinates);
             session()->put('coordinates', $coordinates);
         }
         else
         {
-            $lat = NULL;
-            $long = NULL;
             $coordinates = [
-                'lat' => $lat,
-                'long' => $long
+                'lat' => NULL,
+                'long' => NULL,
+                'country' => NULL,
+                'local' => NULL,
+                'location' => 3,
             ];
+            flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . 'Global');
             session()->put('coordinates', $coordinates);
         }
+    }
 
-        //flash()->overlay('Data test' . $coordinates['lat']);
+    //Flash message to be sent to user once logged in
+    public function flashLocation($user, $coordinates)
+    {
+        //Local
+        if($user->location == 0)
+        {
+
+            flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $coordinates['local']);
+            
+
+        }
+        //Country
+        elseif($user->location == 1)
+        {
+            if($coordinates['country'] == NULL)
+            {
+                flash()->overlay('No localized posts/extensions yet, please select a location');
+            }
+            else
+            {
+                flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $coordinates['country']);
+            }
+
+        }
+        //Global
+        else
+        {
+            flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . 'Global');
+        }
     }
 }

@@ -181,6 +181,7 @@ Route::get('settings', 'HomeController@getSettings');
 Route::get('indev', 'HomeController@getIndev');
 Route::get('photo', 'HomeController@userPhoto');
 Route::post('storePhoto', 'HomeController@storePhoto');
+
 Route::get('search', 'HomeController@search');
 Route::get('results', 'HomeController@results');
 Route::get('tutorials', 'HomeController@tutorials');
@@ -192,7 +193,10 @@ Route::get('nymi', 'HomeController@nymi');
 Route::get('frequency', 'HomeController@frequency');
 Route::get('gettingStarted', 'HomeController@gettingStarted');
 Route::get('local', 'HomeController@local');
+Route::get('country', 'HomeController@country');
 Route::get('global', 'HomeController@globe');
+Route::get('newLocation', 'HomeController@newLocation');
+Route::get('addLocation', 'HomeController@addLocation');
 //Route::get('getContent/{id}', 'HomeController@getContent');
 
 //Admin routes
