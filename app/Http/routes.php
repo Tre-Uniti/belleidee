@@ -70,6 +70,7 @@ Route::get('posts/extension', 'PostController@sortByExtension');
 Route::get('posts/search', 'PostController@search');
 Route::get('posts/results', 'PostController@results');
 Route::get('posts/listElevation/{id}', 'PostController@listElevation');
+Route::get('posts/setBeaconTagElevation', 'PostController@setBeaconTagElevation');
 Route::resource('posts', 'PostController');
 
 //Draft Routes (Resource)

@@ -4,19 +4,21 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Elevate extends Model
+class Elevation extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'elevation';
+    protected $table = 'elevations';
 
     protected $fillable = [
         'post_id',
         'extension_id',
+        'question_id',
         'source_user',
+        'beacon_tag',
     ];
 
     public function user()

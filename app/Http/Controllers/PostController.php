@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Adjudication;
 use App\Beacon;
 use App\Bookmark;
-use App\Elevate;
+use App\Elevation;
 use App\Events\BeaconViewed;
 use App\Events\SponsorViewed;
 use App\Intolerance;
@@ -46,18 +46,10 @@ class PostController extends Controller
     public function index()
     {
         $user = Auth::user();
-
-        //If user has local set then limit results to only local
-        //Search for beacon tag and compare Country-City like User's Country-City
-
-        //Check location setting and retrieve location
-        if($user->location == 1)
-        {
-            $location = session('coordinates');
-        }
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $posts = $this->post->whereNull('status')->latest('created_at')->take(10)->get();
+
+        $posts = $this->filterPostLocation($user, 0);
 
         $sponsor = getSponsor($user);
 
@@ -202,8 +194,9 @@ class PostController extends Controller
         }
 
         $post = $this->post->findOrFail($id);
-
         $post_path = $post->post_path;
+        $beacon = Beacon::where('beacon_tag', '=', $post->beacon_tag)->first();
+        $location = 'http://www.google.com/maps/place/' . $post->lat . ','. $post->long;
 
         $contents = Storage::get($post_path);
         $post = array_add($post, 'body', $contents);
@@ -236,7 +229,7 @@ class PostController extends Controller
         }
 
         //Check if viewing user has already elevated post
-        if(Elevate::where('post_id', $post->id)->where('user_id', $viewUser->id)->exists())
+        if(Elevation::where('post_id', $post->id)->where('user_id', $viewUser->id)->exists())
         {
             $elevation = 'Elevated';
         }
@@ -287,6 +280,7 @@ class PostController extends Controller
                         ->with('elevation', $elevation)
                         ->with('beacon', $beacon)
                         ->with('sourcePhotoPath', $sourcePhotoPath)
+                        ->with('location', $location)
                         ->with('sponsor', $sponsor);
                 }
             }
@@ -299,17 +293,18 @@ class PostController extends Controller
                         return view('posts.locked')
                             ->with(compact('user', 'viewUser', 'post', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
                             ->with('beacon', $beacon)
+                            ->with('location', $location)
                             ->with('sponsor', $sponsor);
                     }
                 }
             }
-
         }
 
         return view('posts.show')
             ->with(compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'))
             ->with('elevation', $elevation)
             ->with('beacon', $beacon)
+            ->with('location', $location)
             ->with('sourcePhotoPath', $sourcePhotoPath)
             ->with('sponsor', $sponsor);
     }
@@ -460,9 +455,9 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $posts = $this->post->where('source', $source)->latest()->paginate(10);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->paginate(10);
 
+        $posts = $this->filterPostLocation($user, 1);
         $sponsor = getSponsor($user);
 
         return view ('posts.listSources')
@@ -500,7 +495,22 @@ class PostController extends Controller
 
         //Get search title
         $title = $request->input('title');
-        $results = Post::where('title', 'LIKE', '%'.$title.'%')->paginate(10);
+        $location = session('coordinates');
+        //Filter by local
+        if($user->location == 0)
+        {
+            $results = $this->post->whereNull('status')->where('title', 'LIKE', '%'.$title.'%')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->latest('created_at')->paginate(10);
+        }
+        //Filter by Country
+        elseif($user->location == 1)
+        {
+            $results = $this->post->whereNull('status')->where('title', 'LIKE', '%'.$title.'%')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->latest('created_at')->paginate(10);
+        }
+        //Filter by Global
+        else
+        {
+            $results = $this->post->whereNull('status')->where('title', 'LIKE', '%'.$title.'%')->latest('created_at')->paginate(10);
+        }
 
         if(!count($results))
         {
@@ -552,7 +562,7 @@ class PostController extends Controller
         $user = Auth::user();
 
         //Check if the User has already elevated
-        if(Elevate::where('user_id', $user->id)->where('post_id', $id)->exists())
+        if(Elevation::where('user_id', $user->id)->where('post_id', $id)->exists())
         {
             flash('You have already elevated this post');
             return redirect('posts/'. $id);
@@ -562,8 +572,9 @@ class PostController extends Controller
         else
         {
             //Start elevation of Post
-            $elevation = new Elevate;
+            $elevation = new Elevation;
             $elevation->post_id = $post->id;
+            $elevation->beacon_tag = $post->beacon_tag;
 
             //Get user of Post being elevated
             $sourceUser = User::findOrFail($post->user_id);
@@ -612,7 +623,8 @@ class PostController extends Controller
         $user = User::findOrFail($post->user_id);
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $elevations = Elevate::where('post_id', $id)->latest('created_at')->paginate(10);
+
+        $elevations = Elevation::where('post_id', $id)->latest('created_at')->paginate(10);
 
         if($user->photo_path == '')
         {
@@ -658,7 +670,22 @@ class PostController extends Controller
         $queryDate = Carbon::parse($date);
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $posts = $this->post->whereDate('created_at', '=', $queryDate)->latest()->paginate(10);
+
+        $location = session('coordinates');
+        if($user->location == 0)
+        {
+            $posts = $this->post->whereNull('status')->whereDate('created_at', '=', $queryDate)->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->latest('created_at')->paginate(10);
+        }
+        //Filter by Country
+        elseif($user->location == 1)
+        {
+            $posts = $this->post->whereNull('status')->whereDate('created_at', '=', $queryDate)->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->latest('created_at')->paginate(10);
+        }
+        //Filter by Global
+        else
+        {
+            $posts = $this->post->whereNull('status')->whereDate('created_at', '=', $queryDate)->latest('created_at')->paginate(10);
+        }
 
         $sponsor = getSponsor($user);
 
@@ -668,7 +695,7 @@ class PostController extends Controller
     }
 
     /**
-     * Sort and show all posts by highest Elevation
+     * Sort and show latest 10 elevated posts
      * @return \Illuminate\Http\Response
      */
     public function sortByElevation()
@@ -676,7 +703,23 @@ class PostController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $elevations = Elevate::where('post_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
+
+        $location = session('coordinates');
+        //Filter by local
+        if($user->location == 0)
+        {
+            $elevations = Elevation::where('post_id', '!=', 'NULL')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
+        }
+        //Filter by Country
+        elseif($user->location == 1)
+        {
+            $elevations = Elevation::where('post_id', '!=', 'NULL')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
+        }
+        //Filter by Global
+        else
+        {
+            $elevations = Elevation::where('post_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
+        }
 
         $sponsor = getSponsor($user);
 
@@ -695,24 +738,82 @@ class PostController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        $location = session('coordinates');
         if($time == 'Today')
         {
-            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->today())->orderBy('elevation', 'desc')->paginate(10);
+            //Filter by City
+            if($user->location == 0)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->where('created_at', '>=', Carbon::now()->today())->orderBy('elevation', 'desc')->paginate(10);
+            }
+            //Filter by Country
+            elseif($user->location == 1)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->where('created_at', '>=', Carbon::now()->today())->orderBy('elevation', 'desc')->paginate(10);
+            }
+            //Filter by Global
+            else
+            {
+                $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->today())->orderBy('elevation', 'desc')->paginate(10);
+            }
             $filter = Carbon::now()->today()->format('l');
         }
         elseif($time == 'Month')
         {
-            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfMonth())->orderBy('elevation', 'desc')->paginate(10);
+            //Filter by City
+            if($user->location == 0)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->where('created_at', '>=', Carbon::now()->startOfMonth())->orderBy('elevation', 'desc')->paginate(10);
+            }
+            //Filter by Country
+            elseif($user->location == 1)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->where('created_at', '>=', Carbon::now()->startOfMonth())->orderBy('elevation', 'desc')->paginate(10);
+            }
+            //Filter by Global
+            else
+            {
+                $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfMonth())->orderBy('elevation', 'desc')->paginate(10);
+            }
             $filter = Carbon::now()->startOfMonth()->format('F');
         }
         elseif($time == 'Year')
         {
-            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfYear())->orderBy('elevation', 'desc')->paginate(10);
+            //Filter by City
+            if($user->location == 0)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->where('created_at', '>=', Carbon::now()->startOfYear())->orderBy('elevation', 'desc')->paginate(10);
+            }
+            //Filter by Country
+            elseif($user->location == 1)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->where('created_at', '>=', Carbon::now()->startOfYear())->orderBy('elevation', 'desc')->paginate(10);
+            }
+            //Filter by Global
+            else
+            {
+                $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfYear())->orderBy('elevation', 'desc')->paginate(10);
+            }
             $filter = Carbon::now()->startOfYear()->format('Y');
         }
         elseif($time == 'All')
         {
-            $posts = $this->post->whereNull('status')->orderBy('elevation', 'desc')->paginate(10);
+            //Filter by City
+            if($user->location == 0)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->orderBy('elevation', 'desc')->paginate(10);
+            }
+            //Filter by Country
+            elseif($user->location == 1)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->orderBy('elevation', 'desc')->paginate(10);
+            }
+            //Filter by Global
+            else
+            {
+                $posts = $this->post->whereNull('status')->orderBy('elevation', 'desc')->paginate(10);
+            }
             $filter = 'All';
         }
         else
@@ -729,16 +830,31 @@ class PostController extends Controller
     }
 
     /**
-     * Sort and show all posts by highest Extension
+     * Sort and list latest 10 extensions
      * @return \Illuminate\Http\Response
      */
     public function sortByExtension()
     {
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = $this->getProfileExtensions($user);
 
-        $extensions = Extension::where('post_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
+        $location = session('coordinates');
+        //Filter by local
+        if($user->location == 0)
+        {
+            $extensions = Extension::where('post_id', '!=', 'NULL')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
+        }
+        //Filter by Country
+        elseif($user->location == 1)
+        {
+            $extensions = Extension::where('post_id', '!=', 'NULL')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
+        }
+        //Filter by Global
+        else
+        {
+            $extensions = Extension::where('post_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
+        }
 
         $sponsor = getSponsor($user);
 
@@ -756,25 +872,86 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = $this->getProfileExtensions($user);
+
+        $location = session('coordinates');
+
         if($time == 'Today')
         {
-            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->today())->orderBy('extension', 'desc')->paginate(10);
+            //Filter by City
+            if($user->location == 0)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->where('created_at', '>=', Carbon::now()->today())->orderBy('extension', 'desc')->paginate(10);
+            }
+            //Filter by Country
+            elseif($user->location == 1)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->where('created_at', '>=', Carbon::now()->today())->orderBy('extension', 'desc')->paginate(10);
+            }
+            //Filter by Global
+            else
+            {
+                $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->today())->orderBy('extension', 'desc')->paginate(10);
+            }
+
             $filter = Carbon::now()->today()->format('l');
         }
         elseif($time == 'Month')
         {
-            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfMonth())->orderBy('extension', 'desc')->paginate(10);
+            //Filter by City
+            if($user->location == 0)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->where('created_at', '>=', Carbon::now()->startOfMonth())->orderBy('extension', 'desc')->paginate(10);
+            }
+            //Filter by Country
+            elseif($user->location == 1)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->where('created_at', '>=', Carbon::now()->startOfMonth())->orderBy('extension', 'desc')->paginate(10);
+            }
+            //Filter by Global
+            else
+            {
+                $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfMonth())->orderBy('extension', 'desc')->paginate(10);
+            }
             $filter = Carbon::now()->startOfMonth()->format('F');
         }
         elseif($time == 'Year')
         {
-            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfYear())->orderBy('extension', 'desc')->paginate(10);
+            //Filter by City
+            if($user->location == 0)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->where('created_at', '>=', Carbon::now()->startOfYear())->orderBy('extension', 'desc')->paginate(10);
+            }
+            //Filter by Country
+            elseif($user->location == 1)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->where('created_at', '>=', Carbon::now()->startOfYear())->orderBy('extension', 'desc')->paginate(10);
+            }
+            //Filter by Global
+            else
+            {
+                $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfYear())->orderBy('extension', 'desc')->paginate(10);
+            }
             $filter = Carbon::now()->startOfYear()->format('Y');
         }
         elseif($time == 'All')
         {
-            $posts = $this->post->whereNull('status')->orderBy('extension', 'desc')->paginate(10);
+            //Filter by City
+            if($user->location == 0)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->orderBy('extension', 'desc')->paginate(10);
+            }
+            //Filter by Country
+            elseif($user->location == 1)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->orderBy('extension', 'desc')->paginate(10);
+            }
+            //Filter by Global
+            else
+            {
+                $posts = $this->post->whereNull('status')->orderBy('extension', 'desc')->paginate(10);
+            }
+
             $filter = 'All';
         }
         else
@@ -800,25 +977,83 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = $this->getProfileExtensions($user);
+
+        $location = session('coordinates');
         if($time == 'Today')
         {
-            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->today())->latest()->paginate(10);
+            //Filter by City
+            if($user->location == 0)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->where('created_at', '>=', Carbon::now()->today())->latest('created_at')->paginate(10);
+            }
+            //Filter by Country
+            elseif($user->location == 1)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country'].'%')->where('created_at', '>=', Carbon::now()->today())->latest('created_at')->paginate(10);
+            }
+            //Filter by Global
+            else
+            {
+                $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->today())->latest('created_at')->paginate(10);
+            }
+
             $filter = Carbon::now()->today()->format('l');
         }
         elseif($time == 'Month')
         {
-            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfMonth())->latest()->paginate(10);
+            //Filter by City
+            if($user->location == 0)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->where('created_at', '>=', Carbon::now()->startOfMonth())->latest('created_at')->paginate(10);
+            }
+            //Filter by Country
+            elseif($user->location == 1)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country'].'%')->where('created_at', '>=', Carbon::now()->startOfMonth())->latest('created_at')->paginate(10);            }
+            //Filter by Global
+            else
+            {
+                $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfMonth())->latest('created_at')->paginate(10);
+            }
             $filter = Carbon::now()->startOfMonth()->format('F');
         }
         elseif($time == 'Year')
         {
-            $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfYear())->latest()->paginate(10);
+            //Filter by City
+            if($user->location == 0)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->where('created_at', '>=', Carbon::now()->startOfYear())->latest('created_at')->paginate(10);
+            }
+            //Filter by Country
+            elseif($user->location == 1)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country'].'%')->where('created_at', '>=', Carbon::now()->startOfYear())->latest('created_at')->paginate(10);            }
+            //Filter by Global
+            else
+            {
+                $posts = $this->post->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfYear())->latest('created_at')->paginate(10);
+            }
             $filter = Carbon::now()->startOfYear()->format('Y');
         }
         elseif($time == 'All')
         {
-            $posts = $this->post->whereNull('status')->latest('created_at')->paginate(10);
+            //Filter by City
+            if($user->location == 0)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->where('created_at', '>=', Carbon::now()->startOfYear())->latest('created_at')->paginate(10);
+            }
+            //Filter by Country
+            elseif($user->location == 1)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country'].'%')->where('created_at', '>=', Carbon::now()->startOfYear())->latest('created_at')->paginate(10);
+            }
+            //Filter by Global
+            else
+            {
+                $posts = $this->post->whereNull('status')->latest('created_at')->paginate(10);
+            }
+
             $filter = 'All';
         }
         else
@@ -843,6 +1078,88 @@ class PostController extends Controller
         Session::put('unlock', $unlock);
 
         return redirect('posts/'. $post->id);
+    }
+
+    /*
+     * Retrieve posts for a given user's location
+     *
+     * @param $user
+     * @param $number (0 = only 10 records, 1 = paginate)
+     */
+    public function filterPostLocation($user, $number)
+    {
+        if($number < 1)
+        {
+            $location = session('coordinates');
+            //Filter by local
+            if($user->location == 0)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->latest('created_at')->take(10)->get();
+            }
+            //Filter by Country
+            elseif($user->location == 1)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->latest('created_at')->take(10)->get();
+            }
+            //Filter by Global
+            else
+            {
+                $posts = $this->post->whereNull('status')->latest('created_at')->take(10)->get();
+            }
+        }
+        else
+        {
+            $location = session('coordinates');
+            //Filter by local
+            if($user->location == 0)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->latest('created_at')->paginate(10);
+            }
+            //Filter by Country
+            elseif($user->location == 1)
+            {
+                $posts = $this->post->whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->latest('created_at')->paginate(10);
+            }
+            //Filter by Global
+            else
+            {
+                $posts = $this->post->whereNull('status')->latest('created_at')->paginate(10);
+            }
+        }
+
+        return $posts;
+
+    }
+    
+    /*
+     * Temp function to set beacon-tag for all posts/extensions/questions
+     */
+    
+    public function setBeaconTagElevation()
+    {
+        $elevations = Elevation::get();
+        foreach($elevations as $elevation)
+        {
+            if($elevation->post_id != NULL)
+            {
+                //d($elevation);
+                $post = Post::where('id', '=', $elevation->post_id)->first();
+                $elevation->beacon_tag = $post->beacon_tag;
+                $elevation->update();
+            }
+            elseif($elevation->extension_id != NULL)
+            {
+                $extension = Extension::where('id', '=', $elevation->extension_id)->first();
+                $elevation->beacon_tag = $extension->beacon_tag;
+                $elevation->update();
+            }
+            elseif($elevation->question_id != NULL)
+            {
+                $elevation->beacon_tag = 'No-Beacon';
+                $elevation->update();
+            }
+        }
+        return redirect('/posts');
     }
 
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Adjudication;
 use App\Beacon;
-use App\Elevate;
+use App\Elevation;
 use App\Events\BeaconViewed;
 use App\Events\SponsorViewed;
 use App\Intolerance;
@@ -466,7 +466,7 @@ class ExtensionController extends Controller
         if(Auth::user())
         {
 
-            if(Elevate::where('extension_id', $extension->id)->where('user_id', $viewUser->id)->exists())
+            if(Elevation::where('extension_id', $extension->id)->where('user_id', $viewUser->id)->exists())
             {
                 $elevation = 'Elevated';
             }
@@ -1005,7 +1005,7 @@ class ExtensionController extends Controller
     {
         $extension = Extension::findOrFail($id);
         $user = Auth::user();
-        if(Elevate::where('user_id', $user->id)->where('extension_id', $id)->exists())
+        if(Elevation::where('user_id', $user->id)->where('extension_id', $id)->exists())
         {
             flash('You have already elevated this extension');
             return redirect('extensions/'. $id);
@@ -1014,8 +1014,9 @@ class ExtensionController extends Controller
         else
         {
             //Start elevation of Post
-            $elevation = new Elevate;
+            $elevation = new Elevation;
             $elevation->extension_id = $extension->id;
+            $elevation->beacon_tag = $extension->beacon_tag;
 
             //Get user of Extension being elevated
             $sourceUser = User::findOrFail($extension->user_id);
@@ -1066,7 +1067,7 @@ class ExtensionController extends Controller
         $user = User::findOrFail($extension->user_id);
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $elevations = Elevate::where('extension_id', $id)->latest('created_at')->paginate(10);
+        $elevations = Elevation::where('extension_id', $id)->latest('created_at')->paginate(10);
 
         if($user->photo_path == '')
         {
@@ -1229,7 +1230,7 @@ class ExtensionController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $elevations = Elevate::where('extension_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('extension_id')->take(10)->get();
+        $elevations = Elevation::where('extension_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('extension_id')->take(10)->get();
 
         $sponsor = getSponsor($user);
 

@@ -40,12 +40,14 @@ class RetrieveLatestLocation
             $lat = NULL;
             $long = NULL;
             $country = NULL;
-            $local = NULL;
+            $city = NULL;
+            $shortTag = NULL;
             $coordinates = [
                 'lat' => $lat,
                 'long' => $long,
                 'country' => $country,
-                'local' => $local,
+                'city' => $city,
+                'shortTag' => $shortTag,
                 'location' => 3,
             ];
 
@@ -83,13 +85,19 @@ class RetrieveLatestLocation
         if($content->beacon_tag != 'No-Beacon')
         {
             $beacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
-            $country = $beacon->country_code;
-            $local = $beacon->country_code . '-' . $beacon->location_code;
+            $country = $beacon->country;
+           // dd($beacon->city);
+            $cityCode = substr($beacon->city, strpos($beacon->city, "-"));
+            $cityName = substr($beacon->city, 0, strpos($beacon->city, "-"));
+            $city = $beacon->country . '-' . $cityName;
+            $shortTag = $beacon->country . $cityCode;
+            //dd($shortTag);
             $coordinates = [
                 'lat' => $content->lat,
                 'long' => $content->long,
                 'country' => $country,
-                'local' => $local,
+                'city' => $city,
+                'shortTag' => $shortTag,
                 'location' => $user->location,
             ];
             $this->flashLocation($user, $coordinates);
@@ -101,7 +109,8 @@ class RetrieveLatestLocation
                 'lat' => NULL,
                 'long' => NULL,
                 'country' => NULL,
-                'local' => NULL,
+                'city' => NULL,
+                'shortTag' => NULL,
                 'location' => 3,
             ];
             flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . 'Global');
@@ -116,7 +125,7 @@ class RetrieveLatestLocation
         if($user->location == 0)
         {
 
-            flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $coordinates['local']);
+            flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $coordinates['city']);
             
 
         }

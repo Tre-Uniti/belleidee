@@ -24,12 +24,28 @@
                 {!! Form::text('address', $beaconRequest->address, ['class' => 'createTitleText']) !!}
             </div>
         </div>
+    <div class = "formData">
+        <div class = "formLabel">
+            {!! Form::label('country', 'Country') !!}
+        </div>
+        <div class = "formInput">
+            {!! Form::text('country', $beaconRequest->country, ['class' => 'createTitleText']) !!}
+        </div>
+    </div>
+    <div class = "formData">
+        <div class = "formLabel">
+            {!! Form::label('city', 'City') !!}
+        </div>
+        <div class = "formInput">
+            {!! Form::text('city', $beaconRequest->city, ['class' => 'createTitleText']) !!}
+        </div>
+    </div>
         <div class = "formData">
             <div class = "formLabel">
                 {!! Form::label('beacon_tag', 'Beacon Tag') !!}
             </div>
             <div class = "formInput">
-                {!! Form::text('beacon_tag', $beaconRequest->country . '-' . $beaconRequest->location, ['class' => 'createTitleText', 'placeholder' => 'Country-City-Shortname']) !!}
+                {!! Form::text('beacon_tag', $beaconRequest->country . '-', ['class' => 'createTitleText', 'placeholder' => 'Country-City-Shortname']) !!}
             </div>
         </div>
         <div class = "formData">

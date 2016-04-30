@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Elevate;
+use App\Elevation;
 use App\Extension;
 use function App\Http\getSponsor;
 use App\Mailers\NotificationMailer;
@@ -117,7 +117,7 @@ class QuestionController extends Controller
         $sponsor = getSponsor($user);
 
         //Check if viewing user has already elevated question
-        if(Elevate::where('question_id', $question->id)->where('user_id', $user->id)->exists())
+        if(Elevation::where('question_id', $question->id)->where('user_id', $user->id)->exists())
         {
             $elevation = 'Elevated';
         }
@@ -239,7 +239,7 @@ class QuestionController extends Controller
         $user = Auth::user();
 
         //Check if the User has already elevated
-        if(Elevate::where('user_id', $user->id)->where('question_id', $id)->exists())
+        if(Elevation::where('user_id', $user->id)->where('question_id', $id)->exists())
         {
             flash('You have already elevated this question');
             return redirect('questions/'. $id);
@@ -249,8 +249,9 @@ class QuestionController extends Controller
         else
         {
             //Start elevation of Question
-            $elevation = new Elevate;
+            $elevation = new Elevation;
             $elevation->question_id = $question->id;
+            $elevation->beacon_tag = 'No-Beacon';
 
             //Get user of Post being elevated
             $sourceUser = User::findOrFail($question->user_id);
@@ -338,7 +339,7 @@ class QuestionController extends Controller
 
         $sponsor = getSponsor($user);
 
-        if(Elevate::where('question_id', $question->id)->where('user_id', $user->id)->exists())
+        if(Elevation::where('question_id', $question->id)->where('user_id', $user->id)->exists())
         {
             $elevation = 'Elevated';
         }
@@ -366,7 +367,7 @@ class QuestionController extends Controller
 
         $sponsor = getSponsor($user);
 
-        if(Elevate::where('question_id', $question->id)->where('user_id', $user->id)->exists())
+        if(Elevation::where('question_id', $question->id)->where('user_id', $user->id)->exists())
         {
             $elevation = 'Elevated';
         }

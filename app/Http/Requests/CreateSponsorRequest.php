@@ -32,7 +32,7 @@ class CreateSponsorRequest extends Request
             'website'  => 'required|min:10|max:275|unique:sponsors',
             'phone' => 'required|min: 10|max:15',
             'country' => 'required|max:50',
-            'location'  => 'required|max:75',
+            'city'  => 'required|max:75',
             'view_budget' => 'required|min:1|max:15',
             'click_budget' => 'required|min:1|max:15',
             'email' => 'required|email|max:255|unique:sponsors',

@@ -1,27 +1,26 @@
 @extends('app')
+@section('pageHeader')
+    <script src = "/js/index.js"></script>
+@stop
 @section('siteTitle')
     Elevated Posts
 @stop
 @section('centerText')
+    <div>
     <h2>Recently Elevated Posts</h2>
     <div class = "indexNav">
         <a href={{ url('/posts')}}><button type = "button" class = "indexButton">New Posts</button></a>
         <a href={{ url('/posts/search')}}><button type = "button" class = "indexButton">Search</button></a>
         <a href={{ url('/posts/extension')}}><button type = "button" class = "indexButton">Extended</button></a>
     </div>
-        <nav class = "infoNav">
-            <ul>
-                <li>
-                    <p class = "extras">/-\</p>
-                    <div class = "indexNav">
-                        <a href={{ url('/posts/elevationTime/Today')}}><button type = "button" class = "indexButton">Today</button></a>
-                        <a href = {{ url('/posts/elevationTime/Month') }}><button type = "button" class = "indexButton">Month</button></a>
-                        <a href={{ url('/posts/elevationTime/Year')}}><button type = "button" class = "indexButton">Year</button></a>
-                        <a href={{ url('/posts/elevationTime/All')}}><button type = "button" class = "indexButton">All-time</button></a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
+    <button class = "interactButton" id = "hiddenIndex">More</button>
+    <div class = "indexContent" id = "hiddenContent">
+        <a href={{ url('/posts/elevationTime/Today')}}><button type = "button" class = "indexButton">Today</button></a>
+        <a href={{ url('/posts/elevationTime/Month') }}><button type = "button" class = "indexButton">Month</button></a>
+        <a href={{ url('/posts/elevationTime/Year')}}><button type = "button" class = "indexButton">Year</button></a>
+        <a href={{ url('/posts/elevationTime/All')}}><button type = "button" class = "indexButton">All-time</button></a>
+    </div>
+    </div>
     <div class = "indexLeft">
         <h4>Title</h4>
     </div>

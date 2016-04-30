@@ -193,7 +193,7 @@ class BeaconController extends Controller
         $posts = Post::where('beacon_tag', '=', $beacon->beacon_tag)->orderBy('elevation', 'desc')->take(7)->get();
         
         //Get location of beacon and setup link to Google maps
-        $location = 'http://www.google.com/maps/place/'. $beacon->lat . ','. $beacon->long;
+        $location = 'http://www.google.com/maps/place/' . $beacon->lat . ','. $beacon->long;
 
         return view ('beacons.show')
                     ->with(compact('user', 'beacon', 'profilePosts','profileExtensions', 'posts'))

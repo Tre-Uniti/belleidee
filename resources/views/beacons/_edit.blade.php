@@ -18,10 +18,10 @@
     </div>
     <div class = "formData">
         <div class = "formLabel">
-            {!! Form::label('country_code', 'Country:') !!}
+            {!! Form::label('country', 'Country:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::select('country_code', $countries, $beacon->country) !!}
+            {!! Form::select('country', $countries, $beacon->country) !!}
         </div>
     </div>
     <div class = "formData">
@@ -34,10 +34,10 @@
     </div>
     <div class = "formData">
         <div class = "formLabel">
-            {!! Form::label('location_code', 'City:') !!}
+            {!! Form::label('city', 'City:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('location_code', null, ['class' => 'createTitleText']) !!}
+            {!! Form::text('city', null, ['class' => 'createTitleText']) !!}
         </div>
     </div>
     <div class = "formData">

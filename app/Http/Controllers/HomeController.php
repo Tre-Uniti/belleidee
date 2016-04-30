@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Beacon;
-use App\Elevate;
+use App\Elevation;
 use App\Events\SetLocation;
 use App\Events\SponsorViewed;
 use App\Extension;

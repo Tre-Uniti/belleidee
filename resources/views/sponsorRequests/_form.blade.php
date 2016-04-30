@@ -26,10 +26,10 @@
         </div>
         <div class = "formData">
             <div class = "formLabel">
-                {!! Form::label('location', 'City or Region') !!}
+                {!! Form::label('city', 'City') !!}
             </div>
             <div class = "formInput">
-                {!! Form::text('location', null, ['class' => 'createTitleText']) !!}
+                {!! Form::text('city', null, ['class' => 'createTitleText']) !!}
             </div>
         </div>
         <div class = "formData">

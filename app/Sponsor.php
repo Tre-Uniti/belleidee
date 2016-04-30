@@ -16,7 +16,7 @@ class Sponsor extends Model
         'click_budget',
         'adult',
         'country',
-        'location',
+        'city',
         'email',
         'user_id',
         'lat',

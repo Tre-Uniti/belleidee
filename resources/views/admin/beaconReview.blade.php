@@ -30,7 +30,7 @@
         City or Region:
     </div>
     <div class = "formShowData">
-        {{ $beaconRequest->location }}
+        {{ $beaconRequest->city }}
     </div>
     <div class = "formLabel">
         Phone:

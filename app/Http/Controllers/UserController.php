@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bookmark;
-use App\Elevate;
+use App\Elevation;
 use App\Events\TransferUser;
 use App\Extension;
 use App\Listeners\TransferUserContent;
@@ -395,7 +395,7 @@ class UserController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        $elevations = Elevate::where('source_user', $user->id)->latest('created_at')->paginate(10);
+        $elevations = Elevation::where('source_user', $user->id)->latest('created_at')->paginate(10);
 
         if($user->photo_path == '')
         {

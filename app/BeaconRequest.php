@@ -14,7 +14,7 @@ class BeaconRequest extends Model
         'email',
         'address',
         'country',
-        'location',
+        'city',
         'status',
         'admin',
     ];
