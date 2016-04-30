@@ -1,4 +1,7 @@
 @extends('app')
+@section('pageHeader')
+    <script src = "/js/index.js"></script>
+@stop
 @section('siteTitle')
     Extensions
 @stop
@@ -11,25 +14,13 @@
             <a href={{ url('/extensions/search')}}><button type = "button" class = "indexButton">Search</button></a>
             <a href={{ url('/extensions/extension')}}><button type = "button" class = "indexButton">Extended</button></a>
         </div>
-
-        <nav class = "infoNav">
-            <ul>
-                <li>
-                    <p class = "extras">/-\</p>
-                    <div>
-                        <div id = "indexNav">
-                                <a href={{ url('/extensions/timeFilter/Today')}}><button type = "button" class = "indexButton">Today</button></a>
-                                <a href = {{ url('/extensions/timeFilter/Month') }}><button type = "button" class = "indexButton">Month</button></a>
-                                <a href={{ url('/extensions/timeFilter/Year')}}><button type = "button" class = "indexButton">Year</button></a>
-                                <a href={{ url('/extensions/timeFilter/All')}}><button type = "button" class = "indexButton">All-time</button></a>
-                         </div>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <div id = "centerTextContent">
-
+        <button class = "interactButton" id = "hiddenIndex">More</button>
+        <div class = "indexContent" id = "hiddenContent">
+            <a href={{ url('/extensions/timeFilter/Today')}}><button type = "button" class = "indexButton">Today</button></a>
+            <a href={{ url('/extensions/timeFilter/Month') }}><button type = "button" class = "indexButton">Month</button></a>
+            <a href={{ url('/extensions/timeFilter/Year')}}><button type = "button" class = "indexButton">Year</button></a>
+            <a href={{ url('/extensions/timeFilter/All')}}><button type = "button" class = "indexButton">All-time</button></a>
+        </div>
     </div>
     <div class = "indexLeft">
         <h4>Title</h4>

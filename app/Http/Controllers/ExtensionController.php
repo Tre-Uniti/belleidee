@@ -6,15 +6,13 @@ use App\Adjudication;
 use App\Beacon;
 use App\Elevation;
 use App\Events\BeaconViewed;
-use App\Events\SponsorViewed;
+use function App\Http\filterContentLocation;
 use App\Intolerance;
 use App\Mailers\NotificationMailer;
 use App\Moderation;
 use App\Notification;
 use App\Post;
 use App\Question;
-use App\Sponsor;
-use App\Sponsorship;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateExtensionRequest;
 use App\Http\Requests\EditExtensionRequest;
@@ -22,7 +20,6 @@ use App\User;
 use App\Extension;
 use Carbon\Carbon;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -53,6 +50,8 @@ class ExtensionController extends Controller
         $profileExtensions = $this->getProfileExtensions($user);
         $extensions = $this->extension->whereNull('status')->latest('created_at')->take(10)->get();
 
+        $extensions = filterContentLocation($user, 0, 'extension');
+        
         $sponsor = getSponsor($user);
 
         return view ('extensions.index')
@@ -1398,4 +1397,5 @@ class ExtensionController extends Controller
 
         return redirect('extensions/'. $extension->id);
     }
+    
 }
