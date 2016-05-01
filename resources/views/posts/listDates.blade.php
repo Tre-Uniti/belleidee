@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Your Posts
+    Posts by Date
 @stop
 
 @section('centerText')

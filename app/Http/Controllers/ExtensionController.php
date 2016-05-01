@@ -7,6 +7,9 @@ use App\Beacon;
 use App\Elevation;
 use App\Events\BeaconViewed;
 use function App\Http\filterContentLocation;
+use function App\Http\filterContentLocationAllTime;
+use function App\Http\filterContentLocationSearch;
+use function App\Http\filterContentLocationTime;
 use App\Intolerance;
 use App\Mailers\NotificationMailer;
 use App\Moderation;
@@ -48,9 +51,8 @@ class ExtensionController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
-        $extensions = $this->extension->whereNull('status')->latest('created_at')->take(10)->get();
 
-        $extensions = filterContentLocation($user, 0, 'extension');
+        $extensions = filterContentLocation($user, 0, 'Extension');
         
         $sponsor = getSponsor($user);
 
@@ -66,7 +68,7 @@ class ExtensionController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $sources = Session::get('sources');
+        $sources = session('sources');
         if(isset($sources['extenception']))
         {
             $extension = Extension::findOrFail($sources['extenception']);
@@ -754,7 +756,7 @@ class ExtensionController extends Controller
     {
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = $this->getProfileExtensions($user);
 
         $sponsor = getSponsor($user);
 
@@ -775,7 +777,7 @@ class ExtensionController extends Controller
 
         //Get search title
         $title = $request->input('title');
-        $results = Extension::where('title', 'LIKE', '%'.$title.'%')->paginate(10);
+        $results = filterContentLocationSearch($user, 0, 'Extension', $title);
 
         if(!count($results))
         {
@@ -959,7 +961,7 @@ class ExtensionController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
 
-        $extensions = Extension::where('extenception', $id)->latest('created_at')->paginate(14);
+        $extensions = Extension::where('extenception', $id)->latest('created_at')->paginate(10);
 
         if($user->photo_path == '')
         {
@@ -1103,6 +1105,27 @@ class ExtensionController extends Controller
     }
 
     /**
+     * List extensions for a specific date
+     * @param $date
+     * @return \Illuminate\Http\Response
+     */
+    public function listDates($date)
+    {
+        $user = Auth::user();
+        $queryDate = Carbon::parse($date);
+        $dateTime = $queryDate->toDateTimeString();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = $this->getProfileExtensions($user);
+
+        $extensions = filterContentLocationTime($user, 3, 'Extension', $dateTime, 'created_at');
+        $sponsor = getSponsor($user);
+
+        return view ('extensions.listDates')
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with('date', $queryDate);
+    }
+
+    /**
      * Retrieve extensions of specific user.
      *
      * @param   $user_id
@@ -1229,8 +1252,8 @@ class ExtensionController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $elevations = Elevation::where('extension_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('extension_id')->take(10)->get();
 
+        $elevations = filterContentLocation($user, 2, 'Extension');
         $sponsor = getSponsor($user);
 
         return view ('extensions.sortByElevation')
@@ -1251,22 +1274,22 @@ class ExtensionController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         if($time == 'Today')
         {
-            $extensions = $this->extension->whereNull('status')->where('created_at', '>=', Carbon::now()->today())->orderBy('elevation', 'desc')->paginate(10);
+            $extensions = filterContentLocationTime($user, 1, 'Extension', 'today', 'elevation');
             $filter = Carbon::now()->today()->format('l');
         }
         elseif($time == 'Month')
         {
-            $extensions = $this->extension->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfMonth())->orderBy('elevation', 'desc')->paginate(10);
+            $extensions = filterContentLocationTime($user, 1, 'Extension', 'startOfMonth', 'elevation');
             $filter = Carbon::now()->startOfMonth()->format('F');
         }
         elseif($time == 'Year')
         {
-            $extensions = $this->extension->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfYear())->orderBy('elevation', 'desc')->paginate(10);
+            $extensions = filterContentLocationTime($user, 1, 'Extension', 'startOfYear', 'elevation');
             $filter = Carbon::now()->startOfYear()->format('Y');
         }
         elseif($time == 'All')
         {
-            $extensions = $this->extension->whereNull('status')->orderBy('elevation', 'desc')->paginate(10);
+            $extensions = filterContentLocationAllTime($user, 0, 'Extension', 'elevation');
             $filter = 'All';
         }
         else
@@ -1291,8 +1314,8 @@ class ExtensionController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $extensions = Extension::where('extenception', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('extenception')->take(10)->get();
-
+        $extensions =
+        $extensions = filterContentLocation($user, 3, 'Extension');
         $sponsor = getSponsor($user);
 
         return view ('extensions.sortByExtension')
@@ -1312,22 +1335,22 @@ class ExtensionController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         if($time == 'Today')
         {
-            $extensions = $this->extension->whereNull('status')->where('created_at', '>=', Carbon::now()->today())->orderBy('extension', 'desc')->paginate(10);
+            $extensions = filterContentLocationTime($user, 1, 'Extension', 'today', 'extension');
             $filter = Carbon::now()->today()->format('l');
         }
         elseif($time == 'Month')
         {
-            $extensions = $this->extension->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfMonth())->orderBy('extension', 'desc')->paginate(10);
+            $extensions = filterContentLocationTime($user, 1, 'Extension', 'startOfMonth', 'extension');
             $filter = Carbon::now()->startOfMonth()->format('F');
         }
         elseif($time == 'Year')
         {
-            $extensions = $this->extension->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfYear())->orderBy('extension', 'desc')->paginate(10);
+            $extensions = filterContentLocationTime($user, 1, 'Extension', 'startOfYear', 'extension');
             $filter = Carbon::now()->startOfYear()->format('Y');
         }
         elseif($time == 'All')
         {
-            $extensions = $this->extension->whereNull('status')->orderBy('extension', 'desc')->paginate(10);
+            $extensions = $posts = filterContentLocationAllTime($user, 0, 'Extension', 'extension');
             $filter = 'All';
         }
         else
@@ -1356,22 +1379,22 @@ class ExtensionController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         if($time == 'Today')
         {
-            $extensions = $this->extension->whereNull('status')->where('created_at', '>=', Carbon::now()->today())->latest()->paginate(10);
+            $extensions = filterContentLocationTime($user, 0, 'Extension', 'today', 'created_at');
             $filter = Carbon::now()->today()->format('l');
         }
         elseif($time == 'Month')
         {
-            $extensions = $this->extension->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfMonth())->latest()->paginate(10);
+            $extensions = filterContentLocationTime($user, 0, 'Extension', 'startOfMonth', 'created_at');
             $filter = Carbon::now()->startOfMonth()->format('F');
         }
         elseif($time == 'Year')
         {
-            $extensions = $this->extension->whereNull('status')->where('created_at', '>=', Carbon::now()->startOfYear())->latest()->paginate(10);
+            $extensions = filterContentLocationTime($user, 0, 'Extension', 'startOfYear', 'created_at');
             $filter = Carbon::now()->startOfYear()->format('Y');
         }
         elseif($time == 'All')
         {
-            $extensions = $this->extension->whereNull('status')->latest('created_at')->paginate(10);
+            $extensions = filterContentLocation($user, 1, 'Extension');
             $filter = 'All';
         }
         else

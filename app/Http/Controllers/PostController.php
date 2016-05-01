@@ -86,6 +86,70 @@ class PostController extends Controller
     }
 
     /**
+     * Retrieve posts of specific user (Top Elevated).
+     *
+     * @param   $user_id
+     * @return \Illuminate\Http\Response
+     */
+    public function userTopElevated($user_id)
+    {
+        $user = User::findOrFail($user_id);
+        $viewUser = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        $posts = $this->post->where('user_id', $user->id)->orderBy('elevation', 'desc')->latest()->paginate(10);
+
+        if($user->photo_path == '')
+        {
+
+            $sourcePhotoPath = '';
+        }
+        else
+        {
+            $sourcePhotoPath = $user->photo_path;
+        }
+
+        $sponsor = getSponsor($user);
+
+        return view ('posts.userTopElevated')
+            ->with(compact('user', 'viewUser', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with('sourcePhotoPath', $sourcePhotoPath);
+    }
+
+    /**
+     * Retrieve posts of specific user (Top Extended).
+     *
+     * @param   $user_id
+     * @return \Illuminate\Http\Response
+     */
+    public function userMostExtended($user_id)
+    {
+        $user = User::findOrFail($user_id);
+        $viewUser = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        $posts = $this->post->where('user_id', $user->id)->orderBy('extension', 'desc')->latest()->paginate(10);
+
+        if($user->photo_path == '')
+        {
+
+            $sourcePhotoPath = '';
+        }
+        else
+        {
+            $sourcePhotoPath = $user->photo_path;
+        }
+
+        $sponsor = getSponsor($user);
+
+        return view ('posts.userMostExtended')
+            ->with(compact('user', 'viewUser', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with('sourcePhotoPath', $sourcePhotoPath);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -470,7 +534,7 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = $this->getProfileExtensions($user);
 
         $sponsor = getSponsor($user);
 
@@ -487,7 +551,7 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = $this->getProfileExtensions($user);
 
         //Get search title
         $title = $request->input('title');
@@ -605,7 +669,7 @@ class PostController extends Controller
 
         $user = User::findOrFail($post->user_id);
         $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = $this->getProfileExtensions($user);
 
         $elevations = Elevation::where('post_id', $id)->latest('created_at')->paginate(10);
 
@@ -651,25 +715,11 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $queryDate = Carbon::parse($date);
+        $dateTime = $queryDate->toDateTimeString();
         $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = $this->getProfileExtensions($user);
 
-        $location = session('coordinates');
-        if($user->location == 0)
-        {
-            $posts = $this->post->whereNull('status')->whereDate('created_at', '=', $queryDate)->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->latest('created_at')->paginate(10);
-        }
-        //Filter by Country
-        elseif($user->location == 1)
-        {
-            $posts = $this->post->whereNull('status')->whereDate('created_at', '=', $queryDate)->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->latest('created_at')->paginate(10);
-        }
-        //Filter by Global
-        else
-        {
-            $posts = $this->post->whereNull('status')->whereDate('created_at', '=', $queryDate)->latest('created_at')->paginate(10);
-        }
-
+        $posts = filterContentLocationTime($user, 3, 'Post', $dateTime, 'created_at');
         $sponsor = getSponsor($user);
 
         return view ('posts.listDates')
@@ -750,7 +800,8 @@ class PostController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
 
-        $extensions = filterContentLocation($user, 0, 'Extension');
+        //Get lat
+        $extensions = filterContentLocation($user, 3, 'Post');
         $sponsor = getSponsor($user);
 
         return view ('posts.sortByExtension')
@@ -771,7 +822,6 @@ class PostController extends Controller
 
         if($time == 'Today')
         {
-
             $posts = filterContentLocationTime($user, 1, 'Post', 'today', 'extension');
             $filter = Carbon::now()->today()->format('l');
         }

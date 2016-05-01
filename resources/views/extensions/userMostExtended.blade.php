@@ -7,7 +7,7 @@
     <h2>Most Extended Extensions by <a href={{ url('/users/'. $user->id)}}>{{ $user->handle }}</a></h2>
     <div class = "indexNav">
         <a href={{ url('extensions/user/elevated/'. $user->id)}}><button type = "button" class = "indexButton">Top Elevated</button></a>
-        <a href={{ url('/extensions/search')}}><button type = "button" class = "indexButton">Search</button></a>
+        <a href={{ url('/users/'. $user->id)}}><button type = "button" class = "indexButton">Profile</button></a>
         <a href={{ url('extensions/user/'. $user->id)}}><button type = "button" class = "indexButton">Recent</button></a>
     </div>
     <div class = "indexLeft">

@@ -19,7 +19,7 @@
 
     <div class = "contentNav">
         <div class = "contentNavTitleLeft">
-            Interactions
+            Influences
             </div>
         <div class = "contentNavRight">
             <a href="{{ url('/users/elevatedBy/'. $user->id) }}"><button type = "button" class = "indexButton">Elevated: {{ $user->elevation }}</button></a>
