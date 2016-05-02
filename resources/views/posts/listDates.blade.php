@@ -6,9 +6,9 @@
 @section('centerText')
     <h2>Created: {{ $date->format('M-d-Y') }}</h2>
     <div class = "indexNav">
-        <a href={{ url('/posts/elevation')}}><button type = "button" class = "indexButton">Top Elevated</button></a>
+        <a href={{ url('/posts/elevation')}}><button type = "button" class = "indexButton">Recently Elevated</button></a>
         <a href={{ url('/posts/search')}}><button type = "button" class = "indexButton">Search</button></a>
-        <a href={{ url('/posts/extension')}}><button type = "button" class = "indexButton">Most Extended</button></a>
+        <a href={{ url('/posts/extension')}}><button type = "button" class = "indexButton">Recently Extended</button></a>
     </div>
     <div class = "indexLeft">
         <h4>Title</h4>

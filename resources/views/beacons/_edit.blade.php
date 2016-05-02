@@ -1,4 +1,4 @@
-<h2>New Beacon</h2>
+<h2>Edit Beacon</h2>
 <div class = "formDataContainer">
     <div class = "formData">
         <div class = "formLabel">

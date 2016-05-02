@@ -86,12 +86,10 @@ class RetrieveLatestLocation
         {
             $beacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
             $country = $beacon->country;
-           // dd($beacon->city);
             $cityCode = substr($beacon->city, strpos($beacon->city, "-"));
             $cityName = substr($beacon->city, 0, strpos($beacon->city, "-"));
             $city = $beacon->country . '-' . $cityName;
             $shortTag = $beacon->country . $cityCode;
-            //dd($shortTag);
             $coordinates = [
                 'lat' => $content->lat,
                 'long' => $content->long,

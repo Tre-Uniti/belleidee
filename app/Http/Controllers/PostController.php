@@ -515,9 +515,9 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->paginate(10);
+        $profileExtensions = $this->getProfileExtensions($user);
 
-        $posts = filterContentLocation($user, 1, 'Post');
+        $posts = filterContentLocation($user, 4, $source);
         $sponsor = getSponsor($user);
 
         return view ('posts.listSources')
@@ -719,7 +719,7 @@ class PostController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
 
-        $posts = filterContentLocationTime($user, 3, 'Post', $dateTime, 'created_at');
+        $posts = filterContentLocationTime($user, 2, 'Post', $dateTime, 'created_at');
         $sponsor = getSponsor($user);
 
         return view ('posts.listDates')
@@ -755,7 +755,7 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = $this->getProfileExtensions($user);
 
         if($time == 'Today')
         {
@@ -799,8 +799,7 @@ class PostController extends Controller
         $user = Auth::user();
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
-
-        //Get lat
+        
         $extensions = filterContentLocation($user, 3, 'Post');
         $sponsor = getSponsor($user);
 

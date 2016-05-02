@@ -518,22 +518,43 @@ class HomeController extends Controller
     public function addLocation(Request $request)
     {
         $user = Auth::user();
-        if($user->location == 0)
+
+        if($request['city'] != null)
         {
             $city = $request['city'];
+            $beacon = Beacon::where('city', 'LIKE', '%'. $city . '%')->where('country', '=', $request['country'])->first();
+            if(is_null($beacon))
+            {
+                flash()->overlay('No beacons in this area yet, please submit a beacon request');
+                return redirect()->back();
+            }
+            $cityCode = substr($beacon->city, strpos($beacon->city, "-"));
+            $cityName = substr($beacon->city, 0, strpos($beacon->city, "-"));
+            $city = $beacon->country . '-' . $cityName;
+            $user->location = 0;
+            $user->update();
+            $shortTag = $beacon->country . $cityCode;
+            flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $city);
         }
         else
         {
             $city = NULL;
+            $cityName = NULL;
+            $shortTag = NULL;
+            $user->location = 1;
+            $user->update();
+            flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $request['country']);
         }
+
         $coordinates = [
             'lat' => NULL,
             'long' => NULL,
             'country' => $request['country'],
-            'local' => $request['country']. '-' . $city,
+            'city' => $city,
+            'shortTag' => $shortTag,
             'location' => $user->location,
         ];
-        flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $coordinates['local']);
+
         session()->put('coordinates', $coordinates);
 
         return redirect ('/gettingStarted');
