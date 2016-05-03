@@ -31,6 +31,8 @@ Route::get('beacons/results', 'BeaconController@results');
 Route::get('beacons/top', 'BeaconController@topUsage');
 Route::get('beacons/signup/{id}', 'BeaconController@signup');
 Route::post('beacons/subscribe', 'BeaconController@subscribe')->name('subscribe');
+Route::get('beacons/invoice/{id}', 'BeaconController@invoice');
+Route::get('beacons/invoice/{beacon}/download/{id}', 'BeaconController@downloadInvoice');
 Route::get('beacons/payment/{id}', 'BeaconController@payment');
 Route::get('beacons/subscription/{id}', 'BeaconController@subscription');
 Route::resource('beacons', 'BeaconController');

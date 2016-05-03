@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Bookmark;
+use function App\Http\filterContentLocation;
+use function App\Http\filterContentLocationSearch;
 use function App\Http\getBeliefs;
 use function App\Http\getCountries;
+use function App\Http\getProfileExtensions;
+use function App\Http\getProfilePosts;
 use App\Http\Requests\CreateBeaconRequest;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -41,8 +45,8 @@ class BeaconController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $beacons = $this->beacon->latest()->paginate(10);
-
+        $beacons = filterContentLocation($user, 1, 'Beacon');
+        
         return view ('beacons.index')
                     ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'));
     }
@@ -185,12 +189,12 @@ class BeaconController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
         $beacon = $this->beacon->findOrFail($id);
         $beaconPath = $beacon->photo_path;
         
-        $posts = Post::where('beacon_tag', '=', $beacon->beacon_tag)->orderBy('elevation', 'desc')->take(7)->get();
+        $posts = Post::where('beacon_tag', '=', $beacon->beacon_tag)->orderBy('elevation', 'desc')->take(10)->get();
         
         //Get location of beacon and setup link to Google maps
         $location = 'http://www.google.com/maps/place/' . $beacon->lat . ','. $beacon->long;
@@ -213,8 +217,8 @@ class BeaconController extends Controller
         $beacon = $this->beacon->findOrFail($id);
 
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
 
         //Get beliefs for drop down select (from helpers.php)
         $beliefs = getBeliefs();
@@ -288,7 +292,14 @@ class BeaconController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $beacon = Beacon::findOrFail($id)->get();
+        //Get all posts and extensions with Beacon tag
+        $posts = Post::where('beacon_tag', '=', $beacon->beacon_tag)->get();
+        $extensions = Extension::where('beacon_tag', '=', $beacon->beacon_tag)->get();
+        
+        //Reset all content to No-Beacon
+        //Delete Beacon
+        
     }
 
 
@@ -300,6 +311,10 @@ class BeaconController extends Controller
      */
     public function listTagged($beacon_tag)
     {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        
         //Check if Beacon_tag belongs to an Idee Beacon
         try
         {
@@ -308,17 +323,11 @@ class BeaconController extends Controller
         catch(ModelNotFoundException $e)
         {
             flash()->overlay('No active Idee Beacon with this tag: '.$beacon_tag);
-            $error = "No active Idee Beacon with this tag: $beacon_tag";
-            return redirect()
-                ->back();
+            return redirect()->back();
         }
 
         $posts = Post::where('beacon_tag', $beacon_tag)->latest()->paginate(10);;
-
-        $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-
+        
         $beaconPath = $beacon->photo_path;
 
         return view ('beacons.listTagged')
@@ -335,8 +344,8 @@ class BeaconController extends Controller
     public function search()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
         $types = [
             'Name' => 'Name',
             'Tag' => 'Beacon Tag'
@@ -355,8 +364,8 @@ class BeaconController extends Controller
     public function results(Request $request)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
 
         //Get type
         $type = $request->input('type');
@@ -364,11 +373,11 @@ class BeaconController extends Controller
 
         if($type == 'Name')
         {
-            $results = Beacon::where('name', 'LIKE', '%'.$identifier.'%')->paginate(10);
+            $results = filterContentLocationSearch($user, 0, 'Beacon-Name', $identifier);
         }
         elseif($type == 'Tag')
         {
-            $results = Beacon::where('beacon_tag', 'LIKE', '%'.$identifier.'%')->paginate(10);
+            $results = filterContentLocationSearch($user, 0, 'Beacon-Tag', $identifier);
         }
         else
         {
@@ -395,11 +404,49 @@ class BeaconController extends Controller
     public function topUsage()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
         $beacons = $this->beacon->orderBy('tag_usage', 'desc')->paginate(10);
 
         return view ('beacons.top')
             ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'));
+    }
+
+
+    /**
+     * Display invoices for a specific Beacon.
+     * 
+     * @param $id Beacon id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function invoice($id)
+    {
+        $beacon = Beacon::findOrFail($id);
+        
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $invoices = $beacon->invoices();
+
+        return view ('beacons.invoices')
+            ->with(compact('user', 'beacon', 'profilePosts','profileExtensions', 'invoices'));
+    }
+    
+    /*
+     * Download specific invoice for beacon
+     * 
+     * @param $id beacon id
+     * @param $invoiceId specific invoice
+     */
+    public function downloadInvoice($id, $invoiceId)
+    {
+        $beacon = Beacon::findOrFail($id);
+        return $beacon->downloadInvoice($invoiceId, [
+            'vendor'  => 'Tre-Uniti LLC',
+            'product' => 'Belle-Idee',
+        ]);
     }
 }

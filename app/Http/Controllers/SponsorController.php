@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Events\SponsorViewed;
 use App\Extension;
+use function App\Http\filterContentLocation;
+use function App\Http\filterContentLocationSearch;
+use function App\Http\getProfileExtensions;
+use function App\Http\getProfilePosts;
 use App\Http\Requests\CreateSponsorRequest;
 use App\Http\Requests\SponsorRequest;
 use App\Http\Requests\PhotoUploadRequest;
@@ -40,9 +44,9 @@ class SponsorController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $sponsors = $this->sponsor->latest()->paginate(10);
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        $sponsors = filterContentLocation($user, 1, 'Sponsor');
 
         if(Sponsorship::where('user_id', '=', $user->id)->exists())
         {
@@ -63,8 +67,8 @@ class SponsorController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
 
         return view('sponsors.create')
             ->with(compact('user', 'profilePosts', 'profileExtensions'));
@@ -133,8 +137,8 @@ class SponsorController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
         $sponsor = $this->sponsor->findOrFail($id);
         Event::fire(new SponsorViewed($sponsor));
         
@@ -160,8 +164,8 @@ class SponsorController extends Controller
         $sponsor = $this->sponsor->findOrFail($id);
 
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
         //Get user photo
         if($user->photo_path == '')
         {
@@ -234,7 +238,9 @@ class SponsorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sponsor = Sponsor::findOrFail($id);
+        //Delete Sponsorships
+        //Send notification to users for new sponsor
     }
 
     /**
@@ -280,8 +286,8 @@ class SponsorController extends Controller
     {
         $sponsor = Sponsor::findOrFail($id);
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
 
         //Customer exists charge card on file
         $amount = $sponsor->views * .5 + $sponsor->clicks * 5;
@@ -346,7 +352,6 @@ class SponsorController extends Controller
                 'card'  => $token
 
             ));
-            //dd($customer);
             $charge = \Stripe\Charge::create(array(
                 'customer' => $customer->id,
                 'amount'   => $amount,
@@ -373,7 +378,7 @@ class SponsorController extends Controller
                 ->update(['views' => 0, 'clicks' => 0, 'missed' => 0, 'status' => 'Live']);
         }
 
-        flash()->overlay('Payment successful: views, clicks, missed restarted');
+        flash()->overlay('Payment successful: views, clicks, missed reset to 0');
 
         return redirect('sponsors/'. $sponsor->id);
     }
@@ -386,11 +391,10 @@ class SponsorController extends Controller
     public function search()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
         $types = [
             'Name' => 'Name',
-            'Location' => 'Location'
         ];
 
         return view ('sponsors.search')
@@ -406,25 +410,12 @@ class SponsorController extends Controller
     public function results(Request $request)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-
-        //Get type
-        $type = $request->input('type');
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        
         $identifier = $request->input('identifier');
 
-        if($type == 'Name')
-        {
-            $results = Sponsor::where('name', 'LIKE', '%'.$identifier.'%')->paginate(10);
-        }
-        elseif($type == 'Location')
-        {
-            $results = Sponsor::where('country', 'LIKE', '%'.$identifier.'%')->orWhere('city', 'LIKE', '%'.$identifier.'%')->paginate(10);
-        }
-        else
-        {
-            $results = null;
-        }
+        $results = filterContentLocationSearch($user, 0, 'Sponsor', $identifier);
 
         if(!count($results))
         {
@@ -434,7 +425,6 @@ class SponsorController extends Controller
 
         return view ('sponsors.results')
             ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
-            ->with('type', $type)
             ->with('identifier', $identifier);
     }
 

@@ -29,7 +29,7 @@
 
 @stop
 @section('centerFooter')
-    {!! $results->appends(['identifier' => $identifier])->render() !!}
+    {!! $results->appends(['type' => $type, 'identifier' => $identifier])->render() !!}
 @stop
 
 

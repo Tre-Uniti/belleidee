@@ -37,21 +37,22 @@ class RetrieveLatestLocation
 
         if(is_null($post) && is_null($extension))
         {
-            $lat = NULL;
-            $long = NULL;
-            $country = NULL;
-            $city = NULL;
-            $shortTag = NULL;
             $coordinates = [
-                'lat' => $lat,
-                'long' => $long,
-                'country' => $country,
-                'city' => $city,
-                'shortTag' => $shortTag,
-                'location' => 3,
+                'lat' => NULL,
+                'long' => NULL,
+                'country' => NULL,
+                'city' => NULL,
+                'cityCode' => NULL,
+                'cityName' => NULL,
+                'shortTag' => NULL,
+                'location' => 2,
             ];
 
-            flash()->overlay('Welcome ' . $user->handle . ' your location is set to: ' . 'Global');
+            //Set user location to Global in database
+            $user->location = 2;
+            $user->update();
+            
+            $this->flashLocation($user, $coordinates);
             session()->put('coordinates', $coordinates);
         }
 
@@ -82,20 +83,30 @@ class RetrieveLatestLocation
     //Get beacon tag and set coordinates
     public function setCoordinates($user, $content)
     {
-        if($content->beacon_tag != 'No-Beacon')
+        $beacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
+        if($content->beacon_tag != 'No-Beacon' && !is_null($beacon))
         {
-            $beacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
+
             $country = $beacon->country;
+
+            //Separate out city code and name
             $cityCode = substr($beacon->city, strpos($beacon->city, "-"));
             $cityName = substr($beacon->city, 0, strpos($beacon->city, "-"));
+
+            //Add country to city name
             $city = $beacon->country . '-' . $cityName;
+
+            //Add country to city code
             $shortTag = $beacon->country . $cityCode;
+
             $coordinates = [
                 'lat' => $content->lat,
                 'long' => $content->long,
                 'country' => $country,
                 'city' => $city,
                 'shortTag' => $shortTag,
+                'cityCode' => $cityCode,
+                'cityName' => $cityName,
                 'location' => $user->location,
             ];
             $this->flashLocation($user, $coordinates);
@@ -108,10 +119,16 @@ class RetrieveLatestLocation
                 'long' => NULL,
                 'country' => NULL,
                 'city' => NULL,
+                'cityCode' => NULL,
+                'cityName' => NULL,
                 'shortTag' => NULL,
-                'location' => 3,
+                'location' => 2,
             ];
-            flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . 'Global');
+
+            //Set user location to Global in database
+            $user->location = 2;
+            $user->update();
+            $this->flashLocation($user, $coordinates);
             session()->put('coordinates', $coordinates);
         }
     }
@@ -122,10 +139,7 @@ class RetrieveLatestLocation
         //Local
         if($user->location == 0)
         {
-
             flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $coordinates['city']);
-            
-
         }
         //Country
         elseif($user->location == 1)
@@ -138,7 +152,6 @@ class RetrieveLatestLocation
             {
                 flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $coordinates['country']);
             }
-
         }
         //Global
         else

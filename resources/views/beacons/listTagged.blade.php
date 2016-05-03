@@ -3,7 +3,7 @@
     Beacons
 @stop
 @section('centerText')
-    <h2><a href={{ url('/beacons/'. $beacon->id)}}>Posts of {{$beacon->beacon_tag}}</a></h2>
+    <h2>Posts of <a href={{ url('/beacons/'. $beacon->id)}}>{{$beacon->beacon_tag}}</a></h2>
     <div class = "indexNav">
         <a href={{ url('/beacons/'. $beacon->id)}}><button type = "button" class = "indexButton">Profile</button></a>
         @if($beacon->tier > 0)

@@ -1,6 +1,7 @@
+<h2>Sponsor</h2>
 <div class = "formDataContainer">
     <div class = "formLabel">
-        <b>{!! Form::label('name', 'Sponsor Name') !!}</b>
+        {!! Form::label('name', 'Name') !!}
     </div>
     <div class = "formInput">
         {!! Form::text('name', null, ['class' => 'createTitleText', 'autofocus']) !!}
@@ -12,16 +13,16 @@
         {!! Form::text('address', null, ['class' => 'createTitleText']) !!}
     </div>
     <div class = "formLabel">
-        {!! Form::label('city', 'City:') !!}
-    </div>
-    <div class = "formInput">
-        {!! Form::text('city', null, ['class' => 'createTitleText']) !!}
-    </div>
-    <div class = "formLabel">
         {!! Form::label('country', 'Country:') !!}
     </div>
     <div class = "formInput">
         {!! Form::text('country', null, ['class' => 'createTitleText']) !!}
+    </div>
+    <div class = "formLabel">
+        {!! Form::label('city', 'City:') !!}
+    </div>
+    <div class = "formInput">
+        {!! Form::text('city', null, ['class' => 'createTitleText']) !!}
     </div>
     <div class = "formLabel">
         {!! Form::label('website', 'Website:') !!}
@@ -82,7 +83,7 @@
         {!! Form::checkbox('adult') !!}
     </div>
     <div class = "formLabel">
-        {!! Form::label('Max Upload size: 2MB') !!}
+        {!! Form::label('Max Upload size: 8MB') !!}
     </div>
     <div class = "formInput">
         {!! Form::file('image', null, ['class' => 'navButton']) !!}

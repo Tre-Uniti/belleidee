@@ -111,10 +111,13 @@ class UserController extends Controller
         {
             $sponsor = NULL;
         }
+        //Get Beacons of post user
+        $userBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
 
         return view('users.show')
             ->with(compact('user', 'viewUser', 'profilePosts', 'profileExtensions'))
             ->with('sourcePhotoPath', $sourcePhotoPath)
+            ->with('userBeacons', $userBeacons)
             ->with('extensions', $extensions)
             ->with('posts', $posts)
             ->with('sponsor', $sponsor);

@@ -62,6 +62,24 @@ function getBeacon($content)
 }
 
 /*
+ * Get the profile posts for a user
+ */
+function getProfilePosts($user)
+{
+    $posts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+    return $posts;
+}
+
+/*
+ * Get the profile extensions for a user
+ */
+function getProfileExtensions($user)
+{
+    $extensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+    return $extensions;
+}
+
+/*
  * Get list of beliefs
  */
 function getBeliefs()
@@ -384,11 +402,11 @@ function filterContentLocation($user, $number, $type)
         {
             if($type == 'Post')
             {
-                $filteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->latest('created_at')->take(10)->get();
+                $filteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->take(10)->get();
             }
             elseif($type == 'Extension')
             {
-                $filteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->latest('created_at')->take(10)->get();
+                $filteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->take(10)->get();
             }
         }
         //Filter by Country
@@ -396,11 +414,11 @@ function filterContentLocation($user, $number, $type)
         {
             if($type == 'Post')
             {
-                $filteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country'].'%')->latest('created_at')->take(10)->get();
+                $filteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', $location['country'].'%')->latest('created_at')->take(10)->get();
             }
             elseif($type == 'Extension')
             {
-                $filteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country'].'%')->latest('created_at')->take(10)->get();
+                $filteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', $location['country'].'%')->latest('created_at')->take(10)->get();
             }
         }
         //Filter by Global
@@ -424,11 +442,19 @@ function filterContentLocation($user, $number, $type)
         {
             if($type == 'Post')
             {
-                $filteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->latest('created_at')->paginate(10);
+                $filteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->paginate(10);
             }
             elseif($type == 'Extension')
             {
-                $filteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->latest('created_at')->paginate(10);
+                $filteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->paginate(10);
+            }
+            elseif($type == 'Beacon')
+            {
+                $filteredContent = Beacon::where('beacon_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->paginate(10);
+            }
+            elseif($type == 'Sponsor')
+            {
+                $filteredContent = Sponsor::where('country', '=', $location['country'])->where('city', '=', $location['cityName']. '-' . $location['cityCode'])->latest('created_at')->paginate(10);
             }
         }
         //Filter by Country
@@ -436,11 +462,19 @@ function filterContentLocation($user, $number, $type)
         {
             if($type == 'Post')
             {
-                $filteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country'].'%')->latest('created_at')->paginate(10);
+                $filteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->latest('created_at')->paginate(10);
             }
             elseif($type == 'Extension')
             {
-                $filteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country'].'%')->latest('created_at')->paginate(10);
+                $filteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->latest('created_at')->paginate(10);
+            }
+            elseif($type == 'Beacon')
+            {
+                $filteredContent = Beacon::where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->latest('created_at')->paginate(10);
+            }
+            elseif($type == 'Sponsor')
+            {
+                $filteredContent = Sponsor::where('country', '=', $location['country'])->latest('created_at')->paginate(10);
             }
         }
         //Filter by Global
@@ -454,6 +488,14 @@ function filterContentLocation($user, $number, $type)
             {
                 $filteredContent = Extension::whereNull('status')->latest('created_at')->paginate(10);
             }
+            elseif($type == 'Beacon')
+            {
+                $filteredContent = Beacon::latest('created_at')->paginate(10);
+            }
+            elseif($type == 'Sponsor')
+            {
+                $filteredContent = Sponsor::latest('created_at')->paginate(10);
+            }
         }
     }
     //Elevation filter for latest content
@@ -464,11 +506,11 @@ function filterContentLocation($user, $number, $type)
         {
             if($type == 'Post')
             {
-                $filteredContent = Elevation::where('post_id', '!=', 'NULL')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
+                $filteredContent = Elevation::where('post_id', '!=', 'NULL')->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
             }
             elseif($type == 'Extension')
             {
-                $filteredContent = Elevation::where('extension_id', '!=', 'NULL')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->orderByRaw('max(created_at) desc')->groupBy('extension_id')->take(10)->get();
+                $filteredContent = Elevation::where('extension_id', '!=', 'NULL')->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->orderByRaw('max(created_at) desc')->groupBy('extension_id')->take(10)->get();
             }
         }
         //Filter by Country
@@ -476,11 +518,11 @@ function filterContentLocation($user, $number, $type)
         {
             if($type == 'Post')
             {
-                $filteredContent = Elevation::where('post_id', '!=', 'NULL')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
+                $filteredContent = Elevation::where('post_id', '!=', 'NULL')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->orderByRaw('max(created_at) desc')->groupBy('post_id')->take(10)->get();
             }
             elseif($type == 'Extension')
             {
-                $filteredContent = Elevation::where('extension_id', '!=', 'NULL')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->orderByRaw('max(created_at) desc')->groupBy('extension_id')->take(10)->get();
+                $filteredContent = Elevation::where('extension_id', '!=', 'NULL')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->orderByRaw('max(created_at) desc')->groupBy('extension_id')->take(10)->get();
             }
         }
         //Filter by Global
@@ -504,22 +546,22 @@ function filterContentLocation($user, $number, $type)
         {
             if ($type == 'Post')
             {
-                $filteredContent = Extension::whereNull('status')->whereNotNull('post_id')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->latest('created_at')->take(10)->get();
+                $filteredContent = Extension::whereNull('status')->whereNotNull('post_id')->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->take(10)->get();
             }
             elseif ($type == 'Extension')
             {
-                $filteredContent = Extension::whereNull('status')->whereNotNull('extenception')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->orderByRaw('max(created_at) desc')->groupBy('extenception')->take(10)->get();
+                $filteredContent = Extension::whereNull('status')->whereNotNull('extenception')->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->orderByRaw('max(created_at) desc')->groupBy('extenception')->take(10)->get();
             }
         }
         elseif($user->location == 1)
         {
             if ($type == 'Post')
             {
-                $filteredContent = Extension::whereNull('status')->whereNotNull('post_id')->where('beacon_tag', 'LIKE', '%'.$location['country'].'%')->latest('created_at')->take(10)->get();
+                $filteredContent = Extension::whereNull('status')->whereNotNull('post_id')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->latest('created_at')->take(10)->get();
             }
             elseif ($type == 'Extension')
             {
-                $filteredContent = Extension::whereNull('status')->whereNotNull('extenception')->where('beacon_tag', 'LIKE', '%'.$location['country'].'%')->orderByRaw('max(created_at) desc')->groupBy('extenception')->take(10)->get();
+                $filteredContent = Extension::whereNull('status')->whereNotNull('extenception')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->orderByRaw('max(created_at) desc')->groupBy('extenception')->take(10)->get();
             }
         }
         elseif($user->location == 2)
@@ -540,11 +582,11 @@ function filterContentLocation($user, $number, $type)
     {
         if($user->location == 0)
         {
-            $filteredContent = Post::whereNull('status')->where('source', '=', $type)->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->latest('created_at')->paginate(10);
+            $filteredContent = Post::whereNull('status')->where('source', '=', $type)->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->paginate(10);
         }
         elseif($user->location == 1)
         {
-            $filteredContent = Post::whereNull('status')->where('source', '=', $type)->where('beacon_tag', 'LIKE', '%'.$location['country'].'%')->latest('created_at')->paginate(10);
+            $filteredContent = Post::whereNull('status')->where('source', '=', $type)->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->latest('created_at')->paginate(10);
         }
         elseif($user->location == 2)
         {
@@ -566,10 +608,10 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
         {
             if ($type == 'Post')
             {
-                $timeFilteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', '%' . $location['shortTag'] . '%')->where('created_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
+                $timeFilteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->where('created_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
             } elseif ($type == 'Extension')
             {
-                $timeFilteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', '%' . $location['shortTag'] . '%')->where('created_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
+                $timeFilteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->where('created_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
             }
 
         } //Filter by Country
@@ -577,10 +619,10 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
         {
             if ($type == 'Post')
             {
-                $timeFilteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', '%' . $location['country'] . '%')->where('created_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
+                $timeFilteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->where('created_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
             } elseif ($type == 'Extension')
             {
-                $timeFilteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', '%' . $location['country'] . '%')->where('created_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
+                $timeFilteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->where('created_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
             }
         } //Filter by Global
         else
@@ -604,22 +646,22 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
         {
             if ($type == 'Post')
             {
-                $timeFilteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->where('created_at', '>=', Carbon::now()->$time())->orderBy($order, 'desc')->paginate(10);
+                $timeFilteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->where('created_at', '>=', Carbon::now()->$time())->orderBy($order, 'desc')->paginate(10);
             }
             elseif ($type == 'Extension')
             {
-                $timeFilteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->where('created_at', '>=', Carbon::now()->$time())->orderBy($order, 'desc')->paginate(10);
+                $timeFilteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->where('created_at', '>=', Carbon::now()->$time())->orderBy($order, 'desc')->paginate(10);
             }
         } //Filter by Country
         elseif ($user->location == 1)
         {
             if ($type == 'Post')
             {
-                $timeFilteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->where('created_at', '>=', Carbon::now()->$time())->orderBy($order, 'desc')->paginate(10);
+                $timeFilteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->where('created_at', '>=', Carbon::now()->$time())->orderBy($order, 'desc')->paginate(10);
             }
             elseif ($type == 'Extension')
             {
-                $timeFilteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->where('created_at', '>=', Carbon::now()->$time())->orderBy($order, 'desc')->paginate(10);            }
+                $timeFilteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->where('created_at', '>=', Carbon::now()->$time())->orderBy($order, 'desc')->paginate(10);            }
         } //Filter by Global
         else
         {
@@ -642,11 +684,11 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
         {
             if($type == 'Post')
             {
-                $timeFilteredContent = Post::whereNull('status')->whereDate('created_at', '=', $time)->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->latest($order)->paginate(10);
+                $timeFilteredContent = Post::whereNull('status')->whereDate('created_at', '=', $time)->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->latest($order)->paginate(10);
             }
             elseif($type == 'Extension')
             {
-                $timeFilteredContent = Extension::whereNull('status')->whereDate('created_at', '=', $time)->where('beacon_tag', 'LIKE', '%'.$location['shortTag'].'%')->latest($order)->paginate(10);
+                $timeFilteredContent = Extension::whereNull('status')->whereDate('created_at', '=', $time)->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->latest($order)->paginate(10);
             }
         }
         //Filter by Country
@@ -654,11 +696,11 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
         {
             if($type == 'Post')
             {
-                $timeFilteredContent = Post::whereNull('status')->whereDate('created_at', '=', $time)->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->latest($order)->paginate(10);
+                $timeFilteredContent = Post::whereNull('status')->whereDate('created_at', '=', $time)->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->latest($order)->paginate(10);
             }
             elseif($type == 'Extension')
             {
-                $timeFilteredContent = Extension::whereNull('status')->whereDate('created_at', '=', $time)->where('beacon_tag', 'LIKE', '%'.$location['country']. '-'. '%')->latest($order)->paginate(10);
+                $timeFilteredContent = Extension::whereNull('status')->whereDate('created_at', '=', $time)->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->latest($order)->paginate(10);
             }
             
         }
@@ -687,11 +729,11 @@ function filterContentLocationAllTime($user, $number, $type, $order)
         {
             if ($type == 'Post')
             {
-                $timeFilteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', '%' . $location['shortTag'] . '%')->orderBy($order, 'desc')->paginate(10);
+                $timeFilteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->orderBy($order, 'desc')->paginate(10);
             }
             elseif ($type == 'Extension')
             {
-                $timeFilteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', '%' . $location['shortTag'] . '%')->orderBy($order, 'desc')->paginate(10);
+                $timeFilteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->orderBy($order, 'desc')->paginate(10);
             }
   
 
@@ -700,10 +742,10 @@ function filterContentLocationAllTime($user, $number, $type, $order)
         {
             if ($type == 'Post')
             {
-                $timeFilteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', '%' . $location['country'] . '%')->orderBy($order, 'desc')->paginate(10);
+                $timeFilteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->orderBy($order, 'desc')->paginate(10);
             } elseif ($type == 'Extension')
             {
-                $timeFilteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', '%' . $location['country'] . '%')->orderBy($order, 'desc')->paginate(10);
+                $timeFilteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->orderBy($order, 'desc')->paginate(10);
             }
       
         } //Filter by Global
@@ -721,11 +763,12 @@ function filterContentLocationAllTime($user, $number, $type, $order)
     return $timeFilteredContent;
 }
 
+//Search-based filters (i.e Post, Extension, Beacon, Sponsor searches)
 function filterContentLocationSearch($user, $number, $type, $search)
 {
 
     $location = session('coordinates');
-    //Time-based filters (i.e Monthly elevated posts/extensions)
+
     if ($number == 0)
     {
         //Filter by City
@@ -733,25 +776,57 @@ function filterContentLocationSearch($user, $number, $type, $search)
         {
             if ($type == 'Post')
             {
-                $searchFilteredContent = Post::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', '%' . $location['shortTag'] . '%')->latest('created_at')->paginate(10);
+                $searchFilteredContent = Post::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->latest('created_at')->paginate(10);
             }
             elseif ($type == 'Extension')
             {
-                $searchFilteredContent = Extension::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', '%' . $location['shortTag'] . '%')->latest('created_at')->paginate(10);
+                $searchFilteredContent = Extension::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->latest('created_at')->paginate(10);
+            }
+            elseif ($type == 'Beacon-Name' || $type == 'Beacon-Tag')
+            {
+                if($type == 'Beacon-Name')
+                {
+                    $searchFilteredContent = Beacon::where('name', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->paginate(10);
+                }
+                elseif($type == 'Beacon-Tag')
+                {
+                    $searchFilteredContent = Beacon::where('beacon_tag', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->paginate(10);
+                }
+            }
+            elseif ($type == 'Sponsor')
+            {
+                $searchFilteredContent = Sponsor::where('name', 'LIKE', '%'.$search.'%')->where('city', '=', $location['cityName'] . '-' . $location['cityCode'])->paginate(10);
             }
 
-        } //Filter by Country
+        }
+        //Filter by Country
         elseif ($user->location == 1)
         {
             if ($type == 'Post')
             {
-                $searchFilteredContent = Post::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', '%' . $location['country'] . '%')->latest('created_at')->paginate(10);
+                $searchFilteredContent = Post::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->latest('created_at')->paginate(10);
             }
             elseif ($type == 'Extension')
             {
-                $searchFilteredContent = Extension::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', '%' . $location['country'] . '%')->latest('created_at')->paginate(10);
+                $searchFilteredContent = Extension::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->latest('created_at')->paginate(10);
             }
-        } //Filter by Global
+            elseif ($type == 'Beacon-Name' || $type == 'Beacon-Tag')
+            {
+                if($type == 'Beacon-Name')
+                {
+                    $searchFilteredContent = Beacon::where('name', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['country'] . '%')->paginate(10);
+                }
+                elseif($type == 'Beacon-Tag')
+                {
+                    $searchFilteredContent = Beacon::where('beacon_tag', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['country'] . '%')->paginate(10);
+                }
+            }
+            elseif ($type == 'Sponsor')
+            {
+                $searchFilteredContent = Sponsor::where('name', 'LIKE', '%'.$search.'%')->where('country', '=', $location['country'])->paginate(10);
+            }
+        }
+        //Filter by Global
         else
         {
             if ($type == 'Post')
@@ -761,6 +836,21 @@ function filterContentLocationSearch($user, $number, $type, $search)
             elseif ($type == 'Extension')
             {
                 $searchFilteredContent = Extension::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->latest('created_at')->paginate(10);
+            }
+            elseif ($type == 'Beacon-Name' || $type == 'Beacon-Tag')
+            {
+                if($type == 'Beacon-Name')
+                {
+                    $searchFilteredContent = Beacon::where('name', 'LIKE', '%'.$search.'%')->paginate(10);
+                }
+                elseif($type == 'Beacon-Tag')
+                {
+                    $searchFilteredContent = Beacon::where('beacon_tag', 'LIKE', '%'.$search.'%')->paginate(10);
+                }
+            }
+            elseif ($type == 'Sponsor')
+            {
+                $searchFilteredContent = Sponsor::where('name', 'LIKE', '%'.$search.'%')->where('country', '=', $location['country'])->paginate(10);
             }
         }
     }

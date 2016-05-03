@@ -536,12 +536,14 @@ class ExtensionController extends Controller
                     }
                 }
             }
-
         }
+        //Get Beacons of post user
+        $userBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
 
         return view('extensions.show')
             ->with(compact('user', 'viewUser', 'extension', 'profilePosts', 'profileExtensions', 'sources' ))
             ->with ('elevation', $elevation)
+            ->with ('userBeacons', $userBeacons)
             ->with ('sourcePhotoPath', $sourcePhotoPath)
             ->with('beacon', $beacon)
             ->with('sponsor', $sponsor);
@@ -723,7 +725,7 @@ class ExtensionController extends Controller
             Storage::put($path, $inspiration);
         }
 
-        //If localized get Beacon coordinates and add to extension
+        //If localized get Beacon coordinates and add to extension and update beacon tag usage
         if($request['beacon_tag'] != 'No-Beacon')
         {
             $beacon = Beacon::where('beacon_tag', '=', $request['beacon_tag'])->firstOrFail();
@@ -731,6 +733,9 @@ class ExtensionController extends Controller
             $long = $beacon->long;
             $extension->lat = $lat;
             $extension->long = $long;
+
+            $beacon->tag_usage = $beacon->tag_usage + 1;
+            $beacon->update();
         }
 
         $extension->update($request->except('body', '_method', '_token'));

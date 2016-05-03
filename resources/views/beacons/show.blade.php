@@ -15,6 +15,13 @@
             <a href="{{ $beacon->website }}" target="_blank"><button type = "button" class = "indexButton">Website</button></a>
             <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
         </div>
+        @if($user->type > 1 || $user->id == $beacon->manager)
+            <div class = "indexNav">
+                <a href="{{ url('/beacons/invoice/'. $beacon->id )}}"><button type = "button" class = "indexButton">Invoices</button></a>
+                <a href="{{ url('/moderations') }}"><button type = "button" class = "indexButton">Moderate</button></a>
+            </div>
+        @endif
+        <p>Beacon tags this month: {{ $beacon->tag_usage }}</p>
 
         <div class = "indexLeft">
             <h4>Top Posts</h4>

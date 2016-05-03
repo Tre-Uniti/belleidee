@@ -217,7 +217,7 @@ class PostController extends Controller
 
         $post = new Post($request->except('body'));
 
-        //If localized get Beacon coordinates
+        //If localized get Beacon coordinates, add 1 to tag_usage
         if($request['beacon_tag'] != 'No-Beacon')
         {
             $beacon = Beacon::where('beacon_tag', '=', $request['beacon_tag'])->firstOrFail();
@@ -225,6 +225,9 @@ class PostController extends Controller
             $long = $beacon->long;
             $post->lat = $lat;
             $post->long = $long;
+            
+            $beacon->tag_usage = $beacon->tag_usage + 1;
+            $beacon->update();
         }
 
         $post->user()->associate($user);
@@ -360,9 +363,13 @@ class PostController extends Controller
             }
         }
 
+        //Get Beacons of post user
+        $userBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
+
         return view('posts.show')
             ->with(compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'))
             ->with('elevation', $elevation)
+            ->with('userBeacons', $userBeacons)
             ->with('beacon', $beacon)
             ->with('location', $location)
             ->with('sourcePhotoPath', $sourcePhotoPath)
