@@ -164,6 +164,29 @@ class BeaconController extends Controller
     }
 
     /**
+     * Show subscription for beacon
+     *
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
+    public function billing($id)
+    {
+        $beacon = $this->beacon->findOrFail($id);
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        $beaconPath = $beacon->photo_path;
+        //Get location of beacon and setup link to Google maps
+        $location = 'http://www.google.com/maps/place/' . $beacon->lat . ','. $beacon->long;
+
+        return view ('beacons.billing')
+            ->with(compact('user', 'beacon', 'profilePosts','profileExtensions'))
+            ->with('beaconPath', $beaconPath)
+            ->with('location' , $location);
+
+    }
+
+    /**
      * Swap subscription
      *
      * @param  \Illuminate\Http\Request  $request

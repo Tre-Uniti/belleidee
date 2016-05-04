@@ -914,37 +914,6 @@ class PostController extends Controller
 
         return redirect('posts/'. $post->id);
     }
-    
-    /*
-     * Temp function to set beacon-tag for all posts/extensions/questions
-     */
-    
-    public function setBeaconTagElevation()
-    {
-        $elevations = Elevation::get();
-        foreach($elevations as $elevation)
-        {
-            if($elevation->post_id != NULL)
-            {
-                //d($elevation);
-                $post = Post::where('id', '=', $elevation->post_id)->first();
-                $elevation->beacon_tag = $post->beacon_tag;
-                $elevation->update();
-            }
-            elseif($elevation->extension_id != NULL)
-            {
-                $extension = Extension::where('id', '=', $elevation->extension_id)->first();
-                $elevation->beacon_tag = $extension->beacon_tag;
-                $elevation->update();
-            }
-            elseif($elevation->question_id != NULL)
-            {
-                $elevation->beacon_tag = 'No-Beacon';
-                $elevation->update();
-            }
-        }
-        return redirect('/posts');
-    }
 
 }
 

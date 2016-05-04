@@ -18,6 +18,7 @@
         @if($user->type > 1 || $user->id == $beacon->manager)
             <div class = "indexNav">
                 <a href="{{ url('/beacons/invoice/'. $beacon->id )}}"><button type = "button" class = "indexButton">Invoices</button></a>
+                <a href="{{ url('/beacons/billing/'. $beacon->id )}}"><button type = "button" class = "indexButton">Billing</button></a>
                 <a href="{{ url('/moderations') }}"><button type = "button" class = "indexButton">Moderate</button></a>
             </div>
         @endif

@@ -28,5 +28,11 @@ class Kernel extends ConsoleKernel
                  ->hourly();
         //$schedule->command('backup:clean')->daily()->at('01:00');
         //$schedule->command('backup:run')->daily()->at('02:00');
+
+        //Run Beacon Subscriptions Email and reset tag usage
+        /*$schedule->command('emails:send')
+        ->monthly()
+        ->pingBefore($url)
+        ->thenPing($url);*/
     }
 }

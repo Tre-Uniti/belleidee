@@ -31,9 +31,11 @@ Route::get('beacons/results', 'BeaconController@results');
 Route::get('beacons/top', 'BeaconController@topUsage');
 Route::get('beacons/signup/{id}', 'BeaconController@signup');
 Route::post('beacons/subscribe', 'BeaconController@subscribe')->name('subscribe');
+Route::get('beacons/payment/{id}', 'BeaconController@payment');
+Route::get('beacons/billing/{id}', 'BeaconController@billing');
 Route::get('beacons/invoice/{id}', 'BeaconController@invoice');
 Route::get('beacons/invoice/{beacon}/download/{id}', 'BeaconController@downloadInvoice');
-Route::get('beacons/payment/{id}', 'BeaconController@payment');
+
 Route::get('beacons/subscription/{id}', 'BeaconController@subscription');
 Route::resource('beacons', 'BeaconController');
 
@@ -74,7 +76,6 @@ Route::get('posts/extension', 'PostController@sortByExtension');
 Route::get('posts/search', 'PostController@search');
 Route::get('posts/results', 'PostController@results');
 Route::get('posts/listElevation/{id}', 'PostController@listElevation');
-Route::get('posts/setBeaconTagElevation', 'PostController@setBeaconTagElevation');
 Route::resource('posts', 'PostController');
 
 //Draft Routes (Resource)
