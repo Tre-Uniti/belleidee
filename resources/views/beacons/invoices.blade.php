@@ -4,6 +4,7 @@
 @stop
 
 @section('centerText')
+    <h2>Invoices for {{ $beacon->name }}</h2>
     <div class = "indexNav">
         <a href="{{ url('/belief/index/'. $beacon->belief) }}"><button type = "button" class = "indexButton">{{ $beacon->belief }}</button></a>
         <a href="{{ url('/beacons/tags/'.$beacon->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $beacon->beacon_tag }}</button></a>
@@ -25,7 +26,7 @@
     @foreach ($invoices as $invoice)
         <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('BeaconController@downloadInvoice', [$beacon->id])}}"><button type = "button" class = "interactButtonLeft">{{ $invoice->dateString() }}</button></a>
+                <a href="{{ action('BeaconController@downloadInvoice', [$beacon->id, $invoice->id])}}"><button type = "button" class = "interactButtonLeft">{{ $invoice->dateString() }}</button></a>
             </div>
             <div class = "listResourceRight">
                 <a href="{{ action('BeaconController@downloadInvoice', [$beacon->id, $invoice->id])}}"><button type = "button" class = "interactButton">{{ $invoice->dollars() }}</button></a>

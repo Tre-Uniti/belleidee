@@ -121,6 +121,10 @@
         </div>
     </div>
 
+    <div class = "formInput">
+        <a href="{{ url('/beacons/subscription/' . $beacon->id) }}"><button type = "button" class = "indexButton">Subscription</button></a>
+        <a href="{{ url('/beacons/signup/'. $beacon->id) }}"><button type = "button" class = "indexButton">Payment</button></a>
+    </div>
 
 
     @section('centerFooter')

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6613c5474b4c03ab5b3acbfe70176a88",
-    "content-hash": "13556cb303f98a1255d357fb37b0a547",
+    "hash": "1c8c415338c14ad63c8dc718411a0c3c",
+    "content-hash": "bd39b11bfe41a29cc595752f6f089396",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -3513,6 +3513,52 @@
             "time": "2016-04-22 12:44:08"
         },
         {
+            "name": "taxjar/taxjar-php",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/taxjar/taxjar-php.git",
+                "reference": "054bd755fb51e7334e3939e1b77bb0874efdf60b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/taxjar/taxjar-php/zipball/054bd755fb51e7334e3939e1b77bb0874efdf60b",
+                "reference": "054bd755fb51e7334e3939e1b77bb0874efdf60b",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0.2",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "internations/http-mock": "0.7.4",
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TaxJar\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "TaxJar and contributors"
+                }
+            ],
+            "description": "TaxJar PHP Library",
+            "homepage": "http://taxjar.com/",
+            "keywords": [
+                "api",
+                "sales tax",
+                "taxjar"
+            ],
+            "time": "2016-04-06 22:28:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v1.1.1",
             "source": {
@@ -4775,7 +4821,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",

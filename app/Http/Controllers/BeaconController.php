@@ -23,6 +23,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BeaconController extends Controller
 {
@@ -429,7 +430,15 @@ class BeaconController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
+
         $invoices = $beacon->invoices();
+
+
+        if(is_null($invoices))
+        {
+            flash()->overlay('No invoices for this beacon yet');
+            return redirect()->back();
+        }
 
         return view ('beacons.invoices')
             ->with(compact('user', 'beacon', 'profilePosts','profileExtensions', 'invoices'));
