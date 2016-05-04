@@ -24,7 +24,7 @@
       padding-right: 15px;
     }
     .createTitleText {
-      width: 350px;
+      max-width: 30%;
     }
     .innerProfileMenus {
       height: 210px;
@@ -73,6 +73,9 @@
     }
     .interactButton {
       font-size: 100%;
+    }
+    .createTitleText {
+      max-width: 40%;
     }
     .navButton {
       font-size: 100%;
@@ -150,6 +153,9 @@
     {
       max-height: 545px;
     }
+    .createTitleText {
+      max-width: 40%;
+    }
     #createOptions
     {
       max-height: 625px;
@@ -206,6 +212,9 @@
     #centerTextContent
     {
       max-height: 385px;
+    }
+    .createTitleText {
+      max-width: 45%;
     }
     #createOptions
     {
@@ -295,17 +304,17 @@
     }
 
     #centerContent {
-      width: 97%;
+      width: 99%;
       height: 84%;
       margin: 1.5% auto;
     }
     #centerText
     {
-      max-height: 320px;
+      max-height: 370px;
     }
 
     #centerTextContent {
-      max-height: 185px;
+      max-height: 195px;
       padding-left: 3px;
       padding-right: 3px;
     }
@@ -314,11 +323,11 @@
       padding-right: 1px;
     }
     #createOptions {
-      max-height: 340px;
+      max-height: 350px;
     }
     .createTitleText
     {
-      width: 100%;
+      max-width: 70%;
     }
     #leftSide {
       top: 80%;
@@ -347,6 +356,7 @@
     }
     .innerPhotos {
       height: 100px;
+      padding-top: 5px;
     }
     .listResourceLeft {
       padding-left: 1%;
@@ -411,6 +421,9 @@
     #createBodyText {
       padding-left: 1px;
       padding-right: 1px;
+    }
+    .createTitleText {
+      max-width: 60%;
     }
     #createOptions {
       max-height: 250px;
@@ -490,6 +503,9 @@
     #centerText
     {
       max-height: 260px;
+    }
+    .createTitleText {
+      max-width: 70%;
     }
 
     #centerTextContent {

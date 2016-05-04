@@ -2,10 +2,10 @@
     <div class = "formInput">
         <b>{!! Form::label('title', 'Draft Title:') !!}</b>
     </div>
-    <div class = "formInput">
+    <div class = "formData">
         {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
     </div>
-    <div class = "formInput">
+    <div class = "formData">
         <select name = 'belief' required >
             <option value="" disabled selected>Belief or Way:</option>
             <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @endif>Adaptia</option>

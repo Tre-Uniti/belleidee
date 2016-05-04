@@ -2,7 +2,7 @@
 <div class = "formInput">
 {!! Form::label('title', 'Post Title:') !!}
 </div>
-    <div class = "formInput">
+    <div class = "formData">
         {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
     </div>
 <div class = "formData">
