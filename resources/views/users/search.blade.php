@@ -12,7 +12,7 @@
                 {!!  Form::label('identifier', 'Handle:') !!}
             </div>
             <div class = "formInput">
-                {!! Form::text('identifier', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Search text']) !!}
+                {!! Form::text('identifier', null, ['autofocus', 'placeholder' => 'Search text']) !!}
             </div>
         </div>
         {!! Form::submit('Search', ['class' => 'navButton']) !!}

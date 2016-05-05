@@ -1,5 +1,5 @@
 @section('pageHeader')
-    <script src = "/js/extension.js"></script>
+    <script src = "/js/toggleSource.js"></script>
 @stop
 
 <div id = "createOptions">

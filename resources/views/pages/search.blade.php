@@ -16,7 +16,7 @@
             </div>
 
             <div class = "formInput">
-                {!! Form::text('identifier', null, ['class' => 'createTitleText', 'placeholder' => 'Search text']) !!}
+                {!! Form::text('identifier', null, ['placeholder' => 'Search text']) !!}
             </div>
         </div>
 

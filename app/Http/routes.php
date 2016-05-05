@@ -32,7 +32,7 @@ Route::get('beacons/top', 'BeaconController@topUsage');
 Route::get('beacons/signup/{id}', 'BeaconController@signup');
 Route::post('beacons/subscribe', 'BeaconController@subscribe')->name('subscribe');
 Route::get('beacons/payment/{id}', 'BeaconController@payment');
-Route::get('beacons/billing/{id}', 'BeaconController@billing');
+Route::get('beacons/subscription/{id}', 'BeaconController@subscription');
 Route::get('beacons/invoice/{id}', 'BeaconController@invoice');
 Route::get('beacons/invoice/{beacon}/download/{id}', 'BeaconController@downloadInvoice');
 
@@ -144,12 +144,14 @@ Route::resource('invites', 'InviteController');
 Route::get('intolerances/post/{source}', 'IntoleranceController@intolerantPost');
 Route::get('intolerances/extension/{source}', 'IntoleranceController@intolerantExtension');
 Route::get('intolerances/userIndex/{id}', 'IntoleranceController@userIndex');
+Route::get('intolerances/beacon/{id}', 'IntoleranceController@beaconIndex');
 Route::resource('intolerances', 'IntoleranceController');
 
 //Moderation routes (resource)
 Route::get('moderator', 'ModeratorController@portal');
 Route::get('moderations/intolerance/{source}', 'ModerationController@intolerance');
 Route::get('moderations/userIndex/{id}', 'ModerationController@userIndex');
+Route::get('moderations/beacon/{id}', 'ModerationController@beaconIndex');
 Route::resource('moderations', 'ModerationController');
 
 //Adjudication routes (resource)
@@ -205,6 +207,9 @@ Route::get('global', 'HomeController@globe');
 Route::get('newLocation', 'HomeController@newLocation');
 Route::get('addLocation', 'HomeController@addLocation');
 //Route::get('getContent/{id}', 'HomeController@getContent');
+
+//Map Routes
+Route::get('map', 'HomeController@map');
 
 //Admin routes
 Route::get('admin', 'AdminController@portal');

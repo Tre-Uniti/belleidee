@@ -1,16 +1,20 @@
 @extends('app')
+@section('pageHeader')
+    <script src = "/js/toggleSource.js"></script>
+@stop
 @section('siteTitle')
     Show Intolerance
 @stop
 @section('centerMenu')
     <h2><a href = {{ url('intolerances') }}>Intolerance</a></h2>
-    @if(isset($intolerance->post_id))
-        <p><a href = {{ action('PostController@show', $intolerance->post_id)}}>Source Post</a>
-        </p>
-    @elseif(isset($intolerance->extension_id))
-        <p><a href = {{ action('ExtensionController@show', $intolerance->extension_id)}}>Source Extension</a></p>
-    @elseif(isset($intolerance->question_id))
-        <p><a href = {{ action('QuestionController@show', $intolerance->queston_id)}}>Source Question</a></p>
+    @if($intolerance->post_id != null)
+        <p><button type = "button" class = "interactButton" id = "content">Show Source Text</button></p>
+        <div class = "extensionContent" id = "hiddenContent">{!! nl2br(e($content)) !!}
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
+    @elseif($intolerance->extension_id != null)
+        <p><button type = "button" class = "interactButton" id = "content">Show Source Text</button></p>
+        <div class = "extensionContent" id = "hiddenContent">{!! nl2br(e($content)) !!}
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
     @endif
 @stop
 @section('centerText')

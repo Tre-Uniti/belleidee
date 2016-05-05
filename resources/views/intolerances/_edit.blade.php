@@ -1,11 +1,16 @@
+@section('pageHeader')
+    <script src = "/js/toggleSource.js"></script>
+@stop
 <div id = "createOptions">
     <h2>Intolerance</h2>
-    @if($intolerance->post_id != '')
-       <p><a href = {{ action('PostController@show', $intolerance->post_id)}}> Source Post</a></p>
-    @elseif($intolerance->extension_id != '')
-        <p><a href = {{ action('ExtensionController@show', $intolerance->extension_id)}}>Source Extension</a></p>
-    @elseif($intolerance->question_id != '')
-        <p><a href = {{ action('QuestionController@show', $intolerance->quesiton_id)}}>Source Question</a></p>
+    @if($intolerance->post_id != null)
+        <p><button type = "button" class = "interactButton" id = "content">Show Source Text</button></p>
+        <div class = "extensionContent" id = "hiddenContent">{!! nl2br(e($content)) !!}
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
+    @elseif($intolerance->extension_id != null)
+        <p><button type = "button" class = "interactButton" id = "content">Show Source Text</button></p>
+        <div class = "extensionContent" id = "hiddenContent">{!! nl2br(e($content)) !!}
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
     @endif
     <div id = "centerTextContent">
         {!! Form::textarea('user_ruling', null, ['id' => 'createBodyText', 'placeholder' => 'Why is this intolerant?:', 'rows' => '3%', 'maxlength' => '300']) !!}

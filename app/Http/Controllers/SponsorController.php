@@ -440,8 +440,15 @@ class SponsorController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $sponsors = $this->sponsor->orderBy('views', 'desc')->paginate(10);
 
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $userSponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+            Event::fire(new SponsorViewed($userSponsor));
+        }
+
         return view ('sponsors.top')
-            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions', 'userSponsor'));
     }
 
     /*

@@ -42,17 +42,14 @@ class ModerationController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $moderations = $this->moderation->latest()->paginate(10);
 
-        if($user->photo_path == '')
-        {
+        if ($user->photo_path == '') {
 
             $photoPath = '';
-        }
-        else
-        {
+        } else {
             $photoPath = $user->photo_path;
         }
 
-        return view ('moderations.index')
+        return view('moderations.index')
             ->with(compact('user', 'moderations', 'profilePosts', 'profileExtensions'))
             ->with('photoPath', $photoPath);
     }
@@ -70,8 +67,7 @@ class ModerationController extends Controller
         $intolerance = Intolerance::findOrFail($intoleranceId);
 
         //Check if User has already posted moderation for intolerance
-        if ($moderation = Moderation::where('intolerance_id', $intolerance['id'])->where('user_id', $user->id)->first())
-        {
+        if ($moderation = Moderation::where('intolerance_id', $intolerance['id'])->where('user_id', $user->id)->first()) {
             flash()->overlay('You have already moderated for this intolerance');
             return redirect('moderations/' . $moderation->id);
         }
@@ -79,13 +75,10 @@ class ModerationController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        if($user->photo_path == '')
-        {
+        if ($user->photo_path == '') {
 
             $photoPath = '';
-        }
-        else
-        {
+        } else {
             $photoPath = $user->photo_path;
         }
 
@@ -113,13 +106,13 @@ class ModerationController extends Controller
         $moderation->user()->associate($user);
         $moderation->save();
         flash()->overlay('Your moderation has been created and will be reviewed');
-        return redirect('moderations/'. $moderation->id);
+        return redirect('moderations/' . $moderation->id);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -135,31 +128,27 @@ class ModerationController extends Controller
         $intolerance = Intolerance::where('id', $moderation->intolerance_id)->first();
 
         //Check if user requesting is the one who created the intolerance
-        if($user->type < 1 && $moderation->user_id != $user->id)
-        {
+        if ($user->type < 1 && $moderation->user_id != $user->id) {
             flash()->overlay('This moderation belongs to another user');
             return redirect()->back();
         }
 
         //Get user photo
-        if($user->photo_path == '')
-        {
+        if ($user->photo_path == '') {
 
             $photoPath = '';
-        }
-        else
-        {
+        } else {
             $photoPath = $user->photo_path;
         }
-        return view ('moderations.show')
-            ->with(compact('user', 'moderation', 'intolerance', 'profilePosts','profileExtensions'))
+        return view('moderations.show')
+            ->with(compact('user', 'moderation', 'intolerance', 'profilePosts', 'profileExtensions'))
             ->with('photoPath', $photoPath);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -171,17 +160,14 @@ class ModerationController extends Controller
         $intolerance = Intolerance::where('id', $moderation->intolerance_id)->first();
 
         //Get user photo
-        if($user->photo_path == '')
-        {
+        if ($user->photo_path == '') {
 
             $photoPath = '';
-        }
-        else
-        {
+        } else {
             $photoPath = $user->photo_path;
         }
-        return view ('moderations.edit')
-            ->with(compact('user', 'moderation', 'intolerance', 'profilePosts','profileExtensions'))
+        return view('moderations.edit')
+            ->with(compact('user', 'moderation', 'intolerance', 'profilePosts', 'profileExtensions'))
             ->with('photoPath', $photoPath);
     }
 
@@ -189,7 +175,7 @@ class ModerationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  $request
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(EditModerationRequest $request, $id)
@@ -198,24 +184,23 @@ class ModerationController extends Controller
         $moderation->update($request->all());
         flash()->overlay('Moderation has been updated');
 
-        return redirect('moderations/'. $moderation->id);
+        return redirect('moderations/' . $moderation->id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $moderation = Moderation::findOrFail($id);
         //dd($moderation);
-        
+
         //Check if moderation has been used in an Adjudication
-        if($adjudication = Adjudication::where('moderation_id', '=', $moderation->id)->first())
-        {
-            return redirect('adjudications/'. $adjudication->id);
+        if ($adjudication = Adjudication::where('moderation_id', '=', $moderation->id)->first()) {
+            return redirect('adjudications/' . $adjudication->id);
         }
         $moderation->delete();
 
@@ -228,10 +213,9 @@ class ModerationController extends Controller
     {
         $intoleranceId = $id;
 
-        if($moderation = Moderation::where('intolerance_id', '=', $intoleranceId)->first())
-        {
+        if ($moderation = Moderation::where('intolerance_id', '=', $intoleranceId)->first()) {
             flash()->overlay('Moderation has already been created');
-            return redirect ('moderations/'. $moderation->id);
+            return redirect('moderations/' . $moderation->id);
         }
 
         Session::put('intoleranceId', $intoleranceId);
@@ -251,20 +235,10 @@ class ModerationController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $moderations = $this->moderation->where('user_id', '=', $user->id)->latest()->paginate(10);
 
-        if($user->photo_path == '')
-        {
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
-        return view ('moderations.userIndex')
-            ->with(compact('user', 'moderations', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+        return view('moderations.userIndex')
+            ->with(compact('user', 'moderations', 'profilePosts', 'profileExtensions'));
 
     }
-
-
 }
+

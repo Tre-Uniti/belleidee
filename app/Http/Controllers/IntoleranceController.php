@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Adjudication;
+use App\Beacon;
 use App\Extension;
+use function App\Http\getProfileExtensions;
+use function App\Http\getProfilePosts;
 use App\Http\Requests\CreateIntoleranceRequest;
 use App\Http\Requests\EditIntoleranceRequest;
 use App\Intolerance;
@@ -17,6 +20,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Console\Question\Question;
 
 class IntoleranceController extends Controller
@@ -43,19 +47,9 @@ class IntoleranceController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $intolerances = $this->intolerance->latest()->paginate(10);
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
         return view ('intolerances.index')
-            ->with(compact('user', 'intolerances', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'intolerances', 'profilePosts', 'profileExtensions'));
     }
 
     /**
@@ -67,7 +61,7 @@ class IntoleranceController extends Controller
     {
         $user = Auth::user();
 
-        $sources = Session::get('sources');
+        $sources = Session::get('intolerantSource');
 
         //Check if User has already posted intolerance for source
         if(isset($sources['post_id']))
@@ -94,22 +88,32 @@ class IntoleranceController extends Controller
             }
         }
 
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-
-        if($user->photo_path == '')
+        if(isset($sources['post_id']))
         {
-
-            $photoPath = '';
+            $post = Post::findOrFail($sources['post_id']);
+            $sourceUser=
+                [
+                    'id' => $post->user_id,
+                    'handle' => $post->user->handle
+                ];
+            $content = Storage::get($post->post_path);
         }
-        else
+        elseif(isset($sources['extension_id']))
         {
-            $photoPath = $user->photo_path;
+            $extension = Extension::findOrFail($sources['extenception']);
+            $sourceUser=
+                [
+                    'id' => $extension->user_id,
+                    'handle' => $extension->user->handle
+                ];
+            $content = Storage::get($extension->extension_path);
         }
+
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
 
         return view('intolerances.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'sources'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'sources', 'sourceUser', 'content'));
     }
 
     /**
@@ -125,14 +129,16 @@ class IntoleranceController extends Controller
         $intolerance = new Intolerance($request->all());
 
         //Add source to intolerance
-        $sources = Session::get('sources');
+        $sources = Session::get('intolerantSource');
         if($sources['type'] == 'post')
         {
             $intolerance->post_id = $sources['post_id'];
+            $intolerance->beacon_tag = $sources['beacon_tag'];
         }
         elseif($sources['type'] == 'extension')
         {
             $intolerance->extension_id = $sources['extension_id'];
+            $intolerance->beacon_tag = $sources['beacon_tag'];
         }
 
         $intolerance->user()->associate($user);
@@ -150,8 +156,8 @@ class IntoleranceController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
         $intolerance = $this->intolerance->findOrFail($id);
 
         //Check if user requesting is the one who created the intolerance
@@ -161,19 +167,29 @@ class IntoleranceController extends Controller
             return redirect()->back();
         }
 
-        //Get user photo
-        if($user->photo_path == '')
+        if($intolerance->post_id != null)
         {
+            $post = Post::findOrFail($intolerance->post_id);
+            $sourceUser=
+                [
+                    'id' => $post->user_id,
+                    'handle' => $post->user->handle
+                ];
+            $content = Storage::get($post->post_path);
+        }
+        elseif($intolerance->extension_id != null)
+        {
+            $extension = Extension::findOrFail($intolerance->extension_id);
+            $sourceUser=
+                [
+                    'id' => $extension->user_id,
+                    'handle' => $extension->user->handle
+                ];
+            $content = Storage::get($extension->extension_path);
+        }
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
         return view ('intolerances.show')
-            ->with(compact('user', 'intolerance', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'intolerance', 'profilePosts','profileExtensions', 'sourceUser', 'content'));
     }
 
     /**
@@ -185,23 +201,34 @@ class IntoleranceController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
         $intolerance = $this->intolerance->findOrFail($id);
 
-        //Get user photo
-        if($user->photo_path == '')
+        if($intolerance->post_id != null)
         {
+            $post = Post::findOrFail($intolerance->post_id);
+            $sourceUser=
+                [
+                    'id' => $post->user_id,
+                    'handle' => $post->user->handle
+                ];
+            $content = Storage::get($post->post_path);
+        }
+        elseif($intolerance->extension_id != null)
+        {
+            $extension = Extension::findOrFail($intolerance->extension_id);
+            $sourceUser=
+                [
+                    'id' => $extension->user_id,
+                    'handle' => $extension->user->handle
+                ];
+            $content = Storage::get($extension->extension_path);
+        }
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+
         return view ('intolerances.edit')
-            ->with(compact('user', 'intolerance', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'intolerance', 'profilePosts','profileExtensions', 'sourceUser', 'content'));
     }
 
     /**
@@ -214,6 +241,18 @@ class IntoleranceController extends Controller
     public function update(EditIntoleranceRequest $request, $id)
     {
         $intolerance = $this->intolerance->findOrFail($id);
+
+        if($intolerance->post_id != null)
+        {
+            $post = Post::where('id', '=', $intolerance->post_id)->first();
+            $intolerance->beacon_tag = $post->beacon_tag;
+        }
+        elseif($intolerance->extension_id != null)
+        {
+            $extension = Extension::where('id', '=', $intolerance->extension_id)->first();
+            $intolerance->beacon_tag = $extension->beacon_tag;
+        }
+
         $intolerance->update($request->all());
         flash()->overlay('Intolerance has been updated');
 
@@ -253,8 +292,8 @@ class IntoleranceController extends Controller
     public function intolerantPost($id)
     {
         $sourcePost = Post::findOrFail($id);
-        $fullSource = ['type' => 'post', 'user_id' => $sourcePost->user_id,  'post_id' => $sourcePost->id, 'post_title' => $sourcePost->title];
-        Session::put('sources', $fullSource);
+        $fullSource = ['type' => 'post', 'user_id' => $sourcePost->user_id,  'post_id' => $sourcePost->id, 'post_title' => $sourcePost->title, 'beacon_tag' => $sourcePost->beacon_tag];
+        Session::put('intolerantSource', $fullSource);
 
         return redirect('intolerances/create');
     }
@@ -266,8 +305,8 @@ class IntoleranceController extends Controller
     public function intolerantExtension($id)
     {
         $sourceExtension = Extension::findOrFail($id);
-        $fullSource = ['type' => 'extension', 'user_id' => $sourceExtension->user_id,  'extension_id' => $sourceExtension->id, 'extension_title' => $sourceExtension->title];
-        Session::put('sources', $fullSource);
+        $fullSource = ['type' => 'extension', 'user_id' => $sourceExtension->user_id,  'extension_id' => $sourceExtension->id, 'extension_title' => $sourceExtension->title, 'beacon_tag' => $sourceExtension->beacon_tag];
+        Session::put('intolerantSource', $fullSource);
 
         return redirect('intolerances/create');
     }
@@ -276,7 +315,7 @@ class IntoleranceController extends Controller
     {
         $sourceQuestion = Question::findOrFail($id);
         $fullSource = ['type' => 'question', 'user_id' => $sourceQuestion->user_id,  'question_id' => $sourceQuestion->id, 'question_title' => $sourceQuestion->title];
-        Session::put('sources', $fullSource);
+        Session::put('intolerantSource', $fullSource);
 
         return redirect('intolerances/create');
     }
@@ -285,9 +324,43 @@ class IntoleranceController extends Controller
     {
         $sourceLegacy = Legacy::findOrFail($id);
         $fullSource = ['type' => 'legacy', 'user_id' => $sourceLegacy->user_id,  'legacy_id' => $sourceLegacy->id, 'legacy_title' => $sourceLegacy->title];
-        Session::put('sources', $fullSource);
+        Session::put('intolerantSource', $fullSource);
 
         return redirect('intolerances/create');
+    }
+
+    /*
+    * List the intolerances for a given user
+    * 
+    * @param $id
+    */
+    public function userIndex($id)
+    {
+        $user = User::findOrFail($id);
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        $intolerances = $this->intolerance->where('user_id', '=', $user->id)->latest()->paginate(10);
+        
+        return view ('intolerances.userIndex')
+            ->with(compact('user', 'intolerances', 'profilePosts', 'profileExtensions'));
+
+    }
+
+    /* List the intolerances for a given beacon
+    *
+    * @param $id
+    */
+    public function beaconIndex($id)
+    {
+        $beacon = Beacon::findOrFail($id);
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        $intolerances = $this->intolerance->where('beacon_tag', '=', $beacon->beacon_tag)->latest()->paginate(10);
+
+        return view ('intolerances.beaconIndex')
+            ->with(compact('user', 'intolerances', 'profilePosts', 'profileExtensions', 'beacon'));
+
     }
     
 }

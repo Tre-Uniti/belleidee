@@ -559,6 +559,20 @@ class HomeController extends Controller
 
         return redirect ('/gettingStarted');
     }
+    
+    /*
+     * Display Idee Map
+     */
+    public function map()
+    {
+        $user = Auth::user();
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
+
+        return view ('pages.map')
+            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+
+    }
 
     /*
      * Retrieve and zip all content for user (Posts and Extensions)

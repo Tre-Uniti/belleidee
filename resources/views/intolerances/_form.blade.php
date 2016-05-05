@@ -1,11 +1,18 @@
+@section('pageHeader')
+    <script src = "/js/toggleSource.js"></script>
+@stop
 <div id = "createOptions">
     <h2>Intolerance</h2>
     @if(isset($sources['post_id']))
-        <p>Source Post: <a href = {{ action('PostController@show', [$sources['post_id']])}}> {{ $sources['post_title'] }}</a></p>
+        <p><button type = "button" class = "interactButton" id = "content">Show Source Text</button></p>
+        <div class = "extensionContent" id = "hiddenContent">{!! nl2br(e($content)) !!}
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
     @elseif(isset($sources['extension_id']))
-        <p>Source Extension: <a href = {{ action('ExtensionController@show', [$sources['extension_id']])}}> {{ $sources['extension_title'] }}</a></p>
+        <p><button type = "button" class = "interactButton" id = "content">Show Source Text</button></p>
+        <div class = "extensionContent" id = "hiddenContent">{!! nl2br(e($content)) !!}
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
     @endif
-    <div id = "centerTextContent">
+        <div id = "centerTextContent">
         {!! Form::textarea('user_ruling', null, ['id' => 'createBodyText', 'placeholder' => 'Why is this intolerant?:', 'rows' => '3%', 'maxlength' => '300']) !!}
     </div>
 <!-- Body Form Input -->

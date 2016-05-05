@@ -148,6 +148,12 @@ ul.tour {
   text-align: left;
 }
 
+#mapid {
+  height: 500px;
+  width: 900px;
+  margin: 0 auto;
+}
+
 .topNav {
   font-family: "Open Sans", Arial, serif;
   background-color: #101010;
@@ -1112,6 +1118,11 @@ article {
     height: 210px;
   }
 
+  #mapid {
+    height: 400px;
+    width: 700px;
+  }
+
   #leftSide {
     height: auto;
   }
@@ -1172,6 +1183,11 @@ article {
     height: 175px;
   }
 
+  #mapid {
+    height: 400px;
+    width: 600px;
+  }
+
   #leftSide {
     top: 80%;
     height: 20%;
@@ -1228,6 +1244,11 @@ article {
 
   #createOptions {
     max-height: 520px;
+  }
+
+  #mapid {
+    height: 400px;
+    width: 600px;
   }
 
   .formDataContainer {
@@ -1343,6 +1364,11 @@ article {
     max-width: 70%;
   }
 
+  #mapid {
+    height: 400px;
+    width: 200px;
+  }
+
   #leftSide {
     top: 80%;
     height: 18%;
@@ -1453,6 +1479,11 @@ article {
     max-height: 250px;
   }
 
+  #mapid {
+    height: 200px;
+    width: 400px;
+  }
+
   #leftSide {
     top: 18%;
     height: auto;
@@ -1532,6 +1563,11 @@ article {
 
   #centerText {
     max-height: 260px;
+  }
+
+  #mapid {
+    height: 200px;
+    width: 100px;
   }
 
   .createTitleText {

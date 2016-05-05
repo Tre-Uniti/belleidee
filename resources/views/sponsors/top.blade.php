@@ -17,13 +17,13 @@
     <div class = "indexRight">
         <h4>Views</h4>
     </div>
-    @foreach ($sponsors as $sponsor)
+    @foreach ($sponsors as $Sponsor)
         <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('SponsorController@show', [$sponsor->id])}}"><button type = "button" class = "interactButtonLeft">{{$sponsor->name}}</button></a>
+                <a href="{{ action('SponsorController@show', [$Sponsor->id])}}"><button type = "button" class = "interactButtonLeft">{{$Sponsor->name}}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('SponsorController@show', [$sponsor->id])}}"><button type = "button" class = "interactButton">{{$sponsor->views}}</button></a>
+                <a href="{{ action('SponsorController@show', [$Sponsor->id])}}"><button type = "button" class = "interactButton">{{$Sponsor->views}}</button></a>
             </div>
         </div>
     @endforeach
