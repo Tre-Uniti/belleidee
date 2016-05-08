@@ -8,6 +8,9 @@ use App\Events\SetLocation;
 use App\Events\SponsorViewed;
 use App\Extension;
 use function App\Http\getCountries;
+use function App\Http\getLocation;
+use function App\Http\getProfileExtensions;
+use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
 use App\Http\Requests\PhotoUploadRequest;
 use App\Post;
@@ -25,9 +28,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+
 use League\Flysystem\Filesystem;
 use League\Flysystem\ZipArchive\ZipArchiveAdapter as Adapter;
 use Event;
+use JavaScript;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Response;
@@ -211,8 +216,11 @@ class HomeController extends Controller
                 'User' => 'User'
             ];
 
+        $location = getLocation();
+
         return view ('pages.search')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'types', 'sponsor'));
+            ->with(compact('user', 'profilePosts','profileExtensions', 'types', 'sponsor'))
+            ->with('location', $location);
     }
 
     /**
@@ -561,16 +569,38 @@ class HomeController extends Controller
     }
     
     /*
-     * Display Idee Map
+     * Display an Idee Map
+     * @param $location Supplied by either the user or set from auth user
      */
-    public function map()
+    public function map($location)
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
+
+        if($location != 0)
+        {
+            $hereLocation = getLocation();
+        }
+        else
+        {
+            //Set Here Maps location type
+            $hereLocation = '&c=52.378,13.520';
+        }
+        
+        //Get Idee location type
+        $location = getLocation();
+
+        //Pass hereLocation for Here API
+        JavaScript::put([
+            'hereLocation' => $hereLocation,
+        ]);
+        
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
 
         return view ('pages.map')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'profilePosts', 'profileExtensions'))
+            ->with('location', $location)
+            ->with('hereLocation', $hereLocation);
 
     }
 

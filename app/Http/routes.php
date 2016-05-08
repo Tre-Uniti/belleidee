@@ -209,7 +209,7 @@ Route::get('addLocation', 'HomeController@addLocation');
 //Route::get('getContent/{id}', 'HomeController@getContent');
 
 //Map Routes
-Route::get('map', 'HomeController@map');
+Route::get('/map/{location}', 'HomeController@map');
 
 //Admin routes
 Route::get('admin', 'AdminController@portal');

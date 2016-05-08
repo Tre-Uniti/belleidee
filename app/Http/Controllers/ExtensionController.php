@@ -10,6 +10,7 @@ use function App\Http\filterContentLocation;
 use function App\Http\filterContentLocationAllTime;
 use function App\Http\filterContentLocationSearch;
 use function App\Http\filterContentLocationTime;
+use function App\Http\getLocation;
 use App\Intolerance;
 use App\Mailers\NotificationMailer;
 use App\Moderation;
@@ -763,10 +764,13 @@ class ExtensionController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
 
+        $location = getLocation();
+
         $sponsor = getSponsor($user);
 
         return view ('extensions.search')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with('location', $location);
     }
 
     /**

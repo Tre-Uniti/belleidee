@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Elevation;
 use App\Extension;
+use function App\Http\getLocation;
 use function App\Http\getSponsor;
 use App\Mailers\NotificationMailer;
 use App\Notification;
@@ -179,9 +180,11 @@ class QuestionController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $sponsor = getSponsor($user);
+        $location = getLocation();
 
         return view ('questions.search')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with('location', $location);
     }
 
     /**

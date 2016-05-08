@@ -6,6 +6,7 @@ use App\Bookmark;
 use App\Elevation;
 use App\Events\TransferUser;
 use App\Extension;
+use function App\Http\getLocation;
 use App\Listeners\TransferUserContent;
 use App\Post;
 use App\Sponsor;
@@ -233,8 +234,11 @@ class UserController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
+        $location = getLocation();
+
         return view ('users.search')
-            ->with(compact('user', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with('location', $location);
 
     }
 

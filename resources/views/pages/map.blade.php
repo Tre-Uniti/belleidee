@@ -10,10 +10,11 @@
 @stop
 @section('centerText')
     <h2>Idee Map:</h2>
+    <p>Your location: {{ $location }}</p>
     <div class = ""></div>
         <div id="mapid"></div>
 
 @stop
 @section('centerFooter')
-
+    <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Back</button></a>
 @stop

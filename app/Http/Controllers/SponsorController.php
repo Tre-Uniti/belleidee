@@ -6,6 +6,7 @@ use App\Events\SponsorViewed;
 use App\Extension;
 use function App\Http\filterContentLocation;
 use function App\Http\filterContentLocationSearch;
+use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use App\Http\Requests\CreateSponsorRequest;
@@ -396,10 +397,12 @@ class SponsorController extends Controller
         $types = [
             'Name' => 'Name',
         ];
+        $location = getLocation();
 
         return view ('sponsors.search')
             ->with(compact('user', 'profilePosts','profileExtensions'))
-            ->with('types', $types);
+            ->with('types', $types)
+            ->with('location', $location);
     }
 
     /**

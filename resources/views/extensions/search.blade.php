@@ -6,14 +6,17 @@
 @section('centerText')
     <div>
         <h2>Search Extensions</h2>
+
         {!! Form::open(['url' => 'extensions/results', 'method' => 'GET']) !!}
         <div class = "formDataContainer">
+
             <div class = "formInput">
                 {!!  Form::label('identifier', 'Title:') !!}
             </div>
             <div class = "formInput">
                 {!! Form::text('title', null, ['autofocus', 'placeholder' => 'Search text']) !!}
             </div>
+            <p>Location Scope: {{ $location }}</p>
         </div>
         {!! Form::submit('Search', ['class' => 'navButton']) !!}
         {!! Form:: close() !!}

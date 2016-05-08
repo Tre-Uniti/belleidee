@@ -7,6 +7,7 @@ use function App\Http\filterContentLocation;
 use function App\Http\filterContentLocationSearch;
 use function App\Http\getBeliefs;
 use function App\Http\getCountries;
+use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use App\Http\Requests\CreateBeaconRequest;
@@ -375,9 +376,12 @@ class BeaconController extends Controller
             'Tag' => 'Beacon Tag'
         ];
 
+        $location = getLocation();
+
         return view ('beacons.search')
             ->with(compact('user', 'profilePosts','profileExtensions'))
-            ->with('types', $types);
+            ->with('types', $types)
+            ->with('location', $location);
     }
 
     /**

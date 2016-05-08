@@ -12,6 +12,7 @@ use App\Sponsor;
 use App\Sponsorship;
 use Carbon\Carbon;
 use Event;
+use Illuminate\Support\Facades\Auth;
 
 /*
  * Get the sponsor of a given user
@@ -761,6 +762,35 @@ function filterContentLocationAllTime($user, $number, $type, $order)
         }
     }
     return $timeFilteredContent;
+}
+
+/*
+ * Get the coordinates of a logged in user and return location
+ */
+function getLocation()
+{
+  $user = Auth::user();
+    if($user->location == 0)
+    {
+        $coordinates = session('coordinates');
+        $location = $coordinates['city'];
+    }
+    elseif($user->location == 1)
+    {
+        $coordinates = session('coordinates');
+        $location = $coordinates['country'];
+    }
+    elseif($user->location == 2)
+    {
+        $coordinates = session('coordinates');
+        $location = 'Global';
+    }
+    else
+    {
+        $location = 'Undefined';
+    }
+
+    return $location;
 }
 
 //Search-based filters (i.e Post, Extension, Beacon, Sponsor searches)

@@ -9,6 +9,7 @@ use function App\Http\filterContentLocation;
 use function App\Http\filterContentLocationAllTime;
 use function App\Http\filterContentLocationSearch;
 use function App\Http\filterContentLocationTime;
+use function App\Http\getLocation;
 use App\Intolerance;
 use App\Moderation;
 use App\Notification;
@@ -544,9 +545,11 @@ class PostController extends Controller
         $profileExtensions = $this->getProfileExtensions($user);
 
         $sponsor = getSponsor($user);
+        $location = getLocation();
 
         return view ('posts.search')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with('location', $location);
     }
 
     /**
