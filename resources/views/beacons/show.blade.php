@@ -41,12 +41,11 @@
                 </div>
             </div>
         @endforeach
-
 @stop
 
 @section('centerFooter')
     <div id = "centerFooter">
-        @if($beacon->tier > 0)
+        @if($beacon->stripe_plan > 0)
             <a href = {{ url('/users/'. $beacon->guide) }}><button type = "button" class = "navButton">Guide</button></a>
         @endif
         @if($user->type > 1)

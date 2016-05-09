@@ -36,11 +36,11 @@ class CreateBeaconRequest extends Request
             'website' => 'min:10|max:275',
             'phone' => 'required|min: 10|max:18',
             'email' => 'email|max:255|unique:beacons',
-            'tier' => 'required',
             'guide' => 'required',
             'lat' => 'min:3',
             'long' => 'min: 3',
             'image' => 'mimes:jpeg,jpg,png|max:8000',
+            'zip' => 'min:5|max:10',
         ];
     }
 }

@@ -2,98 +2,98 @@
 <div class = "formDataContainer">
         <div class = "formData">
             <div class = "formLabel">
-                {!! Form::label('name', 'Name') !!}
+                {!! Form::label('name', 'Name:') !!}
             </div>
             <div class = "formInput">
-                {!! Form::text('name', $beaconRequest->name, ['class' => 'createTitleText', 'autofocus']) !!}
+                {!! Form::text('name', $beaconRequest->name, ['class' => 'infoTitleText', 'autofocus']) !!}
             </div>
         </div>
         <div class = "formData">
             <div class = "formLabel">
-                {!! Form::label('belief', 'Belief') !!}
+                {!! Form::label('belief', 'Belief:') !!}
             </div>
             <div class = "formInput">
                 {!! Form::select('belief', $beliefs, array('belief' => $beaconRequest->belief)) !!}
             </div>
         </div>
-        <div class = "formData">
-            <div class = "formLabel">
-                {!! Form::label('address', 'Address') !!}
-            </div>
-            <div class = "formInput">
-                {!! Form::text('address', $beaconRequest->address, ['class' => 'createTitleText']) !!}
-            </div>
-        </div>
     <div class = "formData">
         <div class = "formLabel">
-            {!! Form::label('country', 'Country') !!}
+            {!! Form::label('country', 'Country:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('country', $beaconRequest->country, ['class' => 'createTitleText']) !!}
+            {!! Form::text('country', $beaconRequest->country, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
         <div class = "formLabel">
-            {!! Form::label('city', 'City') !!}
+            {!! Form::label('address', 'Address:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('city', $beaconRequest->city, ['class' => 'createTitleText']) !!}
+            {!! Form::text('address', $beaconRequest->address, ['class' => 'infoTitleText']) !!}
+        </div>
+    </div>
+    <div class = "formData">
+        <div class = "formLabel">
+            {!! Form::label('city', 'City:') !!}
+        </div>
+        <div class = "formInput">
+            {!! Form::text('city', $beaconRequest->city, ['class' => 'infoTitleText']) !!}
+        </div>
+    </div>
+    <div class = "formData">
+        <div class = "formLabel">
+            {!! Form::label('zip', 'Zip code:') !!}
+        </div>
+        <div class = "formInput">
+            {!! Form::text('zip', $beaconRequest->zip, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
         <div class = "formData">
             <div class = "formLabel">
-                {!! Form::label('beacon_tag', 'Beacon Tag') !!}
+                {!! Form::label('beacon_tag', 'Beacon Tag:') !!}
             </div>
             <div class = "formInput">
-                {!! Form::text('beacon_tag', $beaconRequest->country . '-', ['class' => 'createTitleText', 'placeholder' => 'Country-City-Shortname']) !!}
+                {!! Form::text('beacon_tag', $beaconRequest->country . '-', ['class' => 'infoTitleText', 'placeholder' => 'Country-City-Shortname']) !!}
             </div>
         </div>
         <div class = "formData">
             <div class = "formLabel">
-                {!! Form::label('website', 'Website') !!}
+                {!! Form::label('website', 'Website:') !!}
             </div>
             <div class = "formInput">
-                {!! Form::text('website', $beaconRequest->website, ['class' => 'createTitleText']) !!}
+                {!! Form::text('website', $beaconRequest->website, ['class' => 'infoTitleText']) !!}
             </div>
         </div>
         <div class = "formData">
             <div class = "formLabel">
-                {!! Form::label('phone', 'Phone #') !!}
+                {!! Form::label('phone', 'Phone #:') !!}
             </div>
             <div class = "formInput">
-                {!! Form::text('phone', $beaconRequest->phone, ['class' => 'createTitleText']) !!}
+                {!! Form::text('phone', $beaconRequest->phone, ['class' => 'infoTitleText']) !!}
             </div>
         </div>
         <div class = "formData">
             <div class = "formLabel">
-                {!! Form::label('email', 'Email') !!}
+                {!! Form::label('email', 'Email:') !!}
             </div>
             <div class = "formInput">
-                {!! Form::email('email', $beaconRequest->email, ['class' => 'createTitleText']) !!}
+                {!! Form::email('email', $beaconRequest->email, ['class' => 'infoTitleText']) !!}
             </div>
         </div>
         <div class = "formData">
             <div class = "formLabel">
-                {!! Form::label('manager', 'Manager') !!}
+                {!! Form::label('manager', 'Manager:') !!}
             </div>
             <div class = "formInput">
-                {!! Form::text('manager', $beaconRequest->user_id, ['class' => 'createTitleText']) !!}
+                {!! Form::text('manager', $beaconRequest->user_id, ['class' => 'infoTitleText']) !!}
             </div>
         </div>
         <div class = "formData">
             <div class = "formLabel">
-                {!! Form::label('guide', 'Beacon Guide') !!}
+                {!! Form::label('guide', 'Beacon Guide:') !!}
             </div>
             <div class = "formInput">
-                {!! Form::text('guide', null, ['class' => 'createTitleText']) !!}
-            </div>
-        </div>
-        <div class = "formData">
-            <div class = "formLabel">
-                {!! Form::label('tier', 'Tier') !!}
-            </div>
-            <div class = "formInput">
-                {!! Form::text('tier', null, ['class' => 'createTitleText']) !!}
+                {!! Form::text('guide', null, ['class' => 'infoTitleText']) !!}
             </div>
         </div>
     <div class = "formData">
@@ -101,7 +101,7 @@
             {!! Form::label('lat', 'Latitude:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('lat', null, ['class' => 'createTitleText']) !!}
+            {!! Form::text('lat', null, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -109,12 +109,12 @@
             {!! Form::label('long', 'Longitude:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('long', null, ['class' => 'createTitleText']) !!}
+            {!! Form::text('long', null, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
         <div class = "formData">
             <div class = "formLabel">
-                {!! Form::label('Max Upload size: 2MB') !!}
+                {!! Form::label('Max Upload size: 8MB') !!}
             </div>
             <div class = "formInput">
                 {!! Form::file('image', null, ['class' => 'navButton']) !!}

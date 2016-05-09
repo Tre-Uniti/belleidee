@@ -5,7 +5,7 @@
             {!! Form::label('name', 'Name') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('name', null, ['class' => 'createTitleText', 'autofocus']) !!}
+            {!! Form::text('name', null, ['class' => 'infoTitleText', 'autofocus']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -29,7 +29,7 @@
             {!! Form::label('address', 'Address:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('address', null, ['class' => 'createTitleText']) !!}
+            {!! Form::text('address', null, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -37,7 +37,15 @@
             {!! Form::label('city', 'City:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('city', null, ['class' => 'createTitleText']) !!}
+            {!! Form::text('city', null, ['class' => 'infoTitleText']) !!}
+        </div>
+    </div>
+    <div class = "formData">
+        <div class = "formLabel">
+            {!! Form::label('zip', 'Zip code') !!}
+        </div>
+        <div class = "formInput">
+            {!! Form::text('zip', null, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -45,7 +53,7 @@
             {!! Form::label('phone', 'Phone #:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('phone', null, ['class' => 'createTitleText', 'placeholder' => '+x (xxx) xxx-xxxx'] ) !!}
+            {!! Form::text('phone', null, ['class' => 'infoTitleText', 'placeholder' => '+x (xxx) xxx-xxxx'] ) !!}
         </div>
     </div>
     <div class = "formData">
@@ -53,7 +61,7 @@
             {!! Form::label('email', 'Email:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::email('email', null, ['class' => 'createTitleText']) !!}
+            {!! Form::email('email', null, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -61,7 +69,7 @@
             {!! Form::label('website', 'Website:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('website', null, ['class' => 'createTitleText']) !!}
+            {!! Form::text('website', null, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -69,7 +77,7 @@
             {!! Form::label('beacon_tag', 'Beacon Tag:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('beacon_tag', null, ['class' => 'createTitleText', 'placeholder' => 'Country-City-Shortname']) !!}
+            {!! Form::text('beacon_tag', null, ['class' => 'infoTitleText', 'placeholder' => 'Country-City-Shortname']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -77,7 +85,7 @@
             {!! Form::label('guide', 'Beacon Guide:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('guide', null, ['class' => 'createTitleText']) !!}
+            {!! Form::text('guide', null, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -85,15 +93,7 @@
             {!! Form::label('manager', 'Manager:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('manager', null, ['class' => 'createTitleText']) !!}
-        </div>
-    </div>
-    <div class = "formData">
-        <div class = "formLabel">
-            {!! Form::label('tier', 'Tier:') !!}
-        </div>
-        <div class = "formInput">
-            {!! Form::text('tier', null, ['class' => 'createTitleText']) !!}
+            {!! Form::text('manager', null, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -101,7 +101,7 @@
             {!! Form::label('lat', 'Latitude:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('lat', null, ['class' => 'createTitleText']) !!}
+            {!! Form::text('lat', null, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -109,7 +109,7 @@
             {!! Form::label('long', 'Longitude:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('long', null, ['class' => 'createTitleText']) !!}
+            {!! Form::text('long', null, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">

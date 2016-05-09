@@ -29,6 +29,7 @@ class CreateBasicSponsorRequest extends Request
             'address' => 'required|min: 5',
             'country' => 'required|min: 2',
             'city' => 'required|min: 2',
+            'zip' => 'min:5|max:10',
             'website' => 'min:10|max:275',
             'phone' => 'required|min: 10|max:18',
             'email' => 'required|email|max:255|unique:sponsor_requests|unique:sponsors',

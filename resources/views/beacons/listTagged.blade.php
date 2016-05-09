@@ -10,6 +10,7 @@
         <a href={{ url('/users/'.$beacon->guide)}}><button type = "button" class = "indexButton">Guide</button></a>
         @endif
         <a href={{ url('/extensions/beacon/'. $beacon->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
+        <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
     </div>
     <div class = "indexLeft">
         <h4>Title</h4>

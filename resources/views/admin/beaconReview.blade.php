@@ -15,22 +15,28 @@
         {{ $beaconRequest->belief }}
     </div>
     <div class = "formLabel">
-        Address:
-    </div>
-    <div class = "formShowData">
-        {{ $beaconRequest->address }}
-    </div>
-    <div class = "formLabel">
         Country:
     </div>
     <div class = "formShowData">
         {{ $beaconRequest->country }}
     </div>
     <div class = "formLabel">
-        City or Region:
+        Address:
+    </div>
+    <div class = "formShowData">
+        {{ $beaconRequest->address }}
+    </div>
+    <div class = "formLabel">
+        City:
     </div>
     <div class = "formShowData">
         {{ $beaconRequest->city }}
+    </div>
+    <div class = "formLabel">
+        Zip code:
+    </div>
+    <div class = "formShowData">
+        {{ $beaconRequest->zip }}
     </div>
     <div class = "formLabel">
         Phone:

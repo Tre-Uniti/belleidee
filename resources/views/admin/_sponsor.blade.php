@@ -1,18 +1,11 @@
+<h2>Convert to Sponsor</h2>
 <div class = "formDataContainer">
     <div class = "formData">
         <div class = "formLabel">
             {!! Form::label('name', 'Name') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('name', $sponsorRequest->name, ['class' => 'createTitleText', 'autofocus']) !!}
-        </div>
-    </div>
-    <div class = "formData">
-        <div class = "formLabel">
-            {!! Form::label('address', 'Address') !!}
-        </div>
-        <div class = "formInput">
-            {!! Form::text('address', $sponsorRequest->address, ['class' => 'createTitleText']) !!}
+            {!! Form::text('name', $sponsorRequest->name, ['class' => 'infoTitleText', 'autofocus']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -20,7 +13,15 @@
             {!! Form::label('country', 'Country') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('country', $sponsorRequest->country, ['class' => 'createTitleText']) !!}
+            {!! Form::text('country', $sponsorRequest->country, ['class' => 'infoTitleText']) !!}
+        </div>
+    </div>
+    <div class = "formData">
+        <div class = "formLabel">
+            {!! Form::label('address', 'Address') !!}
+        </div>
+        <div class = "formInput">
+            {!! Form::text('address', $sponsorRequest->address, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -28,7 +29,15 @@
             {!! Form::label('city', 'City') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('city', $sponsorRequest->location, ['class' => 'createTitleText']) !!}
+            {!! Form::text('city', $sponsorRequest->city, ['class' => 'infoTitleText']) !!}
+        </div>
+    </div>
+    <div class = "formData">
+        <div class = "formLabel">
+            {!! Form::label('zip', 'Zip code:') !!}
+        </div>
+        <div class = "formInput">
+            {!! Form::text('zip', $sponsorRequest->zip, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -36,7 +45,7 @@
             {!! Form::label('website', 'Website') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('website', $sponsorRequest->website, ['class' => 'createTitleText']) !!}
+            {!! Form::text('website', $sponsorRequest->website, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -44,7 +53,7 @@
             {!! Form::label('phone', 'Phone #') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('phone', $sponsorRequest->phone, ['class' => 'createTitleText']) !!}
+            {!! Form::text('phone', $sponsorRequest->phone, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -52,7 +61,7 @@
             {!! Form::label('email', 'Email') !!}
         </div>
         <div class = "formInput">
-            {!! Form::email('email', $sponsorRequest->email, ['class' => 'createTitleText']) !!}
+            {!! Form::email('email', $sponsorRequest->email, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -60,7 +69,7 @@
             {!! Form::label('view_budget', 'View Budget') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('view_budget', $sponsorRequest->budget, ['class' => 'createTitleText']) !!}
+            {!! Form::text('view_budget', $sponsorRequest->budget, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -68,7 +77,7 @@
             {!! Form::label('click_budget', 'Click Budget') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('click_budget', $sponsorRequest->budget, ['class' => 'createTitleText']) !!}
+            {!! Form::text('click_budget', $sponsorRequest->budget, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -81,7 +90,7 @@
     </div>
     <div class = "formData">
         <div class = "formLabel">
-            {!! Form::label('Max Upload size: 2MB') !!}
+            {!! Form::label('Max Upload size: 8MB') !!}
         </div>
         <div class = "formInput">
             {!! Form::file('image', null, ['class' => 'navButton']) !!}

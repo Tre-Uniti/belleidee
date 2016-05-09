@@ -14,10 +14,11 @@
     <h2>Subscribe: {{ $beacon->name }}</h2>
     {!! Form::open(['route' => 'subscribe', 'role' => 'form', 'id' => 'payment-form'] ) !!}
 
-    <div class="payment-errors"></div>
-    <div id="signupalert" class="alert alert-danger">
+    <div class="payment-errors">
+    <div id="signupalert">
         <p></p>
         <span></span>
+    </div>
     </div>
     <div class = "formDataContainer">
         <div class = "formData">

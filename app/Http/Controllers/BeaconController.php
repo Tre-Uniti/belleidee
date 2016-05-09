@@ -184,7 +184,6 @@ class BeaconController extends Controller
             ->with(compact('user', 'beacon', 'profilePosts','profileExtensions'))
             ->with('beaconPath', $beaconPath)
             ->with('location' , $location);
-
     }
 
     /**
@@ -197,6 +196,11 @@ class BeaconController extends Controller
     {
         $id = $request['beacon'];
         $beacon = Beacon::findOrFail($id);
+
+        if(is_null($beacon->stripe_plan))
+        {
+            return redirect('/beacons/signup/'. $beacon->id);
+        }
 
         $beacon->subscription($request['subscription'])->swap();
 
@@ -222,7 +226,7 @@ class BeaconController extends Controller
         $posts = Post::where('beacon_tag', '=', $beacon->beacon_tag)->orderBy('elevation', 'desc')->take(10)->get();
         
         //Get location of beacon and setup link to Google maps
-        $location = 'http://www.google.com/maps/place/' . $beacon->lat . ','. $beacon->long;
+        $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
 
         return view ('beacons.show')
                     ->with(compact('user', 'beacon', 'profilePosts','profileExtensions', 'posts'))
@@ -351,13 +355,17 @@ class BeaconController extends Controller
             return redirect()->back();
         }
 
-        $posts = Post::where('beacon_tag', $beacon_tag)->latest()->paginate(10);;
+        $posts = Post::where('beacon_tag', $beacon_tag)->latest()->paginate(10);
+
+        //Get location of beacon and setup link to Google maps
+        $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
         
         $beaconPath = $beacon->photo_path;
 
         return view ('beacons.listTagged')
                     ->with(compact('user', 'posts', 'beacon', 'profilePosts','profileExtensions'))
-                    ->with('beaconPath', $beaconPath);
+                    ->with('beaconPath', $beaconPath)
+                    ->with('location', $location);
 
     }
 
@@ -460,6 +468,8 @@ class BeaconController extends Controller
 
         $invoices = $beacon->invoices();
 
+        $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
+
 
         if(is_null($invoices))
         {
@@ -468,7 +478,8 @@ class BeaconController extends Controller
         }
 
         return view ('beacons.invoices')
-            ->with(compact('user', 'beacon', 'profilePosts','profileExtensions', 'invoices'));
+            ->with(compact('user', 'beacon', 'profilePosts','profileExtensions', 'invoices'))
+            ->with('location', $location);
     }
     
     /*

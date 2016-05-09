@@ -17,6 +17,7 @@ class SponsorRequest extends Model
         'location',
         'status',
         'admin',
+        'zip',
     ];
 
     public function user()

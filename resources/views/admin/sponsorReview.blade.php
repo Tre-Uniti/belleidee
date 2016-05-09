@@ -9,59 +9,53 @@
 
 @section('centerText')
     <div class = "formDataContainer">
-        <div class = "formData">
-            <div class = "formLabel">
-                Address:
-            </div>
-            <div class = "formInput">
-                {{ $sponsorRequest->address }}
-            </div>
+        <div class = "formLabel">
+            Country:
         </div>
-        <div class = "formData">
-            <div class = "formLabel">
-                Country:
-            </div>
-            <div class = "formInput">
-                {{ $sponsorRequest->country }}
-            </div>
+        <div class = "formShowData">
+            {{ $sponsorRequest->country }}
         </div>
-        <div class = "formData">
-            <div class = "formLabel">
-                City:
-            </div>
-            <div class = "formInput">
-                {{ $sponsorRequest->location }}
-            </div>
+        <div class = "formLabel">
+            Address:
         </div>
-        <div class = "formData">
-            <div class = "formLabel">
-                Phone:
-            </div>
-            <div class = "formInput">
-                {{ $sponsorRequest->phone }}
-            </div>
+        <div class = "formShowData">
+            {{ $sponsorRequest->address }}
         </div>
-        <div class = "formData">
-            <div class = "formLabel">
-                Email:
-            </div>
-            <div class = "formInput">
-                {{ $sponsorRequest->email }}
-            </div>
+        <div class = "formLabel">
+            City:
         </div>
-        <div class = "formData">
-            <div class = "formLabel">
-                Website:
-            </div>
-            <div class = "formInput">
-                {{ $sponsorRequest->website }}
-            </div>
+        <div class = "formShowData">
+            {{ $sponsorRequest->city }}
+        </div>
+        <div class = "formLabel">
+            Zip code:
+        </div>
+        <div class = "formShowData">
+            {{ $sponsorRequest->zip }}
+        </div>
+        <div class = "formLabel">
+            Phone:
+        </div>
+        <div class = "formShowData">
+            {{ $sponsorRequest->phone }}
+        </div>
+        <div class = "formLabel">
+            Email:
+        </div>
+        <div class = "formShowData">
+            {{ $sponsorRequest->email }}
+        </div>
+        <div class = "formLabel">
+            Website:
+        </div>
+        <div class = "formShowData">
+            {{ $sponsorRequest->website }}
         </div>
         <div class = "formData">
             <div class = "formLabel">
                 Adult:
             </div>
-            <div class = "formInput">
+            <div class = "formShowData">
                 {{ $sponsorRequest->adult }}
             </div>
         </div>
@@ -69,7 +63,7 @@
             <div class = "formLabel">
                 User:
             </div>
-            <div class = "formInput">
+            <div class = "formShowData">
                 {{ $sponsorRequest->user->handle }}
             </div>
         </div>

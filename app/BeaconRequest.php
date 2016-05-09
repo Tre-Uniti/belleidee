@@ -17,6 +17,7 @@ class BeaconRequest extends Model
         'city',
         'status',
         'admin',
+        'zip',
     ];
 
     public function user()

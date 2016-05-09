@@ -33,6 +33,12 @@
             {{ $beaconRequest->city }}
         </div>
         <div class = "formLabel">
+            Zip:
+        </div>
+        <div class = "formShowData">
+            {{ $beaconRequest->zip }}
+        </div>
+        <div class = "formLabel">
             Phone:
         </div>
         <div class = "formShowData">

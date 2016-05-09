@@ -26,7 +26,7 @@ class CreateExtensionRequest extends Request
     {
         return [
             'title' => 'required|min:1|max:40',
-            'body'  => 'required|min:10|max:3500',
+            'body'  => 'required|min:5|max:3500',
             'belief'=> 'required',
             'source' => 'required'
         ];

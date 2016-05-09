@@ -11,6 +11,7 @@
             <a href={{ url('/users/'. $beacon->guide)}}><button type = "button" class = "indexButton">Guide</button></a>
             @endif
             <a href={{ url('/beacons/tags/'.$beacon->beacon_tag)}}><button type = "button" class = "indexButton">Posts</button></a>
+            <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
         </div>
     <div class = "indexLeft">
         <h4>Title</h4>

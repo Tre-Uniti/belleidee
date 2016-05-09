@@ -24,7 +24,13 @@
         City:
     </div>
     <div class = "formShowData">
-        {{ $sponsorRequest->location }}
+        {{ $sponsorRequest->city }}
+    </div>
+    <div class = "formLabel">
+        Zip:
+    </div>
+    <div class = "formShowData">
+        {{ $sponsorRequest->zip }}
     </div>
     <div class = "formLabel">
         Phone:

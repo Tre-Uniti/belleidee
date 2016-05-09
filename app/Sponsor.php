@@ -21,5 +21,6 @@ class Sponsor extends Model
         'user_id',
         'lat',
         'long',
+        'zip',
     ];
 }

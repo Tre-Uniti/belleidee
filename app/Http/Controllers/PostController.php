@@ -260,7 +260,7 @@ class PostController extends Controller
 
         $post = $this->post->findOrFail($id);
         $post_path = $post->post_path;
-        $location = 'http://www.google.com/maps/place/' . $post->lat . ','. $post->long;
+        $location = 'https://maps.google.com/?q=' . $post->lat . ','. $post->long;
 
         $contents = Storage::get($post_path);
         $post = array_add($post, 'body', $contents);

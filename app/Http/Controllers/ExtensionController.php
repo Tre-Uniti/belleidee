@@ -540,6 +540,7 @@ class ExtensionController extends Controller
         }
         //Get Beacons of post user
         $userBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
+        $location = 'https://maps.google.com/?q=' . $extension->lat . ','. $extension->long;
 
         return view('extensions.show')
             ->with(compact('user', 'viewUser', 'extension', 'profilePosts', 'profileExtensions', 'sources' ))
@@ -547,7 +548,8 @@ class ExtensionController extends Controller
             ->with ('userBeacons', $userBeacons)
             ->with ('sourcePhotoPath', $sourcePhotoPath)
             ->with('beacon', $beacon)
-            ->with('sponsor', $sponsor);
+            ->with('sponsor', $sponsor)
+            ->with('location', $location);
     }
 
     /**
@@ -1245,11 +1247,14 @@ class ExtensionController extends Controller
 
         $extensions = $this->extension->where('beacon_tag', $beacon->beacon_tag)->latest()->paginate(10);
 
+        $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
+
         Event::fire(New BeaconViewed($beacon));
 
         return view ('extensions.beaconExtensions')
             ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
-            ->with('beacon', $beacon);
+            ->with('beacon', $beacon)
+            ->with('location', $location);
     }
 
     /**

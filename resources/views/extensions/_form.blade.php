@@ -19,7 +19,7 @@
     @endif
 
 
-        <div class = "formInput">
+        <div class = "formData">
             {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Your Extension Title']) !!}
             </div>
         <div class = "formInput">

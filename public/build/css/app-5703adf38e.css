@@ -883,6 +883,10 @@ article {
   width: 85%;
 }
 
+.infoTitleText {
+  width: 84%;
+}
+
 .createSubmit {
   margin: 7px auto;
   width: 180px;
@@ -890,6 +894,10 @@ article {
   border: 1px solid;
   border-radius: 20px;
   opacity: 0.97;
+}
+
+.payment-errors {
+  color: red;
 }
 
 #createBodyText {
