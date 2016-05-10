@@ -3,7 +3,7 @@
     <div id = "createOptions">
         {!! Form::label('type', 'Type:') !!}
         {!! Form::select('type', $types) !!}
-        {!! Form::textarea('request', null, ['id' => 'createBodyText', 'placeholder' => 'What can we help with?:', 'rows' => '3%', 'maxlength' => '300']) !!}
+        {!! Form::textarea('request', $support->request, ['id' => 'createBodyText', 'placeholder' => 'What can we help with?:', 'rows' => '3%', 'maxlength' => '300']) !!}
     </div>
     <!-- Body Form Input -->
     @section('centerFooter')

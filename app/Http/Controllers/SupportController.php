@@ -6,6 +6,7 @@ use App\Extension;
 use App\Mailers\NotificationMailer;
 use App\Post;
 use App\Support;
+use Huddle\Zendesk\Facades\Zendesk;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -36,19 +37,11 @@ class SupportController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $supports = $this->support->where('user_id', $user->id)->latest()->paginate(10);
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $tickets = Zendesk::tickets()->findAll();
+        //dd($tickets);
 
         return view ('supports.index')
-            ->with(compact('user', 'supports', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'supports', 'profilePosts', 'profileExtensions'));
     }
 
     /**
@@ -62,16 +55,6 @@ class SupportController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
-
         $types =
             [
                 'Error Report' => 'Error Report',
@@ -80,12 +63,12 @@ class SupportController extends Controller
                 'Beacon' => 'Beacon',
                 'Sponsor' => 'Sponsor',
                 'Intolerance' => 'Intolerance',
+                'Copywrite' => 'Copywrite',
                 'Other' => 'Other'
             ];
 
         return view('supports.create')
             ->with(compact('user', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath)
             ->with('types', $types);
     }
 
@@ -104,6 +87,19 @@ class SupportController extends Controller
         $support->status = 'Open';
         $support->user()->associate($user);
         $support->save();
+
+        // Create a new ticket
+        Zendesk::tickets()->create([
+            'external_id' => $support->id,
+            'subject' => $request['type'],
+            'comment' => [
+                'body' => $request['request']
+            ],
+            'requester' => [
+                'name' => $user->handle,
+                'email'=> $user->email ],
+            'priority' => 'normal'
+        ]);
 
         $mailer->sendSupportNotification($support);
 

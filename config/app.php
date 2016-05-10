@@ -207,8 +207,9 @@ return [
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'Form'      => Illuminate\Html\FormFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
-        'Image' => Intervention\Image\Facades\Image::class,
-        'Javascript' => Laracasts\Utilities\JavaScript\JavaScriptFacade::class,
+        'Image'     => Intervention\Image\Facades\Image::class,
+        'Zendesk'   => Huddle\Zendesk\Facades\Zendesk::class,
+        'Javascript'=> Laracasts\Utilities\JavaScript\JavaScriptFacade::class,
     ],
 
 ];

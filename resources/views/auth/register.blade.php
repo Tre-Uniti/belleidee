@@ -38,6 +38,14 @@
                     <input type="password" id = "password_confirmation" name="password_confirmation" class = "welcomeInputText" placeholder="Repeat Password">
                 </div>
             </div>
+            <div class = "formData">
+                <div class = "formLabel">
+                    <label for = "password" class = "login">I agree to the</label>
+                </div>
+                {!!  Form::checkbox('agreement', 'yes')  !!}
+                    <a href="/terms" class = "welcomeLink" target="_blank">Terms of Use,</a>
+                    <a href = "/privacy" class = "welcomeLink" target="_blank">Privacy Policy</a>
+            </div>
                 <button type="submit" class = "navButton">Register</button>
             </form>
 @stop
@@ -45,6 +53,5 @@
     <h4>Guidelines:</h4>
     <p>Handle (username) can be real or anonymous, max-length (14)</p>
     <p>Passwords must be at least 8 characters long</p>
-    <p><a href = "/privacy" target="_blank">Privacy Policy</a> - <a href="/terms" target="_blank">Terms of Use</a></p>
 @stop
 

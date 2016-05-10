@@ -69,6 +69,10 @@ label.login {
   color: #00CC33;
 }
 
+p.login {
+  color: #009900;
+}
+
 .profileNav > ul > li:hover > div {
   display: block;
   opacity: 1;
