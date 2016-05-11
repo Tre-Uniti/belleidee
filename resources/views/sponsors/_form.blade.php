@@ -10,20 +10,21 @@
     </div>
     <div class = "formData">
         <div class = "formLabel">
+            {!! Form::label('country', 'Country:') !!}
+        </div>
+        <div class = "formInput">
+            {!! Form::select('country', $countries, null, ['class' => 'countrySelect']) !!}
+        </div>
+    </div>
+    <div class = "formData">
+        <div class = "formLabel">
             {!! Form::label('address', 'Address:') !!}
         </div>
         <div class = "formInput">
             {!! Form::text('address', null, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
-    <div class = "formData">
-        <div class = "formLabel">
-            {!! Form::label('country', 'Country:') !!}
-        </div>
-        <div class = "formInput">
-            {!! Form::text('country', null, ['class' => 'infoTitleText']) !!}
-        </div>
-    </div>
+
     <div class = "formData">
         <div class = "formLabel">
             {!! Form::label('city', 'City:') !!}
@@ -34,7 +35,7 @@
     </div>
     <div class = "formData">
         <div class = "formLabel">
-            {!! Form::label('zip', 'Zipcode:') !!}
+            {!! Form::label('zip', 'Zip code:') !!}
         </div>
         <div class = "formInput">
             {!! Form::text('zip', null, ['class' => 'infoTitleText']) !!}

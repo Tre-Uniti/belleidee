@@ -36,19 +36,6 @@ class NotificationMailer extends Mailer
         $this->sendTo($user, $subject, $view, $data);
     }
 
-    //Send support request to Desk.com portal
-    public function sendSupportNotification(Support $support)
-    {
-        $user = User::findOrFail($support->user_id);
-        $view = 'emails.support';
-        $data = compact('support', 'user');
-
-        //Set to email for routing into Desk.com
-        $user['email'] = 'tre-uniti@belle-idee.org';
-        $subject = 'New Support Request from '. $user->handle;
-        $this->sendTo($user, $subject, $view, $data);
-    }
-
     //Send out new Community Question to users
     public function sendCommunityQuestionNotification(Question $question)
     {

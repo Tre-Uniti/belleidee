@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddZendeskSupport extends Migration
+class AddZendeskIdSupports extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,8 @@ class AddZendeskSupport extends Migration
     public function up()
     {
         Schema::table('supports', function (Blueprint $table) {
-            //
+            $table->string('zendesk_id');
+            $table->string('subject');
         });
     }
 
@@ -25,7 +26,8 @@ class AddZendeskSupport extends Migration
     public function down()
     {
         Schema::table('supports', function (Blueprint $table) {
-            //
+            $table->dropColumn('zendesk_id');
+            $table->dropColumn('subject');
         });
     }
 }

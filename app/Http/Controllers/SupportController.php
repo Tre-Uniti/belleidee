@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Extension;
-use App\Mailers\NotificationMailer;
-use App\Post;
+use function App\Http\getProfileExtensions;
+use function App\Http\getProfilePosts;
 use App\Support;
 use Huddle\Zendesk\Facades\Zendesk;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class SupportController extends Controller
@@ -21,7 +18,7 @@ class SupportController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('admin', ['only' => 'delete']);
-        $this->middleware('supportOwner', ['only' => ['show', 'edit']]);
+        $this->middleware('supportOwner', ['only' => ['show', 'edit', 'update']]);
         $this->support = $support;
     }
 
@@ -33,12 +30,9 @@ class SupportController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
         $supports = $this->support->where('user_id', $user->id)->latest()->paginate(10);
-
-        $tickets = Zendesk::tickets()->findAll();
-        //dd($tickets);
 
         return view ('supports.index')
             ->with(compact('user', 'supports', 'profilePosts', 'profileExtensions'));
@@ -52,19 +46,19 @@ class SupportController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
 
         $types =
             [
-                'Error Report' => 'Error Report',
-                'Vulnerability' => 'Vulnerability',
-                'User' => 'User',
-                'Beacon' => 'Beacon',
-                'Sponsor' => 'Sponsor',
-                'Intolerance' => 'Intolerance',
-                'Copywrite' => 'Copywrite',
-                'Other' => 'Other'
+                'error' => 'Error',
+                'vulnerability' => 'Vulnerability',
+                'user' => 'User',
+                'beacon' => 'Beacon',
+                'sponsor' => 'Sponsor',
+                'intolerance' => 'Intolerance',
+                'copywrite' => 'Copywrite',
+                'other' => 'Other'
             ];
 
         return view('supports.create')
@@ -76,32 +70,36 @@ class SupportController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param NotificationMailer $mailer
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, NotificationMailer $mailer)
+    public function store(Request $request)
     {
         $user = Auth::user();
 
         $support = new Support($request->all());
-        $support->status = 'Open';
+        $support->status = 'open';
         $support->user()->associate($user);
         $support->save();
 
         // Create a new ticket
-        Zendesk::tickets()->create([
+        $zendesk = Zendesk::tickets()->create([
             'external_id' => $support->id,
-            'subject' => $request['type'],
+            'subject' => $request['subject'],
             'comment' => [
                 'body' => $request['request']
             ],
             'requester' => [
                 'name' => $user->handle,
                 'email'=> $user->email ],
-            'priority' => 'normal'
+            'priority' => 'normal',
+            'custom_fields' => [
+                '32306027' => $request['type']
+            ],
         ]);
 
-        $mailer->sendSupportNotification($support);
+        //Add Zendesk ticket id to Idee support record
+        $support->zendesk_id = $zendesk->ticket->id;
+        $support->update();
 
         flash()->overlay('Your support request has been created and will be reviewed');
         return redirect('supports/'. $support->id);
@@ -116,23 +114,22 @@ class SupportController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
         $support = $this->support->findOrFail($id);
 
-        //Get user photo
-        if($user->photo_path == '')
-        {
+        // Get ticket and update Idee status and type if it has changed
+        $zendesk = Zendesk::tickets($support->zendesk_id)->find();
 
-            $photoPath = '';
-        }
-        else
+        if($support->status != $zendesk->ticket->status || $support->type != $zendesk->ticket->custom_fields[0]->value)
         {
-            $photoPath = $user->photo_path;
+            $support->status = $zendesk->ticket->status;
+            $support->type = $zendesk->ticket->custom_fields[0]->value;
+            $support->update();
         }
+
         return view ('supports.show')
-            ->with(compact('user', 'support', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'support', 'profilePosts','profileExtensions'));
     }
 
     /**
@@ -148,32 +145,23 @@ class SupportController extends Controller
 
         $types =
             [
-                'Error Report' => 'Error Report',
-                'Vulnerability' => 'Vulnerability',
-                'User' => 'User',
-                'Beacon' => 'Beacon',
-                'Sponsor' => 'Sponsor',
-                'Intolerance' => 'Intolerance',
-                'Other' => 'Other'
+                'error' => 'Error',
+                'vulnerability' => 'Vulnerability',
+                'user' => 'User',
+                'beacon' => 'Beacon',
+                'sponsor' => 'Sponsor',
+                'intolerance' => 'Intolerance',
+                'copywrite' => 'Copywrite',
+                'other' => 'Other'
             ];
 
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        //Get user photo
-        if($user->photo_path == '')
-        {
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
         return view('supports.edit')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'support', 'types'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'support', 'types'));
     }
 
     /**
@@ -186,7 +174,21 @@ class SupportController extends Controller
     public function update(Request $request, $id)
     {
         $support = $this->support->findOrFail($id);
+
+
+        // Update ticket in Zendesk
+        Zendesk::tickets()->update($support->zendesk_id,[
+            'subject' => $request['subject'],
+            'comment' => [
+                'body' => $request['request']
+            ],
+            'custom_fields' => [
+                '32306027' => $request['type']
+            ],
+        ]);
+
         $support->update($request->all());
+
         flash()->overlay('Support has been updated');
 
         return redirect('supports/'. $support->id);
@@ -202,6 +204,8 @@ class SupportController extends Controller
     {
         $support = Support::findOrFail($id);
         $support->delete();
+
+        Zendesk::ticket($support->zendesk_id)->delete();
 
         flash()->overlay('Support has been deleted');
         return redirect('supports');

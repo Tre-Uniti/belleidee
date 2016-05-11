@@ -3,14 +3,9 @@
     Show Beacon
 @stop
 
-@section('centerMenu')
-    <h2>Support Request</h2>
-    <div class = "indexNav">
-    <b>Type:</b> {{ $support->type }} <b>Status:</b> {{ $support->status }}
-    </div>
-@stop
-
 @section('centerText')
+    <h2>{{ $support->subject }}</h2>
+    <p>(This {{ $support->type }} ticket is {{ $support->status }})</p>
     <div id = "centerTextContent">
         <p>
             {{ $support->request }}

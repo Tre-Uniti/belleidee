@@ -1,4 +1,7 @@
 @section('pageHeader')
+    <script src = "/js/caffeine.js"></script>
+@stop
+@section('pageHeader')
     <script src = "/js/extension.js"></script>
 @stop
 <div id = "createOptions">

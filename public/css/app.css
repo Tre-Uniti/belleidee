@@ -158,6 +158,10 @@ ul.tour {
   margin: 0 auto;
 }
 
+.countrySelect {
+  max-width: 80%;
+}
+
 .topNav {
   font-family: "Open Sans", Arial, serif;
   background-color: #101010;
@@ -888,7 +892,7 @@ article {
 }
 
 .infoTitleText {
-  width: 84%;
+  width: 80%;
 }
 
 .createSubmit {

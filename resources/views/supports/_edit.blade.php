@@ -1,9 +1,25 @@
 <div id = "createOptions">
-    <h2>Support Request</h2>
+    <h2>Update Support Request</h2>
     <div id = "createOptions">
-        {!! Form::label('type', 'Type:') !!}
-        {!! Form::select('type', $types) !!}
-        {!! Form::textarea('request', $support->request, ['id' => 'createBodyText', 'placeholder' => 'What can we help with?:', 'rows' => '3%', 'maxlength' => '300']) !!}
+        <div class = "formData">
+            <div class = "formData">
+                {!! Form::label('type', 'Type:') !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::select('type', $types) !!}
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formData">
+                {!! Form::label('subject', 'Subject') !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::text('subject', null, ['class' => 'infoTitleText', 'autofocus']) !!}
+            </div>
+        </div>
+
+        {!! Form::textarea('request', null, ['id' => 'createBodyText', 'placeholder' => 'What can we help with?', 'rows' => '3%', 'maxlength' => '300']) !!}
+
     </div>
     <!-- Body Form Input -->
     @section('centerFooter')

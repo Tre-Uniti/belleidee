@@ -1,3 +1,6 @@
+@section('pageHeader')
+    <script src = "/js/caffeine.js"></script>
+@stop
 <div id = "createOptions">
     <div class = "formInput">
         {!! Form::label('title', 'Post Title:') !!}

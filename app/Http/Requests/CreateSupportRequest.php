@@ -24,6 +24,7 @@ class CreateSupportRequest extends Request
     public function rules()
     {
         return [
+            'subject' => 'required|min:2|max:40',
             'request' => 'required|min:5|max:300',
             'type' => 'required',
         ];

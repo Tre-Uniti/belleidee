@@ -6,6 +6,7 @@ use App\Events\SponsorViewed;
 use App\Extension;
 use function App\Http\filterContentLocation;
 use function App\Http\filterContentLocationSearch;
+use function App\Http\getCountries;
 use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
@@ -71,8 +72,10 @@ class SponsorController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
+        $countries = getCountries();
+
         return view('sponsors.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'profilePosts', 'profileExtensions','countries'));
     }
 
     /**
@@ -167,20 +170,11 @@ class SponsorController extends Controller
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
-        //Get user photo
-        if($user->photo_path == '')
-        {
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $countries = getCountries();
 
         return view('sponsors.edit')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'sponsor'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'sponsor', 'countries'));
     }
 
     /**
