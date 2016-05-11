@@ -16,7 +16,11 @@
 @section('centerFooter')
     <a href="{{ url('supports/') }}"><button type = "button" class = "navButton">Other Requests</button></a>
     <a href="{{ url('supports/'. $support->id . '/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
-
+    @if($user->type > 1)
+        {!! Form::open(['method' => 'DELETE', 'route' => ['supports.destroy', $support->id], 'class' => 'formDeletion']) !!}
+        {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
+        {!! Form::close() !!}
+    @endif
 @stop
 
 

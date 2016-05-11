@@ -205,7 +205,7 @@ class SupportController extends Controller
         $support = Support::findOrFail($id);
         $support->delete();
 
-        Zendesk::ticket($support->zendesk_id)->delete();
+        Zendesk::tickets($support->zendesk_id)->delete();
 
         flash()->overlay('Support has been deleted');
         return redirect('supports');

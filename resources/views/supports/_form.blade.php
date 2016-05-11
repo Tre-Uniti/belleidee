@@ -1,20 +1,21 @@
 <div id = "createOptions">
     <h2>Support Request</h2>
     <div id = "createOptions">
+
+        <div class = "formData">
+            <div class = "formData">
+                {!! Form::label('subject', 'Subject:') !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::text('subject', null, ['class' => 'infoTitleText', 'autofocus']) !!}
+            </div>
+        </div>
         <div class = "formData">
             <div class = "formData">
                 {!! Form::label('type', 'Type:') !!}
             </div>
             <div class = "formInput">
                 {!! Form::select('type', $types) !!}
-            </div>
-        </div>
-        <div class = "formData">
-            <div class = "formData">
-                {!! Form::label('subject', 'Subject') !!}
-            </div>
-            <div class = "formInput">
-                {!! Form::text('subject', null, ['class' => 'infoTitleText', 'autofocus']) !!}
             </div>
         </div>
 
