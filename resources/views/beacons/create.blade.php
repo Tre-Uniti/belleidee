@@ -7,7 +7,7 @@
     @include ('errors.list')
 
     {!! Form::open(['url' => 'beacons', 'files' => true]) !!}
-    @include ('beacons._form', ['submitButtonText' => 'Request Beacon'])
+    @include ('beacons._form', ['submitButtonText' => 'Create Beacon'])
 @stop
 
 

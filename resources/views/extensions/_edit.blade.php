@@ -20,7 +20,7 @@
             <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
     @endif
 
-    <div class = "formInput">
+    <div class = "formData">
             {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
         </div>
 

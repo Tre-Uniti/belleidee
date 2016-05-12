@@ -52,6 +52,20 @@ class NotificationMailer extends Mailer
         }
     }
 
+    //Send out notification to users with content reassigned on Beacon deactivation
+    public function sendBeaconDeactivationNotification(Beacon $beacon, $users)
+    {
+        $view = 'emails.beaconDeactivated';
+        
+        foreach($users as $id)
+        {
+            $user = User::findOrFail($id);
+            $subject = 'Content reassigned from deactivated Beacon';
+            $data = compact('beacon', 'user');
+            $this->sendTo($user, $subject, $view, $data);
+        }
+    }
+
     //Send email to owner of request the Beacon was deleted
     public function sendBeaconDeletedNotification(User $user, $beaconTitle)
     {

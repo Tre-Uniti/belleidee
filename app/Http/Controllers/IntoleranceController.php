@@ -100,7 +100,7 @@ class IntoleranceController extends Controller
         }
         elseif(isset($sources['extension_id']))
         {
-            $extension = Extension::findOrFail($sources['extenception']);
+            $extension = Extension::findOrFail($sources['extension_id']);
             $sourceUser=
                 [
                     'id' => $extension->user_id,

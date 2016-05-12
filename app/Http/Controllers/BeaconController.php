@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Bookmark;
 use function App\Http\filterContentLocation;
 use function App\Http\filterContentLocationSearch;
@@ -11,20 +12,20 @@ use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use App\Http\Requests\CreateBeaconRequest;
+use App\Intolerance;
+use App\Mailers\NotificationMailer;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\User;
 use App\Post;
 use App\Extension;
 use App\Beacon;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BeaconController extends Controller
 {
@@ -227,11 +228,14 @@ class BeaconController extends Controller
         
         //Get location of beacon and setup link to Google maps
         $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
+        
+        $month = Carbon::today()->format('M');
 
         return view ('beacons.show')
                     ->with(compact('user', 'beacon', 'profilePosts','profileExtensions', 'posts'))
                     ->with('beaconPath', $beaconPath)
-                    ->with('location' , $location);
+                    ->with('location' , $location)
+                    ->with('month', $month);
     }
 
     /**
@@ -314,20 +318,89 @@ class BeaconController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Show confirmation to Deactivate the specified Beacon.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deactivate($id)
     {
-        $beacon = Beacon::findOrFail($id)->get();
-        //Get all posts and extensions with Beacon tag
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $beacon = Beacon::findOrFail($id);
+
+        return view ('beacons.deactivate')
+            ->with(compact('user', 'beacon', 'profilePosts','profileExtensions'));
+    }
+
+
+    /**
+     * Deactivate the specified resource from storage.
+     *
+     * @param  int $id
+     * @param NotificationMailer $mailer
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id, NotificationMailer $mailer)
+    {
+        $beacon = Beacon::findOrFail($id);
+
+        //Setup array of users to notify
+        $users = [];
+
+        //Reassign posts to 'No-Beacon'
         $posts = Post::where('beacon_tag', '=', $beacon->beacon_tag)->get();
+        foreach($posts as $post)
+        {
+            $post->beacon_tag = 'No-Beacon';
+            $post->lat = NULL;
+            $post->long = NULL;
+            $post->update();
+
+            //Add user to notify list
+            $users = array_add($users, 'id', $post->user_id);
+        }
+
+        //Reassign extensions to 'No-Beacon'
         $extensions = Extension::where('beacon_tag', '=', $beacon->beacon_tag)->get();
-        
-        //Reset all content to No-Beacon
-        //Delete Beacon
+        foreach($extensions as $extension)
+        {
+            $extension->beacon_tag = 'No-Beacon';
+            $extension->lat = NULL;
+            $extension->long = NULL;
+            $extension->update();
+
+            //Add user to notify list
+            $users = array_add($users, 'id', $extension->user_id);
+        }
+
+        //Reassign Intolerances to 'No-Beacon'
+        $intolerances = Intolerance::where('beacon_tag', '=', $beacon->beacon_tag)->get();
+        foreach($intolerances as $intolerance)
+        {
+            $intolerance->beacon_tag = 'No-Beacon';
+            $intolerance->update();
+
+            //Add user to notify list
+            $users = array_add($users, 'id', $intolerance->user_id);
+        }
+
+        $bookmark = Bookmark::where('pointer', '=', $beacon->beacon_tag)->get();
+        DB::table('bookmark_user')->where('bookmark_id', '=', $bookmark[0]['id'])->delete();
+
+
+        //Email users with notification of Beacon deactivation and reassignment
+        $mailer->sendBeaconDeactivationNotification($beacon, $users);
+
+        //Set Beacon to inactive
+        $beacon->subscription()->cancel();
+        $beacon->status = 'deactivated';
+        $beacon->update();
+
+        flash()->overlay('Beacon has been deactivated');
+        return redirect('beacons');
         
     }
 

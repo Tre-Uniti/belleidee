@@ -676,12 +676,17 @@ table
 {
   border-collapse: separate;
   border-spacing: 3px;
+  margin: 0 auto;
 }
 td
 {
   border: 1px solid black;
   border-radius: 7px;
   -moz-border-radius: 7px;
+  padding: 3px;
+}
+th
+{
   padding: 3px;
 }
 

@@ -1,7 +1,5 @@
 @section('pageHeader')
     <script src = "/js/caffeine.js"></script>
-@stop
-@section('pageHeader')
     <script src = "/js/toggleSource.js"></script>
 @stop
 

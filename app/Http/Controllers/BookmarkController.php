@@ -35,22 +35,11 @@ class BookmarkController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        //$bookmarks = $this->bookmark->latest()->paginate(10);
         $bookmarks = $user->bookmarks()->paginate(10);
-        //Get user photo
-        if($user->photo_path == '')
-        {
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
 
         return view ('bookmarks.index')
-                    ->with(compact('user', 'bookmarks', 'profilePosts','profileExtensions'))
-                    ->with('photoPath', $photoPath);
+                    ->with(compact('user', 'bookmarks', 'profilePosts','profileExtensions'));
     }
 
     /**

@@ -26,15 +26,7 @@
                 {!! Form::label('subscription', 'Subscription plan') !!}
             </div>
             <div class = "formInput">
-                {!! Form::select('subscription' , [ '0' => 'Starter: Free', '1' => 'Small: (<500) 25$ per month', '2' => 'Medium: (<1000) $50 per month', '3' => 'Large: (>1000) $100 per month']) !!}
-            </div>
-        </div>
-        <div class = "formData">
-            <div class = "formLabel">
-                {!! Form::label('beacon', 'Beacon') !!}
-            </div>
-            <div class = "formInput">
-                {!! Form::text('beacon', $beacon->id, [ 'placeholder' => 'Beacon' ]) !!}
+                {!! Form::select('subscription', [ '0' => 'Starter: Free', '1' => 'Small: (<500) 25$ per month', '2' => 'Medium: (<1000) $50 per month', '3' => 'Large: (>1000) $100 per month'], $beacon->stripe_plan) !!}
             </div>
         </div>
         <div class = "formData">
@@ -70,8 +62,16 @@
                 {!! Form::text('cvc', '', ['data-stripe' => 'cvc' ]) !!}
             </div>
         </div>
+        {!! Form::hidden('beacon', $beacon->id, [ 'placeholder' => 'Beacon' ]) !!}
 
-        {!! Form::button('Sign Up', [ 'type' => 'submit', 'id'  => 'btn-signup', 'class' => 'navButton'] ) !!}
+        {!! Form::button('Add Card', [ 'type' => 'submit', 'id'  => 'btn-signup', 'class' => 'navButton'] ) !!}
 
     {!! Form::close()  !!}
+@stop
+
+        @section('centerFooter')
+            <a href = "{{ url('beacons/'. $beacon->id) }}"><button type = "button" class = "navButton">Beacon Profile</button></a>
+            <a href = "{{ url('beacons/subscription/'. $beacon->id) }}"><button type = "button" class = "navButton">Subscriptions</button></a>
+            <a href = "{{ url('beacons/invoice/'. $beacon->id) }}"><button type = "button" class = "navButton">Invoices</button></a>
+
 @stop

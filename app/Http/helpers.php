@@ -451,7 +451,7 @@ function filterContentLocation($user, $number, $type)
             }
             elseif($type == 'Beacon')
             {
-                $filteredContent = Beacon::where('beacon_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->paginate(10);
+                $filteredContent = Beacon::where('beacon_tag', 'LIKE', $location['shortTag'].'%')->where('status', '!=', 'deactivated')->latest('created_at')->paginate(10);
             }
             elseif($type == 'Sponsor')
             {
@@ -471,7 +471,7 @@ function filterContentLocation($user, $number, $type)
             }
             elseif($type == 'Beacon')
             {
-                $filteredContent = Beacon::where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->latest('created_at')->paginate(10);
+                $filteredContent = Beacon::where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->where('status', '!=', 'deactivated')->latest('created_at')->paginate(10);
             }
             elseif($type == 'Sponsor')
             {
@@ -491,7 +491,7 @@ function filterContentLocation($user, $number, $type)
             }
             elseif($type == 'Beacon')
             {
-                $filteredContent = Beacon::latest('created_at')->paginate(10);
+                $filteredContent = Beacon::latest('created_at')->where('status', '!=', 'deactivated')->paginate(10);
             }
             elseif($type == 'Sponsor')
             {

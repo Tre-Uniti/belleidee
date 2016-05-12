@@ -9,6 +9,7 @@ use Illuminate\Session\TokenMismatchException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Stripe\Error as Stripe;
 
 class Handler extends ExceptionHandler
 {
@@ -58,6 +59,29 @@ class Handler extends ExceptionHandler
             flash()->overlay('Content does not exist please contact Tre-Uniti@belle-idee.org');
             return redirect()->back();
         }
+
+        if ($e instanceof Stripe\Card)
+        {
+            flash()->overlay($e->getMessage() . ' Please click the Update Card button below.');
+            return redirect()->back();
+        }
+
+        if ($e instanceof Stripe\RateLimit)
+        {
+            session()->flash('error_msg','It looks like our payment processor was busy. Please try again in a few minutes.');
+            return redirect()->back();
+        }
+
+        if ($e instanceof Stripe\Api ||
+            $e instanceof Stripe\ApiConnection ||
+            $e instanceof Stripe\Authentication ||
+            $e instanceof Stripe\InvalidRequest ||
+            $e instanceof Stripe\Base)
+        {
+            session()->flash('error_msg',$e->getMessage());
+            return redirect()->back();
+        }
         return parent::render($request, $e);
     }
+
 }

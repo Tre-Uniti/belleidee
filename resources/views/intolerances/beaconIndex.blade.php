@@ -6,6 +6,7 @@
 @section('centerText')
     <h2>Intolerance for <a href = "{{ url('/beacons/tags/'. $beacon->beacon_tag) }}">{{ $beacon->beacon_tag }}</a></h2>
         <div class = "indexNav">
+            <a href={{ url('/beacons/'. $beacon->id)}}><button type = "button" class = "indexButton">Profile</button></a>
             <a href={{ url('/intolerances')}}><button type = "button" class = "indexButton">All Intolerances</button></a>
     </div>
     <div class = "indexLeft">

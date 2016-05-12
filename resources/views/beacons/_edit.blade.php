@@ -21,7 +21,7 @@
             {!! Form::label('country', 'Country:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::select('country', $countries, $beacon->country) !!}
+            {!! Form::select('country', $countries, $beacon->country, ['class' => 'countrySelect'] ) !!}
         </div>
     </div>
     <div class = "formData">
@@ -119,11 +119,6 @@
         <div class = "formInput">
             {!! Form::file('image', null, ['class' => 'navButton']) !!}
         </div>
-    </div>
-
-    <div class = "formInput">
-        <a href="{{ url('/beacons/subscription/' . $beacon->id) }}"><button type = "button" class = "indexButton">Subscription</button></a>
-        <a href="{{ url('/beacons/signup/'. $beacon->id) }}"><button type = "button" class = "indexButton">Payment</button></a>
     </div>
 
 

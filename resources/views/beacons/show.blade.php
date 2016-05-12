@@ -22,8 +22,6 @@
                 <a href="{{ url('/intolerances/beacon/'. $beacon->id) }}"><button type = "button" class = "indexButton">Intolerance</button></a>
             </div>
         @endif
-        <p>Beacon tags this month: {{ $beacon->tag_usage }}</p>
-
         <div class = "indexLeft">
             <h4>Top Posts</h4>
         </div>
@@ -50,6 +48,7 @@
         @endif
         @if($user->type > 1)
             <a href="{{ url('/beacons/'.$beacon->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+            <a href="{{ url('beacons/deactivate/'. $beacon->id)}}"><button type = "button" class = "navButton">Deactivate</button></a>
         @endif
         @if($beacon->beacon_tag != 'No-Beacon')
             <a href="{{ url('/bookmarks/beacons/'.$beacon->beacon_tag) }}"><button type = "button" class = "navButton">Bookmark</button></a>

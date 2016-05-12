@@ -36,7 +36,9 @@
             @else
                 <a href="{{ url('/extensions/'. $extension->id) }}"><button type = "button" class = "indexButton">Status: Intolerant</button></a>
             @endif
+            @if($extension->lat != NULL)
                 <a href="{{ url($location) }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
+                @endif
         </div>
         <div class = "indexNav">
             <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title={{$extension->title}}" target="_blank">

@@ -29,8 +29,8 @@ class UpdateBeaconUsage
     {
         $beacon = Beacon::findOrFail($event->beacon->id);
 
-        //Add 1 to the Beacon usage
+        //Add 1 to the Beacon views
         $beacon->where('id', $beacon->id)
-            ->update(['tag_usage' => $beacon->tag_usage + 1]);
+            ->update(['tag_views' => $beacon->tag_views + 1]);
     }
 }

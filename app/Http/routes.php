@@ -36,7 +36,7 @@ Route::get('beacons/payment/{id}', 'BeaconController@payment');
 Route::get('beacons/subscription/{id}', 'BeaconController@subscription');
 Route::get('beacons/invoice/{id}', 'BeaconController@invoice');
 Route::get('beacons/invoice/{beacon}/download/{id}', 'BeaconController@downloadInvoice');
-
+Route::get('beacons/deactivate/{id}', 'BeaconController@deactivate');
 Route::get('beacons/subscription/{id}', 'BeaconController@subscription');
 Route::resource('beacons', 'BeaconController');
 

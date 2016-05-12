@@ -23,7 +23,7 @@ class Beacon extends Model implements BillableContract
     public function getTaxPercent()
     {
 
-        $taxjar = TaxJar\Client::withApiKey($_ENV['TAXJAR_API_KEY']);
+        /*$taxjar = TaxJar\Client::withApiKey($_ENV['TAXJAR_API_KEY']);
         
         $country = $this->country;
         $city = $this->city;
@@ -43,7 +43,7 @@ class Beacon extends Model implements BillableContract
                 //dd($rates);
                 return 8.25;
             }
-        }
+        }*/
 
         return 8.25;
     }
