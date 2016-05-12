@@ -10,17 +10,17 @@ class MonthlyBeaconReset extends Event
 {
     use SerializesModels;
 
-    public $beacons;
+    
 
 
     /**
      * Create a new event instance.
      *
-     * @param $beacons
+     * 
      */
-    public function __construct($beacons)
+    public function __construct()
     {
-        $this->beacons = $beacons;
+        
     }
 
     /**

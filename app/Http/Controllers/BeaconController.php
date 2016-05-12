@@ -22,7 +22,6 @@ use App\Post;
 use App\Extension;
 use App\Beacon;
 use App\Http\Requests;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -580,8 +579,7 @@ class BeaconController extends Controller
  */
     public function runMonthly()
     {
-        $beacons = Beacon::where('stripe_plan', '>', 0)->get();
-        Event::fire(New monthlyBeaconReset($beacons));
+        Event::fire(New monthlyBeaconReset());
 
         flash()->overlay('Reset successful');
         return redirect('/beacons');

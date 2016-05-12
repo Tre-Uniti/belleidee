@@ -7,16 +7,16 @@ use App\Events\MonthlyBeaconReset;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class DatabaseReset
+class BeaconCounterReset
 {
     /**
      * Create the event listener.
      *
-     * @param Beacon $beacons
+     * @param Beacon $beacon
      */
-    public function __construct(Beacon $beacons)
+    public function __construct(Beacon $beacon)
     {
-        $this->beacons = $beacons;
+        $this->beacon = $beacon;
     }
 
     /**
@@ -27,13 +27,13 @@ class DatabaseReset
      */
     public function handle(MonthlyBeaconReset $event)
     {
-        $beacons = $event->beacons;
-            
+        $beacons = Beacon::latest()->get();
+
         foreach($beacons as $beacon)
         {
+            $beacon->total_tag_usage = $beacon->total_tag_usage + $beacon->tag_usage;
             $beacon->tag_views = 0;
             $beacon->tag_usage = 0;
-            $beacon->total_tag_usage = $beacon->total_usage + $beacon->tag_usage;
             $beacon->update();
         }
     }

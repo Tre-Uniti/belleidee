@@ -103,8 +103,9 @@ class NotificationMailer extends Mailer
     }
 
     //Send email to owner of request the Beacon was created
-    public function sendMonthlyBeaconReport(Beacon $beacons)
+    public function sendMonthlyBeaconReport()
     {
+        $beacons = Beacon::where('stripe_plan', '>', 0)->get();
         $view = 'emails.beaconReport';
         foreach($beacons as $beacon)
         {

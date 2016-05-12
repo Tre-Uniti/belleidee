@@ -28,31 +28,24 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->hourly();
-        
+        //$schedule->command('inspire')
+                 //->hourly();
+
         //Run daily backups to S3 and local
-        $schedule->command('backup:clean')->daily()->at('01:00');
-        $schedule->command('backup:run')->daily()->at('02:00');
+        $schedule->command('backup:clean')->daily()->at('01:00')
+                    ->pingBefore('http://beats.envoyer.io/heartbeat/pmD4rGlycwLlIkg	')
+                    ->thenPing('http://beats.envoyer.io/heartbeat/pmD4rGlycwLlIkg');
 
-        $schedule->call(function (NotificationMailer $mailer) {
+        $schedule->command('backup:run')->daily()->at('02:00')
+                    ->pingBefore('http://beats.envoyer.io/heartbeat/063hSXI4bQV8lfC')
+                    ->thenPing('http://beats.envoyer.io/heartbeat/063hSXI4bQV8lfC');
 
-            //Get Beacons with a paid subscription
-            $beacons = Beacon::where('stripe_plan', '>', 0)->get();
-            
-            $mailer->sendMonthlyBeaconReport($beacons);
-            
-            //
-            Event::fire(New monthlyBeaconReset($beacons));            
-            /*Reset monthly counters for each beacon
-            foreach($beacons as $beacon)
-            {
-                $beacon->views = 0;
-                $beacon->tag_usage = 0;
-                $beacon->total_usage = $beacon->total_usage + $beacon->tag_usage;
-                $beacon->update();
-            }*/
-        })->everyMinute();
+        $schedule->call(function () {
+            //Event::fire(New monthlyBeaconReset());
+
+
+        })->everyMinute()->pingBefore('http://beats.envoyer.io/heartbeat/sJMQyFYadJ1mpBw')
+            ->thenPing('http://beats.envoyer.io/heartbeat/sJMQyFYadJ1mpBw');
 
         //Run Beacon Subscriptions Email and reset tag usage
         /*$schedule->command('emails:send')
