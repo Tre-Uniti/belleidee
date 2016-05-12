@@ -11,14 +11,10 @@
             </div>
         </div>
         <div class = "formData">
-            <div class = "formData">
-                {!! Form::label('type', 'Type:') !!}
-            </div>
             <div class = "formInput">
-                {!! Form::select('type', $types) !!}
+                {!! Form::label('type', 'Type:') !!} {!! Form::select('type', $types) !!}
             </div>
         </div>
-
         {!! Form::textarea('request', null, ['id' => 'createBodyText', 'placeholder' => 'What can we help with?', 'rows' => '3%', 'maxlength' => '300']) !!}
 
     </div>

@@ -18,7 +18,7 @@
     @endif
 
     <p>Are you sure you want to deactivate {{ $beacon->name }}?</p>
-    <p>All Posts, Extensions, Intolerances, and bookmarks will be reassigned or removed</p>
+    <p>All Posts, Extensions, Intolerances, and Bookmarks will be reassigned or removed</p>
 
     {!! Form::open(['method' => 'DELETE', 'route' => ['beacons.destroy', $beacon->id], 'class' => 'formDeletion']) !!}
     {!! Form::submit('Confirm Deactivation', ['class' => 'navButton', 'id' => 'delete']) !!}

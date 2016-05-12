@@ -21,7 +21,7 @@
             {!! Form::label('country', 'Country:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('country', $beaconRequest->country, ['class' => 'infoTitleText']) !!}
+            {!! Form::select('country', $countries, $beaconRequest->country, ['class' => 'selectMenu']) !!}
         </div>
     </div>
     <div class = "formData">

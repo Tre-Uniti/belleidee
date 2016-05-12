@@ -6,8 +6,9 @@
 @section('centerText')
         <h2>Recent Beacon Requests</h2>
         <div class = "indexNav">
-            <a href={{ url('/beacons/create')}}><button type = "button" class = "indexButton">Create New Beacon</button></a>
-            <a href={{ url('/beaconRequests/create')}}><button type = "button" class = "indexButton">New Beacon Request</button></a>
+            <a href={{ url('/beacons/create')}}><button type = "button" class = "indexButton">New Beacon</button></a>
+            <a href={{ url('/beacon/runMonthly')}}><button type = "button" class = "indexButton">Run Monthly</button></a>
+            <a href={{ url('/beaconRequests/create')}}><button type = "button" class = "indexButton">New Request</button></a>
         </div>
 
     <div class = "indexLeft">

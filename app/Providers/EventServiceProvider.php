@@ -27,7 +27,11 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\SetLocation' => [
             'App\Listeners\RetrieveLatestLocation'
+        ],
+        'App\Events\MonthlyBeaconReset' => [
+            'App\Listeners\DatabaseReset'
         ]
+
     ];
 
     /**

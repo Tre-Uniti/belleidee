@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Bookmark;
+use App\Events\MonthlyBeaconReset;
 use function App\Http\filterContentLocation;
 use function App\Http\filterContentLocationSearch;
 use function App\Http\getBeliefs;
@@ -26,6 +27,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Event;
 
 class BeaconController extends Controller
 {
@@ -360,7 +362,7 @@ class BeaconController extends Controller
             $post->update();
 
             //Add user to notify list
-            $users = array_add($users, 'id', $post->user_id);
+            $users = array_add($users, $post->user->handle, $post->user_id);
         }
 
         //Reassign extensions to 'No-Beacon'
@@ -373,7 +375,7 @@ class BeaconController extends Controller
             $extension->update();
 
             //Add user to notify list
-            $users = array_add($users, 'id', $extension->user_id);
+            $users = array_add($users, $extension->user->handle, $extension->user_id);
         }
 
         //Reassign Intolerances to 'No-Beacon'
@@ -384,7 +386,7 @@ class BeaconController extends Controller
             $intolerance->update();
 
             //Add user to notify list
-            $users = array_add($users, 'id', $intolerance->user_id);
+            $users = array_add($users, $intolerance->user->handle, $intolerance->user_id);
         }
 
         $bookmark = Bookmark::where('pointer', '=', $beacon->beacon_tag)->get();
@@ -568,5 +570,20 @@ class BeaconController extends Controller
             'vendor'  => 'Tre-Uniti LLC',
             'product' => 'Belle-Idee',
         ]);
+    }
+
+    /*
+ * Download specific invoice for beacon
+ *
+ * @param $id beacon id
+ * @param $invoiceId specific invoice
+ */
+    public function runMonthly()
+    {
+        $beacons = Beacon::where('stripe_plan', '>', 0)->get();
+        Event::fire(New monthlyBeaconReset($beacons));
+
+        flash()->overlay('Reset successful');
+        return redirect('/beacons');
     }
 }

@@ -22,7 +22,7 @@
                 {!! Form::label('country', 'Country:') !!}
             </div>
             <div class = "formInput">
-                {!! Form::select('country', $countries, $beaconRequest->country) !!}
+                {!! Form::select('country', $countries, $beaconRequest->country, ['class' => 'selectMenu']) !!}
             </div>
         </div>
         <div class = "formData">

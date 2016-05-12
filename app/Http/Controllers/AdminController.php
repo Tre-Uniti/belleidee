@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\BeaconRequest;
 use App\Extension;
 use function App\Http\getBeliefs;
+use function App\Http\getCountries;
 use App\Intolerance;
 use App\Moderation;
 use App\Post;
@@ -110,9 +111,10 @@ class AdminController extends Controller
             'Refused' => 'Refused',
         ];
         $beliefs = getBeliefs();
+        $countries = getCountries();
 
         return view('admin.editBeaconRequest')
-            ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions', 'admins', 'status', 'beliefs'));
+            ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions', 'admins', 'status', 'beliefs', 'countries'));
     }
     /**
      * Update the specified resource in storage.
@@ -146,9 +148,10 @@ class AdminController extends Controller
         $beaconRequest = BeaconRequest::findOrFail($id);
 
         $beliefs = getBeliefs();
+        $countries = getCountries();
         
         return view('admin.convertBeacon')
-            ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions', 'countries'))
             ->with('beliefs', $beliefs);
     }
 
@@ -198,9 +201,10 @@ class AdminController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $sponsorRequest = SponsorRequest::findOrFail($id);
 
+        $countries = getCountries();
 
         return view('admin.convertSponsor')
-            ->with(compact('user', 'sponsorRequest', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'sponsorRequest', 'profilePosts', 'profileExtensions', 'countries'));
     }
 
 }

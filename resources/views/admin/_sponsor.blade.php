@@ -13,7 +13,7 @@
             {!! Form::label('country', 'Country') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('country', $sponsorRequest->country, ['class' => 'infoTitleText']) !!}
+            {!! Form::text('country', $countries, $sponsorRequest->country, ['class' => 'infoTitleText']) !!}
         </div>
     </div>
     <div class = "formData">

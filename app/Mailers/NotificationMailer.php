@@ -101,4 +101,19 @@ class NotificationMailer extends Mailer
         $subject = 'Your sponsor request has become an Idee Sponsor!';
         $this->sendTo($user, $subject, $view, $data);
     }
+
+    //Send email to owner of request the Beacon was created
+    public function sendMonthlyBeaconReport(Beacon $beacons)
+    {
+        $view = 'emails.beaconReport';
+        foreach($beacons as $beacon)
+        {
+            $data = compact('beacon');
+            $user['email'] = $beacon->email;
+            $subject = 'Monthly Beacon Report: ' . $beacon->beacon_tag;
+            $this->sendTo($user, $subject, $view, $data);
+        }
+
+    }
+
 }

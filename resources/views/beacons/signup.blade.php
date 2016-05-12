@@ -26,7 +26,7 @@
                 {!! Form::label('subscription', 'Subscription plan') !!}
             </div>
             <div class = "formInput">
-                {!! Form::select('subscription', [ '0' => 'Starter: Free', '1' => 'Small: (<500) 25$ per month', '2' => 'Medium: (<1000) $50 per month', '3' => 'Large: (>1000) $100 per month'], $beacon->stripe_plan) !!}
+                {!! Form::select('subscription', [ '0' => 'Starter: Free', '1' => 'Small: (<500) 25$ per month', '2' => 'Medium: (<1000) $50 per month', '3' => 'Large: (>1000) $100 per month'], $beacon->stripe_plan, ['class' => 'selectMenu']) !!}
             </div>
         </div>
         <div class = "formData">

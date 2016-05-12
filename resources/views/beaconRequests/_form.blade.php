@@ -21,7 +21,7 @@
             {!! Form::label('country', 'Country:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::select('country', $countries, null, ['class' => 'countrySelect']) !!}
+            {!! Form::select('country', $countries, null, ['class' => 'selectMenu']) !!}
         </div>
     </div>
     <div class = "formData">
