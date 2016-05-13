@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\Inspire::class,
         Commands\MonthlyBeaconReport::class,
         Commands\MonthlyBeaconReset::class,
+        Commands\MonthlySponsorReport::class,
     ];
 
     /**
@@ -35,6 +36,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('monthlyBeaconReset')->everyFiveMinutes()
                     ->pingBefore('http://beats.envoyer.io/heartbeat/sJMQyFYadJ1mpBw')
                     ->thenPing('http://beats.envoyer.io/heartbeat/sJMQyFYadJ1mpBw');
+
+        $schedule->command('monthlySponsorReport')->everyFiveMinutes()
+            ->pingBefore('http://beats.envoyer.io/heartbeat/fns0wM10UnkF2h4	')
+            ->thenPing('http://beats.envoyer.io/heartbeat/fns0wM10UnkF2h4	');
 
         //Run daily backups to S3 and local
         $schedule->command('backup:clean')->daily()->at('01:00')

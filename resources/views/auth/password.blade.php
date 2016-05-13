@@ -1,4 +1,7 @@
 @extends('auth')
+@section('siteTitle')
+    Reset Password
+@stop
 
 @section('login')
     <h3>Reset Password</h3>

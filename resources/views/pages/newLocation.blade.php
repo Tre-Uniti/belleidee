@@ -25,7 +25,7 @@
                 {!! Form::text('city', null, ['class' => 'createTitleText', 'placeholder' => 'City Name']) !!}
             </div>
         </div>
-        {!! Form::submit('Search', ['class' => 'navButton']) !!}
+        {!! Form::submit('Set Location', ['class' => 'navButton']) !!}
         {!! Form:: close() !!}
     </div>
 @stop

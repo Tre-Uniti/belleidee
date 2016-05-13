@@ -1,5 +1,7 @@
 @extends('auth')
-
+@section('siteTitle')
+    Reset Password
+@stop
 @section('login')
     <h3>Reset Password</h3>
     <form role="form" method="POST" action="{{ url('/password/reset') }}">

@@ -42,7 +42,7 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['terms', 'privacy']]);
+        $this->middleware('auth', ['except' => ['terms', 'privacy', 'nymi']]);
         $this->middleware('admin', ['only' => 'indexer']);
     }
 
@@ -328,12 +328,7 @@ class HomeController extends Controller
     */
     public function nymi()
     {
-        $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
-
-        return view ('pages.nymi')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+        return view ('pages.nymi');
     }
 
     /*

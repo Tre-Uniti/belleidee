@@ -117,4 +117,20 @@ class NotificationMailer extends Mailer
 
     }
 
+
+    //Send monthly report email to owner of Sponsor
+    public function sendMonthlySponsorReport()
+    {
+        $sponsors = Sponsor::where('status', '=', 'Live')->get();
+        $view = 'emails.sponsorReport';
+        foreach($sponsors as $sponsor)
+        {
+            $data = compact('sponsor');
+            $user['email'] = $sponsor->email;
+            $subject = 'Monthly Sponsor Report: ' . $sponsor->name;
+            $this->sendTo($user, $subject, $view, $data);
+        }
+
+    }
+
 }

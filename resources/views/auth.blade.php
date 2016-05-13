@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Idee /-\ @yield('loginTitle')</title>
+    <title>Idee /-\ @yield('siteTitle')</title>
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
     <!--
        This code is maintained by the Tre-Uniti development ops
