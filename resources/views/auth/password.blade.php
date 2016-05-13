@@ -4,24 +4,19 @@
     <h3>Reset Password</h3>
     @if (session('status'))
     <div class = "flash-success">
-        <table class = "formData">
-            <tr>
-                <td>{{ session('status') }}</td>
-            </tr>
-        </table>
+        {{ session('status') }}
     </div>
     @endif
     <form role="form" method="POST" action="{{ url('/password/email') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-        <table align = "center">
-            <tr>
-                <td><label for = "email" class = "login">E-Mail Address</label></td>
-            </tr>
-            <tr>
-                <td><input type= "email" id = "email" class = "welcomeInputText" name="email" value="{{ old('email') }}"></td>
-            </tr>
-        </table>
+        <div class = "formData">
+            <div class = "formLabel">
+                <label for = "email" class = "login">E-Mail Address</label>
+            </div>
+            <div class = "formInput">
+                <input type= "email" id = "email" class = "welcomeInputText" name="email" value="{{ old('email') }}">
+            </div>
+        </div>
         <button type="submit" class="navButton">Send Password Reset Link</button>
     </form>
 

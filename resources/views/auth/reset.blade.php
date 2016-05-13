@@ -5,27 +5,30 @@
     <form role="form" method="POST" action="{{ url('/password/reset') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="token" value="{{ $token }}">
-
-        <table align = "center">
-            <tr>
-                <td><label for = "email" class = "login">E-Mail Address</label></td>
-            </tr>
-            <tr>
-                <td><input type= "email" id = "email" class = "welcomeInputText" name="email" value="{{ old('email') }}"></td>
-            </tr>
-            <tr>
-                <td><label for = "password" class = "login">Password</label></td>
-            </tr>
-            <tr>
-                <td><input type="password" id = "password" class = "welcomeInputText" name="password"></td>
-            </tr>
-            <tr>
-                <td><label for = "password_confirmation" class = "login">Confirm Password</label></td>
-            </tr>
-            <tr>
-                <td><input type="password" id = "password_confirmation" class = "welcomeInputText" name="password_confirmation"></td>
-            </tr>
-        </table>
+        <div class = "formData">
+            <div class = "formLabel">
+                <label for = "email" class = "login">Email Address</label>
+            </div>
+            <div class = "formInput">
+                <input type= "email" id = "email" class = "welcomeInputText" name="email" value="{{ old('email') }}">
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                <label for = "password" class = "login">Password</label>
+            </div>
+            <div class = "formInput">
+                <input type="password" id = "password" class = "welcomeInputText" name="password">
+            </div>
+        </div>
+        <div class = "formData">
+            <div class = "formLabel">
+                <label for = "password_confirmation" class = "login">Confirm</label>
+            </div>
+            <div class = "formInput">
+                <input type="password" id = "password_confirmation" class = "welcomeInputText" name="password_confirmation" placeholder="Retype password">
+            </div>
+        </div>
         <button type="submit" class="navButton">Reset Password</button>
     </form>
 @stop

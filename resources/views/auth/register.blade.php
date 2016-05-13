@@ -6,14 +6,14 @@
         <h3>Register</h3>
         <form role="form" method="POST" action="{{ url('/auth/register') }}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <div class = "formData">
-                    <div class = "formLabel">
-                        <label for = "handle" class = "login">Handle</label>
-                    </div>
-                    <div class = "formInput">
-                        <input type="text" id = "handle" name="handle" value="{{ old('handle') }}" class = "welcomeInputText">
-                    </div>
+            <div class = "formData">
+                <div class = "formLabel">
+                    <label for = "handle" class = "login">Handle</label>
                 </div>
+                <div class = "formInput">
+                    <input type="text" id = "handle" name="handle" value="{{ old('handle') }}" class = "welcomeInputText">
+                </div>
+            </div>
             <div class = "formData">
                 <div class = "formLabel">
                     <label for = "email" class = "login">Email Address</label>
