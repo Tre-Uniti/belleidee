@@ -120,7 +120,7 @@
             {!! Form::file('image', null, ['class' => 'navButton']) !!}
         </div>
     </div>
-
+    {!! Form::hidden('id', $beacon->id) !!}
 
     @section('centerFooter')
         {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}

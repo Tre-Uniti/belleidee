@@ -38,7 +38,6 @@ Route::get('beacons/invoice/{id}', 'BeaconController@invoice');
 Route::get('beacons/invoice/{beacon}/download/{id}', 'BeaconController@downloadInvoice');
 Route::get('beacons/deactivate/{id}', 'BeaconController@deactivate');
 Route::get('beacons/subscription/{id}', 'BeaconController@subscription');
-Route::get('beacon/runMonthly', 'BeaconController@runMonthly');
 Route::resource('beacons', 'BeaconController');
 
 //Beacon Request Routes (Resource)

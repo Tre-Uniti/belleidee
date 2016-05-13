@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Mailers\NotificationMailer;
+use App\Beacon;
 use Illuminate\Console\Command;
 use Event;
 
@@ -13,33 +13,24 @@ class MonthlyBeaconReset extends Command
      *
      * @var string
      */
-    protected $signature = 'command:monthlyBeaconReset';
+    protected $signature = 'beacon:monthlyBeaconReset';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Reset beacon counters and email reports to paid subscriptions';
-
-    /**
-     * The notification e-mail service.
-     *
-     * @var NotificationMailer
-     */
-    protected $notification;
+    protected $description = 'Reset Beacon counters for the month';
+    
 
     /**
      * Create a new command instance.
      *
-     * @param NotificationMailer $notification
      * @return void
      */
-    public function __construct(NotificationMailer $notification)
+    public function __construct()
     {
         parent::__construct();
-
-        $this->notification = $notification;
     }
 
     /**
@@ -49,7 +40,14 @@ class MonthlyBeaconReset extends Command
      */
     public function handle()
     {
-        $this->notification->sendMonthlyBeaconReport();
-        
+        $beacons = Beacon::latest()->get();
+
+        foreach($beacons as $beacon)
+        {
+            $beacon->total_tag_usage = $beacon->total_tag_usage + $beacon->tag_usage;
+            $beacon->tag_views = 0;
+            $beacon->tag_usage = 0;
+            $beacon->update();
+        }
     }
 }

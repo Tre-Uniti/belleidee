@@ -45,7 +45,7 @@ class Beacon extends Model implements BillableContract
             }
         }*/
 
-        return 8.25;
+        return 0;
     }
 
 

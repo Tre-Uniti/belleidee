@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\BeaconRequest;
 use App\Bookmark;
 use App\Events\MonthlyBeaconReset;
 use function App\Http\filterContentLocation;
@@ -13,6 +14,7 @@ use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use App\Http\Requests\CreateBeaconRequest;
+use App\Http\Requests\EditBeaconRequest;
 use App\Intolerance;
 use App\Mailers\NotificationMailer;
 use Carbon\Carbon;
@@ -268,13 +270,14 @@ class BeaconController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param EditBeaconRequest $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditBeaconRequest $request, $id)
     {
         $beacon = $this->beacon->findOrFail($id);
+
 
         if($request->hasFile('image'))
         {
@@ -569,19 +572,5 @@ class BeaconController extends Controller
             'vendor'  => 'Tre-Uniti LLC',
             'product' => 'Belle-Idee',
         ]);
-    }
-
-    /*
- * Download specific invoice for beacon
- *
- * @param $id beacon id
- * @param $invoiceId specific invoice
- */
-    public function runMonthly()
-    {
-        Event::fire(New monthlyBeaconReset());
-
-        flash()->overlay('Reset successful');
-        return redirect('/beacons');
     }
 }
