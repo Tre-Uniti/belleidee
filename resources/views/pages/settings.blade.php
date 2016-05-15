@@ -53,6 +53,8 @@
         <a href="https://ssl.comodo.com/ev-ssl-certificates.php">
             <img src="https://ssl.comodo.com/images/comodo_secure_113x59_white.png" alt="EV SSL Certificate" width="115" height="65"></a>
   </div>
+    <a href="/terms" target="_blank">Terms of Use | </a>
+    <a href = "/privacy" target="_blank">Privacy Policy</a>
 
 
 

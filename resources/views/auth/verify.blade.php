@@ -1,5 +1,5 @@
 @extends('auth')
-@section('loginTitle')
+@section('siteTitle')
     Verify Email
 @stop
 @section('login')

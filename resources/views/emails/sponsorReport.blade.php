@@ -17,8 +17,8 @@
         <td style = "text-align: center"><b>Missed Views:</b></td>
     </tr>
     <tr>
-        <td style = "text-align: center">{{ $sponsor->views }}</td>
-        <td style = "text-align: center">{{ $sponsor->clicks}}</td>
+        <td style = "text-align: center">{{ $sponsor->views }} / {{$sponsor->view_budget}}</td>
+        <td style = "text-align: center">{{ $sponsor->clicks}} / {{$sponsor->click_budget}}</td>
         <td style = "text-align: center">{{ $sponsor->missed }}</td>
     </tr>
     <tr>

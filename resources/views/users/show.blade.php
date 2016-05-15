@@ -40,7 +40,7 @@
             @if(Auth::user()->type > 1)
                 <a href="{{ url('intolerances/userIndex/'. $user->id) }}"><button type = "button" class = "navButton">Intolerances</button></a>
                 <a href="{{ url('users/'. $user->id . '/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
-                {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) !!}
+                {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id], 'class' => 'formDeletion']) !!}
                 {!! Form::submit('Delete User', ['class' => 'navButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}
 

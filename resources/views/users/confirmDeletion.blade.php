@@ -4,7 +4,7 @@
 @stop
 @section('centerText')
     <h2>Are you sure you want to delete?</h2>
-    <p>The content you have created that is part of the Idee community is transferred while rest is deleted.</p>
+    <p>The content you have created that is part of the Idee community is transferred while the rest is deleted.</p>
 
     <div class = "formInput">
         <a href="{{ url('/settings') }}"><button type = "button" class = "interactButton">Cancel</button></a>

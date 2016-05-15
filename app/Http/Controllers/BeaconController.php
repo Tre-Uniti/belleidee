@@ -278,7 +278,6 @@ class BeaconController extends Controller
     {
         $beacon = $this->beacon->findOrFail($id);
 
-
         if($request->hasFile('image'))
         {
             if(!$request->file('image')->isValid())
@@ -499,7 +498,7 @@ class BeaconController extends Controller
 
         if(!count($results))
         {
-            flash()->overlay('No beacons with this name');
+            flash()->overlay('No beacons with this name or tag');
             return redirect()->back();
         }
 

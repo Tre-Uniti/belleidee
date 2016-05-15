@@ -1,5 +1,5 @@
 @extends('auth')
-@section('loginTitle')
+@section('siteTitle')
     Register
 @stop
 @section('login')

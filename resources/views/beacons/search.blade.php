@@ -16,6 +16,7 @@
                         {!! Form::text('identifier', null, ['placeholder' => 'Search text']) !!}
                     </div>
                     <p>Location Scope: {{ $location }}</p>
+
                 </div>
         {!! Form::submit('Search', ['class' => 'navButton']) !!}
         {!! Form:: close() !!}
@@ -24,6 +25,7 @@
 @stop
 @section('centerFooter')
     <a href="{{ url('/beacons/') }}"><button type = "button" class = "navButton">All Beacons</button></a>
+    <a href="{{ url('/beaconRequests/create') }}"><button type = "button" class = "navButton">Request New Beacon</button></a>
     <a href="{{ url('/search') }}"><button type = "button" class = "navButton">Global Search</button></a>
 @stop
 

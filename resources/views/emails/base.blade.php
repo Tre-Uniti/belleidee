@@ -16,7 +16,7 @@
                    background-color: #D8D8D8; ">
                 <tr>
                     <td colspan="3">
-                        <img src="https://belle-idee.org/img/idee.png" alt="idee" height="30%" width="35%">
+                        <img src="https://belle-idee.org/img/idee-med.png" alt="idee" height="50%" width="50%">
                     </td>
                 </tr>
                 <tr>
@@ -34,7 +34,7 @@
                    padding: 3px;">
                             <tr><th>Tre-Uniti LLC</th></tr>
                             <tr><td>PO Box 888</td></tr>
-                            <tr><td>Sedro-Woolley, Wa</td></tr>
+                            <tr><td>Sedro-Woolley, WA</td></tr>
                             <tr><td>360-333-8783</td></tr>
                         </table>
                     </td>
