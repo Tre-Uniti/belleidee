@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 //use App\Mailers\NotificationMailer;
+use App\Mailers\NotificationMailer;
 use Illuminate\Console\Command;
 
 class MonthlySponsorReport extends Command
@@ -21,32 +22,25 @@ class MonthlySponsorReport extends Command
      */
     protected $description = 'Send monthly Sponsor report';
 
-    /**
-     * The drip e-mail service.
-     *
-     * @var NotificationMailer
-     */
-    //protected $notification;
 
     /**
      * Create a new command instance.
      *
-     * @param NotificationMailer $notification
      */
-    /*public function __construct(NotificationMailer $notification)
+    public function __construct()
     {
         parent::__construct();
 
-        $this->notification = $notification;
     }
 
     /**
      * Execute the console command.
      *
+     * @param NotificationMailer $notification
      * @return mixed
      */
-    /*public function handle()
+    public function handle(NotificationMailer $notification)
     {
-        $this->notification->sendMonthlySponsorReport();
-    }*/
+        $notification->sendMonthlySponsorReport();
+    }
 }

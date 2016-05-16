@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-//use App\Mailers\NotificationMailer;
+use App\Mailers\NotificationMailer;
 use Illuminate\Console\Command;
 
 class MonthlyBeaconReport extends Command
@@ -20,35 +20,27 @@ class MonthlyBeaconReport extends Command
      * @var string
      */
     protected $description = 'Send monthly Beacon report to paid subscriptions';
-
-    /**
-     * The drip e-mail service.
-     *
-     * @var NotificationMailer
-     */
     
-    //protected $notification;
+
 
     /**
      * Create a new command instance.
      *
-     * @param NotificationMailer $notification
      */
-    /*public function __construct(NotificationMailer $notification)
+    public function __construct()
     {
         parent::__construct();
-
-        $this->notification = $notification;
     }
 
     /**
      * Execute the console command.
      *
+     * @param NotificationMailer $notification
      * @return mixed
      */
-    /*public function handle()
+    public function handle(NotificationMailer $notification)
     {
-        $this->notification->sendMonthlyBeaconReport();
-    }*/
+        $notification->sendMonthlyBeaconReport();
+    }
     
 }
