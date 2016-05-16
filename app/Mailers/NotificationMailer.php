@@ -3,13 +3,10 @@
 namespace App\Mailers;
 
 use App\Beacon;
-use App\BeaconRequest;
 use App\Extension;
 use App\Question;
 use App\Sponsor;
-use App\Support;
 use App\User;
-
 
 class NotificationMailer extends Mailer
 {
@@ -116,8 +113,7 @@ class NotificationMailer extends Mailer
         }
 
     }
-
-
+    
     //Send monthly report email to owner of Sponsor
     public function sendMonthlySponsorReport()
     {
@@ -132,5 +128,4 @@ class NotificationMailer extends Mailer
         }
 
     }
-
 }
