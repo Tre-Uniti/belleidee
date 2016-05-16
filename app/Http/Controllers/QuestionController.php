@@ -110,26 +110,38 @@ class QuestionController extends Controller
     {
         $question = Question::findOrFail($id);
         $user = User::where('id', '=', $question->user_id)->firstOrFail();
-        //Get requested post and add body
+
         if(Auth::user())
         {
             $viewUser = Auth::user();
         }
         else
         {
-            //Set user equal to the Transferred user with no access
+            //Set user equal to the Transferred user with no access (for external views)
             $viewUser = User::findOrFail(20);
         }
 
+        //Set Source User photo path
+        if($user->photo_path == '')
+        {
+
+            $sourcePhotoPath = '';
+        }
+        else
+        {
+            $sourcePhotoPath = $user->photo_path;
+        }
+        //Get Beacons of post user
+        $userBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
+
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
+        $sponsor = getSponsor($user);
         
         $extensions = Extension::where('question_id', '=', $id)->where('extenception', '=', NULL)->latest()->paginate(10);
-
-        $sponsor = getSponsor($user);
-
+        
         //Check if viewing user has already elevated question
-        if(Elevation::where('question_id', $question->id)->where('user_id', $user->id)->exists())
+        if(Elevation::where('question_id', $question->id)->where('user_id', $viewUser->id)->exists())
         {
             $elevation = 'Elevated';
         }
@@ -140,6 +152,8 @@ class QuestionController extends Controller
 
         return view ('questions.show')
             ->with(compact('user', 'question', 'extensions', 'profilePosts', 'profileExtensions', 'sponsor', 'viewUser'))
+            ->with('sourcePhotoPath', $sourcePhotoPath)
+            ->with('userBeacons', $userBeacons)
             ->with('elevation', $elevation);
 
     }

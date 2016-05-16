@@ -175,9 +175,6 @@
             </div>
             <nav class = "profileNav">
                 <ul>
-                    @if ($profileBeacons->isEmpty())
-                        <li><a href="{{url('/beacons')}}">Beacons</a></li>
-                    @else
                         <li>
                             <a href="{{url('/beacons')}}">Beacons</a>
                             <div>
@@ -194,7 +191,6 @@
                                 </ul>
                             </div>
                         </li>
-                    @endif
                         @if ($profileExtensions->isEmpty())
                             <li><a href="{{url('/indev')}}">Legacy</a></li>
                         @else

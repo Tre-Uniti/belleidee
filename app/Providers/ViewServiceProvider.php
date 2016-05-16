@@ -22,14 +22,18 @@ class ViewServiceProvider extends ServiceProvider
             if(Auth::user())
             {
                 $user = Auth::user();
+                $profileBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
+                $notifyCount = Notification::where('source_user', $user->id)->count();
             }
             else
             {
                 //Set user equal to the Transferred user with no access (for external views)
                 $user = User::findOrFail(20);
+                $profileBeacons = 'US-SW-ACE';
+                $notifyCount = 0;
             }
 
-            $notifyCount = Notification::where('source_user', $user->id)->count();
+
             if($user->photo_path == '')
             {
                 $photoPath = '';
@@ -39,7 +43,7 @@ class ViewServiceProvider extends ServiceProvider
                 $photoPath = $user->photo_path;
             }
 
-            $profileBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
+
             $view->with('notifyCount', $notifyCount);
             $view->with('photoPath', $photoPath);
             $view->with('profileBeacons', $profileBeacons);
