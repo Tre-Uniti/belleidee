@@ -1,6 +1,14 @@
 @extends('app')
 @section('pageHeader')
     <script src = "/js/index.js"></script>
+    <meta property="og:description"   content="{{ $extension->title }}"/>
+    @if(isset($sourcePhotoPath) && $sourcePhotoPath != NULL)
+        <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $sourcePhotoPath) }}"/>
+    @elseif(isset($photoPath) && $photoPath != NULL)
+        <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $photoPath) }}"/>
+    @else
+        <meta property="og:image"         content={{ url('/img/idee-med.png') }}/>
+    @endif
 @stop
 @section('siteTitle')
     Show Extension
@@ -19,9 +27,7 @@
                 @elseif($extension->source === 'Question')
                     <a href="{{ url('/questions/'.$extension->question_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
                 @endif
-
             </div>
-
     <button class = "interactButton" id = "hiddenIndex">More</button>
     <div class = "indexContent" id = "hiddenContent">
         <a href={{ url('/extensions/listElevation/'. $extension->id)}}><button type = "button" class = "indexButton">Elevations</button></a>

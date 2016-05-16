@@ -8,9 +8,9 @@
     <div class = "indexNav">
 
             <a href={{ url('/bookmarks/users')}}><button type = "button" class = "indexButton">Users</button></a>
-            <a href={{ url('/bookmarks')}}><button type = "button" class = "indexButton">List All</button></a>
+            <a href={{ url('/bookmarks/beacons')}}><button type = "button" class = "indexButton">Beacons</button></a>
             <a href={{ url('/bookmarks/posts')}}><button type = "button" class = "indexButton">Posts</button></a>
-            <a href={{ url('/bookmarks/extensions')}}><button type = "button" class = "indexButton">Extensions</button></a>
+            <a href={{ url('/bookmarks')}}><button type = "button" class = "indexButton">List All</button></a>
     </div>
     <div class = "indexLeft">
         <h4>Title</h4>

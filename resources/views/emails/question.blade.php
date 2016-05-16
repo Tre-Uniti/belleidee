@@ -2,19 +2,19 @@
 
 @section('emailContent')
     <tr>
-        <td colspan = "3"><h3>Greetings, {{$user->handle}}</h3></td>
+        <td colspan = "3" style = "text-align: center"><h3>Greetings, {{$user->handle}}</h3></td>
     </tr>
     <tr>
-        <td colspan="3">A new Community Question has been posted!</td>
+        <td colspan="3" style = "text-align: center">A new Community Question has been posted!</td>
     </tr>
     <tr>
         <td colspan="3"><hr/></td>
     </tr>
     <tr>
-        <td colspan="3"><h3>{{ $question->question }}</h3></td>
+        <td colspan="3" style = "text-align: center"><h3>{{ $question->question }}</h3></td>
     </tr>
     <tr>
-        <td colspan="3">
+        <td colspan="3" style = "text-align: center">
             <a href="{{ url("/extensions/question/{$question->id}") }}"><button type = "button" style = "padding: 8px 13px;
     font-family: 'Open Sans', Arial, serif;
     font-size: 100%;
@@ -34,10 +34,10 @@
         <td colspan="3"><br/></td>
     </tr>
     <tr>
-        <td colspan="3">Asked by:</td>
+        <td colspan="3" style = "text-align: center">Asked by:</td>
     </tr>
     <tr>
-        <td colspan="3">
+        <td colspan="3" style = "text-align: center">
             <a href="{{ url("/users/{$askedBy->id}") }}"><button type = "button" style = "padding: 8px 13px;
     font-family: 'Open Sans', Arial, serif;
     font-size: 100%;
@@ -56,6 +56,6 @@
 
 @endsection
 @section('messageType')
-    <tr><td>System Message</td></tr>
-    <tr><td>Question</td></tr>
+    <tr><td>Community Message</td></tr>
+    <tr><td>New Question</td></tr>
 @stop

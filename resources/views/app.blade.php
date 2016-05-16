@@ -10,13 +10,6 @@
     <script src="/js/app.js"></script>
     <script src="/js/location.js"></script>
 
-    <!-- You can use Open Graph tags to customize link previews.
-    Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
-    <meta property="og:url"           content= "{{ Request::url() }}"/>
-    <meta property="og:type"          content="website"/>
-    <meta property="og:title"         content="Belle-Idee"/>
-    <meta property="og:description"   content="A community for idea, inspiration, and belief sharing."/>
-    <meta property="og:image"         content="https://belle-idee.org/img/idee-med.png"/>
     @yield('pageHeader')
 
     <!--

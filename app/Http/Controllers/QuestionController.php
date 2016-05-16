@@ -96,7 +96,7 @@ class QuestionController extends Controller
 
         $mailer->sendCommunityQuestionNotification($question);
 
-        flash()->overlay('Community Question posted');
+        flash()->overlay('New Community Question posted');
         return redirect('questions/'. $question->id);
     }
 

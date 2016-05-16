@@ -6,13 +6,13 @@
         {!! Form::label('title', 'Community Question') !!}
     </div>
     <div class = "formInput">
-        {!! Form::text('question', null, ['class' => 'createTitleText', 'autofocus']) !!}
+        {!! Form::text('question', null, ['class' => 'createFormText', 'autofocus']) !!}
     </div>
     <div class = "formLabel">
         {!! Form::label('user_id', 'User ID') !!}
     </div>
     <div class = "formInput">
-        {!! Form::text('user_id', null, ['class' => 'createTitleText']) !!}
+        {!! Form::text('user_id', null, ['class' => 'createFormText']) !!}
     </div>
     </div>
 

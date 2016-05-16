@@ -4,13 +4,13 @@
         {!! Form::label('title', 'Question of the Week:') !!}
     </div>
     <div class = "formInput">
-        {!! Form::text('question', null, ['class' => 'createTitleText', 'autofocus']) !!}
+        {!! Form::text('question', null, ['class' => 'createFormText', 'autofocus']) !!}
     </div>
     <div class = "formInput">
         {!! Form::label('user_id', 'User ID') !!}
     </div>
     <div class = "formInput">
-        {!! Form::text('user_id', null, ['class' => 'createTitleText']) !!}
+        {!! Form::text('user_id', null, ['class' => 'createFormText']) !!}
     </div>
 
     @section('centerFooter')

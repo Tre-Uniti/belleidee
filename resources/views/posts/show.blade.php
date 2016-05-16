@@ -1,6 +1,19 @@
 @extends('app')
 @section('pageHeader')
     <script src = "/js/index.js"></script>
+    <!-- You can use Open Graph tags to customize link previews.
+Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+    <meta property="og:url"           content= "{{ Request::url() }}"/>
+    <meta property="og:type"          content="website"/>
+    <meta property="og:title"         content="Belle-Idee"/>
+    <meta property="og:description"   content="{{ $post->title }}"/>
+    @if(isset($sourcePhotoPath) && $sourcePhotoPath != NULL)
+        <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $sourcePhotoPath) }}"/>
+    @elseif(isset($photoPath) && $photoPath != NULL)
+        <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $photoPath) }}"/>
+    @else
+        <meta property="og:image"         content={{ url('/img/idee-med.png') }}/>
+    @endif
 @stop
 @section('siteTitle')
     Show Post
@@ -8,6 +21,7 @@
 
 @section('centerText')
     <div id="fb-root"></div>
+
     <h2>{{ $post->title }}</h2>
     <div class = "indexNav">
             <a href="{{ action('BeliefController@beliefIndex', $post->belief) }}"><button type = "button" class = "indexButton">{{ $post->belief }}</button></a>
