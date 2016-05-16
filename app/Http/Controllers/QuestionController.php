@@ -25,7 +25,7 @@ class QuestionController extends Controller
 
     public function __construct(Question $question)
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'show']);
         $this->middleware('admin',['only' => ['create, edit, update, store']]);
         $this->question = $question;
     }
@@ -108,11 +108,22 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        $user = Auth::user();
+        $question = Question::findOrFail($id);
+        $user = User::where('id', '=', $question->user_id)->firstOrFail();
+        //Get requested post and add body
+        if(Auth::user())
+        {
+            $viewUser = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $viewUser = User::findOrFail(20);
+        }
+
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
-
-        $question = Question::findOrFail($id);
+        
         $extensions = Extension::where('question_id', '=', $id)->where('extenception', '=', NULL)->latest()->paginate(10);
 
         $sponsor = getSponsor($user);
@@ -128,7 +139,7 @@ class QuestionController extends Controller
         }
 
         return view ('questions.show')
-            ->with(compact('user', 'question', 'extensions', 'profilePosts', 'profileExtensions', 'sponsor'))
+            ->with(compact('user', 'question', 'extensions', 'profilePosts', 'profileExtensions', 'sponsor', 'viewUser'))
             ->with('elevation', $elevation);
 
     }
