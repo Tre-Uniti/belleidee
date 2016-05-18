@@ -224,7 +224,23 @@ class BeaconController extends Controller
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
-        $beacon = $this->beacon->findOrFail($id);
+
+
+        //Check Beacon exists and is active belongs to an Idee Beacon
+        try
+        {
+            $beacon = $this->beacon->findOrFail($id);
+            if ($beacon->status == 'deactivated')
+            {
+                flash()->overlay('Beacon deactivated or does not exist');
+                return redirect()->back();
+            }
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('No active Idee Beacon with this id');
+            return redirect()->back();
+        }
         $beaconPath = $beacon->photo_path;
         
         $posts = Post::where('beacon_tag', '=', $beacon->beacon_tag)->orderBy('elevation', 'desc')->take(10)->get();
@@ -350,6 +366,7 @@ class BeaconController extends Controller
     {
         $beacon = Beacon::findOrFail($id);
 
+
         //Setup array of users to notify
         $users = [];
 
@@ -366,6 +383,7 @@ class BeaconController extends Controller
             $users = array_add($users, $post->user->handle, $post->user_id);
         }
 
+
         //Reassign extensions to 'No-Beacon'
         $extensions = Extension::where('beacon_tag', '=', $beacon->beacon_tag)->get();
         foreach($extensions as $extension)
@@ -379,6 +397,7 @@ class BeaconController extends Controller
             $users = array_add($users, $extension->user->handle, $extension->user_id);
         }
 
+
         //Reassign Intolerances to 'No-Beacon'
         $intolerances = Intolerance::where('beacon_tag', '=', $beacon->beacon_tag)->get();
         foreach($intolerances as $intolerance)
@@ -390,18 +409,27 @@ class BeaconController extends Controller
             $users = array_add($users, $intolerance->user->handle, $intolerance->user_id);
         }
 
+
         $bookmark = Bookmark::where('pointer', '=', $beacon->beacon_tag)->get();
-        DB::table('bookmark_user')->where('bookmark_id', '=', $bookmark[0]['id'])->delete();
+
+        if(($bookmark->count() > 0))
+        {
+            DB::table('bookmark_user')->where('bookmark_id', '=', $bookmark[0]['id'])->delete();
+        }
 
 
         //Email users with notification of Beacon deactivation and reassignment
         $mailer->sendBeaconDeactivationNotification($beacon, $users);
 
         //Set Beacon to inactive
-        $beacon->subscription()->cancel();
-        $beacon->status = 'deactivated';
-        $beacon->update();
+        if($beacon->stripe_plan != null)
+        {
+            $beacon->subscription()->cancel();
+        }
 
+        $beacon->status = 'deactivated';
+
+        $beacon->update();
         flash()->overlay('Beacon has been deactivated');
         return redirect('beacons');
         
@@ -424,6 +452,11 @@ class BeaconController extends Controller
         try
         {
             $beacon = Beacon::where('beacon_tag', '=',  $beacon_tag)->firstOrFail();
+            if ($beacon->status == 'deactivated')
+            {
+                flash()->overlay('Beacon deactivated or does not exist');
+                return redirect()->back();
+            }
         }
         catch(ModelNotFoundException $e)
         {

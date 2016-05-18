@@ -26,7 +26,7 @@
         @foreach ($bookmarks as $bookmark)
             <div class = "listResource">
                 <div class = "listResourceBookmarkLeft">
-                    <a href="{{ action('BeaconController@show', [$bookmark['id']])}}">
+                    <a href="{{ action('BeaconController@listTagged', [$bookmark['pointer']])}}">
                         <button type = "button" class = "interactButtonLeft">{{ $bookmark['title'] }}</button></a>
                 </div>
                 <div class = "listResourceRight">
