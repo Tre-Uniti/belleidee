@@ -1,5 +1,5 @@
 @extends('auth')
-@section('loginTitle')
+@section('siteTitle')
     Tour
 @stop
 @section('login')

@@ -8,7 +8,7 @@
         <td colspan="3"><b>How do I get started now that I'm confirmed?</b></td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">1.  Watch our <a href="{{ url("/training") }}" style = "color: black;">training videos</a> or attend a local <a href="{{ url("/workshops") }}" style = "color: black;">workshop</a>.</td>
+        <td colspan="3" style = "text-align: left;">1.  Watch our <a href="{{ url("/tutorials") }}" style = "color: black;">training videos</a> or attend a local <a href="{{ url("/workshops") }}" style = "color: black;">workshop</a>.</td>
     </tr>
     <tr>
         <td colspan="3" style = "text-align: left;">2.  Read the  <a href="{{ url("/posts/1") }}" style = "color: black;">Commencement post</a> or other informative posts by <a href="{{ url("/users/1") }}" style = "color: black;">Tre-Uniti</a></td>
