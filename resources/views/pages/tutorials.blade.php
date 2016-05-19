@@ -6,7 +6,7 @@
     <h2>Idee Tutorials</h2>
 
     <h4>Introduction:</h4>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/SiPMUbMttwg" frameborder="0" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/ryyF_x1EQ9c" frameborder="0" allowfullscreen></iframe>
     <!--//How to create a draft and convert
     //How to extend a post and view extensions
     //How to elevate and view elevations (+rankings)
@@ -24,6 +24,9 @@
     //Legacy extension and users
     //Intolerance reporting
     //Create and manage support tickets-->
+    <h4>Interactions:</h4>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/LutPtWPsTdA" frameborder="0" allowfullscreen></iframe>
+
 @stop
 @section('centerFooter')
 
