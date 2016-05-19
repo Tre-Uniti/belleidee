@@ -73,6 +73,10 @@ p.login {
   color: #009900;
 }
 
+p.verification {
+  color: #FFFFFF;
+}
+
 .profileNav > ul > li:hover > div {
   display: block;
   opacity: 1;
