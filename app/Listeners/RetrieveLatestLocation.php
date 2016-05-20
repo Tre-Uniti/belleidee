@@ -90,15 +90,15 @@ class RetrieveLatestLocation
             $country = $beacon->country;
 
             //Separate out city code and name
-            $cityCode = substr($beacon->beacon_tag, strpos($beacon->beacon_tag, "-"));
-            $cityCode = substr($cityCode, strpos($cityCode, "-"));
+            $cityCode = substr($beacon->beacon_tag, 3);
+            $cityCode = substr($cityCode, 0, strpos($cityCode, "-"));
             $cityName = $beacon->city;
 
             //Add country to city name
             $city = $beacon->country . '-' . $cityName;
 
             //Add country to city code
-            $shortTag = $beacon->country . $cityCode;
+            $shortTag = $beacon->country . '-' . $cityCode;
 
             $coordinates = [
                 'lat' => $content->lat,
@@ -140,7 +140,8 @@ class RetrieveLatestLocation
         //Local
         if($user->location == 0)
         {
-            if($coordinates['city'] == '-')
+            
+            if($coordinates['city'] == NULL)
             {
                 flash()->overlay('No recently localized content, please set a custom location or request a new beacon');
             }

@@ -414,8 +414,8 @@ class HomeController extends Controller
         $user->location = 0;
         $user->update();
 
-        $post = Post::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
-        $extension = Extension::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
+        $post = getProfilePosts($user);
+        $extension = getProfileExtensions($user);
 
         if(is_null($post) && is_null($extension))
         {
@@ -428,7 +428,7 @@ class HomeController extends Controller
                 'long' => $long,
                 'country' => $country,
                 'city' => $city,
-                'location' => 3,
+                'location' => 2,
             ];
 
             flash()->overlay('Please select where you would like your location to be');
@@ -439,9 +439,9 @@ class HomeController extends Controller
         Event::fire(New SetLocation($user));
 
         $coordinates = session('coordinates');
-        dd($coordinates);
-        if(session($coordinates['city']) == NULL)
+        if(is_null(($coordinates['city'])))
         {
+            flash()->overlay('No recently localized content, please set a custom location or request a new beacon');
             return redirect('/newLocation');
         }
 
@@ -471,7 +471,7 @@ class HomeController extends Controller
                 'long' => $long,
                 'country' => $country,
                 'city' => $city,
-                'location' => 3,
+                'location' => 2,
             ];
 
             flash()->overlay('Please select where you would like your location to be');
@@ -482,8 +482,9 @@ class HomeController extends Controller
         Event::fire(New SetLocation($user));
 
         $coordinates = session('coordinates');
-        if(session($coordinates['country']) == NULL)
+        if(is_null(($coordinates['country'])))
         {
+            flash()->overlay('No recently localized content, please set a custom location or request a new beacon');
             return redirect('/newLocation');
         }
 
