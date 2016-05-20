@@ -22,6 +22,7 @@ Route::get('users/extendedBy/{id}', 'UserController@extendedBy');
 Route::get('users/elevatedBy/{id}', 'UserController@elevatedBy');
 Route::get('users/beacons/{id}', 'UserController@beaconsOfUser');
 Route::get('users/deletion/', 'UserController@confirmDeletion');
+Route::get('users/timeFilter/{time}', 'UserController@timeFilter');
 Route::resource('users', 'UserController');
 
 //Beacon Routes (Resource)

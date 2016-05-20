@@ -7,11 +7,14 @@ use App\Elevation;
 use App\Events\TransferUser;
 use App\Extension;
 use function App\Http\getLocation;
+use function App\Http\getProfileExtensions;
+use function App\Http\getProfilePosts;
 use App\Listeners\TransferUserContent;
 use App\Post;
 use App\Sponsor;
 use App\Sponsorship;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -22,7 +25,6 @@ use Event;
 
 
 class UserController extends Controller
-
 
 {
     private $user;
@@ -44,7 +46,7 @@ class UserController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $users = $this->user->where('verified', '=', 1)->latest()->paginate(10);
+        $users = $this->user->where('verified', '=', 1)->take(10)->get();
 
         return view ('users.index')
             ->with(compact('user', 'users', 'profilePosts','profileExtensions'));
@@ -469,6 +471,51 @@ class UserController extends Controller
             ->with(compact('user', 'viewUser', 'bookmarks', 'profilePosts', 'profileExtensions'))
             ->with('sponsor', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
+    }
+
+    /**
+     * Sort and show all users by selected time
+     *
+     * @param $time
+     * @return \Illuminate\Http\Response
+     */
+    public function timeFilter($time)
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        if($time == 'Today')
+        {
+            $posts = filterContentLocationTime($user, 0, 'Post', 'today', 'created_at');
+            $filter = Carbon::now()->today()->format('l');
+        }
+        elseif($time == 'Month')
+        {
+            $posts = filterContentLocationTime($user, 0, 'Post', 'startOfMonth', 'created_at');
+            $filter = Carbon::now()->startOfMonth()->format('F');
+        }
+        elseif($time == 'Year')
+        {
+            $posts = filterContentLocationTime($user, 0, 'Post', 'startOfYear', 'created_at');
+            $filter = Carbon::now()->startOfYear()->format('Y');
+        }
+        elseif($time == 'All')
+        {
+            $posts = filterContentLocation($user, 1, 'Post');
+            $filter = 'All';
+        }
+        else
+        {
+            $filter = 'All';
+        }
+
+        $sponsor = getSponsor($user);
+
+        return view ('posts.timeFilter')
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with('filter', $filter)
+            ->with('time', $time);
     }
 
 

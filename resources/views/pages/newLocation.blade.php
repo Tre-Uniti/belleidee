@@ -7,7 +7,11 @@
 @stop
 
 @section('centerText')
+    @if (Session::has('flash_notification.message'))
+            <a href = "{{ url('/beaconRequests/create') }}"><button type = "button" class = "indexButton">New Beacon Request</button></a>
+    @endif
     <div>
+
         <h2>Select your Location</h2>
         {!! Form::open(['url' => '/addLocation', 'method' =>  'GET']) !!}
         <div class = "formDataContainer">
@@ -24,8 +28,15 @@
             <div class = "formInput">
                 {!! Form::text('city', null, ['class' => 'createTitleText', 'placeholder' => 'City Name']) !!}
             </div>
+            <div class = "formInput">
+                {!! Form::submit('Set Location', ['class' => 'navButton']) !!}
+                {!! Form:: close() !!}
+            </div>
+
         </div>
-        {!! Form::submit('Set Location', ['class' => 'navButton']) !!}
-        {!! Form:: close() !!}
+
     </div>
+@stop
+@section('centerFooter')
+
 @stop

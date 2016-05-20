@@ -422,12 +422,12 @@ class HomeController extends Controller
             $lat = NULL;
             $long = NULL;
             $country = NULL;
-            $local = NULL;
+            $city = NULL;
             $coordinates = [
                 'lat' => $lat,
                 'long' => $long,
                 'country' => $country,
-                'local' => $local,
+                'city' => $city,
                 'location' => 3,
             ];
 
@@ -437,6 +437,13 @@ class HomeController extends Controller
         }
 
         Event::fire(New SetLocation($user));
+
+        $coordinates = session('coordinates');
+        dd($coordinates);
+        if(session($coordinates['city']) == NULL)
+        {
+            return redirect('/newLocation');
+        }
 
         return redirect ('gettingStarted');
     }
@@ -458,12 +465,12 @@ class HomeController extends Controller
             $lat = NULL;
             $long = NULL;
             $country = NULL;
-            $local = NULL;
+            $city = NULL;
             $coordinates = [
                 'lat' => $lat,
                 'long' => $long,
                 'country' => $country,
-                'local' => $local,
+                'city' => $city,
                 'location' => 3,
             ];
 
@@ -475,9 +482,9 @@ class HomeController extends Controller
         Event::fire(New SetLocation($user));
 
         $coordinates = session('coordinates');
-        if($coordinates['country'] == NULL)
+        if(session($coordinates['country']) == NULL)
         {
-
+            return redirect('/newLocation');
         }
 
         return redirect ('gettingStarted');
@@ -541,6 +548,12 @@ class HomeController extends Controller
         }
         else
         {
+            $beacon = Beacon::where('country', '=', $request['country'])->first();
+            if(is_null($beacon))
+            {
+                flash()->overlay('No beacons in this country yet, please submit a beacon request');
+                return redirect()->back();
+            }
             $city = NULL;
             $cityName = NULL;
             $shortTag = NULL;

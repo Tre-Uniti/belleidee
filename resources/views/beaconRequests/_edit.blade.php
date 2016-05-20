@@ -6,7 +6,7 @@
                 {!! Form::label('name', 'Beacon Name:') !!}
             </div>
             <div class = "formInput">
-                {!! Form::text('name', null, ['class' => 'infoTitleText', 'autofocus']) !!}
+                {!! Form::text('name', $beaconRequest->name, ['class' => 'infoTitleText', 'autofocus']) !!}
             </div>
         </div>
         <div class = "formData">
@@ -14,7 +14,7 @@
                 {!! Form::label('belief', 'Belief:') !!}
             </div>
             <div class = "formInput">
-                {!! Form::select('belief', $beliefs) !!}
+                {!! Form::select('belief', $beliefs, array('belief' => $beaconRequest->belief)) !!}
             </div>
         </div>
         <div class = "formData">
