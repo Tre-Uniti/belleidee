@@ -411,13 +411,8 @@ class HomeController extends Controller
     public function local()
     {
         $user = Auth::user();
-        $user->location = 0;
-        $user->update();
-
-        $post = getProfilePosts($user);
-        $extension = getProfileExtensions($user);
-
-        if(is_null($post) && is_null($extension))
+        
+        if($user->last_tag == 'No-Beacon' || $user->last_tag == NULL)
         {
             $lat = NULL;
             $long = NULL;
@@ -435,6 +430,9 @@ class HomeController extends Controller
             session()->put('coordinates', $coordinates);
             return redirect ('newLocation');
         }
+        
+        $user->location = 0;
+        $user->update();
 
         Event::fire(New SetLocation($user));
 
@@ -445,6 +443,8 @@ class HomeController extends Controller
             return redirect('/newLocation');
         }
 
+
+
         return redirect ('gettingStarted');
     }
 
@@ -454,13 +454,8 @@ class HomeController extends Controller
     public function country()
     {
         $user = Auth::user();
-        $user->location = 1;
-        $user->update();
 
-        $post = Post::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
-        $extension = Extension::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
-
-        if(is_null($post) && is_null($extension))
+        if($user->last_tag == 'No-Beacon' || $user->last_tag == NULL)
         {
             $lat = NULL;
             $long = NULL;
@@ -478,6 +473,9 @@ class HomeController extends Controller
             session()->put('coordinates', $coordinates);
             return redirect ('newLocation');
         }
+
+        $user->location = 1;
+        $user->update();
 
         Event::fire(New SetLocation($user));
 
@@ -542,9 +540,9 @@ class HomeController extends Controller
             $cityCode = substr($beacon->city, strpos($beacon->city, "-"));
             $cityName = substr($beacon->city, 0, strpos($beacon->city, "-"));
             $city = $beacon->country . '-' . $cityName;
+            $shortTag = $beacon->country . $cityCode;
             $user->location = 0;
             $user->update();
-            $shortTag = $beacon->country . $cityCode;
             flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $city);
         }
         else
@@ -564,8 +562,8 @@ class HomeController extends Controller
         }
 
         $coordinates = [
-            'lat' => NULL,
-            'long' => NULL,
+            'lat' => $beacon->lat,
+            'long' => $beacon->long,
             'country' => $request['country'],
             'city' => $city,
             'shortTag' => $shortTag,

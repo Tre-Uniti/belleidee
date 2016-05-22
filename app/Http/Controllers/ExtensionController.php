@@ -144,6 +144,10 @@ class ExtensionController extends Controller
         //Get sources from session (what type of extension this is)
         $sources = Session::get('sources');
 
+        //Update user's last_tag
+        $user->last_tag = $request['beacon_tag'];
+        $user->update();
+
         //Store body text at AWS insert into db with extenception and/or post
         if(isset($sources['extenception']))
         {
@@ -354,6 +358,10 @@ class ExtensionController extends Controller
         {
             $mailer->sendExtensionNotification($extension);
         }
+
+        //Update user's last_tag
+        $user->last_tag = $request['last_tag'];
+        $user->update();
         
 
         flash()->overlay('Your extension has been created');
@@ -695,12 +703,12 @@ class ExtensionController extends Controller
     public function update(EditExtensionRequest $request, $id)
     {
         $extension = $this->extension->findOrFail($id);
-        $user_id = Auth::id();
+        $user = Auth::user();
 
         $inspiration = $request->input('body');
         $path = $extension->extension_path;
         $newTitle = $request->input('title');
-        $newPath = '/posts/'.$user_id.'/'.$newTitle.'.txt';
+        $newPath = '/extensions/'.$user->id.'/'.$newTitle.'.txt';
         //Update AWS document if Title changes
         if($path != $newPath)
         {
@@ -742,6 +750,10 @@ class ExtensionController extends Controller
         }
 
         $extension->update($request->except('body', '_method', '_token'));
+
+        //Update user's last_tag
+        $user->last_tag = $request['beacon_tag'];
+        $user->update();
 
         if($extension->question_id != '' && $extension->extenception == '')
         {

@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Idee /-\ @yield('siteTitle')</title>
+    <link rel="canonical" href="https://belle-idee.org/">
+    <meta name="title" content="Belle Idee">
+    <meta name="description" content="Belle Idee - A place to share ideas, inspirations and influences.">
+    <title>Belle Idee @yield('siteTitle')</title>
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
     <!--
        This code is maintained by the Tre-Uniti development ops

@@ -1,7 +1,4 @@
 @extends('auth')
-@section('siteTitle')
-Welcome!
-@stop
 @section('login')
     <h3>Login Options:</h3>
             <a href="{{ secure_url('/nymi') }}"><button type = "button" class = "navButton">Nymi</button></a>

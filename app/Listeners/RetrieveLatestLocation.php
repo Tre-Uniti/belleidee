@@ -32,10 +32,10 @@ class RetrieveLatestLocation
     {
         $user = User::findOrFail($event->user->id);
 
-        $post = Post::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
-        $extension = Extension::where('user_id', '=', $user->id)->orderby('created_at', 'desc')->first();
+        $last_tag = $user->last_tag;
 
-        if(is_null($post) && is_null($extension))
+        //Global User
+        if($last_tag == NULL || $last_tag == 'No-Beacon')
         {
             $coordinates = [
                 'lat' => NULL,
@@ -51,42 +51,23 @@ class RetrieveLatestLocation
             //Set user location to Global in database
             $user->location = 2;
             $user->update();
-            
+
             $this->flashLocation($user, $coordinates);
             session()->put('coordinates', $coordinates);
         }
-
-        //Set location of user based off of post location
-        elseif(!is_null($post) && is_null($extension))
+        else
         {
-            $this->setCoordinates($user, $post);
-        }
-        //Set location of user based off of extension location
-        elseif(is_null($post) && !is_null($extension))
-        {
-            $this->setCoordinates($user, $extension);
+            $this->setCoordinates($user, $last_tag);
         }
 
-        //Set location if post was created before latest extension
-        elseif($post->created_at >= $extension->created_at)
-        {
-            $this->setCoordinates($user, $post);
-        }
-
-        //Set location if post was created after latest extension
-        elseif($post->created_at <= $extension->created_at)
-        {
-            $this->setCoordinates($user, $extension);
-        }
     }
 
     //Get beacon tag and set coordinates
-    public function setCoordinates($user, $content)
+    public function setCoordinates($user, $last_tag)
     {
-        $beacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
-        if($content->beacon_tag != 'No-Beacon' && !is_null($beacon))
+        $beacon = Beacon::where('beacon_tag', '=', $last_tag)->first();
+        if($last_tag != 'No-Beacon' && !is_null($beacon))
         {
-
             $country = $beacon->country;
 
             //Separate out city code and name
@@ -101,8 +82,8 @@ class RetrieveLatestLocation
             $shortTag = $beacon->country . '-' . $cityCode;
 
             $coordinates = [
-                'lat' => $content->lat,
-                'long' => $content->long,
+                'lat' => $beacon->lat,
+                'long' => $beacon->long,
                 'country' => $country,
                 'city' => $city,
                 'shortTag' => $shortTag,

@@ -6,9 +6,12 @@ use App\Bookmark;
 use App\Elevation;
 use App\Events\TransferUser;
 use App\Extension;
+use function App\Http\filterContentLocation;
+use function App\Http\filterContentLocationTime;
 use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
+use function App\Http\getSponsor;
 use App\Listeners\TransferUserContent;
 use App\Post;
 use App\Sponsor;
@@ -487,22 +490,22 @@ class UserController extends Controller
 
         if($time == 'Today')
         {
-            $posts = filterContentLocationTime($user, 0, 'Post', 'today', 'created_at');
+            $users = filterContentLocationTime($user, 0, 'User', 'today', 'created_at');
             $filter = Carbon::now()->today()->format('l');
         }
         elseif($time == 'Month')
         {
-            $posts = filterContentLocationTime($user, 0, 'Post', 'startOfMonth', 'created_at');
+            $users = filterContentLocationTime($user, 0, 'User', 'startOfMonth', 'created_at');
             $filter = Carbon::now()->startOfMonth()->format('F');
         }
         elseif($time == 'Year')
         {
-            $posts = filterContentLocationTime($user, 0, 'Post', 'startOfYear', 'created_at');
+            $users = filterContentLocationTime($user, 0, 'User', 'startOfYear', 'created_at');
             $filter = Carbon::now()->startOfYear()->format('Y');
         }
         elseif($time == 'All')
         {
-            $posts = filterContentLocation($user, 1, 'Post');
+            $users = filterContentLocation($user, 1, 'User');
             $filter = 'All';
         }
         else
@@ -512,8 +515,8 @@ class UserController extends Controller
 
         $sponsor = getSponsor($user);
 
-        return view ('posts.timeFilter')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+        return view ('users.timeFilter')
+            ->with(compact('user', 'users', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }

@@ -234,6 +234,10 @@ class PostController extends Controller
         $post->user()->associate($user);
         $post->save();
 
+        //Set user last tag
+        $user->last_tag = $request['beacon_tag'];
+        $user->update();
+
         flash()->overlay('Your post has been created');
         return redirect('posts/'. $post->id);
     }
@@ -437,11 +441,11 @@ class PostController extends Controller
     public function update(EditPostRequest $request, $id)
     {
         $post = $this->post->findOrFail($id);
-        $user_id = Auth::id();
+        $user = Auth::user();
 
         $path = $post->post_path;
         $newTitle = $request->input('title');
-        $newPath = '/posts/'.$user_id.'/'.$newTitle.'.txt';
+        $newPath = '/posts/'.$user->id.'/'.$newTitle.'.txt';
         $inspiration = $request->input('body');
 
         //Update AWS document if Title changes
@@ -483,6 +487,9 @@ class PostController extends Controller
         //Update database with new values
         $post->update($request->except('body', '_method', '_token'));
 
+        //Set user last tag
+        $user->last_tag = $request['beacon_tag'];
+        $user->update();
 
         flash()->overlay('Your post has been updated');
 

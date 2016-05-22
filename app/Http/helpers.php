@@ -10,6 +10,7 @@ use App\Extension;
 use App\Post;
 use App\Sponsor;
 use App\Sponsorship;
+use App\User;
 use Carbon\Carbon;
 use Event;
 use Illuminate\Support\Facades\Auth;
@@ -610,9 +611,14 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
             if ($type == 'Post')
             {
                 $timeFilteredContent = Post::whereNull('status')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->where('created_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
-            } elseif ($type == 'Extension')
+            }
+            elseif ($type == 'Extension')
             {
                 $timeFilteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->where('created_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
+            }
+            elseif ($type == 'User')
+            {
+                $timeFilteredContent = User::where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->where('created_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
             }
 
         } //Filter by Country
