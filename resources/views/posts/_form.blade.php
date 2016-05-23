@@ -43,6 +43,14 @@
 
 <!-- Body Form Input -->
     <div id = "centerTextContent">
+
+
+                {!! Form::label('image', 'Resized 450x350') !!}
+
+
+                {!! Form::file('image', null, ['class' => 'navButton']) !!}
+
+
     {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your idea or belief here:', 'rows' => '18', 'maxlength' => '3500']) !!}
     </div>
     @section('centerFooter')

@@ -14,4 +14,9 @@ class Question extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function extension()
+    {
+        return $this->hasMany('App\Extension');
+    }
 }

@@ -8,6 +8,7 @@ use App\Events\TransferUser;
 use App\Extension;
 use function App\Http\filterContentLocation;
 use function App\Http\filterContentLocationAllTime;
+use function App\Http\filterContentLocationSearch;
 use function App\Http\filterContentLocationTime;
 use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
@@ -50,7 +51,7 @@ class UserController extends Controller
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
-        $users = $this->user->where('verified', '=', 1)->latest()->take(10)->get();
+        $users = filterContentLocation($user, 0, 'User');
 
         return view ('users.index')
             ->with(compact('user', 'users', 'profilePosts','profileExtensions'));
@@ -262,8 +263,11 @@ class UserController extends Controller
         //Get search title
         $handle = $request->input('identifier');
 
-        //Search DB for uses like search
-        $results = User::where('handle', 'LIKE', '%'.$handle.'%')->paginate(10);
+        //Filter by location
+        $results = filterContentLocationSearch($user, 0, 'User', $handle);
+
+        //Get search title
+        $handle = $request->input('identifier');
 
         if(!count($results))
         {
@@ -324,7 +328,7 @@ class UserController extends Controller
     }
 
     /**
-     * Sort and show all users by highest Elevation
+     * Sort and show latest Elevated Users
      * @return \Illuminate\Http\Response
      */
     public function sortByElevation()
@@ -332,10 +336,11 @@ class UserController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $users = $this->user->orderBy('elevation', 'desc')->paginate(10);
+
+        $elevations = filterContentLocation($user, 0, 'Elevation');
 
         return view ('users.sortByElevation')
-            ->with(compact('user', 'users', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'elevations', 'profilePosts','profileExtensions'));
     }
 
     /**
@@ -392,10 +397,11 @@ class UserController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $users = $this->user->orderBy('extension', 'desc')->paginate(10);
+
+        $extensions = filterContentLocation($user, 0, 'Extension');
 
         return view ('users.sortByExtension')
-            ->with(compact('user', 'users', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'));
     }
 
     /**

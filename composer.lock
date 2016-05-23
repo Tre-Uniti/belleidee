@@ -1718,12 +1718,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mmanos/laravel-search.git",
-                "reference": "f9e9e00a523d355a3b9a0cbb2165fbd2aebe7428"
+                "reference": "92bc9ae4e05de219c08a72ea37de21931245ba62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mmanos/laravel-search/zipball/f9e9e00a523d355a3b9a0cbb2165fbd2aebe7428",
-                "reference": "f9e9e00a523d355a3b9a0cbb2165fbd2aebe7428",
+                "url": "https://api.github.com/repos/mmanos/laravel-search/zipball/92bc9ae4e05de219c08a72ea37de21931245ba62",
+                "reference": "92bc9ae4e05de219c08a72ea37de21931245ba62",
                 "shasum": ""
             },
             "require": {
@@ -1767,7 +1767,7 @@
                 "text",
                 "zendsearch"
             ],
-            "time": "2015-06-26 18:38:04"
+            "time": "2016-05-22 21:55:31"
         },
         {
             "name": "mmucklo/inflect",
@@ -3690,16 +3690,16 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "0.9.4",
+            "version": "0.9.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "70bba85e4aabc9449626651f48b9018ede04f86b"
+                "reference": "4db079511a283e5aba1b3c2fb19037c645e70fc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/70bba85e4aabc9449626651f48b9018ede04f86b",
-                "reference": "70bba85e4aabc9449626651f48b9018ede04f86b",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/4db079511a283e5aba1b3c2fb19037c645e70fc2",
+                "reference": "4db079511a283e5aba1b3c2fb19037c645e70fc2",
                 "shasum": ""
             },
             "require": {
@@ -3751,7 +3751,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2015-04-02 19:54:00"
+            "time": "2016-05-22 21:52:33"
         },
         {
             "name": "phpdocumentor/reflection-docblock",

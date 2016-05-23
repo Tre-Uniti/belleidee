@@ -13,13 +13,13 @@
         <a href={{ url('/posts/search')}}><button type = "button" class = "indexButton">Search</button></a>
         <a href={{ url('/posts')}}><button type = "button" class = "indexButton">New Posts</button></a>
         </div>
-        <button class = "interactButton" id = "hiddenIndex">More</button>
-        <div class = "indexContent" id = "hiddenContent">
-            <a href={{ url('/posts/extensionTime/Today')}}><button type = "button" class = "indexButton">Today</button></a>
-            <a href = {{ url('/posts/extensionTime/Month') }}><button type = "button" class = "indexButton">Month</button></a>
-            <a href={{ url('/posts/extensionTime/Year')}}><button type = "button" class = "indexButton">Year</button></a>
-            <a href={{ url('/posts/extensionTime/All')}}><button type = "button" class = "indexButton">All-time</button></a>
-        </div>
+        <nav class = "infoNav">
+            <ul>
+                <li>
+                    <a href = {{ url('/posts/elevation') }}><button type = "button" class = "indexButton">Recently Elevated</button></a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
     <div class = "indexLeft">

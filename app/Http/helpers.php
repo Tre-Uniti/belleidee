@@ -410,6 +410,15 @@ function filterContentLocation($user, $number, $type)
             {
                 $filteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->take(10)->get();
             }
+            elseif($type == 'Elevation')
+            {
+                $filteredContent = Elevation::where('beacon_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->take(10)->get();
+            }
+            elseif($type == 'User')
+            {
+                $filteredContent = User::where('verified', '=', 1)->where('last_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->take(10)->get();
+            }
+
         }
         //Filter by Country
         elseif($user->location == 1)
@@ -422,6 +431,14 @@ function filterContentLocation($user, $number, $type)
             {
                 $filteredContent = Extension::whereNull('status')->where('beacon_tag', 'LIKE', $location['country'].'%')->latest('created_at')->take(10)->get();
             }
+            elseif($type == 'Elevation')
+            {
+                $filteredContent = Elevation::where('beacon_tag', 'LIKE', $location['country'].'%')->latest('created_at')->take(10)->get();
+            }
+            elseif($type == 'User')
+            {
+                $filteredContent = User::where('verified', '=', 1)->where('last_tag', 'LIKE', $location['country'].'%')->latest('created_at')->take(10)->get();
+            }
         }
         //Filter by Global
         else
@@ -433,6 +450,14 @@ function filterContentLocation($user, $number, $type)
             elseif($type == 'Extension')
             {
                 $filteredContent = Extension::whereNull('status')->latest('created_at')->take(10)->get();
+            }
+            elseif($type == 'Elevation')
+            {
+                $filteredContent = Elevation::latest('created_at')->take(10)->get();
+            }
+            elseif($type == 'User')
+            {
+                $filteredContent = User::where('verified', '=', 1)->latest('created_at')->take(10)->get();
             }
         }
     }
@@ -660,7 +685,7 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
             }
             elseif ($type == 'User')
             {
-                $timeFilteredContent = User::where('verified', '=', 1)->where('created_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
+                $timeFilteredContent = User::where('verified', '=', 1)->where('updated_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
             }
         }
     }
@@ -681,7 +706,7 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
             }
             elseif ($type == 'User')
             {
-                $timeFilteredContent = User::where('verified', '=', 1)->where('last_tag', 'LIKE', $location['shortTag'] . '%')->where('created_at', '>=', Carbon::now()->$time())->orderBy($order, 'desc')->paginate(10);
+                $timeFilteredContent = User::where('verified', '=', 1)->where('last_tag', 'LIKE', $location['shortTag'] . '%')->where('updated_at', '>=', Carbon::now()->$time())->orderBy($order, 'desc')->paginate(10);
             }
         } //Filter by Country
         elseif ($user->location == 1)
@@ -696,7 +721,7 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
             }
             elseif ($type == 'User')
             {
-                $timeFilteredContent = User::where('verified', '=', 1)->where('last_tag', 'LIKE', $location['country'] . '%')->where('created_at', '>=', Carbon::now()->$time())->orderBy($order, 'desc')->paginate(10);
+                $timeFilteredContent = User::where('verified', '=', 1)->where('last_tag', 'LIKE', $location['country'] . '%')->where('updated_at', '>=', Carbon::now()->$time())->orderBy($order, 'desc')->paginate(10);
             }
         }
         //Filter by Global
@@ -877,6 +902,10 @@ function filterContentLocationSearch($user, $number, $type, $search)
             {
                 $searchFilteredContent = Sponsor::where('name', 'LIKE', '%'.$search.'%')->where('city', '=', $location['cityName'] . '-' . $location['cityCode'])->paginate(10);
             }
+            elseif ($type == 'User')
+            {
+                $searchFilteredContent = User::where('handle', 'LIKE', '%'.$search.'%')->where('last_tag', 'LIKE', $location['country'] . '-' . $location['cityCode']. '%')->paginate(10);
+            }
 
         }
         //Filter by Country
@@ -905,6 +934,10 @@ function filterContentLocationSearch($user, $number, $type, $search)
             {
                 $searchFilteredContent = Sponsor::where('name', 'LIKE', '%'.$search.'%')->where('country', '=', $location['country'])->paginate(10);
             }
+            elseif ($type == 'User')
+            {
+                $searchFilteredContent = User::where('handle', 'LIKE', '%'.$search.'%')->where('last_tag', 'LIKE', $location['country'] . '%')->paginate(10);
+            }
         }
         //Filter by Global
         else
@@ -931,6 +964,10 @@ function filterContentLocationSearch($user, $number, $type, $search)
             elseif ($type == 'Sponsor')
             {
                 $searchFilteredContent = Sponsor::where('name', 'LIKE', '%'.$search.'%')->where('country', '=', $location['country'])->paginate(10);
+            }
+            elseif ($type == 'User')
+            {
+                $searchFilteredContent = User::where('handle', 'LIKE', '%'.$search.'%')->paginate(10);
             }
         }
     }

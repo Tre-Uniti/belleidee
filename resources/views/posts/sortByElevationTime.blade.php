@@ -38,6 +38,7 @@
 @stop
 @section('centerFooter')
     {!! $posts->render() !!}
+
 @stop
 
 

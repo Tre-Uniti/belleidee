@@ -552,7 +552,7 @@ class BeaconController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
-        $beacons = $this->beacon->orderBy('tag_usage', 'desc')->paginate(10);
+        $beacons = $this->beacon->orderBy('total_tag_usage', 'desc')->paginate(10);
 
         return view ('beacons.top')
             ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'));

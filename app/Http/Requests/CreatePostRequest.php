@@ -29,7 +29,8 @@ class CreatePostRequest extends Request
             'title' => 'required|min:1|max:40',
             'body'  => 'required|min:5|max:3500',
             'belief'=> 'required',
-            'source' => 'required'
+            'source' => 'required',
+            'image' => 'mimes:jpeg,jpg,png|max:10000'
         ];
     }
 }

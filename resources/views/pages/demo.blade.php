@@ -8,7 +8,7 @@
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="/js/app.js"></script>
-
+    <script src="/js/index.js"></script>
     <!--
        This code is maintained by the Tre-Uniti development ops
        Feature & Pull Requests decided at Belle-Creatori.org
@@ -108,29 +108,24 @@
                     <a href="{{ url('/demo') }}"><button type = "button" class = "indexButton">Beacon Tag</button></a>
                     <a href="{{ url('/demo') }}"><button type = "button" class = "indexButton">Source</button></a>
                 </div>
-                    <nav class = "infoNav">
-                        <ul>
-                            <li>
-                                <p class = "extras">/-\</p>
-                                <div class = "indexNav">
-                                    <a href={{ url('/demo')}}><button type = "button" class = "indexButton">Elevations</button></a>
-                                    <a href = {{ url('/demo') }}><button type = "button" class = "indexButton">Creation Date</button></a>
-                                    <a href={{ url('/demo')}}><button type = "button" class = "indexButton">Extensions</button></a>
-                                </div>
-                                <div class = "indexNav">
-                                    <a href="{{ url('/demo') }}"><button type = "button" class = "indexButton">Report Intolerance</button></a>
-                                </div>
-                                <div class = "indexNav">
-                                        <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title=Idee" target="_blank">
-                                            <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
-                                        <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank">
-                                            <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
-                                        <a href="http://twitter.com/intent/tweet?status= Idee - {{Request::url()}}" target="_blank">
-                                            <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
-                                </div>
-                            </li>
-                        </ul>
-                    </nav>
+                <button class = "interactButton" id = "hiddenIndex">More</button>
+                <div class = "indexContent" id = "hiddenContent">
+                    <button type = "button" class = "indexButton">Elevations</button>
+                    <button type = "button" class = "indexButton">Creation Date</button>
+                    <button type = "button" class = "indexButton">Extensions</button>
+                    <div class = "indexNav">
+                        <button type = "button" class = "indexButton">Report Intolerance</button>
+                        <button type = "button" class = "indexButton">Location</button>
+                    </div>
+                    <div class = "indexNav">
+                        <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title=Belle Idee Demo" target="_blank">
+                            <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
+                        <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank">
+                            <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
+                        <a href="http://twitter.com/intent/tweet?status=Belle Idee Demo - {{Request::url()}}" target="_blank">
+                            <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
+                    </div>
+                </div>
                 <div id = "centerTextContent">
                     <p>
                         Welcome to Belle-Idee, this is a demo view of posts and extensions.

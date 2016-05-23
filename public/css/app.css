@@ -829,6 +829,10 @@ th {
   width: 95%;
 }
 
+.photoContent {
+  margin: 0 auto;
+}
+
 #centerContent {
   width: 50%;
   height: 80%;

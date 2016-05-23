@@ -36,6 +36,11 @@ class Extension extends Model
         return $this->belongsTo('App\Post');
     }
 
+    public function question()
+    {
+        return $this->belongsTo('App\Question');
+    }
+
     //Return title of extenception
     public function extenceptionTitle($id)
     {

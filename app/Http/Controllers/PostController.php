@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Storage;
 use Event;
 use function App\Http\getBeacon;
 use function App\Http\getSponsor;
+use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -200,21 +201,71 @@ class PostController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
 
-        $title = $request->input('title');
-        $path = '/posts/'.$user_id.'/'.$title.'.txt';
-        $inspiration = $request->input('body');
-        //Check if User has already has path set for title
-        if (Storage::exists($path))
+        
+        if($request->hasFile('image'))
         {
-            $error = "You've already saved an inspiration with this title.";
-            return redirect()
-                ->back()
-                ->withInput()
-                ->withErrors([$error]);
+            //dd($request);
+            if(!$request->file('image')->isValid())
+            {
+                $error = "Image File invalid.";
+                return redirect()
+                    ->back()
+                    ->withErrors([$error]);
+            }
+
+            //Get image from request
+            $image = $request->file('image');
+
+            //Create image file name
+            $title = str_replace(' ', '_', $request['title']);
+            $imageFileName = $title . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
+            $path = '/user_photos/posts/'. $user->id . '/' .$imageFileName;
+            if (Storage::exists($path))
+            {
+                $error = "You've already saved an inspiration with this title.";
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->withErrors([$error]);
+            }
+
+            //Resize the image
+            $imageResized = Image::make($image);
+            $imageResized->resize(450, 350, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $imageResized = $imageResized->stream();
+            
+            //Store new photo in storage (S3)
+            Storage::put($path,  $imageResized->__toString());
+            $request = array_add($request, 'post_path', $path);
         }
-        //Store body text at AWS
-        Storage::put($path, $inspiration);
-        $request = array_add($request, 'post_path', $path);
+        else
+        {
+            $title = $request->input('title');
+            $path = '/posts/'.$user_id.'/'.$title.'.txt';
+            $inspiration = $request->input('body');
+            //Check if User has already has path set for title
+            if (Storage::exists($path))
+            {
+                $error = "You've already saved an inspiration with this title.";
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->withErrors([$error]);
+            }
+            
+            //Store body text at AWS
+            Storage::put($path, $inspiration);
+            
+            $request = array_add($request, 'post_path', $path);
+        }
+        
+        
+
+        
+    
 
         $post = new Post($request->except('body'));
 
@@ -264,6 +315,17 @@ class PostController extends Controller
 
         $post = $this->post->findOrFail($id);
         $post_path = $post->post_path;
+
+        $title = str_replace(' ', '_', $post->title);
+
+        if($post_path == $title . '.txt')
+        {
+            $contentType = 'Text';
+        }
+        else
+        {
+            $contentType = 'Image';
+        }
         $location = 'https://maps.google.com/?q=' . $post->lat . ','. $post->long;
 
         $contents = Storage::get($post_path);
@@ -378,7 +440,8 @@ class PostController extends Controller
             ->with('beacon', $beacon)
             ->with('location', $location)
             ->with('sourcePhotoPath', $sourcePhotoPath)
-            ->with('sponsor', $sponsor);
+            ->with('sponsor', $sponsor)
+            ->with('contentType', $contentType);
     }
 
     /**
