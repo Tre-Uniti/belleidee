@@ -12,8 +12,8 @@
 */
 
 //User Routes (Resource)
-Route::get('users/sortByElevation', 'UserController@sortByElevation');
-Route::get('users/sortByExtension', 'UserController@sortByExtension');
+Route::get('users/elevation', 'UserController@sortByElevation');
+Route::get('users/extension', 'UserController@sortByExtension');
 Route::get('users/search', 'UserController@search');
 Route::get('users/results', 'UserController@results');
 Route::get('users/ascend/{id}', 'UserController@ascend');
@@ -23,6 +23,8 @@ Route::get('users/elevatedBy/{id}', 'UserController@elevatedBy');
 Route::get('users/beacons/{id}', 'UserController@beaconsOfUser');
 Route::get('users/deletion/', 'UserController@confirmDeletion');
 Route::get('users/timeFilter/{time}', 'UserController@timeFilter');
+Route::get('users/elevationTime/{time}', 'UserController@sortByElevationTime');
+Route::get('users/extensionTime/{time}', 'UserController@sortByExtensionTime');
 Route::resource('users', 'UserController');
 
 //Beacon Routes (Resource)

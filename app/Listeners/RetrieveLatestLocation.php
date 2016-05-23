@@ -91,8 +91,8 @@ class RetrieveLatestLocation
                 'cityName' => $cityName,
                 'location' => $user->location,
             ];
-            $this->flashLocation($user, $coordinates);
             session()->put('coordinates', $coordinates);
+            $this->flashLocation($user, $coordinates);
         }
         else
         {

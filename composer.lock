@@ -1718,12 +1718,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mmanos/laravel-search.git",
-                "reference": "31aeb632b7c7453438351213cba4ea566bc38ff3"
+                "reference": "f9e9e00a523d355a3b9a0cbb2165fbd2aebe7428"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mmanos/laravel-search/zipball/31aeb632b7c7453438351213cba4ea566bc38ff3",
-                "reference": "31aeb632b7c7453438351213cba4ea566bc38ff3",
+                "url": "https://api.github.com/repos/mmanos/laravel-search/zipball/f9e9e00a523d355a3b9a0cbb2165fbd2aebe7428",
+                "reference": "f9e9e00a523d355a3b9a0cbb2165fbd2aebe7428",
                 "shasum": ""
             },
             "require": {
@@ -1767,7 +1767,7 @@
                 "text",
                 "zendsearch"
             ],
-            "time": "2015-04-14 00:15:54"
+            "time": "2015-06-26 18:38:04"
         },
         {
             "name": "mmucklo/inflect",

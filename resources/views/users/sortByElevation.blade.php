@@ -6,24 +6,24 @@
 @section('centerText')
     <h2>User Directory</h2>
         <div class = "indexNav">
-            <a href={{ url('/users')}}><button type = "button" class = "indexButton">Most Recent</button></a>
+            <a href={{ url('/users')}}><button type = "button" class = "indexButton">Recent</button></a>
             <a href={{ url('/users/search')}}><button type = "button" class = "indexButton">Search</button></a>
-            <a href={{ url('/users/sortByExtension')}}><button type = "button" class = "indexButton">Most Extended</button></a>
+            <a href={{ url('/users/extension')}}><button type = "button" class = "indexButton">Extended</button></a>
             <p>(Top Elevated)</p>
         </div>
     <div class = "indexLeft">
         <h4>Handle</h4>
     </div>
     <div class = "indexRight">
-        <h4>Joined</h4>
+        <h4>Elevation</h4>
     </div>
-    @foreach ($users as $user2)
+    @foreach ($users as $User)
         <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('UserController@show', [$user2->id])}}"><button type = "button" class = "interactButtonLeft">{{ $user2->handle }}</button></a>
+                <a href="{{ action('UserController@show', [$User->id])}}"><button type = "button" class = "interactButtonLeft">{{ $User->handle }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('UserController@show', [$user2->id])}}"><button type = "button" class = "interactButton">{{ $user2->created_at->format('M-d-Y') }}</button></a>
+                <a href="{{ action('UserController@elevatedBy', [$User->id])}}"><button type = "button" class = "interactButton">{{ $User->elevation }}</button></a>
             </div>
         </div>
     @endforeach

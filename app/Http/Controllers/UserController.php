@@ -7,6 +7,7 @@ use App\Elevation;
 use App\Events\TransferUser;
 use App\Extension;
 use function App\Http\filterContentLocation;
+use function App\Http\filterContentLocationAllTime;
 use function App\Http\filterContentLocationTime;
 use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
@@ -47,9 +48,9 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $users = $this->user->where('verified', '=', 1)->take(10)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        $users = $this->user->where('verified', '=', 1)->latest()->take(10)->get();
 
         return view ('users.index')
             ->with(compact('user', 'users', 'profilePosts','profileExtensions'));
@@ -336,6 +337,52 @@ class UserController extends Controller
         return view ('users.sortByElevation')
             ->with(compact('user', 'users', 'profilePosts','profileExtensions'));
     }
+
+    /**
+     * Sort and show all elevation by highest Elevation given time
+     *
+     * @param $time
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByElevationTime($time)
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        if($time == 'Today')
+        {
+            $users = filterContentLocationTime($user, 1, 'User', 'today', 'elevation');
+            $filter = Carbon::now()->today()->format('l');
+        }
+        elseif($time == 'Month')
+        {
+            $users = filterContentLocationTime($user, 1, 'User', 'startOfMonth', 'elevation');
+            $filter = Carbon::now()->startOfMonth()->format('F');
+        }
+        elseif($time == 'Year')
+        {
+            $users = filterContentLocationTime($user, 1, 'User', 'startOfYear', 'elevation');
+            $filter = Carbon::now()->startOfYear()->format('Y');
+        }
+        elseif($time == 'All')
+        {
+            $users = filterContentLocationAllTime($user, 0, 'User', 'elevation');
+            $filter = 'All';
+        }
+        else
+        {
+            $filter = 'All';
+        }
+
+        $sponsor = getSponsor($user);
+
+        return view ('users.sortByElevationTime')
+            ->with(compact('user', 'users', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with('filter', $filter)
+            ->with('time', $time);
+    }
+    
     /**
      * Sort and show all users by highest Extension
      * @return \Illuminate\Http\Response
@@ -349,6 +396,51 @@ class UserController extends Controller
 
         return view ('users.sortByExtension')
             ->with(compact('user', 'users', 'profilePosts','profileExtensions'));
+    }
+
+    /**
+     * Sort and show all users by highest Extension given time
+     *
+     * @param $time
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByExtensionTime($time)
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        if($time == 'Today')
+        {
+            $users = filterContentLocationTime($user, 1, 'User', 'today', 'extension');
+            $filter = Carbon::now()->today()->format('l');
+        }
+        elseif($time == 'Month')
+        {
+            $users = filterContentLocationTime($user, 1, 'User', 'startOfMonth', 'extension');
+            $filter = Carbon::now()->startOfMonth()->format('F');
+        }
+        elseif($time == 'Year')
+        {
+            $users = filterContentLocationTime($user, 1, 'User', 'startOfYear', 'extension');
+            $filter = Carbon::now()->startOfYear()->format('Y');
+        }
+        elseif($time == 'All')
+        {
+            $users = filterContentLocationAllTime($user, 0, 'User', 'extension');
+            $filter = 'All';
+        }
+        else
+        {
+            $filter = 'All';
+        }
+
+        $sponsor = getSponsor($user);
+
+        return view ('users.sortByExtensionTime')
+            ->with(compact('user', 'users', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with('filter', $filter)
+            ->with('time', $time);
     }
 
 
