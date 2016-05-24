@@ -831,6 +831,7 @@ th {
 
 .photoContent {
   margin: 0 auto;
+  text-align: center;
 }
 
 #centerContent {

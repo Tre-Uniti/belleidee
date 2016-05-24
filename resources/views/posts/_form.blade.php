@@ -1,7 +1,11 @@
 @section('pageHeader')
     <script src = "/js/caffeine.js"></script>
+    <script src = "/js/creation.js"></script>
 @stop
 <div id = "createOptions">
+    <button id = "imageButton" type = "button" class = "indexButton">Upload an Image</button>
+    <button id = "textButton" type = "button" class = "indexButton">Write an Article</button>
+    <div id = "indexInfo" class = "indexContent">
 <div class = "formInput">
 {!! Form::label('title', 'Post Title:') !!}
 </div>
@@ -39,23 +43,22 @@
                 <option value="Other" @if (old('source') == 'Other') selected="selected" @endif>Other</option>
             </select>
     </div>
-
+    </div>
 
 <!-- Body Form Input -->
-    <div id = "centerTextContent">
 
-
-                {!! Form::label('image', 'Resized 450x350') !!}
-
-
-                {!! Form::file('image', null, ['class' => 'navButton']) !!}
-
-
-    {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your idea or belief here:', 'rows' => '18', 'maxlength' => '3500']) !!}
+    <div class = "indexContent" id = "imageUpload">
+        {!! Form::file('image', null, ['class' => 'navButton']) !!}
+        </div>
+    <div class = "indexContent" id = "addText">
+        {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your idea or belief here:', 'rows' => '18', 'maxlength' => '3500']) !!}
     </div>
+
     @section('centerFooter')
+        <div id = "footerButtons" class = "indexContent">
         {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
-        <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
+        <button type = "button" id = "back" class = "navButton">Back</button>
     {!! Form::close()   !!}
+        </div>
     @stop
 </div>

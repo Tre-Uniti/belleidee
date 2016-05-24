@@ -72,34 +72,42 @@ class ExtensionController extends Controller
         $sources = session('sources');
         if(isset($sources['extenception']))
         {
-            $extension = Extension::findOrFail($sources['extenception']);
+            $sourceModel = Extension::findOrFail($sources['extenception']);
             $sourceUser=
                 [
-                    'id' => $extension->user_id,
-                    'handle' => $extension->user->handle
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
                 ];
-            $content = Storage::get($extension->extension_path);
+            $content = Storage::get($sourceModel->extension_path);
+
+            $type = substr($sourceModel->extension_path, -3);
         }
         elseif(isset($sources['post_id']))
         {
-            $post = Post::findOrFail($sources['post_id']);
+            $sourceModel = Post::findOrFail($sources['post_id']);
             $sourceUser=
                 [
-                    'id' => $post->user_id,
-                    'handle' => $post->user->handle
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
                 ];
-            $content = Storage::get($post->post_path);
+            $content = Storage::get($sourceModel->post_path);
+
+            $type = substr($sourceModel->post_path, -3);
+
         }
         elseif(isset($sources['question_id']))
         {
-            $question = Question::findOrFail($sources['question_id']);
+            $sourceModel = Question::findOrFail($sources['question_id']);
+            $type = 'txt';
             $sourceUser=
             [
-                'id' => $question->user_id,
-                'handle' => $question->user->handle
+                'id' => $sourceModel->user_id,
+                'handle' => $sourceModel->user->handle
             ];
-            $content = $question->question;
+            $content = $sourceModel->question;
         }
+
+
         
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
@@ -114,7 +122,8 @@ class ExtensionController extends Controller
         $sponsor = getSponsor($user);
 
         return view('extensions.create')
-                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sourceUser', 'sponsor', 'content'));
+                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sourceUser', 'sourceModel', 'sponsor', 'content'))
+                    ->with('type', $type);
     }
 
     /**
@@ -569,25 +578,32 @@ class ExtensionController extends Controller
     public function edit($id)
     {
         $extension = $this->extension->findOrFail($id);
-        $extension_path = $extension->extension_path;
-        $contents = Storage::get($extension_path);
-        $extension = array_add($extension, 'body', $contents);
+
+        if(substr($extension->extension_path, -3) != 'txt')
+        {
+            $contents = Storage::get($extension->extension_path);
+        }
+        else
+        {
+            $contents = Storage::get($extension->extension_path);
+            $extension = array_add($extension, 'body', $contents);
+        }
+
 
         //Get Source info of extension
         if (isset($extension->post_id))
         {
-            $post_id = $extension->post_id;
-            $post = Post::findOrFail($post_id);
+
 
             if (isset($extension->extenception))
             {
-                $extenception = Extension::findOrFail($extension->extenception);
+                $sourceModel = Extension::findOrFail($extension->extenception);
                 $sources = [
                     'type' => 'extensions',
-                    'post_id' => $extenception->post_id,
-                    'extenception' => $extenception->id,
-                    'extension_title' => $extenception->title,
-                    'post_title' => $post->title
+                    'post_id' => $sourceModel->post_id,
+                    'extenception' => $sourceModel->id,
+                    'extension_title' => $sourceModel->title,
+                    'post_title' => $sourceModel->post->title
                 ];
                 $sourceUser=
                     [
@@ -595,57 +611,61 @@ class ExtensionController extends Controller
                         'handle' => $extension->user->handle
                     ];
                 $content = Storage::get($extension->extension_path);
+                $type = substr($sourceModel->extension_path, -3);
             }
             else
             {
+                $sourceModel = Post::findOrFail($extension->post_id);
                 $sources = [
                     'type' => 'posts',
-                    'post_id' => $post->id,
-                    'post_title' => $post->title
+                    'post_id' => $sourceModel->id,
+                    'post_title' => $sourceModel->title
                 ];
                 $sourceUser=
                     [
-                        'id' => $post->user_id,
-                        'handle' => $post->user->handle
+                        'id' => $sourceModel->user_id,
+                        'handle' => $sourceModel->user->handle
                     ];
-                $content = Storage::get($post->post_path);
+                $content = Storage::get($sourceModel->post_path);
+                $type = substr($sourceModel->extension_path, -3);
 
             }
         }
         elseif (isset($extension->question_id))
         {
-            $question_id = $extension->question_id;
-            $question = Question::findOrFail($question_id);
+
 
             if (isset($extension->extenception))
             {
-                $extenception = Extension::findOrFail($extension->extenception);
+                $sourceModel = Extension::findOrFail($extension->extenception);
                 $sources = [
                     'type' => 'extensions',
-                    'question_id' => $extenception->question_id,
-                    'extenception' => $extenception->id,
-                    'extension_title' => $extenception->title,
+                    'question_id' => $sourceModel->question_id,
+                    'extenception' => $sourceModel->id,
+                    'extension_title' => $sourceModel->title,
                 ];
                 $sourceUser=
                     [
-                        'id' => $extension->user_id,
-                        'handle' => $extension->user->handle
+                        'id' => $sourceModel->user_id,
+                        'handle' => $sourceModel->user->handle
                     ];
-                $content = Storage::get($extension->extension_path);
+                $content = Storage::get($sourceModel->extension_path);
+                $type = substr($sourceModel->extension_path, -3);
             }
             else
             {
+                $sourceModel = Question::findOrFail($extension->question_id);
                 $sources = [
                     'type' => 'question',
-                    'question_id' => $question->id,
-                    'question' => $question->question
+                    'question_id' => $sourceModel->id,
+                    'question' => $sourceModel->question
                 ];
                 $sourceUser=
                     [
-                        'id' => $question->user_id,
-                        'handle' => $question->user->handle
+                        'id' => $sourceModel->user_id,
+                        'handle' => $sourceModel->user->handle
                     ];
-                $content = $question->question;
+                $content = $sourceModel->question;
             }
         }
         else
@@ -690,7 +710,8 @@ class ExtensionController extends Controller
         }
 
         return view('extensions.edit')
-                    ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sponsor', 'beacon', 'content', 'sourceUser'));
+                    ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sponsor', 'beacon', 'content', 'sourceUser', 'sourceModel'))
+                    ->with('type', $type);
     }
 
     /**

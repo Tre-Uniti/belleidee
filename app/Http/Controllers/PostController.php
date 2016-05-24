@@ -152,7 +152,42 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for choosing what type of creation.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function chooseCreation()
+    {
+
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = $this->getProfileExtensions($user);
+        $date = Carbon::now()->format('M-d-Y');
+
+        //Get last post of user and check if it was UTC today
+        //If the dates match redirect them to their post
+        try
+        {
+            $lastPost = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->firstOrFail();
+            if($lastPost != null & $lastPost->created_at->format('M-d-Y') === $date)
+            {
+                flash()->overlay('You have already posted on UTC: '. $date);
+                return redirect('posts/'.$lastPost->id);
+            }
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('Your first post:');
+        }
+        
+        $sponsor = getSponsor($user);
+
+        return view('posts.chooseCreation')
+            ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'sponsor'));
+    }
+
+    /**
+     * Show the form for creating a new resource (Image).
      *
      * @return \Illuminate\Http\Response
      */
@@ -185,9 +220,12 @@ class PostController extends Controller
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
         $sponsor = getSponsor($user);
+        
 
-        return view('posts.create')
+            return view('posts.create')
                 ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sponsor'));
+
+
     }
 
     /**
