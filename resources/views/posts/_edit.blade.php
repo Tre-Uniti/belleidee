@@ -40,11 +40,19 @@
                 </select>
        </div>
 
-
     <!-- Body Form Input -->
-    <div id = "centerTextContent">
-        {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your idea or belief here:', 'rows' => '18%', 'maxlength' => '3500']) !!}
-    </div>
+    @if($type != 'txt')
+        <div class = "photoContent">
+            <a href={{ url('/posts/'. $post->id) }}><img src= {{ url(env('IMAGE_LINK'). $post->post_path) }} alt="{{$post->title}}"></a>
+            <p>Please follow the image guideline <a href = "{{ url('/images') }}" target = "blank">here</a></p>
+            {!! Form::label('image', 'Recommended size: 450x350') !!}
+            {!! Form::file('image', null, ['class' => 'navButton']) !!}
+        </div>
+    @else
+        <div id = "centerTextContent">
+            {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your idea or belief here:', 'rows' => '18%', 'maxlength' => '3500']) !!}
+        </div>
+    @endif
     @section('centerFooter')
         {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
         <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>

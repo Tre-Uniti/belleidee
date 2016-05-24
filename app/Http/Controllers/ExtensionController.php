@@ -139,7 +139,7 @@ class ExtensionController extends Controller
         $user_id = $user->id;
 
         $title = $request->input('title');
-        $path = '/extensions/'.$user_id.'/'.$title.'.txt';
+        $path = '/extensions/'.$user_id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';
         $inspiration = $request->input('body');
         if (Storage::exists($path))
         {
@@ -729,7 +729,7 @@ class ExtensionController extends Controller
         $inspiration = $request->input('body');
         $path = $extension->extension_path;
         $newTitle = $request->input('title');
-        $newPath = '/extensions/'.$user->id.'/'.$newTitle.'.txt';
+        $newPath = '/extensions/'.$user->id.'/'.$newTitle. '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';
         //Update AWS document if Title changes
         if($path != $newPath)
         {

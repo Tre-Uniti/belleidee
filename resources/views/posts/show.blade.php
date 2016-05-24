@@ -55,7 +55,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                             <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
                        </div>
     </div>
-    @if($contentType == 'Image')
+    @if($type != 'txt')
         <div class = "photoContent">
             <a href={{ url('/posts/'. $post->id) }}><img src= {{ url(env('IMAGE_LINK'). $post->post_path) }} alt="{{$post->title}}"></a>
         </div>

@@ -157,7 +157,7 @@ class HomeController extends Controller
 
         //Create image file name
         $userName = str_replace(' ', '_', $user->handle);
-        $imageFileName = $userName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
+        $imageFileName = $userName . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
         $path = '/user_photos/'. $user->id . '/' .$imageFileName;
 
         //Check if the existing photo is the same day

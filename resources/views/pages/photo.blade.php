@@ -9,7 +9,7 @@
         {!! Form::open(['url' => 'storePhoto', 'files' => true]) !!}
     <div class = "formData">
         <div class = "formLabel">
-            {!! Form::label('image', 'Resized 450x350') !!}
+            {!! Form::label('image', 'Auto-Resized to 450x350') !!}
         </div>
         <div class = "formShowData">
             {!! Form::file('image', null, ['class' => 'navButton']) !!}
@@ -21,7 +21,7 @@
 
 </div>
     <div class = "formInput">
-        Please review and accept the image guideline <a href = "{{ url('/images') }}" target="_blank">here</a>
+        Please follow the image guideline <a href = "{{ url('/images') }}" target = "blank">here</a>
     </div>
 
 

@@ -104,7 +104,7 @@ class BeaconController extends Controller
             $image = $request->file('image');
 
             $beaconName = str_replace(' ', '_', $beacon->name);
-            $imageFileName = $beaconName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
+            $imageFileName = $beaconName . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
             $path = '/beacon_photos/'. $beacon->id . '/' .$imageFileName;
 
             //Resize the image
@@ -306,7 +306,7 @@ class BeaconController extends Controller
             $image = $request->file('image');
 
             $beaconName = str_replace(' ', '_', $beacon->name);
-            $imageFileName = $beaconName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
+            $imageFileName = $beaconName . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
             $path = '/beacon_photos/'. $beacon->id . '/' .$imageFileName;
 
             //Resize the image

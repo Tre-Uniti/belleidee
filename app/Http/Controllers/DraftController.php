@@ -82,7 +82,7 @@ class DraftController extends Controller
         $user_id = $user->id;
 
         $title = $request->input('title');
-        $path = '/drafts/'.$user_id.'/'.$title.'.txt';
+        $path = '/drafts/'.$user_id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
         $inspiration = $request->input('body');
         //Check if User has already has path set for title
         if (Storage::exists($path))
@@ -218,7 +218,7 @@ class DraftController extends Controller
 
         $path = $draft->draft_path;
         $newTitle = $request->input('title');
-        $newPath = '/drafts/'.$user_id.'/'.$newTitle.'.txt';
+        $newPath = '/drafts/'.$user_id.'/'.$newTitle. '-' . Carbon::now()->format('M-d-Y-H-i-s').'.txt';
         $inspiration = $request->input('body');
 
         //Update AWS document if Title changes

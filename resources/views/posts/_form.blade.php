@@ -3,6 +3,7 @@
     <script src = "/js/creation.js"></script>
 @stop
 <div id = "createOptions">
+    <h2 id = "creationHeader">Select Creation Type:</h2>
     <button id = "imageButton" type = "button" class = "indexButton">Upload an Image</button>
     <button id = "textButton" type = "button" class = "indexButton">Write an Article</button>
     <div id = "indexInfo" class = "indexContent">
@@ -48,6 +49,8 @@
 <!-- Body Form Input -->
 
     <div class = "indexContent" id = "imageUpload">
+        <p>Please follow the image guideline <a href = "{{ url('/images') }}" target = "blank">here</a></p>
+        {!! Form::label('image', 'Recommended size: 450x350') !!}
         {!! Form::file('image', null, ['class' => 'navButton']) !!}
         </div>
     <div class = "indexContent" id = "addText">

@@ -6,6 +6,8 @@ $(document).ready(function() {
 
         document.getElementById("textButton").style.display = "None";
         document.getElementById("imageButton").style.display = "None";
+        document.getElementById("creationHeader").style.display = "None";
+
     });
 
     $(document.getElementById("textButton")).click(function () {
@@ -15,6 +17,7 @@ $(document).ready(function() {
 
         document.getElementById("textButton").style.display = "None";
         document.getElementById("imageButton").style.display = "None";
+        document.getElementById("creationHeader").style.display = "None";
     });
 
     $(document.getElementById("back")).click(function () {
@@ -26,6 +29,7 @@ $(document).ready(function() {
         document.getElementById("addText").style.display = "None";
         document.getElementById("textButton").style.display = "Inline";
         document.getElementById("imageButton").style.display = "Inline";
+        document.getElementById("creationHeader").style.display = "Block";
     });
 
 });

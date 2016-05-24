@@ -112,7 +112,7 @@ class SponsorController extends Controller
             $image = $request->file('image');
 
             $sponsorName = str_replace(' ', '_', $sponsor->name);
-            $imageFileName = $sponsorName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
+            $imageFileName = $sponsorName . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
             $path = '/sponsor_photos/'. $sponsor->id . '/' .$imageFileName;
 
             //Resize the image
@@ -199,7 +199,7 @@ class SponsorController extends Controller
             $image = $request->file('image');
 
             $sponsorName = str_replace(' ', '_', $sponsor->name);
-            $imageFileName = $sponsorName . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
+            $imageFileName = $sponsorName . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
             $path = '/sponsor_photos/'. $sponsor->id . '/' .$imageFileName;
 
             //Resize the image

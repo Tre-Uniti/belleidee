@@ -10,6 +10,8 @@ use function App\Http\filterContentLocationAllTime;
 use function App\Http\filterContentLocationSearch;
 use function App\Http\filterContentLocationTime;
 use function App\Http\getLocation;
+use function App\Http\getProfileExtensions;
+use function App\Http\getProfilePosts;
 use App\Intolerance;
 use App\Moderation;
 use App\Notification;
@@ -152,41 +154,6 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for choosing what type of creation.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function chooseCreation()
-    {
-
-        $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
-        $date = Carbon::now()->format('M-d-Y');
-
-        //Get last post of user and check if it was UTC today
-        //If the dates match redirect them to their post
-        try
-        {
-            $lastPost = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->firstOrFail();
-            if($lastPost != null & $lastPost->created_at->format('M-d-Y') === $date)
-            {
-                flash()->overlay('You have already posted on UTC: '. $date);
-                return redirect('posts/'.$lastPost->id);
-            }
-        }
-        catch(ModelNotFoundException $e)
-        {
-            flash()->overlay('Your first post:');
-        }
-        
-        $sponsor = getSponsor($user);
-
-        return view('posts.chooseCreation')
-            ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'sponsor'));
-    }
-
-    /**
      * Show the form for creating a new resource (Image).
      *
      * @return \Illuminate\Http\Response
@@ -239,10 +206,19 @@ class PostController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
 
-        
+        $posts = Post::where('user_id', '=', $user->id)->where('title', '=', $request['title'])->get()->count();
+
+        if ($posts != 0)
+        {
+            $error = "You've already saved an inspiration with this title.";
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors([$error]);
+        }
+
         if($request->hasFile('image'))
         {
-            //dd($request);
             if(!$request->file('image')->isValid())
             {
                 $error = "Image File invalid.";
@@ -250,13 +226,12 @@ class PostController extends Controller
                     ->back()
                     ->withErrors([$error]);
             }
-
             //Get image from request
             $image = $request->file('image');
 
             //Create image file name
             $title = str_replace(' ', '_', $request['title']);
-            $imageFileName = $title . '-' . Carbon::today()->format('M-d-Y') . '.' . $image->getClientOriginalExtension();
+            $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
             $path = '/user_photos/posts/'. $user->id . '/' .$imageFileName;
             if (Storage::exists($path))
             {
@@ -282,7 +257,7 @@ class PostController extends Controller
         else
         {
             $title = $request->input('title');
-            $path = '/posts/'.$user_id.'/'.$title.'.txt';
+            $path = '/posts/'.$user_id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
             $inspiration = $request->input('body');
             //Check if User has already has path set for title
             if (Storage::exists($path))
@@ -299,11 +274,6 @@ class PostController extends Controller
             
             $request = array_add($request, 'post_path', $path);
         }
-        
-        
-
-        
-    
 
         $post = new Post($request->except('body'));
 
@@ -354,20 +324,19 @@ class PostController extends Controller
         $post = $this->post->findOrFail($id);
         $post_path = $post->post_path;
 
-        $title = str_replace(' ', '_', $post->title);
-
-        if($post_path == $title . '.txt')
-        {
-            $contentType = 'Text';
-        }
-        else
-        {
-            $contentType = 'Image';
-        }
-        $location = 'https://maps.google.com/?q=' . $post->lat . ','. $post->long;
-
+        //Get contents of post from Amazon S3
         $contents = Storage::get($post_path);
-        $post = array_add($post, 'body', $contents);
+        
+        //Get type of post (i.e Image or Txt)
+        $type = substr($post->post_path, -3);
+        if($type == 'txt')
+        {
+            $contents = Storage::get($post->post_path);
+            $post = array_add($post, 'body', $contents);
+        }
+
+        //Add location of post
+        $location = 'https://maps.google.com/?q=' . $post->lat . ','. $post->long;
 
         //Get other Posts of User
         $user_id = $post->user_id;
@@ -479,7 +448,7 @@ class PostController extends Controller
             ->with('location', $location)
             ->with('sourcePhotoPath', $sourcePhotoPath)
             ->with('sponsor', $sponsor)
-            ->with('contentType', $contentType);
+            ->with('type', $type);
     }
 
     /**
@@ -491,16 +460,19 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = $this->post->findOrFail($id);
-        $post_path = $post->post_path;
-        $date = $post->created_at;
-        $contents = Storage::get($post_path);
-        $post = array_add($post, 'body', $contents);
 
+        //Get type of post (i.e Image or Txt)
+        $type = substr($post->post_path, -3);
+        if($type == 'txt')
+        {
+            $contents = Storage::get($post->post_path);
+            $post = array_add($post, 'body', $contents);
+        }
+        
         //Get other Posts of User
-        $user_id = $post->user_id;
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
 
         $date = $post->created_at->format('M-d-Y');
 
@@ -528,7 +500,8 @@ class PostController extends Controller
         }
 
         return view('posts.edit')
-                ->with(compact('user', 'post', 'profilePosts', 'profileExtensions', 'beacons', 'date', 'sponsor', 'beacon'));
+                ->with(compact('user', 'post', 'profilePosts', 'profileExtensions', 'beacons', 'date', 'sponsor', 'beacon'))
+                ->with('type', $type);
 
     }
 
@@ -543,38 +516,75 @@ class PostController extends Controller
     {
         $post = $this->post->findOrFail($id);
         $user = Auth::user();
+        $type = substr($post->post_path, -3);
 
-        $path = $post->post_path;
         $newTitle = $request->input('title');
-        $newPath = '/posts/'.$user->id.'/'.$newTitle.'.txt';
-        $inspiration = $request->input('body');
-
-        //Update AWS document if Title changes
-        if($path != $newPath)
+        //If post contains new title check if there is already a post with this title
+        if($newTitle == $post->title)
         {
-            //Check if User has already has path set for title
-            if (Storage::exists($newPath))
-            {
-                $error = "You've already saved an inspiration with this title.";
-                return redirect()
-                    ->back()
-                    ->withInput()
-                    ->withErrors([$error]);
-            }
-            //Update AWS with new file and path for title change
-            else
-            {
-                Storage::put($newPath, $inspiration);
-                Storage::delete($path);
-                $request = array_add($request, 'post_path', $newPath);
-            }
+            $posts = 0;
         }
         else
         {
-            //Store updated body text with same title at AWS
-            Storage::put($path, $inspiration);
+            $posts = Post::where('user_id', '=', $user->id)->where('title', '=', $newTitle)->get()->count();
         }
 
+        if ($posts != 0)
+        {
+            $error = "You've already saved an inspiration with this title.";
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors([$error]);
+        }
+
+        //If post contains image upload using S3
+        if($type != 'txt')
+        {
+            if($request->hasFile('image'))
+            {
+                if(!$request->file('image')->isValid())
+                {
+                    $error = "Image File invalid.";
+                    return redirect()
+                        ->back()
+                        ->withErrors([$error]);
+                }
+
+                //Get image from request
+                $image = $request->file('image');
+
+                //Create image file name
+                $title = str_replace(' ', '_', $request['title']);
+                $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
+                $newPath = '/user_photos/posts/'. $user->id . '/' .$imageFileName;
+
+                //Resize the image
+                $imageResized = Image::make($image);
+                $imageResized->resize(450, 350, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $imageResized = $imageResized->stream();
+
+                //Store new photo in storage (S3)
+                Storage::put($newPath,  $imageResized->__toString());
+                Storage::delete($post->post_path);
+
+                $request = array_add($request, 'post_path', $newPath);
+        }
+        }
+        elseif($type == 'txt')
+        {
+            $title = $request->input('title');
+            $newPath = '/posts/'.$user->id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
+            $inspiration = $request->input('body');
+
+            Storage::put($newPath, $inspiration);
+            Storage::delete($post->post_path);
+            $request = array_add($request, 'post_path', $newPath);
+        }
+        
         //If localized get Beacon coordinates and add to post
         if($request['beacon_tag'] != 'No-Beacon')
         {

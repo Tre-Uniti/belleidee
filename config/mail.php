@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'Tre-Uniti@belle-idee.org', 'name' => 'Tre-Uniti'],
+    'from' => ['address' => 'Tre-Uniti@belle-idee.org', 'name' => 'Belle-Idee'],
 
     /*
     |--------------------------------------------------------------------------
