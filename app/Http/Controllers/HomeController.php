@@ -661,4 +661,41 @@ class HomeController extends Controller
             return Response::download(public_path() . '/' . $zipname);
         
     }
+
+    /*
+     * Add GPS coordinates to all posts and extensions with a beacon tag
+     *
+     * @param $id
+     */
+    public function addGPS()
+    {
+        $posts = Post::where('beacon_tag', '!=', 'No-Beacon')->get();
+        foreach($posts as $post)
+        {
+
+            $beacon = Beacon::where('beacon_tag', '=', $post->beacon_tag)->first();
+
+            if(!is_null($beacon))
+            {
+                $post->lat = $beacon->lat;
+                $post->long = $beacon->long;
+                $post->update();
+            }
+        }
+
+        $extensions = Extension::where('beacon_tag', '!=', 'No-Beacon')->get();
+        foreach($extensions as $extension)
+        {
+            $beacon = Beacon::where('beacon_tag', '=', $extension->beacon_tag)->first();
+            if(!is_null($beacon))
+            {
+                $extension->lat = $beacon->lat;
+                $extension->long = $beacon->long;
+                $extension->update();
+            }
+        }
+        
+        flash()->overlay('GPS added');
+        return redirect('home');
+    }
 }

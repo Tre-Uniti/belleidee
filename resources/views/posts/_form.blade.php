@@ -49,9 +49,9 @@
 <!-- Body Form Input -->
 
     <div class = "indexContent" id = "imageUpload">
-        <p>Please follow the image guideline <a href = "{{ url('/images') }}" target = "blank">here</a></p>
-        {!! Form::label('image', 'Recommended size: 450x350') !!}
+        <a href = "{{ url('/images') }}" target = "blank">View Image Guidelines</a>
         {!! Form::file('image', null, ['class' => 'navButton']) !!}
+        {!! Form::textarea('caption', null, ['id' => 'createBodyText', 'placeholder' => 'Add optional caption:', 'rows' => '2%', 'maxlength' => '255']) !!}
         </div>
     <div class = "indexContent" id = "addText">
         {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your idea or belief here:', 'rows' => '18', 'maxlength' => '3500']) !!}

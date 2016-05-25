@@ -14,6 +14,7 @@ class Post extends Model
         'belief',
         'beacon_tag',
         'source',
+        'caption',
         'post_path',
         'lat',
         'long',

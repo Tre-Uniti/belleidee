@@ -44,9 +44,11 @@
     @if($type != 'txt')
         <div class = "photoContent">
             <a href={{ url('/posts/'. $post->id) }}><img src= {{ url(env('IMAGE_LINK'). $post->post_path) }} alt="{{$post->title}}"></a>
-            <p>Please follow the image guideline <a href = "{{ url('/images') }}" target = "blank">here</a></p>
-            {!! Form::label('image', 'Recommended size: 450x350') !!}
+            <p>
+                <a href = "{{ url('/images') }}" target = "blank">View Image Guidelines</a>
             {!! Form::file('image', null, ['class' => 'navButton']) !!}
+            </p>
+            {!! Form::textarea('caption', null, ['id' => 'createBodyText', 'placeholder' => 'Add optional caption:', 'rows' => '2%', 'maxlength' => '255']) !!}
         </div>
     @else
         <div id = "centerTextContent">

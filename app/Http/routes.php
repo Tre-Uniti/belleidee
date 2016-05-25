@@ -212,6 +212,7 @@ Route::get('global', 'HomeController@globe');
 Route::get('newLocation', 'HomeController@newLocation');
 Route::get('addLocation', 'HomeController@addLocation');
 //Route::get('getContent/{id}', 'HomeController@getContent');
+Route::get('addGPS', 'HomeController@addGPS');
 
 //Map Routes
 Route::get('/map/{location}', 'HomeController@map');

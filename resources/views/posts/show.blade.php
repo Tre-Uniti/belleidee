@@ -58,6 +58,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     @if($type != 'txt')
         <div class = "photoContent">
             <a href={{ url('/posts/'. $post->id) }}><img src= {{ url(env('IMAGE_LINK'). $post->post_path) }} alt="{{$post->title}}"></a>
+            <p>{!! nl2br(e($post->caption)) !!}</p>
         </div>
         @else
         <div id = "centerTextContent">
