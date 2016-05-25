@@ -79,7 +79,7 @@ class ExtensionController extends Controller
                     'handle' => $sourceModel->user->handle
                 ];
             $content = Storage::get($sourceModel->extension_path);
-
+            $sourceOriginalPath = NULL;
             $type = substr($sourceModel->extension_path, -3);
         }
         elseif(isset($sources['post_id']))
@@ -91,7 +91,7 @@ class ExtensionController extends Controller
                     'handle' => $sourceModel->user->handle
                 ];
             $content = Storage::get($sourceModel->post_path);
-
+            $sourceOriginalPath = substr_replace($sourceModel->post_path, 'originals/', 19, 0);
             $type = substr($sourceModel->post_path, -3);
 
         }
@@ -104,6 +104,7 @@ class ExtensionController extends Controller
                 'id' => $sourceModel->user_id,
                 'handle' => $sourceModel->user->handle
             ];
+            $sourceOriginalPath = NULL;
             $content = $sourceModel->question;
         }
 
@@ -123,6 +124,7 @@ class ExtensionController extends Controller
 
         return view('extensions.create')
                     ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sourceUser', 'sourceModel', 'sponsor', 'content'))
+                    ->with('sourceOriginalPath', $sourceOriginalPath)
                     ->with('type', $type);
     }
 

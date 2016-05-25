@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.18.12",
+            "version": "3.18.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "12386ad98e3a76df29cee9475264b7364a50542f"
+                "reference": "8bd25f62869051476034464d853a9c0c72e2d91e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/12386ad98e3a76df29cee9475264b7364a50542f",
-                "reference": "12386ad98e3a76df29cee9475264b7364a50542f",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8bd25f62869051476034464d853a9c0c72e2d91e",
+                "reference": "8bd25f62869051476034464d853a9c0c72e2d91e",
                 "shasum": ""
             },
             "require": {
@@ -85,7 +85,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-05-20 05:19:30"
+            "time": "2016-05-24 18:21:32"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -3502,16 +3502,16 @@
         },
         {
             "name": "zendesk/zendesk_api_client_php",
-            "version": "v2.0.8",
+            "version": "2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendesk/zendesk_api_client_php.git",
-                "reference": "4da2e7e3de93ccdd4157ae023f6b91cacd943c47"
+                "reference": "07f30ecfa77f2277b0fecf2d9b25c61a9b77f8da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendesk/zendesk_api_client_php/zipball/4da2e7e3de93ccdd4157ae023f6b91cacd943c47",
-                "reference": "4da2e7e3de93ccdd4157ae023f6b91cacd943c47",
+                "url": "https://api.github.com/repos/zendesk/zendesk_api_client_php/zipball/07f30ecfa77f2277b0fecf2d9b25c61a9b77f8da",
+                "reference": "07f30ecfa77f2277b0fecf2d9b25c61a9b77f8da",
                 "shasum": ""
             },
             "require": {
@@ -3537,7 +3537,7 @@
             ],
             "description": "PHP Client for Zendesk REST API. See http://developer.zendesk.com/api-docs",
             "homepage": "https://github.com/zendesk/zendesk_api_client_php",
-            "time": "2016-04-29 08:17:54"
+            "time": "2016-05-25 05:16:27"
         }
     ],
     "packages-dev": [

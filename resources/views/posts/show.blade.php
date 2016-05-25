@@ -1,6 +1,9 @@
 @extends('app')
 @section('pageHeader')
     <script src = "/js/index.js"></script>
+
+    <link href="/css/lightbox.css" rel="stylesheet">
+
     <!-- You can use Open Graph tags to customize link previews.
 Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     <meta property="og:url"           content= "{{ Request::url() }}"/>
@@ -57,8 +60,9 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     </div>
     @if($type != 'txt')
         <div class = "photoContent">
-            <a href={{ url('/posts/'. $post->id) }}><img src= {{ url(env('IMAGE_LINK'). $post->post_path) }} alt="{{$post->title}}"></a>
+            <a href="{{ url(env('IMAGE_LINK'). $sourceOriginalPath) }}" data-lightbox="{{ $post->title }}" data-title="{{ $post->caption }}"><img src= {{ url(env('IMAGE_LINK'). $post->post_path) }} alt="{{$post->title}}"></a>
             <p>{!! nl2br(e($post->caption)) !!}</p>
+
         </div>
         @else
         <div id = "centerTextContent">
@@ -87,5 +91,6 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                 {!! Form::close() !!}
         @endif
     </div>
+    <script src="/js/lightbox.js"></script>
 @stop
 

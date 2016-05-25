@@ -233,6 +233,7 @@ class PostController extends Controller
             $title = str_replace(' ', '_', $request['title']);
             $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
             $path = '/user_photos/posts/'. $user->id . '/' .$imageFileName;
+            $originalPath = '/user_photos/posts/originals/'. $user->id . '/' .$imageFileName;
             if (Storage::exists($path))
             {
                 $error = "You've already saved an inspiration with this title.";
@@ -244,14 +245,17 @@ class PostController extends Controller
 
             //Resize the image
             $imageResized = Image::make($image);
-            $imageResized->resize(450, 350, function ($constraint) {
+            $originalImage = Image::make($image);
+            $imageResized->resize(450, 400, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
             $imageResized = $imageResized->stream();
+            $originalImage = $originalImage->stream();
             
             //Store new photo in storage (S3)
             Storage::put($path,  $imageResized->__toString());
+            Storage::put($originalPath,  $originalImage->__toString());
             $request = array_add($request, 'post_path', $path);
         }
         else
@@ -333,6 +337,12 @@ class PostController extends Controller
         {
             $contents = Storage::get($post->post_path);
             $post = array_add($post, 'body', $contents);
+            $sourceOriginalPath = '';
+        }
+        else
+        {
+            //Get path to original image for lightbox preview
+            $sourceOriginalPath = substr_replace($post->post_path, 'originals/', 19, 0);
         }
 
         //Add location of post
@@ -418,6 +428,7 @@ class PostController extends Controller
                         ->with('beacon', $beacon)
                         ->with('sourcePhotoPath', $sourcePhotoPath)
                         ->with('location', $location)
+                        ->with('sourceOriginalPath', $sourceOriginalPath)
                         ->with('sponsor', $sponsor);
                 }
             }
@@ -447,6 +458,7 @@ class PostController extends Controller
             ->with('beacon', $beacon)
             ->with('location', $location)
             ->with('sourcePhotoPath', $sourcePhotoPath)
+            ->with('sourceOriginalPath', $sourceOriginalPath)
             ->with('sponsor', $sponsor)
             ->with('type', $type);
     }
@@ -558,18 +570,24 @@ class PostController extends Controller
                 $title = str_replace(' ', '_', $request['title']);
                 $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
                 $newPath = '/user_photos/posts/'. $user->id . '/' .$imageFileName;
-
+                $originalPath = '/user_photos/posts/originals/'. $user->id . '/' .$imageFileName;
+                $sourceOriginalPath = substr_replace($post->post_path, 'originals/', 19, 0);
+                
                 //Resize the image
                 $imageResized = Image::make($image);
-                $imageResized->resize(450, 350, function ($constraint) {
+                $originalImage = Image::make($image);
+                $imageResized->resize(450, 400, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 });
                 $imageResized = $imageResized->stream();
+                $originalImage = $originalImage->stream();
 
                 //Store new photo in storage (S3)
                 Storage::put($newPath,  $imageResized->__toString());
+                Storage::put($originalPath,  $originalImage->__toString());
                 Storage::delete($post->post_path);
+                Storage::delete($sourceOriginalPath);
 
                 $request = array_add($request, 'post_path', $newPath);
         }
@@ -623,7 +641,9 @@ class PostController extends Controller
         }
         else
         {
+            $sourceOriginalPath = substr_replace($post->post_path, 'originals/', 19, 0);
             Storage::delete($post->post_path);
+            Storage::delete($sourceOriginalPath);
             $post->delete();
         }
 

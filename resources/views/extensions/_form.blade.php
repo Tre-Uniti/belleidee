@@ -1,6 +1,7 @@
 @section('pageHeader')
     <script src = "/js/caffeine.js"></script>
     <script src = "/js/toggleSource.js"></script>
+    <link href="/css/lightbox.css" rel="stylesheet">
 @stop
 
 <div id = "createOptions">
@@ -19,7 +20,8 @@
         <div class = "extensionContent" id = "hiddenContent">
             @if($type != 'txt')
                 <div class = "photoContent">
-                    <a href = "{{ url('/posts/'. $sourceModel->id) }}" target = "_blank"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->post_path) }} alt="{{$sourceModel->title}}"></a>
+                    <a href="{{ url(env('IMAGE_LINK'). $sourceOriginalPath) }}" data-lightbox="{{ $sourceModel->title }}" data-title="{{ $sourceModel->caption }}"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->post_path) }} alt="{{$sourceModel->title}}"></a>
+                    <p>{{$sourceModel->caption}}</p>
                 </div>
             @else
                 {!! nl2br(e($content)) !!}
@@ -30,8 +32,6 @@
             {!! nl2br(e($content)) !!}
             <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
     @endif
-
-
         <div class = "formData">
             {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Your Title']) !!}
             </div>
@@ -85,5 +85,6 @@
             {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
         @endif
     <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
+            <script src="/js/lightbox.js"></script>
     @stop
 </div>
