@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Adjudication;
 use App\Beacon;
 use App\Elevation;
+use function App\Http\autolink;
 use function App\Http\filterContentLocation;
 use function App\Http\filterContentLocationAllTime;
 use function App\Http\filterContentLocationSearch;
@@ -30,7 +31,9 @@ use Illuminate\Support\Facades\Storage;
 use Event;
 use function App\Http\getBeacon;
 use function App\Http\getSponsor;
+use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
+use Mews\Purifier\Facades\Purifier;
 
 class PostController extends Controller
 {
@@ -228,6 +231,7 @@ class PostController extends Controller
             }
             //Get image from request
             $image = $request->file('image');
+            $caption = Purifier::clean($request->input('caption'));
 
             //Create image file name
             $title = str_replace(' ', '_', $request['title']);
@@ -260,9 +264,14 @@ class PostController extends Controller
         }
         else
         {
+            $this->validate($request, [
+                'body' => 'required|min:5|max:3500'
+            ]);
             $title = $request->input('title');
             $path = '/posts/'.$user_id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
-            $inspiration = $request->input('body');
+            $inspiration = Purifier::clean($request->input('body'));
+            $caption = null;
+
             //Check if User has already has path set for title
             if (Storage::exists($path))
             {
@@ -280,6 +289,7 @@ class PostController extends Controller
         }
 
         $post = new Post($request->except('body'));
+        $post->caption = $caption;
 
         //If localized get Beacon coordinates, add 1 to tag_usage
         if($request['beacon_tag'] != 'No-Beacon')
@@ -327,21 +337,21 @@ class PostController extends Controller
 
         $post = $this->post->findOrFail($id);
         $post_path = $post->post_path;
-
-        //Get contents of post from Amazon S3
-        $contents = Storage::get($post_path);
         
         //Get type of post (i.e Image or Txt)
         $type = substr($post->post_path, -3);
         if($type == 'txt')
         {
             $contents = Storage::get($post->post_path);
+            $contents = autolink($contents, array("target"=>"_blank","rel"=>"nofollow"));
+
             $post = array_add($post, 'body', $contents);
             $sourceOriginalPath = '';
         }
         else
         {
             //Get path to original image for lightbox preview
+            $post->caption = autolink($post->caption, array("target"=>"_blank","rel"=>"nofollow"));
             $sourceOriginalPath = substr_replace($post->post_path, 'originals/', 19, 0);
         }
 
@@ -553,6 +563,10 @@ class PostController extends Controller
         //If post contains image upload using S3
         if($type != 'txt')
         {
+            //Get image from request
+            $this->validate($request, [
+                'image' => 'required|mimes:jpeg,jpg,png|max:10000'
+            ]);
             if($request->hasFile('image'))
             {
                 if(!$request->file('image')->isValid())
@@ -563,8 +577,10 @@ class PostController extends Controller
                         ->withErrors([$error]);
                 }
 
-                //Get image from request
                 $image = $request->file('image');
+
+                //Clean caption
+                $post->caption = Purifier::clean($request->input('caption'));
 
                 //Create image file name
                 $title = str_replace(' ', '_', $request['title']);
@@ -596,7 +612,10 @@ class PostController extends Controller
         {
             $title = $request->input('title');
             $newPath = '/posts/'.$user->id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
-            $inspiration = $request->input('body');
+            $this->validate($request, [
+                'body' => 'required|min:5|max:3500',
+            ]);
+            $inspiration = Purifier::clean($request->input('body'));
 
             Storage::put($newPath, $inspiration);
             Storage::delete($post->post_path);

@@ -166,6 +166,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Huddle\Zendesk\Providers\ZendeskServiceProvider::class,
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
+        Mews\Purifier\PurifierServiceProvider::class,
     ],
 
     /*
@@ -220,6 +221,7 @@ return [
         'Image'     => Intervention\Image\Facades\Image::class,
         'Zendesk'   => Huddle\Zendesk\Facades\Zendesk::class,
         'Javascript'=> Laracasts\Utilities\JavaScript\JavaScriptFacade::class,
+        'Purifier' => Mews\Purifier\Facades\Purifier::class,
     ],
 
 ];
