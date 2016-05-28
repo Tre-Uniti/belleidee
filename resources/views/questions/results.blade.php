@@ -29,7 +29,7 @@
 
 @stop
 @section('centerFooter')
-    {!! $results->appends(['title' => $question])->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $results->appends(['question' => $question])])
 @stop
 
 

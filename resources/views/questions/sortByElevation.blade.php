@@ -27,7 +27,7 @@
         @endforeach
 @stop
 @section('centerFooter')
-    {!! $questions->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $questions])
 @stop
 
 

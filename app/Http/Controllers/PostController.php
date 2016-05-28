@@ -621,11 +621,20 @@ class PostController extends Controller
             Storage::delete($post->post_path);
             $request = array_add($request, 'post_path', $newPath);
         }
-        
+
+        //Update Beacon
+        $beacon = Beacon::where('beacon_tag', '=', $request['beacon_tag'])->firstOrFail();
+        $oldBeacon = Beacon::where('beacon_tag', '=', $post->beacon_tag)->firstOrFail();
+        if($oldBeacon->id != $beacon->id)
+        {
+            $oldBeacon->tag_usage = $oldBeacon->tag_usage - 1;
+            $beacon->tag_usage = $beacon->tag_usage + 1;
+            $oldBeacon->update();
+            $beacon->update();
+        }
         //If localized get Beacon coordinates and add to post
         if($request['beacon_tag'] != 'No-Beacon')
         {
-            $beacon = Beacon::where('beacon_tag', '=', $request['beacon_tag'])->firstOrFail();
             $lat = $beacon->lat;
             $long = $beacon->long;
             $post->lat = $lat;

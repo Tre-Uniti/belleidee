@@ -31,10 +31,9 @@
 
         @endforeach
 
-    {!! $extensions->render() !!}
-
 @stop
 @section('centerFooter')
+    @include('pagination.custom-paginator', ['paginator' => $extensions])
     @if($elevation === 'Elevated')
         <a href="{{ url('/questions/'.$question->id) }}"><button type = "button" class = "navButton">{{ $elevation }}</button></a>
     @else

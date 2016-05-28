@@ -27,7 +27,7 @@
     @endforeach
 @stop
 @section('centerFooter')
-    {!! $adjudications->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $adjudications])
 @stop
 
 

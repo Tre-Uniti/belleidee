@@ -40,7 +40,7 @@
         @endforeach
 @stop
 @section('centerFooter')
-    {!! $users->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $users])
 @stop
 
 

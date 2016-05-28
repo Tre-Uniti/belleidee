@@ -29,7 +29,7 @@
 
 @stop
 @section('centerFooter')
-    {!! $moderations->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $moderations])
 @stop
 
 

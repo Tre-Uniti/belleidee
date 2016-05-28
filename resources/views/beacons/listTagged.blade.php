@@ -30,7 +30,7 @@
     @endforeach
 @stop
 @section('centerFooter')
-    {!! $posts->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $posts])
     <div>
         <a href = {{ url('/bookmarks/beacons/'. $beacon->beacon_tag) }}><button type = "button" class = "navButton">Bookmark</button></a>
     </div>

@@ -685,7 +685,7 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
             }
             elseif ($type == 'User')
             {
-                $timeFilteredContent = User::where('verified', '=', 1)->where('updated_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
+                $timeFilteredContent = User::where('verified', '=', 1)->where('created_at', '>=', Carbon::now()->$time())->latest($order)->paginate(10);
             }
         }
     }
@@ -737,7 +737,7 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
             }
             elseif ($type == 'User')
             {
-                $timeFilteredContent = User::where('verified', '=', 1)->where('created_at', '>=', Carbon::now()->$time())->orderBy($order, 'desc')->paginate(10);
+                $timeFilteredContent = User::where('verified', '=', 1)->where('updated_at', '>=', Carbon::now()->$time())->orderBy($order, 'desc')->paginate(10);
             }
         }
     }
@@ -963,7 +963,7 @@ function filterContentLocationSearch($user, $number, $type, $search)
             }
             elseif ($type == 'Sponsor')
             {
-                $searchFilteredContent = Sponsor::where('name', 'LIKE', '%'.$search.'%')->where('country', '=', $location['country'])->paginate(10);
+                $searchFilteredContent = Sponsor::where('name', 'LIKE', '%'.$search.'%')->paginate(10);
             }
             elseif ($type == 'User')
             {

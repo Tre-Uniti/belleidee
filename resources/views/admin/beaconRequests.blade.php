@@ -28,5 +28,5 @@
     @endforeach
 @stop
 @section('centerFooter')
-    {!! $beaconRequests->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $beaconRequests])
 @stop

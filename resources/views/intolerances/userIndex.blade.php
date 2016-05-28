@@ -29,7 +29,7 @@
 
 @stop
 @section('centerFooter')
-    {!! $intolerances->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $intolerances])
 @stop
 
 

@@ -27,5 +27,5 @@
     @endforeach
 @stop
 @section('centerFooter')
-    {!! $sponsorRequests->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $sponsorRequests])
 @stop

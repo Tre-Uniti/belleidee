@@ -30,6 +30,9 @@
 
     @endforeach
 @stop
+@section('centerFooter')
+    @include('pagination.custom-paginator', ['paginator' => $extensions])
+@stop
 
 
 

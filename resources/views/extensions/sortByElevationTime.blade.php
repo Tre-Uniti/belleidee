@@ -38,5 +38,5 @@
 @stop
 
 @section('centerFooter')
-    {!! $extensions->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $extensions])
 @stop

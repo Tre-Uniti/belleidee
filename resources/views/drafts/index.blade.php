@@ -27,7 +27,7 @@
 
 @stop
 @section('centerFooter')
-    {!! $drafts->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $drafts])
 @stop
 
 

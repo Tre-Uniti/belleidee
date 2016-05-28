@@ -31,7 +31,7 @@
 
 @stop
 @section('centerFooter')
-    {!! $sponsors->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $sponsors])
 @stop
 
 

@@ -41,7 +41,7 @@
         @endforeach
 @stop
 @section('centerFooter')
-    {!! $bookmarks->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $bookmarks])
 @stop
 
 

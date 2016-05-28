@@ -4,7 +4,7 @@
 @stop
 
 @section('centerText')
-        <h2>Users who joined in {{ $filter }}</h2>
+        <h2>{{ $filter }} Users </h2>
         <div class ="indexNav">
               <a href={{ url('/users/elevationTime/'. $time)}}><button type = "button" class = "indexButton">Elevated</button></a>
                <a href={{ url('/users/search')}}><button type = "button" class = "indexButton">Search</button></a>
@@ -40,5 +40,5 @@
 @stop
 
 @section('centerFooter')
-    {!! $users->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $users])
 @stop

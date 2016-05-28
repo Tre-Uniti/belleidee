@@ -35,5 +35,5 @@
 
 @stop
 @section('centerFooter')
-    {!! $elevations->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $elevations])
 @stop

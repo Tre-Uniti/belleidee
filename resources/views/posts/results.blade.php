@@ -28,7 +28,7 @@
 
 @stop
 @section('centerFooter')
-    {!! $results->appends(['title' => $title])->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $results->appends(['title' => $title])])
 @stop
 
 
