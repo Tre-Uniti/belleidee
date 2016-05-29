@@ -669,7 +669,6 @@ class ExtensionController extends Controller
                     ];
                 $content = $sourceModel->question;
                 $type = 'txt';
-                dd($type);
             }
         }
         else
