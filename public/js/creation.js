@@ -31,5 +31,10 @@ $(document).ready(function() {
         document.getElementById("imageButton").style.display = "Inline";
         document.getElementById("creationHeader").style.display = "Block";
     });
+    
+
+
 
 });
+
+

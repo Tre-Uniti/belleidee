@@ -143,7 +143,10 @@ class ExtensionController extends Controller
         $title = $request->input('title');
         $path = '/extensions/'.$user_id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';
         $inspiration = $request->input('body');
-        if (Storage::exists($path))
+
+        //Check if user has already created an extension with this title
+        $extensions = Extension::where('user_id', '=', $user->id)->where('title', '=', $request['title'])->get()->count();
+        if ($extensions != 0)
         {
             $error = "You've already saved an inspiration with this title.";
             return redirect()
@@ -596,7 +599,6 @@ class ExtensionController extends Controller
         if (isset($extension->post_id))
         {
 
-
             if (isset($extension->extenception))
             {
                 $sourceModel = Extension::findOrFail($extension->extenception);
@@ -629,14 +631,12 @@ class ExtensionController extends Controller
                         'handle' => $sourceModel->user->handle
                     ];
                 $content = Storage::get($sourceModel->post_path);
-                $type = substr($sourceModel->extension_path, -3);
+                $type = substr($sourceModel->post_path, -3);
 
             }
         }
         elseif (isset($extension->question_id))
         {
-
-
             if (isset($extension->extenception))
             {
                 $sourceModel = Extension::findOrFail($extension->extenception);
@@ -668,6 +668,8 @@ class ExtensionController extends Controller
                         'handle' => $sourceModel->user->handle
                     ];
                 $content = $sourceModel->question;
+                $type = 'txt';
+                dd($type);
             }
         }
         else
