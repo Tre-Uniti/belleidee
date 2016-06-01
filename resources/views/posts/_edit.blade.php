@@ -1,5 +1,6 @@
 @section('pageHeader')
     <script src = "/js/caffeine.js"></script>
+    <script src = "/js/creation.js"></script>
 @stop
 <div id = "createOptions">
     <div class = "formInput">

@@ -2,6 +2,7 @@
     <script src = "/js/caffeine.js"></script>
     <script src = "/js/toggleSource.js"></script>
     <script src = "/js/submit.js"></script>
+    <script src = "/js/creation.js"></script>
     <link href="/css/lightbox.css" rel="stylesheet">
 @stop
 

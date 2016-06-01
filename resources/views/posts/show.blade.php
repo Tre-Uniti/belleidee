@@ -1,7 +1,6 @@
 @extends('app')
 @section('pageHeader')
     <script src = "/js/index.js"></script>
-
     <link href="/css/lightbox.css" rel="stylesheet">
 
     <!-- You can use Open Graph tags to customize link previews.

@@ -49,8 +49,9 @@ Route::post('beaconRequests/convertBeacon', 'BeaconRequestController@convert')->
 Route::resource('beaconRequests', 'BeaconRequestController');
 
 //Belief Routes
-Route::get('beliefs', 'BeliefController@index');
-Route::get('belief/index/{name}', 'BeliefController@beliefIndex');
+Route::get('beliefs/postIndex/{name}', 'BeliefController@postIndex');
+Route::get('beliefs/extensionIndex/{name}', 'BeliefController@extensionIndex');
+Route::resource('beliefs', 'BeliefController');
 
 //Bookmark Routes (Resources)
 Route::get('bookmarks/users/', 'BookmarkController@listUsers');
