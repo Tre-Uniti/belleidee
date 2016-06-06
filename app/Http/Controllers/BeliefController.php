@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Beacon;
 use App\Belief;
+use App\Extension;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use App\Post;
@@ -16,7 +18,7 @@ class BeliefController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        //$this->middleware('admin', ['except' => 'index', 'beliefIndex']);
+        $this->middleware('admin', ['except' => 'index', 'beliefIndex', 'postIndex', 'extensionIndex']);
     }
     /**
      * Display a listing of the resource.
@@ -29,8 +31,10 @@ class BeliefController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
+        $beliefs = Belief::latest()->get();
+
         return view ('beliefs.index')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'beliefs', 'profilePosts','profileExtensions'));
     }
 
     /**
@@ -66,18 +70,18 @@ class BeliefController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string $name
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($name)
     {
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
-        $belief = Belief::findOrFail($id);
+        $belief = Belief::where('name', '=', $name)->first();
 
-        return view ('beliefs.edit')
+        return view ('beliefs.show')
             ->with(compact('user', 'belief', 'profilePosts','profileExtensions'));
     }
 
@@ -108,7 +112,12 @@ class BeliefController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $belief = Belief::findOrFail($id);
+        $belief->update($request->all());
+
+        flash()->overlay('Belief has been updated');
+
+        return redirect('beliefs/'. $belief->id);
     }
 
     /**
@@ -119,7 +128,30 @@ class BeliefController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $belief = Belief::findOrFail($id);
+
+        $belief->delete();
+
+        flash()->overlay('Belief has been deleted');
+        return redirect('beliefs');
+    }
+
+    /**
+     * List beacons for specific belief
+     *
+     * @param $belief
+     * @return \Illuminate\Http\Response
+     */
+    public function beacons($belief)
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        $beacons = Beacon::where('belief', $belief)->latest()->paginate(10);
+
+        return view ('beliefs.beacons')
+            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'))
+            ->with('belief', $belief);
     }
 
     /**
@@ -128,15 +160,14 @@ class BeliefController extends Controller
      * @param $belief
      * @return \Illuminate\Http\Response
      */
-    public function postIndex($belief)
+    public function posts($belief)
     {
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
         $posts = Post::where('belief', $belief)->latest()->paginate(10);
 
-
-        return view ('beliefs.beliefIndex')
+        return view ('beliefs.posts')
             ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
             ->with('belief', $belief);
     }
@@ -147,17 +178,18 @@ class BeliefController extends Controller
      * @param $belief
      * @return \Illuminate\Http\Response
      */
-    public function extensionIndex($belief)
+    public function extensions($belief)
     {
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
-        $posts = Post::where('belief', $belief)->latest()->paginate(10);
+        $extensions = Extension::where('belief', $belief)->latest()->paginate(10);
 
-
-        return view ('beliefs.beliefIndex')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+        return view ('beliefs.extensions')
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
             ->with('belief', $belief);
     }
+
+
 
 }

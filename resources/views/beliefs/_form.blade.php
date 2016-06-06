@@ -4,8 +4,8 @@
 
 <div id = "createOptions">
     <div class = "formData">
-        {!! Form::label('belief', 'Belief Name:') !!}
-        {!! Form::text('belief', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Title']) !!}
+        {!! Form::label('name', 'Belief Name:') !!}
+        {!! Form::text('name', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Title']) !!}
     </div>
 <!-- Body Form Input -->
     <div id = "centerTextContent">

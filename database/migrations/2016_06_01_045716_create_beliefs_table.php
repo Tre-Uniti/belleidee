@@ -14,7 +14,7 @@ class CreateBeliefsTable extends Migration
     {
         Schema::create('beliefs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('belief');
+            $table->string('name');
             $table->string('description');
             $table->integer('beacons')->unsigned();
             $table->integer('posts')->unsigned();
