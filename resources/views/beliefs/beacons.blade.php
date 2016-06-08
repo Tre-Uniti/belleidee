@@ -4,7 +4,7 @@
 @stop
 
 @section('centerText')
-    <h2>{{ $belief }}</h2>
+    <h2>{{ $belief }} Beacons</h2>
         <div class = "indexNav">
             <a href={{ url('/beliefs/'. $belief)}}><button type = "button" class = "indexButton">Profile</button></a>
             <a href={{ url('/beliefs/posts/'. $belief)}}><button type = "button" class = "indexButton">Posts</button></a>
@@ -12,15 +12,15 @@
         </div>
 
     <div class = "indexLeft">
-        <h4>Title</h4>
+        <h4>Name</h4>
     </div>
     <div class = "indexRight">
-        <h4>User</h4>
+        <h4>Beacon Tag</h4>
     </div>
     @foreach ($beacons as $beacon)
         <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('BeaconController@show', [$beacon->id])}}"><button type = "button" class = "interactButtonLeft">{{ $post->name }}</button></a>
+                <a href="{{ action('BeaconController@show', [$beacon->id])}}"><button type = "button" class = "interactButtonLeft">{{ $beacon->name }}</button></a>
             </div>
             <div class = "listResourceRight">
                 <a href="{{ action('BeaconController@listTagged', [$beacon->beacon_tag])}}"><button type = "button" class = "interactButton">{{ $beacon->beacon_tag }}</button></a>

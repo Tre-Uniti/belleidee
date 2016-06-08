@@ -23,29 +23,20 @@ class Beacon extends Model implements BillableContract
     public function getTaxPercent()
     {
 
-        /*$taxjar = TaxJar\Client::withApiKey($_ENV['TAXJAR_API_KEY']);
-        
+        $zip = $this->zipcode;
+        $zip = substr($zip, 0, 2);
         $country = $this->country;
-        $city = $this->city;
 
-        if($country == 'US')
+        //Only one nexus in WA therefore only charge sales tax if Beacon is located in WA
+        if($zip == 98 && $country == 'US')
         {
-            $zip = $this->zip;
-
-            //Idee is based in WA, USA.  Check if ZIP is within WA
-            if((98000 <= $zip) && ($zip <= 99400))
-            {
-                // United States (ZIP w/ Optional Params)
-                $rates = $taxjar->ratesForLocation($zip, [
-                    'city' => 'SEDRO WOOLLEY',
-                    'country' => 'US'
-                ]);
-                //dd($rates);
-                return 8.25;
-            }
-        }*/
-
-        return 0;
+            dd($zip . $country);
+            return 8.5;
+        }
+        else
+        {
+            return 0;
+        }
     }
 
 

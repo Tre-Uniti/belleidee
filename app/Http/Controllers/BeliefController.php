@@ -64,7 +64,7 @@ class BeliefController extends Controller
         $belief->save();
 
         flash()->overlay('Belief successfully added');
-        return redirect('/beliefs/'. $belief->id);
+        return redirect('/beliefs/'. $belief->name);
     }
 
     /**
@@ -117,7 +117,7 @@ class BeliefController extends Controller
 
         flash()->overlay('Belief has been updated');
 
-        return redirect('beliefs/'. $belief->id);
+        return redirect('beliefs/'. $belief->name);
     }
 
     /**
