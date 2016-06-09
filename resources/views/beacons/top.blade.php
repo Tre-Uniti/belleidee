@@ -8,7 +8,7 @@
     <div class = "indexNav">
         <a href={{ url('/beacons/')}}><button type = "button" class = "indexButton">All Beacons</button></a>
         <a href={{ url('/beacons/search')}}><button type = "button" class = "indexButton">Beacon Search</button></a>
-        <a href={{ url('/search')}}><button type = "button" class = "indexButton">Global Search</button></a>
+        <a href={{ url('/beaconRequests')}}><button type = "button" class = "indexButton">New Requests</button></a>
     </div>
     <div class = "indexLeft">
         <h4>Beacon</h4>

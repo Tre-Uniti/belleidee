@@ -14,7 +14,7 @@
 
         @foreach($beliefs as $belief)
             <div class = "listResource">
-                <div class = "listResourceLeft">
+                <div class = "indexLeft">
                     <a href = {{ url('/beliefs/'. $belief->name) }}><button type = "button" class = "interactButton">{{ $belief->name }}</button></a>
                 </div>
                 <div class = "listResourceRight">

@@ -26,7 +26,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
 
     <h2>{{ $post->title }}</h2>
     <div class = "indexNav">
-            <a href="{{ action('BeliefController@beliefIndex', $post->belief) }}"><button type = "button" class = "indexButton">{{ $post->belief }}</button></a>
+            <a href="{{ action('BeliefController@show', $post->belief) }}"><button type = "button" class = "indexButton">{{ $post->belief }}</button></a>
            <a href="{{ url('/beacons/tags/'.$post->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $post->beacon_tag }}</button></a>
             <a href="{{ url('/posts/source/'. $post->source) }}"><button type = "button" class = "indexButton">{{ $post->source }}</button></a>
     </div>
