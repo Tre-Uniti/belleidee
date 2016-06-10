@@ -33,6 +33,7 @@ class EditPostRequest extends Request
             'body'  => 'min:5|max:3500',
             'belief'=> 'required',
             'source' => 'required',
+            'caption' => 'max:250',
             'image' => 'mimes:jpeg,jpg,png|max:10000'
         ];
     }

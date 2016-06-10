@@ -1,6 +1,7 @@
 @section('pageHeader')
     <script src = "/js/caffeine.js"></script>
     <script src = "/js/toggleSource.js"></script>
+    <script src = "/js/submit.js"></script>
     <script src = "/js/creation.js"></script>
 @stop
 @section('title')
@@ -82,9 +83,9 @@
         @endif
         @section('centerFooter')
             @if(($sources['type'] == 'question'))
-                {!! Form::submit('Update Answer', ['class' => 'navButton']) !!}
+                {!! Form::submit('Update Answer', ['class' => 'navButton', 'id' => 'submit']) !!}
             @else
-                {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
+                {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
             @endif
             <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
         @stop

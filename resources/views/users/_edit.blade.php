@@ -1,3 +1,7 @@
+@section('pageHeader')
+    <script src = "/js/caffeine.js"></script>
+    <script src = "/js/submit.js"></script>
+@stop
 <h2>Update User</h2>
 <div class = "formDataContainer">
     <div class = "formLabel">
@@ -28,7 +32,7 @@
 </div>
 
     @section('centerFooter')
-        {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
+        {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
         <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>
         {!! Form::close()   !!}
     @stop

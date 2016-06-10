@@ -1,3 +1,7 @@
+@section('pageHeader')
+    <script src = "/js/caffeine.js"></script>
+    <script src = "/js/submit.js"></script>
+@stop
 @extends('app')
 @section('siteTitle')
     Create Invite
@@ -30,7 +34,7 @@
 
 @section('centerFooter')
     <div class = "createSubmit">
-        {!! Form::submit('Send Invite', ['class' => 'navButton']) !!}
+        {!! Form::submit('Send Invite', ['class' => 'navButton', 'id' => 'submit']) !!}
         {!! Form::close()   !!}
     </div>
 @stop

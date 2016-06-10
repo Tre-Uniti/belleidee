@@ -6,7 +6,7 @@
 @section('centerText')
     <h2>{{ $belief }} Beacons</h2>
         <div class = "indexNav">
-            <a href={{ url('/beliefs/'. $belief)}}><button type = "button" class = "indexButton">Profile</button></a>
+            <a href={{ url('/beliefs/'. $belief)}}><button type = "button" class = "indexButton">About</button></a>
             <a href={{ url('/beliefs/posts/'. $belief)}}><button type = "button" class = "indexButton">Posts</button></a>
             <a href={{ url('/beliefs/extensions/'. $belief)}}><button type = "button" class = "indexButton">Extensions</button></a>
         </div>

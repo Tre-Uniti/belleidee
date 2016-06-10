@@ -6,6 +6,7 @@ use App\Adjudication;
 use App\Beacon;
 use App\Elevation;
 use App\Events\BeaconViewed;
+use App\Events\BeliefInteraction;
 use function App\Http\filterContentLocation;
 use function App\Http\filterContentLocationAllTime;
 use function App\Http\filterContentLocationSearch;
@@ -376,7 +377,9 @@ class ExtensionController extends Controller
         //Update user's last_tag
         $user->last_tag = $request['last_tag'];
         $user->update();
-        
+
+        //Add 1 to Belief extensions
+        Event::fire(New BeliefInteraction($extension->belief, '+extension'));
 
         flash()->overlay('Your extension has been created');
         return redirect('extensions/'. $extension->id);
@@ -780,6 +783,13 @@ class ExtensionController extends Controller
             $extension->long = $long;
         }
 
+        //Update Belief with new post belief
+        if($extension->belief != $request->belief)
+        {
+            Event::fire(New BeliefInteraction($extension->belief, '-extension'));
+            Event::fire(New BeliefInteraction($request->belief, '+extension'));
+        }
+
         $extension->update($request->except('body', '_method', '_token'));
 
         //Update user's last_tag
@@ -865,6 +875,9 @@ class ExtensionController extends Controller
             Storage::delete($extension->extension_path);
             $extension->delete();
         }
+
+        //Subtract 1 from Belief extensions
+        Event::fire(New BeliefInteraction($extension->belief, '-extension'));
 
         flash()->overlay('Extension has been deleted');
         return redirect('extensions');

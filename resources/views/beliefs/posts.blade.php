@@ -8,7 +8,7 @@
     <h2>{{ $belief }} Posts</h2>
     <div class = "indexNav">
         <a href={{ url('/beliefs/beacons/'. $belief)}}><button type = "button" class = "indexButton">Beacons</button></a>
-        <a href={{ url('/beliefs/'. $belief)}}><button type = "button" class = "indexButton">Profile</button></a>
+        <a href={{ url('/beliefs/'. $belief)}}><button type = "button" class = "indexButton">About</button></a>
         <a href={{ url('/beliefs/extensions/'. $belief)}}><button type = "button" class = "indexButton">Extensions</button></a>
     </div>
     <div class = "indexLeft">

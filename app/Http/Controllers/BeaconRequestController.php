@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Beacon;
+use App\Events\BeliefInteraction;
 use App\Extension;
 use function App\Http\getBeliefs;
 use function App\Http\getCountries;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Response;
+use Event;
 
 class BeaconRequestController extends Controller
 {
@@ -207,6 +209,9 @@ class BeaconRequestController extends Controller
 
         //Notify requester their request is now a Beacon!
         $mailer->sendBeaconCreatedNotification($user, $beacon);
+
+        //Update Belief with new beacon
+        Event::fire(New BeliefInteraction($beacon->belief, '+beacon'));
 
         //Delete beacon request as it is now a beacon
         $beaconRequest->delete();

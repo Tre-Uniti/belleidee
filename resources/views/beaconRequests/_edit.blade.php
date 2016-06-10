@@ -1,3 +1,7 @@
+@section('pageHeader')
+    <script src = "/js/caffeine.js"></script>
+    <script src = "/js/submit.js"></script>
+@stop
 <h2>Edit Beacon Request</h2>
 <div id = "createOptions">
     <div class = "formDataContainer">
@@ -75,7 +79,7 @@
         </div>
     </div>
     @section('centerFooter')
-        {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
+        {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
         <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>
         {!! Form::close()   !!}
     @stop

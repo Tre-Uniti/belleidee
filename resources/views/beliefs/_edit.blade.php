@@ -1,5 +1,6 @@
 @section('pageHeader')
     <script src = "/js/caffeine.js"></script>
+    <script src = "/js/submit.js"></script>
 @stop
 @section('title')
     Edit Belief

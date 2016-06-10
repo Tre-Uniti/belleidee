@@ -14,6 +14,7 @@ class Draft extends Model
         'beacon_tag',
         'source',
         'draft_path',
+        'caption',
     ];
     public function user()
     {

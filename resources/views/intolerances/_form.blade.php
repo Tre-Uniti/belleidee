@@ -1,4 +1,8 @@
 @section('pageHeader')
+    <script src = "/js/caffeine.js"></script>
+    <script src = "/js/submit.js"></script>
+@stop
+@section('pageHeader')
     <script src = "/js/toggleSource.js"></script>
 @stop
 <div id = "createOptions">
@@ -17,7 +21,7 @@
     </div>
 <!-- Body Form Input -->
     @section('centerFooter')
-            {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
+            {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
         <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>
         {!! Form::close()   !!}
     @stop

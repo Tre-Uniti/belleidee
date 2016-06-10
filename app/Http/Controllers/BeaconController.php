@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\BeaconRequest;
 use App\Bookmark;
+use App\Events\BeliefInteraction;
 use App\Events\MonthlyBeaconReset;
 use function App\Http\filterContentLocation;
 use function App\Http\filterContentLocationSearch;
@@ -126,6 +127,8 @@ class BeaconController extends Controller
                     ->update(['photo_path' => $path]);
         }
 
+        //Update Belief with new beacon
+        Event::fire(New BeliefInteraction($beacon->belief, '+beacon'));
 
         flash()->overlay('Your beacon has been created');
         return redirect('beacons/signup/'. $beacon->id);
@@ -329,6 +332,13 @@ class BeaconController extends Controller
             $beacon->photo_path = $path;
         }
 
+        //Update Belief with new beacon
+        if($beacon->belief != $request->belief)
+        {
+            Event::fire(New BeliefInteraction($beacon->belief, '-beacon'));
+            Event::fire(New BeliefInteraction($request->belief, '+beacon'));
+        }
+
         $beacon->update($request->all());
 
         flash()->overlay('Beacon has been updated');
@@ -430,6 +440,10 @@ class BeaconController extends Controller
         $beacon->status = 'deactivated';
 
         $beacon->update();
+
+        //Substract one from Belief's beacons
+        Event::fire(New BeliefInteraction($beacon->belief, '-beacon'));
+
         flash()->overlay('Beacon has been deactivated');
         return redirect('beacons');
         

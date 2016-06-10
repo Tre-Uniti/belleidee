@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Beacon;
 use App\Draft;
+use App\Events\BeliefInteraction;
 use App\Extension;
+use function App\Http\autolink;
 use function App\Http\getBeacon;
 use function App\Http\getSponsor;
 use App\Http\Requests\CreateDraftRequest;
@@ -18,6 +21,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Mews\Purifier\Facades\Purifier;
+use Event;
 
 class DraftController extends Controller
 {
@@ -81,11 +87,9 @@ class DraftController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
 
-        $title = $request->input('title');
-        $path = '/drafts/'.$user_id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
-        $inspiration = $request->input('body');
-        //Check if User has already has path set for title
-        if (Storage::exists($path))
+        $drafts = Draft::where('user_id', '=', $user->id)->where('title', '=', $request['title'])->get()->count();
+
+        if ($drafts != 0)
         {
             $error = "You've already saved an inspiration with this title.";
             return redirect()
@@ -93,10 +97,76 @@ class DraftController extends Controller
                 ->withInput()
                 ->withErrors([$error]);
         }
-        //Store body text at AWS
-        Storage::put($path, $inspiration);
-        $request = array_add($request, 'draft_path', $path);
+
+        if($request->hasFile('image'))
+        {
+            if(!$request->file('image')->isValid())
+            {
+                $error = "Image File invalid.";
+                return redirect()
+                    ->back()
+                    ->withErrors([$error]);
+            }
+            //Get image from request
+            $image = $request->file('image');
+            $caption = Purifier::clean($request->input('caption'));
+
+            //Create image file name
+            $title = str_replace(' ', '_', $request['title']);
+            $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
+            $path = '/drafts/photos/'. $user->id . '/' .$imageFileName;
+            $originalPath = '/drafts/photos/originals/'. $user->id . '/' .$imageFileName;
+            if (Storage::exists($path))
+            {
+                $error = "You've already saved an inspiration with this title.";
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->withErrors([$error]);
+            }
+
+            //Resize the image
+            $imageResized = Image::make($image);
+            $originalImage = Image::make($image);
+            $imageResized->resize(450, 400, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $imageResized = $imageResized->stream();
+            $originalImage = $originalImage->stream();
+
+            //Store new photo in storage (S3)
+            Storage::put($path,  $imageResized->__toString());
+            Storage::put($originalPath,  $originalImage->__toString());
+            $request = array_add($request, 'draft_path', $path);
+        }
+        else
+        {
+            $this->validate($request, [
+                'body' => 'required|min:5|max:3500'
+            ]);
+            $title = $request->input('title');
+            $path = '/drafts/'.$user_id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
+            $inspiration = Purifier::clean($request->input('body'));
+            $caption = null;
+
+            //Check if User has already has path set for title
+            if (Storage::exists($path))
+            {
+                $error = "You've already saved an inspiration with this title.";
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->withErrors([$error]);
+            }
+
+            //Store body text at AWS
+            Storage::put($path, $inspiration);
+
+            $request = array_add($request, 'draft_path', $path);
+        }
         $draft = new Draft($request->except('body'));
+        $draft->caption = $caption;
         $draft->user()->associate($user);
         $draft->save();
         flash()->overlay('Your draft has been created');
@@ -111,8 +181,6 @@ class DraftController extends Controller
      */
     public function show($id)
     {
-        //Get requested post and add body
-        $viewUser = Auth::user();
 
         $draft = $this->draft->findOrFail($id);
         $draft_path = $draft->draft_path;
@@ -147,10 +215,35 @@ class DraftController extends Controller
                 $sponsor = NULL;
             }
         }
+        //Get type of post (i.e Image or Txt)
+        $type = substr($draft->draft_path, -3);
+        if($type == 'txt')
+        {
+            $contents = Storage::get($draft->draft_path);
+            $contents = autolink($contents, array("target"=>"_blank","rel"=>"nofollow"));
+
+            $draft = array_add($draft, 'body', $contents);
+            $sourceOriginalPath = '';
+            $base64 = '';
+        }
+        else
+        {
+            //Get path to original image and encode to png for private viewing
+            $draft->caption = autolink($draft->caption, array("target"=>"_blank","rel"=>"nofollow"));
+            $img = Image::make(Storage::get($draft->draft_path));
+            $img->encode('png');
+            $imgtype = 'png';
+            $base64 = 'data:image/' . $imgtype . ';base64,' . base64_encode($img);
+            //$sourceOriginalPath = substr_replace($draft->draft_path, 'originals/', 19, 0);
+        }
 
 
         return view('drafts.show')
-            ->with(compact('user', 'draft', 'profilePosts', 'profileExtensions', 'beacon', 'sponsor'));
+            ->with(compact('user', 'draft', 'profilePosts', 'profileExtensions', 'beacon', 'sponsor'))
+            //->with('sourceOriginalPath', $sourceOriginalPath)
+                ->with('base64', $base64)
+            ->with('type', $type)
+            ->with('sponsor', $sponsor);
     }
 
     /**
@@ -162,8 +255,22 @@ class DraftController extends Controller
     public function edit($id)
     {
         $draft = $this->draft->findOrFail($id);
+        //Get type of draft (i.e Image or Txt)
+        $type = substr($draft->draft_path, -3);
+        if($type == 'txt')
+        {
+            $contents = Storage::get($draft->draft_path);
+            $draft = array_add($draft, 'body', $contents);
+            $base64 = '';
+        }
+        else
+        {
+            $img = Image::make(Storage::get($draft->draft_path));
+            $img->encode('png');
+            $imgtype = 'png';
+            $base64 = 'data:image/' . $imgtype . ';base64,' . base64_encode($img);
+        }
         $draft_path = $draft->draft_path;
-        $date = $draft->created_at;
         $contents = Storage::get($draft_path);
         $draft = array_add($draft, 'body', $contents);
 
@@ -201,7 +308,9 @@ class DraftController extends Controller
         }
 
         return view('drafts.edit')
-            ->with(compact('user', 'draft', 'profilePosts', 'profileExtensions', 'beacons', 'date', 'beacon', 'sponsor'));
+            ->with(compact('user', 'draft', 'profilePosts', 'profileExtensions', 'beacons', 'date', 'beacon', 'sponsor'))
+            ->with('base64', $base64)
+            ->with('type', $type);
     }
 
     /**
@@ -214,37 +323,90 @@ class DraftController extends Controller
     public function update(EditDraftRequest $request, $id)
     {
         $draft = $this->draft->findOrFail($id);
-        $user_id = Auth::id();
+        $user = Auth::user();
 
-        $path = $draft->draft_path;
+        $type = substr($draft->draft_path, -3);
+
         $newTitle = $request->input('title');
-        $newPath = '/drafts/'.$user_id.'/'.$newTitle. '-' . Carbon::now()->format('M-d-Y-H-i-s').'.txt';
-        $inspiration = $request->input('body');
-
-        //Update AWS document if Title changes
-        if($path != $newPath)
+        //If post contains new title check if there is already a post with this title
+        if($newTitle == $draft->title)
         {
-            //Check if User has already has path set for title
-            if (Storage::exists($newPath))
-            {
-                $error = "You've already saved an inspiration with this title.";
-                return redirect()
-                    ->back()
-                    ->withInput()
-                    ->withErrors([$error]);
-            }
-            //Update AWS with new file and path for title change
-            else
-            {
-                Storage::put($newPath, $inspiration);
-                Storage::delete($path);
-                $request = array_add($request, 'draft_path', $newPath);
-            }
+            $drafts = 0;
         }
         else
         {
-            //Store updated body text with same title at AWS
-            Storage::put($path, $inspiration);
+            $drafts = Draft::where('user_id', '=', $draft->id)->where('title', '=', $newTitle)->get()->count();
+        }
+
+        if ($drafts != 0)
+        {
+            $error = "You've already saved an inspiration with this title.";
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors([$error]);
+        }
+
+        //If post contains image upload using S3
+        if($type != 'txt')
+        {
+            //Get image from request
+            $this->validate($request, [
+                'image' => 'required|mimes:jpeg,jpg,png|max:10000'
+            ]);
+            if($request->hasFile('image'))
+            {
+                if(!$request->file('image')->isValid())
+                {
+                    $error = "Image File invalid.";
+                    return redirect()
+                        ->back()
+                        ->withErrors([$error]);
+                }
+
+                $image = $request->file('image');
+
+                //Clean caption
+                $draft->caption = Purifier::clean($request->input('caption'));
+
+                //Create image file name
+                $title = str_replace(' ', '_', $request['title']);
+                $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
+                $newPath = '/drafts/photos/'. $user->id . '/' .$imageFileName;
+                $originalPath = '/drafts/photos/originals/'. $user->id . '/' .$imageFileName;
+                $sourceOriginalPath = substr_replace($draft->draft_path, 'originals/', 15, 0);
+
+                //Resize the image
+                $imageResized = Image::make($image);
+                $originalImage = Image::make($image);
+                $imageResized->resize(450, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $imageResized = $imageResized->stream();
+                $originalImage = $originalImage->stream();
+
+                //Store new photo in storage (S3)
+                Storage::put($newPath,  $imageResized->__toString());
+                Storage::put($originalPath,  $originalImage->__toString());
+                Storage::delete($draft->draft_path);
+                Storage::delete($sourceOriginalPath);
+
+                $request = array_add($request, 'draft_path', $newPath);
+            }
+        }
+        elseif($type == 'txt')
+        {
+            $title = str_replace(' ', '_', $request->input('title'));
+            $newPath = '/drafts/'.$user->id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
+            $this->validate($request, [
+                'body' => 'required|min:5|max:3500',
+            ]);
+            $inspiration = Purifier::clean($request->input('body'));
+
+            Storage::put($newPath, $inspiration);
+            Storage::delete($draft->draft_path);
+            $request = array_add($request, 'draft_path', $newPath);
         }
         //Update database with new values
         $draft->update($request->except('body', '_method', '_token'));
@@ -262,8 +424,19 @@ class DraftController extends Controller
     public function destroy($id)
     {
         $draft = Draft::findOrFail($id);
- 
-        Storage::delete($draft->draft_path);
+
+        $type = substr($draft->draft_path, -3);
+        if($type == 'txt')
+        {
+            Storage::delete($draft->draft_path);
+        }
+        else
+        {
+            Storage::delete($draft->draft_path);
+            $sourceOriginalPath = substr_replace($draft->draft_path, 'originals/', 15, 0);
+            Storage::delete($sourceOriginalPath);
+        }
+
         $draft->delete();
         
         flash()->overlay('Draft has been deleted');
@@ -279,7 +452,20 @@ class DraftController extends Controller
     public function convert($id)
     {
         $draft = $this->draft->findOrFail($id);
+        $user = Auth::user();
+        $type = substr($draft->draft_path, -3);
         $date = Carbon::now()->format('M-d-Y');
+
+        $posts = Post::where('user_id', '=', $user->id)->where('title', '=', $draft->title)->get()->count();
+
+        if ($posts != 0)
+        {
+            $error = "You've already saved an inspiration with this title.";
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors([$error]);
+        }
 
         //Get last post of user and check if it was UTC today
         //If the dates match redirect them to their post
@@ -298,35 +484,53 @@ class DraftController extends Controller
             flash()->overlay('Your first draft:');
         }
 
-
-        $draft_path = $draft->draft_path;
-        $inspiration = Storage::get($draft_path);
-        $path = '/posts/'.$draft->user_id.'/'.$draft->title.'.txt';
-
-        //Check if User has already has path set for title
-        if (Storage::exists($path))
+        //Determine if draft is image or text and move to new location
+        $title = str_replace(' ', '_', $draft->title);
+        $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $type;
+        if($type != 'txt')
         {
-            flash()->overlay('You have already saved an inspiration with this title.');
-            return redirect('drafts/'. $draft->id);
+            Storage::move($draft->draft_path, 'user_photos/posts/'. $user->id . '/'. $imageFileName);
+
+            $sourceOriginalPath = substr_replace($draft->draft_path, 'originals/', 15, 0);
+            Storage::move($sourceOriginalPath, 'user_photos/posts/originals/'. $user->id . '/'. $imageFileName);
+            $path = '/user_photos/posts/'. $user->id . '/'. $imageFileName;
+        }
+        else
+        {
+            Storage::move($draft->draft_path, '/posts/' . $draft->user_id.'/'. $imageFileName);
+            $path = '/posts/'. $draft->user_id.'/'.$imageFileName;
         }
 
-        //Add contents of draft to Amazon under new post and
-        Storage::put($path, $inspiration);
+        //Get location of beacon and for post location and update with +1 usage
+        $beacon = Beacon::where('beacon_tag', '=', $draft->beacon_tag)->first();
+        $lat = $beacon->lat;
+        $long = $beacon->long;
+        $beacon->tag_usage = $beacon->tag_usage + 1;
+        $beacon->update();
 
         $post = new Post;
         $post->title = $draft->title;
         $post->belief = $draft->belief;
         $post->beacon_tag = $draft->beacon_tag;
         $post->source = $draft->source;
+        $post->caption = $draft->caption;
         $post->post_path = $path;
+        $post->lat = $lat;
+        $post->long = $long;
         $post->user()->associate($draft->user_id);
         $post->save();
 
         //Delete old Draft
         Draft::where('id', $draft->id)->delete();
-        Storage::delete($draft_path);
 
-        flash()->overlay('Your draft is now a post.');
-        return redirect('posts/');
+        //Update Belief with new post
+        Event::fire(New BeliefInteraction($post->belief, '+post'));
+
+        //Set user last tag
+        $user->last_tag = $post->beacon_tag;
+        $user->update();
+
+        flash()->overlay('Your draft has been converted to a public post!');
+        return redirect('posts/'. $post->id);
     }
 }

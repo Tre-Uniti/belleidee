@@ -18,7 +18,7 @@ class BeliefController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['except' => 'index', 'beliefIndex', 'postIndex', 'extensionIndex']);
+        $this->middleware('admin', ['only' => 'create', 'store', 'edit', 'update', 'destroy']);
     }
     /**
      * Display a listing of the resource.
@@ -147,7 +147,7 @@ class BeliefController extends Controller
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
-        $beacons = Beacon::where('belief', $belief)->latest()->paginate(10);
+        $beacons = Beacon::where('belief', $belief)->where('status', '!=', 'deactivated')->latest()->paginate(10);
 
         return view ('beliefs.beacons')
             ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'))

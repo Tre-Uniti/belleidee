@@ -1,7 +1,9 @@
 @section('pageHeader')
     <script src = "/js/caffeine.js"></script>
     <script src = "/js/creation.js"></script>
+    <script src = "/js/submit.js"></script>
 @stop
+
 <div id = "createOptions">
     <h2 id = "creationHeader">Select Creation Type:</h2>
     <button id = "imageButton" type = "button" class = "indexButton">Upload an Image</button>

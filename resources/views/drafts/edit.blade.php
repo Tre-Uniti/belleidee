@@ -8,7 +8,7 @@
         @include ('errors.list')
     </div>
 
-    {!! Form::model($draft, ['route' => ['drafts.update', $draft->id], 'method' => 'patch']) !!}
+    {!! Form::model($draft, ['route' => ['drafts.update', $draft->id], 'method' => 'patch', 'files' => true]) !!}
     @include ('drafts._edit', ['submitButtonText' => 'Update Draft'])
 
 @stop

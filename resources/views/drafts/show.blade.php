@@ -1,4 +1,8 @@
 @extends('app')
+@section('pageHeader')
+    <script src = "/js/index.js"></script>
+    <link href="/css/lightbox.css" rel="stylesheet">
+@stop
 @section('siteTitle')
     Show Draft
 @stop
@@ -13,21 +17,21 @@
         <a href="{{ url('/beacons/tags/'.$draft->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $draft->beacon_tag }}</button></a>
         <a href="{{ url('/posts') }}"><button type = "button" class = "indexButton">{{ $draft->source }}</button></a>
     </div>
-        <nav class = "infoNav">
-            <ul>
-                <li>
-                    <p class = "extras">/-\</p>
-                    <div class = "indexNav">
-                        <a href = {{ url('/indev') }}><button type = "button" class = "indexButton">{{ $draft->created_at->format('M-d-Y') }}</button></a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    <div id = "centerTextContent">
-            <p>
-                {!! nl2br(e($draft->body)) !!}
-            </p>
-    </div>
+    <button class = "interactButton" id = "hiddenIndex">More</button>
+    <div class = "indexContent" id = "hiddenContent">
+        <button type = "button" class = "indexButton">{{ $draft->created_at->format('M-d-Y') }}</button>
+        </div>
+        @if($type != 'txt')
+            <div class = "photoContent">
+                <img src="{!! $base64 !!}">
+                <p>{!! nl2br($draft->caption) !!}</p>
+
+            </div>
+        @else
+            <div id = "centerTextContent">
+                {!! nl2br($draft->body) !!}
+            </div>
+        @endif
 @stop
 
 @section('centerFooter')

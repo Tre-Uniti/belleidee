@@ -1,5 +1,6 @@
 @section('pageHeader')
     <script src = "/js/caffeine.js"></script>
+    <script src = "/js/submit.js"></script>
     <script src = "/js/creation.js"></script>
 @stop
 <div id = "createOptions">
@@ -41,11 +42,22 @@
     </div>
 
     <!-- Body Form Input -->
-    <div id = "centerTextContent">
-        {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Continue your extension here:', 'rows' => '18%', 'maxlength' => '3500']) !!}
-    </div>
+    @if($type != 'txt')
+        <div class = "photoContent">
+            <img src="{!! $base64 !!}">
+            <p>
+                <a href = "{{ url('/images') }}" target = "blank">View Image Guidelines</a>
+                {!! Form::file('image', null, ['class' => 'navButton']) !!}
+            </p>
+            {!! Form::textarea('caption', null, ['id' => 'createBodyText', 'placeholder' => 'Add optional caption:', 'rows' => '2%', 'maxlength' => '255']) !!}
+        </div>
+    @else
+        <div id = "centerTextContent">
+            {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your idea or belief here:', 'rows' => '18%', 'maxlength' => '3500']) !!}
+        </div>
+    @endif
     @section('centerFooter')
-        {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
+        {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
         <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
     @stop
 </div>

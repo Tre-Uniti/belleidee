@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Adjudication;
 use App\Beacon;
 use App\Elevation;
+use App\Events\BeliefInteraction;
 use function App\Http\autolink;
 use function App\Http\filterContentLocation;
 use function App\Http\filterContentLocationAllTime;
@@ -311,6 +312,9 @@ class PostController extends Controller
         $user->last_tag = $request['beacon_tag'];
         $user->update();
 
+        //Update Belief with new post
+        Event::fire(New BeliefInteraction($request->belief, '+post'));
+
         flash()->overlay('Your post has been created');
         return redirect('posts/'. $post->id);
     }
@@ -336,7 +340,6 @@ class PostController extends Controller
         }
 
         $post = $this->post->findOrFail($id);
-        $post_path = $post->post_path;
         
         //Get type of post (i.e Image or Txt)
         $type = substr($post->post_path, -3);
@@ -641,6 +644,13 @@ class PostController extends Controller
             $post->long = $long;
         }
 
+        //Update Belief with new post belief
+        if($post->belief != $request->belief)
+        {
+            Event::fire(New BeliefInteraction($post->belief, '-post'));
+            Event::fire(New BeliefInteraction($request->belief, '+post'));
+        }
+
         //Update database with new values
         $post->update($request->except('body', '_method', '_token'));
 
@@ -674,6 +684,9 @@ class PostController extends Controller
             Storage::delete($sourceOriginalPath);
             $post->delete();
         }
+
+        //Subtract 1 from Belief posts
+        Event::fire(New BeliefInteraction($post->belief, '-post'));
 
         flash()->overlay('Post has been deleted');
         return redirect('posts');

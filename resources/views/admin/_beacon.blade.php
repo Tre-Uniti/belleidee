@@ -1,4 +1,7 @@
-<h2>Convert to Beacon</h2>
+@section('pageHeader')
+    <script src = "/js/caffeine.js"></script>
+    <script src = "/js/submit.js"></script>
+@stop<h2>Convert to Beacon</h2>
 <div class = "formDataContainer">
         <div class = "formData">
             <div class = "formLabel">
@@ -122,7 +125,7 @@
         </div>
         {!! Form::hidden('beaconRequestId', $beaconRequest->id) !!}
     @section('centerFooter')
-        {!! Form::submit($submitButtonText, ['class' => 'navButton']) !!}
+        {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
         <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>
         {!! Form::close()   !!}
     @stop
