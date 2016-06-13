@@ -15,7 +15,7 @@
         <h2>Select your Location</h2>
         {!! Form::open(['url' => '/addLocation', 'method' =>  'GET']) !!}
         <div class = "formDataContainer">
-            <p><a href = "{{ url('/beaconRequests/agreement') }}" target = "_blank">Beacons</a> and your interaction with them set location automatically</p>
+            <p>Location is set by interaction with <a href = "{{ url('/beaconRequests/agreement') }}" target = "_blank">Beacons</a> in a given area</p>
             <div class = "formInput">
                 {!!  Form::label('country', 'Country (Required):') !!}
             </div>

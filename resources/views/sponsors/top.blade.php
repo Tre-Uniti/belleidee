@@ -4,7 +4,7 @@
 @stop
 
 @section('centerText')
-    <h2>Top Sponsors</h2>
+    <h2>{{ $location }} Top Sponsors</h2>
         <div class = "indexNav">
 
           <a href={{ url('/sponsors/')}}><button type = "button" class = "indexButton">All Sponsors</button></a>

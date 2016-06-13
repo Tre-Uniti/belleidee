@@ -16,7 +16,7 @@
         <h4>Title</h4>
     </div>
     <div class = "indexRight">
-        <h4>User</h4>
+        <h4>Handle</h4>
     </div>
     @foreach ($posts as $post)
         <div class = "listResource">

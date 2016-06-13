@@ -52,9 +52,11 @@ class UserController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
         $users = filterContentLocation($user, 0, 'User');
+        $location = getLocation();
 
         return view ('users.index')
-            ->with(compact('user', 'users', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'users', 'profilePosts','profileExtensions'))
+            ->with('location', $location);
     }
 
     /**

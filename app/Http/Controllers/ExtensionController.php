@@ -7,6 +7,7 @@ use App\Beacon;
 use App\Elevation;
 use App\Events\BeaconViewed;
 use App\Events\BeliefInteraction;
+use function App\Http\autolink;
 use function App\Http\filterContentLocation;
 use function App\Http\filterContentLocationAllTime;
 use function App\Http\filterContentLocationSearch;
@@ -31,6 +32,7 @@ use Illuminate\Support\Facades\Storage;
 use Event;
 use function App\Http\getBeacon;
 use function App\Http\getSponsor;
+use Mews\Purifier\Facades\Purifier;
 
 class ExtensionController extends Controller
 {
@@ -55,11 +57,14 @@ class ExtensionController extends Controller
         $profileExtensions = $this->getProfileExtensions($user);
 
         $extensions = filterContentLocation($user, 0, 'Extension');
+
+        $location = getLocation();
         
         $sponsor = getSponsor($user);
 
         return view ('extensions.index')
-                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sponsor'));
+            ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sponsor'))
+            ->with('location', $location);
     }
 
     /**
@@ -143,7 +148,7 @@ class ExtensionController extends Controller
 
         $title = $request->input('title');
         $path = '/extensions/'.$user_id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';
-        $inspiration = $request->input('body');
+        $inspiration = Purifier::clean($request->input('body'));
 
         //Check if user has already created an extension with this title
         $extensions = Extension::where('user_id', '=', $user->id)->where('title', '=', $request['title'])->get()->count();
@@ -407,6 +412,7 @@ class ExtensionController extends Controller
         $extension = $this->extension->findOrFail($id);
         $extension_path = $extension->extension_path;
         $contents = Storage::get($extension_path);
+        $contents = autolink($contents, array("target"=>"_blank","rel"=>"nofollow"));
         $extension = array_add($extension, 'body', $contents);
 
         //Get other Posts and Extensions of User
@@ -732,7 +738,7 @@ class ExtensionController extends Controller
         $extension = $this->extension->findOrFail($id);
         $user = Auth::user();
 
-        $inspiration = $request->input('body');
+        $inspiration = Purifier::clean($request->input('body'));
         $path = $extension->extension_path;
         $newTitle = $request->input('title');
         $newPath = '/extensions/'.$user->id.'/'.$newTitle. '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';

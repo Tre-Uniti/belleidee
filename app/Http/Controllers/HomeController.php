@@ -426,7 +426,7 @@ class HomeController extends Controller
                 'location' => 2,
             ];
 
-            flash()->overlay('Please select where you would like your location to be');
+            flash()->overlay('Last Beacon Tag: '. $user->last_tag . ", please select location");
             session()->put('coordinates', $coordinates);
             return redirect ('newLocation');
         }
@@ -442,8 +442,6 @@ class HomeController extends Controller
             flash()->overlay('No recently localized content, please set a custom location or request a new beacon');
             return redirect('/newLocation');
         }
-
-
 
         return redirect ('gettingStarted');
     }
@@ -469,7 +467,7 @@ class HomeController extends Controller
                 'location' => 2,
             ];
 
-            flash()->overlay('Please select where you would like your location to be');
+            flash()->overlay('Last Beacon Tag: '. $user->last_tag . ', please select location');
             session()->put('coordinates', $coordinates);
             return redirect ('newLocation');
         }
@@ -531,16 +529,17 @@ class HomeController extends Controller
         if($request['city'] != null)
         {
             $city = $request['city'];
-            $beacon = Beacon::where('city', 'LIKE', '%'. $city . '%')->where('country', '=', $request['country'])->first();
+            $beacon = Beacon::where('city', '=', $city)->where('country', '=', $request['country'])->first();
             if(is_null($beacon))
             {
                 flash()->overlay('No beacons in this area yet, please submit a beacon request');
-                return redirect()->back();
+                return redirect()->back()->withInput();
             }
-            $cityCode = substr($beacon->city, strpos($beacon->city, "-"));
-            $cityName = substr($beacon->city, 0, strpos($beacon->city, "-"));
+            $cityCode = substr($beacon->beacon_tag, 3);
+            $cityCode = substr($cityCode, 0, strpos($cityCode, "-"));
+            $cityName = $beacon->city;
             $city = $beacon->country . '-' . $cityName;
-            $shortTag = $beacon->country . $cityCode;
+            $shortTag = $beacon->country . '-' . $cityCode;
             $user->location = 0;
             $user->update();
             flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $city);
@@ -551,11 +550,12 @@ class HomeController extends Controller
             if(is_null($beacon))
             {
                 flash()->overlay('No beacons in this country yet, please submit a beacon request');
-                return redirect()->back();
+                return redirect()->back()->withInput();
             }
             $city = NULL;
             $cityName = NULL;
             $shortTag = NULL;
+            $cityCode = NULL;
             $user->location = 1;
             $user->update();
             flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $request['country']);
@@ -567,6 +567,8 @@ class HomeController extends Controller
             'country' => $request['country'],
             'city' => $city,
             'shortTag' => $shortTag,
+            'cityName' => $cityName,
+            'cityCode' => $cityCode,
             'location' => $user->location,
         ];
 

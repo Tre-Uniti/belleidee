@@ -29,15 +29,15 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('inspire')
                  //->hourly();
-        $schedule->command('monthlyBeaconReport')->everyMinute()
+        $schedule->command('monthlyBeaconReport')->Monthly()
                     ->pingBefore('http://beats.envoyer.io/heartbeat/xVDhFSK4jA0LbWA	')
                     ->thenPing('http://beats.envoyer.io/heartbeat/xVDhFSK4jA0LbWA	');
 
-        $schedule->command('monthlyBeaconReset')->everyFiveMinutes()
+        $schedule->command('monthlyBeaconReset')->Monthly()
                     ->pingBefore('http://beats.envoyer.io/heartbeat/sJMQyFYadJ1mpBw')
                     ->thenPing('http://beats.envoyer.io/heartbeat/sJMQyFYadJ1mpBw');
 
-        $schedule->command('monthlySponsorReport')->everyFiveMinutes()
+        $schedule->command('monthlySponsorReport')->Monthly()
             ->pingBefore('http://beats.envoyer.io/heartbeat/fns0wM10UnkF2h4	')
             ->thenPing('http://beats.envoyer.io/heartbeat/fns0wM10UnkF2h4	');
 

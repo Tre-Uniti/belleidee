@@ -4,7 +4,7 @@
 @stop
 
 @section('centerText')
-    <h2>Top Beacons</h2>
+    <h2>{{ $location }} Top Beacons</h2>
     <div class = "indexNav">
         <a href={{ url('/beacons/')}}><button type = "button" class = "indexButton">All Beacons</button></a>
         <a href={{ url('/beacons/search')}}><button type = "button" class = "indexButton">Beacon Search</button></a>

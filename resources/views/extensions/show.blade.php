@@ -56,7 +56,7 @@
         </div>
     </div>
     <div id = "centerTextContent">
-            {!! nl2br(e($extension->body)) !!}
+            {!! nl2br($extension->body) !!}
     </div>
 
 @stop

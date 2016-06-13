@@ -386,10 +386,38 @@ function getCountries()
 }
 
 /*
+ * Get the coordinates of a logged in user and return location
+ */
+function getLocation()
+{
+    $user = Auth::user();
+    if($user->location == 0)
+    {
+        $coordinates = session('coordinates');
+        $location = $coordinates['city'];
+    }
+    elseif($user->location == 1)
+    {
+        $coordinates = session('coordinates');
+        $location = $coordinates['country'];
+    }
+    elseif($user->location == 2)
+    {
+        $location = 'Global';
+    }
+    else
+    {
+        $location = 'Undefined';
+    }
+
+    return $location;
+}
+
+/*
  * Retrieve content for a given user's location
  *
  * @param $user
- * @param $number (0 = only 10 records, 1 = paginate)
+ * @param $number (0 = only 10 records, 1 = paginate, 2 = elevation filter, 3 = extension filter, 4 = source specific (for posts))
  * @param type Defines if what type of location filter is needed
  */
 function filterContentLocation($user, $number, $type)
@@ -485,7 +513,7 @@ function filterContentLocation($user, $number, $type)
             }
             elseif($type == 'Sponsor')
             {
-                $filteredContent = Sponsor::where('country', '=', $location['country'])->where('city', '=', $location['cityName']. '-' . $location['cityCode'])->latest('created_at')->paginate(10);
+                $filteredContent = Sponsor::where('country', '=', $location['country'])->where('city', '=', $location['cityName'])->latest('created_at')->paginate(10);
             }
         }
         //Filter by Country
@@ -805,6 +833,14 @@ function filterContentLocationAllTime($user, $number, $type, $order)
             {
                 $timeFilteredContent = User::where('verified', '=', 1)->where('last_tag', 'LIKE', $location['shortTag'] . '%')->orderBy($order, 'desc')->paginate(10);
             }
+            elseif ($type == 'Beacon')
+            {
+                $timeFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->orderBy($order, 'desc')->paginate(10);
+            }
+            elseif ($type == 'Sponsor')
+            {
+                $timeFilteredContent = Sponsor::where('status', '!=', 'deactivated')->where('city', '=', $location['cityName'] . '-' . $location['cityCode'])->orderBy($order, 'desc')->paginate(10);
+            }
 
         } //Filter by Country
         elseif ($user->location == 1)
@@ -820,6 +856,14 @@ function filterContentLocationAllTime($user, $number, $type, $order)
             {
                 $timeFilteredContent = User::where('verified', '=', 1)->where('last_tag', 'LIKE', $location['country'] . '%')->orderBy($order, 'desc')->paginate(10);
             }
+            elseif ($type == 'Beacon')
+            {
+                $timeFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->paginate(10);
+            }
+            elseif ($type == 'Sponsor')
+            {
+                $timeFilteredContent = Sponsor::where('status', '!=', 'deactivated')->where('country', '=', $location['country'])->orderBy($order, 'desc')->paginate(10);
+            }
       
         } //Filter by Global
         else {
@@ -834,39 +878,20 @@ function filterContentLocationAllTime($user, $number, $type, $order)
             {
                 $timeFilteredContent = User::where('verified', '=', 1)->orderBy($order, 'desc')->paginate(10);
             }
+            elseif ($type == 'Beacon')
+            {
+                $timeFilteredContent = Beacon::where('status', '!=', 'deactivated')->orderBy($order, 'desc')->paginate(10);
+            }
+            elseif ($type == 'Sponsor')
+            {
+                $timeFilteredContent = Sponsor::where('status', '!=', 'deactivated')->orderBy($order, 'desc')->paginate(10);
+            }
         }
     }
     return $timeFilteredContent;
 }
 
-/*
- * Get the coordinates of a logged in user and return location
- */
-function getLocation()
-{
-  $user = Auth::user();
-    if($user->location == 0)
-    {
-        $coordinates = session('coordinates');
-        $location = $coordinates['city'];
-    }
-    elseif($user->location == 1)
-    {
-        $coordinates = session('coordinates');
-        $location = $coordinates['country'];
-    }
-    elseif($user->location == 2)
-    {
-        $coordinates = session('coordinates');
-        $location = 'Global';
-    }
-    else
-    {
-        $location = 'Undefined';
-    }
 
-    return $location;
-}
 
 //Search-based filters (i.e Post, Extension, Beacon, Sponsor searches)
 function filterContentLocationSearch($user, $number, $type, $search)

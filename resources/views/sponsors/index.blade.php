@@ -5,10 +5,10 @@
 
 @section('centerText')
 
-    <h2>Sponsor Directory</h2>
+    <h2>{{ $location }} Sponsor Directory</h2>
         <p>Sponsor: A business or non-profit promoting within Idee</p>
     <div class = "indexNav">
-        <a href={{ url('/sponsors/top')}}><button type = "button" class = "indexButton">Most Views</button></a>
+        <a href={{ url('/sponsors/top')}}><button type = "button" class = "indexButton">Top Sponsors</button></a>
         <a href={{ url('/sponsors/search')}}><button type = "button" class = "indexButton">Search</button></a>
         <a href={{ url('/sponsorRequests')}}><button type = "button" class = "indexButton">Sponsor Requests</button></a>
     </div>

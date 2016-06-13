@@ -8,6 +8,7 @@ use App\Bookmark;
 use App\Events\BeliefInteraction;
 use App\Events\MonthlyBeaconReset;
 use function App\Http\filterContentLocation;
+use function App\Http\filterContentLocationAllTime;
 use function App\Http\filterContentLocationSearch;
 use function App\Http\getBeliefs;
 use function App\Http\getCountries;
@@ -53,9 +54,11 @@ class BeaconController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $beacons = filterContentLocation($user, 1, 'Beacon');
+        $location = getLocation();
         
         return view ('beacons.index')
-                    ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'))
+            ->with('location', $location);
     }
 
     /**
@@ -565,11 +568,13 @@ class BeaconController extends Controller
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
+        $location = getLocation();
 
-        $beacons = $this->beacon->orderBy('total_tag_usage', 'desc')->paginate(10);
+        $beacons = filterContentLocationAllTime($user, 0, 'Beacon', 'total_tag_usage');
 
         return view ('beacons.top')
-            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'))
+            ->with('location', $location);
     }
 
 

@@ -8,7 +8,7 @@
 
 @section('centerText')
     <div>
-    <h2>Recent Posts</h2>
+    <h2>{{ $location }} Recent Posts</h2>
     <div class = "indexNav">
         <a href={{ url('/posts/elevation')}}><button type = "button" class = "indexButton">Elevated</button></a>
         <a href={{ url('/posts/search')}}><button type = "button" class = "indexButton">Search</button></a>

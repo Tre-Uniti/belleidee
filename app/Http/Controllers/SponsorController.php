@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\SponsorViewed;
 use App\Extension;
 use function App\Http\filterContentLocation;
+use function App\Http\filterContentLocationAllTime;
 use function App\Http\filterContentLocationSearch;
 use function App\Http\getCountries;
 use function App\Http\getLocation;
@@ -49,6 +50,7 @@ class SponsorController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
         $sponsors = filterContentLocation($user, 1, 'Sponsor');
+        $location = getLocation();
 
         if(Sponsorship::where('user_id', '=', $user->id)->exists())
         {
@@ -58,7 +60,8 @@ class SponsorController extends Controller
         }
 
         return view ('sponsors.index')
-            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions', 'userSponsor'));
+            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions', 'userSponsor'))
+            ->with('location', $location);
     }
 
     /**
@@ -435,7 +438,8 @@ class SponsorController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $sponsors = $this->sponsor->orderBy('views', 'desc')->paginate(10);
+        $sponsors = filterContentLocationAllTime($user, 0, 'Sponsor', 'views');
+        $location = getLocation();
 
         if(Sponsorship::where('user_id', '=', $user->id)->exists())
         {
@@ -445,7 +449,8 @@ class SponsorController extends Controller
         }
 
         return view ('sponsors.top')
-            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions', 'userSponsor'));
+            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions', 'userSponsor'))
+            ->with('location', $location);
     }
 
     /*

@@ -56,10 +56,13 @@ class PostController extends Controller
 
         $posts = filterContentLocation($user, 0, 'Post');
 
+        $location = getLocation();
+
         $sponsor = getSponsor($user);
 
         return view ('posts.index')
-                    ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with('location', $location);
     }
 
     /**

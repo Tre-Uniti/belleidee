@@ -4,7 +4,7 @@
 @stop
 
 @section('centerText')
-    <h2>Beacon Directory</h2>
+    <h2>{{ $location }} Beacon Directory</h2>
         <p>Beacon: A place of worship or thought</p>
         <div class = "indexNav">
             <a href={{ url('/beacons/top')}}><button type = "button" class = "indexButton">Top Beacons</button></a>
