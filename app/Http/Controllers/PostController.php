@@ -199,7 +199,6 @@ class PostController extends Controller
             return view('posts.create')
                 ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sponsor'));
 
-
     }
 
     /**
@@ -331,7 +330,7 @@ class PostController extends Controller
 
     public function show($id)
     {
-        //Get requested post and add body
+        //Get logged in user or set to Transferred for Guest
         if(Auth::user())
         {
             $viewUser = Auth::user();
@@ -339,7 +338,7 @@ class PostController extends Controller
         else
         {
             //Set user equal to the Transferred user with no access
-            $viewUser = User::findOrFail(20);
+            $viewUser = User::where('handle', '=', 'Transferred')->first();
         }
 
         $post = $this->post->findOrFail($id);

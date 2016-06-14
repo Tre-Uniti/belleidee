@@ -30,6 +30,6 @@
 
 @stop
 @section('centerFooter')
-    {!! $beacons->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $beacons])
 @stop
 

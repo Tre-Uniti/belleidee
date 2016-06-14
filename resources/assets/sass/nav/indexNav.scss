@@ -1,0 +1,56 @@
+#indexNav
+{
+  margin: 0 auto;
+}
+.indexContent
+{
+  font-size: 100%;
+  padding: 10px;
+  display: none;
+
+}
+.indexLeft
+{
+  width: 50%;
+  float: left;
+}
+
+.indexRight
+{
+  width: 50%;
+  float: right;
+}
+
+.listResource
+{
+  clear: both;
+  overflow: auto;
+}
+.listResourceLeft
+{
+  width: 35%;
+  float: left;
+  text-align: left;
+  overflow: auto;
+  padding-left: 10%;
+}
+.listResourceBookmarkLeft
+{
+  width: 35%;
+  float: left;
+  text-align: left;
+  padding-left: 12%;
+  overflow: auto;
+}
+.listResourceRight
+{
+  width: 50%;
+  float: right;
+  overflow: auto;
+}
+.listResourceBookmarkRight
+{
+  width: 60%;
+  overflow: auto;
+  float: left;
+}

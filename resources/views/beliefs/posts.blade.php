@@ -30,7 +30,7 @@
 
 @stop
 @section('centerFooter')
-    {!! $posts->render() !!}
+    @include('pagination.custom-paginator', ['paginator' => $posts])
 @stop
 
 

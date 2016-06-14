@@ -406,7 +406,7 @@ class ExtensionController extends Controller
         else
         {
             //Set user equal to the Transferred user with no access
-            $viewUser = User::findOrFail(20);
+            $viewUser = User::where('handle', '=', 'Transferred')->first();
         }
         //Get requested post and add body
         $extension = $this->extension->findOrFail($id);

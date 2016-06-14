@@ -8,6 +8,7 @@ use App\Extension;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -17,7 +18,7 @@ class BeliefController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['index', 'show']]);
         $this->middleware('admin', ['only' => 'create', 'store', 'edit', 'update', 'destroy']);
     }
     /**
@@ -27,9 +28,20 @@ class BeliefController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+            $user->handle = 'Guest';
+        }
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
+
 
         $beliefs = Belief::latest()->get();
 
@@ -75,7 +87,17 @@ class BeliefController extends Controller
      */
     public function show($name)
     {
-        $user = Auth::user();
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+            $user->handle = 'Guest';
+        }
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 

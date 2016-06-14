@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Beacon;
 use App\Notification;
 use App\Sponsor;
 use App\Sponsorship;
@@ -28,8 +29,8 @@ class ViewServiceProvider extends ServiceProvider
             else
             {
                 //Set user equal to the Transferred user with no access (for external views)
-                $user = User::findOrFail(20);
-                $profileBeacons = 'US-SW-ACE';
+                $user = User::where('handle', '=', 'Transferred')->first();
+                $profileBeacons = Beacon::where('name', '=', 'No-Beacon')->get();
                 $notifyCount = 0;
             }
 
