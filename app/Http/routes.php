@@ -131,7 +131,6 @@ Route::get('extensions/listElevation/{id}', 'ExtensionController@listElevation')
 Route::resource('extensions', 'ExtensionController');
 
 //Legacy Routes (Resource)
-Route::get('legacy/index/{name}', 'LegacyController@beliefIndex');
 Route::resource('legacy', 'LegacyController');
 
 //Question Routes (Resource)

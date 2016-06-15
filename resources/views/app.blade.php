@@ -192,10 +192,10 @@
                             </div>
                         </li>
                         @if ($profileExtensions->isEmpty())
-                            <li><a href="{{url('/indev')}}">Legacy</a></li>
+                            <li><a href="{{url('/legacy')}}">Legacy</a></li>
                         @else
                             <li>
-                                <a href="{{ url('/indev') }}">Legacy</a>
+                                <a href="{{ url('/legacy') }}">Legacy</a>
                                 <div>
                                     <ul>
                                     </ul>

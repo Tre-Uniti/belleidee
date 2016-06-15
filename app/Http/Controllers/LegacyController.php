@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Auth;
 
 class LegacyController extends Controller
 {
+    private $legacy;
+
+    public function __construct(Legacy $legacy)
+    {
+        $this->middleware('auth');
+        $this->middleware('admin', ['except' => 'index']);
+        $this->legacy = $legacy;
+    }
+
     /**
      * List Legacy Index
      *
@@ -20,22 +29,9 @@ class LegacyController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        flash()->overlay('Legacy content will appear once more users become admins');
 
-        if($user->photo_path == '')
-        {
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
-
-        return view ('legacy.index')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+        return redirect()->back();
     }
 
     /**
@@ -104,33 +100,5 @@ class LegacyController extends Controller
         //
     }
 
-    /**
-     * List Legacy posts for specific belief
-     *
-     * @param $belief
-     * @return \Illuminate\Http\Response
-     */
-    public function beliefIndex($belief)
-    {
 
-
-        $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        //$legacy = Legacy::where('belief', $belief)->latest()->paginate(10);
-
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
-
-        flash()->overlay('Legacy posts are coming soon!');
-
-        return redirect()->back();
-    }
 }
