@@ -148,15 +148,12 @@ class SponsorController extends Controller
         $profileExtensions = getProfileExtensions($user);
         $sponsor = $this->sponsor->findOrFail($id);
         Event::fire(new SponsorViewed($sponsor));
-        
-        $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->count();
 
         $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
 
         return view ('sponsors.show')
             ->with(compact('user', 'sponsor', 'profilePosts','profileExtensions'))
-            ->with('location', $location)
-            ->with('sponsorships', $sponsorships);
+            ->with('location', $location);
     }
 
     /**
@@ -262,12 +259,29 @@ class SponsorController extends Controller
             $sponsorship->user_id = $user->id;
             $sponsorship->save();
 
+            //Update sponsor with new sponsorship
+            $sponsor->sponsorships = $sponsor->sponsorships + 1;
+            $sponsor->update();
+
             flash()->overlay('Your first sponsorship has started!');
         }
         else
         {
+            //Subtract 1 from past sponsor
+            $oldSponsor = Sponsor::where('id', '=', $exists->sponsor_id)->first();
+            if ($oldSponsor->id != $sponsor->id)
+            {
+                $oldSponsor->sponsorships = $oldSponsor->sponsorships - 1;
+                $oldSponsor->update();
+                //Update new sponsor with sponsorship
+                $sponsor->sponsorships = $sponsor->sponsorships + 1;
+                $sponsor->update();
+
+            }
+
             //Delete old Sponsorship
             Sponsorship::where('user_id', '=', $user->id)->delete();
+
             //Create new Sponsorship
             $sponsorship = new Sponsorship;
             $sponsorship->sponsor_id = $sponsor->id;
@@ -277,6 +291,25 @@ class SponsorController extends Controller
             flash()->overlay('Your sponsorship has started!');
         }
         return redirect('sponsors/'. $sponsor->id);
+    }
+
+    /*
+     * Show sponsorships for a given sponsor
+     */
+    public function sponsorships($id)
+    {
+        $sponsor = Sponsor::findOrfail($id);
+        $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->paginate(10);
+
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
+
+        return view('sponsors/sponsorships')
+            ->with(compact('user', 'sponsorships', 'sponsor', 'profilePosts', 'profileExtensions'))
+            ->with('location', $location);
     }
 
     //Page to supply sponsor payments
@@ -466,5 +499,9 @@ class SponsorController extends Controller
 
         return redirect('sponsors/'. $sponsor->id);
     }
+
+    /*
+     *
+     */
 
 }

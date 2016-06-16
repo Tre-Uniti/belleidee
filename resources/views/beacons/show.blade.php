@@ -44,9 +44,8 @@
 
 @section('centerFooter')
     <div id = "centerFooter">
-        @if($beacon->stripe_plan > 0)
-            <a href = {{ url('/users/'. $beacon->guide) }}><button type = "button" class = "navButton">Guide</button></a>
-        @endif
+        <a href = {{ url('/users/'. $beacon->guide) }}><button type = "button" class = "navButton">Guide</button></a>
+
         @if($user->type > 1)
             <a href="{{ url('/beacons/'.$beacon->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
             <a href="{{ url('beacons/deactivate/'. $beacon->id)}}"><button type = "button" class = "navButton">Deactivate</button></a>

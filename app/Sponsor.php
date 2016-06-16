@@ -23,4 +23,9 @@ class Sponsor extends Model
         'long',
         'zip',
     ];
+
+    public function sponsorship()
+    {
+        $this->hasMany('App\Sponsorship');
+    }
 }

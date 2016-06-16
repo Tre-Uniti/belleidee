@@ -9,7 +9,7 @@
 
 @section('centerText')
         <div class = "indexNav">
-            <a href="{{ url('/sponsors/'. $sponsor->id) }}" target="_blank"><button type = "button" class = "indexButton">Sponsorships: {{ $sponsorships }}</button></a>
+            <a href="{{ url('/sponsors/sponsorships/'. $sponsor->id) }}"><button type = "button" class = "indexButton">Sponsorships: {{ $sponsor->sponsorships }}</button></a>
             <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
             <a href="{{ $sponsor->website }}" target="_blank"><button type = "button" class = "indexButton">Website</button></a>
         </div>
