@@ -28,4 +28,9 @@ class Sponsor extends Model
     {
         $this->hasMany('App\Sponsorship');
     }
+
+    public function promotion()
+    {
+        $this->hasOne('App\Promotion');
+    }
 }

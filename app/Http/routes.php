@@ -103,6 +103,9 @@ Route::get('sponsors/eligibleSearch/{id}', 'SponsorController@eligibleSearch');
 Route::get('sponsors/eligibleResults', 'SponsorController@eligibleResults');
 Route::resource('sponsors', 'SponsorController');
 
+//Sponsor Promotions
+Route::resource('promotions', 'PromotionController');
+
 //Sponsor Request Routes (Resource)
 Route::get('sponsorRequests/agreement', 'SponsorRequestController@agreement');
 Route::post('sponsorRequests/convertSponsor', 'SponsorRequestController@convert')->name('convertSponsor');
