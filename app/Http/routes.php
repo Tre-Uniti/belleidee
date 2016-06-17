@@ -99,6 +99,8 @@ Route::get('sponsors/top', 'SponsorController@topUsage');
 Route::get('sponsors/sponsorship/{id}', 'SponsorController@sponsorship');
 Route::get('sponsors/sponsorships/{id}', 'SponsorController@sponsorships');
 Route::get('sponsors/eligible/{id}', 'SponsorController@eligible');
+Route::get('sponsors/eligibleSearch/{id}', 'SponsorController@eligibleSearch');
+Route::get('sponsors/eligibleResults', 'SponsorController@eligibleResults');
 Route::resource('sponsors', 'SponsorController');
 
 //Sponsor Request Routes (Resource)

@@ -1,11 +1,11 @@
 @extends('app')
 @section('siteTitle')
-    Sponsorships
+    Eligible Sponsorships
 @stop
 
 @section('centerText')
 
-    <h2>{{ $sponsor->name }} Sponsorships</h2>
+    <h2>{{ $sponsor->name }} Eligible Sponsorships</h2>
 
     <div class = "indexNav">
         <a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "indexButton">About</button></a>
@@ -13,8 +13,9 @@
         <a href="{{ $sponsor->website }}" target="_blank"><button type = "button" class = "indexButton">Website</button></a>
     </div>
     <div class = "indexNav">
-        <button type = "button" class = "indexButton">Total: {{ $sponsor->sponsorships }}</button>
-        <a href="{{ url('/sponsors/eligible/'. $sponsor->id) }}"><button type = "button" class = "indexButton">Promo Eligible</button></a>
+        <button type = "button" class = "indexButton">Total Eligible: {{ $eligibleCount }}</button>
+        <a href="{{ url('/sponsors/eligibleSearch/'. $sponsor->id) }}"><button type = "button" class = "indexButton">Search Eligible</button></a>
+        <a href="{{ url('/sponsors/sponsorships/'. $sponsor->id) }}"><button type = "button" class = "indexButton">All Sponsorships</button></a>
     </div>
 
     <div class = "indexLeft">

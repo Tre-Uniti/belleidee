@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Show Draft
+    Show Sponsor
 @stop
 
 @section('centerMenu')
@@ -18,7 +18,6 @@
                 <button type = "button" class = "indexButton">Views: {{ $sponsor->views }} / {{ $sponsor->view_budget }}</button>
                 <button type = "button" class = "indexButton">Clicks: {{ $sponsor->clicks }} / {{ $sponsor->click_budget }}</button>
             </div>
-
         @endif
 
     <h4>Sponsor Promotions:</h4>

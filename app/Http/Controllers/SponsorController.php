@@ -17,7 +17,9 @@ use App\Http\Requests\PhotoUploadRequest;
 use App\Post;
 use App\Sponsor;
 use App\Sponsorship;
+use App\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -36,7 +38,7 @@ class SponsorController extends Controller
     public function __construct(Sponsor $sponsor)
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['except' => ['index', 'show', 'sponsorship', 'search', 'results', 'topUsage', 'click']]);
+        $this->middleware('admin', ['only' => ['create', 'store', 'edit', 'update', 'destroy', 'pay', 'payment']]);
         $this->sponsor = $sponsor;
     }
     /**
@@ -469,9 +471,9 @@ class SponsorController extends Controller
     public function topUsage()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $sponsors = filterContentLocationAllTime($user, 0, 'Sponsor', 'views');
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        $sponsors = filterContentLocationAllTime($user, 0, 'Sponsor', 'sponsorships');
         $location = getLocation();
 
         if(Sponsorship::where('user_id', '=', $user->id)->exists())
@@ -500,8 +502,107 @@ class SponsorController extends Controller
         return redirect('sponsors/'. $sponsor->id);
     }
 
+   /*
+    * List users who are eligible for a promotion
+    *
+    * @param $id
+    */
+    public function eligible($id)
+    {
+        $sponsor = Sponsor::findOrFail($id);
+
+        //User must have sponsorship for at least 7 days
+        $date = Carbon::today()->subDays(7);
+
+        $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date )->paginate();
+        $eligibleCount = count($sponsorships);
+
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
+
+        return view('sponsors/eligible')
+                ->with(compact('user', 'sponsor', 'sponsorships', 'profilePosts', 'profileExtensions'))
+                ->with('location', $location)
+                ->with('eligibleCount', $eligibleCount);
+    }
+
     /*
-     *
+    * Search eligible sponsorships for specific user
+    *
+    * @param $id
+    */
+    public function eligibleSearch($id)
+    {
+        $sponsor = Sponsor::findOrFail($id);
+
+        //User must have sponsorship for at least 7 days
+        $date = Carbon::today()->subDays(7);
+
+        $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date )->paginate();
+        $eligibleCount = count($sponsorships);
+
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
+
+        return view('sponsors/eligibleSearch')
+            ->with(compact('user', 'sponsor', 'sponsorships', 'profilePosts', 'profileExtensions'))
+            ->with('location', $location)
+            ->with('eligibleCount', $eligibleCount);
+    }
+
+    /**
+     * Display the results page for a search on eligible Sponsorships.
+     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
      */
+    public function eligibleResults(Request $request)
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $sponsorId = $request->input('sponsorId');
+        $sponsor = Sponsor::findOrFail($sponsorId);
+        $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
+
+
+        $handle = $request->input('handle');
+        try
+        {
+            $searchUser = User::where('handle', 'LIKE', '%' .$handle . '%')->first();
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('No User with this handle');
+            return redirect()->back();
+        }
+
+        //User must have sponsorship for at least 7 days
+        $date = Carbon::today()->subDays(7);
+
+        $results = Sponsorship::where('user_id', '=', $searchUser->id)->where('sponsor_id', '=', $sponsorId)->where('created_at', '<=', $date )->paginate();
+
+        if(!count($results))
+        {
+            flash()->overlay('No Eligible user with this handle');
+            return redirect()->back();
+        }
+        else
+        {
+            $eligibleCount = count($results);
+        }
+
+        return view ('sponsors.eligibleResults')
+            ->with(compact('user', 'profilePosts','profileExtensions', 'results', 'sponsor'))
+            ->with('handle', $handle)
+            ->with('location', $location)
+            ->with('eligibleCount', $eligibleCount);
+    }
 
 }

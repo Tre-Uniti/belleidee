@@ -23,7 +23,7 @@
                 <a href="{{ action('SponsorController@show', [$Sponsor->id])}}"><button type = "button" class = "interactButtonLeft">{{$Sponsor->name}}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('SponsorController@show', [$Sponsor->id])}}"><button type = "button" class = "interactButton">{{$Sponsor->views}}</button></a>
+                <a href="{{ action('SponsorController@sponsorships', [$Sponsor->id])}}"><button type = "button" class = "interactButton">{{$Sponsor->sponsorships}}</button></a>
             </div>
         </div>
     @endforeach
