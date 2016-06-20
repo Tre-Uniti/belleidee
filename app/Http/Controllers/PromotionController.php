@@ -19,7 +19,7 @@ class PromotionController extends Controller
     public function __construct(Promotion $promotion)
     {
         $this->middleware('auth', ['except' => 'show']);
-        $this->middleware('promotionOwner', ['only' => 'edit', 'update', 'destroy']);
+        $this->middleware('promotionOwner', ['only' => 'edit', 'update', 'destroy', 'index']);
         $this->promotion = $promotion;
     }
 
@@ -54,7 +54,7 @@ class PromotionController extends Controller
         $promotion->save();
 
         flash()->overlay('Promotion successfully added');
-        return redirect('/promotion/'. $promotion->id);
+        return redirect('/promotions/'. $promotion->id);
     }
 
     /*
@@ -102,6 +102,25 @@ class PromotionController extends Controller
         flash()->overlay('Promotion has been updated');
 
         return redirect('promotions/'. $promotion->id);
+    }
+
+    /*
+     * List all promotions for a given sponsor
+     *
+     * @param $id
+     */
+    public function sponsorIndex($id)
+    {
+        $sponsor = Sponsor::findOrFail($id);
+
+        $promotions = Promotion::where('sponsor_id', '=', $sponsor->id)->paginate(10);
+
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        return view('promotions/sponsorIndex')
+            ->with(compact('user', 'promotions', 'sponsor', 'profilePosts', 'profileExtensions'));
     }
 
 }

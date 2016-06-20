@@ -14,7 +14,9 @@
     </div>
     <div class = "indexNav">
         <button type = "button" class = "indexButton">Total: {{ $sponsor->sponsorships }}</button>
+        @if($user->id == $sponsor->user_id || $user->type > 1 )
         <a href="{{ url('/sponsors/eligible/'. $sponsor->id) }}"><button type = "button" class = "indexButton">Promo Eligible</button></a>
+        @endif
     </div>
 
     <div class = "indexLeft">
@@ -37,6 +39,9 @@
 @stop
 @section('centerFooter')
     @include('pagination.custom-paginator', ['paginator' => $sponsorships])
+    <div>
+        <a href="{{ url('/sponsors/sponsorship/'.$sponsor->id) }}"><button type = "button" class = "navButton">Start Sponsorship</button></a>
+    </div>
 @stop
 
 

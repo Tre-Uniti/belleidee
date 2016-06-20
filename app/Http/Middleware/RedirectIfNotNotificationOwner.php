@@ -18,7 +18,7 @@ class RedirectIfNotNotificationOwner
     {
         $response = $next($request);
         $id = $request->route('notifications');
-        $notification = Notification::findOrFail($id); // Fetch the post
+        $notification = Notification::findOrFail($id); // Fetch the notification
 
         if($notification->source_user == Auth::id())
         {

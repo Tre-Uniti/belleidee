@@ -19,6 +19,7 @@ use App\Http\Requests\CreateBeaconRequest;
 use App\Http\Requests\EditBeaconRequest;
 use App\Intolerance;
 use App\Mailers\NotificationMailer;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -623,5 +624,30 @@ class BeaconController extends Controller
             'vendor'  => 'Tre-Uniti LLC',
             'product' => 'Belle-Idee',
         ]);
+    }
+
+    /*
+     * List guide posts for specific beacon
+     *
+     * @param $id
+     */
+    public function guide($id)
+    {
+        $beacon = Beacon::findOrFail($id);
+
+        $user = User::where('id', '=', $beacon->guide)->first();
+
+        if(!count($user))
+        {
+            flash()->overlay('Guide User does not exist for ' . $beacon->beacon_tag . ', please submit a support ticket');
+            return redirect('supports/create');
+        }
+        $posts = Post::where('user_id', '=', $user->id)->where('beacon_tag', '=', $beacon->beacon_tag)->paginate(10);
+
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        return view('beacons.guide')
+                ->with(compact('user', 'beacon', 'posts', 'profilePosts', 'profileExtensions'));
     }
 }

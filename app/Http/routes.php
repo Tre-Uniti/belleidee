@@ -41,6 +41,7 @@ Route::get('beacons/invoice/{id}', 'BeaconController@invoice');
 Route::get('beacons/invoice/{beacon}/download/{id}', 'BeaconController@downloadInvoice');
 Route::get('beacons/deactivate/{id}', 'BeaconController@deactivate');
 Route::get('beacons/subscription/{id}', 'BeaconController@subscription');
+Route::get('beacons/guide/{id}', 'BeaconController@guide');
 Route::resource('beacons', 'BeaconController');
 
 //Beacon Request Routes (Resource)
@@ -104,6 +105,8 @@ Route::get('sponsors/eligibleResults', 'SponsorController@eligibleResults');
 Route::resource('sponsors', 'SponsorController');
 
 //Sponsor Promotions
+Route::get('promotions/sponsor/{id}', 'PromotionController@sponsorIndex');
+Route::get('promotions/create/{id}', 'PromotionController@create');
 Route::resource('promotions', 'PromotionController');
 
 //Sponsor Request Routes (Resource)

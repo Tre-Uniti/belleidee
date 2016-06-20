@@ -4,7 +4,7 @@
 @stop
 
 @section('centerText')
-    <h2>Subscription for: {{ $beacon->name }}</h2>
+    <h2>Subscription for: <a href = "{{url('beacons/'. $beacon->id)}}">{{ $beacon->name }}</a></h2>
 
     <div class = "formDataContainer">
         @include ('errors.list')

@@ -1060,21 +1060,18 @@ article {
     height: 84%;
     margin: 1.5% auto; }
   #centerText {
-    max-height: 370px; }
+    max-height: 360px; }
   #centerTextContent {
-    max-height: 195px;
+    max-height: 190px;
     padding-left: 3px;
     padding-right: 3px; }
   #createBodyText {
     padding-left: 1px;
     padding-right: 1px; }
   #createOptions {
-    max-height: 350px; }
+    max-height: 340px; }
   .createTitleText {
     max-width: 70%; }
-  #mapid {
-    height: 400px;
-    width: 200px; }
   #leftSide {
     top: 80%;
     height: 18%;

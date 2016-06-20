@@ -39,6 +39,7 @@ class SponsorController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('admin', ['only' => ['create', 'store', 'edit', 'update', 'destroy', 'pay', 'payment']]);
+        $this->middleware('sponsorAdmin', ['only' => ['eligible', 'eligibleSearch']]);
         $this->sponsor = $sponsor;
     }
     /**
@@ -569,8 +570,15 @@ class SponsorController extends Controller
 
         $sponsorId = $request->input('sponsorId');
         $sponsor = Sponsor::findOrFail($sponsorId);
-        $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
 
+        //Verify user is admin or admin for sponsor
+        if($user->type <= 1 && $user->id != $sponsor->user_id)
+        {
+            flash()->overlay('You must be an admin or the owner of this sponsor to view');
+            return redirect('sponsors/'. $sponsor->id); // Not the Owner! Redirect back.
+        }
+
+        $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
 
         $handle = $request->input('handle');
         try

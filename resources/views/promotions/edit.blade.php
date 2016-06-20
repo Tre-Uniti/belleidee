@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Edit Belief
+    Edit Promotion
 @stop
 
 @section('centerText')
@@ -8,7 +8,7 @@
         @include ('errors.list')
     </div>
 
-    {!! Form::model($belief, ['route' => ['beliefs.update', $belief->id], 'method' => 'patch']) !!}
-    @include ('beliefs._edit', ['submitButtonText' => 'Update Belief'])
+    {!! Form::model($promotion, ['route' => ['promotions.update', $promotion->id], 'method' => 'patch']) !!}
+    @include ('promotions._edit', ['submitButtonText' => 'Update Promotion'])
 
 @stop

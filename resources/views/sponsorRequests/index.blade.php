@@ -6,6 +6,7 @@
 @section('centerText')
     <h2>Recent Sponsor Requests</h2>
     <div class = "indexNav">
+        <a href={{ url('/sponsors')}}><button type = "button" class = "indexButton">All Sponsors</button></a>
          <a href={{ url('/sponsorRequests/create')}}><button type = "button" class = "indexButton">New Sponsor Request</button></a>
          <a href="{{ url('/sponsorRequests/agreement')}}" target="_blank"><button type = "button" class = "indexButton">Sponsor Agreement</button></a>
     </div>

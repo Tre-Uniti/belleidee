@@ -14,7 +14,8 @@
             <a href="{{ $sponsor->website }}" target="_blank"><button type = "button" class = "indexButton">Website</button></a>
         </div>
         @if($user->type > 1 || $user->id == $sponsor->user_id)
-            <div class = "">
+            <div>
+                <a href="{{ url('promotions/create/'. $sponsor->id) }}"> <button type = "button" class = "indexButton">Create Promotion</button></a>
                 <button type = "button" class = "indexButton">Views: {{ $sponsor->views }} / {{ $sponsor->view_budget }}</button>
                 <button type = "button" class = "indexButton">Clicks: {{ $sponsor->clicks }} / {{ $sponsor->click_budget }}</button>
             </div>

@@ -11,7 +11,7 @@
 
     @include ('errors.list')
 
-    <h2>Subscribe: {{ $beacon->name }}</h2>
+    <h2>Subscribe: <a href = "{{url('beacons/'. $beacon->id)}}">{{ $beacon->name }}</a></h2>
     {!! Form::open(['route' => 'subscribe', 'role' => 'form', 'id' => 'payment-form'] ) !!}
 
     <div class="payment-errors">
@@ -67,6 +67,7 @@
         {!! Form::button('Add Card', [ 'type' => 'submit', 'id'  => 'btn-signup', 'class' => 'navButton'] ) !!}
 
     {!! Form::close()  !!}
+    </div>
 @stop
 
         @section('centerFooter')

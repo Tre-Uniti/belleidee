@@ -7,13 +7,14 @@
 @stop
 <div id = "createOptions">
     <div class = "formData">
-        {!! Form::label('description', 'Description:') !!}
-        {!! Form::text('description', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Description']) !!}
+        <div id = "centerTextContent">
+            {!! Form::textarea('description', null, ['id' => 'createBodyText', 'placeholder' => 'Description of Promotion:', 'rows' => '3%', 'maxlength' => '255']) !!}
+        </div>
+        {!! Form::label('promo', 'Promo Code:') !!}
+        {!! Form::text('promo', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Enter code here...']) !!}
     </div>
     <!-- Body Form Input -->
-    <div id = "centerTextContent">
-        {!! Form::textarea('promo', null, ['id' => 'createBodyText', 'placeholder' => 'Promotion:', 'rows' => '3%', 'maxlength' => '255']) !!}
-    </div>
+
     @section('centerFooter')
         {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
         <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
