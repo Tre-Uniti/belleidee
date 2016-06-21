@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\BeaconRequest;
 use App\Bookmark;
+use App\Events\BeaconViewed;
 use App\Events\BeliefInteraction;
 use App\Events\MonthlyBeaconReset;
 use function App\Http\filterContentLocation;
@@ -453,49 +454,6 @@ class BeaconController extends Controller
         
     }
 
-
-    /**
-     * List posts and extensions with the specific beacon_tag
-     *
-     * @param  string  $beacon_tag
-     * @return \Illuminate\Http\Response
-     */
-    public function listTagged($beacon_tag)
-    {
-        $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-        
-        //Check if Beacon_tag belongs to an Idee Beacon
-        try
-        {
-            $beacon = Beacon::where('beacon_tag', '=',  $beacon_tag)->firstOrFail();
-            if ($beacon->status == 'deactivated')
-            {
-                flash()->overlay('Beacon deactivated or does not exist');
-                return redirect()->back();
-            }
-        }
-        catch(ModelNotFoundException $e)
-        {
-            flash()->overlay('No active Idee Beacon with this tag: '.$beacon_tag);
-            return redirect()->back();
-        }
-
-        $posts = Post::where('beacon_tag', $beacon_tag)->latest()->paginate(10);
-
-        //Get location of beacon and setup link to Google maps
-        $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
-        
-        $beaconPath = $beacon->photo_path;
-
-        return view ('beacons.listTagged')
-                    ->with(compact('user', 'posts', 'beacon', 'profilePosts','profileExtensions'))
-                    ->with('beaconPath', $beaconPath)
-                    ->with('location', $location);
-
-    }
-
     /**
      * Display the search page for Beacons.
      *
@@ -626,6 +584,48 @@ class BeaconController extends Controller
         ]);
     }
 
+    /**
+     * List posts and extensions with the specific beacon_tag
+     *
+     * @param  string  $beacon_tag
+     * @return \Illuminate\Http\Response
+     */
+    public function posts($beacon_tag)
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        //Check if Beacon_tag belongs to an Idee Beacon
+        try
+        {
+            $beacon = Beacon::where('beacon_tag', '=',  $beacon_tag)->firstOrFail();
+            if ($beacon->status == 'deactivated')
+            {
+                flash()->overlay('Beacon deactivated or does not exist');
+                return redirect()->back();
+            }
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('No active Idee Beacon with this tag: '.$beacon_tag);
+            return redirect()->back();
+        }
+
+        $posts = Post::where('beacon_tag', $beacon_tag)->latest()->paginate(10);
+
+        //Get location of beacon and setup link to Google maps
+        $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
+
+        $beaconPath = $beacon->photo_path;
+
+        return view ('beacons.posts')
+            ->with(compact('user', 'posts', 'beacon', 'profilePosts','profileExtensions'))
+            ->with('beaconPath', $beaconPath)
+            ->with('location', $location);
+
+    }
+
     /*
      * List guide posts for specific beacon
      *
@@ -649,5 +649,30 @@ class BeaconController extends Controller
 
         return view('beacons.guide')
                 ->with(compact('user', 'beacon', 'posts', 'profilePosts', 'profileExtensions'));
+    }
+
+    /**
+     * Retrieve extensions of specific beacon.
+     *
+     * @param   $id
+     * @return \Illuminate\Http\Response
+     */
+    public function extensions($id)
+    {
+        $beacon = Beacon::findOrFail($id);
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $extensions = Extension::where('beacon_tag', $beacon->beacon_tag)->latest()->paginate(10);
+
+        $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
+
+        Event::fire(New BeaconViewed($beacon));
+
+        return view ('beacons.extensions')
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
+            ->with('beacon', $beacon)
+            ->with('location', $location);
     }
 }

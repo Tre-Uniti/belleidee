@@ -876,14 +876,66 @@ class ExtensionController extends Controller
             flash()->overlay('Extension contains community activity, cannot delete');
             return redirect('extensions/'. $extension->id);
         }
-        else
+
+        //Subtract 1 from Beacon if localized
+        if($extension->beacon_tag != 'No-Beacon')
         {
-            Storage::delete($extension->extension_path);
-            $extension->delete();
+            $beacon = Beacon::where('beacon_tag', '=', $extension->beacon_tag)->first();
+            $beacon->tag_usage = $beacon->tag_usage - 1;
+            $beacon->update();
+        }
+
+        //Subtract 1 extension from source
+        if($extension->extenception != NULL)
+        {
+            $sourceExtension = Extension::where('id', '=', $extension->extenception)->first();
+            $sourceExtension->extension = $sourceExtension->extension - 1;
+            $sourceExtension->update();
+
+            if($extension->post_id != NULL)
+            {
+                $post = Post::where('id', '=', $extension->extenception)->first();
+                $post->extension = $post->extension - 1;
+                $post->update();
+            }
+            elseif($extension->question_id != NULL)
+            {
+                $question = Question::where('id', '=', $extension->question_id)->first();
+                $question->extension = $question->extension - 1;
+                $question->update();
+            }
+
+            $user = User::where('id', '=', $sourceExtension->user_id)->first();
+            $user->extension = $user->extension - 1;
+            $user->update();
+        }
+        elseif($extension->post_id != NULL)
+        {
+            $post = Post::where('id', '=', $extension->post_id)->first();
+            $post->extension = $post->extension - 1;
+            $post->update();
+
+            $user = User::where('id', '=', $post->user_id)->first();
+            $user->extension = $user->extension - 1;
+            $user->update();
+        }
+        elseif($extension->question_id != NULL)
+        {
+            $question = Question::where('id', '=', $extension->question_id)->first();
+            $question->extension = $question->extension - 1;
+            $question->update();
+
+            $user = User::where('id', '=', $question->user_id)->first();
+            $user->extension = $user->extension - 1;
+            $user->update();
         }
 
         //Subtract 1 from Belief extensions
         Event::fire(New BeliefInteraction($extension->belief, '-extension'));
+
+        //Delete the Extension
+        Storage::delete($extension->extension_path);
+        $extension->delete();
 
         flash()->overlay('Extension has been deleted');
         return redirect('extensions');
@@ -1292,31 +1344,6 @@ class ExtensionController extends Controller
         return view ('extensions.userMostExtended')
             ->with(compact('user', 'viewUser', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('sourcePhotoPath', $sourcePhotoPath);
-    }
-
-    /**
-     * Retrieve extensions of specific beacon.
-     *
-     * @param   $id
-     * @return \Illuminate\Http\Response
-     */
-    public function beaconExtensions($id)
-    {
-        $beacon = Beacon::findOrFail($id);
-        $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-
-        $extensions = $this->extension->where('beacon_tag', $beacon->beacon_tag)->latest()->paginate(10);
-
-        $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
-
-        Event::fire(New BeaconViewed($beacon));
-
-        return view ('extensions.beaconExtensions')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
-            ->with('beacon', $beacon)
-            ->with('location', $location);
     }
 
     /**

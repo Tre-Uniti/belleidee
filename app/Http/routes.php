@@ -28,7 +28,7 @@ Route::get('users/extensionTime/{time}', 'UserController@sortByExtensionTime');
 Route::resource('users', 'UserController');
 
 //Beacon Routes (Resource)
-Route::get('beacons/tags/{source}', 'BeaconController@listTagged');
+
 Route::get('beacons/search', 'BeaconController@search');
 Route::get('beacons/results', 'BeaconController@results');
 Route::get('beacons/top', 'BeaconController@topUsage');
@@ -41,7 +41,9 @@ Route::get('beacons/invoice/{id}', 'BeaconController@invoice');
 Route::get('beacons/invoice/{beacon}/download/{id}', 'BeaconController@downloadInvoice');
 Route::get('beacons/deactivate/{id}', 'BeaconController@deactivate');
 Route::get('beacons/subscription/{id}', 'BeaconController@subscription');
+Route::get('beacons/posts/{source}', 'BeaconController@posts');
 Route::get('beacons/guide/{id}', 'BeaconController@guide');
+Route::get('beacons/extensions/{id}', 'BeaconController@extensions');
 Route::resource('beacons', 'BeaconController');
 
 //Beacon Request Routes (Resource)
@@ -130,7 +132,6 @@ Route::get('extensions/results', 'ExtensionController@results');
 Route::get('extensions/user/{id}', 'ExtensionController@userExtensions');
 Route::get('extensions/user/elevated/{id}', 'ExtensionController@userTopElevated');
 Route::get('extensions/user/extended/{id}', 'ExtensionController@userMostExtended');
-Route::get('extensions/beacon/{id}', 'ExtensionController@beaconExtensions');
 Route::get('extensions/elevate/{id}', 'ExtensionController@elevateExtension');
 Route::get('extensions/question/{source}', 'ExtensionController@extendQuestion');
 Route::get('extensions/post/{source}', 'ExtensionController@extendPost');

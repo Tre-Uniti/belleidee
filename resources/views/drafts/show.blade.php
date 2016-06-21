@@ -14,7 +14,7 @@
 @section('centerText')
     <div class = "indexNav">
         <a href="{{ action('BeliefController@show', $draft->belief) }}"><button type = "button" class = "indexButton">{{ $draft->belief }}</button></a>
-        <a href="{{ url('/beacons/tags/'.$draft->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $draft->beacon_tag }}</button></a>
+        <a href="{{ url('/beacons/posts/'.$draft->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $draft->beacon_tag }}</button></a>
         <a href="{{ url('/posts') }}"><button type = "button" class = "indexButton">{{ $draft->source }}</button></a>
     </div>
     <button class = "interactButton" id = "hiddenIndex">More</button>

@@ -25,7 +25,7 @@
             <a href="{{ action('BeaconController@show', [$beaconIndex->id])}}"><button type = "button" class = "interactButtonLeft">{{ $beaconIndex->name }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('BeaconController@listTagged', [$beaconIndex->beacon_tag])}}"><button type = "button" class = "interactButton">{{ $beaconIndex->beacon_tag }}</button></a>
+                <a href="{{ action('BeaconController@posts', [$beaconIndex->beacon_tag])}}"><button type = "button" class = "interactButton">{{ $beaconIndex->beacon_tag }}</button></a>
             </div>
             </div>
         @endforeach

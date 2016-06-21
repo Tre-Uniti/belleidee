@@ -22,8 +22,35 @@
         @endif
 
     <h4>Sponsor Promotions:</h4>
-    <p>Sponsor promotions will start when there are more sponsors using Idee.</p>
-    <p>You may request a new sponsor <a href = {{ url('/sponsorRequests/create') }}>here</a></p>
+        <div class = "indexLeft">
+            <h4>Status</h4>
+        </div>
+        <div class = "indexRight">
+            <h4>Created At</h4>
+        </div>
+    @foreach($promotions as $promotion)
+        @if($promotion->status == 'Eligible Only')
+            @if($user->type > 1 || $user->id == $sponsor->user_id || $eligibleUser != NULL)
+                <div class = "listResource">
+                <div class = "indexLeft">
+                    <a href="{{ action('PromotionController@show', [$promotion->id])}}"><button type = "button" class = "interactButtonLeft">{{ $promotion->status }}</button></a>
+                </div>
+                <div class = "listResourceRight">
+                     <a href="{{ action('PromotionController@show', [$promotion->id])}}"><button type = "button" class = "interactButton">{{ $promotion->created_at->format('M-d-Y')}}</button></a>
+                </div>
+                </div>
+             @endif
+        @elseif($promotion->status == 'Open to All')
+            <div class = "listResource">
+                <div class = "indexLeft">
+                    <a href="{{ action('PromotionController@show', [$promotion->id])}}"><button type = "button" class = "interactButtonLeft">{{ $promotion->status }}</button></a>
+                </div>
+                <div class = "listResourceRight">
+                    <a href="{{ action('PromotionController@show', [$promotion->id])}}"><button type = "button" class = "interactButton">{{ $promotion->created_at->format('M-d-Y')}}</button></a>
+                </div>
+            </div>
+            @endif
+    @endforeach
 
 @stop
 

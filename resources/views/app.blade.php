@@ -181,11 +181,11 @@
                                 <ul>
                                     @if(isset($userBeacons))
                                         @foreach($userBeacons as $userBeacon)
-                                            <li><a href={{ action('BeaconController@listTagged', [$userBeacon->pointer])}}>{{ $userBeacon->pointer }}</a></li>
+                                            <li><a href={{ action('BeaconController@posts', [$userBeacon->pointer])}}>{{ $userBeacon->pointer }}</a></li>
                                         @endforeach
                                     @else
                                         @foreach($profileBeacons as $profileBeacon)
-                                            <li><a href={{ action('BeaconController@listTagged', [$profileBeacon->pointer])}}>{{ $profileBeacon->pointer }}</a></li>
+                                            <li><a href={{ action('BeaconController@posts', [$profileBeacon->pointer])}}>{{ $profileBeacon->pointer }}</a></li>
                                         @endforeach
                                     @endif
                                 </ul>

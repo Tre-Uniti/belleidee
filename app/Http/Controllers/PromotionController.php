@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use function App\Http\autolink;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use App\Http\Requests\PromotionRequest;
 use App\Promotion;
 use App\Sponsor;
+use App\Sponsorship;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Mews\Purifier\Facades\Purifier;
 
 class PromotionController extends Controller
 {
@@ -36,8 +40,15 @@ class PromotionController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
+        $statuses = [
+            'Eligible Only' => 'Eligible Only',
+            'Open to All' => 'Open to All',
+            'Closed' => 'Closed'
+        ];
+
         return view('promotions/create')
-            ->with(compact('user', 'sponsor', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'sponsor', 'profilePosts', 'profileExtensions'))
+            ->with('statuses', $statuses);
 
     }
 
@@ -48,7 +59,11 @@ class PromotionController extends Controller
      */
     public function store(PromotionRequest $request)
     {
-        $promotion = new Promotion($request->except('sponsor_id'));
+
+
+        $promotion = new Promotion($request->except('sponsor_id', 'description'));
+        $description = Purifier::clean($request->input('description'));
+        $promotion->description = $description;
         $sponsor = Sponsor::findOrFail($request->sponsor_id);
         $promotion->sponsor()->associate($sponsor);
         $promotion->save();
@@ -62,11 +77,34 @@ class PromotionController extends Controller
      */
     public function show($id)
     {
-        $promotion = Promotion::findOrFail($id);
-
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
+
+        $promotion = Promotion::findOrFail($id);
+
+
+        if($user->type < 2)
+        {
+            if($promotion->status == 'closed' && $user->id != $promotion->sponsor->user_id)
+            {
+                flash()->overlay('Must be the manager of this sponsor or be an admin to view');
+                return redirect()->back();
+            }
+            elseif($promotion->status == 'Eligible Only' && $user->id != $promotion->sponsor->user_id)
+            {
+                //User must have sponsorship for at least 7 days
+                $date = Carbon::today()->subDays(7);
+                $eligibleUser = Sponsorship::where('user_id', '=', $user->id)->where('sponsor_id', '=', $promotion->sponsor_id)->where('created_at', '<=', $date )->first();
+                if(!count($eligibleUser))
+                {
+                    flash()->overlay('Not eligible to view this promo (must be sponsored for 7+ days');
+                    return redirect()->back();
+                }
+            }
+        }
+
+        $promotion->description = autolink($promotion->description, array("target"=>"_blank","rel"=>"nofollow"));
 
         return view('promotions.show')
             ->with(compact('user', 'promotion', 'profilePosts', 'profileExtensions'));
@@ -87,8 +125,16 @@ class PromotionController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
+        $statuses = [
+            'Eligible Only' => 'Eligible Only',
+            'Open to All' => 'Open to All',
+            'Closed' => 'Closed'
+        ];
+
+
         return view('promotions/edit')
-            ->with(compact('user', 'promotion', 'sponsor', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'promotion', 'sponsor', 'profilePosts', 'profileExtensions'))
+            ->with('statuses', $statuses);
     }
 
     /*
@@ -97,7 +143,9 @@ class PromotionController extends Controller
     public function update(PromotionRequest $request, $id)
     {
         $promotion = Promotion::findOrFail($id);
-        $promotion->update($request->all());
+        $description = Purifier::clean($request->input('description'));
+        $promotion->description = $description;
+        $promotion->update($request->except('description'));
 
         flash()->overlay('Promotion has been updated');
 

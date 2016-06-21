@@ -6,8 +6,8 @@
     <h2>Guide Posts of <a href={{ url('/beacons/'. $beacon->id)}}>{{$beacon->beacon_tag}}</a></h2>
     <div class = "indexNav">
         <a href={{ url('/beacons/'. $beacon->id)}}><button type = "button" class = "indexButton">Profile</button></a>
-        <a href={{ url('/beacons/guide/'.$beacon->id)}}><button type = "button" class = "indexButton">Guide Posts</button></a>
-        <a href={{ url('/extensions/beacon/'. $beacon->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
+        <a href={{ url('/beacons/posts/'.$beacon->beacon_tag)}}><button type = "button" class = "indexButton">User Posts</button></a>
+        <a href={{ url('/beacons/extensions/'. $beacon->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
     </div>
     <div class = "indexLeft">
         <h4>Title</h4>

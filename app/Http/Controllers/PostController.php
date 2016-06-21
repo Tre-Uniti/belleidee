@@ -690,6 +690,14 @@ class PostController extends Controller
         //Subtract 1 from Belief posts
         Event::fire(New BeliefInteraction($post->belief, '-post'));
 
+        //Subtract 1 from Beacon if localized
+        if($post->beacon_tag != 'No-Beacon')
+        {
+            $beacon = Beacon::where('beacon_tag', '=', $post->beacon_tag)->first();
+            $beacon->tag_usage = $beacon->tag_usage - 1;
+            $beacon->update();
+        }
+
         flash()->overlay('Post has been deleted');
         return redirect('posts');
     }

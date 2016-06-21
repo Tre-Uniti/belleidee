@@ -15,6 +15,7 @@ use App\Http\Requests\CreateSponsorRequest;
 use App\Http\Requests\SponsorRequest;
 use App\Http\Requests\PhotoUploadRequest;
 use App\Post;
+use App\Promotion;
 use App\Sponsor;
 use App\Sponsorship;
 use App\User;
@@ -152,10 +153,15 @@ class SponsorController extends Controller
         $sponsor = $this->sponsor->findOrFail($id);
         Event::fire(new SponsorViewed($sponsor));
 
+        $promotions = Promotion::where('sponsor_id', '=', $sponsor->id)->where('status', '!=', 'Closed')->take(7)->get();
+        //User must have sponsorship for at least 7 days
+        $date = Carbon::today()->subDays(7);
+        $eligibleUser = Sponsorship::where('user_id', '=', $user->id)->where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date )->first();
+
         $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
 
         return view ('sponsors.show')
-            ->with(compact('user', 'sponsor', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'sponsor', 'eligibleUser', 'promotions', 'profilePosts','profileExtensions'))
             ->with('location', $location);
     }
 

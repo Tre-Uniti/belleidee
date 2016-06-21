@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class PromotionOwner
+class RedirectIfNotPromotionOwner
 {
     /**
      * Handle an incoming request.

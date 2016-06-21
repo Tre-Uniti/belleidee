@@ -1,17 +1,14 @@
 @extends('app')
 @section('siteTitle')
-    User Extensions
+    Beacon Extensions
 @stop
 
 @section('centerText')
     <h2>Extensions of <a href={{ url('/beacons/tags/'. $beacon->beacon_tag)}}>{{ $beacon->beacon_tag }}</a></h2>
         <div class = "indexNav">
             <a href={{ url('/beacons/'. $beacon->id)}}><button type = "button" class = "indexButton">Profile</button></a>
-            @if($beacon->tier > 0)
-            <a href={{ url('/users/'. $beacon->guide)}}><button type = "button" class = "indexButton">Guide</button></a>
-            @endif
-            <a href={{ url('/beacons/tags/'.$beacon->beacon_tag)}}><button type = "button" class = "indexButton">Posts</button></a>
-            <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
+            <a href={{ url('/beacons/guide/'. $beacon->id)}}><button type = "button" class = "indexButton">Guide Posts</button></a>
+            <a href={{ url('/beacons/posts/'.$beacon->beacon_tag)}}><button type = "button" class = "indexButton">User Posts</button></a>
         </div>
     <div class = "indexLeft">
         <h4>Title</h4>
