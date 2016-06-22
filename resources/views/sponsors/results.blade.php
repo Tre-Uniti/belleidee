@@ -12,10 +12,10 @@
 
     </div>
         <div class = "indexLeft">
-            <h4>Sponsor</h4>
+            <h4>Name</h4>
         </div>
         <div class = "indexRight">
-            <h4>Views</h4>
+            <h4>Sponsorships</h4>
         </div>
         @foreach ($results as $result)
             <div class = "listResource">
@@ -23,7 +23,7 @@
                     <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButtonLeft">{{$result->name}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButton">{{$result->views}}</button></a>
+                    <a href="{{ action('SponsorController@sponsorships', [$result->id])}}"><button type = "button" class = "interactButton">{{$result->sponsorships}}</button></a>
                 </div>
             </div>
         @endforeach

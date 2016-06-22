@@ -9,7 +9,7 @@
         <input type="hidden" name="token" value="{{ $token }}">
         <div class = "formData">
             <div class = "formLabel">
-                <label for = "email" class = "login">Email Address</label>
+                <label for = "email" class = "login">Email</label>
             </div>
             <div class = "formInput">
                 <input type= "email" id = "email" class = "welcomeInputText" name="email" value="{{ old('email') }}">

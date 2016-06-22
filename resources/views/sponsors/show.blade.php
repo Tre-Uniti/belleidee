@@ -3,11 +3,8 @@
     Show Sponsor
 @stop
 
-@section('centerMenu')
-    <h2>{{ $sponsor->name }}</h2>
-@stop
-
 @section('centerText')
+    <h2>{{ $sponsor->name }}</h2>
         <div class = "indexNav">
             <a href="{{ url('/sponsors/sponsorships/'. $sponsor->id) }}"><button type = "button" class = "indexButton">Sponsorships: {{ $sponsor->sponsorships }}</button></a>
             <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>

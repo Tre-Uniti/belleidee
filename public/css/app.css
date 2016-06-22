@@ -511,6 +511,12 @@ p.login {
 p.verification {
   color: #FFFFFF; }
 
+@media screen and (max-width: 465px) and (max-height: 540px) {
+  #welcome {
+    min-width: 305px; }
+  #login {
+    min-width: 298px; } }
+
 html {
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -1193,11 +1199,11 @@ article {
     height: 84%;
     margin: 1.5% auto; }
   #centerText {
-    max-height: 260px; }
+    max-height: 240px; }
   .createTitleText {
     max-width: 70%; }
   #centerTextContent {
-    max-height: 135px;
+    max-height: 130px;
     padding-left: 3px;
     padding-right: 3px; }
   .formDataContainer {
@@ -1213,7 +1219,7 @@ article {
     padding-left: 1px;
     padding-right: 1px; }
   #createOptions {
-    max-height: 300px; }
+    max-height: 280px; }
   #leftSide {
     top: 80%;
     height: 20%;
@@ -1233,7 +1239,7 @@ article {
   .innerProfileMenus {
     height: 70px; }
   .innerPhotos {
-    height: 100px; }
+    height: 90px; }
   .listResourceLeft {
     padding-left: 1%;
     width: 45%; }

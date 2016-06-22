@@ -140,11 +140,12 @@
         <article>
         <div id = "centerMenu">
         <header>
-            @include('partials.flash')
+
             @yield('centerMenu')
         </header>
         </div>
         <div id = "centerText">
+            @include('partials.flash')
             @yield('centerText')
         </div>
         </article>
