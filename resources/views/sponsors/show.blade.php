@@ -27,7 +27,7 @@
         </div>
     @foreach($promotions as $promotion)
         @if($promotion->status == 'Eligible Only')
-            @if($user->type > 1 || $user->id == $sponsor->user_id || $eligibleUser != NULL)
+            @if($user->type > 1 || $user->id == $sponsor->user_id || $eligibleUser == 'yes')
                 <div class = "listResource">
                 <div class = "indexLeft">
                     <a href="{{ action('PromotionController@show', [$promotion->id])}}"><button type = "button" class = "interactButtonLeft">{{ $promotion->status }}</button></a>
