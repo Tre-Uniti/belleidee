@@ -22,6 +22,7 @@ class Sponsor extends Model
         'lat',
         'long',
         'zip',
+        'sponsor_tag',
     ];
 
     public function sponsorship()

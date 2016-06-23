@@ -14,6 +14,14 @@
     </div>
     <div class = "formData">
         <div class = "formLabel">
+            {!! Form::label('sponsor_tag', 'Sponsor Tag') !!}
+        </div>
+        <div class = "formInput">
+            {!! Form::text('sponsor_tag', null, ['class' => 'infoTitleText', 'autofocus']) !!}
+        </div>
+    </div>
+    <div class = "formData">
+        <div class = "formLabel">
             {!! Form::label('country', 'Country:') !!}
         </div>
         <div class = "formInput">

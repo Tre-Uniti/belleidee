@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Storage;
 
 class Kernel extends ConsoleKernel
 {
@@ -27,26 +28,37 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $filePath = Storage::disk('local');
         //$schedule->command('inspire')
                  //->hourly();
         $schedule->command('monthlyBeaconReport')->Monthly()
+                    ->sendOutputTo($filePath)
+                    ->emailOutputTo('tre-uniti@belle-idee.org')
                     ->pingBefore('http://beats.envoyer.io/heartbeat/xVDhFSK4jA0LbWA	')
                     ->thenPing('http://beats.envoyer.io/heartbeat/xVDhFSK4jA0LbWA	');
 
         $schedule->command('monthlyBeaconReset')->Monthly()
+                    ->sendOutputTo($filePath)
+                    ->emailOutputTo('tre-uniti@belle-idee.org')
                     ->pingBefore('http://beats.envoyer.io/heartbeat/sJMQyFYadJ1mpBw')
                     ->thenPing('http://beats.envoyer.io/heartbeat/sJMQyFYadJ1mpBw');
 
         $schedule->command('monthlySponsorReport')->Monthly()
-            ->pingBefore('http://beats.envoyer.io/heartbeat/fns0wM10UnkF2h4	')
-            ->thenPing('http://beats.envoyer.io/heartbeat/fns0wM10UnkF2h4	');
+                    ->sendOutputTo($filePath)
+                    ->emailOutputTo('tre-uniti@belle-idee.org')
+                    ->pingBefore('http://beats.envoyer.io/heartbeat/fns0wM10UnkF2h4	')
+                    ->thenPing('http://beats.envoyer.io/heartbeat/fns0wM10UnkF2h4	');
 
         //Run daily backups to S3 and local
         $schedule->command('backup:clean')->daily()->at('01:00')
+                    ->appendOutputTo($filePath)
+                    ->emailOutputTo('tre-uniti@belle-idee.org')
                     ->pingBefore('http://beats.envoyer.io/heartbeat/pmD4rGlycwLlIkg	')
                     ->thenPing('http://beats.envoyer.io/heartbeat/pmD4rGlycwLlIkg');
 
         $schedule->command('backup:run')->daily()->at('02:00')
+                    ->appendOutputTo($filePath)
+                    ->emailOutputTo('tre-uniti@belle-idee.org')
                     ->pingBefore('http://beats.envoyer.io/heartbeat/063hSXI4bQV8lfC')
                     ->thenPing('http://beats.envoyer.io/heartbeat/063hSXI4bQV8lfC');
         

@@ -31,7 +31,7 @@ class CreateBeaconRequest extends Request
             'address' => 'required|min: 5',
             'country' => 'required|min: 2',
             'city' => 'required|min: 2',
-            'beacon_tag'  => 'required|min:7|max:12|unique:beacons',
+            'beacon_tag'  => 'required|min:7|max:15|unique:beacons',
             'belief' => 'required',
             'website' => 'min:10|max:275',
             'phone' => 'required|min: 10|max:18',

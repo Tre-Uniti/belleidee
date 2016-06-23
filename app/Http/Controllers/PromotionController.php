@@ -159,13 +159,24 @@ class PromotionController extends Controller
      */
     public function sponsorIndex($id)
     {
-        $sponsor = Sponsor::findOrFail($id);
-
-        $promotions = Promotion::where('sponsor_id', '=', $sponsor->id)->paginate(10);
-
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
+
+        $sponsor = Sponsor::findOrFail($id);
+
+        //User must have sponsorship for at least 7 days
+        $date = Carbon::today()->subDays(7);
+
+        if($user->type > 1 || $user->id == $sponsor->user_id || Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date)->where('user_id', '=', $user->id)->exists())
+        {
+            $promotions = Promotion::where('sponsor_id', '=', $sponsor->id)->where('status', '!=', 'closed')->paginate(10);
+        }
+        else
+        {
+            flash()->overlay('Not eligible to view all sponsor promotions (min 7 days)');
+            return redirect()->back();
+        }
 
         return view('promotions/sponsorIndex')
             ->with(compact('user', 'promotions', 'sponsor', 'profilePosts', 'profileExtensions'));

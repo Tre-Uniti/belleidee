@@ -30,6 +30,7 @@ class CreateSponsorRequest extends Request
             'name' => 'required|min:3|max:50|unique:sponsors',
             'address' => 'required|min: 5',
             'website'  => 'required|min:10|max:275|unique:sponsors',
+            'beacon_tag'  => 'required|min:5|max:15|unique:sponsors',
             'phone' => 'required|min: 10|max:15',
             'country' => 'required|max:50',
             'city'  => 'required|max:75',

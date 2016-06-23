@@ -17,7 +17,7 @@
     </div>
     @foreach ($supports as $support)
         <div class = "listResource">
-            <div class = "listResourceLeft">
+            <div class = "indexLeft">
                 <a href="{{ action('SupportController@show', [$support->id])}}"><button type = "button" class = "interactButtonLeft">{{ $support->type }} - {{ $support->status }} </button></a>
             </div>
             <div class = "listResourceRight">

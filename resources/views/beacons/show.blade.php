@@ -11,9 +11,10 @@
 
         <div class = "indexNav">
             <a href="{{ url('/beliefs/'. $beacon->belief) }}"><button type = "button" class = "indexButton">{{ $beacon->belief }}</button></a>
-            <a href="{{ url('/beacons/posts/'.$beacon->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $beacon->beacon_tag }}</button></a>
-            <a href="{{ $beacon->website }}" target="_blank"><button type = "button" class = "indexButton">Website</button></a>
+            <a href="{{ url('/beacons/posts/'.$beacon->beacon_tag) }}"><button type = "button" class = "indexButton">User Posts</button></a>
             <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
+            <a href="{{ $beacon->website }}" target="_blank"><button type = "button" class = "indexButton">Website</button></a>
+
         </div>
         @if($user->type > 1 || $user->id == $beacon->manager)
             <div class = "indexNav">
@@ -22,7 +23,7 @@
                 <a href="{{ url('/intolerances/beacon/'. $beacon->id) }}"><button type = "button" class = "indexButton">Intolerance</button></a>
             </div>
         @endif
-        <p>Beacon tags this month: {{ $beacon->tag_usage }}</p>
+        <p>Tags this month for ({{ $beacon->beacon_tag }}): {{ $beacon->tag_usage }}</p>
         <div class = "indexLeft">
             <h4>Top Posts</h4>
         </div>

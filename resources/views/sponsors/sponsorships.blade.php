@@ -40,7 +40,7 @@
 @section('centerFooter')
     @include('pagination.custom-paginator', ['paginator' => $sponsorships])
     <div>
-        <a href="{{ url('/sponsors/sponsorship/'.$sponsor->id) }}"><button type = "button" class = "navButton">Start Sponsorship</button></a>
+        <a href="{{ url('promotions/sponsor/'.$sponsor->id) }}"><button type = "button" class = "navButton">View All Promos</button></a>
     </div>
 @stop
 

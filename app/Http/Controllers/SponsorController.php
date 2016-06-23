@@ -156,7 +156,25 @@ class SponsorController extends Controller
         $promotions = Promotion::where('sponsor_id', '=', $sponsor->id)->where('status', '!=', 'Closed')->take(7)->get();
         //User must have sponsorship for at least 7 days
         $date = Carbon::today()->subDays(7);
-        $eligibleUser = Sponsorship::where('user_id', '=', $user->id)->where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date )->first();
+        try
+        {
+            $eligibleUser = Sponsorship::where('user_id', '=', $user->id)->where('sponsor_id', '=', $sponsor->id)->first();
+
+        }
+        catch(ModelNotFoundException $e)
+        {
+            $eligibleUser = NULL;
+        }
+
+        if($eligibleUser != NULL && $eligibleUser->created_at <= $date)
+        {
+            $eligibleUser = 'yes';
+        }
+        elseif($eligibleUser != NULL && $eligibleUser->created_at > $date)
+        {
+            $eligibleUser = 'no';
+        }
+
 
         $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
 
@@ -308,11 +326,21 @@ class SponsorController extends Controller
     public function sponsorships($id)
     {
         $sponsor = Sponsor::findOrfail($id);
-        $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->paginate(10);
 
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
+
+        if($user->type > 1 || $user->id == $sponsor->user_id || Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->paginate(10);
+        }
+        else
+        {
+            flash()->overlay('Not eligible to view sponsorships');
+            return redirect()->back();
+        }
+
 
         $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
 
@@ -526,17 +554,8 @@ class SponsorController extends Controller
         $date = Carbon::today()->subDays(7);
 
         $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date)->paginate();
+        $eligibleCount = count($sponsorships);
 
-        if($user->type > 1 || $user->id == $sponsor->user_id || Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date->where('user_id', '=', $user->id)->exists()))
-        {
-            $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date)->paginate();
-            $eligibleCount = count($sponsorships);
-        }
-        else
-        {
-            flash()->overlay('Not eligible to view sponsor promotions');
-            return redirect()->back();
-        }
 
         $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
 
@@ -555,15 +574,15 @@ class SponsorController extends Controller
     {
         $sponsor = Sponsor::findOrFail($id);
 
-        //User must have sponsorship for at least 7 days
-        $date = Carbon::today()->subDays(7);
-
-        $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date )->paginate();
-        $eligibleCount = count($sponsorships);
-
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
+
+        //User must have sponsorship for at least 7 days
+        $date = Carbon::today()->subDays(7);
+
+        $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date)->paginate();
+        $eligibleCount = count($sponsorships);
 
         $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
 
@@ -584,18 +603,6 @@ class SponsorController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
-        $sponsorId = $request->input('sponsorId');
-        $sponsor = Sponsor::findOrFail($sponsorId);
-
-        //Verify user is admin or admin for sponsor
-        if($user->type <= 1 && $user->id != $sponsor->user_id)
-        {
-            flash()->overlay('You must be an admin or the owner of this sponsor to view');
-            return redirect('sponsors/'. $sponsor->id); // Not the Owner! Redirect back.
-        }
-
-        $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
-
         $handle = $request->input('handle');
         try
         {
@@ -610,7 +617,20 @@ class SponsorController extends Controller
         //User must have sponsorship for at least 7 days
         $date = Carbon::today()->subDays(7);
 
-        $results = Sponsorship::where('user_id', '=', $searchUser->id)->where('sponsor_id', '=', $sponsorId)->where('created_at', '<=', $date )->paginate();
+        $sponsorId = $request->input('sponsorId');
+        $sponsor = Sponsor::findOrFail($sponsorId);
+
+        if($user->type > 1 || $user->id == $sponsor->user_id || Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date)->where('user_id', '=', $user->id)->exists())
+        {
+            $results = Sponsorship::where('user_id', '=', $searchUser->id)->where('sponsor_id', '=', $sponsorId)->where('created_at', '<=', $date )->paginate();
+        }
+        else
+        {
+            flash()->overlay('Not eligible to search sponsor promotions (min 7 days)');
+            return redirect()->back();
+        }
+
+        $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
 
         if(!count($results))
         {

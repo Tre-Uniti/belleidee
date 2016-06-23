@@ -513,7 +513,7 @@ function filterContentLocation($user, $number, $type)
             }
             elseif($type == 'Sponsor')
             {
-                $filteredContent = Sponsor::where('country', '=', $location['country'])->where('city', '=', $location['cityName'])->latest('created_at')->paginate(10);
+                $filteredContent = Sponsor::where('sponsor_tag', 'LIKE', $location['shortTag'].'%')->where('status', '!=', 'deactivated')->latest('created_at')->paginate(10);
             }
         }
         //Filter by Country
@@ -537,7 +537,7 @@ function filterContentLocation($user, $number, $type)
             }
             elseif($type == 'Sponsor')
             {
-                $filteredContent = Sponsor::where('country', '=', $location['country'])->latest('created_at')->paginate(10);
+                $filteredContent = Sponsor::where('sponsor_tag', 'LIKE', $location['country']. '-'. '%')->where('status', '!=', 'deactivated')->latest('created_at')->paginate(10);
             }
         }
         //Filter by Global
@@ -561,7 +561,7 @@ function filterContentLocation($user, $number, $type)
             }
             elseif($type == 'Sponsor')
             {
-                $filteredContent = Sponsor::latest('created_at')->paginate(10);
+                $filteredContent = Sponsor::latest('created_at')->where('status', '!=', 'deactivated')->paginate(10);
             }
         }
     }
@@ -839,7 +839,7 @@ function filterContentLocationAllTime($user, $number, $type, $order)
             }
             elseif ($type == 'Sponsor')
             {
-                $timeFilteredContent = Sponsor::where('status', '!=', 'deactivated')->where('city', '=', $location['cityName'] . '-' . $location['cityCode'])->orderBy($order, 'desc')->paginate(10);
+                $timeFilteredContent = Sponsor::where('status', '!=', 'deactivated')->where('sponsor_tag', 'LIKE', $location['shortTag'] . '%')->orderBy($order, 'desc')->paginate(10);
             }
 
         } //Filter by Country
@@ -862,7 +862,7 @@ function filterContentLocationAllTime($user, $number, $type, $order)
             }
             elseif ($type == 'Sponsor')
             {
-                $timeFilteredContent = Sponsor::where('status', '!=', 'deactivated')->where('country', '=', $location['country'])->orderBy($order, 'desc')->paginate(10);
+                $timeFilteredContent = Sponsor::where('status', '!=', 'deactivated')->where('sponsor_tag', 'LIKE', $location['country']. '-'. '%')->orderBy($order, 'desc')->paginate(10);
             }
       
         } //Filter by Global
@@ -916,16 +916,16 @@ function filterContentLocationSearch($user, $number, $type, $search)
             {
                 if($type == 'Beacon-Name')
                 {
-                    $searchFilteredContent = Beacon::where('name', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->paginate(10);
+                    $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->paginate(10);
                 }
                 elseif($type == 'Beacon-Tag')
                 {
-                    $searchFilteredContent = Beacon::where('beacon_tag', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->paginate(10);
+                    $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('beacon_tag', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->paginate(10);
                 }
             }
             elseif ($type == 'Sponsor')
             {
-                $searchFilteredContent = Sponsor::where('name', 'LIKE', '%'.$search.'%')->where('city', '=', $location['cityName'] . '-' . $location['cityCode'])->paginate(10);
+                $searchFilteredContent = Sponsor::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->where('sponsor_tag', 'LIKE', $location['shortTag'] . '%')->paginate(10);
             }
             elseif ($type == 'User')
             {
@@ -948,16 +948,16 @@ function filterContentLocationSearch($user, $number, $type, $search)
             {
                 if($type == 'Beacon-Name')
                 {
-                    $searchFilteredContent = Beacon::where('name', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['country'] . '%')->paginate(10);
+                    $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['country'] . '%')->paginate(10);
                 }
                 elseif($type == 'Beacon-Tag')
                 {
-                    $searchFilteredContent = Beacon::where('beacon_tag', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['country'] . '%')->paginate(10);
+                    $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('beacon_tag', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['country'] . '%')->paginate(10);
                 }
             }
             elseif ($type == 'Sponsor')
             {
-                $searchFilteredContent = Sponsor::where('name', 'LIKE', '%'.$search.'%')->where('country', '=', $location['country'])->paginate(10);
+                $searchFilteredContent = Sponsor::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['country'] . '%')->paginate(10);
             }
             elseif ($type == 'User')
             {
@@ -979,16 +979,16 @@ function filterContentLocationSearch($user, $number, $type, $search)
             {
                 if($type == 'Beacon-Name')
                 {
-                    $searchFilteredContent = Beacon::where('name', 'LIKE', '%'.$search.'%')->paginate(10);
+                    $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->paginate(10);
                 }
                 elseif($type == 'Beacon-Tag')
                 {
-                    $searchFilteredContent = Beacon::where('beacon_tag', 'LIKE', '%'.$search.'%')->paginate(10);
+                    $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('beacon_tag', 'LIKE', '%'.$search.'%')->paginate(10);
                 }
             }
             elseif ($type == 'Sponsor')
             {
-                $searchFilteredContent = Sponsor::where('name', 'LIKE', '%'.$search.'%')->paginate(10);
+                $searchFilteredContent = Sponsor::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->paginate(10);
             }
             elseif ($type == 'User')
             {
