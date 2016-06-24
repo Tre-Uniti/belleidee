@@ -445,11 +445,6 @@
       max-height: 250px;
     }
 
-    #mapid
-    {
-      height: 200px;
-      width: 400px;
-    }
     #leftSide {
       top: 18%;
       height: auto;
@@ -517,13 +512,13 @@
       padding: 7px 1px;
     }
     #centerContent {
-      width: 97%;
+      width: 98%;
       height: 84%;
       margin: 1.5% auto;
     }
     #centerText
     {
-      max-height: 240px;
+      max-height: 230px;
     }
     .createTitleText {
       max-width: 70%;
@@ -580,7 +575,7 @@
       height: 70px;
     }
     .innerPhotos {
-      height: 90px;
+      height: 80px;
     }
     .listResourceLeft {
       padding-left: 1%;
@@ -626,7 +621,7 @@
       margin: 1.5% auto;
     }
     #centerText {
-      max-height: 180px;
+      max-height: 150px;
     }
 
     #centerTextContent {
@@ -643,7 +638,7 @@
     }
 
     #leftSide {
-      top: 22%;
+      top: 1%;
       height: auto;
       width: 20%;
       visibility: visible;
@@ -654,7 +649,7 @@
       display: none;
     }
     #rightSide {
-      top: 22%;
+      top: 1%;
       height: auto;
       width: 20%;
       visibility: visible;
@@ -669,6 +664,7 @@
     }
     .innerPhotos {
       height: 120px;
+      padding-top: 3px;
     }
     .listResourceLeft {
       padding-left: 1%;

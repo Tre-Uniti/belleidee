@@ -41,7 +41,7 @@ class BeaconController extends Controller
     public function __construct(Beacon $beacon)
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['only' => 'create', 'update', 'edit']);
+        $this->middleware('admin', ['only' => 'create', 'store', 'update', 'edit', 'deactivate', 'destroy']);
         $this->beacon = $beacon;
     }
 
@@ -172,7 +172,7 @@ class BeaconController extends Controller
                 ['email' => $beacon->email, 'description' => $beacon->name]);
 
         flash()->overlay('Level '. $request['subscription'] . ' subscription started for '. $beacon->name);
-        return redirect('beacons/'. $beacon->id);
+        return redirect('beacons/'. $beacon->beacon_tag);
 
     }
 
@@ -217,17 +217,17 @@ class BeaconController extends Controller
         $beacon->subscription($request['subscription'])->swap();
 
         flash()->overlay('Level '. $request['subscription'] . ' subscription updated for '. $beacon->name);
-        return redirect('beacons/'. $beacon->id);
+        return redirect('beacons/'. $beacon->beacon_tag);
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  $beacon_tag
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($beacon_tag)
     {
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
@@ -237,7 +237,7 @@ class BeaconController extends Controller
         //Check Beacon exists and is active belongs to an Idee Beacon
         try
         {
-            $beacon = $this->beacon->findOrFail($id);
+            $beacon = Beacon::where('beacon_tag', '=',  $beacon_tag)->firstOrFail();
             if ($beacon->status == 'deactivated')
             {
                 flash()->overlay('Beacon deactivated or does not exist');
@@ -348,7 +348,7 @@ class BeaconController extends Controller
 
         flash()->overlay('Beacon has been updated');
 
-        return redirect('beacons/'. $beacon->id);
+        return redirect('beacons/'. $beacon->beacon_tag);
     }
 
     /**
@@ -587,10 +587,10 @@ class BeaconController extends Controller
     /**
      * List posts and extensions with the specific beacon_tag
      *
-     * @param  string  $beacon_tag
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function posts($beacon_tag)
+    public function posts($id)
     {
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
@@ -599,7 +599,7 @@ class BeaconController extends Controller
         //Check if Beacon_tag belongs to an Idee Beacon
         try
         {
-            $beacon = Beacon::where('beacon_tag', '=',  $beacon_tag)->firstOrFail();
+            $beacon = Beacon::findOrFail($id);
             if ($beacon->status == 'deactivated')
             {
                 flash()->overlay('Beacon deactivated or does not exist');
@@ -608,11 +608,11 @@ class BeaconController extends Controller
         }
         catch(ModelNotFoundException $e)
         {
-            flash()->overlay('No active Idee Beacon with this tag: '.$beacon_tag);
+            flash()->overlay('No active Idee Beacon with this id');
             return redirect()->back();
         }
 
-        $posts = Post::where('beacon_tag', $beacon_tag)->latest()->paginate(10);
+        $posts = Post::where('beacon_tag', $beacon->beacon_tag)->latest()->paginate(10);
 
         //Get location of beacon and setup link to Google maps
         $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
@@ -633,7 +633,21 @@ class BeaconController extends Controller
      */
     public function guide($id)
     {
-        $beacon = Beacon::findOrFail($id);
+        //Check if Beacon_tag belongs to an Idee Beacon
+        try
+        {
+            $beacon = Beacon::findOrFail($id);
+            if ($beacon->status == 'deactivated')
+            {
+                flash()->overlay('Beacon deactivated or does not exist');
+                return redirect()->back();
+            }
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('No active Idee Beacon with this id');
+            return redirect()->back();
+        }
 
         $user = User::where('id', '=', $beacon->guide)->first();
 
@@ -647,6 +661,8 @@ class BeaconController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
+        Event::fire(New BeaconViewed($beacon));
+
         return view('beacons.guide')
                 ->with(compact('user', 'beacon', 'posts', 'profilePosts', 'profileExtensions'));
     }
@@ -659,20 +675,31 @@ class BeaconController extends Controller
      */
     public function extensions($id)
     {
-        $beacon = Beacon::findOrFail($id);
+        //Check if Beacon_tag belongs to an Idee Beacon
+        try
+        {
+            $beacon = Beacon::findOrFail($id);
+            if ($beacon->status == 'deactivated')
+            {
+                flash()->overlay('Beacon deactivated or does not exist');
+                return redirect()->back();
+            }
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('No active Idee Beacon with this id');
+            return redirect()->back();
+        }
+
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
         $extensions = Extension::where('beacon_tag', $beacon->beacon_tag)->latest()->paginate(10);
 
-        $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
-
         Event::fire(New BeaconViewed($beacon));
 
         return view ('beacons.extensions')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
-            ->with('beacon', $beacon)
-            ->with('location', $location);
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'beacon'));
     }
 }

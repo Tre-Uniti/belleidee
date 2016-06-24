@@ -19,10 +19,10 @@
     @foreach ($beacons as $beaconIndex)
         <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('BeaconController@show', [$beaconIndex->id])}}"><button type = "button" class = "interactButtonLeft">{{$beaconIndex->name}}</button></a>
+                <a href="{{ action('BeaconController@show', [$beaconIndex->beacon_tag])}}"><button type = "button" class = "interactButtonLeft">{{$beaconIndex->name}}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('BeaconController@listTagged', [$beaconIndex->beacon_tag])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$beaconIndex->beacon_tag}}</button></a>
+                <a href="{{ action('BeaconController@show', [$beaconIndex->beacon_tag])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$beaconIndex->beacon_tag}}</button></a>
             </div>
         </div>
     @endforeach

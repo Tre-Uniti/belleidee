@@ -318,7 +318,7 @@ class BookmarkController extends Controller
 
             //Notify user bookmark was successful
             flash()->overlay('You have successfully bookmarked this beacon');
-            return redirect('/beacons/'. $beacon->id);
+            return redirect('/beacons/'. $beacon->beacon_tag);
         }
         else
         {
@@ -334,7 +334,7 @@ class BookmarkController extends Controller
 
             //Notify user bookmark was successful
             flash()->overlay('You have successfully bookmarked this beacon');
-            return redirect('/beacons/'. $beacon->id);
+            return redirect('/beacons/'. $beacon->beacon_tag);
         }
     }
 

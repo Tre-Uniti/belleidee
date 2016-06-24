@@ -27,14 +27,14 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     <h2>{{ $post->title }}</h2>
     <div class = "indexNav">
             <a href="{{ action('BeliefController@show', $post->belief) }}"><button type = "button" class = "indexButton">{{ $post->belief }}</button></a>
-           <a href="{{ url('/beacons/posts/'.$post->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $post->beacon_tag }}</button></a>
+           <a href="{{ url('/beacons/'.$post->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $post->beacon_tag }}</button></a>
             <a href="{{ url('/posts/source/'. $post->source) }}"><button type = "button" class = "indexButton">{{ $post->source }}</button></a>
     </div>
     <button class = "interactButton" id = "hiddenIndex">More</button>
     <div class = "indexContent" id = "hiddenContent">
-                    <a href={{ url('/posts/listElevation/'.$post->id)}}><button type = "button" class = "indexButton">Elevations</button></a>
-                    <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}><button type = "button" class = "indexButton">{{ $post->created_at->format('M-d-Y') }}</button></a>
-                    <a href={{ url('/extensions/post/list/'.$post->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
+        <a href={{ url('/posts/listElevation/'.$post->id)}}><button type = "button" class = "indexButton">Elevations</button></a>
+        <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}><button type = "button" class = "indexButton">{{ $post->created_at->format('M-d-Y') }}</button></a>
+        <a href={{ url('/extensions/post/list/'.$post->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
 
                 <div class = "indexNav">
                     @if($post->user_id != Auth::id())
@@ -48,14 +48,14 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                             <a href="{{ url($location) }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
                         @endif
                 </div>
-                    <div class = "indexNav">
-                        <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title={{$post->title}}" target="_blank">
-                            <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
-                        <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank">
-                            <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
-                        <a href="http://twitter.com/intent/tweet?status={{$post->title}} - {{Request::url()}}" target="_blank">
-                            <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
-                       </div>
+                <div class = "indexNav">
+                    <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title={{$post->title}}" target="_blank">
+                        <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
+                    <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank">
+                        <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
+                    <a href="http://twitter.com/intent/tweet?status={{$post->title}} - {{Request::url()}}" target="_blank">
+                        <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
+                </div>
     </div>
     @if($type != 'txt')
         <div class = "photoContent">

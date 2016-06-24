@@ -74,10 +74,10 @@
         @foreach ($results as $result)
             <div class = "listResource">
                 <div class = "listResourceLeft">
-                    <a href="{{ action('BeaconController@show', [$result->id])}}"><button type = "button" class = "interactButtonLeft">{{$result->name}}</button></a>
+                    <a href="{{ action('BeaconController@show', [$result->beacon_tag])}}"><button type = "button" class = "interactButtonLeft">{{$result->name}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('BeaconController@show', [$result->id])}}"><button type = "button" class = "interactButton">{{$result->created_at->format('M-d-Y')}}</button></a>
+                    <a href="{{ action('BeaconController@show', [$result->beacon_tag])}}"><button type = "button" class = "interactButton">{{$result->created_at->format('M-d-Y')}}</button></a>
                 </div>
             </div>
         @endforeach

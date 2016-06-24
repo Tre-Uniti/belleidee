@@ -3,9 +3,9 @@
     Beacons
 @stop
 @section('centerText')
-    <h2>User Posts of <a href={{ url('/beacons/'. $beacon->id)}}>{{$beacon->name}}</a></h2>
+    <h2>User Posts of <a href={{ url('/beacons/'. $beacon->beacon_tag)}}>{{$beacon->name}}</a></h2>
     <div class = "indexNav">
-        <a href={{ url('/beacons/'. $beacon->id)}}><button type = "button" class = "indexButton">Profile</button></a>
+        <a href={{ url('/beacons/'. $beacon->beacon_tag)}}><button type = "button" class = "indexButton">Profile</button></a>
         <a href={{ url('/beacons/guide/'.$beacon->id)}}><button type = "button" class = "indexButton">Guide Posts</button></a>
         <a href={{ url('/beacons/extensions/'. $beacon->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
 
@@ -29,9 +29,6 @@
 @stop
 @section('centerFooter')
     @include('pagination.custom-paginator', ['paginator' => $posts])
-    <div>
-        <a href = {{ url('/bookmarks/beacons/'. $beacon->beacon_tag) }}><button type = "button" class = "navButton">Bookmark</button></a>
-    </div>
 
 @stop
 

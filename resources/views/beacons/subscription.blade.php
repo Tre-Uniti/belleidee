@@ -4,7 +4,7 @@
 @stop
 
 @section('centerText')
-    <h2>Subscription for: <a href = "{{url('beacons/'. $beacon->id)}}">{{ $beacon->name }}</a></h2>
+    <h2>Subscription for: <a href = "{{url('beacons/'. $beacon->beacon_tag)}}">{{ $beacon->name }}</a></h2>
 
     <div class = "formDataContainer">
         @include ('errors.list')
@@ -25,6 +25,6 @@
 
 @stop
 @section('centerFooter')
-    <a href = "{{ url('beacons/'. $beacon->id) }}"><button type = "button" class = "navButton">Beacon Profile</button></a>
+    <a href = "{{ url('beacons/'. $beacon->beacon_tag) }}"><button type = "button" class = "navButton">Beacon Profile</button></a>
     <a href = "{{ url('beacons/signup/'. $beacon->id) }}"><button type = "button" class = "navButton">Change Card</button></a>
 @stop

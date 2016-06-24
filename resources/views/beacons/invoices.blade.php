@@ -4,10 +4,10 @@
 @stop
 
 @section('centerText')
-    <h2>Invoices for {{ $beacon->name }}</h2>
+    <h2>Invoices for <a href = "{{ url('beacons/'. $beacon->beacon_tag)}}">{{ $beacon->name }}</a></h2>
     @if($user->type > 1 || $user->id == $beacon->manager)
         <div class = "indexNav">
-            <a href="{{ url('/beacons/'. $beacon->id )}}"><button type = "button" class = "indexButton">Profile</button></a>
+            <a href="{{ url('/beacons/'. $beacon->beacon_tag )}}"><button type = "button" class = "indexButton">Profile</button></a>
             <a href="{{ url('/beacons/subscription/'. $beacon->id )}}"><button type = "button" class = "indexButton">Subscription</button></a>
             <a href="{{ url('/intolerances/beacon/'. $beacon->id) }}"><button type = "button" class = "indexButton">Intolerance</button></a>
         </div>

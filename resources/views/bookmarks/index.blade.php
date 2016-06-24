@@ -31,7 +31,7 @@
                         <a href="{{ action('UserController@show', [$bookmark['pointer']])}}">
                             <button type = "button" class = "interactButtonLeft">{{ $bookmark['title'] }}</button></a>
                     @elseif($bookmark['type'] === 'Beacon')
-                        <a href="{{ action('BeaconController@posts', [$bookmark['pointer']])}}">
+                        <a href="{{ action('BeaconController@show', [$bookmark['pointer']])}}">
                            <button type = "button" class = "interactButtonLeft">{{ $bookmark['title'] }}</button></a>
                     @elseif($bookmark['type'] === 'Post')
                         <a href="{{ action('PostController@show', [$bookmark['pointer']])}}">
@@ -47,7 +47,7 @@
                         <a href="{{ action('UserController@show', [$bookmark['pointer']])}}">
                             <button type = "button" class = "interactButtonLeft">{{ $bookmark['type'] }}</button></a>
                     @elseif($bookmark['type'] === 'Beacon')
-                        <a href="{{ action('BeaconController@posts', [$bookmark['pointer']])}}">
+                        <a href="{{ action('BeaconController@show', [$bookmark['pointer']])}}">
                             <button type = "button" class = "interactButtonLeft">{{ $bookmark['type'] }}</button></a>
                     @elseif($bookmark['type'] === 'Post')
                         <a href="{{ action('PostController@show', [$bookmark['pointer']])}}">

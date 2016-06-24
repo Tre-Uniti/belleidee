@@ -11,7 +11,7 @@
         <td colspan="3">Thank you for submitting this request.</td>
     </tr>
     <tr>
-        <td colspan="3"><a href="{{ url('/beacons/'. $beacon->id) }}"><button type = "button" style = "padding: 8px 13px;
+        <td colspan="3"><a href="{{ url('/beacons/'. $beacon->beacon_tag) }}"><button type = "button" style = "padding: 8px 13px;
     font-family: 'Open Sans', Arial, serif;
     font-size: 100%;
     border-radius: 4px;

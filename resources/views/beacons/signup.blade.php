@@ -11,7 +11,7 @@
 
     @include ('errors.list')
 
-    <h2>Subscribe: <a href = "{{url('beacons/'. $beacon->id)}}">{{ $beacon->name }}</a></h2>
+    <h2>Subscribe: <a href = "{{url('beacons/'. $beacon->beacon_tag)}}">{{ $beacon->name }}</a></h2>
     {!! Form::open(['route' => 'subscribe', 'role' => 'form', 'id' => 'payment-form'] ) !!}
 
     <div class="payment-errors">

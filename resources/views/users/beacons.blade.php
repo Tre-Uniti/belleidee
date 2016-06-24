@@ -23,11 +23,11 @@
 
             <div class = "listResource">
                 <div class = "listResourceLeft">
-                        <a href="{{ action('BeaconController@listTagged', $bookmark->pointer)}}">
+                        <a href="{{ action('BeaconController@show', $bookmark->pointer)}}">
                             <button type = "button" class = "interactButton">{{ $bookmark->pointer }}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                        <a href="{{ action('BeaconController@listTagged', $bookmark->pointer)}}">
+                        <a href="{{ action('BeaconController@show', $bookmark->pointer)}}">
                             <button type = "button" class = "interactButton">{{ $bookmark->created_at->format('M-d-Y') }}</button></a>
                 </div>
             </div>

@@ -4,7 +4,7 @@
 @stop
 
 @section('centerMenu')
-    <h2>Deactivate {{ $beacon->name }}</h2>
+    <h2>Deactivate <a href = "{{url('beacons/'. $beacon->beacon_tag)}}">{{ $beacon->name }}</a></h2>
 @stop
 
 @section('centerText')

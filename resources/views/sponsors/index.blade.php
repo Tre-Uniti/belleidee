@@ -10,7 +10,7 @@
     <div class = "indexNav">
         <a href={{ url('/sponsors/top')}}><button type = "button" class = "indexButton">Top Sponsors</button></a>
         <a href={{ url('/sponsors/search')}}><button type = "button" class = "indexButton">Search</button></a>
-        <a href={{ url('/sponsorRequests')}}><button type = "button" class = "indexButton">Sponsor Requests</button></a>
+        <a href={{ url('/sponsorRequests')}}><button type = "button" class = "indexButton">Requests</button></a>
     </div>
     <div class = "indexLeft">
         <h4>Name</h4>

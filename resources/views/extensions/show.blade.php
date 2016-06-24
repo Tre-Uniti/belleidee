@@ -19,7 +19,7 @@
     <h2>{{ $extension->title }}</h2>
             <div class = "indexNav">
                 <a href="{{ action('BeliefController@show', $extension->belief) }}"><button type = "button" class = "indexButton">{{ $extension->belief }}</button></a>
-                <a href="{{ url('/beacons/posts/'.$extension->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $extension->beacon_tag }}</button></a>
+                <a href="{{ url('/beacons/'.$extension->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $extension->beacon_tag }}</button></a>
                 @if($extension->source === 'Post')
                     <a href="{{ url('/posts/'.$extension->post_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
                 @elseif($extension->source === 'Extension')
