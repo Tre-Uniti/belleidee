@@ -8,8 +8,8 @@
 
 <div id = "createOptions">
     <p><button type = "button" class = "interactButton" id = "content">Show Source</button></p>
+    <div class = "extensionContent" id = "hiddenContent">
     @if(isset($sources['extenception']))
-        <div class = "extensionContent" id = "hiddenContent">
             @if($type != 'txt')
                 <div class = "photoContent">
                     <a href = "{{ url('/extensions/'. $sourceModel->id) }}" target = "_blank"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->extension_path) }} alt="{{$sourceModel->title}}"></a>
@@ -17,9 +17,8 @@
             @else
                 {!! nl2br(e($content)) !!}
             @endif
-            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
     @elseif(isset($sources['post_id']))
-        <div class = "extensionContent" id = "hiddenContent">
             @if($type != 'txt')
                 <div class = "photoContent">
                     <a href="{{ url(env('IMAGE_LINK'). $sourceOriginalPath) }}" data-lightbox="{{ $sourceModel->title }}" data-title="{{ $sourceModel->caption }}"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->post_path) }} alt="{{$sourceModel->title}}"></a>
@@ -28,12 +27,13 @@
             @else
                 {!! nl2br(e($content)) !!}
             @endif
-            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
+
     @elseif(isset($sources['question_id']))
-        <div class = "extensionContent" id = "hiddenContent">
             {!! nl2br(e($content)) !!}
-            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
     @endif
+    </div>
         <div class = "formData">
             {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Your Title']) !!}
             </div>

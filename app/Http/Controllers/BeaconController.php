@@ -702,4 +702,29 @@ class BeaconController extends Controller
         return view ('beacons.extensions')
             ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'beacon'));
     }
+
+    /**
+     * Retrieve extensions of specific beacon.
+     *
+     * @param   $id
+     * @return \Illuminate\Http\Response
+     */
+    public function social($id)
+    {
+        $beacon = Beacon::findOrFail($id);
+
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $beaconUrl = url('/beacons/'. $beacon->beacon_tag);
+
+        $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
+
+        return view('beacons.social')
+                ->with(compact('user', 'beacon', 'profilePosts', 'profileExtensions'))
+                ->with('beaconUrl', $beaconUrl)
+                ->with('location', $location);
+
+    }
 }

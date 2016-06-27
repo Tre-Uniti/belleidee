@@ -1,16 +1,34 @@
 @extends('app')
+@section('pageHeader')
+    <script src = "/js/toggleSource.js"></script>
+@stop
 @section('siteTitle')
     Show Moderation
 @stop
-@section('centerMenu')
-    <h2><a href = {{ url('moderations') }}>Moderation</a></h2>
-    @if($intolerance->post_id != '')
-        <p><a href = {{ action('PostController@show', [$intolerance->post_id])}}>Source Post</a></p>
-    @elseif($intolerance->extension_id != '')
-        <p><a href = {{ action('ExtensionController@show', [$intolerance->extension_id])}}>Source Extension</a></p>
-    @endif
-@stop
 @section('centerText')
+    <h2><a href = {{ url('moderations') }}>Moderation</a></h2>
+    <p><button type = "button" class = "interactButton" id = "content">Show Source</button></p>
+    <div class = "extensionContent" id = "hiddenContent">
+        @if($intolerance->post_id != null)
+            @if($type != 'txt')
+                <div class = "photoContent">
+                    <a href = "{{ url('/posts/'. $sourceModel->id) }}" target = "_blank"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->post_path) }} alt="{{$sourceModel->title}}"></a>
+                </div>
+            @else
+                {!! nl2br(e($content)) !!}
+            @endif
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
+        @elseif($intolerance->extension_id != null)
+            @if($type != 'txt')
+                <div class = "photoContent">
+                    <a href = "{{ url('/extensions/'. $sourceModel->id) }}" target = "_blank"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->extension_path) }} alt="{{$sourceModel->title}}"></a>
+                </div>
+            @else
+                {!! nl2br(e($content)) !!}
+            @endif
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
+        @endif
+    </div>
     <div id = "centerTextContent">
         <p><b>User: </b><a href = {{ action('UserController@show', [$intolerance->user_id])}}>{{ $intolerance->user->handle }} </a></p>
         <p>

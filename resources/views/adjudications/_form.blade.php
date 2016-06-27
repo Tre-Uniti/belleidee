@@ -1,16 +1,32 @@
 @section('pageHeader')
     <script src = "/js/caffeine.js"></script>
     <script src = "/js/submit.js"></script>
+    <script src = "/js/toggleSource.js"></script>
 @stop
 <div id = "createOptions">
     <h2>Intolerance</h2>
-    @if($moderation->post_id != '')
-        <p><a href = {{ action('PostController@show', $moderation->post_id)}}> Source Post</a></p>
-    @elseif($moderation->extension_id != '')
-        <p><a href = {{ action('ExtensionController@show', $moderation->extension_id)}}>Source Extension</a></p>
-    @elseif($moderation->question_id != '')
-        <p><a href = {{ action('QuestionController@show', $moderation->quesiton_id)}}>Source Question</a></p>
-    @endif
+    <p><button type = "button" class = "interactButton" id = "content">Show Source</button></p>
+    <div class = "extensionContent" id = "hiddenContent">
+        @if($intolerance->post_id != null)
+            @if($type != 'txt')
+                <div class = "photoContent">
+                    <a href = "{{ url('/posts/'. $sourceModel->id) }}" target = "_blank"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->post_path) }} alt="{{$sourceModel->title}}"></a>
+                </div>
+            @else
+                {!! nl2br(e($content)) !!}
+            @endif
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
+        @elseif($intolerance->extension_id != null)
+            @if($type != 'txt')
+                <div class = "photoContent">
+                    <a href = "{{ url('/extensions/'. $sourceModel->id) }}" target = "_blank"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->extension_path) }} alt="{{$sourceModel->title}}"></a>
+                </div>
+            @else
+                {!! nl2br(e($content)) !!}
+            @endif
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
+        @endif
+    </div>
     <div id = "centerTextContent">
         <p>{{ $intolerance->user_ruling }}</p>
         <p>{{ $moderation->mod_ruling }}</p>

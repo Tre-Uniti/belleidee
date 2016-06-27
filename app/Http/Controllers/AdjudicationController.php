@@ -16,6 +16,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class AdjudicationController extends Controller
 {
@@ -69,21 +70,34 @@ class AdjudicationController extends Controller
         $moderationId = Session::get('moderationId');
         $moderation = Moderation::findOrFail($moderationId);
         $intolerance = Intolerance::findOrFail($moderation->intolerance_id);
-        if($user->photo_path == '')
-        {
 
-            $photoPath = '';
-        }
-        else
+        if($intolerance->post_id != null)
         {
-            $photoPath = $user->photo_path;
+            $sourceModel = Post::findOrFail($intolerance->post_id);
+            $sourceUser=
+                [
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
+                ];
+            $content = Storage::get($sourceModel->post_path);
+            $type = substr($sourceModel->post_path, -3);
         }
-
+        elseif($intolerance->extension_id != null)
+        {
+            $sourceModel = Extension::findOrFail($intolerance->extension_id);
+            $sourceUser=
+                [
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
+                ];
+            $content = Storage::get($sourceModel->extension_path);
+            $type = substr($sourceModel->post_path, -3);
+        }
 
 
         return view ('adjudications.create')
-            ->with(compact('user', 'adjudication', 'moderation', 'intolerance', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'adjudication', 'moderation', 'intolerance', 'profilePosts', 'profileExtensions', 'sourceUser', 'content'))
+            ->with('type', $type);
     }
 
     /**
@@ -143,19 +157,31 @@ class AdjudicationController extends Controller
         $moderation = Moderation::where('id', $adjudication->moderation_id)->first();
         $intolerance = Intolerance::where('id', $moderation->intolerance_id)->first();
 
-        //Get user photo
-        if($user->photo_path == '')
+        if($intolerance->post_id != null)
         {
-
-            $photoPath = '';
+            $sourceModel = Post::findOrFail($intolerance->post_id);
+            $sourceUser=
+                [
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
+                ];
+            $content = Storage::get($sourceModel->post_path);
+            $type = substr($sourceModel->post_path, -3);
         }
-        else
+        elseif($intolerance->extension_id != null)
         {
-            $photoPath = $user->photo_path;
+            $sourceModel = Extension::findOrFail($intolerance->extension_id);
+            $sourceUser=
+                [
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
+                ];
+            $content = Storage::get($sourceModel->extension_path);
+            $type = substr($sourceModel->post_path, -3);
         }
         return view ('adjudications.show')
-            ->with(compact('user', 'adjudication', 'moderation', 'intolerance', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'adjudication', 'moderation', 'intolerance', 'profilePosts','profileExtensions', 'sourceUser', 'content'))
+            ->with('type', $type);
     }
 
     /**

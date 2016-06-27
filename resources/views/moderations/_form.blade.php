@@ -4,11 +4,28 @@
 @stop
 <div id = "createOptions">
     <h2>Moderation</h2>
-    @if($intolerance->post_id != '')
-        <p><a href = {{ action('PostController@show', [$intolerance->post_id])}}>Source Post</a></p>
-    @elseif($intolerance->extension_id != '')
-        <p><a href = {{ action('ExtensionController@show', [$intolerance->extension_id])}}>Source Extension</a></p>
-    @endif
+    <p><button type = "button" class = "interactButton" id = "content">Show Source</button></p>
+    <div class = "extensionContent" id = "hiddenContent">
+        @if($intolerance->post_id != null)
+            @if($type != 'txt')
+                <div class = "photoContent">
+                    <a href = "{{ url('/posts/'. $sourceModel->id) }}" target = "_blank"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->post_path) }} alt="{{$sourceModel->title}}"></a>
+                </div>
+            @else
+                {!! nl2br(e($content)) !!}
+            @endif
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
+        @elseif($intolerance->extension_id != null)
+            @if($type != 'txt')
+                <div class = "photoContent">
+                    <a href = "{{ url('/extensions/'. $sourceModel->id) }}" target = "_blank"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->extension_path) }} alt="{{$sourceModel->title}}"></a>
+                </div>
+            @else
+                {!! nl2br(e($content)) !!}
+            @endif
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
+        @endif
+    </div>
 
     <div id = "centerTextContent">
         <p>{{ $intolerance->user_ruling }}</p>

@@ -44,6 +44,7 @@ Route::get('beacons/subscription/{id}', 'BeaconController@subscription');
 Route::get('beacons/posts/{id}', 'BeaconController@posts');
 Route::get('beacons/guide/{id}', 'BeaconController@guide');
 Route::get('beacons/extensions/{id}', 'BeaconController@extensions');
+Route::get('beacons/social/{id}', 'BeaconController@social');
 Route::resource('beacons', 'BeaconController');
 
 //Beacon Request Routes (Resource)

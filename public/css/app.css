@@ -1100,7 +1100,7 @@ article {
     height: 70px; }
   .innerPhotos {
     height: 100px;
-    padding-top: 5px; }
+    padding-top: 3px; }
   .listResourceLeft {
     padding-left: 1%;
     width: 45%; }
@@ -1137,6 +1137,8 @@ article {
     filter: alpha(opacity=90);
     border: 2px solid;
     border-radius: 25px; }
+  #centerText {
+    max-height: 260px; }
   #centerTextContent {
     max-height: 150px;
     padding-left: 3px;
@@ -1147,7 +1149,7 @@ article {
   .createTitleText {
     max-width: 60%; }
   #createOptions {
-    max-height: 250px; }
+    max-height: 300px; }
   #leftSide {
     top: 18%;
     height: auto;
@@ -1236,6 +1238,7 @@ article {
   .innerProfileMenus {
     height: 70px; }
   .innerPhotos {
+    padding-top: 5px;
     height: 80px; }
   .listResourceLeft {
     padding-left: 1%;

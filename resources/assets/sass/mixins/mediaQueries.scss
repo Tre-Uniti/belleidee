@@ -371,7 +371,7 @@
     }
     .innerPhotos {
       height: 100px;
-      padding-top: 5px;
+      padding-top: 3px;
     }
     .listResourceLeft {
       padding-left: 1%;
@@ -428,6 +428,11 @@
       border-radius: 25px;
     }
 
+    #centerText
+    {
+      max-height: 260px;
+    }
+
     #centerTextContent {
       max-height: 150px;
       padding-left: 3px;
@@ -442,7 +447,7 @@
     }
 
     #createOptions {
-      max-height: 250px;
+      max-height: 300px;
     }
 
     #leftSide {
@@ -575,6 +580,7 @@
       height: 70px;
     }
     .innerPhotos {
+      padding-top: 5px;
       height: 80px;
     }
     .listResourceLeft {

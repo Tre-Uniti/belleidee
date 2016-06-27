@@ -17,6 +17,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ModerationController extends Controller
 {
@@ -75,16 +76,32 @@ class ModerationController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        if ($user->photo_path == '') {
-
-            $photoPath = '';
-        } else {
-            $photoPath = $user->photo_path;
+        if($intolerance->post_id != null)
+        {
+            $sourceModel = Post::findOrFail($intolerance->post_id);
+            $sourceUser=
+                [
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
+                ];
+            $content = Storage::get($sourceModel->post_path);
+            $type = substr($sourceModel->post_path, -3);
+        }
+        elseif($intolerance->extension_id != null)
+        {
+            $sourceModel = Extension::findOrFail($intolerance->extension_id);
+            $sourceUser=
+                [
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
+                ];
+            $content = Storage::get($sourceModel->extension_path);
+            $type = substr($sourceModel->post_path, -3);
         }
 
         return view('moderations.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'intolerance'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'intolerance', 'sourceUser', 'content'))
+            ->with('type', $type);
     }
 
     /**
@@ -133,16 +150,32 @@ class ModerationController extends Controller
             return redirect()->back();
         }
 
-        //Get user photo
-        if ($user->photo_path == '') {
-
-            $photoPath = '';
-        } else {
-            $photoPath = $user->photo_path;
+        if($intolerance->post_id != null)
+        {
+            $sourceModel = Post::findOrFail($intolerance->post_id);
+            $sourceUser=
+                [
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
+                ];
+            $content = Storage::get($sourceModel->post_path);
+            $type = substr($sourceModel->post_path, -3);
         }
+        elseif($intolerance->extension_id != null)
+        {
+            $sourceModel = Extension::findOrFail($intolerance->extension_id);
+            $sourceUser=
+                [
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
+                ];
+            $content = Storage::get($sourceModel->extension_path);
+            $type = substr($sourceModel->post_path, -3);
+        }
+
         return view('moderations.show')
-            ->with(compact('user', 'moderation', 'intolerance', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'moderation', 'intolerance', 'profilePosts', 'profileExtensions', 'sourceUser', 'content'))
+            ->with('type', $type);
     }
 
     /**
@@ -159,16 +192,32 @@ class ModerationController extends Controller
         $moderation = $this->moderation->findOrFail($id);
         $intolerance = Intolerance::where('id', $moderation->intolerance_id)->first();
 
-        //Get user photo
-        if ($user->photo_path == '') {
-
-            $photoPath = '';
-        } else {
-            $photoPath = $user->photo_path;
+        if($intolerance->post_id != null)
+        {
+            $sourceModel = Post::findOrFail($intolerance->post_id);
+            $sourceUser=
+                [
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
+                ];
+            $content = Storage::get($sourceModel->post_path);
+            $type = substr($sourceModel->post_path, -3);
         }
+        elseif($intolerance->extension_id != null)
+        {
+            $sourceModel = Extension::findOrFail($intolerance->extension_id);
+            $sourceUser=
+                [
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
+                ];
+            $content = Storage::get($sourceModel->extension_path);
+            $type = substr($sourceModel->post_path, -3);
+        }
+
         return view('moderations.edit')
-            ->with(compact('user', 'moderation', 'intolerance', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'moderation', 'intolerance', 'profilePosts', 'profileExtensions', 'sourceUser', 'content'))
+            ->with('type', $type);
     }
 
     /**

@@ -71,6 +71,14 @@ class IntoleranceController extends Controller
                 flash()->overlay('You have already posted intolerance for this post');
                 return redirect('intolerances/' . $intolerance->id);
             }
+            $sourceModel = Post::findOrFail($sources['post_id']);
+            $sourceUser=
+                [
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
+                ];
+            $content = Storage::get($sourceModel->post_path);
+            $type = substr($sourceModel->post_path, -3);
         }
         elseif(isset($sources['extension_id']))
         {
@@ -78,6 +86,14 @@ class IntoleranceController extends Controller
                 flash()->overlay('You have already posted intolerance for this extension');
                 return redirect('intolerances/' . $intolerance->id);
             }
+            $sourceModel = Extension::findOrFail($sources['extension_id']);
+            $sourceUser=
+                [
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
+                ];
+            $content = Storage::get($sourceModel->extension_path);
+            $type = substr($sourceModel->post_path, -3);
         }
         elseif(isset($sources['question_id']))
         {
@@ -88,32 +104,13 @@ class IntoleranceController extends Controller
             }
         }
 
-        if(isset($sources['post_id']))
-        {
-            $post = Post::findOrFail($sources['post_id']);
-            $sourceUser=
-                [
-                    'id' => $post->user_id,
-                    'handle' => $post->user->handle
-                ];
-            $content = Storage::get($post->post_path);
-        }
-        elseif(isset($sources['extension_id']))
-        {
-            $extension = Extension::findOrFail($sources['extension_id']);
-            $sourceUser=
-                [
-                    'id' => $extension->user_id,
-                    'handle' => $extension->user->handle
-                ];
-            $content = Storage::get($extension->extension_path);
-        }
 
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
         return view('intolerances.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'sources', 'sourceUser', 'content'));
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'sources', 'sourceUser', 'content'))
+            ->with('type', $type);
     }
 
     /**
@@ -169,27 +166,30 @@ class IntoleranceController extends Controller
 
         if($intolerance->post_id != null)
         {
-            $post = Post::findOrFail($intolerance->post_id);
+            $sourceModel = Post::findOrFail($intolerance->post_id);
             $sourceUser=
                 [
-                    'id' => $post->user_id,
-                    'handle' => $post->user->handle
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
                 ];
-            $content = Storage::get($post->post_path);
+            $content = Storage::get($sourceModel->post_path);
+            $type = substr($sourceModel->post_path, -3);
         }
         elseif($intolerance->extension_id != null)
         {
-            $extension = Extension::findOrFail($intolerance->extension_id);
+            $sourceModel = Extension::findOrFail($intolerance->extension_id);
             $sourceUser=
                 [
-                    'id' => $extension->user_id,
-                    'handle' => $extension->user->handle
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
                 ];
-            $content = Storage::get($extension->extension_path);
+            $content = Storage::get($sourceModel->extension_path);
+            $type = substr($sourceModel->post_path, -3);
         }
 
         return view ('intolerances.show')
-            ->with(compact('user', 'intolerance', 'profilePosts','profileExtensions', 'sourceUser', 'content'));
+            ->with(compact('user', 'intolerance', 'profilePosts','profileExtensions', 'sourceUser', 'content'))
+            ->with('type', $type);
     }
 
     /**
@@ -207,28 +207,31 @@ class IntoleranceController extends Controller
 
         if($intolerance->post_id != null)
         {
-            $post = Post::findOrFail($intolerance->post_id);
+            $sourceModel = Post::findOrFail($intolerance->post_id);
             $sourceUser=
                 [
-                    'id' => $post->user_id,
-                    'handle' => $post->user->handle
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
                 ];
-            $content = Storage::get($post->post_path);
+            $content = Storage::get($sourceModel->post_path);
+            $type = substr($sourceModel->post_path, -3);
         }
         elseif($intolerance->extension_id != null)
         {
-            $extension = Extension::findOrFail($intolerance->extension_id);
+            $sourceModel = Extension::findOrFail($intolerance->extension_id);
             $sourceUser=
                 [
-                    'id' => $extension->user_id,
-                    'handle' => $extension->user->handle
+                    'id' => $sourceModel->user_id,
+                    'handle' => $sourceModel->user->handle
                 ];
-            $content = Storage::get($extension->extension_path);
+            $content = Storage::get($sourceModel->extension_path);
+            $type = substr($sourceModel->post_path, -3);
         }
 
 
         return view ('intolerances.edit')
-            ->with(compact('user', 'intolerance', 'profilePosts','profileExtensions', 'sourceUser', 'content'));
+            ->with(compact('user', 'intolerance', 'profilePosts','profileExtensions', 'sourceUser', 'content'))
+            ->with('type', $type);
     }
 
     /**

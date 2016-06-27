@@ -3,11 +3,8 @@
     Beacon Review
 @stop
 
-@section('centerMenu')
-    <h2>{{ $beaconRequest->name }}</h2>
-@stop
-
 @section('centerText')
+    <h2>{{ $beaconRequest->name }}</h2>
     <div class = "formLabel">
         Belief:
     </div>
