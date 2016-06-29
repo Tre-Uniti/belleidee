@@ -26,7 +26,7 @@ class QuestionController extends Controller
     public function __construct(Question $question)
     {
         $this->middleware('auth', ['except' => 'show']);
-        $this->middleware('admin',['only' => ['create, edit, update, store']]);
+        $this->middleware('guardian',['only' => ['create, edit, update, store']]);
         $this->question = $question;
     }
 

@@ -40,7 +40,7 @@ class BeaconController extends Controller
 
     public function __construct(Beacon $beacon)
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['show', 'guide', 'posts', 'extensions']]);
         $this->middleware('admin', ['only' => 'create', 'store', 'update', 'edit', 'deactivate', 'destroy']);
         $this->beacon = $beacon;
     }
@@ -229,7 +229,19 @@ class BeaconController extends Controller
      */
     public function show($beacon_tag)
     {
-        $user = Auth::user();
+
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+            $user->handle = 'Guest';
+        }
+
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
@@ -592,7 +604,17 @@ class BeaconController extends Controller
      */
     public function posts($id)
     {
-        $user = Auth::user();
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+            $user->handle = 'Guest';
+        }
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
@@ -650,11 +672,31 @@ class BeaconController extends Controller
         }
 
         $user = User::where('id', '=', $beacon->guide)->first();
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $viewUser = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $viewUser = User::where('handle', '=', 'Transferred')->first();
+            $viewUser->handle = 'Guest';
+        }
 
         if(!count($user))
         {
             flash()->overlay('Guide User does not exist for ' . $beacon->beacon_tag . ', please submit a support ticket');
             return redirect('supports/create');
+        }
+        if($user->photo_path == '')
+        {
+
+            $sourcePhotoPath = '';
+        }
+        else
+        {
+            $sourcePhotoPath = $user->photo_path;
         }
         $posts = Post::where('user_id', '=', $user->id)->where('beacon_tag', '=', $beacon->beacon_tag)->paginate(10);
 
@@ -664,7 +706,8 @@ class BeaconController extends Controller
         Event::fire(New BeaconViewed($beacon));
 
         return view('beacons.guide')
-                ->with(compact('user', 'beacon', 'posts', 'profilePosts', 'profileExtensions'));
+                ->with(compact('user', 'viewUser', 'beacon', 'posts', 'profilePosts', 'profileExtensions'))
+                ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
     /**
@@ -690,8 +733,18 @@ class BeaconController extends Controller
             flash()->overlay('No active Idee Beacon with this id');
             return redirect()->back();
         }
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+            $user->handle = 'Guest';
+        }
 
-        $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
@@ -718,13 +771,19 @@ class BeaconController extends Controller
         $profileExtensions = getProfileExtensions($user);
 
         $beaconUrl = url('/beacons/'. $beacon->beacon_tag);
+        $beaconSocialUrl = "<a href = ". '"'. "$beaconUrl". '"'."><img src= ". '"'. "Add image location". '"'. "></a>";
+        $imageLink = "<img src= ". '"'. "https://yoursite.com/images/ideeSocial.png". '"'. ">";
+
+        $beaconSocialUrl = htmlspecialchars($beaconSocialUrl);
+        $imageLink = htmlspecialchars($imageLink);
 
         $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
 
         return view('beacons.social')
                 ->with(compact('user', 'beacon', 'profilePosts', 'profileExtensions'))
                 ->with('beaconUrl', $beaconUrl)
+                ->with('beaconSocialUrl', $beaconSocialUrl)
+                ->with('imageLink', $imageLink)
                 ->with('location', $location);
-
     }
 }

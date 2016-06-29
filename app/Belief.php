@@ -10,4 +10,9 @@ class Belief extends Model
         'name',
         'description',
     ];
+
+    public function legacy()
+    {
+        return $this->hasOne('app/legacy');
+    }
 }

@@ -9,6 +9,7 @@ use App\Http\Requests\PromotionRequest;
 use App\Promotion;
 use App\Sponsor;
 use App\Sponsorship;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -77,12 +78,21 @@ class PromotionController extends Controller
      */
     public function show($id)
     {
-        $user = Auth::user();
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+            $user->handle = 'Guest';
+        }
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
         $promotion = Promotion::findOrFail($id);
-
 
         if($user->type < 2)
         {

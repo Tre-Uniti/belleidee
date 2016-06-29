@@ -142,9 +142,6 @@ Route::get('extensions/extend/list/{id}', 'ExtensionController@extendList');
 Route::get('extensions/listElevation/{id}', 'ExtensionController@listElevation');
 Route::resource('extensions', 'ExtensionController');
 
-//Legacy Routes (Resource)
-Route::resource('legacy', 'LegacyController');
-
 //Question Routes (Resource)
 Route::get('questions/elevate/{id}', 'QuestionController@elevateQuestion');
 Route::get('questions/search', 'QuestionController@search');
@@ -164,6 +161,12 @@ Route::get('intolerances/extension/{source}', 'IntoleranceController@intolerantE
 Route::get('intolerances/userIndex/{id}', 'IntoleranceController@userIndex');
 Route::get('intolerances/beacon/{id}', 'IntoleranceController@beaconIndex');
 Route::resource('intolerances', 'IntoleranceController');
+
+//Legacy Routes (resource)
+Route::resource('legacies', 'LegacyController');
+
+//Legacy Posts Routes (resource)
+Route::resource('legacyPosts', 'LegacyPostController');
 
 //Moderation routes (resource)
 Route::get('moderator', 'ModeratorController@portal');

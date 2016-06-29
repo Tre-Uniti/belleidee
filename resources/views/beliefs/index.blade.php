@@ -25,7 +25,7 @@
 @stop
 
 @section('centerFooter')
-    @if($user->type > 1)
+    @if($user->type > 2)
         <a href = {{ url('/beliefs/create') }}><button type = "button" class = "navButton">Create</button></a>
     @endif
 @stop

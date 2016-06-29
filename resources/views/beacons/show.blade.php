@@ -28,7 +28,7 @@
                     <a href="{{ url('/intolerances/beacon/'. $beacon->id) }}"><button type = "button" class = "indexButton">Intolerance</button></a>
                 </div>
                 <div class = "indexNav">
-                   <a href = "{{ url('/beacons/social/'. $beacon->id) }}"><button type = "button" class = "indexButton">Generate Social Button for your beacon</button></a>
+                   <a href = "{{ url('/beacons/social/'. $beacon->id) }}"><button type = "button" class = "indexButton">Add Social Button/Link</button></a>
                 </div>
             @endif
             <p>Tags this month ({{ $beacon->beacon_tag }}): {{ $beacon->tag_usage }}</p>

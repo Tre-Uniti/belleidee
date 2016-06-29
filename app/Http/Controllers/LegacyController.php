@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Belief;
 use App\Extension;
+use function App\Http\getProfileExtensions;
+use function App\Http\getProfilePosts;
 use App\Legacy;
 use App\Post;
+use App\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -17,8 +22,9 @@ class LegacyController extends Controller
 
     public function __construct(Legacy $legacy)
     {
-        $this->middleware('auth');
-        $this->middleware('admin', ['except' => 'index']);
+
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('guardian', ['only' => 'create', 'store', 'edit', 'update', 'destroy']);
         $this->legacy = $legacy;
     }
 
@@ -29,9 +35,25 @@ class LegacyController extends Controller
      */
     public function index()
     {
-        flash()->overlay('Legacy content will appear once more users become admins');
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+            $user->handle = 'Guest';
+        }
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
 
-        return redirect()->back();
+
+        $legacies = Legacy::latest()->get();
+
+        return view ('legacies.index')
+            ->with(compact('user', 'legacies', 'profilePosts','profileExtensions'));
     }
 
     /**
@@ -41,7 +63,12 @@ class LegacyController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        return view ('legacies.create')
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'));
     }
 
     /**
@@ -52,7 +79,38 @@ class LegacyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try
+        {
+            $user = User::where('handle', '=', ($request['handle']))->firstOrFail();
+            if($user->type < 2)
+            {
+                flash()->overlay('User must be at least an admin to post for Legacy');
+                return redirect()->back();
+            }
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('No user with this handle');
+            return redirect()->back();
+        }
+
+        try
+        {
+            $belief = Belief::where('name', '=', ($request['belief']))->firstOrFail();
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('No belief with this name');
+            return redirect()->back();
+        }
+
+        $legacy = new Legacy();
+        $legacy->user()->associate($user);
+        $legacy->belief()->associate($belief);
+        $legacy->save();
+
+        flash()->overlay('Legacy successfully added');
+        return redirect('/legacies/'. $legacy->id);
     }
 
     /**
@@ -63,7 +121,24 @@ class LegacyController extends Controller
      */
     public function show($id)
     {
-        //
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+            $user->handle = 'Guest';
+        }
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $legacy = Legacy::where('id', '=', $id)->first();
+
+        return view ('legacies.show')
+            ->with(compact('user', 'legacy', 'profilePosts','profileExtensions'));
     }
 
     /**
@@ -74,7 +149,14 @@ class LegacyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $legacy = Legacy::findOrFail($id);
+
+        return view ('legacies.edit')
+            ->with(compact('user', 'legacy', 'profilePosts','profileExtensions'));
     }
 
     /**
@@ -86,7 +168,12 @@ class LegacyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $legacy = Legacy::findOrFail($id);
+        $legacy->update($request->all());
+
+        flash()->overlay('Legacy has been updated');
+
+        return redirect('legacies/'. $legacy->id);
     }
 
     /**
@@ -97,7 +184,12 @@ class LegacyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $legacy = Legacy::findOrFail($id);
+
+        $legacy->delete();
+
+        flash()->overlay('Legacy has been deleted');
+        return redirect('legacies');
     }
 
 

@@ -7,7 +7,7 @@
 @stop
 
 @section('centerText')
-    <h2>{{ $beacon->name }}</h2>
+    <h2>Social Button for <a href = "{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->name }}</a></h2>
     <div class = "indexNav">
         <a href="{{ url('/beliefs/'. $beacon->belief) }}"><button type = "button" class = "indexButton">{{ $beacon->belief }}</button></a>
         <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
@@ -31,13 +31,22 @@
         <p>Tags this month ({{ $beacon->beacon_tag }}): {{ $beacon->tag_usage }}</p>
     </div>
 
-    <h4>Link to your beacon by following these steps:</h4>
-    <ul>
-        <li>Download desired logo/image</li>
-        <li>Copy and paste the code into your website</li>
-        <li>Modify the code to update the image location on your server</li>
-    </ul>
-    <p>Quick Link to your Beacon: {{ $beaconUrl }}</p>
+        <h4>1.  Download desired logo/image</h4>
+        <p><a href = "{{secure_asset('img/ideeSocial.png')}}"><img src={{secure_asset('img/ideeSocial.png')}}></a><a href = "{{secure_asset('img/ideeSocial2.png')}}"><img src={{secure_asset('img/ideeSocial2.png')}}></a></p>
+        <h4>2.  Copy and paste the code into your website</h4>
+
+            <div class = "formDataContainer">
+                <p>{{$beaconSocialUrl}}</p>
+            </div>
+
+        <h4>3.  Modify the code to update the image location on your server</h4>
+
+            <div class = "formDataContainer">
+                <p>{{$imageLink}}</p>
+            </div>
+
+    <p>Or provide a direct link to your Beacon:</p>
+    <p><a href = "{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beaconUrl }}</a></p>
 @stop
 
 @section('centerFooter')

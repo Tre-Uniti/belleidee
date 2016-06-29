@@ -39,4 +39,9 @@ class Elevation extends Model
     {
         return $this->belongsTo('App\Question');
     }
+
+    public function legacyPost()
+    {
+        return $this->belongsTo('App\LegacyPost');
+    }
 }

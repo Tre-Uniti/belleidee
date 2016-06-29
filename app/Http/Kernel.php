@@ -33,6 +33,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'filterPost' => \App\Http\Middleware\FormatPost::class,
         'admin' => \App\Http\Middleware\RedirectIfNotAdmin::class,
+        'guardian' => \App\Http\Middleware\RedirectIfNotGuardian::class,
         'moderator' => \App\Http\Middleware\RedirectIfNotModerator::class,
         'postOwner' => \App\Http\Middleware\RedirectIfNotPostOwner::class,
         'extensionOwner' => \App\Http\Middleware\RedirectIfNotExtensionOwner::class,

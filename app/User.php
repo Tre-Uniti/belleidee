@@ -107,6 +107,11 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasOne('App\Sponsorship');
     }
 
+    public function legacy()
+    {
+        return $this->hasOne('App\Legacy');
+    }
+
 
     /*
      * Get the bookmarks associated with the user
