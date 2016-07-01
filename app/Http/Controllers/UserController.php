@@ -51,11 +51,12 @@ class UserController extends Controller
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
+        $sponsor = getSponsor($user);
         $users = filterContentLocation($user, 0, 'User');
         $location = getLocation();
 
         return view ('users.index')
-            ->with(compact('user', 'users', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'users', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('location', $location);
     }
 
@@ -109,18 +110,7 @@ class UserController extends Controller
             $sourcePhotoPath = $user->photo_path;
         }
 
-        //Get and set user's sponsor logo
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            $sponsor->where('id', $sponsor->id)
-                ->update(['views' => $sponsor->views + 1]);
-        }
-        else
-        {
-            $sponsor = NULL;
-        }
+        $sponsor = getSponsor($user);
         //Get Beacons of post user
         $userBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
 

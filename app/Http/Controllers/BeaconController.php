@@ -16,6 +16,7 @@ use function App\Http\getCountries;
 use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
+use function App\Http\getSponsor;
 use App\Http\Requests\CreateBeaconRequest;
 use App\Http\Requests\EditBeaconRequest;
 use App\Intolerance;
@@ -55,11 +56,12 @@ class BeaconController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $sponsor = getSponsor($user);
         $beacons = filterContentLocation($user, 1, 'Beacon');
         $location = getLocation();
         
         return view ('beacons.index')
-            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('location', $location);
     }
 

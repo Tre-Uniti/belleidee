@@ -7,6 +7,7 @@ use App\Belief;
 use App\Extension;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
+use function App\Http\getSponsor;
 use App\Post;
 use App\User;
 use Illuminate\Http\Request;
@@ -41,12 +42,13 @@ class BeliefController extends Controller
         }
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
+        $sponsor = getSponsor($user);
 
 
         $beliefs = Belief::latest()->get();
 
         return view ('beliefs.index')
-            ->with(compact('user', 'beliefs', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'beliefs', 'profilePosts','profileExtensions', 'sponsor'));
     }
 
     /**
@@ -59,9 +61,10 @@ class BeliefController extends Controller
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
+        $sponsor = getSponsor($user);
 
         return view ('beliefs.create')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'));
     }
 
     /**
@@ -100,11 +103,12 @@ class BeliefController extends Controller
         }
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
+        $sponsor = getSponsor($user);
 
         $belief = Belief::where('name', '=', $name)->first();
 
         return view ('beliefs.show')
-            ->with(compact('user', 'belief', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'belief', 'profilePosts','profileExtensions', 'sponsor'));
     }
 
     /**
@@ -118,11 +122,12 @@ class BeliefController extends Controller
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
+        $sponsor = getSponsor($user);
 
         $belief = Belief::findOrFail($id);
 
         return view ('beliefs.edit')
-            ->with(compact('user', 'belief', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'belief', 'profilePosts','profileExtensions', 'sponsor'));
     }
 
     /**
@@ -169,10 +174,11 @@ class BeliefController extends Controller
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
+        $sponsor = getSponsor($user);
         $beacons = Beacon::where('belief', $belief)->where('status', '!=', 'deactivated')->latest()->paginate(10);
 
         return view ('beliefs.beacons')
-            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('belief', $belief);
     }
 
@@ -187,10 +193,11 @@ class BeliefController extends Controller
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
+        $sponsor = getSponsor($user);
         $posts = Post::where('belief', $belief)->latest()->paginate(10);
 
         return view ('beliefs.posts')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('belief', $belief);
     }
 
@@ -205,10 +212,11 @@ class BeliefController extends Controller
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
+        $sponsor = getSponsor($user);
         $extensions = Extension::where('belief', $belief)->latest()->paginate(10);
 
         return view ('beliefs.extensions')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('belief', $belief);
     }
 

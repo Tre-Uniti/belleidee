@@ -13,6 +13,6 @@ class Belief extends Model
 
     public function legacy()
     {
-        return $this->hasOne('app/legacy');
+        return $this->hasOne('App\Legacy');
     }
 }

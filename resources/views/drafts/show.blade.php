@@ -7,11 +7,8 @@
     Show Draft
 @stop
 
-@section('centerMenu')
-    <h2>{{ $draft->title }}</h2>
-@stop
-
 @section('centerText')
+    <h2>{{ $draft->title }}</h2>
     <div class = "indexNav">
         <a href="{{ action('BeliefController@show', $draft->belief) }}"><button type = "button" class = "indexButton">{{ $draft->belief }}</button></a>
         <a href="{{ url('/beacons/'.$draft->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $draft->beacon_tag }}</button></a>

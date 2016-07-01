@@ -5,7 +5,7 @@
 @section('login')
     <h3>What is Belle-Idee?</h3>
     <ul class = "tour">
-        <li>A venue for ideas ,inspirations, and influences</li>
+        <li>A place to share spiritual ideas, inspirations, and experiences</li>
         <li>Integrated with local and global Beacons</li>
         <li>Powered by Laravel & Open Source</li>
         <li>Moderated based on respect and tolerance</li>

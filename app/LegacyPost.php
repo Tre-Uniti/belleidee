@@ -8,7 +8,9 @@ class LegacyPost extends Model
 {
     protected $fillable = [
         'title',
-        'post_path'
+        'belief',
+        'body',
+        'source_path'
     ];
 
     public function legacy()

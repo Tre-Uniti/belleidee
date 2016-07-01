@@ -17,6 +17,7 @@
 @section('centerFooter')
     <a href="{{ url('/beliefs/') }}"><button type = "button" class = "navButton">Belief Directory</button></a>
     @if($user->type > 2)
+        <a href="{{ url('/legacies/'.$belief->legacy->id) }}"><button type = "button" class = "navButton">Legacy</button></a>
         <a href="{{ url('/beliefs/'.$belief->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
     @endif
 @stop

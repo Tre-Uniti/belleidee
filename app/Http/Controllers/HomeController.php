@@ -700,4 +700,17 @@ class HomeController extends Controller
         flash()->overlay('GPS added');
         return redirect('home');
     }
+
+    /*
+     * About Idee page
+     */
+    public function about()
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        return view('pages.about')
+            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+    }
 }

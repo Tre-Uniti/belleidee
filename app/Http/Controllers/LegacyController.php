@@ -169,8 +169,34 @@ class LegacyController extends Controller
     public function update(Request $request, $id)
     {
         $legacy = Legacy::findOrFail($id);
-        $legacy->update($request->all());
+        try
+        {
+            $user = User::where('handle', '=', ($request['handle']))->firstOrFail();
+            if($user->type < 2)
+            {
+                flash()->overlay('User must be at least an admin to post for Legacy');
+                return redirect()->back();
+            }
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('No user with this handle');
+            return redirect()->back();
+        }
 
+        try
+        {
+            $belief = Belief::where('name', '=', ($request['belief']))->firstOrFail();
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('No belief with this name');
+            return redirect()->back();
+        }
+
+        $legacy->user()->associate($user);
+        $legacy->belief()->associate($belief);
+        $legacy->save();
         flash()->overlay('Legacy has been updated');
 
         return redirect('legacies/'. $legacy->id);

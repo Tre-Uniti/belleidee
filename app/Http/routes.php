@@ -227,6 +227,7 @@ Route::get('country', 'HomeController@country');
 Route::get('global', 'HomeController@globe');
 Route::get('newLocation', 'HomeController@newLocation');
 Route::get('addLocation', 'HomeController@addLocation');
+Route::get('about', 'HomeController@about');
 //Route::get('getContent/{id}', 'HomeController@getContent');
 Route::get('addGPS', 'HomeController@addGPS');
 

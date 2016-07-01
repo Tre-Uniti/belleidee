@@ -12,11 +12,13 @@
         <a href="{{ url('/frequency') }}"><button type = "button" class = "indexButton">Email Frequency</button></a>
     </div>
     <div class = "indexNav">
-        <b>Account:</b>
+        <b>Location:</b>
     </div>
     <div class = "indexNav">
-        <a href = "{{ url('/users/deletion') }}"><button type = "button" class = "indexButton">Delete Account</button></a>
-        <a href="{{ url('/home') }}"><button type = "button" class = "indexButton">Joined: {{$user->created_at->format('M-d-Y')}}</button></a>
+        <a href="{{ url('/newLocation') }}"><button type = "button" class = "indexButton">Custom</button></a>
+        <a href="{{ url('/local') }}"><button type = "button" class = "indexButton">Local</button></a>
+        <a href="{{ url('/country') }}"><button type = "button" class = "indexButton">Country</button></a>
+        <a href="{{ url('/global') }}"><button type = "button" class = "indexButton">Global</button></a>
     </div>
     <div class = "indexNav">
         <b>Sponsor:</b>
@@ -32,15 +34,14 @@
     <div class = "indexNav">
         <a href="{{ url('/gettingStarted') }}"><button type = "button" class = "indexButton">Getting Started</button></a>
         <a href="{{ url('/tutorials') }}"><button type = "button" class = "indexButton">Tutorials</button></a>
+        <a href="{{ url('/about') }}"><button type = "button" class = "indexButton">About Idee</button></a>
     </div>
     <div class = "indexNav">
-        <b>Location:</b>
+        <b>Account:</b>
     </div>
     <div class = "indexNav">
-        <a href="{{ url('/newLocation') }}"><button type = "button" class = "indexButton">Custom</button></a>
-        <a href="{{ url('/local') }}"><button type = "button" class = "indexButton">Local</button></a>
-        <a href="{{ url('/country') }}"><button type = "button" class = "indexButton">Country</button></a>
-        <a href="{{ url('/global') }}"><button type = "button" class = "indexButton">Global</button></a>
+        <a href = "{{ url('/users/deletion') }}"><button type = "button" class = "indexButton">Delete Account</button></a>
+        <a href="{{ url('/home') }}"><button type = "button" class = "indexButton">Joined: {{$user->created_at->format('M-d-Y')}}</button></a>
     </div>
 
     <div class = "indexNav">

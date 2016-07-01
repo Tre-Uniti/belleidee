@@ -4,6 +4,7 @@
 @stop
 
 @section('centerText')
+    <h2>Create Legacy</h2>
     @include ('errors.list')
 
     {!! Form::open(['url' => 'legacies']) !!}

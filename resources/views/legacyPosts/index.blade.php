@@ -4,21 +4,21 @@
 @stop
 
 @section('centerText')
-    <h2>Legacy Directory</h2>
+    <h2>Legacy Posts</h2>
         <div class = "indexLeft">
-            <h4>Legacy</h4>
+            <h4>Title</h4>
         </div>
         <div class = "indexRight">
-            <h4>Guide</h4>
+            <h4>Belief</h4>
         </div>
 
-        @foreach($legacies as $legacy)
+        @foreach($legacyPosts as $legacyPost)
             <div class = "listResource">
                 <div class = "indexLeft">
-                    <a href = {{ url('/legacies/'. $legacy->id) }}><button type = "button" class = "interactButton">{{ $legacy->belief->name }}</button></a>
+                    <a href = {{ url('/legacyPosts/'. $legacyPost->id) }}><button type = "button" class = "interactButton">{{ $legacyPost->title }}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href = {{ url('/users/'. $legacy->user->id) }}><button type = "button" class = "interactButton">{{ $legacy->user->handle }}</button></a>
+                    <a href = {{ url('/users/'. $legacyPost->user_id) }}><button type = "button" class = "interactButton">{{ $legacyPost->legacy->belief->name }}</button></a>
                 </div>
             </div>
         @endforeach

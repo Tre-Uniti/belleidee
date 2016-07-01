@@ -1,9 +1,10 @@
 @extends('app')
 @section('siteTitle')
-    Edit Belief
+    Edit Legacy
 @stop
 
 @section('centerText')
+    <h2>Edit Legacy</h2>
     <div class = "errors">
         @include ('errors.list')
     </div>
