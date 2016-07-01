@@ -56,4 +56,5 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     @if ($user->type > 2)
         <a href="{{ url('/legacies/') }}"><button type = "button" class = "navButton">Legacies</button></a>
     @endif
+    <a href="{{ url('/extensions/legacy/'. $legacy->id) }}"><button type = "button" class = "navButton">Extend</button></a>
 @stop

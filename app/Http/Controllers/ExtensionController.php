@@ -14,6 +14,8 @@ use function App\Http\filterContentLocationSearch;
 use function App\Http\filterContentLocationTime;
 use function App\Http\getLocation;
 use App\Intolerance;
+use App\Legacy;
+use App\LegacyPost;
 use App\Mailers\NotificationMailer;
 use App\Moderation;
 use App\Notification;
@@ -113,9 +115,18 @@ class ExtensionController extends Controller
             $sourceOriginalPath = NULL;
             $content = $sourceModel->question;
         }
+        elseif(isset($sources['legacy_id']))
+        {
+            $sourceModel = LegacyPost::findOrFail($sources['legacyPost_id']);
+            $type = 'txt';
+            $sourceUser=
+                [
+                    'belief' => $sourceModel->legacy->belief->name
+                ];
+            $sourceOriginalPath = NULL;
+            $content = Storage::get($sourceModel->source_path);
+        }
 
-
-        
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
         $date = Carbon::now()->format('M-d-Y');
@@ -169,6 +180,7 @@ class ExtensionController extends Controller
         $user->update();
 
         //Store body text at AWS insert into db with extenception and/or post
+        //Check if extension is extending another extension
         if(isset($sources['extenception']))
         {
             Storage::put($path, $inspiration);
@@ -228,6 +240,64 @@ class ExtensionController extends Controller
                 flash()->overlay('Your extension has been created');
                 return redirect('extensions/'. $extension->id);
             }
+            if(isset($sources['legacyPost_id']))
+            {
+                $sourceId = $sources['legacyPost_id'];
+                $request = array_add($request, 'legacy_id', $sourceId);
+                $request = array_add($request, 'extenception', $sources['extenception']);
+                $request = array_add($request, 'source_user', $sources['user_id']);
+
+                //Add 1 extension to original question
+                $legacyPost = LegacyPost::findOrFail($sourceId);
+                $legacyPost->where('id', $legacyPost->id)
+                    ->update(['extension' => $legacyPost->extension + 1]);
+
+                //Add 1 extension to source extension
+                $sourceExtension = Extension::findOrFail($sources['extenception']);
+                $sourceExtension->where('id', $sourceExtension->id)
+                    ->update(['extension' => $sourceExtension->extension + 1]);
+
+                //Add 1 extension to source user of extension
+                $sourceUser = User::findOrFail($sourceExtension->user_id);
+                $sourceUser->where('id', $sourceUser->id)
+                    ->update(['extension' => $sourceUser->extension + 1]);
+
+                $extension = new Extension($request->except('body'));
+                //If localized get Beacon coordinates and add to extension
+                if($request['beacon_tag'] != 'No-Beacon')
+                {
+                    $beacon = Beacon::where('beacon_tag', '=', $request['beacon_tag'])->firstOrFail();
+                    $lat = $beacon->lat;
+                    $long = $beacon->long;
+                    $extension->lat = $lat;
+                    $extension->long = $long;
+
+                    $beacon->tag_usage = $beacon->tag_usage + 1;
+                    $beacon->update();
+                }
+
+                $extension->user()->associate($user);
+                $extension->save();
+
+                //Create Notification for Source user
+                $notification = new Notification();
+                $notification->type = 'Extended';
+                $notification->source_type = 'Extension';
+                $notification->source_id = $extension->id;
+                $notification->title = $extension->title;
+                $notification->source_user = $sourceUser->id;
+                $notification->user()->associate($user);
+                $notification->save();
+
+                //Send mail to source user if their frequency is Null or above 1
+                if($sourceUser->frequency > 1)
+                {
+                    $mailer->sendExtenceptionNotification($extension);
+                }
+
+                flash()->overlay('Your extension has been created');
+                return redirect('extensions/'. $extension->id);
+            }
             elseif(isset($sources['post_id']))
             {
                 $sourceId = $sources['post_id'];
@@ -262,6 +332,9 @@ class ExtensionController extends Controller
                     $long = $beacon->long;
                     $extension->lat = $lat;
                     $extension->long = $long;
+
+                    $beacon->tag_usage = $beacon->tag_usage + 1;
+                    $beacon->update();
                 }
 
                 $extension->user()->associate($user);
@@ -306,6 +379,9 @@ class ExtensionController extends Controller
                 $long = $beacon->long;
                 $extension->lat = $lat;
                 $extension->long = $long;
+
+                $beacon->tag_usage = $beacon->tag_usage + 1;
+                $beacon->update();
             }
 
             $extension->user()->associate($user);
@@ -325,7 +401,38 @@ class ExtensionController extends Controller
             flash()->overlay('Your answer has been created!');
             return redirect('extensions/'. $extension->id);
         }
-        
+        //Extension is directly from Legacy Post
+        if(isset($sources['legacyPost_id']))
+        {
+            $sourceId = $sources['legacyPost_id'];
+            $request = array_add($request, 'legacy_id', $sourceId);
+            $request = array_add($request, 'source_user', $sources['legacy_id']);
+
+            //Add 1 extension to original question
+            $legacyPost = LegacyPost::findOrFail($sourceId);
+            $legacyPost->where('id', $legacyPost->id)
+                ->update(['extension' => $legacyPost->extension + 1]);
+
+            $extension = new Extension($request->except('body'));
+            //If localized get Beacon coordinates and add to extension
+            if($request['beacon_tag'] != 'No-Beacon')
+            {
+                $beacon = Beacon::where('beacon_tag', '=', $request['beacon_tag'])->firstOrFail();
+                $lat = $beacon->lat;
+                $long = $beacon->long;
+                $extension->lat = $lat;
+                $extension->long = $long;
+
+                $beacon->tag_usage = $beacon->tag_usage + 1;
+                $beacon->update();
+            }
+
+            $extension->user()->associate($user);
+            $extension->save();
+
+            flash()->overlay('Your extension has been created');
+            return redirect('extensions/'. $extension->id);
+        }
         //Extension is directly off of Post (no extenception)
         elseif(isset($sources['post_id']))
         {
@@ -356,6 +463,9 @@ class ExtensionController extends Controller
             $long = $beacon->long;
             $extension->lat = $lat;
             $extension->long = $long;
+
+            $beacon->tag_usage = $beacon->tag_usage + 1;
+            $beacon->update();
         }
 
         $extension->user()->associate($user);
@@ -993,7 +1103,7 @@ class ExtensionController extends Controller
         return redirect('extensions/create');
     }
 
-    //Used to setup extension of extension
+    //Used to setup extension of question
     public function extendQuestion($id)
     {
         $user = Auth::user();
@@ -1005,6 +1115,17 @@ class ExtensionController extends Controller
             return redirect('extensions/'. $extension->id);
         }
         $fullSource = ['type' => 'question', 'user_id' => $sourceQuestion->user_id, 'question_id' => $sourceQuestion->id, 'question' => $sourceQuestion->question, 'beacon_tag' => 'No-Beacon'];
+        Session::put('sources', $fullSource);
+
+        return redirect('extensions/create');
+    }
+
+    //Used to setup extension of legacy
+    public function extendLegacy($id)
+    {
+        $sourceLegacy = LegacyPost::findOrFail($id);
+        $legacy = Legacy::where('id', '=', $sourceLegacy->legacy->id)->first();
+        $fullSource = ['type' => 'legacy', 'legacy_id' => $legacy->id,  'legacyPost_id' => $sourceLegacy->id, 'legacy_title' => $sourceLegacy->title, 'beacon_tag' => 'No-Beacon'];
         Session::put('sources', $fullSource);
 
         return redirect('extensions/create');

@@ -135,6 +135,7 @@ Route::get('extensions/user/elevated/{id}', 'ExtensionController@userTopElevated
 Route::get('extensions/user/extended/{id}', 'ExtensionController@userMostExtended');
 Route::get('extensions/elevate/{id}', 'ExtensionController@elevateExtension');
 Route::get('extensions/question/{source}', 'ExtensionController@extendQuestion');
+Route::get('extensions/legacy/{source}', 'ExtensionController@extendLegacy');
 Route::get('extensions/post/{source}', 'ExtensionController@extendPost');
 Route::get('extensions/extenception/{source}', 'ExtensionController@extenception');
 Route::get('extensions/post/list/{id}', 'ExtensionController@postList');

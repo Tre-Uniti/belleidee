@@ -11,6 +11,7 @@ use function App\Http\getSponsor;
 use App\Legacy;
 use App\LegacyPost;
 use App\Post;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

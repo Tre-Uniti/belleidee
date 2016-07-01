@@ -72,7 +72,6 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
 
 @section('centerFooter')
     <div id = "centerFooter">
-
         @if($post->user_id == Auth::id())
             <a href="{{ url('/posts/'.$post->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
         @else
