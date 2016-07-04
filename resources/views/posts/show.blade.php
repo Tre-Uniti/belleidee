@@ -59,8 +59,9 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     </div>
     @if($type != 'txt')
         <div class = "photoContent">
-            <a href="{{ url(env('IMAGE_LINK'). $sourceOriginalPath) }}" data-lightbox="{{ $post->title }}" data-title="{{ $post->caption }}"><img src= {{ url(env('IMAGE_LINK'). $post->post_path) }} alt="{{$post->title}}"></a>
             <p>{!! nl2br($post->caption) !!}</p>
+            <a href="{{ url(env('IMAGE_LINK'). $sourceOriginalPath) }}" data-lightbox="{{ $post->title }}" data-title="{{ $post->caption }}"><img src= {{ url(env('IMAGE_LINK'). $post->post_path) }} alt="{{$post->title}}"></a>
+
 
         </div>
         @else
