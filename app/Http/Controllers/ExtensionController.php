@@ -184,13 +184,11 @@ class ExtensionController extends Controller
         if(isset($sources['extenception']))
         {
             Storage::put($path, $inspiration);
-            $request = array_add($request, 'extension_path', $path);
+
             if(isset($sources['question_id']))
             {
                 $sourceId = $sources['question_id'];
-                $request = array_add($request, 'question_id', $sourceId);
-                $request = array_add($request, 'extenception', $sources['extenception']);
-                $request = array_add($request, 'source_user', $sources['user_id']);
+
 
                 //Add 1 extension to original question
                 $question = Question::findOrFail($sourceId);
@@ -208,6 +206,10 @@ class ExtensionController extends Controller
                     ->update(['extension' => $sourceUser->extension + 1]);
 
                 $extension = new Extension($request->except('body'));
+                $extension->question_id = $sourceId;
+                $extension->extenception = $sources['extenception'];
+                $extension->source_user = $sources['user_id'];
+                $extension->extension_path = $path;
                 //If localized get Beacon coordinates and add to extension
                 if($request['beacon_tag'] != 'No-Beacon')
                 {
@@ -237,17 +239,17 @@ class ExtensionController extends Controller
                     $mailer->sendExtenceptionNotification($extension);
                 }
 
+                //Add 1 to Belief extensions
+                Event::fire(New BeliefInteraction($extension->belief, '+extension'));
+
                 flash()->overlay('Your extension has been created');
                 return redirect('extensions/'. $extension->id);
             }
-            if(isset($sources['legacyPost_id']))
+            if(isset($sources['legacy_post_id']))
             {
-                $sourceId = $sources['legacyPost_id'];
-                $request = array_add($request, 'legacy_id', $sourceId);
-                $request = array_add($request, 'extenception', $sources['extenception']);
-                $request = array_add($request, 'source_user', $sources['user_id']);
+                $sourceId = $sources['legacy_post_id'];
 
-                //Add 1 extension to original question
+                //Add 1 extension to original legacy
                 $legacyPost = LegacyPost::findOrFail($sourceId);
                 $legacyPost->where('id', $legacyPost->id)
                     ->update(['extension' => $legacyPost->extension + 1]);
@@ -263,6 +265,11 @@ class ExtensionController extends Controller
                     ->update(['extension' => $sourceUser->extension + 1]);
 
                 $extension = new Extension($request->except('body'));
+                $extension->legacy_post_id = $sourceId;
+                $extension->extenception = $sources['extenception'];
+                $extension->source_user = $sources['user_id'];
+                $extension->extension_path = $path;
+
                 //If localized get Beacon coordinates and add to extension
                 if($request['beacon_tag'] != 'No-Beacon')
                 {
@@ -295,15 +302,15 @@ class ExtensionController extends Controller
                     $mailer->sendExtenceptionNotification($extension);
                 }
 
+                //Add 1 to Belief extensions
+                Event::fire(New BeliefInteraction($extension->belief, '+extension'));
+
                 flash()->overlay('Your extension has been created');
                 return redirect('extensions/'. $extension->id);
             }
             elseif(isset($sources['post_id']))
             {
                 $sourceId = $sources['post_id'];
-                $request = array_add($request, 'post_id', $sourceId);
-                $request = array_add($request, 'extenception', $sources['extenception']);
-                $request = array_add($request, 'source_user', $sources['user_id']);
 
                 //Add 1 extension to original post
                 $post = Post::findOrFail($sourceId);
@@ -321,8 +328,11 @@ class ExtensionController extends Controller
                 $sourceUser->where('id', $sourceUser->id)
                     ->update(['extension' => $sourceUser->extension + 1]);
 
-
                 $extension = new Extension($request->except('body'));
+                $extension->post_id = $sourceId;
+                $extension->extenception = $sources['extenception'];
+                $extension->source_user = $sources['user_id'];
+                $extension->extension_path = $path;
 
                 //If localized get Beacon coordinates and add to extension
                 if($request['beacon_tag'] != 'No-Beacon')
@@ -356,6 +366,9 @@ class ExtensionController extends Controller
                     $mailer->sendExtenceptionNotification($extension);
                 }
 
+                //Add 1 to Belief extensions
+                Event::fire(New BeliefInteraction($extension->belief, '+extension'));
+
                 flash()->overlay('Your extension has been created');
                 return redirect('extensions/'. $extension->id);
             }
@@ -366,10 +379,11 @@ class ExtensionController extends Controller
         {
 
             Storage::put($path, $inspiration);
-            $request = array_add($request, 'extension_path', $path);
-            $request = array_add($request, 'question_id', $sources['question_id']);
-            $request = array_add($request, 'source_user', $sources['user_id']);
+
             $extension = new Extension($request->except('body'));
+            $extension->question_id = $sources['question_id'];
+            $extension->source_user = $sources['user_id'];
+            $extension->extension_path = $path;
 
             //If localized get Beacon coordinates and add to extension
             if($request['beacon_tag'] != 'No-Beacon')
@@ -386,7 +400,6 @@ class ExtensionController extends Controller
 
             $extension->user()->associate($user);
             $extension->save();
-
 
             //Add 1 extension to original question
             $question = Question::findOrFail($sources['question_id']);
@@ -398,15 +411,17 @@ class ExtensionController extends Controller
             $sourceUser->where('id', $sourceUser->id)
                 ->update(['extension' => $sourceUser->extension + 1]);
 
+            //Add 1 to Belief extensions
+            Event::fire(New BeliefInteraction($extension->belief, '+extension'));
+
             flash()->overlay('Your answer has been created!');
             return redirect('extensions/'. $extension->id);
         }
         //Extension is directly from Legacy Post
-        if(isset($sources['legacyPost_id']))
+        elseif(isset($sources['legacyPost_id']))
         {
             $sourceId = $sources['legacyPost_id'];
-            $request = array_add($request, 'legacy_id', $sourceId);
-            $request = array_add($request, 'source_user', $sources['legacy_id']);
+            Storage::put($path, $inspiration);
 
             //Add 1 extension to original question
             $legacyPost = LegacyPost::findOrFail($sourceId);
@@ -414,6 +429,10 @@ class ExtensionController extends Controller
                 ->update(['extension' => $legacyPost->extension + 1]);
 
             $extension = new Extension($request->except('body'));
+            $extension->extension_path = $path;
+            $extension->legacy_post_id = $sources['legacyPost_id'];
+            $extension->source_user =  $sources['legacy_id'];
+
             //If localized get Beacon coordinates and add to extension
             if($request['beacon_tag'] != 'No-Beacon')
             {
@@ -430,7 +449,10 @@ class ExtensionController extends Controller
             $extension->user()->associate($user);
             $extension->save();
 
-            flash()->overlay('Your extension has been created');
+            //Add 1 to Belief extensions
+            Event::fire(New BeliefInteraction($extension->belief, '+extension'));
+
+            flash()->overlay('Your legacy extension has been created');
             return redirect('extensions/'. $extension->id);
         }
         //Extension is directly off of Post (no extenception)
@@ -438,9 +460,6 @@ class ExtensionController extends Controller
         {
             $sourceId = $sources['post_id'];
             Storage::put($path, $inspiration);
-            $request = array_add($request, 'extension_path', $path);
-            $request = array_add($request, 'post_id', $sourceId);
-            $request = array_add($request, 'source_user', $sources['user_id']);
 
             //Add 1 extension to original post
             $post = Post::findOrFail($sourceId);
@@ -451,9 +470,21 @@ class ExtensionController extends Controller
             $sourceUser = User::findOrFail($post->user_id);
             $sourceUser->where('id', $sourceUser->id)
                 ->update(['extension' => $sourceUser->extension + 1]);
+
+            $extension = new Extension($request->except('body'));
+            $extension->post_id = $sourceId;
+            $extension->source_user = $sources['user_id'];
+            $extension->extension_path = $path;
+            $extension->user()->associate($user);
+            $extension->save();
+        }
+        else
+        {
+            flash()->overlay('No data entered or incorrect source');
+            return redirect()->back()->withInput();
         }
 
-        $extension = new Extension($request->except('body'));
+
 
         //If localized get Beacon coordinates and add to extension
         if($request['beacon_tag'] != 'No-Beacon')
@@ -468,8 +499,6 @@ class ExtensionController extends Controller
             $beacon->update();
         }
 
-        $extension->user()->associate($user);
-        $extension->save();
 
         //Create Notification for Source user
         $notification = new Notification();
@@ -488,10 +517,6 @@ class ExtensionController extends Controller
         {
             $mailer->sendExtensionNotification($extension);
         }
-
-        //Update user's last_tag
-        $user->last_tag = $request['last_tag'];
-        $user->update();
 
         //Add 1 to Belief extensions
         Event::fire(New BeliefInteraction($extension->belief, '+extension'));
@@ -1096,6 +1121,10 @@ class ExtensionController extends Controller
         elseif(isset($sourceExtension->question_id))
         {
             $fullSource = ['type' => 'extensions', 'user_id' => $sourceExtension->user_id, 'question_id' => $sourceExtension->question_id,   'extenception' => $id, 'extension_title' => $sourceExtension->title, 'beacon_tag' => $sourceExtension->beacon_tag];
+        }
+        elseif(isset($sourceExtension->legacy_post_id))
+        {
+            $fullSource = ['type' => 'extensions', 'user_id' => $sourceExtension->user_id, 'legacy_post_id' => $sourceExtension->legacy_post_id,   'extenception' => $id, 'extension_title' => $sourceExtension->title, 'beacon_tag' => $sourceExtension->beacon_tag];
         }
 
         Session::put('sources', $fullSource);

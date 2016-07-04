@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Elevation;
+use App\Events\BeliefInteraction;
 use App\Extension;
 use function App\Http\autolink;
+use function App\Http\getBeacon;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
@@ -19,6 +21,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Mews\Purifier\Facades\Purifier;
+use Event;
 
 class LegacyPostController extends Controller
 {
@@ -90,9 +93,9 @@ class LegacyPostController extends Controller
      */
     public function store(Request $request)
     {
-        $legacy = $request['belief'];
+        $legacy = Legacy::where('id', '=', $request['belief'])->first();
 
-        $legacyPosts = LegacyPost::where('legacy_id', '=', $legacy)->where('title', '=', $request['title'])->get()->count();
+        $legacyPosts = LegacyPost::where('legacy_id', '=', $legacy->id)->where('title', '=', $request['title'])->get()->count();
 
         if ($legacyPosts != 0)
         {
@@ -105,10 +108,11 @@ class LegacyPostController extends Controller
         else
         {
             $this->validate($request, [
-                'body' => 'required|min:5|max:1000'
+                'body' => 'required|min:5|max:1000',
+                'title' => 'required|min:1|max:40'
             ]);
             $title = $request->input('title');
-            $source_path = '/legacy/'.$legacy.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
+            $source_path = '/legacy/'.$legacy->belief->name.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
             $body = Purifier::clean($request->input('body'));
 
             //Check if User has already has path set for title
@@ -128,8 +132,12 @@ class LegacyPostController extends Controller
         }
 
         $legacyPost = new legacyPost($request->except('body'));
+        $legacyPost->belief = $legacy->belief->name;
         $legacyPost->legacy()->associate($legacy);
         $legacyPost->save();
+
+        //Update Belief with new legacy ost
+        Event::fire(New BeliefInteraction($legacy->belief->name, '+legacy_post'));
 
         flash()->overlay('Your legacy post has been created');
         return redirect('legacyPosts/'. $legacyPost->id);
@@ -164,21 +172,18 @@ class LegacyPostController extends Controller
         $contents = autolink($contents, array("target"=>"_blank","rel"=>"nofollow"));
         $legacyPost = array_add($legacyPost, 'body', $contents);
 
-        $elevations = Elevation::where('user_id', '=', $user->id)->where('legacy_post_id', '=', $legacyPost->id)->get()->count();
-        if($elevations != 0)
-        {
-            $elevation = 'Elevate';
-        }
-        else
+        //Check if viewing user has already elevated post
+        if(Elevation::where('legacy_post_id', $legacyPost->id)->where('user_id', $user->id)->exists())
         {
             $elevation = 'Elevated';
         }
-
-        $legacy = Legacy::where('id', '=', $legacyPost->id)->first();
-        $belief = $legacy->belief->name;
+        else
+        {
+            $elevation = 'Elevate';
+        }
 
         return view('legacyPosts.show')
-            ->with(compact('user', 'legacyPost', 'elevation', 'legacy', 'belief', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'legacyPost', 'elevation', 'profilePosts', 'profileExtensions'));
     }
 
     /**
@@ -283,5 +288,89 @@ class LegacyPostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Elevate legacy post if not already elevated and redirect to original post
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function elevateLegacyPost($id)
+    {
+        //Get Post associated with id
+        $legacyPost = LegacyPost::findOrFail($id);
+
+        //Get User elevating the Post
+        $user = Auth::user();
+
+        //Check if the User has already elevated
+        if(Elevation::where('user_id', $user->id)->where('legacy_post_id', $id)->exists())
+        {
+            flash('You have already elevated this post');
+            return redirect('legacyPosts/'. $id);
+        }
+
+        //Post approved for Elevation
+        else
+        {
+            //Start elevation of Post
+            $elevation = new Elevation;
+            $elevation->legacy_post_id = $legacyPost->id;
+
+            //Assign id of user who Posted as source
+            $elevation->source_user = $legacyPost->legacy_id;
+
+            //Associate id of the user who gifted Elevation
+            $elevation->user()->associate($user);
+            $elevation->save();
+
+            //Elevate Post by 1
+            $legacyPost->where('id', $legacyPost->id)
+                ->update(['elevation' => $legacyPost->elevation + 1]);
+        }
+
+        //Successful elevation of User and Post :)
+        flash('Elevation successful');
+        return redirect('legacyPosts/'. $legacyPost->id);
+    }
+
+    /**
+     * List Elevations for specific Legacy post
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function listElevation($id)
+    {
+        //Get Legacy Post associated with id
+        $legacyPost = LegacyPost::findOrFail($id);
+
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $elevations = Elevation::where('legacy_post_id', $id)->latest('created_at')->paginate(10);
+
+        return view ('legacyPosts.listElevation')
+            ->with(compact('user', 'elevations', 'legacyPost', 'profilePosts','profileExtensions'));
+    }
+
+    /**
+     * List Extensions for specific Legacy post
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function listExtension($id)
+    {
+        //Get Legacy Post associated with id
+        $legacyPost = LegacyPost::findOrFail($id);
+
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $extensions = Extension::whereNull('status')->where('legacy_post_id', $id)->latest('created_at')->paginate(10);
+
+        return view ('legacyPosts.listExtension')
+            ->with(compact('user', 'extensions', 'legacyPost', 'profilePosts','profileExtensions'));
     }
 }

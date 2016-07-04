@@ -8,6 +8,7 @@ use App\Extension;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
+use App\LegacyPost;
 use App\Post;
 use App\User;
 use Illuminate\Http\Request;
@@ -217,6 +218,25 @@ class BeliefController extends Controller
 
         return view ('beliefs.extensions')
             ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with('belief', $belief);
+    }
+
+    /**
+     * List Legacy Posts for specific belief
+     *
+     * @param $belief
+     * @return \Illuminate\Http\Response
+     */
+    public function legacyPosts($belief)
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        $sponsor = getSponsor($user);
+        $legacyPosts = LegacyPost::where('belief', $belief)->latest()->paginate(10);
+
+        return view ('beliefs.extensions')
+            ->with(compact('user', 'legacyPosts', 'profilePosts','profileExtensions', 'sponsor'))
             ->with('belief', $belief);
     }
 

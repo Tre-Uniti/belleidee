@@ -50,6 +50,13 @@ class UpdateBeliefCounter
         case "-extension":
             $belief->extensions = $belief->extensions - 1;
             break;
+        //Update legacy posts
+        case "+legacy_post":
+            $belief->legacy_posts = $belief->legacy_posts + 1;
+            break;
+        case "-legacy_post":
+            $belief->legacy_posts = $belief->legacy_posts - 1;
+            break;
 
         default:
             echo "No type given" . $event->type . $event->belief;

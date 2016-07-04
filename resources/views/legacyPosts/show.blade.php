@@ -24,14 +24,14 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
 
     <h2>{{ $legacyPost->title }}</h2>
     <div class = "indexNav">
-        <a href="{{ action('BeliefController@show', $legacyPost->legacy->belief->name) }}"><button type = "button" class = "indexButton">{{ $legacyPost->legacy->belief->name }}</button></a>
+        <a href="{{ action('BeliefController@show', $legacyPost->belief) }}"><button type = "button" class = "indexButton">{{ $legacyPost->belief }}</button></a>
 
     </div>
     <button class = "interactButton" id = "hiddenIndex">More</button>
     <div class = "indexContent" id = "hiddenContent">
-        <a href={{ url('/posts/listElevation/'.$legacyPost->id)}}><button type = "button" class = "indexButton">Elevations</button></a>
+        <a href={{ url('legacyPosts/list/elevation/'.$legacyPost->id)}}><button type = "button" class = "indexButton">Elevations</button></a>
         <a href = {{ url('/posts/date/'.$legacyPost->created_at->format('M-d-Y')) }}><button type = "button" class = "indexButton">{{ $legacyPost->created_at->format('M-d-Y') }}</button></a>
-        <a href={{ url('/extensions/post/list/'.$legacyPost->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
+        <a href={{ url('legacyPosts/list/extension/'.$legacyPost->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
 
         <div class = "indexNav">
             <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title={{$legacyPost->title}}" target="_blank">
@@ -50,11 +50,16 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
 @stop
 
 @section('centerFooter')
+    @if($elevation == 'Elevated')
+        <a href="{{ url('/legacyPosts/'.$legacyPost->id) }}"><button type = "button" class = "navButton">{{ $elevation }}</button></a>
+    @else
+        <a href="{{ url('/legacyPosts/elevate/'.$legacyPost->id) }}"><button type = "button" class = "navButton">{{ $elevation }}</button></a>
+    @endif
     @if($user->type > 1)
         <a href="{{ url('/legacyPosts/'.$legacyPost->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
     @endif
     @if ($user->type > 2)
         <a href="{{ url('/legacies/') }}"><button type = "button" class = "navButton">Legacies</button></a>
     @endif
-    <a href="{{ url('/extensions/legacy/'. $legacy->id) }}"><button type = "button" class = "navButton">Extend</button></a>
+    <a href="{{ url('/extensions/legacy/'. $legacyPost->id) }}"><button type = "button" class = "navButton">Extend</button></a>
 @stop

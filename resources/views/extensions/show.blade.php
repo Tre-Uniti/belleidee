@@ -26,6 +26,8 @@
                     <a href="{{ url('/extensions/'.$extension->extenception ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
                 @elseif($extension->source === 'Question')
                     <a href="{{ url('/questions/'.$extension->question_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
+                @elseif($extension->source === 'Legacy')
+                    <a href="{{ url('/legacyPosts/'.$extension->legacy_post_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
                 @endif
             </div>
     <button class = "interactButton" id = "hiddenIndex">More</button>
