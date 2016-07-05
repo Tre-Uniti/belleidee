@@ -2,11 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use App\Promotion;
+use App\Announcement;
+use App\User;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class RedirectIfNotPromotionOwner
+class RedirectIfNotAnnouncementOwner
 {
     /**
      * Handle an incoming request.
@@ -18,11 +19,11 @@ class RedirectIfNotPromotionOwner
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        $id = $request->route('promotions');
-        $promotion = Promotion::findOrFail($id); // Fetch the Promotion
+        $id = $request->route('announcements');
+        $announcement = Announcement::findOrFail($id); // Fetch the Announcement
         $user = Auth::user();
 
-        if($promotion->sponsor->user_id == $user->id)
+        if($announcement->beacon->manager == $user->id)
         {
             return $response;
         }
@@ -31,7 +32,7 @@ class RedirectIfNotPromotionOwner
             return $response;
         }
 
-        flash()->overlay('You must own this promotion to view or edit');
-        return redirect('sponsors/'. $promotion->sponsor->id); // Not the Owner! Redirect back.
+        flash()->overlay('You must own this announcement to view or edit');
+        return redirect('beacons/'. $announcement->beacon->beacon_tag); // Not the Owner! Redirect back.
     }
 }

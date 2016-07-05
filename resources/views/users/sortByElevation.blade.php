@@ -39,6 +39,8 @@
                     <a href="{{ action('ExtensionController@show', [$elevation->extension_id])}}"><button type = "button" class = "interactButtonLeft">{{ $elevation->extension->title }}</button></a>
                 @elseif($elevation->question_id != NULL)
                     <a href="{{ action('QuestionController@show', [$elevation->question_id])}}"><button type = "button" class = "interactButtonLeft">{{ $elevation->question->question }}</button></a>
+                @elseif($elevation->legacy_post_id != NULL)
+                    <a href="{{ action('LegacyPostController@show', [$elevation->legacy_post_id])}}"><button type = "button" class = "interactButtonLeft">{{ $elevation->legacyPost->title}}</button></a>
                 @endif
             </div>
             <div class = "listResourceRight">

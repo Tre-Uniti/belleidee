@@ -44,6 +44,7 @@ class Kernel extends HttpKernel
         'sponsorRequestOwner' => \App\Http\Middleware\RedirectIfNotSponsorRequestOwner::class,
         'userDeletion' => \App\Http\Middleware\UserDeletion::class,
         'promotionOwner' => \App\Http\Middleware\RedirectIfNotPromotionOwner::class,
-        'sponsorAdmin' => \App\Http\Middleware\RedirectIfNotSponsorAdmin::class
+        'sponsorAdmin' => \App\Http\Middleware\RedirectIfNotSponsorAdmin::class,
+        'announcementOwner' => \App\Http\Middleware\RedirectIfNotAnnouncementOwner::class,
     ];
 }

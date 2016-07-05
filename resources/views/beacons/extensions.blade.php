@@ -6,9 +6,9 @@
 @section('centerText')
     <h2>Extensions of <a href={{ url('/beacons/'. $beacon->beacon_tag)}}>{{ $beacon->name }}</a></h2>
         <div class = "indexNav">
-            <a href={{ url('/beacons/'. $beacon->beacon_tag)}}><button type = "button" class = "indexButton">Profile</button></a>
             <a href={{ url('/beacons/guide/'. $beacon->id)}}><button type = "button" class = "indexButton">Guide Posts</button></a>
             <a href={{ url('/beacons/posts/'.$beacon->id)}}><button type = "button" class = "indexButton">User Posts</button></a>
+            <a href={{ url('/beacons/'. $beacon->beacon_tag)}}><button type = "button" class = "indexButton">Beacon Profile</button></a>
         </div>
     <div class = "indexLeft">
         <h4>Title</h4>

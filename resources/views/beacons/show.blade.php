@@ -22,31 +22,35 @@
             <a href="{{ url('/beacons/extensions/'.$beacon->id) }}"><button type = "button" class = "indexButton">Extensions</button></a>
 
             @if($user->type > 1 || $user->id == $beacon->manager)
+
                 <div class = "indexNav">
+                    <p>Manager:</p>
                     <a href="{{ url('/beacons/invoice/'. $beacon->id )}}"><button type = "button" class = "indexButton">Invoices</button></a>
                     <a href="{{ url('/beacons/subscription/'. $beacon->id )}}"><button type = "button" class = "indexButton">Subscription</button></a>
                     <a href="{{ url('/intolerances/beacon/'. $beacon->id) }}"><button type = "button" class = "indexButton">Intolerance</button></a>
                 </div>
                 <div class = "indexNav">
                    <a href = "{{ url('/beacons/social/'. $beacon->id) }}"><button type = "button" class = "indexButton">Add Social Button/Link</button></a>
+                   <a href = "{{ url('/announcements/beaconIndex/'. $beacon->id) }}"><button type = "button" class = "indexButton">Announcements</button></a>
                 </div>
             @endif
             <p>Tags this month ({{ $beacon->beacon_tag }}): {{ $beacon->tag_usage }}</p>
+
         </div>
         <div class = "indexLeft">
-            <h4>Top Posts</h4>
+            <h4>Announcement</h4>
         </div>
         <div class = "indexRight">
-            <h4>Handle</h4>
+            <h4>Created</h4>
         </div>
 
-        @foreach ($posts as $post)
+        @foreach ($announcements as $announcement)
             <div class = "listResource">
                 <div class = "listResourceLeft">
-                    <a href="{{ action('PostController@show', [$post->id])}}"><button type = "button" class = "interactButtonLeft">{{ $post->title }}</button></a>
+                    <a href="{{ action('AnnouncementController@show', [$announcement->id])}}"><button type = "button" class = "interactButtonLeft">{{ $announcement->title }}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('UserController@show', [$post->user_id])}}"><button type = "button" class = "interactButton">{{ $post->user->handle }}</button></a>
+                    <a href="{{ action('AnnouncementController@show', [$announcement->id])}}"><button type = "button" class = "interactButton">{{ $announcement->created_at->format('M-d-Y') }}</button></a>
                 </div>
             </div>
         @endforeach

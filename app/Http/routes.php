@@ -28,7 +28,6 @@ Route::get('users/extensionTime/{time}', 'UserController@sortByExtensionTime');
 Route::resource('users', 'UserController');
 
 //Beacon Routes (Resource)
-
 Route::get('beacons/search', 'BeaconController@search');
 Route::get('beacons/results', 'BeaconController@results');
 Route::get('beacons/top', 'BeaconController@topUsage');
@@ -46,6 +45,11 @@ Route::get('beacons/guide/{id}', 'BeaconController@guide');
 Route::get('beacons/extensions/{id}', 'BeaconController@extensions');
 Route::get('beacons/social/{id}', 'BeaconController@social');
 Route::resource('beacons', 'BeaconController');
+
+//Announcements for Subscribed Beacons
+Route::get('announcements/beaconIndex/{id}', 'AnnouncementController@beaconIndex');
+Route::get('announcements/create/{id}', 'AnnouncementController@create');
+Route::resource('announcements', 'AnnouncementController');
 
 //Beacon Request Routes (Resource)
 Route::get('beaconRequests/agreement', 'BeaconRequestController@agreement');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Announcement;
 use App\BeaconRequest;
 use App\Bookmark;
 use App\Events\BeaconViewed;
@@ -265,15 +266,15 @@ class BeaconController extends Controller
         }
         $beaconPath = $beacon->photo_path;
         
-        $posts = Post::where('beacon_tag', '=', $beacon->beacon_tag)->orderBy('elevation', 'desc')->take(10)->get();
-        
+        $announcements = Announcement::where('beacon_id', '=', $beacon->id)->latest()->take(10)->get();
+
         //Get location of beacon and setup link to Google maps
         $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
         
         $month = Carbon::today()->format('M');
 
         return view ('beacons.show')
-                    ->with(compact('user', 'beacon', 'profilePosts','profileExtensions', 'posts'))
+                    ->with(compact('user', 'beacon', 'profilePosts','profileExtensions', 'announcements'))
                     ->with('beaconPath', $beaconPath)
                     ->with('location' , $location)
                     ->with('month', $month);

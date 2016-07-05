@@ -30,7 +30,6 @@ class Beacon extends Model implements BillableContract
         //Only one nexus in WA therefore only charge sales tax if Beacon is located in WA
         if($zip == 98 && $country == 'US')
         {
-            dd($zip . $country);
             return 8.5;
         }
         else
@@ -61,5 +60,10 @@ class Beacon extends Model implements BillableContract
         'long',
         'zip',
     ];
+
+    public function announcement()
+    {
+        return $this->hasMany('App\Announcement');
+    }
 
 }

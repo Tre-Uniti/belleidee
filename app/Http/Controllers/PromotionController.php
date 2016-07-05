@@ -61,7 +61,6 @@ class PromotionController extends Controller
     public function store(PromotionRequest $request)
     {
 
-
         $promotion = new Promotion($request->except('sponsor_id', 'description'));
         $description = Purifier::clean($request->input('description'));
         $promotion->description = $description;
@@ -74,7 +73,7 @@ class PromotionController extends Controller
     }
 
     /*
-     * Display the specificed promotion
+     * Display the specific promotion
      */
     public function show($id)
     {

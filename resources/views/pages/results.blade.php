@@ -13,6 +13,8 @@
                 <h4>Handle</h4>
             @elseif($type == 'Questions')
                 <h4>Question</h4>
+            @elseif($type == 'Beacons' || $type == 'Sponsors')
+                <h4>Name</h4>
             @else
                 <h4>Title</h4>
             @endif
@@ -22,6 +24,10 @@
                 <h4>Joined</h4>
             @elseif($type == 'Questions')
                 <h4>Asked By</h4>
+            @elseif($type == 'Beacons')
+                <h4>Beacon Tag</h4>
+            @elseif($type == 'Sponsors')
+                <h4>Sponsor Tag</h4>
             @else
                 <h4>User</h4>
             @endif
@@ -77,7 +83,7 @@
                     <a href="{{ action('BeaconController@show', [$result->beacon_tag])}}"><button type = "button" class = "interactButtonLeft">{{$result->name}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('BeaconController@show', [$result->beacon_tag])}}"><button type = "button" class = "interactButton">{{$result->created_at->format('M-d-Y')}}</button></a>
+                    <a href="{{ action('BeaconController@show', [$result->beacon_tag])}}"><button type = "button" class = "interactButton">{{$result->beacon_tag}}</button></a>
                 </div>
             </div>
         @endforeach
@@ -88,7 +94,7 @@
                     <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButtonLeft">{{$result->name}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButton">{{$result->created_at->format('M-d-Y')}}</button></a>
+                    <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButton">{{$result->sponsor_tag}}</button></a>
                 </div>
             </div>
         @endforeach

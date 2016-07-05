@@ -5,7 +5,7 @@
 @section('centerText')
     <h2>Guide Posts of <a href={{ url('/beacons/'. $beacon->beacon_tag)}}>{{$beacon->name}}</a></h2>
     <div class = "indexNav">
-        <a href={{ url('/beacons/'. $beacon->beacon_tag)}}><button type = "button" class = "indexButton">Profile</button></a>
+        <a href={{ url('/beacons/'. $beacon->beacon_tag)}}><button type = "button" class = "indexButton">Beacon Profile</button></a>
         <a href={{ url('/beacons/posts/'.$beacon->id)}}><button type = "button" class = "indexButton">User Posts</button></a>
         <a href={{ url('/beacons/extensions/'. $beacon->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
     </div>

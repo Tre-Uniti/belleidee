@@ -7,6 +7,7 @@ use App\Elevation;
 use App\Events\SetLocation;
 use App\Events\SponsorViewed;
 use App\Extension;
+use function App\Http\filterContentLocationSearch;
 use function App\Http\getCountries;
 use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
@@ -241,13 +242,13 @@ class HomeController extends Controller
 
         if($type == 'Post')
         {
-            $results = Post::where('title', 'LIKE', '%'.$identifier.'%')->paginate(10);
+            $results = filterContentLocationSearch($user, 0, 'Post', $identifier);
             $results->appends($request->all());
             $type = 'Posts';
         }
         elseif($type == 'Extension')
         {
-            $results = Extension::where('title', 'LIKE', '%'.$identifier.'%')->paginate(10);
+            $results = filterContentLocationSearch($user, 0, 'Extension', $identifier);
             $results->appends($request->all());
             $type = 'Extensions';
         }
@@ -259,21 +260,22 @@ class HomeController extends Controller
         }
         elseif($type == 'User')
         {
-            $results = User::where('handle', 'LIKE', '%'.$identifier.'%')->paginate(10);
+            $results = filterContentLocationSearch($user, 0, 'User', $identifier);
             $results->appends($request->all());
             $type = 'Users';
 
         }
         elseif($type == 'Beacon')
         {
-            $results = Beacon::where('name', 'LIKE', '%'.$identifier.'%')->paginate(10);
+
+            $results = filterContentLocationSearch($user, 0, 'Beacon-Name', $identifier);
             $results->appends($request->all());
             $type = 'Beacons';
 
         }
         elseif($type == 'Sponsor')
         {
-            $results = Sponsor::where('name', 'LIKE', '%'.$identifier.'%')->paginate(10);
+            $results = filterContentLocationSearch($user, 0, 'Sponsor', $identifier);
             $results->appends($request->all());
             $type = 'Sponsors';
 

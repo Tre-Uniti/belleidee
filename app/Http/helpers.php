@@ -50,7 +50,7 @@ function getBeacon($content)
 
     $beacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
 
-    if ($beacon != NULL && $beacon->tier >= 1)
+    if ($beacon != NULL && $beacon->stripe_plan >= 1)
     {
         //Beacon pays subscription for promotions
         Event::fire(new BeaconViewed($beacon));

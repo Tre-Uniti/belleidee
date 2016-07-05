@@ -38,6 +38,8 @@
                     <a href="{{ action('PostController@show', [$extension->post_id])}}"><button type = "button" class = "interactButtonLeft">{{ $extension->post->title }}</button></a>
                 @elseif($extension->question_id != NULL)
                     <a href="{{ action('QuestionController@show', [$extension->question_id])}}"><button type = "button" class = "interactButtonLeft">{{ $extension->question->question}}</button></a>
+                @elseif($extension->legacy_post_id != NULL)
+                    <a href="{{ action('LegacyPostController@show', [$extension->legacy_post_id])}}"><button type = "button" class = "interactButtonLeft">{{ $extension->legacyPost->title}}</button></a>
                 @endif
 
             </div>
