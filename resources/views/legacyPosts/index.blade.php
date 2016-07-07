@@ -15,11 +15,11 @@
 
         @foreach($legacyPosts as $legacyPost)
             <div class = "listResource">
-                <div class = "indexLeft">
+                <div class = "listResourceLeft">
                     <a href = {{ url('/legacyPosts/'. $legacyPost->id) }}><button type = "button" class = "interactButton">{{ $legacyPost->title }}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href = {{ url('/beliefs/'. $legacyPost->legacy->belief->name) }}><button type = "button" class = "interactButton">{{ $legacyPost->legacy->belief->name }}</button></a>
+                    <a href = {{ url('/legacyPosts/belief/'. $legacyPost->legacy->belief->name) }}><button type = "button" class = "interactButton">{{ $legacyPost->legacy->belief->name }}</button></a>
                 </div>
             </div>
         @endforeach

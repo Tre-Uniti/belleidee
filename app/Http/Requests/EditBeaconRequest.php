@@ -29,7 +29,7 @@ class EditBeaconRequest extends Request
             'address' => 'required|min: 5',
             'country' => 'required|min: 2',
             'city' => 'required|min: 2',
-            'beacon_tag'  => 'required|min:7|max:12|unique:beacons,beacon_tag,' . $this->get('id'),
+            'beacon_tag'  => 'required|min:7|max:16|unique:beacons,beacon_tag,' . $this->get('id'),
             'belief' => 'required',
             'website' => 'min:10|max:275',
             'phone' => 'required|min: 10|max:18',

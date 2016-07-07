@@ -9,7 +9,7 @@
             <h4>Belief</h4>
         </div>
         <div class = "indexRight">
-            <h4>Beacons</h4>
+            <h4>Legacy Posts</h4>
         </div>
 
         @foreach($beliefs as $belief)
@@ -18,7 +18,7 @@
                     <a href = {{ url('/beliefs/'. $belief->name) }}><button type = "button" class = "interactButton">{{ $belief->name }}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href = {{ url('/beliefs/beacons/'. $belief->name) }}><button type = "button" class = "interactButton">{{ $belief->beacons }}</button></a>
+                    <a href = {{ url('/legacyPosts/belief/'. $belief->name) }}><button type = "button" class = "interactButton">{{ $belief->legacy_posts }}</button></a>
                 </div>
             </div>
         @endforeach

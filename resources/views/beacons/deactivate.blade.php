@@ -24,7 +24,7 @@
     {!! Form::submit('Confirm Deactivation', ['class' => 'navButton', 'id' => 'delete']) !!}
     {!! Form::close() !!}
 
-    <a href = "{{ url('/beacons/'. $beacon->id) }}"><button type = "button" class = "navButton">Cancel</button></a>
+    <a href = "{{ url('/beacons/'. $beacon->beacon_tag) }}"><button type = "button" class = "navButton">Cancel</button></a>
 
 
 @stop

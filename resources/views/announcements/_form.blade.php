@@ -4,7 +4,7 @@
 @stop
 
 <div id = "createOptions">
-
+<p>Announcements are posted on your home page as well as sent to users who recently used your beacon tag.</p>
     <div class = "formData">
         {!! Form::label('title', 'Title:') !!}
     </div>

@@ -3,11 +3,8 @@
     Sponsor Request
 @stop
 
-@section('centerMenu')
-    <h2>{{ $sponsorRequest->name }}</h2>
-@stop
-
 @section('centerText')
+    <h2>{{ $sponsorRequest->name }}</h2>
     <div class = "formLabel">
         Address:
     </div>

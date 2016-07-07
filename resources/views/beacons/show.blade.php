@@ -44,6 +44,9 @@
             <h4>Created</h4>
         </div>
 
+        @if(!count($announcements))
+            <p>No announcements to show</p>
+        @else
         @foreach ($announcements as $announcement)
             <div class = "listResource">
                 <div class = "listResourceLeft">
@@ -54,6 +57,7 @@
                 </div>
             </div>
         @endforeach
+    @endif
 @stop
 
 @section('centerFooter')

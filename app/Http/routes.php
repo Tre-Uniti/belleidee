@@ -171,6 +171,7 @@ Route::resource('intolerances', 'IntoleranceController');
 Route::resource('legacies', 'LegacyController');
 
 //Legacy Posts Routes (resource)
+Route::get('legacyPosts/belief/{belief}', 'LegacyPostController@beliefIndex');
 Route::get('legacyPosts/elevate/{id}', 'LegacyPostController@elevateLegacyPost');
 Route::get('legacyPosts/list/elevation/{id}', 'LegacyPostController@listElevation');
 Route::get('legacyPosts/list/extension/{id}', 'LegacyPostController@listExtension');

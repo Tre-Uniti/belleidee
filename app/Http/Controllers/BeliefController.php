@@ -8,6 +8,7 @@ use App\Extension;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
+use App\Legacy;
 use App\LegacyPost;
 use App\Post;
 use App\User;
@@ -79,6 +80,13 @@ class BeliefController extends Controller
         $belief = new Belief($request->all());
         $belief->save();
 
+        $user = User::where('handle', '=', 'Tre-Uniti')->first();
+
+        $legacy = new Legacy();
+        $legacy->user()->associate($user);
+        $legacy->belief()->associate($belief);
+        $legacy->save();
+
         flash()->overlay('Belief successfully added');
         return redirect('/beliefs/'. $belief->name);
     }
@@ -108,8 +116,10 @@ class BeliefController extends Controller
 
         $belief = Belief::where('name', '=', $name)->first();
 
+        $legacyPosts = LegacyPost::where('belief', '=', $belief->name)->latest()->take(10)->get();
+
         return view ('beliefs.show')
-            ->with(compact('user', 'belief', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'belief', 'legacyPosts', 'profilePosts','profileExtensions', 'sponsor'));
     }
 
     /**

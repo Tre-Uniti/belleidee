@@ -31,6 +31,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\BeliefInteraction' => [
             'App\Listeners\UpdateBeliefCounter'
         ],
+        'App\Events\NewAnnouncement' => [
+            'App\Listeners\SendOutAnnouncement'
+        ],
     ];
 
     /**

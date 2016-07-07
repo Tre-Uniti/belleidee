@@ -9,7 +9,9 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     <meta property="og:type"          content="website"/>
     <meta property="og:title"         content="Belle-Idee"/>
     <meta property="og:description"   content="{{ $post->title }}"/>
-    @if(isset($sourcePhotoPath) && $sourcePhotoPath != NULL)
+    @if($type != 'txt')
+        <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $post->post_path) }}"/>
+    @elseif(isset($sourcePhotoPath) && $sourcePhotoPath != NULL)
         <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $sourcePhotoPath) }}"/>
     @elseif(isset($photoPath) && $photoPath != NULL)
         <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $photoPath) }}"/>

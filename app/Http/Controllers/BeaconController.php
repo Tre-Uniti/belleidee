@@ -396,7 +396,6 @@ class BeaconController extends Controller
     {
         $beacon = Beacon::findOrFail($id);
 
-
         //Setup array of users to notify
         $users = [];
 

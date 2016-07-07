@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Belief;
 use App\Elevation;
 use App\Events\BeliefInteraction;
 use App\Extension;
@@ -29,8 +30,8 @@ class LegacyPostController extends Controller
 
     public function __construct(LegacyPost $legacyPost)
     {
-        $this->middleware('auth', ['except' => 'show']);
-        $this->middleware('admin', ['except' => ['show', 'index']]);
+        $this->middleware('auth', ['except' => 'show', 'beliefIndex']);
+        $this->middleware('admin', ['except' => ['show', 'index', 'beliefIndex']]);
     }
 
     /**
@@ -372,5 +373,35 @@ class LegacyPostController extends Controller
 
         return view ('legacyPosts.listExtension')
             ->with(compact('user', 'extensions', 'legacyPost', 'profilePosts','profileExtensions'));
+    }
+
+    /*
+     * List index of Legacy posts for a given Belief
+     *
+     * $param $belief (The given belief for indexing legacy posts)
+     */
+    public function beliefIndex($belief)
+    {
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+            $user->handle = 'Guest';
+        }
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $legacyPosts = LegacyPost::where('belief', '=', $belief)->latest()->take(10)->get();
+
+        $belief = Belief::where('name', '=', $belief)->first();
+
+        return view('legacyPosts.beliefIndex')
+                ->with(compact('user', 'legacyPosts', 'belief', 'profilePosts', 'profileExtensions'));
+
     }
 }

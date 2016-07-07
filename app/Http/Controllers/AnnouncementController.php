@@ -43,6 +43,16 @@ class AnnouncementController extends Controller
     public function create($id)
     {
         $beacon = Beacon::findOrFail($id);
+        if($beacon->stripe_plan == NULL )
+        {
+            flash()->overlay('Must be subscribed to a paid plan to send out announcements');
+            return redirect('beacons/signup/'. $beacon->id);
+        }
+        elseif($beacon->stripe_plan < 1)
+        {
+            flash()->overlay('Must be subscribed to a paid plan to send out announcements');
+            return redirect('beacons/subscription/'. $beacon->id);
+        }
 
         $user = Auth::user();
         if($user->id == $beacon->manager || $user->type > 1)
@@ -70,6 +80,16 @@ class AnnouncementController extends Controller
     {
         $user = Auth::user();
         $beacon = Beacon::findOrFail($request->beacon_id);
+        if($beacon->stripe_plan == NULL )
+        {
+            flash()->overlay('Must be subscribed to a paid plan to send out announcements');
+            return redirect('beacons/signup/'. $beacon->id);
+        }
+        elseif($beacon->stripe_plan < 1)
+        {
+            flash()->overlay('Must be subscribed to a paid plan to send out announcements');
+            return redirect('beacons/subscription/'. $beacon->id);
+        }
         if($user->id == $beacon->manager || $user->type > 1)
         {
             $announcement = new Announcement($request->except('beacon_id', 'description'));
@@ -84,6 +104,9 @@ class AnnouncementController extends Controller
             flash()->overlay('Must be the manager or admin to create an announcement');
             return redirect()->back();
         }
+
+        //Send out announcement to users who have recently used their beacon tag
+
 
         flash()->overlay('Announcement successfully added');
         return redirect('/announcements/'. $announcement->id);
