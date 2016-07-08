@@ -44,12 +44,12 @@
     <!-- Body Form Input -->
     @if($type != 'txt')
         <div class = "photoContent">
+            {!! Form::textarea('caption', null, ['id' => 'createBodyText', 'placeholder' => 'Add optional caption:', 'rows' => '2%', 'maxlength' => '255']) !!}
             <img src="{!! $base64 !!}">
             <p>
                 <a href = "{{ url('/images') }}" target = "blank">View Image Guidelines</a>
                 {!! Form::file('image', null, ['class' => 'navButton']) !!}
             </p>
-            {!! Form::textarea('caption', null, ['id' => 'createBodyText', 'placeholder' => 'Add optional caption:', 'rows' => '2%', 'maxlength' => '255']) !!}
         </div>
     @else
         <div id = "centerTextContent">

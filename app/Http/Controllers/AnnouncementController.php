@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Announcement;
 use App\Beacon;
+use App\Events\BeliefInteraction;
 use function App\Http\autolink;
+use function App\Http\filterContentLocation;
+use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
+use App\Mailers\NotificationMailer;
 use App\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Mews\Purifier\Facades\Purifier;
+
 
 class AnnouncementController extends Controller
 {
@@ -21,7 +27,7 @@ class AnnouncementController extends Controller
     public function __construct(Announcement $announcement)
     {
         $this->middleware('auth', ['except' => 'show']);
-        $this->middleware('announcementOwner', ['only' => 'edit', 'update', 'destroy', 'index']);
+        $this->middleware('announcementOwner', ['only' => 'edit', 'update', 'destroy']);
         $this->announcement = $announcement;
     }
     /**
@@ -31,7 +37,16 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $announcements = filterContentLocation($user, 1, 'Announcement');
+        $location = getLocation();
+
+        return view('announcements.index')
+                ->with(compact('user', 'announcements', 'profilePosts', 'profileExtensions'))
+                ->with('location', $location);
     }
 
     /**
@@ -73,10 +88,11 @@ class AnnouncementController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     * @param NotificationMailer $mailer
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, NotificationMailer $mailer)
     {
         $user = Auth::user();
         $beacon = Beacon::findOrFail($request->beacon_id);
@@ -98,15 +114,14 @@ class AnnouncementController extends Controller
             $beacon = Beacon::findOrFail($request->beacon_id);
             $announcement->beacon()->associate($beacon);
             $announcement->save();
+            //Email users with notification of Beacon deactivation and reassignment
+            $mailer->sendBeaconAnnouncementNotification($announcement);
         }
         else
         {
             flash()->overlay('Must be the manager or admin to create an announcement');
             return redirect()->back();
         }
-
-        //Send out announcement to users who have recently used their beacon tag
-
 
         flash()->overlay('Announcement successfully added');
         return redirect('/announcements/'. $announcement->id);
@@ -134,7 +149,15 @@ class AnnouncementController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
-        $announcement = Announcement::findOrFail($id);
+        try
+        {
+            $announcement = Announcement::findOrFail($id);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->error('Announcement no longer exists');
+            return redirect('/announcements');
+        }
         $beacon = Beacon::findOrFail($announcement->beacon_id);
         //Get location of beacon and setup link to Google maps
         $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
@@ -154,7 +177,16 @@ class AnnouncementController extends Controller
      */
     public function edit($id)
     {
-        //
+        $announcement = Announcement::findOrFail($id);
+        $beacon = Beacon::where('id', '=', $announcement->beacon_id)->first();
+
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        return view('announcements.edit')
+                ->with(compact('user', 'announcement', 'beacon', 'profilePosts', 'profileExtensions'));
+
     }
 
     /**
@@ -166,7 +198,12 @@ class AnnouncementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $announcement = Announcement::findOrFail($id);
+        $announcement->update($request->all());
+
+        flash()->overlay('Announcement has been updated');
+
+        return redirect('announcements/'. $announcement->id);
     }
 
     /**
@@ -177,7 +214,13 @@ class AnnouncementController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $announcement = Announcement::findOrFail($id);
+        $beacon = Beacon::where('id', '=', $announcement->beacon_id)->first();
+
+        $announcement->delete();
+
+        flash()->overlay('Announcement has been deleted');
+        return redirect('beacons/'. $beacon->beacon_tag);
     }
 
     /*

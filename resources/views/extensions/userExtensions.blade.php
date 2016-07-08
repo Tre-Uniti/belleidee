@@ -24,7 +24,7 @@
             <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButtonLeft">{{ $extension->title }}</button></a>
         </div>
         <div class = "listResourceRight">
-            <a href="{{ action('PostController@listDates', [$extension->created_at->format('M-d-Y')])}}"><button type = "button" class = "interactButton">{{ $extension->created_at->format('M-d-Y') }}</button></a>
+            <a href="{{ action('ExtensionController@listDates', [$extension->created_at->format('M-d-Y')])}}"><button type = "button" class = "interactButton">{{ $extension->created_at->format('M-d-Y') }}</button></a>
         </div>
         </div>
     @endforeach

@@ -20,7 +20,7 @@
     @foreach ($elevations as $elevation)
 
         <div class = "listResource">
-            <div class = "listResourceLeft">
+            <div class = "indexLeft">
                 <a href="{{ action('LegacyPostController@show', [$legacyPost->id])}}"><button type = "button" class = "interactButton">{{ $elevation->created_at->format('M-d-Y') }}</button></a>
             </div>
             <div class = "listResourceRight">

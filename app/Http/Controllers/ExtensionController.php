@@ -1392,11 +1392,11 @@ class ExtensionController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = $this->getProfileExtensions($user);
 
-        $extensions = filterContentLocationTime($user, 3, 'Extension', $dateTime, 'created_at');
+        $extensions = filterContentLocationTime($user, 2, 'Extension', $dateTime, 'created_at');
         $sponsor = getSponsor($user);
 
         return view ('extensions.listDates')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sponsor'))
             ->with('date', $queryDate);
     }
 

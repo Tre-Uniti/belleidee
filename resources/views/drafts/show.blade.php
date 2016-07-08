@@ -20,9 +20,8 @@
         </div>
         @if($type != 'txt')
             <div class = "photoContent">
-                <img src="{!! $base64 !!}">
                 <p>{!! nl2br($draft->caption) !!}</p>
-
+                <img src="{!! $base64 !!}">
             </div>
         @else
             <div id = "centerTextContent">

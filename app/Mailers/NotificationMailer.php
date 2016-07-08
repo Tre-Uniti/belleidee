@@ -130,9 +130,13 @@ class NotificationMailer extends Mailer
     }
 
     //Send out notification to users with content reassigned on Beacon deactivation
-    public function sendBeaconAnnouncementNotification(Beacon $beacon, $users, $announcement)
+    public function sendBeaconAnnouncementNotification($announcement)
     {
         $view = 'emails.beaconAnnouncement';
+
+        $beacon = Beacon::where('id', '=', $announcement->beacon_id)->first();
+
+        $users = User::where('last_tag', '=', $beacon->beacon_tag)->get();
 
         foreach($users as $user)
         {

@@ -570,7 +570,7 @@ class PostController extends Controller
         {
             //Get image from request
             $this->validate($request, [
-                'image' => 'required|mimes:jpeg,jpg,png|max:10000'
+                'image' => 'mimes:jpeg,jpg,png|max:10000'
             ]);
             if($request->hasFile('image'))
             {

@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.18.24",
+            "version": "3.18.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "c74f6f316282b0ac6a3cd8a681171343c0e07ec3"
+                "reference": "8cc3d3231d9fb9da528205f3b905097a37ac3df3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/c74f6f316282b0ac6a3cd8a681171343c0e07ec3",
-                "reference": "c74f6f316282b0ac6a3cd8a681171343c0e07ec3",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8cc3d3231d9fb9da528205f3b905097a37ac3df3",
+                "reference": "8cc3d3231d9fb9da528205f3b905097a37ac3df3",
                 "shasum": ""
             },
             "require": {
@@ -85,7 +85,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-07-01 21:27:27"
+            "time": "2016-07-07 23:09:15"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -2563,16 +2563,16 @@
         },
         {
             "name": "spatie/laravel-backup",
-            "version": "3.8.0",
+            "version": "3.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-backup.git",
-                "reference": "ff922a830d3dc73c353d93cb735db62d1239b7e6"
+                "reference": "08b7b8c778d5aeb0179cc49da4f64415bab9f81f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/ff922a830d3dc73c353d93cb735db62d1239b7e6",
-                "reference": "ff922a830d3dc73c353d93cb735db62d1239b7e6",
+                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/08b7b8c778d5aeb0179cc49da4f64415bab9f81f",
+                "reference": "08b7b8c778d5aeb0179cc49da4f64415bab9f81f",
                 "shasum": ""
             },
             "require": {
@@ -2621,7 +2621,7 @@
                 "laravel-backup",
                 "spatie"
             ],
-            "time": "2016-06-15 23:42:49"
+            "time": "2016-07-06 15:30:58"
         },
         {
             "name": "stripe/stripe-php",

@@ -21,5 +21,8 @@
 @section('centerFooter')
     @if($user->type > 1 || $user->id == $beacon->manager)
         <a href="{{ url('/announcements/'.$announcement->id .'/edit')}}"><button type = "button" class = "navButton">Edit</button></a>
+        {!! Form::open(['method' => 'DELETE', 'route' => ['announcements.destroy', $announcement->id], 'class' => 'formDeletion']) !!}
+        {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
+        {!! Form::close() !!}
     @endif
 @stop

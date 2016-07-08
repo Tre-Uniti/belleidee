@@ -51,9 +51,9 @@
 <!-- Body Form Input -->
 
     <div class = "indexContent" id = "imageUpload">
+        {!! Form::textarea('caption', null, ['id' => 'createBodyText', 'placeholder' => 'Add optional caption:', 'rows' => '2%', 'maxlength' => '255']) !!}
         <a href = "{{ url('/images') }}" target = "blank">View Image Guidelines</a>
         {!! Form::file('image', null, ['class' => 'navButton']) !!}
-        {!! Form::textarea('caption', null, ['id' => 'createBodyText', 'placeholder' => 'Add optional caption:', 'rows' => '2%', 'maxlength' => '255']) !!}
         </div>
     <div class = "indexContent" id = "addText">
         {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your idea or belief here:', 'rows' => '18', 'maxlength' => '3500']) !!}

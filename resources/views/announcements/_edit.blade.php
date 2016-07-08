@@ -4,18 +4,16 @@
 @stop
 
 <div id = "createOptions">
+    <p>Announcements are posted on your home page.</p>
     <div class = "formData">
-        <div class = "formLabel">
-            {!! Form::label('title', 'Title') !!}
-        </div>
-        <div class = "formInput">
-            {!! Form::text('title', null, ['class' => 'createFormText', 'autofocus', 'placeholder' => 'Title of Announcement']) !!}
-        </div>
+        {!! Form::label('title', 'Title:') !!}
     </div>
+    <div class="formData">
+        {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => '']) !!}
+    </div>
+
     <div class = "formData">
-        <div class = "formData">
-            {!! Form::textarea('description', null, ['id' => 'createBodyText', 'placeholder' => 'Description about the announcement.', 'rows' => '3%', 'maxlength' => '255']) !!}
-        </div>
+        {!! Form::textarea('description', null, ['id' => 'createBodyText', 'placeholder' => 'Description about the announcement.', 'rows' => '3%', 'maxlength' => '255']) !!}
     </div>
     {!! Form::hidden('beacon_id', $beacon->id) !!}
     @section('centerFooter')

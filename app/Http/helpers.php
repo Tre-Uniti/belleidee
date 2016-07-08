@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Announcement;
 use App\Beacon;
 use App\Elevation;
 use App\Events\BeaconViewed;
@@ -515,6 +516,13 @@ function filterContentLocation($user, $number, $type)
             {
                 $filteredContent = Sponsor::where('sponsor_tag', 'LIKE', $location['shortTag'].'%')->where('status', '!=', 'deactivated')->latest('created_at')->paginate(10);
             }
+            elseif($type == 'Announcement')
+            {
+                $filteredContent = Announcement::whereHas('beacon', function ($query) {
+                    $location = session('coordinates');
+                    $query->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->where('status', '!=', 'deactivated');
+                })->paginate(10);
+            }
         }
         //Filter by Country
         elseif($user->location == 1)
@@ -539,6 +547,14 @@ function filterContentLocation($user, $number, $type)
             {
                 $filteredContent = Sponsor::where('sponsor_tag', 'LIKE', $location['country']. '-'. '%')->where('status', '!=', 'deactivated')->latest('created_at')->paginate(10);
             }
+            elseif($type == 'Announcement')
+            {
+                $filteredContent = Announcement::whereHas('beacon', function ($query) {
+                    $location = session('coordinates');
+                    $query->where('beacon_tag', 'LIKE', $location['country'].'%')->where('status', '!=', 'deactivated');
+                })->paginate(10);
+            }
+
         }
         //Filter by Global
         else
@@ -562,6 +578,10 @@ function filterContentLocation($user, $number, $type)
             elseif($type == 'Sponsor')
             {
                 $filteredContent = Sponsor::latest('created_at')->where('status', '!=', 'deactivated')->paginate(10);
+            }
+            elseif($type == 'Announcement')
+            {
+                $filteredContent = Announcement::latest()->paginate(10);
             }
         }
     }

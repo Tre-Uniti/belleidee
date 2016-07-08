@@ -20,10 +20,10 @@
     @foreach ($extensions as $extension)
         <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('ExtensionController@show', [$extensions->id])}}"><button type = "button" class = "interactButton">{{ $extensions->title }}</button></a>
+                <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButton">{{ $extension->title }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('UserController@show', [$extensions->user_id])}}"><button type = "button" class = "interactButton">{{ $extensions->user->handle }}</button></a>
+                <a href="{{ action('UserController@show', [$extension->user_id])}}"><button type = "button" class = "interactButton">{{ $extension->user->handle }}</button></a>
             </div>
         </div>
     @endforeach
