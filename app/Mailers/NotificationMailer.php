@@ -136,7 +136,7 @@ class NotificationMailer extends Mailer
 
         $beacon = Beacon::where('id', '=', $announcement->beacon_id)->first();
 
-        $users = User::where('last_tag', '=', $beacon->beacon_tag)->get();
+        $users = User::where('last_tag', '=', $beacon->beacon_tag)->where('frequency', '>', 1)->get();
 
         foreach($users as $user)
         {

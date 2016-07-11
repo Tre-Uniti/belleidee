@@ -8,7 +8,7 @@
 
 
     <div class = "formDataContainer">
-        {!! Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'patch']) !!}
+        {!! Form::model($user, ['route' => ['frequency', $user->id], 'method' => 'patch']) !!}
         <div class = "formInput">
             {!! Form::label('frequency', 'Select Frequency') !!}
         </div>

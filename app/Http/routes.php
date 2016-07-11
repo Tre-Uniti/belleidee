@@ -25,6 +25,7 @@ Route::get('users/deletion/', 'UserController@confirmDeletion');
 Route::get('users/timeFilter/{time}', 'UserController@timeFilter');
 Route::get('users/elevationTime/{time}', 'UserController@sortByElevationTime');
 Route::get('users/extensionTime/{time}', 'UserController@sortByExtensionTime');
+Route::patch('users/frequency/{id}', 'UserController@frequency')->name('frequency');
 Route::resource('users', 'UserController');
 
 //Beacon Routes (Resource)
@@ -175,6 +176,7 @@ Route::get('legacyPosts/belief/{belief}', 'LegacyPostController@beliefIndex');
 Route::get('legacyPosts/elevate/{id}', 'LegacyPostController@elevateLegacyPost');
 Route::get('legacyPosts/list/elevation/{id}', 'LegacyPostController@listElevation');
 Route::get('legacyPosts/list/extension/{id}', 'LegacyPostController@listExtension');
+Route::get('legacyPosts/date/{date}', 'LegacyPostController@listDates');
 Route::resource('legacyPosts', 'LegacyPostController');
 
 //Moderation routes (resource)

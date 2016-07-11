@@ -30,7 +30,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     <button class = "interactButton" id = "hiddenIndex">More</button>
     <div class = "indexContent" id = "hiddenContent">
         <a href={{ url('legacyPosts/list/elevation/'.$legacyPost->id)}}><button type = "button" class = "indexButton">Elevations</button></a>
-        <a href = {{ url('/posts/date/'.$legacyPost->created_at->format('M-d-Y')) }}><button type = "button" class = "indexButton">{{ $legacyPost->created_at->format('M-d-Y') }}</button></a>
+        <a href = {{ url('/legacyPosts/date/'.$legacyPost->created_at->format('M-d-Y')) }}><button type = "button" class = "indexButton">{{ $legacyPost->created_at->format('M-d-Y') }}</button></a>
         <a href={{ url('legacyPosts/list/extension/'.$legacyPost->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
 
         <div class = "indexNav">

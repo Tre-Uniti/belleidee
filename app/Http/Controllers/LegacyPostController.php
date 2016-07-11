@@ -31,7 +31,7 @@ class LegacyPostController extends Controller
     public function __construct(LegacyPost $legacyPost)
     {
         $this->middleware('auth', ['except' => 'show', 'beliefIndex']);
-        $this->middleware('admin', ['except' => ['show', 'index', 'beliefIndex']]);
+        $this->middleware('admin', ['only' => ['create', 'store', 'edit', 'update']]);
     }
 
     /**
@@ -137,7 +137,7 @@ class LegacyPostController extends Controller
         $legacyPost->legacy()->associate($legacy);
         $legacyPost->save();
 
-        //Update Belief with new legacy ost
+        //Update Belief with new legacy post
         Event::fire(New BeliefInteraction($legacy->belief->name, '+legacy_post'));
 
         flash()->overlay('Your legacy post has been created');
@@ -273,7 +273,8 @@ class LegacyPostController extends Controller
 
 
         //Update database with new values
-        $legacyPost->update($request->except('body', '_method', '_token'));
+        $legacyPost->belief = $legacy->belief->name;
+        $legacyPost->update($request->except('body', '_method', '_token', 'belief'));
 
         flash()->overlay('Your legacy post has been updated');
 
@@ -403,5 +404,26 @@ class LegacyPostController extends Controller
         return view('legacyPosts.beliefIndex')
                 ->with(compact('user', 'legacyPosts', 'belief', 'profilePosts', 'profileExtensions'));
 
+    }
+
+    /**
+     * List legacy posts for a specific date
+     * @param $date
+     * @return \Illuminate\Http\Response
+     */
+    public function listDates($date)
+    {
+        $user = Auth::user();
+        $queryDate = Carbon::parse($date);
+        $dateTime = $queryDate->toDateTimeString();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $legacyPosts = LegacyPost::whereDate('created_at', '=', $dateTime)->latest()->paginate(10);
+
+
+        return view ('legacyPosts.listDates')
+            ->with(compact('user', 'legacyPosts', 'profilePosts','profileExtensions'))
+            ->with('date', $queryDate);
     }
 }

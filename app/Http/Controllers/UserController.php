@@ -41,6 +41,7 @@ class UserController extends Controller
         $this->middleware('userDeletion', ['only' => ['destroy']]);
         $this->user = $user;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -55,8 +56,8 @@ class UserController extends Controller
         $users = filterContentLocation($user, 0, 'User');
         $location = getLocation();
 
-        return view ('users.index')
-            ->with(compact('user', 'users', 'profilePosts','profileExtensions', 'sponsor'))
+        return view('users.index')
+            ->with(compact('user', 'users', 'profilePosts', 'profileExtensions', 'sponsor'))
             ->with('location', $location);
     }
 
@@ -73,7 +74,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -84,7 +85,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -96,17 +97,14 @@ class UserController extends Controller
         //Get other Extensions of User
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        $posts = Post::where('user_id',$user->id )->count();
-        $extensions = Extension::where('user_id',$user->id )->count();
+        $posts = Post::where('user_id', $user->id)->count();
+        $extensions = Extension::where('user_id', $user->id)->count();
 
         //Get path of photo and append correct Amazon bucket
         //First check user has submitted their own photo otherwise default to medium background image
-        if($user->photo_path == '')
-        {
+        if ($user->photo_path == '') {
             $sourcePhotoPath = '';
-        }
-        else
-        {
+        } else {
             $sourcePhotoPath = $user->photo_path;
         }
 
@@ -126,7 +124,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -135,24 +133,18 @@ class UserController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         //Get user photo
-        if($user->photo_path == '')
-        {
+        if ($user->photo_path == '') {
             $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
-        }
-        else
-        {
+        } else {
             $sourcePhotoPath = $user->photo_path;
         }
         //Get and set user's sponsor logo
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
+        if (Sponsorship::where('user_id', '=', $user->id)->exists()) {
             $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
             $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
             $sponsor->where('id', $sponsor->id)
                 ->update(['views' => $sponsor->views + 1]);
-        }
-        else
-        {
+        } else {
             $sponsor = NULL;
         }
 
@@ -163,7 +155,7 @@ class UserController extends Controller
         ];
 
         return view('users.edit')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'frequencies' ))
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'frequencies'))
             ->with('sponsor', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
@@ -171,8 +163,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -181,15 +173,15 @@ class UserController extends Controller
 
         $user->update($request->all());
 
-        flash()->overlay('User: '. $user->handle . ' updated');
+        flash()->overlay('User: ' . $user->handle . ' updated');
 
-        return redirect('users/'. $user->id);
+        return redirect('users/' . $user->id);
     }
 
     /**
      * Ascend User by 1.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function ascend($id)
@@ -199,15 +191,15 @@ class UserController extends Controller
         $user->type = $user->type + 1;
         $user->update();
 
-        flash()->overlay('User: '. $user->handle . ' ascended');
+        flash()->overlay('User: ' . $user->handle . ' ascended');
 
-        return redirect('users/'. $user->id);
+        return redirect('users/' . $user->id);
     }
 
     /**
      * Descend User by 1.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function descend($id)
@@ -217,11 +209,11 @@ class UserController extends Controller
         $user->type = $user->type - 1;
         $user->update();
 
-        flash()->overlay('User: '. $user->handle . ' descended');
+        flash()->overlay('User: ' . $user->handle . ' descended');
 
-        return redirect('users/'. $user->id);
+        return redirect('users/' . $user->id);
     }
-    
+
     /**
      * Display the search page for users.
      *
@@ -235,8 +227,8 @@ class UserController extends Controller
 
         $location = getLocation();
 
-        return view ('users.search')
-            ->with(compact('user', 'profilePosts','profileExtensions'))
+        return view('users.search')
+            ->with(compact('user', 'profilePosts', 'profileExtensions'))
             ->with('location', $location);
 
     }
@@ -244,7 +236,7 @@ class UserController extends Controller
     /**
      * Display the results page for a search on users.
      * @return \Illuminate\Http\Response
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      */
     public function results(Request $request)
     {
@@ -261,14 +253,13 @@ class UserController extends Controller
         //Get search title
         $handle = $request->input('identifier');
 
-        if(!count($results))
-        {
+        if (!count($results)) {
             flash()->overlay('No users with this handle');
             return redirect()->back();
         }
-        
-        return view ('users.results')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
+
+        return view('users.results')
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'results'))
             ->with('handle', $handle);
     }
 
@@ -282,15 +273,15 @@ class UserController extends Controller
         $user = Auth::user();
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        
-        return view ('users.confirmDeletion')
-            ->with(compact('user', 'profilePosts','profileExtensions'));
+
+        return view('users.confirmDeletion')
+            ->with(compact('user', 'profilePosts', 'profileExtensions'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -299,24 +290,20 @@ class UserController extends Controller
         //Transfer all user's posts, extensions, questions, elevations, intolerance, beacon/sponsor_requests to Transferred
         Event::fire(new TransferUser($user));
 
-        if($user->id = Auth::id())
-        {
+        if ($user->id = Auth::id()) {
 
             Auth::logout();
-            
-            if($user->delete())
-            {
+
+            if ($user->delete()) {
                 flash()->overlay('You have successfully deleted your account');
-                return redirect ('/');
+                return redirect('/');
             }
-        }
-        else
-        {
+        } else {
             $user->delete();
         }
         flash()->overlay('User has been deleted and content transferred');
 
-        return redirect ('users/'. 20);
+        return redirect('users/' . 20);
     }
 
     /**
@@ -331,8 +318,8 @@ class UserController extends Controller
 
         $elevations = filterContentLocation($user, 0, 'Elevation');
 
-        return view ('users.sortByElevation')
-            ->with(compact('user', 'elevations', 'profilePosts','profileExtensions'));
+        return view('users.sortByElevation')
+            ->with(compact('user', 'elevations', 'profilePosts', 'profileExtensions'));
     }
 
     /**
@@ -347,39 +334,30 @@ class UserController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
-        if($time == 'Today')
-        {
+        if ($time == 'Today') {
             $users = filterContentLocationTime($user, 1, 'User', 'today', 'elevation');
             $filter = Carbon::now()->today()->format('l');
-        }
-        elseif($time == 'Month')
-        {
+        } elseif ($time == 'Month') {
             $users = filterContentLocationTime($user, 1, 'User', 'startOfMonth', 'elevation');
             $filter = Carbon::now()->startOfMonth()->format('F');
-        }
-        elseif($time == 'Year')
-        {
+        } elseif ($time == 'Year') {
             $users = filterContentLocationTime($user, 1, 'User', 'startOfYear', 'elevation');
             $filter = Carbon::now()->startOfYear()->format('Y');
-        }
-        elseif($time == 'All')
-        {
+        } elseif ($time == 'All') {
             $users = filterContentLocationAllTime($user, 0, 'User', 'elevation');
             $filter = 'All';
-        }
-        else
-        {
+        } else {
             $filter = 'All';
         }
 
         $sponsor = getSponsor($user);
 
-        return view ('users.sortByElevationTime')
-            ->with(compact('user', 'users', 'profilePosts','profileExtensions', 'sponsor'))
+        return view('users.sortByElevationTime')
+            ->with(compact('user', 'users', 'profilePosts', 'profileExtensions', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
-    
+
     /**
      * Sort and show all users by highest Extension
      * @return \Illuminate\Http\Response
@@ -392,8 +370,8 @@ class UserController extends Controller
 
         $extensions = filterContentLocation($user, 0, 'Extension');
 
-        return view ('users.sortByExtension')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'));
+        return view('users.sortByExtension')
+            ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions'));
     }
 
     /**
@@ -408,35 +386,26 @@ class UserController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
-        if($time == 'Today')
-        {
+        if ($time == 'Today') {
             $users = filterContentLocationTime($user, 1, 'User', 'today', 'extension');
             $filter = Carbon::now()->today()->format('l');
-        }
-        elseif($time == 'Month')
-        {
+        } elseif ($time == 'Month') {
             $users = filterContentLocationTime($user, 1, 'User', 'startOfMonth', 'extension');
             $filter = Carbon::now()->startOfMonth()->format('F');
-        }
-        elseif($time == 'Year')
-        {
+        } elseif ($time == 'Year') {
             $users = filterContentLocationTime($user, 1, 'User', 'startOfYear', 'extension');
             $filter = Carbon::now()->startOfYear()->format('Y');
-        }
-        elseif($time == 'All')
-        {
+        } elseif ($time == 'All') {
             $users = filterContentLocationAllTime($user, 0, 'User', 'extension');
             $filter = 'All';
-        }
-        else
-        {
+        } else {
             $filter = 'All';
         }
 
         $sponsor = getSponsor($user);
 
-        return view ('users.sortByExtensionTime')
-            ->with(compact('user', 'users', 'profilePosts','profileExtensions', 'sponsor'))
+        return view('users.sortByExtensionTime')
+            ->with(compact('user', 'users', 'profilePosts', 'profileExtensions', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -458,27 +427,21 @@ class UserController extends Controller
         $extensions = Extension::where('source_user', $user->id)->latest('created_at')->paginate(10);
 
         //Set sourcePhotoPath so the viewing user's photo is replaced with this user's photo
-        if($user->photo_path == '')
-        {
+        if ($user->photo_path == '') {
             $sourcePhotoPath = '';
-        }
-        else
-        {
+        } else {
             $sourcePhotoPath = $user->photo_path;
         }
         //Get and set user's sponsor logo
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
+        if (Sponsorship::where('user_id', '=', $user->id)->exists()) {
             $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
             $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
             $sponsor->where('id', $sponsor->id)
                 ->update(['views' => $sponsor->views + 1]);
-        }
-        else
-        {
+        } else {
             $sponsor = NULL;
         }
-        return view ('users.extendedBy')
+        return view('users.extendedBy')
             ->with(compact('user', 'viewUser', 'extensions', 'profilePosts', 'profileExtensions'))
             ->with('sponosr', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
@@ -499,28 +462,22 @@ class UserController extends Controller
 
         $elevations = Elevation::where('source_user', $user->id)->latest('created_at')->paginate(10);
 
-        if($user->photo_path == '')
-        {
+        if ($user->photo_path == '') {
 
             $sourcePhotoPath = '';
-        }
-        else
-        {
+        } else {
             $sourcePhotoPath = $user->photo_path;
         }
         //Get and set user's sponsor logo
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
+        if (Sponsorship::where('user_id', '=', $user->id)->exists()) {
             $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
             $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
             $sponsor->where('id', $sponsor->id)
                 ->update(['views' => $sponsor->views + 1]);
-        }
-        else
-        {
+        } else {
             $sponsor = NULL;
         }
-        return view ('users.elevatedBy')
+        return view('users.elevatedBy')
             ->with(compact('user', 'viewUser', 'elevations', 'profilePosts', 'profileExtensions'))
             ->with('sponsor', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
@@ -540,27 +497,21 @@ class UserController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $bookmarks = $user->bookmarks()->where('type', '=', 'Beacon')->paginate(10);
 
-        if($user->photo_path == '')
-        {
+        if ($user->photo_path == '') {
             $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
-        }
-        else
-        {
+        } else {
             $sourcePhotoPath = $user->photo_path;
         }
         //Get and set user's sponsor logo
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
+        if (Sponsorship::where('user_id', '=', $user->id)->exists()) {
             $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
             $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
             $sponsor->where('id', $sponsor->id)
                 ->update(['views' => $sponsor->views + 1]);
-        }
-        else
-        {
+        } else {
             $sponsor = NULL;
         }
-        return view ('users.beacons')
+        return view('users.beacons')
             ->with(compact('user', 'viewUser', 'bookmarks', 'profilePosts', 'profileExtensions'))
             ->with('sponsor', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
@@ -578,38 +529,49 @@ class UserController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
-        if($time == 'Today')
-        {
+        if ($time == 'Today') {
             $users = filterContentLocationTime($user, 0, 'User', 'today', 'created_at');
             $filter = Carbon::now()->today()->format('l');
-        }
-        elseif($time == 'Month')
-        {
+        } elseif ($time == 'Month') {
             $users = filterContentLocationTime($user, 0, 'User', 'startOfMonth', 'created_at');
             $filter = Carbon::now()->startOfMonth()->format('F');
-        }
-        elseif($time == 'Year')
-        {
+        } elseif ($time == 'Year') {
             $users = filterContentLocationTime($user, 0, 'User', 'startOfYear', 'created_at');
             $filter = Carbon::now()->startOfYear()->format('Y');
-        }
-        elseif($time == 'All')
-        {
+        } elseif ($time == 'All') {
             $users = filterContentLocation($user, 1, 'User');
             $filter = 'All';
-        }
-        else
-        {
+        } else {
             $filter = 'All';
         }
 
         $sponsor = getSponsor($user);
 
-        return view ('users.timeFilter')
-            ->with(compact('user', 'users', 'profilePosts','profileExtensions', 'sponsor'))
+        return view('users.timeFilter')
+            ->with(compact('user', 'users', 'profilePosts', 'profileExtensions', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
 
+    /*
+     * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+     * Update email frequency
+     */
+    public function frequency(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        if ($user->id != Auth::id()) {
+            flash()->overlay('Must be this user to update frequency');
+            return redirect()->back();
+        }
+
+        $user->update($request->all());
+
+        flash()->overlay('User Frequency for ' . $user->handle . ' has been updated');
+
+        return redirect('users/' . $user->id);
+    }
 
 }
