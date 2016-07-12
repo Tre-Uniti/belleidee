@@ -70,7 +70,7 @@ class LegacyPostController extends Controller
         }
         else
         {
-            $legacies = Legacy::where('user_id', '=', $user->id)->get();
+            $legacies = Legacy::where('user_id', '=', $user->id)->latest()->get();
             if(!count($legacies))
             {
                 flash()->overlay('Must be elected and assigned a Legacy to post');
@@ -425,5 +425,166 @@ class LegacyPostController extends Controller
         return view ('legacyPosts.listDates')
             ->with(compact('user', 'legacyPosts', 'profilePosts','profileExtensions'))
             ->with('date', $queryDate);
+    }
+
+    /**
+     * Sort and show latest 10 elevated legacy posts
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByElevation()
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $elevations = Elevation::where('legacy_post_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('legacy_post_id')->take(10)->get();
+
+        return view ('legacyPosts.sortByElevation')
+            ->with(compact('user', 'elevations', 'profilePosts','profileExtensions'));
+    }
+
+    /**
+     * Sort and show all legacy posts by highest Elevation given time
+     *
+     * @param $time
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByElevationTime($time)
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        if($time == 'Today')
+        {
+            $legacyPosts = LegacyPost::where('created_at', '>=', Carbon::now()->$time())->orderBy('elevation', 'desc')->paginate(10);
+
+            $filter = Carbon::now()->today()->format('l');
+        }
+        elseif($time == 'Month')
+        {
+            $legacyPosts = LegacyPost::where('created_at', '>=', Carbon::now()->startOfMOnth())->orderBy('elevation', 'desc')->paginate(10);
+            $filter = Carbon::now()->startOfMonth()->format('F');
+        }
+        elseif($time == 'Year')
+        {
+            $legacyPosts = LegacyPost::where('created_at', '>=', Carbon::now()->startOfYear())->orderBy('elevation', 'desc')->paginate(10);
+            $filter = Carbon::now()->startOfYear()->format('Y');
+        }
+        elseif($time == 'All')
+        {
+            $legacyPosts = LegacyPost::orderBy('elevation', 'desc')->paginate(10);
+            $filter = 'All';
+        }
+        else
+        {
+            $filter = 'All';
+        }
+
+        return view ('legacyPosts.sortByElevationTime')
+            ->with(compact('user', 'legacyPosts', 'profilePosts','profileExtensions'))
+            ->with('filter', $filter)
+            ->with('time', $time);
+    }
+
+    /**
+     * Sort and list latest 10 extensions
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByExtension()
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $extensions = Extension::whereNotNull('legacy_post_id')->latest('created_at')->take(10)->get();
+
+        return view ('legacyPosts.sortByExtension')
+            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'));
+    }
+
+    /**
+     * Sort and show all posts by highest Extension given time
+     *
+     * @param $time
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByExtensionTime($time)
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        if($time == 'Today')
+        {
+            $legacyPosts = LegacyPost::where('created_at', '>=', Carbon::now()->$time())->orderBy('extension', 'desc')->paginate(10);
+
+            $filter = Carbon::now()->today()->format('l');
+        }
+        elseif($time == 'Month')
+        {
+            $legacyPosts = LegacyPost::where('created_at', '>=', Carbon::now()->startOfMOnth())->orderBy('extension', 'desc')->paginate(10);
+            $filter = Carbon::now()->startOfMonth()->format('F');
+        }
+        elseif($time == 'Year')
+        {
+            $legacyPosts = LegacyPost::where('created_at', '>=', Carbon::now()->startOfYear())->orderBy('extension', 'desc')->paginate(10);
+            $filter = Carbon::now()->startOfYear()->format('Y');
+        }
+        elseif($time == 'All')
+        {
+            $legacyPosts = LegacyPost::orderBy('extension', 'desc')->paginate(10);
+            $filter = 'All';
+        }
+
+        return view ('legacyPosts.sortByExtensionTime')
+            ->with(compact('user', 'legacyPosts', 'profilePosts','profileExtensions'))
+            ->with('filter', $filter)
+            ->with('time', $time);
+    }
+
+    /**
+     * Sort and show all extensions by selected time
+     *
+     * @param $time
+     * @return \Illuminate\Http\Response
+     */
+    public function timeFilter($time)
+    {
+        $user = Auth::user();
+        $profilePosts = $this->getProfilePosts($user);
+        $profileExtensions = $this->getProfileExtensions($user);
+
+        if($time == 'Today')
+        {
+            $posts = filterContentLocationTime($user, 0, 'Post', 'today', 'created_at');
+            $filter = Carbon::now()->today()->format('l');
+        }
+        elseif($time == 'Month')
+        {
+            $posts = filterContentLocationTime($user, 0, 'Post', 'startOfMonth', 'created_at');
+            $filter = Carbon::now()->startOfMonth()->format('F');
+        }
+        elseif($time == 'Year')
+        {
+            $posts = filterContentLocationTime($user, 0, 'Post', 'startOfYear', 'created_at');
+            $filter = Carbon::now()->startOfYear()->format('Y');
+        }
+        elseif($time == 'All')
+        {
+            $posts = filterContentLocation($user, 1, 'Post');
+            $filter = 'All';
+        }
+        else
+        {
+            $filter = 'All';
+        }
+
+        $sponsor = getSponsor($user);
+
+        return view ('posts.timeFilter')
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with('filter', $filter)
+            ->with('time', $time);
     }
 }

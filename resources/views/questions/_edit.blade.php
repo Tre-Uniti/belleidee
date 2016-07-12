@@ -8,13 +8,13 @@
         {!! Form::label('title', 'Question of the Week:') !!}
     </div>
     <div class = "formInput">
-        {!! Form::text('question', null, ['class' => 'createFormText', 'autofocus']) !!}
+        {!! Form::textarea('question', null, ['id' => 'createBodyText', 'placeholder' => 'What is the next community question?:', 'rows' => '2%', 'maxlength' => '255']) !!}
     </div>
     <div class = "formInput">
-        {!! Form::label('user_id', 'User ID') !!}
+        {!! Form::label('handle', 'User Handle') !!}
     </div>
     <div class = "formInput">
-        {!! Form::text('user_id', null, ['class' => 'createFormText']) !!}
+        {!! Form::text('handle', $question->user->handle, ['class' => 'createFormText']) !!}
     </div>
 
     @section('centerFooter')

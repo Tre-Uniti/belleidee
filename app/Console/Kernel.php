@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\MonthlyBeaconReport::class,
         Commands\MonthlyBeaconReset::class,
         Commands\MonthlySponsorReport::class,
+        Commands\LatestLegacyReport::class,
     ];
 
     /**
@@ -31,6 +32,15 @@ class Kernel extends ConsoleKernel
         $filePath = Storage::disk('local');
         //$schedule->command('inspire')
                  //->hourly();
+
+        //Latest Legacy Report
+        $schedule->command('latestLegacyReport')->Weekly()->sundays()->at('7:00')
+                    ->sendOutputTo($filePath)
+                    ->emailOutputTo('tre-uniti@belle-idee.org')
+                    ->pingBefore('http://beats.envoyer.io/heartbeat/xVDhFSK4jA0LbWA')
+                    ->thenPing('http://beats.envoyer.io/heartbeat/xVDhFSK4jA0LbWA');
+
+        //Monthly reports
         $schedule->command('monthlyBeaconReport')->Monthly()
                     ->sendOutputTo($filePath)
                     ->emailOutputTo('tre-uniti@belle-idee.org')

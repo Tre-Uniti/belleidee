@@ -4,7 +4,7 @@
 @stop
 
 @section('centerText')
-    <h2>Legacy Posts for {{ $belief->name }}</h2>
+    <h2>Legacy Posts for <a href = "{{ url('/beliefs/'. $belief->name) }}">{{ $belief->name }}</a></h2>
     <p>Legacy posts are created by Admins to help users discover the inspirational texts of each belief.</p>
     <div class = "indexLeft">
         <h4>Title</h4>

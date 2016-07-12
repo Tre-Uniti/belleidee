@@ -11,7 +11,7 @@
             <a href={{ url('/users/extendedBy/'. $user->id)}}><button type = "button" class = "indexButton">Extended By</button></a>
     </div>
     <div class =  "indexLeft">
-        <h4>Post or Extension</h4>
+        <h4>Source Title</h4>
     </div>
     <div class = "indexRight">
         <h4>Elevated By</h4>
@@ -25,6 +25,8 @@
                     <a href="{{ action('ExtensionController@show', [$elevation->extension_id])}}"><button type = "button" class = "interactButtonLeft">{{ $elevation->extension->title }}</button></a>
                 @elseif (isset($elevation->question_id))
                     <a href="{{ action('QuestionController@show', [$elevation->question_id])}}"><button type = "button" class = "interactButtonLeft">{{ $elevation->question->question }}</button></a>
+                @elseif (isset($elevation->legacy_post_id))
+                    <a href="{{ action('LegacyPostController@show', [$elevation->legacy_post_id])}}"><button type = "button" class = "interactButtonLeft">{{ $elevation->legacyPost->title }}</button></a>
                 @endif
             </div>
             <div class = "listResourceRight">

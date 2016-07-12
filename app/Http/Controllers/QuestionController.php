@@ -91,7 +91,8 @@ class QuestionController extends Controller
     public function store(Request $request, NotificationMailer $mailer)
     {
         $question = new Question($request->all());
-        $question->user()->associate($request['user_id']);
+        $user = User::where('handle', '=', $request->input('handle'))->first();
+        $question->user()->associate($user);
         $question->save();
 
         $mailer->sendCommunityQuestionNotification($question);
@@ -185,7 +186,8 @@ class QuestionController extends Controller
     public function update(Request $request, $id)
     {
         $question = $this->question->findOrFail($id);
-        $question->user()->associate($request['user_id']);
+        $user = User::where('handle', '=', $request->input('handle'))->first();
+        $question->user()->associate($user);
         $question->update($request->all());
 
         flash()->overlay('Community Question updated');

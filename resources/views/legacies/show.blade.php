@@ -8,7 +8,9 @@
     <h2>{{ $legacy->belief->name }}</h2>
     <div class = "indexNav">
         <a href="{{ url('/beliefs/'. $legacy->belief->name) }}"><button type = "button" class = "indexButton">Belief</button></a>
-        <a href="{{ url('/beliefs/'. $legacy->belief->id) }}"><button type = "button" class = "indexButton">Posts by: {{ $legacy->user->handle }} </button></a>
+        <a href="{{ url('/users/'. $legacy->user->id) }}"><button type = "button" class = "indexButton">{{ $legacy->user->handle }} </button></a>
+        <a href="{{ url('/legacyPosts/'. $legacy->belief->name) }}"><button type = "button" class = "indexButton">Legacy Posts</button></a>
+
     </div>
 @stop
 

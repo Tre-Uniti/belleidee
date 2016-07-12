@@ -6,17 +6,17 @@
     <h2>New Community Question</h2>
     <div class = "formDataContainer">
 
-    <div class = "formLabel">
+    <div class = "formData">
         {!! Form::label('title', 'Community Question') !!}
     </div>
-    <div class = "formInput">
-        {!! Form::text('question', null, ['class' => 'createFormText', 'autofocus']) !!}
+    <div class = "formData">
+        {!! Form::textarea('question', null, ['id' => 'createBodyText', 'placeholder' => 'What is the next community question?:', 'rows' => '2%', 'maxlength' => '255']) !!}
     </div>
-    <div class = "formLabel">
-        {!! Form::label('user_id', 'User ID') !!}
+    <div class = "formData">
+        {!! Form::label('handle', 'User Handle') !!}
     </div>
-    <div class = "formInput">
-        {!! Form::text('user_id', null, ['class' => 'createFormText']) !!}
+    <div class = "formData">
+        {!! Form::text('handle', null, ['class' => 'createFormText']) !!}
     </div>
     </div>
 

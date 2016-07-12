@@ -31,7 +31,7 @@
 
     @elseif(isset($sources['question_id']))
             {!! nl2br(e($content)) !!}
-            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
+            <p>Asked by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
 
     @elseif(isset($sources['legacy_id']))
             {!! nl2br(e($content)) !!}

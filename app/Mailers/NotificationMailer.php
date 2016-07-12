@@ -4,6 +4,8 @@ namespace App\Mailers;
 
 use App\Beacon;
 use App\Extension;
+use App\Legacy;
+use App\LegacyPost;
 use App\Question;
 use App\Sponsor;
 use App\User;
@@ -142,6 +144,29 @@ class NotificationMailer extends Mailer
         {
             $subject = 'New Announcement from '. $beacon->name;
             $data = compact('beacon', 'user', 'announcement');
+            $this->sendTo($user, $subject, $view, $data);
+        }
+    }
+
+    //Send latest legacy report to users with frequency set to 2
+    public function sendLatestLegacyReport()
+    {
+        $legacies = Legacy::latest()->get();
+
+        $legacyPosts = [];
+        foreach($legacies as $legacy)
+        {
+            $legacyPost = LegacyPost::where('legacy_id', '=', $legacy->id)->latest()->first();
+            array_add($legacyPosts, 'legacyPost', $legacyPost);
+        }
+
+        $users = User::where('frequencey', '>', 1)->latest()->get();
+        $view = 'emails.legacyPosts';
+
+        foreach($users as $user)
+        {
+            $data = compact('user', 'legacyPosts');
+            $subject = 'Latest Legacy Report: ';
             $this->sendTo($user, $subject, $view, $data);
         }
     }

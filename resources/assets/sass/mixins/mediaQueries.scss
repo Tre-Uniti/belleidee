@@ -199,6 +199,11 @@
     .topNav > ul > li > p {
       padding: 0 18px;
     }
+    #questionContainer
+    {
+      margin: 0 auto;
+      width: 70%;
+    }
   }
 
   //Tablet Landscape
@@ -229,10 +234,10 @@
     {
       max-height: 520px;
     }
-    #mapid
+    #questionContainer
     {
-      height: 400px;
-      width: 600px;
+      margin: 0 auto;
+      width: 70%;
     }
 
     .formDataContainer
@@ -385,6 +390,11 @@
     {
       display: block;
     }
+    #questionContainer
+    {
+      margin: 0 auto;
+      width: 80%;
+    }
   }
 
   //Mobile landscape
@@ -492,6 +502,11 @@
     {
       visibility: hidden;
     }
+    #questionContainer
+    {
+      margin: 0 auto;
+      width: 80%;
+    }
   }
 
   //Small screen mobile portrait
@@ -595,6 +610,11 @@
     {
       display: block;
     }
+    #questionContainer
+    {
+      margin: 0 auto;
+      width: 80%;
+    }
 
   }
 
@@ -691,6 +711,12 @@
     .profileNav > ul > li:hover > div
     {
       visibility: hidden;
+    }
+
+    #questionContainer
+    {
+      margin: 0 auto;
+      width: 80%;
     }
   }
 

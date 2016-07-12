@@ -31,7 +31,7 @@
     <div class = "contentNavTitle">
         Community Question
         </div>
-    <div class = "indexNav">
+    <div id = "questionContainer">
         <a href = {{ url('questions/'. $question->id)}}><button type = "button" class = "indexButton">{{ $question->question }}</button></a>
     </div>
 

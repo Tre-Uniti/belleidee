@@ -1,11 +1,29 @@
 @extends('app')
+@section('pageHeader')
+    <script src = "js/index.js"></script>
+@stop
 @section('siteTitle')
     Legacies
 @stop
 
 @section('centerText')
+    <div>
     <h2>Legacy Posts</h2>
-    <p>Legacy posts are created by Admins to help users discover the inspirational texts of each belief.</p>
+    <div class = "indexNav">
+        <a href={{ url('/legacyPosts/elevation')}}><button type = "button" class = "indexButton">Elevated</button></a>
+        <a href={{ url('/legacyPosts/search')}}><button type = "button" class = "indexButton">Search</button></a>
+        <a href={{ url('/legacyPosts/extension')}}><button type = "button" class = "indexButton">Extended</button></a>
+    </div>
+    <button class = "interactButton" id = "hiddenIndex">More</button>
+    <div class = "indexContent" id = "hiddenContent">
+        <p>Legacy posts are created by Admins to help users discover the inspirational texts of each belief.</p>
+        <a href={{ url('/legacyPosts/timeFilter/Today')}}><button type = "button" class = "indexButton">Today</button></a>
+        <a href={{ url('/legacyPosts/timeFilter/Month') }}><button type = "button" class = "indexButton">Month</button></a>
+        <a href={{ url('/legacyPosts/timeFilter/Year')}}><button type = "button" class = "indexButton">Year</button></a>
+        <a href={{ url('/legacyPosts/timeFilter/All')}}><button type = "button" class = "indexButton">All-time</button></a>
+    </div>
+    </div>
+
         <div class = "indexLeft">
             <h4>Title</h4>
         </div>
