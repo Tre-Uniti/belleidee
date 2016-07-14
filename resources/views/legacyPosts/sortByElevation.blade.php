@@ -11,7 +11,7 @@
     <div class = "indexNav">
         <a href={{ url('/legacyPosts')}}><button type = "button" class = "indexButton">New Legacy</button></a>
         <a href={{ url('/legacyPosts/search')}}><button type = "button" class = "indexButton">Search</button></a>
-        <a href={{ url('/legacyPosts/extended')}}><button type = "button" class = "indexButton">Extended</button></a>
+        <a href={{ url('/legacyPosts/extension')}}><button type = "button" class = "indexButton">Extended</button></a>
     </div>
     <button class = "interactButton" id = "hiddenIndex">More</button>
     <div class = "indexContent" id = "hiddenContent">
@@ -30,10 +30,10 @@
         @foreach ($elevations as $elevation)
             <div class = "listResource">
             <div class = "listResourceLeft">
-                <a href="{{ action('LegacyPostController@show', [$elevation->legacy_post_id])}}"><button type = "button" class = "interactButtonLeft">{{ $elevation->legacyPost->title }}</button></a>
+                <a href="{{ action('LegacyPostController@show', [$elevation->legacy_post_id])}}"><button type = "button" class = "interactButtonLeft">{{ $elevation->legacypost['title'] }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('LegacyPostController@listElevation', [$elevation->legacy_post_id])}}"><button type = "button" class = "interactButton">{{ $elevation->legacyPost->elevation }}</button></a>
+                <a href="{{ action('LegacyPostController@listElevation', [$elevation->legacy_post_id])}}"><button type = "button" class = "interactButton">{{ $elevation->legacyPost['elevation']}}</button></a>
             </div>
             </div>
         @endforeach

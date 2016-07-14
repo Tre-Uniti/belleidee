@@ -21,8 +21,6 @@ class LatestLegacyReport extends Command
      */
     protected $description = 'Send latest Legacy posts to Idee users';
 
-
-
     /**
      * Create a new command instance.
      *

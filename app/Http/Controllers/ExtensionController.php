@@ -1039,6 +1039,12 @@ class ExtensionController extends Controller
                 $question->extension = $question->extension - 1;
                 $question->update();
             }
+            elseif($extension->legacy_post_id != NULL)
+            {
+                $legacyPost = LegacyPost::where('id', '=', $extension->legacy_post_id)->first();
+                $legacyPost->extension = $legacyPost->extension - 1;
+                $legacyPost->update();
+            }
 
             $user = User::where('id', '=', $sourceExtension->user_id)->first();
             $user->extension = $user->extension - 1;
@@ -1063,6 +1069,12 @@ class ExtensionController extends Controller
             $user = User::where('id', '=', $question->user_id)->first();
             $user->extension = $user->extension - 1;
             $user->update();
+        }
+        elseif($extension->legacy_post_id != NULL)
+        {
+            $legacyPost = LegacyPost::where('id', '=', $extension->legacy_post_id)->first();
+            $legacyPost->extension = $legacyPost->extension - 1;
+            $legacyPost->update();
         }
 
         //Subtract 1 from Belief extensions

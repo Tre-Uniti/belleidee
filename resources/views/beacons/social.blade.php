@@ -36,7 +36,7 @@
     </div>
 
         <h4>1.  Download desired logo/image</h4>
-        <p><a href = "{{secure_asset('img/ideeSocial.png')}}"><img src={{secure_asset('img/ideeSocial.png')}}></a><a href = "{{secure_asset('img/ideeSocial2.png')}}"><img src={{secure_asset('img/ideeSocial2.png')}}></a></p>
+        <p><a href = "{{secure_asset('img/ideeSocial.png')}}"><img src={{secure_asset('img/ideeSocial.png')}}></a><a href = "{{secure_asset('img/ideeSocial2.png')}}"><img src={{secure_asset('img/ideeSocial2.png')}}></a></a><a href = "{{secure_asset('img/ideeSocial3.png')}}"><img src={{secure_asset('img/ideeSocial3.png')}}></a></p>
         <h4>2.  Copy and paste the code into your website</h4>
 
             <div class = "formDataContainer">

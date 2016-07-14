@@ -177,11 +177,13 @@ Route::get('legacyPosts/elevate/{id}', 'LegacyPostController@elevateLegacyPost')
 Route::get('legacyPosts/list/elevation/{id}', 'LegacyPostController@listElevation');
 Route::get('legacyPosts/list/extension/{id}', 'LegacyPostController@listExtension');
 Route::get('legacyPosts/date/{date}', 'LegacyPostController@listDates');
-Route::get('legacyPosts/elevationTime/{time}', 'LegacyPostsController@sortByElevationTime');
-Route::get('legacyPosts/extensionTime/{time}', 'LegacyPostsController@sortByExtensionTime');
-Route::get('legacyPosts/timeFilter/{time}', 'LegacyPostsController@timeFilter');
-Route::get('legacyPosts/search', 'LegacyPostsController@search');
-Route::get('legacyPosts/results', 'LegacyPostsController@results');
+Route::get('legacyPosts/elevation', 'LegacyPostController@sortByElevation');
+Route::get('legacyPosts/extension', 'LegacyPostController@sortByExtension');
+Route::get('legacyPosts/elevationTime/{time}', 'LegacyPostController@sortByElevationTime');
+Route::get('legacyPosts/extensionTime/{time}', 'LegacyPostController@sortByExtensionTime');
+Route::get('legacyPosts/timeFilter/{time}', 'LegacyPostController@timeFilter');
+Route::get('legacyPosts/search', 'LegacyPostController@search');
+Route::get('legacyPosts/results', 'LegacyPostController@results');
 Route::resource('legacyPosts', 'LegacyPostController');
 
 //Moderation routes (resource)

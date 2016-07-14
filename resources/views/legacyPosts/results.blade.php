@@ -5,8 +5,8 @@
 @section('centerText')
     <h2>Search Results</h2>
         <div class = "indexNav">
-            <a href={{ url('/legacyPosts/')}}><button type = "button" class = "indexButton">Recent Posts</button></a>
-               <a href={{ url('/legacyPosts/search')}}><button type = "button" class = "indexButton">Post Search</button></a>
+            <a href={{ url('/legacyPosts/')}}><button type = "button" class = "indexButton">Recent Legacy</button></a>
+               <a href={{ url('/legacyPosts/search')}}><button type = "button" class = "indexButton">Legacy Search</button></a>
               <a href={{ url('/search')}}><button type = "button" class = "indexButton">Global Search</button></a>
     </div>
         <div class = "indexLeft">
@@ -21,14 +21,14 @@
                     <a href="{{ action('LegacyPostController@show', [$result->id])}}"><button type = "button" class = "interactButtonLeft">{{$result->title}}</button></a>
                 </div>
                 <div class = "listResourceRight">
-                    <a href="{{ action('BeliefController@show', [$result->belief])}}"><button type = "button" class = "interactButtonLeft">{{$result->belief}}</button></a>
+                    <a href="{{ action('LegacyPostController@beliefIndex', [$result->belief])}}"><button type = "button" class = "interactButtonLeft">{{$result->belief}}</button></a>
                 </div>
             </div>
         @endforeach
 
 @stop
 @section('centerFooter')
-    @include('pagination.custom-paginator', ['paginator' => $results->appends(['title' => $title])])
+    @include('pagination.custom-paginator', ['paginator' => $results->appends(['belief' => $belief, 'title' => $title ])])
 @stop
 
 

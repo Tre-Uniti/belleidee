@@ -4,7 +4,7 @@
 @stop
 
 @section('centerText')
-    <h2>Elevations of  <a href={{ url('/legacyPost/'. $legacyPost->id)}}>{{ $legacyPost->title }}</a></h2>
+    <h2>Elevations of  <a href={{ url('/legacyPosts/'. $legacyPost->id)}}>{{ $legacyPost->title }}</a></h2>
     <div class = "indexNav">
         <a href={{ url('/legacyPosts/'. $legacyPost->id)}}><button type = "button" class = "indexButton">Back</button></a>
         <a href={{ url('/legacyPosts/'. $legacyPost->id)}}><button type = "button" class = "indexButton">Total: {{ $legacyPost->elevation }}</button></a>

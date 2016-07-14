@@ -5,6 +5,9 @@
 
 @section('centerText')
     <h2>Legacy Posts for <a href = "{{ url('/beliefs/'. $belief->name) }}">{{ $belief->name }}</a></h2>
+    <a href = " {{ url('/legacyPosts') }}"><button type = "button" class = "indexButton">All Legacy</button></a>
+    <a href = " {{ url('/beliefs/' . $belief->name) }}"><button type = "button" class = "indexButton">About {{ $belief->name }}</button></a>
+
     <p>Legacy posts are created by Admins to help users discover the inspirational texts of each belief.</p>
     <div class = "indexLeft">
         <h4>Title</h4>
@@ -25,7 +28,6 @@
 @stop
 
 @section('centerFooter')
-    <a href = " {{ url('/beliefs/' . $belief->name) }}"><button type = "button" class = "navButton">About Belief</button></a>
     @if($user->type >= 2)
         <a href = {{ url('/legacyPosts/create') }}><button type = "button" class = "navButton">Create</button></a>
     @endif

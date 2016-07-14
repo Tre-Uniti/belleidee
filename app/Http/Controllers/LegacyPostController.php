@@ -8,6 +8,7 @@ use App\Events\BeliefInteraction;
 use App\Extension;
 use function App\Http\autolink;
 use function App\Http\getBeacon;
+use function App\Http\getBeliefs;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
@@ -270,8 +271,6 @@ class LegacyPostController extends Controller
             Storage::delete($legacyPost->source_path);
             $request = array_add($request, 'source_path', $newPath);
 
-
-
         //Update database with new values
         $legacyPost->belief = $legacy->belief->name;
         $legacyPost->update($request->except('body', '_method', '_token', 'belief'));
@@ -290,6 +289,62 @@ class LegacyPostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display the search page for legacy posts.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $beliefs = getBeliefs();
+        $beliefs = array('All' => 'All') + $beliefs;
+
+        return view ('legacyPosts.search')
+            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with('beliefs', $beliefs);
+    }
+
+    /**
+     * Display the results page for a search on legacy Posts.
+     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function results(Request $request)
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        //Get search title
+        $title = $request->input('title');
+        $belief = $request->input('belief');
+
+        if($belief == 'All')
+        {
+            $results = LegacyPost::where('title', 'LIKE', '%' . $title . '%')->latest()->paginate(10);
+        }
+        else
+        {
+            $results = LegacyPost::where('title', 'LIKE', '%'. $title . '%')->where('belief', '=', $belief)->latest()->paginate(10);
+        }
+
+
+        if(!count($results))
+        {
+            flash()->overlay('No legacy posts with this title');
+            return redirect()->back()->withInput();
+        }
+
+        return view ('legacyPosts.results')
+            ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
+            ->with('title', $title)
+            ->with('belief', $belief);
     }
 
     /**
@@ -497,7 +552,7 @@ class LegacyPostController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
-        $extensions = Extension::whereNotNull('legacy_post_id')->latest('created_at')->take(10)->get();
+        $extensions = Extension::whereNotNull('legacy_post_id')->whereNull('status')->latest('created_at')->take(10)->get();
 
         return view ('legacyPosts.sortByExtension')
             ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'));
@@ -552,27 +607,28 @@ class LegacyPostController extends Controller
     public function timeFilter($time)
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
 
         if($time == 'Today')
         {
-            $posts = filterContentLocationTime($user, 0, 'Post', 'today', 'created_at');
+            $legacyPosts = LegacyPost::where('created_at', '>=', Carbon::now()->$time())->latest()->paginate(10);
+
             $filter = Carbon::now()->today()->format('l');
         }
         elseif($time == 'Month')
         {
-            $posts = filterContentLocationTime($user, 0, 'Post', 'startOfMonth', 'created_at');
+            $legacyPosts = LegacyPost::where('created_at', '>=', Carbon::now()->startOfMOnth())->latest()->paginate(10);
             $filter = Carbon::now()->startOfMonth()->format('F');
         }
         elseif($time == 'Year')
         {
-            $posts = filterContentLocationTime($user, 0, 'Post', 'startOfYear', 'created_at');
+            $legacyPosts = LegacyPost::where('created_at', '>=', Carbon::now()->startOfYear())->latest()->paginate(10);
             $filter = Carbon::now()->startOfYear()->format('Y');
         }
         elseif($time == 'All')
         {
-            $posts = filterContentLocation($user, 1, 'Post');
+            $legacyPosts = LegacyPost::latest()->paginate(10);
             $filter = 'All';
         }
         else
@@ -580,10 +636,8 @@ class LegacyPostController extends Controller
             $filter = 'All';
         }
 
-        $sponsor = getSponsor($user);
-
-        return view ('posts.timeFilter')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+        return view ('legacyPosts.timeFilter')
+            ->with(compact('user', 'legacyPosts', 'profilePosts','profileExtensions'))
             ->with('filter', $filter)
             ->with('time', $time);
     }

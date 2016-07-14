@@ -192,17 +192,22 @@
                                 </ul>
                             </div>
                         </li>
-                        @if ($profileExtensions->isEmpty())
-                            <li><a href="{{url('/legacy')}}">Legacy</a></li>
-                        @else
                             <li>
-                                <a href="{{ url('/legacy') }}">Legacy</a>
+                                <a href="{{ url('/legacyPosts') }}">Legacy</a>
                                 <div>
                                     <ul>
+                                        @if(isset($userLegacies))
+                                            @foreach($userLegacies as $userLegacy)
+                                                <li><a href={{ action('LegacyPostController@show', [$userLegacy->legacy_post_id])}}>{{ $userLegacy->created_at->format('M-d-Y') }}</a></li>
+                                            @endforeach
+                                        @else
+                                            @foreach($profileLegacies as $profileLegacy)
+                                                <li><a href={{ action('LegacyPostController@show', [$profileLegacy->legacy_post_id])}}>{{ $profileLegacy->created_at->format('M-d-Y') }}</a></li>
+                                            @endforeach
+                                        @endif
                                     </ul>
                                 </div>
                             </li>
-                        @endif
                 </ul>
             </nav>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Beacon;
+use App\Extension;
 use App\Notification;
 use App\Sponsor;
 use App\Sponsorship;
@@ -24,6 +25,7 @@ class ViewServiceProvider extends ServiceProvider
             {
                 $user = Auth::user();
                 $profileBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
+                $profileLegacies = Extension::where('user_id', '=', $user->id)->whereNull('status')->whereNotNull('legacy_post_id')->latest()->take(7)->get();
                 $notifyCount = Notification::where('source_user', $user->id)->count();
             }
             else
@@ -31,6 +33,8 @@ class ViewServiceProvider extends ServiceProvider
                 //Set user equal to the Transferred user with no access (for external views)
                 $user = User::where('handle', '=', 'Transferred')->first();
                 $profileBeacons = Beacon::where('name', '=', 'No-Beacon')->get();
+                $profileLegacies = Extension::where('user_id', '=', $user->id)->whereNull('status')->whereNotNull('legacy_post_id')->latest()->take(7)->get();
+
                 $notifyCount = 0;
             }
 
@@ -48,6 +52,7 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('notifyCount', $notifyCount);
             $view->with('photoPath', $photoPath);
             $view->with('profileBeacons', $profileBeacons);
+            $view->with('profileLegacies', $profileLegacies);
 
         });
 

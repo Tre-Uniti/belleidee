@@ -7,11 +7,19 @@
 
         <div class = "formDataContainer">
             {!! Form::open(['url' => 'legacyPosts/results', 'method' => 'GET']) !!}
+            <div class = "formData">
+                <div class = "formInput">
+                    {!! Form::label('belief', 'Belief:') !!}
+                </div>
+                <div class = "formInput">
+                    {!! Form::select('belief', $beliefs) !!}
+                </div>
+            </div>
             <div class = "formInput">
                 {!!  Form::label('identifier', 'Title:') !!}
             </div>
             <div class = "formInput">
-                {!! Form::text('title', null, ['autofocus', 'placeholder' => 'Search text']) !!}
+                {!! Form::text('title', null, ['autofocus', 'placeholder' => 'Search title']) !!}
             </div>
         </div>
         {!! Form::submit('Search', ['class' => 'navButton']) !!}

@@ -18,13 +18,13 @@ class LegacyPost extends Model
         return $this->belongsTo('App\Legacy');
     }
 
-    public function elevations()
+    public function elevation()
     {
-        return $this->hasMany('App\Elevation');
+        return $this->hasMany('App\Elevation', 'legacy_post_id');
     }
 
-    public function extensions()
+    public function extension()
     {
-        return $this->hasMany('App\Extension');
+        return $this->hasMany('App\Extension', 'legacy_post_id');
     }
 }

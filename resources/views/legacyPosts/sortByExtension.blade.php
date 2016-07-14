@@ -30,10 +30,10 @@
         @foreach ($extensions as $extension)
             <div class = "listResource">
             <div class = "listResourceLeft">
-            <a href="{{ action('LegacyController@show', [$extension->legacy_post_id])}}"><button type = "button" class = "interactButtonLeft">{{ $extension->legacyPost->title }}</button></a>
+            <a href="{{ action('LegacyController@show', [$extension->legacy_post_id])}}"><button type = "button" class = "interactButtonLeft">{{ $extension->legacyPost['title'] }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('LegacyPostController@extensionList', [$extension->legacy_post_id])}}"><button type = "button" class = "interactButton">{{ $extension->legacyPost->extension }}</button></a>
+                <a href="{{ action('LegacyPostController@listExtension', [$extension->legacy_post_id])}}"><button type = "button" class = "interactButton">{{ $extension->legacyPost['extension'] }}</button></a>
             </div>
             </div>
         @endforeach

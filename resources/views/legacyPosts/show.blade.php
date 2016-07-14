@@ -24,8 +24,9 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
 
     <h2>{{ $legacyPost->title }}</h2>
     <div class = "indexNav">
+        <a href = "{{ url('/legacyPosts') }}"><button type = "button" class = "indexButton">All Legacy</button></a>
         <a href="{{ action('BeliefController@show', $legacyPost->belief) }}"><button type = "button" class = "indexButton">{{ $legacyPost->belief }}</button></a>
-
+        <a href = "{{ url('/legacyPosts/belief/'. $legacyPost->belief) }}"><button type = "button" class = "indexButton">Belief Legacy</button></a>
     </div>
     <button class = "interactButton" id = "hiddenIndex">More</button>
     <div class = "indexContent" id = "hiddenContent">
@@ -57,9 +58,6 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     @endif
     @if($user->type > 1)
         <a href="{{ url('/legacyPosts/'.$legacyPost->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
-    @endif
-    @if ($user->type > 2)
-        <a href="{{ url('/legacies/') }}"><button type = "button" class = "navButton">Legacies</button></a>
     @endif
     <a href="{{ url('/extensions/legacy/'. $legacyPost->id) }}"><button type = "button" class = "navButton">Extend</button></a>
 @stop

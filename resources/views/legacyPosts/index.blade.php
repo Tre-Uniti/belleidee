@@ -45,7 +45,7 @@
 
 @section('centerFooter')
     @if($user->type >= 2)
-        <a href = {{ url('/legacyPosts/create') }}><button type = "button" class = "navButton">Create</button></a>
+        <a href = {{ url('/legacyPosts/create') }}><button type = "button" class = "navButton">Create Legacy Post</button></a>
     @endif
 @stop
 

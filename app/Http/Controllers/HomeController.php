@@ -14,6 +14,7 @@ use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
 use App\Http\Requests\PhotoUploadRequest;
+use App\LegacyPost;
 use App\Post;
 use App\Question;
 use App\Sponsor;
@@ -211,10 +212,11 @@ class HomeController extends Controller
             [
                 'Beacon' => 'Beacon',
                 'Extension' => 'Extension',
+                'Legacy' => 'Legacy',
                 'Post' => 'Post',
                 'Question' => 'Question',
                 'Sponsor' => 'Sponsor',
-                'User' => 'User'
+                'User' => 'User',
             ];
 
         $location = getLocation();
@@ -279,6 +281,12 @@ class HomeController extends Controller
             $results->appends($request->all());
             $type = 'Sponsors';
 
+        }
+        elseif($type == 'Legacy')
+        {
+            $results = LegacyPost::where('title', 'LIKE', '%' . $identifier . '%')->latest()->paginate(10);
+            $results->appends($request->all());
+            $type = 'Legacy';
         }
         else
         {

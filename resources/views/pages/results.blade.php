@@ -28,6 +28,8 @@
                 <h4>Beacon Tag</h4>
             @elseif($type == 'Sponsors')
                 <h4>Sponsor Tag</h4>
+            @elseif($type == 'Legacy')
+                <h4>Belief</h4>
             @else
                 <h4>User</h4>
             @endif
@@ -95,6 +97,17 @@
                 </div>
                 <div class = "listResourceRight">
                     <a href="{{ action('SponsorController@show', [$result->id])}}"><button type = "button" class = "interactButton">{{$result->sponsor_tag}}</button></a>
+                </div>
+            </div>
+        @endforeach
+    @elseif($type == 'Legacy')
+        @foreach ($results as $result)
+            <div class = "listResource">
+                <div class = "listResourceLeft">
+                    <a href="{{ action('LegacyPostController@show', [$result->id])}}"><button type = "button" class = "interactButtonLeft">{{$result->title}}</button></a>
+                </div>
+                <div class = "listResourceRight">
+                    <a href="{{ action('LegacyPostController@beliefIndex', [$result->belief])}}"><button type = "button" class = "interactButtonLeft">{{$result->belief}}</button></a>
                 </div>
             </div>
         @endforeach

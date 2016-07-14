@@ -148,25 +148,26 @@ class NotificationMailer extends Mailer
         }
     }
 
-    //Send latest legacy report to users with frequency set to 2
+    //Send latest legacy report to users with frequency set to above 1
     public function sendLatestLegacyReport()
     {
         $legacies = Legacy::latest()->get();
 
-        $legacyPosts = [];
+        //$legacyPosts = [];
+        $legacyPosts = LegacyPost::latest()->first();
         foreach($legacies as $legacy)
         {
-            $legacyPost = LegacyPost::where('legacy_id', '=', $legacy->id)->latest()->first();
-            array_add($legacyPosts, 'legacyPost', $legacyPost);
+            //$legacyPosts = LegacyPost::where('legacy_id', '=', $legacy->id)->latest()->take(1)->get();
+            //array_add($legacyPosts, 'legacyPost', $legacyPost);
         }
 
-        $users = User::where('frequencey', '>', 1)->latest()->get();
+        $users = User::where('frequency', '>', 1)->latest()->get();
         $view = 'emails.legacyPosts';
 
         foreach($users as $user)
         {
             $data = compact('user', 'legacyPosts');
-            $subject = 'Latest Legacy Report: ';
+            $subject = 'Latest Legacy Overview ';
             $this->sendTo($user, $subject, $view, $data);
         }
     }

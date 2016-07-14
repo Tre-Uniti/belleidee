@@ -43,7 +43,7 @@ class Extension extends Model
 
     public function legacyPost()
     {
-        return $this->belongsTo('App\LegacyPost');
+        return $this->belongsTo('App\LegacyPost', 'legacy_post_id');
     }
 
     //Return title of extenception

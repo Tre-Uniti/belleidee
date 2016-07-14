@@ -17,6 +17,7 @@ class Elevation extends Model
         'post_id',
         'extension_id',
         'question_id',
+        'legacy_post_id',
         'source_user',
         'beacon_tag',
     ];
@@ -42,6 +43,6 @@ class Elevation extends Model
 
     public function legacyPost()
     {
-        return $this->belongsTo('App\LegacyPost');
+        return $this->belongsTo('App\LegacyPost', 'legacy_post_id');
     }
 }
