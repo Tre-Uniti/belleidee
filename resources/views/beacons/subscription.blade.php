@@ -14,7 +14,7 @@
             {!! Form::label('subscription', 'Subscription Type:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::select('subscription' , [ '0' => 'Starter: Free', '1' => 'Small: (<500 people) $25 per month', '2' => 'Medium: (<1000) $50 per month', '3' => 'Large: (>1000) $100 per month'], $beacon->stripe_plan) !!}
+            {!! Form::select('subscription' , [ '0' => 'Starter: Free', '1' => 'Small: (<500 people) $10 per month', '2' => 'Medium: (<1000) $25 per month', '3' => 'Large: (>1000) $50 per month'], $beacon->stripe_plan) !!}
         </div>
         {!! Form::hidden('beacon', $beacon->id) !!}
     </div>

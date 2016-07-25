@@ -48,12 +48,11 @@ function getSponsor($user)
  */
 function getBeacon($content)
 {
-
     $beacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
 
-    if ($beacon != NULL && $beacon->stripe_plan >= 1)
+    if($beacon->stripe_plan == 2)
     {
-        //Beacon pays subscription for promotions
+        //Beacon pays subscription
         Event::fire(new BeaconViewed($beacon));
     }
     else
@@ -510,11 +509,11 @@ function filterContentLocation($user, $number, $type)
             }
             elseif($type == 'Beacon')
             {
-                $filteredContent = Beacon::where('beacon_tag', 'LIKE', $location['shortTag'].'%')->where('status', '!=', 'deactivated')->latest('created_at')->paginate(10);
+                $filteredContent = Beacon::where('beacon_tag', 'LIKE', $location['shortTag'].'%')->where('status', '!=', 'deactivated')->latest('updated_at')->paginate(10);
             }
             elseif($type == 'Sponsor')
             {
-                $filteredContent = Sponsor::where('sponsor_tag', 'LIKE', $location['shortTag'].'%')->where('status', '!=', 'deactivated')->latest('created_at')->paginate(10);
+                $filteredContent = Sponsor::where('sponsor_tag', 'LIKE', $location['shortTag'].'%')->where('status', '!=', 'deactivated')->latest('updated_at')->paginate(10);
             }
             elseif($type == 'Announcement')
             {
@@ -541,11 +540,11 @@ function filterContentLocation($user, $number, $type)
             }
             elseif($type == 'Beacon')
             {
-                $filteredContent = Beacon::where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->where('status', '!=', 'deactivated')->latest('created_at')->paginate(10);
+                $filteredContent = Beacon::where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->where('status', '!=', 'deactivated')->latest('updated_at')->paginate(10);
             }
             elseif($type == 'Sponsor')
             {
-                $filteredContent = Sponsor::where('sponsor_tag', 'LIKE', $location['country']. '-'. '%')->where('status', '!=', 'deactivated')->latest('created_at')->paginate(10);
+                $filteredContent = Sponsor::where('sponsor_tag', 'LIKE', $location['country']. '-'. '%')->where('status', '!=', 'deactivated')->latest('updated_at')->paginate(10);
             }
             elseif($type == 'Announcement')
             {
@@ -573,11 +572,11 @@ function filterContentLocation($user, $number, $type)
             }
             elseif($type == 'Beacon')
             {
-                $filteredContent = Beacon::latest('created_at')->where('status', '!=', 'deactivated')->paginate(10);
+                $filteredContent = Beacon::latest('updated_at')->where('status', '!=', 'deactivated')->paginate(10);
             }
             elseif($type == 'Sponsor')
             {
-                $filteredContent = Sponsor::latest('created_at')->where('status', '!=', 'deactivated')->paginate(10);
+                $filteredContent = Sponsor::latest('updated_at')->where('status', '!=', 'deactivated')->paginate(10);
             }
             elseif($type == 'Announcement')
             {
@@ -878,7 +877,7 @@ function filterContentLocationAllTime($user, $number, $type, $order)
             }
             elseif ($type == 'Beacon')
             {
-                $timeFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->paginate(10);
+                $timeFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->orderBy($order, 'desc')->paginate(10);
             }
             elseif ($type == 'Sponsor')
             {

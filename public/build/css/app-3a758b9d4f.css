@@ -452,6 +452,7 @@
   min-width: 335px;
   height: auto;
   margin: 7.3% auto;
+  padding-top: 5px;
   background-color: #E8E8E8;
   opacity: 0.75;
   filter: alpha(opacity=75);

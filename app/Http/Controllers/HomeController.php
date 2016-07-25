@@ -15,6 +15,7 @@ use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
 use App\Http\Requests\PhotoUploadRequest;
 use App\LegacyPost;
+use App\Mailers\NotificationMailer;
 use App\Post;
 use App\Question;
 use App\Sponsor;

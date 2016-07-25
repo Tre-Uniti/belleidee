@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/location.js"></script>
+    <script src="/js/googleAnalytics.js"></script>
 
     @yield('pageHeader')
 
@@ -160,7 +161,7 @@
             <div class = "innerPhotos">
                 @if(isset($beacon))
                     @if($beacon != NULL)
-                    <a href={{ url('/beacons/'. $beacon->id) }}><img src= {{ url(env('IMAGE_LINK'). $beacon->photo_path) }} alt="{{$beacon->name}}" height = "95%" width = "95%"></a>
+                    <a href={{ url('/beacons/'. $beacon->beacon_tag) }}><img src= {{ url(env('IMAGE_LINK'). $beacon->photo_path) }} alt="{{$beacon->name}}" height = "95%" width = "95%"></a>
                     @endif
                 @elseif(isset($sponsor))
                     @if($sponsor != NULL)

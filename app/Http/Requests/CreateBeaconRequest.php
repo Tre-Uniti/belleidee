@@ -31,16 +31,16 @@ class CreateBeaconRequest extends Request
             'address' => 'required|min: 5',
             'country' => 'required|min: 2',
             'city' => 'required|min: 2',
-            'beacon_tag'  => 'required|min:7|max:16|unique:beacons',
+            'beacon_tag'  => 'required|min:7|max:18|unique:beacons',
             'belief' => 'required',
             'website' => 'min:10|max:275',
-            'phone' => 'required|min: 10|max:18',
+            'phone' => 'required|min: 10|max:20',
             'email' => 'email|max:255|unique:beacons',
             'guide' => 'required',
             'lat' => 'min:3',
             'long' => 'min: 3',
             'image' => 'mimes:jpeg,jpg,png|max:8000',
-            'zip' => 'min:5|max:10',
+            'zip' => 'min:3|max:10',
         ];
     }
 }

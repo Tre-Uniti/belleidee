@@ -13,14 +13,13 @@
         <div class = "indexNav">
             <a href={{ url('/announcements')}}><button type = "button" class = "indexButton">Announcements</button></a>
             <a href={{ url('/beacons/search')}}><button type = "button" class = "indexButton">Search</button></a>
-
-            <a href={{ url('/beaconRequests')}}><button type = "button" class = "indexButton">New Requests</button></a>
+            <a href={{ url('/beaconRequests')}}><button type = "button" class = "indexButton">Requests</button></a>
         </div>
     <button class = "interactButton" id = "hiddenIndex">More</button>
     <div class = "indexContent" id = "hiddenContent">
-        <a href={{ url('/beacons/top')}}><button type = "button" class = "indexButton">Sort by Oldest</button></a>
-        <a href={{ url('/beacons/top')}}><button type = "button" class = "indexButton">Most Tagged</button></a>
-        <a href={{ url('/beacons/top')}}><button type = "button" class = "indexButton">Top Viewed</button></a>
+        <a href={{ url('/beacons/joinDate')}}><button type = "button" class = "indexButton">Join Date</button></a>
+        <a href={{ url('/beacons/topTagged')}}><button type = "button" class = "indexButton">Top Tagged</button></a>
+        <a href={{ url('/beacons/topViewed')}}><button type = "button" class = "indexButton">Top Viewed</button></a>
 
     </div>
     </div>

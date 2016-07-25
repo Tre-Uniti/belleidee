@@ -532,11 +532,11 @@ class BeaconController extends Controller
     }
 
     /**
-     * Display a top beacons by usage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function topUsage()
+ * Display a top beacons by tag usage.
+ *
+ * @return \Illuminate\Http\Response
+ */
+    public function topTagged()
     {
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
@@ -545,7 +545,44 @@ class BeaconController extends Controller
 
         $beacons = filterContentLocationAllTime($user, 0, 'Beacon', 'total_tag_usage');
 
-        return view ('beacons.top')
+        return view ('beacons.topTagged')
+            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'))
+            ->with('location', $location);
+    }
+
+    /**
+     * Display a top beacons by highest views.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function topViewed()
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        $location = getLocation();
+
+        $beacons = filterContentLocationAllTime($user, 0, 'Beacon', 'tag_views');
+
+        return view ('beacons.topViewed')
+            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'))
+            ->with('location', $location);
+    }
+    /**
+     * Display a top beacons by creation date.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function joinDate()
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        $location = getLocation();
+
+        $beacons = filterContentLocationAllTime($user, 0, 'Beacon', 'created_at');
+
+        return view ('beacons.joinDate')
             ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'))
             ->with('location', $location);
     }

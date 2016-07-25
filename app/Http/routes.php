@@ -31,7 +31,6 @@ Route::resource('users', 'UserController');
 //Beacon Routes (Resource)
 Route::get('beacons/search', 'BeaconController@search');
 Route::get('beacons/results', 'BeaconController@results');
-Route::get('beacons/top', 'BeaconController@topUsage');
 Route::get('beacons/signup/{id}', 'BeaconController@signup');
 Route::post('beacons/subscribe', 'BeaconController@subscribe')->name('subscribe');
 Route::post('beacons/swap', 'BeaconController@swap')->name('swap');
@@ -45,6 +44,9 @@ Route::get('beacons/posts/{id}', 'BeaconController@posts');
 Route::get('beacons/guide/{id}', 'BeaconController@guide');
 Route::get('beacons/extensions/{id}', 'BeaconController@extensions');
 Route::get('beacons/social/{id}', 'BeaconController@social');
+Route::get('beacons/joinDate/', 'BeaconController@joinDate');
+Route::get('beacons/topTagged', 'BeaconController@topTagged');
+Route::get('beacons/topViewed', 'BeaconController@topViewed');
 Route::resource('beacons', 'BeaconController');
 
 //Announcements for Subscribed Beacons

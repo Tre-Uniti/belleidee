@@ -13,6 +13,7 @@
        Feature & Pull Requests decided at Belle-Creatori.org
        Idee Repo: https://github.com/tre-uniti/belle-idee
     -->
+    <script src="/js/googleAnalytics.js"></script>
 </head>
 <body>
     <div id = "welcome">
