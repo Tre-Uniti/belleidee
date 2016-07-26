@@ -1,9 +1,13 @@
 @extends('app')
+@section('pageHeader')
+    <script src = "/js/index.js"></script>
+@stop
 @section('siteTitle')
     Show Sponsor
 @stop
 
 @section('centerText')
+    <div>
     <h2>{{ $sponsor->name }}</h2>
         <div class = "indexNav">
             <a href="{{ url('/sponsors/sponsorships/'. $sponsor->id) }}"><button type = "button" class = "indexButton">Sponsorships</button></a>
@@ -11,14 +15,19 @@
             <a href="{{ $sponsor->website }}" target="_blank"><button type = "button" class = "indexButton">Website</button></a>
         </div>
         @if($user->type > 1 || $user->id == $sponsor->user_id)
-            <div>
-                <a href="{{ url('promotions/create/'. $sponsor->id) }}"> <button type = "button" class = "indexButton">Create Promotion</button></a>
-                <button type = "button" class = "indexButton">Views: {{ $sponsor->views }} / {{ $sponsor->view_budget }}</button>
-                <button type = "button" class = "indexButton">Clicks: {{ $sponsor->clicks }} / {{ $sponsor->click_budget }}</button>
-            </div>
+    <button class = "interactButton" id = "hiddenIndex">More</button>
         @endif
+        <div class = "indexContent" id = "hiddenContent">
+            <div>
+                <a href = "{{ url('/sponsors/analytics/'. $sponsor->id) }}"><button type = "button" class = "indexButton">Analytics</button></a>
+                <a href = "{{ url('/sponsors/social/'. $sponsor->id) }}"><button type = "button" class = "indexButton">Social Button</button></a>
+                <a href="{{ url('promotions/sponsor/'. $sponsor->id) }}"> <button type = "button" class = "indexButton">Promotions</button></a>
+            </div>
+        </div>
+        </div>
 
-    <h4>Sponsor Promotions for: {{ $sponsor->sponsor_tag }}</h4>
+
+    <h4>Promotions for: {{ $sponsor->sponsor_tag }}</h4>
         <div class = "indexLeft">
             <h4>Status</h4>
         </div>

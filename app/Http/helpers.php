@@ -9,6 +9,7 @@ use App\Events\BeaconViewed;
 use App\Events\SponsorViewed;
 use App\Extension;
 use App\Post;
+use App\Promotion;
 use App\Sponsor;
 use App\Sponsorship;
 use App\User;
@@ -522,6 +523,13 @@ function filterContentLocation($user, $number, $type)
                     $query->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->where('status', '!=', 'deactivated');
                 })->paginate(10);
             }
+            elseif($type == 'Promotion')
+            {
+                $filteredContent = Promotion::where('status', '=', 'Open to All')->whereHas('sponsor', function ($query) {
+                    $location = session('coordinates');
+                    $query->where('sponsor_tag', 'LIKE', $location['shortTag'].'%')->where('status', '!=', 'deactivated');
+                })->paginate(10);
+            }
         }
         //Filter by Country
         elseif($user->location == 1)
@@ -553,7 +561,13 @@ function filterContentLocation($user, $number, $type)
                     $query->where('beacon_tag', 'LIKE', $location['country'].'%')->where('status', '!=', 'deactivated');
                 })->paginate(10);
             }
-
+            elseif($type == 'Promotion')
+            {
+                $filteredContent = Promotion::where('status', '=', 'Open to All')->whereHas('sponsor', function ($query) {
+                    $location = session('coordinates');
+                    $query->where('sponsor_tag', 'LIKE', $location['country'].'%')->where('status', '!=', 'deactivated');
+                })->paginate(10);
+            }
         }
         //Filter by Global
         else
@@ -581,6 +595,10 @@ function filterContentLocation($user, $number, $type)
             elseif($type == 'Announcement')
             {
                 $filteredContent = Announcement::latest()->paginate(10);
+            }
+            elseif($type == 'Promotion')
+            {
+                $filteredContent = Promotion::latest()->where('status', '=', 'Open to All')->paginate(10);
             }
         }
     }

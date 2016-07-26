@@ -18,7 +18,8 @@
             @else
                 {!! nl2br(e($content)) !!}
             @endif
-            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
+        </div>
     @elseif(isset($sources['post_id']))
         <div class = "extensionContent" id = "hiddenContent">
             @if($type != 'txt')
@@ -28,12 +29,20 @@
             @else
                 {!! nl2br(e($content)) !!}
             @endif
-            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
+        </div>
     @elseif(isset($sources['question_id']))
         <div class = "extensionContent" id = "hiddenContent">
             {!! nl2br(e($content)) !!}
-            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p></div>
+            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
+        </div>
+    @elseif(isset($sources['legacy_id']))
+        <div class = "extensionContent" id = "hiddenContent">
+            {!! nl2br(e($content)) !!}
+            <p>Legacy of: <a href = "{{ url('/beliefs/'. $sourceUser['belief']) }}" target="_blank">{{ $sourceUser['belief'] }}</a></p>
+        </div>
     @endif
+
 
     <div class = "formData">
             {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
@@ -71,6 +80,8 @@
                         <option value="Post" @if (old('source') == 'Post') @elseif($extension->source == 'Post' & (old('category') == '')) selected="selected" @endif>Post</option>
                     @elseif(isset($sources['question_id']))
                         <option value="Question" @if (old('source') == 'Question') selected="selected" @elseif($extension->source == 'Question' & (old('category') == '')) @endif>Question</option>
+                    @elseif(isset($sources['legacy_id']))
+                        <option value="Legacy" @if (old('source') == 'Legacy') selected="selected" @endif>Legacy</option>
                     @endif
                 </select>
         </div>

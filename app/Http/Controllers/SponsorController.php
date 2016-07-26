@@ -40,7 +40,7 @@ class SponsorController extends Controller
     {
         $this->middleware('auth', ['except' => 'show']);
         $this->middleware('admin', ['only' => ['create', 'store', 'edit', 'update', 'destroy', 'pay', 'payment']]);
-        $this->middleware('sponsorAdmin', ['only' => ['eligible', 'eligibleSearch']]);
+        $this->middleware('sponsorAdmin', ['only' => ['eligible', 'eligibleSearch', 'analytics']]);
         $this->sponsor = $sponsor;
     }
     /**
@@ -142,10 +142,10 @@ class SponsorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param $sponsor_tag
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($sponsor_tag)
     {
         //Get logged in user or set to Transferred for Guest
         if(Auth::user())
@@ -158,9 +158,27 @@ class SponsorController extends Controller
             $user = User::where('handle', '=', 'Transferred')->first();
             $user->handle = 'Guest';
         }
+
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
-        $sponsor = $this->sponsor->findOrFail($id);
+
+        //Check Sponsor exists and is active belongs to an Idee Beacon
+        try
+        {
+            $sponsor = Sponsor::where('sponsor_tag', '=',  $sponsor_tag)->firstOrFail();
+            if ($sponsor->status == 'deactivated')
+            {
+                flash()->overlay('Sponsor deactivated or does not exist');
+                return redirect()->back();
+            }
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('No active Idee Sponsor with this id');
+            return redirect()->back();
+        }
+        $sponsorPath = $sponsor->photo_path;
+
         Event::fire(new SponsorViewed($sponsor));
 
         $promotions = Promotion::where('sponsor_id', '=', $sponsor->id)->where('status', '!=', 'Closed')->take(7)->get();
@@ -259,7 +277,7 @@ class SponsorController extends Controller
         $sponsor->update($request->all());
         flash()->overlay('Sponsor has been updated');
 
-        return redirect('sponsors/'. $sponsor->id);
+        return redirect('sponsors/'. $sponsor->sponsor_tag);
     }
 
     /**
@@ -327,7 +345,7 @@ class SponsorController extends Controller
 
             flash()->overlay('Your sponsorship has started!');
         }
-        return redirect('sponsors/'. $sponsor->id);
+        return redirect('sponsors/'. $sponsor->sponsor_tag);
     }
 
     /*
@@ -389,7 +407,7 @@ class SponsorController extends Controller
 
             flash()->overlay('Payment successful: views, clicks, missed reset');
 
-            return redirect('sponsors/' . $sponsor->id);
+            return redirect('sponsors/' . $sponsor->sponsor_tag);
         }
 
         return view('sponsors.pay')
@@ -458,7 +476,7 @@ class SponsorController extends Controller
 
         flash()->overlay('Payment successful: views, clicks, missed reset to 0');
 
-        return redirect('sponsors/'. $sponsor->id);
+        return redirect('sponsors/'. $sponsor->sponsor_tag);
     }
 
     /**
@@ -509,11 +527,68 @@ class SponsorController extends Controller
     }
 
     /**
+     * Display a top sponsors by sponsorships.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function topSponsored()
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        $location = getLocation();
+
+        $sponsors = filterContentLocationAllTime($user, 0, 'Sponsor', 'sponsorships');
+
+        return view ('sponsors.topSponsored')
+            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions'))
+            ->with('location', $location);
+    }
+
+    /**
+     * Display top sponsors by highest views.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function topViewed()
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        $location = getLocation();
+
+        $sponsors = filterContentLocationAllTime($user, 0, 'Sponsor', 'views');
+
+        return view ('sponsors.topViewed')
+            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions'))
+            ->with('location', $location);
+    }
+    /**
+     * Display a top beacons by creation date.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function joinDate()
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        $location = getLocation();
+
+        $sponsors = filterContentLocationAllTime($user, 0, 'Sponsor', 'created_at');
+
+        return view ('sponsors.joinDate')
+            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions'))
+            ->with('location', $location);
+    }
+
+    /**
      * Display a top beacons by usage.
      *
      * @return \Illuminate\Http\Response
      */
-    public function topUsage()
+    /*public function topUsage()
     {
         $user = Auth::user();
         $profilePosts = getProfilePosts($user);
@@ -531,7 +606,7 @@ class SponsorController extends Controller
         return view ('sponsors.top')
             ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions', 'userSponsor'))
             ->with('location', $location);
-    }
+    }*/
 
     /*
      * Charge Sponsor for a click and redirect to their page
@@ -544,7 +619,7 @@ class SponsorController extends Controller
         $sponsor->where('id', $sponsor->id)
             ->update(['clicks' => $sponsor->clicks + 1]);
 
-        return redirect('sponsors/'. $sponsor->id);
+        return redirect('sponsors/'. $sponsor->sponsor_tag);
     }
 
    /*
@@ -655,6 +730,64 @@ class SponsorController extends Controller
         return view ('sponsors.eligibleResults')
             ->with(compact('user', 'profilePosts','profileExtensions', 'results', 'sponsor'))
             ->with('handle', $handle)
+            ->with('location', $location)
+            ->with('eligibleCount', $eligibleCount);
+    }
+
+    /**
+     * Retrieve extensions of specific sponsor.
+     *
+     * @param   $id
+     * @return \Illuminate\Http\Response
+     */
+    public function social($id)
+    {
+        $sponsor = Sponsor::findOrFail($id);
+
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        $sponsorUrl = url('/sponsors/'. $sponsor->sponsor_tag);
+        $sponsorSocialUrl = "<a href = ". '"'. "$sponsorUrl". '"'."><img src= ". '"'. "Add image location". '"'. "></a>";
+        $imageLink = "<img src= ". '"'. "https://yoursite.com/images/ideeSocial.png". '"'. ">";
+
+        $sponsorSocialUrl = htmlspecialchars($sponsorSocialUrl);
+        $imageLink = htmlspecialchars($imageLink);
+
+        $location = 'https://maps.google.com/?q=' . $sponsor->lat . ','. $sponsor->long;
+
+        return view('sponsors.social')
+            ->with(compact('user', 'sponsor', 'profilePosts', 'profileExtensions'))
+            ->with('sponsorUrl', $sponsorUrl)
+            ->with('sponsorSocialUrl', $sponsorSocialUrl)
+            ->with('imageLink', $imageLink)
+            ->with('location', $location);
+    }
+
+    /*
+     * Retrieve the analytics for a specific sponsor
+     */
+    public function analytics($id)
+    {
+        $sponsor = Sponsor::findOrFail($id);
+
+        $promotions = Promotion::where('sponsor_id', '=', $sponsor->id)->get()->count();
+        //User must have sponsorship for at least 7 days
+        $date = Carbon::today()->subDays(7);
+
+        $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date)->paginate();
+        $eligibleCount = count($sponsorships);
+
+        $location = 'https://maps.google.com/?q=' . $sponsor->lat . ','. $sponsor->long;
+
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        return view('sponsors.analytics')
+            ->with(compact('sponsor', 'user', 'profilePosts', 'profileExtensions'))
+            ->with('promotions', $promotions)
             ->with('location', $location)
             ->with('eligibleCount', $eligibleCount);
     }

@@ -8,7 +8,7 @@
     <h2>{{ $sponsor->name }} Eligible Sponsorships</h2>
 
     <div class = "indexNav">
-        <a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "indexButton">About</button></a>
+        <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}"><button type = "button" class = "indexButton">Sponsor Profile</button></a>
         <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
         <a href="{{ $sponsor->website }}" target="_blank"><button type = "button" class = "indexButton">Website</button></a>
     </div>

@@ -44,6 +44,7 @@ class BeaconController extends Controller
     {
         $this->middleware('auth', ['except' => ['show', 'guide', 'posts', 'extensions']]);
         $this->middleware('admin', ['only' => 'create', 'store', 'update', 'edit', 'deactivate', 'destroy']);
+        $this->middleware('beaconAdmin', ['only' => ['subscription', 'invoice', 'downloadInvoice', 'social', 'analytics']]);
         $this->beacon = $beacon;
     }
 
@@ -824,5 +825,30 @@ class BeaconController extends Controller
                 ->with('beaconSocialUrl', $beaconSocialUrl)
                 ->with('imageLink', $imageLink)
                 ->with('location', $location);
+    }
+
+    /*
+     * Retrieve analytics for specific beacon
+     */
+    public function analytics($id)
+    {
+        $beacon = Beacon::findOrFail($id);
+
+        $guidePosts = Post::where('user_id', '=', $beacon->guide)->where('beacon_tag', '=', $beacon->beacon_tag)->get()->count();
+        $userPosts = Post::where('beacon_tag', '=', $beacon->beacon_tag)->get()->count();
+        $extensions = Extension::where('beacon_tag', '=', $beacon->beacon_tag)->get()->count();
+
+        $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
+
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        return view('beacons.analytics')
+            ->with(compact('beacon', 'user', 'profilePosts', 'profileExtensions'))
+            ->with('location', $location)
+            ->with('guidePosts', $guidePosts)
+            ->with('userPosts', $userPosts)
+            ->with('extensions', $extensions);
     }
 }

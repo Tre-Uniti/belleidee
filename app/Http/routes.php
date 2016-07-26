@@ -47,6 +47,7 @@ Route::get('beacons/social/{id}', 'BeaconController@social');
 Route::get('beacons/joinDate/', 'BeaconController@joinDate');
 Route::get('beacons/topTagged', 'BeaconController@topTagged');
 Route::get('beacons/topViewed', 'BeaconController@topViewed');
+Route::get('beacons/analytics/{id}', 'BeaconController@analytics');
 Route::resource('beacons', 'BeaconController');
 
 //Announcements for Subscribed Beacons
@@ -112,6 +113,11 @@ Route::get('sponsors/sponsorships/{id}', 'SponsorController@sponsorships');
 Route::get('sponsors/eligible/{id}', 'SponsorController@eligible');
 Route::get('sponsors/eligibleSearch/{id}', 'SponsorController@eligibleSearch');
 Route::get('sponsors/eligibleResults', 'SponsorController@eligibleResults');
+Route::get('sponsors/joinDate', 'SponsorController@joinDate');
+Route::get('sponsors/topSponsored', 'SponsorController@topSponsored');
+Route::get('sponsors/topViewed', 'SponsorController@topViewed');
+Route::get('sponsors/social/{id}', 'SponsorController@social');
+Route::get('sponsors/analytics/{id}', 'SponsorController@analytics');
 Route::resource('sponsors', 'SponsorController');
 
 //Sponsor Promotions

@@ -30,7 +30,8 @@
                     <a href="{{ url('/intolerances/beacon/'. $beacon->id) }}"><button type = "button" class = "indexButton">Intolerance</button></a>
                 </div>
                 <div class = "indexNav">
-                   <a href = "{{ url('/beacons/social/'. $beacon->id) }}"><button type = "button" class = "indexButton">Add Social Button/Link</button></a>
+                    <a href = "{{ url('/beacons/analytics/'. $beacon->id) }}"><button type = "button" class = "indexButton">Analytics</button></a>
+                   <a href = "{{ url('/beacons/social/'. $beacon->id) }}"><button type = "button" class = "indexButton">Social Button</button></a>
                    <a href = "{{ url('/announcements/beaconIndex/'. $beacon->id) }}"><button type = "button" class = "indexButton">Announcements</button></a>
                 </div>
             @endif

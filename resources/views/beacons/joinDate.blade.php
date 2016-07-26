@@ -3,7 +3,7 @@
     <script src = "/js/index.js"></script>
 @stop
 @section('siteTitle')
-    Oldest Beacons
+    Beacons by Join Date
 @stop
 
 @section('centerText')

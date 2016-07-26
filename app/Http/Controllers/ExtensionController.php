@@ -815,6 +815,45 @@ class ExtensionController extends Controller
                 $type = 'txt';
             }
         }
+        //Get Source info of extension
+        elseif (isset($extension->legacy_post_id))
+        {
+
+            if (isset($extension->extenception))
+            {
+                $sourceModel = Extension::findOrFail($extension->extenception);
+                $sources = [
+                    'type' => 'extensions',
+                    'legacy_post_id' => $sourceModel->legacy_post_id,
+                    'extenception' => $sourceModel->id,
+                    'extension_title' => $sourceModel->title,
+                    'post_title' => $sourceModel->legacypost->title
+                ];
+                $sourceUser=
+                    [
+                        'id' => $extension->user_id,
+                        'handle' => $extension->user->handle
+                    ];
+                $content = Storage::get($extension->extension_path);
+                $type = substr($sourceModel->extension_path, -3);
+            }
+            else
+            {
+                $sourceModel = LegacyPost::findOrFail($extension->legacy_post_id);
+                $sources = [
+                    'type' => 'legacy',
+                    'legacy_id' => $sourceModel->id,
+                    'legacy_post_title' => $sourceModel->title
+                ];
+                $sourceUser=
+                    [
+                        'belief' => $sourceModel->legacy->belief->name
+                    ];
+                $content = Storage::get($sourceModel->source_path);
+                $type = substr($sourceModel->legacy_post_path, -3);
+
+            }
+        }
         else
         {
             $sourceUser=

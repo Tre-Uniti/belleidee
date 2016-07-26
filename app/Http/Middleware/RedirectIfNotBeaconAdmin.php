@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Sponsor;
+use App\Beacon;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class RedirectIfNotSponsorAdmin
+class RedirectIfNotBeaconAdmin
 {
     /**
      * Handle an incoming request.
@@ -19,10 +19,10 @@ class RedirectIfNotSponsorAdmin
     {
         $response = $next($request);
         $id = $request->route('id');
-        $sponsor = Sponsor::findOrFail($id); // Fetch the Sponsor
+        $beacon = Beacon::findOrFail($id); // Fetch the Beacon
         $user = Auth::user();
 
-        if($sponsor->user_id == $user->id)
+        if($beacon->manager == $user->id)
         {
             return $response;
         }
@@ -31,7 +31,7 @@ class RedirectIfNotSponsorAdmin
             return $response;
         }
 
-        flash()->overlay('You must be an admin or the owner of this sponsor to view');
-        return redirect('sponsors/'. $sponsor->sponsor_tag); // Not the Owner! Redirect back.
+        flash()->overlay('You must be an admin or the owner of this beacon to view');
+        return redirect('beacons/'. $beacon->beacon_tag); // Not the Owner! Redirect back.
     }
 }

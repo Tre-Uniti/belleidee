@@ -8,7 +8,7 @@
     <h2>{{ $sponsor->name }} Sponsorships</h2>
 
     <div class = "indexNav">
-        <a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "indexButton">About</button></a>
+        <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}"><button type = "button" class = "indexButton">Sponsor Profile</button></a>
         <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
         <a href="{{ $sponsor->website }}" target="_blank"><button type = "button" class = "indexButton">Website</button></a>
     </div>
@@ -31,7 +31,7 @@
                 <a href="{{ action('UserController@show', [$sponsorship->user_id])}}"><button type = "button" class = "interactButtonLeft">{{ $sponsorship->user->handle }}</button></a>
             </div>
             <div class = "listResourceRight">
-                <a href="{{ action('SponsorController@show', [$sponsorship->sponsor_id])}}"><button type = "button" class = "interactButton">{{ $sponsorship->created_at->format('M-d-Y')}}</button></a>
+                <a href="{{ action('SponsorController@show', [$sponsorship->sponsor->sponsor_tag])}}"><button type = "button" class = "interactButton">{{ $sponsorship->created_at->format('M-d-Y')}}</button></a>
             </div>
         </div>
     @endforeach

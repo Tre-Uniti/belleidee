@@ -24,8 +24,8 @@
         <b>Sponsor:</b>
     </div>
     <div class = "indexNav">
-        <a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "indexButton">{{$sponsor->name}}</button></a>
-        <a href="{{ url('/sponsors/'. $sponsor->id) }}"><button type = "button" class = "indexButton">Sponsorship: {{ $days }} days</button></a>
+        <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}"><button type = "button" class = "indexButton">{{$sponsor->name}}</button></a>
+        <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}"><button type = "button" class = "indexButton">Sponsorship: {{ $days }} days</button></a>
     </div>
 
     <div class = "indexNav">

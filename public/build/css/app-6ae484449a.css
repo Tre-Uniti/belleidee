@@ -444,6 +444,13 @@
   padding: 3px;
   font-weight: 500; }
 
+.formCreation {
+  display: inline-block;
+  text-align: center;
+  width: auto;
+  padding: 2px;
+  margin: 0 auto; }
+
 .formDeletion {
   display: inline-block; }
 
@@ -699,7 +706,7 @@ article {
   margin: 5px auto;
   width: 99%;
   height: auto;
-  max-height: 610px;
+  max-height: 635px;
   overflow: auto; }
 
 #centerTextContent {
@@ -872,7 +879,7 @@ article {
   .navButton {
     font-size: 100%; }
   #centerText {
-    max-height: 630px; }
+    max-height: 635px; }
   #centerTextContent {
     max-height: 530px;
     padding-left: 15px;

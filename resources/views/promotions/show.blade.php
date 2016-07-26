@@ -22,7 +22,7 @@
         Sponsor:
     </div>
     <div class = "formShowData">
-        <a href = "{{ url('/sponsors/'. $promotion->sponsor_id) }}">{{ $promotion->sponsor->name }}</a>
+        <a href = "{{ url('/sponsors/'. $promotion->sponsor->sponsor_tag) }}">{{ $promotion->sponsor->name }}</a>
     </div>
     <div id = "centerTextContent">
         <p>{!! nl2br($promotion->description) !!}</p>

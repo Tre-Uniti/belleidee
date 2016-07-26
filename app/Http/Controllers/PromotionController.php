@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use function App\Http\autolink;
+use function App\Http\filterContentLocation;
+use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use App\Http\Requests\PromotionRequest;
@@ -11,6 +13,7 @@ use App\Sponsor;
 use App\Sponsorship;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -24,8 +27,41 @@ class PromotionController extends Controller
     public function __construct(Promotion $promotion)
     {
         $this->middleware('auth', ['except' => 'show']);
-        $this->middleware('promotionOwner', ['only' => 'edit', 'update', 'destroy', 'index']);
+        $this->middleware('promotionOwner', ['only' => 'edit', 'update', 'destroy', 'sponsorIndex']);
         $this->promotion = $promotion;
+    }
+
+    /*
+     * Index for all promotions
+     *
+     * @param $id
+     */
+    public function index()
+    {
+
+
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+
+        try
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $sponsor = Sponsor::where('id','=', $sponsorship->sponsor_id)->first();
+
+        }
+        catch(ModelNotFoundException $e)
+        {
+            $sponsor = Sponsor::where('sponsor_tag', '=', 'US-SW-TreUniti');
+        }
+
+        $promotions = filterContentLocation($user, 1, 'Promotion');
+        $location = getLocation();
+
+        return view('promotions.index')
+            ->with(compact('user', 'promotions', 'sponsor', 'profilePosts', 'profileExtensions'))
+            ->with('location', $location);
+
     }
 
     /*

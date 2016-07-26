@@ -172,7 +172,7 @@
                         <a href={{ url('/sponsors/click/'. $userSponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $userSponsor->photo_path) }} alt="{{$userSponsor->name}}" height = "95%" width = "95%"></a>
                     @endif
                 @else
-                    <a href={{ url('/sponsors/1') }}><img src= {{ asset('img/tre-uniti.png') }} alt="Tre-Uniti" height = "95%" width = "95%"></a>
+                    <a href={{ url('/sponsors/US-SW-TreUniti') }}><img src= {{ asset('img/tre-uniti.png') }} alt="Tre-Uniti" height = "95%" width = "95%"></a>
                 @endif
             </div>
             <nav class = "profileNav">
