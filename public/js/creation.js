@@ -31,7 +31,21 @@ $(document).ready(function() {
         document.getElementById("imageButton").style.display = "Inline";
         document.getElementById("creationHeader").style.display = "Block";
     });
-    
+
+    $(document.getElementById("hiddenIndex")).click(function(){
+        $("#hiddenContent").slideToggle();
+        var content = document.getElementById("hiddenIndex");
+        if(content.innerHTML == "Show Tags")
+        {
+            content.innerHTML = "Hide Tags";
+        }
+        else
+        {
+            content.innerHTML = "Show Tags"
+        }
+
+    });
+
 
 
 

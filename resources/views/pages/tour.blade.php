@@ -1,21 +1,31 @@
-@extends('auth')
-@section('siteTitle')
-    Tour
-@stop
-@section('login')
-    <h3>What is Belle-Idee?</h3>
-    <ul class = "tour">
-        <li>A place to share spiritual ideas, inspirations, and experiences</li>
-        <li>Integrated with local and global Beacons</li>
-        <li>Powered by Laravel & Open Source</li>
-        <li>Moderated based on respect and tolerance</li>
-        <li>Supported by sponsors with promotions</li>
-        <li>Community Questions about ideas & beliefs</li>
-        <li>Maintained by <a href = "https://tre-uniti.org" target="_blank" class = "welcomeLink">Tre-Uniti</a></li>
-    </ul>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="canonical" href="https://belle-idee.org/">
+    <meta name="title" content="Belle Idee">
+    <meta name="description" content="Belle Idee - A place to share ideas, inspirations and influences.">
+    <title>Belle Idee Tour</title>
+    <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
+    <!--
+       This code is maintained by the Tre-Uniti development ops
+       Feature & Pull Requests decided at Belle-Creatori.org
+       Idee Repo: https://github.com/tre-uniti/belle-idee
+    -->
+    <script src="/js/googleAnalytics.js"></script>
+</head>
+<body>
+<div id = "welcome">
+    <a href="/"><img src={{secure_asset('img/idee.png')}} alt="idee" height = "35%" width = "35%"></a>
+    <hr/>
+    <div id = "tour">
+        <a href="/img/tour.png" target="_blank"><img id = "tourImage" src = "/img/tour.png" alt="tour" width="100%" height="100%"></a>
+    </div>
     <a href="{{ url('/auth/register') }}"><button type = "button" class = "navButton">Register</button></a>
     <a href="{{ url('/demo') }}"><button type = "button" class = "navButton">View Demo Page</button></a>
-@stop
-@section('footer')
-    <a href="https://duckduckgo.com/"><button type = "button" class = "interactButton">Not Interested</button></a>
-@stop
+    <hr/>
+        <a href="https://duckduckgo.com/"><button type = "button" class = "interactButton">Not Interested</button></a>
+</div>
+</body>
+</html>

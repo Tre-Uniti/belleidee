@@ -79,6 +79,24 @@ p.verification
   color: #FFFFFF;
 }
 
+#tour
+{
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  background-color: #202020;
+  opacity:0.95;
+  filter:alpha(opacity=90);
+  border: 2px solid;
+  border-radius: 25px;
+  min-width: 332px;
+}
+
+#tourImage
+{
+  border-radius: 25px;
+}
+
 //Media Queries
 
 //Small screen mobile portrait
