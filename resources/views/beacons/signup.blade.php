@@ -71,7 +71,7 @@
 @stop
 
         @section('centerFooter')
-            <a href = "{{ url('beacons/'. $beacon->id) }}"><button type = "button" class = "navButton">Beacon Profile</button></a>
+            <a href = "{{ url('beacons/'. $beacon->beacon_tag) }}"><button type = "button" class = "navButton">Beacon Profile</button></a>
             <a href = "{{ url('beacons/subscription/'. $beacon->id) }}"><button type = "button" class = "navButton">Subscriptions</button></a>
             <a href = "{{ url('beacons/invoice/'. $beacon->id) }}"><button type = "button" class = "navButton">Invoices</button></a>
 

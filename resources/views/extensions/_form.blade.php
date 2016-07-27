@@ -7,7 +7,12 @@
 @stop
 
 <div id = "createOptions">
-    <p><button type = "button" class = "interactButton" id = "content">Show Source</button></p>
+    @if(isset($sources['question_id']) && (!isset($sources['extenception'])))
+        <p><button type = "button" class = "interactButton" id = "content">Answer to: {{ $sourceModel->question }}</button></p>
+    @else
+        <p><button type = "button" class = "interactButton" id = "content">Extends: {{ $sourceModel->title }}</button></p>
+    @endif
+
     <div class = "extensionContent" id = "hiddenContent">
     @if(isset($sources['extenception']))
             @if($type != 'txt')
@@ -41,9 +46,13 @@
         <div class = "formData">
             {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Your Title']) !!}
             </div>
-        <div class = "formInput">
+    <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
+    <div class = "indexContent" id = "hiddenIndexContent">
+        <div class = "formData">
+            <div class = "formCreation">
+                <div>Belief or Way:</div>
+                <div>
             <select name = 'belief' required >
-                <option value="" disabled selected>Belief or Way:</option>
                 <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @elseif(isset($sourceUser['belief'])) @if($sourceUser['belief'] == 'Adaptia') selected="selected"@endif @endif>Adaptia</option>
                 <option value="Atheism" @if (old('belief') == 'Atheism') selected="selected" @elseif(isset($sourceUser['belief'])) @if ($sourceUser['belief'] == 'Atheism') selected="selected" @endif @endif>Atheism</option>
                 <option value="Buddhism" @if (old('belief') == 'Buddhism') selected="selected" @elseif(isset($sourceUser['belief'])) @if ($sourceUser['belief'] == 'Buddhism') selected="selected" @endif @endif>Buddhism</option>
@@ -60,11 +69,18 @@
                 <option value="Zoroastrianism" @if (old('belief') == 'Zoroastrianism') selected="selected" @elseif(isset($sourceUser['belief'])) @if ($sourceUser['belief'] == 'Zoroastrianism') selected="selected" @endif @endif>Zoroastrianism</option>
                 <option value="Other" @if (old('belief') == 'Other') selected="selected" @elseif(isset($sourceUser['belief'])) @if ($sourceUser['belief'] == 'Other') selected="selected" @endif @endif>Other</option>
             </select>
-
+                </div>
+            </div>
+                <div class = "formCreation">
+                    <div>Beacon Tag:</div>
+                    <div>
             {!! Form::select('beacon_tag', $beacons) !!}
-
+                        </div>
+                    </div>
+                <div class = "formCreation">
+                    <div>Source:</div>
+                    <div>
             <select name = 'source' required>
-                <option  disabled>Source:</option>
                 @if(isset($sources['extenception']))
                     <option value="Extension" @if (old('source') == 'Extension') selected="selected" @endif>Extension</option>
                 @elseif(isset($sources['post_id']))
@@ -75,6 +91,9 @@
                     <option value="Legacy" @if (old('source') == 'Legacy') selected="selected" @endif>Legacy</option>
                 @endif
             </select>
+                    </div>
+        </div>
+        </div>
         </div>
 
 <!-- Body Form Input -->

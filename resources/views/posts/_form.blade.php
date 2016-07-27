@@ -16,7 +16,7 @@
             {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
         </div>
         <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
-        <div class = "indexContent" id = "hiddenContent">
+        <div class = "indexContent" id = "hiddenIndexContent">
             <div class = "formData">
                 <div class = "formCreation">
                     <div>Belief or Way:</div>
@@ -59,8 +59,6 @@
                     </div>
                 </div>
         </div>
-
-
         </div>
 
     <!-- Body Form Input -->

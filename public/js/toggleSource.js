@@ -2,7 +2,7 @@ $(document).ready(function(){
     $(document.getElementById("content")).click(function(){
         $("#hiddenContent").slideToggle();
         var content = document.getElementById("content");
-        if(content.innerHTML == "Show Source")
+        if(content.innerHTML != "Hide Source")
         {
             content.innerHTML = "Hide Source";
         }
