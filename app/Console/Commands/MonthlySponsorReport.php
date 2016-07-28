@@ -42,5 +42,6 @@ class MonthlySponsorReport extends Command
     public function handle(NotificationMailer $notification)
     {
         $notification->sendMonthlySponsorReport();
+        $this->info('Sponsor report successfully sent!');
     }
 }

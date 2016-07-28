@@ -29,45 +29,86 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $filePath = Storage::disk('local');
+        if (Storage::disk('local')->exists('/reports/legacyReports.txt'))
+        {
+            $legacyReportFile = Storage::disk('local')->get('/reports/legacyReports.txt');
+        }
+        else
+        {
+            $legacyReportFile = Storage::disk('local')->put('/reports/legacyReports.txt', 'Initial');
+        }
+        if (Storage::disk('local')->exists('/reports/beaconReports.txt'))
+        {
+            $beaconReportFile = Storage::disk('local')->get('/reports/beaconReports.txt');
+        }
+        else
+        {
+            $beaconReportFile = Storage::disk('local')->put('/reports/beaconReports.txt', 'Initial');
+        }
+        if (Storage::disk('local')->exists('/reports/beaconResets.txt'))
+        {
+            $beaconResetFile = Storage::disk('local')->get('/reports/beaconResets.txt');
+        }
+        else
+        {
+            $beaconResetFile = Storage::disk('local')->put('/reports/beaconResets.txt', 'Initial');
+        }
+        if (Storage::disk('local')->exists('/reports/sponsorReports.txt'))
+        {
+            $sponsorReportFile = Storage::disk('local')->get('/reports/sponsorReports.txt');
+        }
+        else
+        {
+            $sponsorReportFile = Storage::disk('local')->put('/reports/sponsorReports.txt', 'Initial');
+        }
+        if (Storage::disk('local')->exists('/reports/backupReports.txt'))
+        {
+            $backupReportFile = Storage::disk('local')->get('/reports/backupReports.txt');
+        }
+        else
+        {
+            $backupReportFile = Storage::disk('local')->put('/reports/backupReports.txt', 'Initial');
+        }
+
+        //$backupReportFile = $storagePath . '/reports/' . 'backupReport.txt';
         //$schedule->command('inspire')
                  //->hourly();
 
         //Latest Legacy Report
-        $schedule->command('latestLegacyReport')->Weekly()->sundays()->at('7:00')
-                    ->sendOutputTo($filePath)
+        $schedule->command('legacy:latestLegacyReport')->Weekly()->sundays()->at('7:00')
+                    ->appendOutputTo($legacyReportFile)
                     ->emailOutputTo('tre-uniti@belle-idee.org')
                     ->pingBefore('http://beats.envoyer.io/heartbeat/xVDhFSK4jA0LbWA')
                     ->thenPing('http://beats.envoyer.io/heartbeat/xVDhFSK4jA0LbWA');
 
         //Monthly reports
-        $schedule->command('monthlyBeaconReport')->Monthly()
-                    ->sendOutputTo($filePath)
+        $schedule->command('beacon:monthlyBeaconReport')->everyMinute()
+                    ->appendOutputTo($beaconReportFile)
                     ->emailOutputTo('tre-uniti@belle-idee.org')
                     ->pingBefore('http://beats.envoyer.io/heartbeat/xVDhFSK4jA0LbWA	')
                     ->thenPing('http://beats.envoyer.io/heartbeat/xVDhFSK4jA0LbWA	');
 
-        $schedule->command('monthlyBeaconReset')->Monthly()
-                    ->sendOutputTo($filePath)
+        $schedule->command('beacon:monthlyBeaconReset')->Monthly()
+                    ->appendOutputTo($beaconResetFile)
                     ->emailOutputTo('tre-uniti@belle-idee.org')
                     ->pingBefore('http://beats.envoyer.io/heartbeat/sJMQyFYadJ1mpBw')
                     ->thenPing('http://beats.envoyer.io/heartbeat/sJMQyFYadJ1mpBw');
 
-        $schedule->command('monthlySponsorReport')->Monthly()
-                    ->sendOutputTo($filePath)
+        $schedule->command('sponsor:monthlySponsorReport')->Monthly()
+                    ->appendOutputTo($sponsorReportFile)
                     ->emailOutputTo('tre-uniti@belle-idee.org')
                     ->pingBefore('http://beats.envoyer.io/heartbeat/fns0wM10UnkF2h4	')
                     ->thenPing('http://beats.envoyer.io/heartbeat/fns0wM10UnkF2h4	');
 
         //Run daily backups to S3 and local
         $schedule->command('backup:clean')->daily()->at('01:00')
-                    ->appendOutputTo($filePath)
+                    ->appendOutputTo($backupReportFile)
                     ->emailOutputTo('tre-uniti@belle-idee.org')
                     ->pingBefore('http://beats.envoyer.io/heartbeat/pmD4rGlycwLlIkg	')
                     ->thenPing('http://beats.envoyer.io/heartbeat/pmD4rGlycwLlIkg');
 
         $schedule->command('backup:run')->daily()->at('02:00')
-                    ->appendOutputTo($filePath)
+                    ->appendOutputTo($backupReportFile)
                     ->emailOutputTo('tre-uniti@belle-idee.org')
                     ->pingBefore('http://beats.envoyer.io/heartbeat/063hSXI4bQV8lfC')
                     ->thenPing('http://beats.envoyer.io/heartbeat/063hSXI4bQV8lfC');

@@ -41,6 +41,7 @@ class MonthlyBeaconReport extends Command
     public function handle(NotificationMailer $notification)
     {
         $notification->sendMonthlyBeaconReport();
+        $this->info('Beacon report successfully sent!');
     }
     
 }

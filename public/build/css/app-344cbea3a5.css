@@ -537,6 +537,8 @@ p.verification {
   #welcome {
     min-width: 302px; }
   #login {
+    min-width: 296px; }
+  #tour {
     min-width: 296px; } }
 
 html {

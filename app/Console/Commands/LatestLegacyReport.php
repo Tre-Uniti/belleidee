@@ -39,6 +39,7 @@ class LatestLegacyReport extends Command
     public function handle(NotificationMailer $notification)
     {
         $notification->sendLatestLegacyReport();
+        $this->info('Legacy report successfully sent!');
     }
 
 }

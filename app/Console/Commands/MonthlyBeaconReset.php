@@ -49,5 +49,6 @@ class MonthlyBeaconReset extends Command
             $beacon->tag_usage = 0;
             $beacon->update();
         }
+        $this->info('Beacon counters successfully reset!');
     }
 }
