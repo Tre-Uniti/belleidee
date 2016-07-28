@@ -31,7 +31,7 @@
         <td colspan="3" style = "text-align: left;">1.  <b>Elevation</b> is similar to "Like" and <b>Extension</b> is similar to "Comment".</td>
     </tr>
     <tr>
-        <td colspan="3" style = "text-align: left;">2.  <b>Beacons</b> are places of worship like Churches, Synagogues, Mosques, etc.</td>
+        <td colspan="3" style = "text-align: left;">2.  <b>Beacons</b> are places of worship or thought like Libraries, Churches, Mosques, etc.</td>
     </tr>
     <tr>
         <td colspan="3" style = "text-align: left;">3.  <b>Sponsors</b> are chosen by each user to sponsor them and receive promotions.</td>
