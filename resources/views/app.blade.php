@@ -9,7 +9,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/location.js"></script>
-    <script src="/js/googleAnalytics.js"></script>
+    @if(!App::environment('local'))
+        <script src="/js/googleAnalytics.js"></script>
+    @endif
 
     @yield('pageHeader')
 

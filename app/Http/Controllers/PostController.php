@@ -186,6 +186,7 @@ class PostController extends Controller
         }
         catch(ModelNotFoundException $e)
         {
+            $lastPost = NULL;
             flash()->overlay('Your first post:');
         }
 
@@ -197,7 +198,7 @@ class PostController extends Controller
         
 
             return view('posts.create')
-                ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sponsor'));
+                ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sponsor', 'lastPost'));
 
     }
 

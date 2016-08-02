@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Show Beacon
+    Show Support Case
 @stop
 
 @section('centerText')

@@ -13,7 +13,9 @@
        Feature & Pull Requests decided at Belle-Creatori.org
        Idee Repo: https://github.com/tre-uniti/belle-idee
     -->
-    <script src="/js/googleAnalytics.js"></script>
+    @if(!App::environment('local'))
+        <script src="/js/googleAnalytics.js"></script>
+    @endif
 </head>
 <body>
     <div id = "welcome">
