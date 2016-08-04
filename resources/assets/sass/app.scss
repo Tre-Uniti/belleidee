@@ -1,8 +1,6 @@
 // Utilities
 @import "utility/siteVars";
 
-
-
 //Navigation
 @import 'nav/topNav';
 @import 'nav/profileNav';
@@ -32,21 +30,17 @@
 @import 'pages/welcome';
 
 html{
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  -webkit-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background-color: #ECF0F1;
 }
 /* unvisited link */
 a:link {
-  color: #188BC0;
+  color: #2C3E50;
   text-decoration: none;
 }
 
 /* visited link */
 a:visited {
-  color: #202020;
+  color: #2C3E50;
 
 }
 /* mouse over link */
@@ -167,8 +161,8 @@ th
 //Flash Messages:
 .flash-info
 {
-  color: #009900;
-  background-color: #101010;
+  color: #FFFFFF;
+  background-color: #27AE60;
   margin: 0 auto;
   padding: 7px;
   border-radius: 10px;
@@ -176,8 +170,8 @@ th
 }
 .flash-success
 {
-  color: #009900;
-  background-color: #101010;
+  color: #FFFFFF;
+  background-color: #27AE60;
   margin: 0 auto;
   padding: 7px;
   border-radius: 10px;
@@ -196,19 +190,19 @@ th
 //Errors
 .errors
 {
-  background-color: #202020;
+  background-color: #BDC3C7;
   opacity: .9;
 }
 .listErrors
 {
-  color: #33FF33;
+  color: #c0392b;
   text-align: left;
   padding-bottom: 3px;
 }
 
 .payment-errors
 {
-  color: red;
+  color: #c0392b;
 }
 
 //Sides
@@ -238,12 +232,7 @@ article
   height: auto;
   max-height: 100%;
   opacity: $centerOpacity;
-  border: 2px solid;
-  border-radius: 12px;
-  background: -webkit-linear-gradient(#F8F8F8  , #C0C0C0 );
-  background: -o-linear-gradient(#F8F8F8 , #C0C0C0 );
-  background: -moz-linear-gradient(#F8F8F8 , #C0C0C0 );
-  background: linear-gradient(#F8F8F8 , #C0C0C0 );
+  background-color: #ECF0F1;
 
 }
 #centerMenu
@@ -269,7 +258,6 @@ article
 #centerTextContent > button
 {
   @include baseButton;
-  text-shadow: 3px 3px 10px #003300;
   @include colorNavButton($navButtonColor1, $navButtonColor2, $navTextColor);
 }
 #centerTextContent > button:hover > div
@@ -308,11 +296,10 @@ article
 
 #centerFooter
 {
-  background-color: $bottomBackgroundColor;
+  background-color: #ECF0F1;;
   margin: 0 auto;
   display: inline-block;
   border-radius: 20px;
-  opacity: 0.9;
   padding: 3px;
 }
 
@@ -350,7 +337,6 @@ article
 .navButton
 {
   @include baseButton;
-  text-shadow: 3px 3px 10px #003300;
   @include colorNavButton($navButtonColor1, $navButtonColor2, $navTextColor);
   &:hover
   {
@@ -401,7 +387,7 @@ article
     background: -moz-linear-gradient($actHoverColor1, $actHoverColor2);
     background: linear-gradient($actHoverColor1, $actHoverColor2);
   }
-  border: solid 1px ;
+  border: solid 1px;
 }
 
 //Include Media Queries

@@ -4,7 +4,6 @@
 @stop
 
 @section('login')
-    <h3>Reset Password</h3>
     @if (session('status'))
     <div class = "flash-success">
         {{ session('status') }}

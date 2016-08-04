@@ -3,46 +3,33 @@
   width: 30%;
   min-width: 335px;
   height: auto;
-  margin: 7.3% auto;
+  margin: 3% auto;
   padding-top: 5px;
-  background-color: #E8E8E8;
-  opacity:0.75;
+  background-color: #ECF0F1;
   filter:alpha(opacity=75);
-  border: 2px solid;
   border-radius: 25px;
   font-family: "Open Sans", Arial, serif;
   text-align: center;
 }
 #login
 {
-  width: 69%;
+  width: 85%;
   height: auto;
-  margin: 0 auto;
-  background-color: #202020;
-  opacity:0.95;
+  margin: 3% auto;
+  background-color: #ECF0F1;
   filter:alpha(opacity=90);
-  border: 2px solid;
   border-radius: 25px;
   min-width: 332px;
 }
 h3
 {
-  color: white;
+  color: #2C3E50;
   text-decoration: underline;
 }
-hr
-{
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  margin-left: auto;
-  margin-right: auto;
-  border-style: inset;
-  border-width: 7px;
-  border-color: green;
-}
+
 label.login
 {
-  color: white;
+  color: #2C3E50;;
 }
 .welcomeInputText
 {
@@ -60,18 +47,18 @@ label.login
 }
 /* mouse over link */
 .welcomeLink:hover {
-  color: #009900;
+  color: #27AE60;
 }
 
 /* selected link */
 .welcomeLink:active {
-  color: #00CC33;
+  color: #27AE60;
 
 }
 
 p.login
 {
-  color: #009900;
+  color: #27AE60;
 }
 
 p.verification
@@ -84,10 +71,9 @@ p.verification
   width: 100%;
   height: auto;
   margin: 0 auto;
-  background-color: #202020;
+  background-color: #ECF0F1;
   opacity:0.95;
   filter:alpha(opacity=90);
-  border: 2px solid;
   border-radius: 25px;
   min-width: 332px;
 }
@@ -95,6 +81,13 @@ p.verification
 #tourImage
 {
   border-radius: 25px;
+}
+
+.topBar
+{
+  height: 56px;
+  width: 100%;
+  background-color: #27AE60;
 }
 
 //Media Queries

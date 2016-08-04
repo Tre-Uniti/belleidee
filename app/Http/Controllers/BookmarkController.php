@@ -282,7 +282,7 @@ class BookmarkController extends Controller
 
             //Notify user bookmark was successful
             flash()->overlay('You have successfully bookmarked this User');
-            return redirect('users/'. $user->id);
+            return redirect('users/'. $sourceUser->id);
         }
     }
 
@@ -315,6 +315,10 @@ class BookmarkController extends Controller
             }
             //Add beacon_tag to user's bookmarks
             $user->bookmarks()->attach($bookmark->id);
+
+            //Add Beacon tag to user's last tag
+            $user->last_tag = $beacon->beacon_tag;
+            $user->update();
 
             //Notify user bookmark was successful
             flash()->overlay('You have successfully bookmarked this beacon');

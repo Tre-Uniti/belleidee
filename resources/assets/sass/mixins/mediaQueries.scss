@@ -2,11 +2,10 @@
 @mixin desktop($desktopBackground) {
   @media screen and (min-width: 1501px) and (min-height: 850px) {
     html {
-      background-image: url($desktopBackground);
-      background-color: black;
+
     }
     .topNav {
-      width: 65%;
+      width: 100%;
     }
 
     .interactButton {
@@ -65,11 +64,10 @@
   //Small Desktop
   @media screen and (min-width: 801px) and (max-width: 1500px) and (max-height: 1400px) {
     html {
-      background-image: url($desktopBackground);
-      background-color: black;
+
     }
     .topNav {
-      width: 67%;
+      width: 100%;
     }
     .interactButton {
       font-size: 100%;
@@ -138,12 +136,10 @@
   {
     html
     {
-      background-image: url($tabletBackground);
-      background-color: black;
     }
     .topNav
     {
-      max-width: 79%;
+      max-width: 100%;
     }
     #centerContent
     {
@@ -210,11 +206,10 @@
   @media screen and (min-width: 852px) and (max-width: 1500px)
   {
     html {
-      background-image: url($tabletBackground);
-      background-color: black;
+
     }
     .topNav {
-      max-width: 77%;
+      max-width: 100%;
     }
     #centerContent {
       width: 50%;
@@ -292,11 +287,9 @@
 @mixin mobile($mobileBackground) {
   @media screen and (max-width: 419px) and (min-height: 541px) {
     html {
-      background-image: url($mobileBackground);
-      background-color: black;
     }
     .topNav {
-      max-width: 97%;
+      max-width: 100%;
     }
     .topNav > ul > li > a {
       padding: 0 1px;
@@ -401,12 +394,9 @@
   @media screen and (min-width: 419px) and (max-width: 751px) and (max-height: 450px)
   {
     html {
-      background-image: url($mobileBackground);
-      background-color: black;
-      font-size: 80%;
     }
     .topNav {
-      max-width: 56%;
+      max-width: 100%;
     }
     .topNav > ul > li > a {
       padding: 0 1px;
@@ -513,11 +503,9 @@
   @media screen and (max-width: 465px) and (max-height: 540px) {
 
     html {
-      background-image: url($mobileBackground);
-      background-color: black;
     }
     .topNav {
-      max-width: 97%;
+      max-width: 100%;
     }
     .topNav > ul > li > a {
       padding: 0 1px;
@@ -622,12 +610,9 @@
   @media screen and (min-width: 467px) and (max-width: 751px) and (max-height: 400px)
   {
     html {
-      background-image: url($mobileBackground);
-      background-color: black;
-      font-size: 80%;
     }
     .topNav {
-      max-width: 56%;
+      max-width: 100%;
     }
     .topNav > ul > li > a {
       padding: 0 1px;
@@ -723,11 +708,10 @@
   //Writing screens
   @media screen and (max-width: 465px) and (max-height: 260px) {
     html {
-      background-image: url($mobileBackground);
-      background-color: black;
+
     }
     .topNav {
-      max-width: 97%;
+      max-width: 100%;
       visibility: hidden;
       max-height: .01%;
     }

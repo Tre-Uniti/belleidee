@@ -173,7 +173,7 @@ class PostController extends Controller
         $profileExtensions = $this->getProfileExtensions($user);
         $date = Carbon::now()->format('M-d-Y');
 
-        //Get last post of user and check if it was UTC today
+        //Get last beac of user and check if it was UTC today
         //If the dates match redirect them to their post
         try
         {
@@ -190,15 +190,25 @@ class PostController extends Controller
             flash()->overlay('Your first post:');
         }
 
+        //Fetch last beacon used or set to No-Beacon
+        try
+        {
+            $lastBeacon = Beacon::where('beacon_tag', '=', $user->last_tag)->firstOrFail();
+        }
+        catch(ModelNotFoundException $e)
+        {
+            $lastBeacon = Beacon::where('beacon_tag', '=', 'No-Beacon')->firstOrFail();
+            flash()->overlay('No recent Beacon interaction, please verify post tags');
+        }
+
         //Populate Beacon options with user's bookmarked beacons
         $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
         $sponsor = getSponsor($user);
-        
 
-            return view('posts.create')
-                ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sponsor', 'lastPost'));
+        return view('posts.create')
+            ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sponsor', 'lastPost', 'lastBeacon'));
 
     }
 

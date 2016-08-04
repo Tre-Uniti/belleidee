@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('siteTitle')
-    <title>Idee /-\ About</title>
+    <title>Idee - About</title>
 @stop
 
 @section('centerText')

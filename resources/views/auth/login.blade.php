@@ -1,9 +1,8 @@
 @extends('auth')
 @section('siteTitle')
-    Login
+    Idee - Login
 @stop
 @section('login')
-    <h3>Login</h3>
     <form role="form" method="POST" action="{{ secure_url('/auth/login') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class = "formData">
@@ -31,9 +30,6 @@
     </form>
 @stop
 @section('footer')
-    <h4>Other Options:</h4>
-    <a href="{{ secure_url('/nymi') }}"><button type = "button" class = "navButton">Nymi</button></a>
-    <a href="{{ secure_url('/auth/register') }}"><button type = "button" class = "navButton">Register</button></a>
-    <a href="{{ secure_url('/tour') }}"><button type = "button" class = "navButton">Tour</button></a><br/>
+    <hr/>
     <a class="btn btn-link" href="{{ secure_url('/password/email') }}">Forgot Your Password?</a>
 @stop

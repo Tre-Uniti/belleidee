@@ -18,9 +18,9 @@
   padding: 3px 7px;
   margin-left: 3px;
   line-height: 1.42857143;
-  color: #FFFFFF;
+  color: #2C3E50;
   text-decoration: none;
-  background-color: #696969;
+  background-color: #BDC3C7;
   border: 1px solid #202020;
   border-radius: 10px;
 }
@@ -40,8 +40,8 @@
 .pagination > li > a:focus,
 .pagination > li > span:focus {
   z-index: 2;
-  color: #009900;
-  background-color: #202020;
+  color: #FFFFFF;
+  background-color: #27AE60;;
   border-color: #E8E8E8;
 }
 .pagination > .active > a,
@@ -51,9 +51,9 @@
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
   z-index: 3;
-  color: #009900;
+  color: #FFFFFF;
   cursor: default;
-  background-color: #202020;
+  background-color: #27AE60;;
   border-color: #009900;
 }
 .pagination > .disabled > span,

@@ -18,9 +18,10 @@
 <body>
 <div id = "welcome">
     <a href="/"><img src={{secure_asset('img/idee.png')}} alt="idee" height = "35%" width = "35%"></a>
-    <hr/>
     <div id = "tour">
-        <a href="/img/tour.png" target="_blank"><img id = "tourImage" src = "/img/tour.png" alt="tour" width="100%" height="100%"></a>
+        <p>
+            <a href="/img/tour.png" target="_blank"><img id = "tourImage" src = "/img/tour.png" alt="tour" width="100%" height="100%"></a>
+        </p>
     </div>
     <a href="{{ url('/auth/register') }}"><button type = "button" class = "navButton">Register</button></a>
     <a href="{{ url('/demo') }}"><button type = "button" class = "navButton">View Demo Page</button></a>

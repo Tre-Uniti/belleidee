@@ -7,6 +7,7 @@
     <meta name="title" content="Belle Idee">
     <meta name="description" content="Belle Idee - A place to share ideas, inspirations and influences.">
     <title>Belle Idee @yield('siteTitle')</title>
+    <link rel = "stylesheet" href = "/css/normalize.css">
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
     <!--
        This code is maintained by the Tre-Uniti development ops
@@ -18,16 +19,18 @@
     @endif
 </head>
 <body>
+<div id = "container">
+<div class = "topBar">
+    </div>
     <div id = "welcome">
         <a href="/"><img src={{secure_asset('img/idee.png')}} alt="idee" height = "35%" width = "35%"></a>
-            <hr/>
                 <div id = "login">
                     @include('partials.flash')
                     @include('errors.list')
                     @yield('login')
                 </div>
-            <hr/>
             @yield('footer')
     </div>
+</div>
 </body>
 </html>

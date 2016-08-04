@@ -22,7 +22,6 @@
     -->
 </head>
 <body>
-
 <div id = "container">
     <nav class = "topNav">
         <ul>

@@ -70,22 +70,21 @@ class DraftController extends Controller
         $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-        //Get last post of user and check if it was UTC today
-        //If the dates match redirect them to their post
+        //Fetch last beacon used or set to No-Beacon
         try
         {
-            $lastPost = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->firstOrFail();
+            $lastBeacon = Beacon::where('beacon_tag', '=', $user->last_tag)->firstOrFail();
         }
         catch(ModelNotFoundException $e)
         {
-            $lastPost = NULL;
-            flash()->overlay('Your first draft:');
+            $lastBeacon = Beacon::where('beacon_tag', '=', 'No-Beacon')->firstOrFail();
+            flash()->overlay('No recent Beacon interaction, please verify post tags');
         }
 
         $sponsor = getSponsor($user);
 
         return view('drafts.create')
-            ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sponsor', 'lastPost'));
+            ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sponsor', 'lastBeacon'));
     }
 
     /**
