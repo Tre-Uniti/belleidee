@@ -15,10 +15,10 @@
       font-size: 100%;
     }
     #centerText {
-      max-height: 635px;
+      max-height: 775px;
     }
     #centerTextContent {
-      max-height: 530px;
+      max-height: 680px;
       padding-left: 15px;
       padding-right: 15px;
     }
@@ -79,7 +79,7 @@
       font-size: 100%;
     }
     #centerText {
-      max-height: 430px;
+      max-height: 425px;
     }
     #centerTextContent {
       max-height: 300px;
@@ -148,7 +148,7 @@
     }
     #centerText
     {
-      max-height: 635px;
+      max-height: 630px;
     }
     #centerTextContent
     {
@@ -165,12 +165,8 @@
     {
       height: 175px;
     }
-    #mapid
+    #leftSide
     {
-      height: 400px;
-      width: 600px;
-    }
-    #leftSide {
       top: 80%;
       height: 20%;
       width: 45%;
@@ -216,7 +212,7 @@
       height: 81%;
     }
     #centerText {
-      max-height: 530px;
+      max-height: 535px;
     }
     #centerTextContent
     {
@@ -322,7 +318,7 @@
     }
     #centerText
     {
-      max-height: 345px;
+      max-height: 350px;
     }
 
     #centerTextContent {
@@ -388,6 +384,10 @@
       margin: 0 auto;
       width: 80%;
     }
+    .indexContent
+    {
+      padding: 2px;
+    }
   }
 
   //Mobile landscape
@@ -430,7 +430,7 @@
 
     #centerText
     {
-      max-height: 260px;
+      max-height: 265px;
     }
 
     #centerTextContent {
@@ -526,7 +526,7 @@
     }
     #centerText
     {
-      max-height: 230px;
+      max-height: 235px;
     }
     .createTitleText {
       max-width: 70%;
@@ -602,6 +602,10 @@
     {
       margin: 0 auto;
       width: 80%;
+    }
+    .indexContent
+    {
+      padding: 2px;
     }
 
   }

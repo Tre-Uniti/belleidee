@@ -3,6 +3,7 @@
     Idee - Login
 @stop
 @section('login')
+    <div id = "dataInput">
     <form role="form" method="POST" action="{{ secure_url('/auth/login') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class = "formData">
@@ -28,6 +29,7 @@
         </div>
         <button type="submit" class = "navButton">Login</button>
     </form>
+    </div>
 @stop
 @section('footer')
     <hr/>

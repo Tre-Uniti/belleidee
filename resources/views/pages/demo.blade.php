@@ -156,7 +156,7 @@
             <h2>Hosted</h2>
 
             <div class = "innerPhotos">
-                <a href="/demo"><img src={{asset('img/idee.png')}} alt="idee" height = "97%" width = "85%"></a>
+                <a href="/demo"><img src={{asset('img/background3.jpg')}} alt="idee" height = "97%" width = "85%"></a>
             </div>
 
             <nav class = "profileNav">

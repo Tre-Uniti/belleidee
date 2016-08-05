@@ -4,6 +4,7 @@
 @stop
 @section('login')
         <h3>Register</h3>
+        <div id = "dataInput">
         <form role="form" method="POST" action="{{ url('/auth/register') }}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class = "formData">
@@ -48,6 +49,7 @@
             </div>
                 <button type="submit" class = "navButton">Register</button>
             </form>
+            </div>
 @stop
 @section('footer')
     <h4>Guidelines:</h4>

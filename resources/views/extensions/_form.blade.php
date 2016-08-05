@@ -26,8 +26,10 @@
     @elseif(isset($sources['post_id']))
             @if($type != 'txt')
                 <div class = "photoContent">
-                    <a href="{{ url(env('IMAGE_LINK'). $sourceOriginalPath) }}" data-lightbox="{{ $sourceModel->title }}" data-title="{{ $sourceModel->caption }}"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->post_path) }} alt="{{$sourceModel->title}}"></a>
                     <p>{{$sourceModel->caption}}</p>
+                    <div class = "postPhoto">
+                    <a href="{{ url(env('IMAGE_LINK'). $sourceOriginalPath) }}" data-lightbox="{{ $sourceModel->title }}" data-title="{{ $sourceModel->caption }}"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->post_path) }} alt="{{$sourceModel->title}}" width="99%" height="99%"></a>
+                    </div>
                 </div>
             @else
                 {!! nl2br(e($content)) !!}
@@ -50,7 +52,7 @@
     <div class = "indexContent" id = "hiddenIndexContent">
         <div class = "formData">
             <div class = "formCreation">
-                <div>Belief or Way:</div>
+                <div class = "tagLabel">Belief or Way:</div>
                 <div>
             <select name = 'belief' required >
                 <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @elseif(isset($sourceUser['belief'])) @if($sourceUser['belief'] == 'Adaptia') selected="selected"@endif @endif>Adaptia</option>
@@ -72,13 +74,13 @@
                 </div>
             </div>
                 <div class = "formCreation">
-                    <div>Beacon Tag:</div>
+                    <div class = "tagLabel">Beacon Tag:</div>
                     <div>
             {!! Form::select('beacon_tag', $beacons) !!}
                         </div>
                     </div>
                 <div class = "formCreation">
-                    <div>Source:</div>
+                    <div class = "tagLabel">Source:</div>
                     <div>
             <select name = 'source' required>
                 @if(isset($sources['extenception']))

@@ -45,12 +45,12 @@ a:visited {
 }
 /* mouse over link */
 a:hover {
-  color: #009900;
+  color: #27AE60;
 }
 
 /* selected link */
 a:active {
-  color: #00CC33;
+  color: #27AE60;
 
 }
 p.verify
@@ -70,6 +70,18 @@ p.extras
   cursor: pointer;
 }
 
+.tagLabel
+{
+  font-weight: bold;
+}
+.tagSelector
+{
+  border-color: #BDC3C7;
+  border-radius: 5px;
+}
+
+
+
 .hover {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
@@ -78,7 +90,7 @@ p.extras
 
 ul.tour
 {
-  color: white;
+  color: #ECF0F1;
   text-align: left;
 }
 
@@ -332,6 +344,16 @@ article
   margin: 0 auto;
   text-align: center;
 }
+.postPhoto
+{
+  height: auto;
+  width: auto;
+  max-width: 400px;
+  max-height: 450px;
+  text-align: center;
+  margin: 0 auto;
+}
+
 
 /* Button specific */
 .navButton

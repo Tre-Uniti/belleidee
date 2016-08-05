@@ -18,7 +18,7 @@
     </div>
     @foreach ($notifications as $notification)
         <div class = "listResource">
-            <div class = "listResourceLeft" style = "padding-left: 0; text-align: center; width: 50%;">
+            <div class = "listResourceLeft">
                 @if($notification->source_type == 'Post')
                 <a href="{{ action('NotificationController@post', [$notification->id])}}"><button type = "button" class = "interactButtonLeft">{{ $notification->title }} </button></a>
                 @elseif($notification->source_type == 'Extension')

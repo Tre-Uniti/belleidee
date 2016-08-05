@@ -80,16 +80,14 @@
   border-radius:4px;
   -moz-border-radius:4px;
   -webkit-border-radius:4px;
-  color: $navTextHoverColor;
-  background: -webkit-linear-gradient($navHoverColor1, $navHoverColor2);
-  background: -o-linear-gradient($navHoverColor1, $navHoverColor2);
-  background: -moz-linear-gradient($navHoverColor1, $navHoverColor2);
-  background: linear-gradient($navHoverColor1, $navHoverColor2);
+  color: #27AE60;
+  background-color: #ECF0F1;
 }
 
 .topNav > ul > li:hover > a
 {
-  color: #FFFFFF;
+  color: #27AE60;
+  background-color: #ECF0F1;
 }
 
 .topNav > ul > li:hover > a > .caret
@@ -98,12 +96,12 @@
 }
 .topNav > ul > li:hover > p
 {
-  color: #FFFFFF;
+  color: #27AE60;
 }
 
 .topNav > ul > li:hover > p > .caret
 {
-  border-top-color: #FFFFFF;
+  border-top-color: #27AE60;
 }
 
 .topNav > ul > li > div

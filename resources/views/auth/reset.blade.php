@@ -3,6 +3,7 @@
     Reset Password
 @stop
 @section('login')
+    <div id = "dataInput">
     <form role="form" method="POST" action="{{ url('/password/reset') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="token" value="{{ $token }}">
@@ -32,6 +33,7 @@
         </div>
         <button type="submit" class="navButton">Reset Password</button>
     </form>
+        </div>
 @stop
 @section('footer')
     <h5>You may email tre-uniti@belle-idee.org if login problems persist.</h5>

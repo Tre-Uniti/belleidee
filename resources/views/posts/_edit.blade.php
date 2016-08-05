@@ -5,7 +5,7 @@
 @stop
 <div id = "createOptions">
     <div class = "formInput">
-        {!! Form::label('title', 'Post Title:') !!}
+        {!! Form::label('title', 'Post Title:', ['class' => 'tagLabel']) !!}
     </div>
      <div class = "formData">
             {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
@@ -14,7 +14,7 @@
     <div class = "indexContent" id = "hiddenIndexContent">
         <div class = "formData">
             <div class = "formCreation">
-                <div>Belief or Way:</div>
+                <div class = "tagLabel">Belief or Way:</div>
                 <div>
                     <select name = 'belief' required >
                         <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @elseif($post->belief == 'Adaptia' & (old('belief') == '')) selected="selected" @endif>Adaptia</option>
@@ -36,13 +36,13 @@
                 </div>
             </div>
             <div class = "formCreation">
-                <div>Beacon Tag:</div>
+                <div class = "tagLabel">Beacon Tag:</div>
                 <div>
                     {!! Form::select('beacon_tag', $beacons) !!}
                 </div>
             </div>
             <div class = "formCreation">
-                <div>Source:</div>
+                <div class = "tagLabel">Source:</div>
                 <div>
                     <select name = 'source' required>
                         <option value="Discussion" @if (old('source') == 'Discussion') selected="selected" @elseif($post->source == 'Discussion' & (old('Discussion') == '')) selected="selected"  @endif>Discussion</option>

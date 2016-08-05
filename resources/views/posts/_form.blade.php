@@ -10,7 +10,7 @@
     <button id = "textButton" type = "button" class = "indexButton">Write an Article</button>
     <div id = "indexInfo" class = "indexContent">
         <div class = "formInput">
-            {!! Form::label('title', 'Title:') !!}
+            {!! Form::label('title', 'Title:', ['class' => 'tagLabel']) !!}
         </div>
         <div class = "formData">
             {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
@@ -19,9 +19,9 @@
         <div class = "indexContent" id = "hiddenIndexContent">
             <div class = "formData">
                 <div class = "formCreation">
-                    <div>Belief or Way:</div>
+                    <div class = "tagLabel">Belief or Way:</div>
                     <div>
-                        <select name = 'belief' required >
+                        <select name = 'belief' class = "tagSelector" required >
                             <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @elseif($lastBeacon->belief == 'Adaptia' & (old('belief') == '')) selected="selected" @endif>Adaptia</option>
                             <option value="Atheism" @if (old('belief') == 'Atheism') selected="selected" @elseif($lastBeacon->belief == 'Atheism' & (old('belief') == '')) selected="selected" @endif>Atheism</option>
                             <option value="Buddhism" @if (old('belief') == 'Buddhism') selected="selected" @elseif($lastBeacon->belief == 'Buddhism' & (old('belief') == '')) selected="selected" @endif>Buddhism</option>
@@ -41,15 +41,15 @@
                     </div>
                 </div>
                 <div class = "formCreation">
-                    <div>Beacon Tag:</div>
+                    <div class = "tagLabel">Beacon Tag:</div>
                     <div>
-                        {!! Form::select('beacon_tag', $beacons, $lastBeacon->beacon_tag) !!}
+                        {!! Form::select('beacon_tag', $beacons, $lastBeacon->beacon_tag, ['class' => 'tagSelector']) !!}
                     </div>
                 </div>
                 <div class = "formCreation">
-                    <div>Source:</div>
+                    <div class = "tagLabel">Source:</div>
                     <div>
-                        <select name = 'source' required>
+                        <select name = 'source' class = "tagSelector" required>
                             <option value="Discussion" @if (old('source') == 'Discussion') selected="selected" @endif>Discussion</option>
                             <option value="Reflection" @if (old('source') == 'Reflection') selected="selected" @endif>Reflection</option>
                             <option value="Writings" @if (old('source') == 'Writings') selected="selected" @endif>Writings</option>

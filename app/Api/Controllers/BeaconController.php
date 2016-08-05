@@ -3,7 +3,6 @@
 namespace App\Api\Controllers;
 
 use App\Beacon;
-use BaseController;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BeaconController extends BaseController
