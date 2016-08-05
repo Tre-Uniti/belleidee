@@ -167,6 +167,7 @@ return [
         Huddle\Zendesk\Providers\ZendeskServiceProvider::class,
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
+        Dingo\Api\Provider\LaravelServiceProvider::class
     ],
 
     /*
@@ -222,6 +223,8 @@ return [
         'Zendesk'   => Huddle\Zendesk\Facades\Zendesk::class,
         'Javascript'=> Laracasts\Utilities\JavaScript\JavaScriptFacade::class,
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
+        'DingoAPI' => Dingo\Api\Facade\API::class,
+        'DingoRoute' => Dingo\Api\Facade\Route::class,
     ],
 
 ];

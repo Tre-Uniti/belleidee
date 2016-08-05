@@ -1,6 +1,6 @@
 {
     "name": "tre-uniti/belle-idee",
-    "description": "Belief-Based inspiration sharing",
+    "description": "A community sharing ideas and inspirations",
     "license": "MIT",
     "type": "project",
 
@@ -23,7 +23,9 @@
         "taxjar/taxjar-php": "^1.3",
         "laracasts/utilities": "~2.0",
         "laravelcollective/html": "^5.2",
-        "mews/purifier": "~2.0"
+        "mews/purifier": "~2.0",
+        "phpdocumentor/reflection-docblock": "2.0.*",
+        "dingo/api": "1.0.x@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
