@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddThemesToUsers extends Migration
+class AddThemeToUsers extends Migration
 {
     /**
      * Run the migrations.
