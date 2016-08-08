@@ -8,8 +8,9 @@
     <b>User Preferences:</b>
 </div>
     <div class = "indexNav">
-        <a href="{{ url('photo') }}"><button type = "button" class = "indexButton">Profile Photo</button></a>
+        <a href="{{ url('photo') }}"><button type = "button" class = "indexButton">Photo</button></a>
         <a href="{{ url('/frequency') }}"><button type = "button" class = "indexButton">Email Frequency</button></a>
+        <a href="{{ url('/theme') }}"><button type = "button" class = "indexButton">Theme</button></a>
     </div>
     <div class = "indexNav">
         <b>Location:</b>

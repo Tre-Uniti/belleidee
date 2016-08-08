@@ -26,6 +26,7 @@ Route::get('users/timeFilter/{time}', 'UserController@timeFilter');
 Route::get('users/elevationTime/{time}', 'UserController@sortByElevationTime');
 Route::get('users/extensionTime/{time}', 'UserController@sortByExtensionTime');
 Route::patch('users/frequency/{id}', 'UserController@frequency')->name('frequency');
+Route::patch('users/theme/{id}', 'UserController@theme')->name('theme');
 Route::resource('users', 'UserController');
 
 //Beacon Routes (Resource)
@@ -254,6 +255,8 @@ Route::get('global', 'HomeController@globe');
 Route::get('newLocation', 'HomeController@newLocation');
 Route::get('addLocation', 'HomeController@addLocation');
 Route::get('about', 'HomeController@about');
+Route::get('theme', 'HomeController@theme');
+Route::get('addtheme', 'HomeController@addTheme');
 //Route::get('getContent/{id}', 'HomeController@getContent');
 Route::get('addGPS', 'HomeController@addGPS');
 

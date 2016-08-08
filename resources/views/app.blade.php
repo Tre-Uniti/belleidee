@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Idee /-\ @yield('siteTitle')</title>
+    <title>Idee - @yield('siteTitle')</title>
     <link rel = "stylesheet" href = "/css/normalize.css">
-    <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
+    @if(isset($viewUser))
+        @if($viewUser->theme == 1)
+        <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
+        @else
+        <link rel = "stylesheet" href = "{{ elixir('css/app2.css') }}">
+        @endif
+    @else
+         @if($user->theme == 1)
+        <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
+        @else
+        <link rel = "stylesheet" href = "{{ elixir('css/app2.css') }}">
+        @endif
+    @endif
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/location.js"></script>

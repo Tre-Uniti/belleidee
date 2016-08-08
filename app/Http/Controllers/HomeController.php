@@ -124,8 +124,6 @@ class HomeController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        $sponsor = getSponsor($user);
-
         return view('pages.photo')
             ->with(compact('user', 'profilePosts', 'profileExtensions'));
     }
@@ -176,8 +174,6 @@ class HomeController extends Controller
             $constraint->upsize();
         });
         $imageResized = $imageResized->stream();
-
-
 
         //If user has existing profile photo, then delete from Storage
         if($user->photo_path != NULL)
@@ -403,8 +399,8 @@ class HomeController extends Controller
     public function frequency()
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
         $frequencies = [
             '1' => 'Least',
             '2' => 'Often',
@@ -413,7 +409,6 @@ class HomeController extends Controller
 
         return view ('pages.frequency')
             ->with(compact('user', 'profilePosts', 'profileExtensions', 'frequencies'));
-        
     }
     
     /*
@@ -586,6 +581,40 @@ class HomeController extends Controller
         session()->put('coordinates', $coordinates);
 
         return redirect ('/gettingStarted');
+    }
+
+    /*
+     * Allow user to select specific Idee theme
+    */
+    public function theme()
+    {
+        $user = Auth::user();
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
+        $themes = [
+            '1' => 'Simple Light',
+            '2' => 'Starry Night',
+        ];
+
+        return view ('pages.themes')
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'themes'));
+    }
+
+    /*
+     * Temp function for adding default theme
+     */
+    public function addTheme()
+    {
+        $users = User::latest()->get();
+
+        foreach($users as $user)
+        {
+            $user->theme = 1;
+            $user->update();
+        }
+
+        flash()->overlay('All user themes updated');
+        return redirect('/home');
     }
     
     /*

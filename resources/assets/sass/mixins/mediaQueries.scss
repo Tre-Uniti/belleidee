@@ -1,9 +1,7 @@
 //Desktop
 @mixin desktop($desktopBackground) {
   @media screen and (min-width: 1501px) and (min-height: 850px) {
-    html {
 
-    }
     .topNav {
       width: 100%;
     }
@@ -63,9 +61,6 @@
 
   //Small Desktop
   @media screen and (min-width: 801px) and (max-width: 1500px) and (max-height: 1400px) {
-    html {
-
-    }
     .topNav {
       width: 100%;
     }
@@ -103,11 +98,7 @@
     .innerProfileMenus {
       height: 210px;
     }
-    #mapid
-    {
-      height: 400px;
-      width: 700px;
-    }
+
     #leftSide {
       height: auto;
     }
@@ -134,9 +125,7 @@
 {
   @media screen and (max-width: 800px) and (min-height: 600px)
   {
-    html
-    {
-    }
+
     .topNav
     {
       max-width: 100%;

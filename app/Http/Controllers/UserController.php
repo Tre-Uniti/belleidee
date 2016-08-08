@@ -574,4 +574,25 @@ class UserController extends Controller
         return redirect('users/' . $user->id);
     }
 
+    /*
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    * Update user theme
+    */
+    public function theme(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        if ($user->id != Auth::id()) {
+            flash()->overlay('Must be this user to update theme');
+            return redirect()->back();
+        }
+
+        $user->update($request->all());
+
+        flash()->overlay('User Theme for ' . $user->handle . ' has been updated');
+
+        return redirect('users/' . $user->id);
+    }
+
 }

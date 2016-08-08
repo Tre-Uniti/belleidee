@@ -4,10 +4,10 @@ $imgBackgroundLandscape: "/img/backgroundLandscape.jpg";
 $imgBackgroundPortrait: "/img/backgroundPortrait.jpg";
 
 //Nav Buttons
-$navButtonColor1: #2ECC71;
-$navButtonColor2: #2ECC71;
-$navHoverColor1:  #27AE60;
-$navHoverColor2:  #27AE60;
+$navButtonColor1: #27AE60;
+$navButtonColor2: #27AE60;
+$navHoverColor1:  #2ECC71;
+$navHoverColor2:  #2ECC71;
 $navTextColor:    #FFFFFF;
 $navTextHoverColor: #FFFFFF;
 
@@ -33,7 +33,23 @@ $homeScrollHeight: 125px;
 $photoScrollHeight: 200px;
 $navScrollHeight: 567px;
 
+//Top Nav
+$topNavBackgroundColor: #202020;
+$topNavColor: #ECF0F1;
+$topNavHoverBackground: #27AE60;
+$topNavHoverColor: #ECF0F1;
+$topNavDivBackground: #202020;
+$topNavDivColor: #ECF0F1;
+$topNavDivHoverColor: #ECF0F1;
+$topNavDivHoverBackground: #27AE60;
 
+//Profile Nav
+$profileBackgroundHoverColor: #27AE60;
+$profileHoverColor: #ECF0F1;
+$profileDivBackground: #202020;
+$profileDivColor: #ECF0F1;
+$profileDivHoverBackground:#27AE60;
+$profileDivHoverColor: #ECF0F1;
 
 //Menus
 $topPosition: 1%;
@@ -46,6 +62,8 @@ $sideMargin: 0;
 $profileBackgroundColor: #BDC3C7;
 $profileOpacity: 0.7;
 $profileTransition: opacity 1s;
+
+
 
 
 

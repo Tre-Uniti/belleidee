@@ -1,5 +1,5 @@
-// Utilities
-@import "utility/flatThemeVars";
+  // Utilities
+@import "utility/starThemeVars";
 
 //Navigation
 @import 'nav/topNav';
@@ -27,32 +27,31 @@
 
 // Media Queries
 @import 'mixins/mediaQueries';
+@import 'mixins/mediaQueryImg';
 
 // Base Imports
 @import 'pages/welcome';
 
-html{
-  background-color: #ECF0F1;
-}
+
 /* unvisited link */
 a:link {
-  color: #2C3E50;
+  color: #202020;
   text-decoration: none;
 }
 
 /* visited link */
 a:visited {
-  color: #2C3E50;
+  color: #202020;
 
 }
 /* mouse over link */
 a:hover {
-  color: #27AE60;
+  color: #009900;
 }
 
 /* selected link */
 a:active {
-  color: #27AE60;
+  color: #00CC33;
 
 }
 p.verify
@@ -71,7 +70,6 @@ p.extras
   width: auto;
   cursor: pointer;
 }
-
 .tagLabel
 {
   font-weight: bold;
@@ -90,7 +88,7 @@ p.extras
 
 ul.tour
 {
-  color: #ECF0F1;
+  color: white;
   text-align: left;
 }
 
@@ -173,8 +171,8 @@ th
 //Flash Messages:
 .flash-info
 {
-  color: #FFFFFF;
-  background-color: #27AE60;
+  color: #009900;
+  background-color: #101010;
   margin: 0 auto;
   padding: 7px;
   border-radius: 10px;
@@ -182,8 +180,8 @@ th
 }
 .flash-success
 {
-  color: #FFFFFF;
-  background-color: #27AE60;
+  color: #009900;
+  background-color: #101010;
   margin: 0 auto;
   padding: 7px;
   border-radius: 10px;
@@ -202,19 +200,19 @@ th
 //Errors
 .errors
 {
-  background-color: #BDC3C7;
+  background-color: #202020;
   opacity: .9;
 }
 .listErrors
 {
-  color: #c0392b;
+  color: #33FF33;
   text-align: left;
   padding-bottom: 3px;
 }
 
 .payment-errors
 {
-  color: #c0392b;
+  color: red;
 }
 
 //Sides
@@ -243,7 +241,12 @@ article
   height: auto;
   max-height: 100%;
   opacity: $centerOpacity;
-  background-color: #ECF0F1;
+  border: 2px solid;
+  border-radius: 12px;
+  background: -webkit-linear-gradient(#F8F8F8  , #C0C0C0 );
+  background: -o-linear-gradient(#F8F8F8 , #C0C0C0 );
+  background: -moz-linear-gradient(#F8F8F8 , #C0C0C0 );
+  background: linear-gradient(#F8F8F8 , #C0C0C0 );
 
 }
 #centerMenu
@@ -307,7 +310,7 @@ article
 
 #centerFooter
 {
-  background-color: #ECF0F1 $bottomBackgroundColor;;
+  background-color: $bottomBackgroundColor;
   margin: 0 auto;
   display: inline-block;
   border-radius: 20px;
@@ -343,6 +346,7 @@ article
   margin: 0 auto;
   text-align: center;
 }
+
 .postPhoto
 {
   height: auto;
@@ -352,7 +356,6 @@ article
   text-align: center;
   margin: 0 auto;
 }
-
 
 /* Button specific */
 .navButton
@@ -408,13 +411,10 @@ article
     background: -moz-linear-gradient($actHoverColor1, $actHoverColor2);
     background: linear-gradient($actHoverColor1, $actHoverColor2);
   }
-  border: solid 1px;
+  border: solid 1px ;
 }
 
 //Include Media Queries
 @include desktop($imgBackground1);
 @include tablet($imgBackgroundLandscape);
 @include mobile($imgBackgroundPortrait);
-
-
-

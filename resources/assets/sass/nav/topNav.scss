@@ -1,12 +1,90 @@
-.topNav
+@mixin topNavColor($topNavBackgroundColor, $topNavColor, $topNavHoverBackground, $topNavHoverColor, $topNavDivBackground, $topNavDivColor, $topNavDivHoverColor, $topNavDivHoverBackground)
 {
-  font-family: "Open Sans", Arial, serif;
-  background-color: #27AE60;
-  border-radius: 4px;
-  color: #ECF0F1;
-  display: block;
-  margin: 0 auto;
+  .topNav
+  {
+    font-family: "Open Sans", Arial, serif;
+    background-color: $topNavBackgroundColor;
+    border-radius: 4px;
+    color: #ECF0F1;
+    display: block;
+    margin: 0 auto;
+  }
+  .topNav > ul > li:hover
+  {
+    border-radius:4px;
+    moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    color: $topNavHoverColor;
+    background-color: $topNavHoverBackground;
+  }
+
+  .topNav > ul > li > p
+  {
+    color: $topNavColor;
+    display: block;
+    padding: 0 24px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .topNav > ul > li:hover
+  {
+    border-radius:4px;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    color: $topNavHoverColor;
+    background-color: $topNavHoverBackground;
+  }
+
+  .topNav > ul > li:hover > a
+  {
+    color: $topNavHoverColor;
+    background-color: $topNavHoverBackground;
+  }
+
+
+
+  .topNav > ul > li > div
+  {
+    background-color: $topNavDivBackground;
+    display: none;
+    margin: 0;
+    opacity: 0;
+    position: fixed;
+    width: 165px;
+    visibility: hidden;
+    z-index: 100;
+    -webkit-transiton: opacity 0.2s;
+    -moz-transition: opacity 0.2s;
+    -ms-transition: opacity 0.2s;
+    -o-transition: opacity 0.2s;
+    -transition: opacity 0.2s;
+  }
+  .topNav > ul > li > div ul > li > a
+  {
+    color: $topNavDivColor;
+    display: block;
+    padding: 12px 24px;
+    text-decoration: none;
+  }
+  .topNav > ul > li > div ul > li:hover > a
+  {
+    background-color: $topNavDivHoverBackground;
+    color: $topNavDivHoverColor;
+  }
+
+  .topNav > ul > li:hover > p
+  {
+    color: $topNavHoverColor;
+  }
+
+  .topNav > ul > li:hover > p > .caret
+  {
+    border-top-color: $topNavHoverColor;
+  }
+
 }
+
 .topNav ul
 {
   margin: 0;
@@ -67,59 +145,14 @@
   transition: color 0.1s linear;
 }
 
-.topNav > ul > li > p
-{
-  color: #ECF0F1;
-  display: block;
-  padding: 0 24px;
-  text-decoration: none;
-  font-weight: bold;
-}
-.topNav > ul > li:hover
-{
-  border-radius:4px;
-  -moz-border-radius:4px;
-  -webkit-border-radius:4px;
-  color: #27AE60;
-  background-color: #ECF0F1;
-}
-
-.topNav > ul > li:hover > a
-{
-  color: #27AE60;
-  background-color: #ECF0F1;
-}
 
 .topNav > ul > li:hover > a > .caret
 {
   border-top-color: #FFFFFF;
 }
-.topNav > ul > li:hover > p
-{
-  color: #27AE60;
-}
 
-.topNav > ul > li:hover > p > .caret
-{
-  border-top-color: #27AE60;
-}
 
-.topNav > ul > li > div
-{
-  background-color: #BDC3C7;
-  display: none;
-  margin: 0;
-  opacity: 0;
-  position: fixed;
-  width: 165px;
-  visibility: hidden;
-  z-index: 100;
-  -webkit-transiton: opacity 0.2s;
-  -moz-transition: opacity 0.2s;
-  -ms-transition: opacity 0.2s;
-  -o-transition: opacity 0.2s;
-  -transition: opacity 0.2s;
-}
+
 
 .topNav > ul > li:hover > div
 {
@@ -133,17 +166,7 @@
   display: block;
 }
 
-.topNav > ul > li > div ul > li > a
-{
-  color: #2C3E50;
-  display: block;
-  padding: 12px 24px;
-  text-decoration: none;
-}
 
-.topNav > ul > li > div ul > li:hover > a
-{
-  background-color: #27AE60;
-  color: #FFFFFF;
-}
+
+
 

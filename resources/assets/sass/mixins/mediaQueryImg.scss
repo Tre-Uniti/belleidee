@@ -1,0 +1,33 @@
+@media screen and (min-width: 1301px)
+{
+  html{
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-image: url($imgBackground1);
+  }
+}
+@media screen and (min-width: 701px) and (max-width: 1300px)
+{
+  html{
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-image: url($imgBackgroundLandscape);
+  }
+}
+@media screen and (max-width: 701px)
+{
+  html{
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-image: url($imgBackgroundPortrait);
+  }
+}
