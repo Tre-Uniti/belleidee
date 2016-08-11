@@ -135,7 +135,7 @@
                         <br/>
                         Center: Contains the main text content posted by the user
                         <br/>
-                        Right side: Links to the user's sponsor as well as recently used beacon tags and legacy extensions.
+                        Right side: Links to the user's beacon or sponsor picture and recently used beacon tags and legacy extensions.
                     </p>
                     <p>
                         These terms and features are more fully explained in the tutorials and posts of the Tre-Uniti user.
@@ -153,7 +153,7 @@
     <!-- --- --- Right -->
     <div id = "rightContainer">
         <div id = "rightSide">
-            <h2>Hosted</h2>
+            <h2>Beacon or Sponsor</h2>
 
             <div class = "innerPhotos">
                 <a href="/demo"><img src={{asset('img/background3.jpg')}} alt="idee" height = "97%" width = "85%"></a>

@@ -134,10 +134,17 @@ class User extends Model implements AuthenticatableContract,
     }
     public function confirmEmail()
     {
+        //Generate API token for user
+        $api_token = str_random(60);
+        while(User::where('api_token', '=', $api_token)->exists())
+        {
+            $api_token = str_random(60);
+        }
         $this->verified = true;
         $this->emailToken = null;
         $this->frequency = 3;
         $this->theme = 1;
+        $this->api_token = $api_token;
         $this->save();
     }
 }

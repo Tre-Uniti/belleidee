@@ -23,7 +23,11 @@
                 @if($extension->source === 'Post')
                     <a href="{{ url('/posts/'.$extension->post_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
                 @elseif($extension->source === 'Extension')
-                    <a href="{{ url('/extensions/'.$extension->extenception ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
+                    @if($extension->answer_id == $extension->extenception)
+                        <a href="{{ url('/extensions/'.$extension->extenception ) }}"><button type = "button" class = "indexButton">Answer</button></a>
+                    @else
+                        <a href="{{ url('/extensions/'.$extension->extenception ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
+                    @endif
                 @elseif($extension->source === 'Question')
                     <a href="{{ url('/questions/'.$extension->question_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
                 @elseif($extension->source === 'Legacy')

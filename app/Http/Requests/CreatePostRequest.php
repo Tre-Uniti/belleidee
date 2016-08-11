@@ -27,7 +27,7 @@ class CreatePostRequest extends Request
     {
         return [
             'title' => 'required|min:1|max:40',
-            'body'  => 'min:5|max:3500',
+            'body'  => 'min:5|max:5000',
             'belief'=> 'required',
             'source' => 'required',
             'caption' => 'max:250',

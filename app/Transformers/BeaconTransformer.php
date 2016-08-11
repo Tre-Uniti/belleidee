@@ -4,7 +4,7 @@ namespace App\Transformers;
 use App\Beacon;
 use League\Fractal\TransformerAbstract;
 
-class UserTransformer extends TransformerAbstract
+class BeaconTransformer extends TransformerAbstract
 {
 
     /**

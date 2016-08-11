@@ -11,6 +11,8 @@
 @import 'nav/beliefNav';
 @import 'nav/pagination';
 @import 'nav/indexNav';
+@import 'nav/cardNav';
+@import 'nav/containers';
 @import 'mixins/colorButton';
 @import 'mixins/baseButton';
 
@@ -32,7 +34,7 @@
 @import 'pages/welcome';
 
 html{
-  background-color: #ECF0F1;
+  background-color: $mainBackgroundColor;
 }
 /* unvisited link */
 a:link {
@@ -72,15 +74,7 @@ p.extras
   cursor: pointer;
 }
 
-.tagLabel
-{
-  font-weight: bold;
-}
-.tagSelector
-{
-  border-color: #BDC3C7;
-  border-radius: 5px;
-}
+
 
 .hover {
   -webkit-user-select: none;
@@ -110,41 +104,7 @@ ul.tour
   float: right;
 }
 
-//Containers:
-.extensionContent
-{
-  text-align: left;
-  font-size: 100%;
-  padding: 10px;
-  border: 2px solid;
-  border-color: #202020;
-  border-radius: 12px;
-  display: none;
-}
 
-#container
-{
-  text-align: center;
-  position: fixed;
-  height: 100%;
-  width:100%;
-}
-#leftContainer
-{
-  opacity: .9;
-  transition: opacity 1s;
-}
-#rightContainer
-{
-  opacity: .9;
-  transition: opacity 1s;
-}
-
-#questionContainer
-{
-  margin: 0 auto;
-  width: 50%;
-}
 
 //Table Specific
 table
@@ -221,27 +181,18 @@ th
 #leftSide
 {
   @include sideDiv($profileBackgroundColor);
-  left: 2em;
+  left: 3em;
 }
 #rightSide
 {
   @include sideDiv($profileBackgroundColor);
-  right: 2em;
+  right: 3em;
 }
 
 //Content and Creation
-#centerContent
-{
-  width: 50%;
-  height: 80%;
-  font-family: "Open Sans", Arial, serif;
-  margin: 1.5% auto;
 
-}
 article
 {
-  height: auto;
-  max-height: 100%;
   opacity: $centerOpacity;
   background-color: #ECF0F1;
 
@@ -251,21 +202,7 @@ article
   margin: 0 auto;
   width: 99%;
 }
-#centerText
-{
-  margin: 5px auto;
-  width: 99%;
-  height: auto;
-  max-height: 635px;
-  overflow: auto;
-}
-#centerTextContent
-{
-  text-align: left;
-  font-size: 110%;
-  padding-left: 15px;
-  padding-right: 15px;
-}
+
 #centerTextContent > button
 {
   @include baseButton;

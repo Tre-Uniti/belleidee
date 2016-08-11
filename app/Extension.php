@@ -16,6 +16,7 @@ class Extension extends Model
         'post_id',
         'source_user',
         'extenception',
+        'answer_id',
         'question_id',
         'lat',
         'long',

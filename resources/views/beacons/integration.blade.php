@@ -7,7 +7,8 @@
 @stop
 
 @section('centerText')
-    <h2>Social Button for <a href = "{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->name }}</a></h2>
+
+    <h2>Integration for <a href = "{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->name }}</a></h2>
     <div class = "indexNav">
         <a href="{{ url('/beliefs/'. $beacon->belief) }}"><button type = "button" class = "indexButton">{{ $beacon->belief }}</button></a>
         <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
@@ -34,16 +35,20 @@
         @endif
         <p>Tags this month ({{ $beacon->beacon_tag }}): {{ $beacon->tag_usage }}</p>
     </div>
+    <h3>Activity Feed:</h3>
+    <p>To add your activity feed to your website you can copy the code here and use your API key below for access.</p>
+    <p>API Key: {{ $user->api_token }}</p>
 
-        <h4>1.  Download desired logo/image</h4>
+    <h3>Social Button</h3>
+        <h5>1.  Download desired logo/image</h5>
         <p><a href = "{{secure_asset('img/ideeSocial.png')}}"><img src={{secure_asset('img/ideeSocial.png')}}></a><a href = "{{secure_asset('img/ideeSocial2.png')}}"><img src={{secure_asset('img/ideeSocial2.png')}}></a></a><a href = "{{secure_asset('img/ideeSocial3.png')}}"><img src={{secure_asset('img/ideeSocial3.png')}}></a></p>
-        <h4>2.  Copy and paste the code into your website</h4>
+        <h5>2.  Copy and paste the code into your website</h5>
 
             <div class = "formDataContainer">
                 <p>{{$beaconSocialUrl}}</p>
             </div>
 
-        <h4>3.  Modify the code to update the image location on your server</h4>
+        <h5>3.  Modify the code to update the image location on your server</h5>
 
             <div class = "formDataContainer">
                 <p>{{$imageLink}}</p>

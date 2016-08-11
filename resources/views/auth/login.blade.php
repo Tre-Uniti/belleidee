@@ -33,5 +33,5 @@
 @stop
 @section('footer')
     <hr/>
-    <a class="btn btn-link" href="{{ secure_url('/password/email') }}">Forgot Your Password?</a>
+    <a href="{{ secure_url('/auth/register') }}">Join now</a> - <a href="{{ secure_url('/password/email') }}">Reset Password</a>
 @stop

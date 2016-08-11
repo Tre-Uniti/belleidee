@@ -51,14 +51,17 @@ function getBeacon($content)
 {
     $beacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
 
-    if($beacon->stripe_plan == 2)
+    if(isset($beacon->stripe_plan))
     {
-        //Beacon pays subscription
-        Event::fire(new BeaconViewed($beacon));
-    }
-    else
-    {
-        $beacon = NULL;
+        if($beacon->stripe_plan > 0)
+        {
+            //Beacon pays subscription
+            Event::fire(new BeaconViewed($beacon));
+        }
+        else
+        {
+            $beacon = NULL;
+        }
     }
 
     return $beacon;

@@ -74,13 +74,13 @@ class Kernel extends ConsoleKernel
         //$schedule->command('inspire')
                  //->hourly();
 
-        //Latest Legacy Report
+        /*Latest Legacy Report
         $schedule->command('legacy:latestLegacyReport')->Weekly()->sundays()->at('7:00')
                     ->appendOutputTo($legacyReportFile)
                     ->emailOutputTo('tre-uniti@belle-idee.org')
                     ->pingBefore('http://beats.envoyer.io/heartbeat/xVDhFSK4jA0LbWA')
                     ->thenPing('http://beats.envoyer.io/heartbeat/xVDhFSK4jA0LbWA');
-
+        */
         //Monthly reports
         $schedule->command('beacon:monthlyBeaconReport')->everyMinute()
                     ->appendOutputTo($beaconReportFile)

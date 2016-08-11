@@ -21,13 +21,9 @@
     border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
-    border: 1px solid #003300;
-    text-shadow: 3px 3px 10px #000000;
+    border: 1px solid #202020;
     color: #FFFFFF;
-    background: linear-gradient(#7dff23, #188BC0);
-    background: -webkit-linear-gradient(#7dff23, #188BC0);
-    background: -o-linear-gradient(#7dff23, #188BC0);
-    background: -moz-linear-gradient(#7dff23, #188BC0);">Post your answer</button></a>
+    background-color: #27AE60">Post your answer</button></a>
         </td>
     </tr>
     <tr>

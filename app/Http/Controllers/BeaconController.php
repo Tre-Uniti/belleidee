@@ -44,7 +44,7 @@ class BeaconController extends Controller
     {
         $this->middleware('auth', ['except' => ['show', 'guide', 'posts', 'extensions']]);
         $this->middleware('admin', ['only' => 'create', 'store', 'update', 'edit', 'deactivate', 'destroy']);
-        $this->middleware('beaconAdmin', ['only' => ['subscription', 'invoice', 'downloadInvoice', 'social', 'analytics']]);
+        $this->middleware('beaconAdmin', ['only' => ['subscription', 'invoice', 'downloadInvoice', 'integration', 'analytics']]);
         $this->beacon = $beacon;
     }
 
@@ -797,12 +797,12 @@ class BeaconController extends Controller
     }
 
     /**
-     * Retrieve extensions of specific beacon.
+     * Show how to integrate beacon with other services.
      *
      * @param   $id
      * @return \Illuminate\Http\Response
      */
-    public function social($id)
+    public function integration($id)
     {
         $beacon = Beacon::findOrFail($id);
 
@@ -819,7 +819,7 @@ class BeaconController extends Controller
 
         $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
 
-        return view('beacons.social')
+        return view('beacons.integration')
                 ->with(compact('user', 'beacon', 'profilePosts', 'profileExtensions'))
                 ->with('beaconUrl', $beaconUrl)
                 ->with('beaconSocialUrl', $beaconSocialUrl)

@@ -53,7 +53,7 @@
             <div class = "formCreation">
                 <div class = "tagLabel">Belief or Way:</div>
                 <div>
-                    <select name = 'belief' required >
+                    <select name = 'belief' class = "tagSelector" required >
                         <option value="" disabled selected>Belief or Way:</option>
                         <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @elseif($extension->belief == 'Adaptia' & (old('belief') == '')) selected="selected" @endif>Adaptia</option>
                         <option value="Atheism" @if (old('belief') == 'Atheism') selected="selected" @elseif($extension->belief == 'Atheism' & (old('belief') == '')) selected="selected" @endif>Atheism</option>
@@ -76,13 +76,13 @@
             <div class = "formCreation">
                 <div class = "tagLabel">Beacon Tag:</div>
                 <div>
-                    {!! Form::select('beacon_tag', $beacons) !!}
+                    {!! Form::select('beacon_tag', $beacons,$extension->beacon_tag, ['class' => 'tagSelector'] ) !!}
                 </div>
             </div>
             <div class = "formCreation">
                 <div class = "tagLabel">Source:</div>
                 <div>
-                    <select name = 'source' required>
+                    <select name = 'source' class = "tagSelector" required>
                         <option  disabled>Source:</option>
                         @if(isset($sources['extenception']))
                             <option value="Extension" @if (old('source') == 'Extension') selected="selected" @elseif($extension->source == 'Extension' & (old('category') == '')) selected="selected" @endif>Extension</option>

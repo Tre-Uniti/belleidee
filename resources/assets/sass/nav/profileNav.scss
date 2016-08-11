@@ -1,5 +1,14 @@
 @mixin profileColor($profileBackgroundHoverColor, $profileHoverColor, $profileDivBackground, $profileDivColor, $profileDivHoverBackground, $profileDivHoverColor)
 {
+  .profileNav
+  {
+    font-family: "Open Sans", Arial, serif;
+    border-radius: 4px;
+    color: #000000;
+    width: 85%;
+    margin: .5% auto;
+  }
+
   .profileNav > ul > li:hover
   {
     border-radius:4px;
@@ -50,14 +59,7 @@
     color: $profileDivHoverColor;
   }
 }
-.profileNav
-{
-  font-family: "Open Sans", Arial, serif;
-  border-radius: 4px;
-  color: #000000;
-  width: 85%;
-  margin: .5% auto;
-}
+
 .profileNav ul
 {
   margin: 0;

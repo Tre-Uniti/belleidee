@@ -25,6 +25,7 @@ Route::get('users/deletion/', 'UserController@confirmDeletion');
 Route::get('users/timeFilter/{time}', 'UserController@timeFilter');
 Route::get('users/elevationTime/{time}', 'UserController@sortByElevationTime');
 Route::get('users/extensionTime/{time}', 'UserController@sortByExtensionTime');
+Route::get('users/token', 'UserController@token');
 Route::patch('users/frequency/{id}', 'UserController@frequency')->name('frequency');
 Route::patch('users/theme/{id}', 'UserController@theme')->name('theme');
 Route::resource('users', 'UserController');
@@ -44,7 +45,7 @@ Route::get('beacons/subscription/{id}', 'BeaconController@subscription');
 Route::get('beacons/posts/{id}', 'BeaconController@posts');
 Route::get('beacons/guide/{id}', 'BeaconController@guide');
 Route::get('beacons/extensions/{id}', 'BeaconController@extensions');
-Route::get('beacons/social/{id}', 'BeaconController@social');
+Route::get('beacons/integration/{id}', 'BeaconController@integration');
 Route::get('beacons/joinDate/', 'BeaconController@joinDate');
 Route::get('beacons/topTagged', 'BeaconController@topTagged');
 Route::get('beacons/topViewed', 'BeaconController@topViewed');
@@ -256,7 +257,6 @@ Route::get('newLocation', 'HomeController@newLocation');
 Route::get('addLocation', 'HomeController@addLocation');
 Route::get('about', 'HomeController@about');
 Route::get('theme', 'HomeController@theme');
-Route::get('addtheme', 'HomeController@addTheme');
 //Route::get('getContent/{id}', 'HomeController@getContent');
 Route::get('addGPS', 'HomeController@addGPS');
 
@@ -279,10 +279,16 @@ Route::get('admin/sponsor/convert/{id}', 'AdminController@convertSponsorRequest'
 //Cashier
 Route::post('stripe/webhook', '\Laravel\Cashier\WebhookController@handleWebhook');
 
-//API Routing for Dingo/API
+//API Routing
+Route::group(['prefix' => 'api/v1', 'middleware' => 'auth:api'], function () {
+    Route::get('/beacons/{id}', 'Api\BeaconApiController@show');
+    Route::get('/beacons/guidePosts/{id}', 'Api\BeaconApiController@guidePosts');
+    Route::get('/beacons/posts/{id}', 'Api\BeaconApiController@posts');
+    Route::get('/beacons/extensions/{id}', 'Api\BeaconApiController@extensions');
+});
 //https://github.com/dingo/api/wiki/Creating-API-Endpoints
-$api = app('Dingo\Api\Routing\Router');
-$api->version('v1', function ($api)
+/*$api = app('Dingo\Api\Routing\Router');
+$api->version('v1', ['middleware' => 'api.auth', 'api.throttle', 'limit' => 500, 'expires' => 5], function ($api)
 {
     $api->get('beacons/{id}', ['as' => 'beacons.show', 'uses' => 'App\Api\Controllers\BeaconController@show']);
-});
+});*/

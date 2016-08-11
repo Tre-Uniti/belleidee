@@ -69,7 +69,7 @@
         {!! Form::file('image', null, ['class' => 'navButton']) !!}
     </div>
     <div class = "indexContent" id = "addText">
-        {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your idea or belief here:', 'rows' => '18', 'maxlength' => '3500']) !!}
+        {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your idea or belief here:', 'rows' => '18', 'maxlength' => '5000']) !!}
     </div>
 
 
@@ -82,3 +82,4 @@
         </div>
     @stop
 </div>
+    </div>

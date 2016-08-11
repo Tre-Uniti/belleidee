@@ -1,0 +1,59 @@
+//Containers:
+.extensionContent
+{
+  text-align: left;
+  font-size: 100%;
+  padding: 10px;
+  border: 2px solid #202020;
+  border-radius: 12px;
+  display: none;
+}
+
+#container
+{
+  text-align: center;
+  position: fixed;
+  height: 100%;
+  width:100%;
+  overflow: auto;
+}
+
+#centerContent
+{
+  width: 50%;
+  height: 100%;
+  font-family: "Open Sans", Arial, serif;
+  margin: 1.5% auto;
+}
+
+#centerText
+{
+  margin: 5px auto;
+  width: 99%;
+  height: auto;
+}
+
+#centerTextContent
+{
+  text-align: left;
+  font-size: 110%;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#leftContainer
+{
+  opacity: .9;
+  transition: opacity 1s;
+}
+#rightContainer
+{
+  opacity: .9;
+  transition: opacity 1s;
+}
+
+#questionContainer
+{
+  margin: 0 auto;
+  width: 50%;
+}

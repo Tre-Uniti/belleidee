@@ -13,6 +13,8 @@ use function App\Http\filterContentLocationAllTime;
 use function App\Http\filterContentLocationSearch;
 use function App\Http\filterContentLocationTime;
 use function App\Http\getLocation;
+use function App\Http\getProfileExtensions;
+use function App\Http\getProfilePosts;
 use App\Intolerance;
 use App\Legacy;
 use App\LegacyPost;
@@ -21,6 +23,7 @@ use App\Moderation;
 use App\Notification;
 use App\Post;
 use App\Question;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateExtensionRequest;
 use App\Http\Requests\EditExtensionRequest;
@@ -137,10 +140,22 @@ class ExtensionController extends Controller
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
 
+        //Fetch last beacon used or set to No-Beacon
+        try
+        {
+            $lastBeacon = Beacon::where('beacon_tag', '=', $user->last_tag)->firstOrFail();
+        }
+        catch(ModelNotFoundException $e)
+        {
+            $lastBeacon = Beacon::where('beacon_tag', '=', 'No-Beacon')->firstOrFail();
+            flash()->overlay('No recent Beacon interaction, please verify post tags');
+        }
+
+
         $sponsor = getSponsor($user);
 
         return view('extensions.create')
-                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sourceUser', 'sourceModel', 'sponsor', 'content'))
+                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sourceUser', 'sourceModel', 'sponsor', 'content', 'lastBeacon'))
                     ->with('sourceOriginalPath', $sourceOriginalPath)
                     ->with('type', $type);
     }
@@ -189,24 +204,44 @@ class ExtensionController extends Controller
             {
                 $sourceId = $sources['question_id'];
 
-
                 //Add 1 extension to original question
                 $question = Question::findOrFail($sourceId);
                 $question->where('id', $question->id)
                     ->update(['extension' => $question->extension + 1]);
 
-                //Add 1 extension to source extension and user
-                $sourceExtension = Extension::findOrFail($sources['extenception']);
-                $sourceExtension->where('id', $sourceExtension->id)
-                    ->update(['extension' => $sourceExtension->extension + 1]);
 
-                //Add 1 extension to source user of extension
-                $sourceUser = User::findOrFail($sourceExtension->user_id);
-                $sourceUser->where('id', $sourceUser->id)
-                    ->update(['extension' => $sourceUser->extension + 1]);
+                //Add 1 extension to source extension and answer extension
+                $sourceExtension = Extension::findOrFail($sources['extenception']);
+                if($sourceExtension->id != $sourceExtension->answer_id)
+                {
+                    $sourceExtension->where('id', $sourceExtension->id)
+                        ->update(['extension' => $sourceExtension->extension + 1]);
+
+                    //Add 1 extension to source user of extension
+                    $sourceUser = User::findOrFail($sourceExtension->user_id);
+                    $sourceUser->where('id', $sourceUser->id)
+                        ->update(['extension' => $sourceUser->extension + 1]);
+
+                    //Add extension to original answer to maintain chain + tracking
+                    $answerExtension = Extension::findOrFail($sourceExtension->answer_id);
+                    $answerExtension->where('id', $answerExtension->id)
+                        ->update(['extension' => $answerExtension->extension + 1]);
+                }
+                else
+                {
+                    $sourceExtension->where('id', $sourceExtension->id)
+                        ->update(['extension' => $sourceExtension->extension + 1]);
+
+                    //Add 1 extension to source user of extension
+                    $sourceUser = User::findOrFail($sourceExtension->user_id);
+                    $sourceUser->where('id', $sourceUser->id)
+                        ->update(['extension' => $sourceUser->extension + 1]);
+                }
+
 
                 $extension = new Extension($request->except('body'));
                 $extension->question_id = $sourceId;
+                $extension->answer_id = $sourceExtension->answer_id;
                 $extension->extenception = $sources['extenception'];
                 $extension->source_user = $sources['user_id'];
                 $extension->extension_path = $path;
@@ -317,7 +352,6 @@ class ExtensionController extends Controller
                 $post->where('id', $post->id)
                     ->update(['extension' => $post->extension + 1]);
 
-
                 //Add 1 extension to source extension
                 $sourceExtension = Extension::findOrFail($sources['extenception']);
                 $sourceExtension->where('id', $sourceExtension->id)
@@ -400,6 +434,10 @@ class ExtensionController extends Controller
 
             $extension->user()->associate($user);
             $extension->save();
+
+            //Track future extenception of this answer
+            $extension->answer_id = $extension->id;
+            $extension->update();
 
             //Add 1 extension to original question
             $question = Question::findOrFail($sources['question_id']);
@@ -554,11 +592,9 @@ class ExtensionController extends Controller
         $user_id = $extension->user_id;
         $user = User::findOrFail($user_id);
 
-
-
         //Get Posts and Extensions of user
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
 
         //Determine if beacon or sponsor shows and update
         if($extension->beacon_tag == 'No-Beacon')
@@ -1214,6 +1250,17 @@ class ExtensionController extends Controller
     //Show extensions of a specific post
     public function postList($id)
     {
+        //Get requested post and add body
+        if(Auth::user())
+        {
+            $viewUser = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $viewUser = User::where('handle', '=', 'Transferred')->first();
+        }
+
         //Get post and set sources for extension
         $post = Post::findOrFail($id);
         $sources = [
@@ -1262,7 +1309,7 @@ class ExtensionController extends Controller
         }
 
         return view('extensions.postList')
-                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources', 'beacon', 'sponsor', 'post'))
+                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources', 'beacon', 'sponsor', 'post', 'viewUser'))
                     ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -1271,7 +1318,19 @@ class ExtensionController extends Controller
     //Show extensions of a specific extension (extenception)
     public function extendList($id)
     {
-        //Get post and set sources for extension
+        //Get view user or Guest user
+        if(Auth::user())
+        {
+            $viewUser = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $viewUser = User::where('handle', '=', 'Transferred')->first();
+            $viewUser->handle = 'Guest';
+        }
+
+        //Get extension and set sources for extension
         $extension = Extension::findOrFail($id);
         $sources = [
             'extenception' => $extension->id,
@@ -1281,13 +1340,20 @@ class ExtensionController extends Controller
         //Get other Posts and Extensions of User
         $user_id = $extension->user_id;
         $user = User::findOrFail($user_id);
+        $profilePosts = getProfilePosts($user);
+        $profileExtensions = getProfileExtensions($user);
 
+        //Get all extensions for question answer
+        if($extension->answer_id == $extension->id)
+        {
+            $extensions = Extension::where('answer_id', $id)->where('id', '!=', $extension->id)->latest('created_at')->paginate(10);
+        }
+        //Get all extensions for other types of extension
+        else
+        {
+            $extensions = Extension::where('extenception', $id)->latest('created_at')->paginate(10);
+        }
 
-        //Get Posts and Extensions of user
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
-
-        $extensions = Extension::where('extenception', $id)->latest('created_at')->paginate(10);
 
         if($user->photo_path == '')
         {
@@ -1319,7 +1385,7 @@ class ExtensionController extends Controller
         }
 
         return view('extensions.postList')
-                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources', 'beacon', 'sponsor', 'extension'))
+                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources', 'beacon', 'sponsor', 'extension', 'viewUser'))
                     ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 

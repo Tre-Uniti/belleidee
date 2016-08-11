@@ -56,6 +56,33 @@ class PostController extends Controller
 
         $posts = filterContentLocation($user, 0, 'Post');
 
+        //Filter each post for content and if it is an image or text
+        //Check for Elevation
+        foreach($posts as $post)
+        {
+            //Get type of post (i.e Image or Txt)
+            $type = substr($post->post_path, -3);
+            if($type == 'txt')
+            {
+                $post->excerpt = autolink($post->excerpt, array("target"=>"_blank","rel"=>"nofollow"));
+            }
+            else
+            {
+                $post->caption = autolink($post->caption, array("target"=>"_blank","rel"=>"nofollow"));
+            }
+            $post->type = $type;
+
+            //Check if viewing user has already elevated post
+            if(Elevation::where('post_id', $post->id)->where('user_id', $user->id)->exists())
+            {
+                $post->elevationStatus = 'Elevated';
+            }
+            else
+            {
+                $post->elevationStatus = 'Elevate';
+            }
+        }
+
         $location = getLocation();
 
         $sponsor = getSponsor($user);
@@ -198,7 +225,6 @@ class PostController extends Controller
         catch(ModelNotFoundException $e)
         {
             $lastBeacon = Beacon::where('beacon_tag', '=', 'No-Beacon')->firstOrFail();
-            flash()->overlay('No recent Beacon interaction, please verify post tags');
         }
 
         //Populate Beacon options with user's bookmarked beacons
@@ -246,20 +272,13 @@ class PostController extends Controller
             //Get image from request
             $image = $request->file('image');
             $caption = Purifier::clean($request->input('caption'));
+            $excerpt = null;
 
             //Create image file name
             $title = str_replace(' ', '_', $request['title']);
             $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
             $path = '/user_photos/posts/'. $user->id . '/' .$imageFileName;
             $originalPath = '/user_photos/posts/originals/'. $user->id . '/' .$imageFileName;
-            if (Storage::exists($path))
-            {
-                $error = "You've already saved an inspiration with this title.";
-                return redirect()
-                    ->back()
-                    ->withInput()
-                    ->withErrors([$error]);
-            }
 
             //Resize the image
             $imageResized = Image::make($image);
@@ -276,25 +295,17 @@ class PostController extends Controller
             Storage::put($originalPath,  $originalImage->__toString());
             $request = array_add($request, 'post_path', $path);
         }
+        //Process Post as a text file
         else
         {
             $this->validate($request, [
-                'body' => 'required|min:5|max:3500'
+                'body' => 'required|min:5|max:5000'
             ]);
             $title = $request->input('title');
             $path = '/posts/'.$user_id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
             $inspiration = Purifier::clean($request->input('body'));
+            $excerpt = substr($inspiration, 0, 250);
             $caption = null;
-
-            //Check if User has already has path set for title
-            if (Storage::exists($path))
-            {
-                $error = "You've already saved an inspiration with this title.";
-                return redirect()
-                    ->back()
-                    ->withInput()
-                    ->withErrors([$error]);
-            }
             
             //Store body text at AWS
             Storage::put($path, $inspiration);
@@ -304,6 +315,7 @@ class PostController extends Controller
 
         $post = new Post($request->except('body'));
         $post->caption = $caption;
+        $post->excerpt = $excerpt;
 
         //If localized get Beacon coordinates, add 1 to tag_usage
         if($request['beacon_tag'] != 'No-Beacon')

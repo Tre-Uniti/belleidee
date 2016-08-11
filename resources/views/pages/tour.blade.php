@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="canonical" href="https://belle-idee.org/">
     <meta name="title" content="Belle Idee">
-    <meta name="description" content="Belle Idee - A place to share ideas, inspirations and influences.">
+    <meta name="description" content="Belle Idee - A place to share ideas and inspirations.">
     <title>Belle Idee Tour</title>
     <link rel = "stylesheet" href = "/css/normalize.css">
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">

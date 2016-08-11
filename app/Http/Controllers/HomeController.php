@@ -599,23 +599,6 @@ class HomeController extends Controller
         return view ('pages.themes')
             ->with(compact('user', 'profilePosts', 'profileExtensions', 'themes'));
     }
-
-    /*
-     * Temp function for adding default theme
-     */
-    public function addTheme()
-    {
-        $users = User::latest()->get();
-
-        foreach($users as $user)
-        {
-            $user->theme = 1;
-            $user->update();
-        }
-
-        flash()->overlay('All user themes updated');
-        return redirect('/home');
-    }
     
     /*
      * Display an Idee Map

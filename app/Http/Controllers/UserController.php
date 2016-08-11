@@ -37,7 +37,7 @@ class UserController extends Controller
     public function __construct(User $user)
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['only' => ['edit', 'update', 'delete', 'ascend', 'descend']]);
+        $this->middleware('admin', ['only' => ['edit', 'update', 'delete', 'ascend', 'descend', 'token']]);
         $this->middleware('userDeletion', ['only' => ['destroy']]);
         $this->user = $user;
     }
@@ -593,6 +593,27 @@ class UserController extends Controller
         flash()->overlay('User Theme for ' . $user->handle . ' has been updated');
 
         return redirect('users/' . $user->id);
+    }
+
+    /*
+     * Set API token for all users
+     */
+    public function token()
+    {
+        $users = User::latest()->get();
+        foreach($users as $user)
+        {
+            //Generate API token for user
+            $api_token = str_random(60);
+            while(User::where('api_token', '=', $api_token)->exists())
+            {
+                $api_token = str_random(60);
+            }
+            $user->api_token = $api_token;
+            $user->update();
+        }
+        flash()->overlay('User tokens set');
+        return redirect('/users');
     }
 
 }

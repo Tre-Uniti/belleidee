@@ -16,7 +16,7 @@
                    background-color: #D8D8D8; ">
                 <tr>
                     <td colspan="3" style="text-align:center">
-                        <img src="https://belle-idee.org/img/idee.png" alt="idee" height="70%" width="70%">
+                        <img src="https://belle-idee.org/img/idee.png" alt="idee" height="50%" width="40%">
                     </td>
                 </tr>
                 <tr>

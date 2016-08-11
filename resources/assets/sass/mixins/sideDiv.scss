@@ -1,11 +1,12 @@
-@mixin sideDiv($backgroundColor)
+@mixin sideDiv($mainBackgroundColor)
 {
   width: 21%;
   height: auto;
   margin: 0 auto;
-  top: 10.15%;
-  background-color: #BDC3C7;
+  top: 8.5%;
+  background-color: $mainBackgroundColor;
   position: fixed;
   border-radius: 20px;
+  border: 1px solid #BDC3C7;
   font-family: "Open Sans", Arial, serif;
 }

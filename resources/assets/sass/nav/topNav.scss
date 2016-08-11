@@ -9,14 +9,6 @@
     display: block;
     margin: 0 auto;
   }
-  .topNav > ul > li:hover
-  {
-    border-radius:4px;
-    moz-border-radius:4px;
-    -webkit-border-radius:4px;
-    color: $topNavHoverColor;
-    background-color: $topNavHoverBackground;
-  }
 
   .topNav > ul > li > p
   {
@@ -38,6 +30,9 @@
 
   .topNav > ul > li:hover > a
   {
+    border-radius:4px;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
     color: $topNavHoverColor;
     background-color: $topNavHoverBackground;
   }

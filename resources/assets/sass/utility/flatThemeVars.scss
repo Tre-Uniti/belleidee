@@ -2,6 +2,8 @@
 $imgBackground1: "/img/background.jpg";
 $imgBackgroundLandscape: "/img/backgroundLandscape.jpg";
 $imgBackgroundPortrait: "/img/backgroundPortrait.jpg";
+//Background Colors:
+$mainBackgroundColor: #ECF0F1;
 
 //Nav Buttons
 $navButtonColor1: #2ECC71;
@@ -43,6 +45,12 @@ $topNavDivColor: #2C3E50;
 $topNavDivHoverColor: #ECF0F1;
 $topNavDivHoverBackground: #27AE60;
 
+//Profiles
+$profileBackgroundColor: #ECF0F1;
+$profileOpacity: 0.7;
+$profileTransition: opacity 1s;
+
+
 //Profile Nav
 $profileBackgroundHoverColor: #27AE60;
 $profileHoverColor: #ECF0F1;
@@ -58,15 +66,3 @@ $topBackgroundColor: #202020;
 $bottomPosition: 1%;
 $bottomBackgroundColor: #ECF0F1;
 $sideMargin: 0;
-
-//Profiles
-$profileBackgroundColor: #BDC3C7;
-$profileOpacity: 0.7;
-$profileTransition: opacity 1s;
-
-
-
-
-
-
-

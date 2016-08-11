@@ -69,7 +69,7 @@
         </div>
     @else
         <div id = "centerTextContent">
-            {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your idea or belief here:', 'rows' => '18%', 'maxlength' => '3500']) !!}
+            {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Express your idea or belief here:', 'rows' => '18%', 'maxlength' => '5000']) !!}
         </div>
     @endif
     @section('centerFooter')
