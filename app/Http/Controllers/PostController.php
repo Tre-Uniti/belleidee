@@ -47,15 +47,13 @@ class PostController extends Controller
         $this->middleware('postOwner', ['only' => 'edit', 'update', 'destroy']);
         $this->post = $post;
     }
-
-    public function index()
+    /*
+  * Prepare cards by getting content for posts
+  * @param $posts
+  * @param $user
+  */
+    public function prepareCards($posts ,$user)
     {
-        $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-
-        $posts = filterContentLocation($user, 0, 'Post');
-
         //Filter each post for content and if it is an image or text
         //Check for Elevation
         foreach($posts as $post)
@@ -82,6 +80,18 @@ class PostController extends Controller
                 $post->elevationStatus = 'Elevate';
             }
         }
+        return $posts;
+    }
+
+    public function index()
+    {
+        $user = Auth::user();
+        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        $posts = filterContentLocation($user, 0, 'Post');
+
+        $posts = $this->prepareCards($posts, $user);
 
         $location = getLocation();
 
@@ -105,6 +115,7 @@ class PostController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->where('user_id', $user->id)->latest()->paginate(10);
+        $posts = $this->prepareCards($posts, $user);
 
         if($user->photo_path == '')
         {
@@ -137,6 +148,7 @@ class PostController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $posts = $this->post->where('user_id', $user->id)->orderBy('elevation', 'desc')->latest()->paginate(10);
+        $posts = $this->prepareCards($posts, $user);
 
         if($user->photo_path == '')
         {
@@ -304,7 +316,7 @@ class PostController extends Controller
             $title = $request->input('title');
             $path = '/posts/'.$user_id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
             $inspiration = Purifier::clean($request->input('body'));
-            $excerpt = substr($inspiration, 0, 250);
+            $excerpt = substr($inspiration, 0, 300);
             $caption = null;
             
             //Store body text at AWS
@@ -644,6 +656,9 @@ class PostController extends Controller
                 'body' => 'required|min:5|max:3500',
             ]);
             $inspiration = Purifier::clean($request->input('body'));
+            $excerpt = substr($inspiration, 0, 300);
+            $caption = null;
+            $post->excerpt = $excerpt;
 
             Storage::put($newPath, $inspiration);
             Storage::delete($post->post_path);
@@ -738,6 +753,7 @@ class PostController extends Controller
         $profileExtensions = $this->getProfileExtensions($user);
 
         $posts = filterContentLocation($user, 4, $source);
+        $posts = $this->prepareCards($posts, $user);
         $sponsor = getSponsor($user);
 
         return view ('posts.listSources')
@@ -780,6 +796,7 @@ class PostController extends Controller
         
         //Filter by location
         $results = filterContentLocationSearch($user, 0, 'Post', $title);
+        $results = $this->prepareCards($results, $user);
 
         if(!count($results))
         {
@@ -942,6 +959,8 @@ class PostController extends Controller
         $profileExtensions = $this->getProfileExtensions($user);
 
         $posts = filterContentLocationTime($user, 2, 'Post', $dateTime, 'created_at');
+        $posts = $this->prepareCards($posts, $user);
+
         $sponsor = getSponsor($user);
 
         return view ('posts.listDates')
@@ -960,6 +979,7 @@ class PostController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $elevations = filterContentLocation($user, 2, 'Post');
+
 
         $sponsor = getSponsor($user);
 
@@ -1004,6 +1024,7 @@ class PostController extends Controller
             $filter = 'All';
         }
 
+        $posts = $this->prepareCards($posts, $user);
         $sponsor = getSponsor($user);
 
         return view ('posts.sortByElevationTime')
@@ -1066,6 +1087,7 @@ class PostController extends Controller
             $filter = 'All';
         }
 
+        $posts = $this->prepareCards($posts, $user);
         $sponsor = getSponsor($user);
 
         return view ('posts.sortByExtensionTime')
@@ -1111,6 +1133,7 @@ class PostController extends Controller
             $filter = 'All';
         }
 
+        $posts = $this->prepareCards($posts, $user);
         $sponsor = getSponsor($user);
 
         return view ('posts.timeFilter')
@@ -1128,6 +1151,31 @@ class PostController extends Controller
         Session::put('unlock', $unlock);
 
         return redirect('posts/'. $post->id);
+    }
+
+
+
+    /*
+     * Add excerpt to db from posts
+     */
+    public function setExcerpt()
+    {
+        $posts = Post::where('caption', '=', null)->latest()->get();
+        foreach($posts as $post)
+        {
+            if($content = Storage::get($post->post_path))
+            {
+                $inspiration = Purifier::clean($content);
+                $excerpt = substr($inspiration, 0, 300);
+                $caption = null;
+                $post->excerpt = $excerpt;
+                $post->update();
+            }
+
+        }
+
+        flash()->overlay('Post excerpts updated');
+        return redirect('posts');
     }
 
 }

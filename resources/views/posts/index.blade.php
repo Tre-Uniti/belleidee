@@ -26,10 +26,9 @@
             <div class = "postCard">
                 <div class = "postTitleSection">
                     <h3>
-                        <a href="{{ action('PostController@show', [$post->id])}}"><button type = "button" class = "interactButtonLeft">{{ $post->title }}</button></a>
+                        <a href="{{ action('PostController@show', [$post->id])}}">{{ $post->title }}</a>
                     </h3>
                 </div>
-
                 <div class = "postCaptionExcerptSection">
 
                         @if(isset($post->excerpt))
@@ -38,7 +37,7 @@
                             </p>
                         @elseif(isset($post->caption))
                             <a href="{{ action('PostController@show', [$post->id])}}"><button type = "button" class = "interactButtonLeft">{{ $post->caption }}</button></a>
-                            <div>
+                            <div class = "cardPhoto">
                             <a href="{{ url('/posts/'. $post->id) }}"><img src= {{ url(env('IMAGE_LINK'). $post->post_path) }} alt="{{$post->title}}"></a>
                             </div>
                         @endif
@@ -63,7 +62,7 @@
                     </div>
                     <a href="{{ url('/beacons/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a>
                     <div class = "extensionSection">
-                        <a href="{{ url('/extensions/post/'.$post->id) }}"><img src = 'img\extension.png'></a>
+                        <a href="{{ url('/extensions/post/'.$post->id) }}"><img src = '/img/extend.png'></a>
                         <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
                         <span class="tooltiptext">Extend to add any inspiration you received</span>
                     </div>

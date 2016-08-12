@@ -9,6 +9,7 @@
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
+  -webkit-transition: all 0.2s;
   transition: all 0.2s; }
 
 .topNav > ul > li > a > .caret {
@@ -20,6 +21,7 @@
   height: 0;
   width: 0;
   vertical-align: middle;
+  -webkit-transition: color 0.1s linear;
   transition: color 0.1s linear; }
 
 .topNav > ul > li > a {
@@ -39,6 +41,7 @@
   height: 0;
   width: 0;
   vertical-align: middle;
+  -webkit-transition: color 0.1s linear;
   transition: color 0.1s linear; }
 
 .topNav > ul > li:hover > a > .caret {
@@ -54,7 +57,7 @@
 
 .topNav {
   font-family: "Open Sans", Arial, serif;
-  background-color: #202020;
+  background-color: #27AE60;
   border-radius: 4px;
   color: #ECF0F1;
   display: block;
@@ -71,18 +74,18 @@
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  color: #ECF0F1;
-  background-color: #27AE60; }
+  color: #27AE60;
+  background-color: #ECF0F1; }
 
 .topNav > ul > li:hover > a {
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  color: #ECF0F1;
-  background-color: #27AE60; }
+  color: #27AE60;
+  background-color: #ECF0F1; }
 
 .topNav > ul > li > div {
-  background-color: #202020;
+  background-color: #BDC3C7;
   display: none;
   margin: 0;
   opacity: 0;
@@ -97,7 +100,7 @@
   -transition: opacity 0.2s; }
 
 .topNav > ul > li > div ul > li > a {
-  color: #ECF0F1;
+  color: #2C3E50;
   display: block;
   padding: 12px 24px;
   text-decoration: none; }
@@ -107,10 +110,10 @@
   color: #ECF0F1; }
 
 .topNav > ul > li:hover > p {
-  color: #ECF0F1; }
+  color: #27AE60; }
 
 .topNav > ul > li:hover > p > .caret {
-  border-top-color: #ECF0F1; }
+  border-top-color: #27AE60; }
 
 .profileNav ul {
   margin: 0;
@@ -123,6 +126,7 @@
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
+  -webkit-transition: all 0.2s;
   transition: all 0.2s; }
 
 .profileNav > ul > li > a {
@@ -157,7 +161,7 @@
   color: #ECF0F1; }
 
 .profileNav > ul > li > div {
-  background-color: #202020;
+  background-color: #BDC3C7;
   border-top: 0;
   border-radius: 0 0 4px 4px;
   display: none;
@@ -174,13 +178,13 @@
   -transition: opacity 0.2s; }
 
 .profileNav > ul > li > div ul > li > a {
-  color: #ECF0F1;
+  color: #2C3E50;
   display: block;
   padding: 12px 24px;
   text-decoration: none; }
 
 .profileNav > ul > li > div ul > li > a {
-  color: #ECF0F1;
+  color: #2C3E50;
   display: block;
   padding: 12px 24px;
   text-decoration: none; }
@@ -205,6 +209,7 @@
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
+  -webkit-transition: all 0.2s;
   transition: all 0.2s; }
 
 .infoNav > ul > li > div {
@@ -277,6 +282,7 @@
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border: 1px solid #E8E8E8;
+  -webkit-transition: all 0.2s;
   transition: all 0.2s; }
 
 .beliefNav > ul > li > div {
@@ -420,10 +426,17 @@
   margin: 0 auto 15px auto;
   width: 80%; }
 
+.cardPhoto img {
+  max-width: 100%;
+  height: auto;
+  width: auto\9;
+  /* ie8 */ }
+
 .elevationSection {
   position: relative;
   display: inline-block;
-  padding-right: 10px; }
+  padding-right: 10px;
+  padding-bottom: 3px; }
 
 .elevationSection .tooltiptext {
   visibility: hidden;
@@ -446,7 +459,8 @@
 .extensionSection {
   position: relative;
   display: inline-block;
-  padding-left: 10px; }
+  padding-left: 10px;
+  padding-bottom: 3px; }
 
 .extensionSection .tooltiptext {
   visibility: hidden;
@@ -500,10 +514,12 @@
 
 #leftContainer {
   opacity: .9;
+  -webkit-transition: opacity 1s;
   transition: opacity 1s; }
 
 #rightContainer {
   opacity: .9;
+  -webkit-transition: opacity 1s;
   transition: opacity 1s; }
 
 #questionContainer {
@@ -562,27 +578,6 @@
   border-color: #BDC3C7;
   border-radius: 5px; }
 
-@media screen and (min-width: 1301px) {
-  html {
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-image: url("/img/background.jpg"); } }
-
-@media screen and (min-width: 701px) and (max-width: 1300px) {
-  html {
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-image: url("/img/backgroundLandscape.jpg"); } }
-
-@media screen and (max-width: 701px) {
-  html {
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-image: url("/img/backgroundPortrait.jpg"); } }
-
 #welcome {
   width: 30%;
   min-width: 335px;
@@ -605,8 +600,7 @@
   min-width: 332px; }
 
 h3 {
-  color: #2C3E50;
-  text-decoration: underline; }
+  color: #2C3E50; }
 
 label.login {
   color: #2C3E50; }
@@ -666,20 +660,20 @@ html {
 
 /* unvisited link */
 a:link {
-  color: #202020;
+  color: #2C3E50;
   text-decoration: none; }
 
 /* visited link */
 a:visited {
-  color: #202020; }
+  color: #2C3E50; }
 
 /* mouse over link */
 a:hover {
-  color: #009900; }
+  color: #27AE60; }
 
 /* selected link */
 a:active {
-  color: #00CC33; }
+  color: #27AE60; }
 
 p.verify {
   color: #000000; }
@@ -700,7 +694,7 @@ p.extras {
   -ms-user-select: none; }
 
 ul.tour {
-  color: white;
+  color: #ECF0F1;
   text-align: left; }
 
 .selectMenu {
@@ -732,16 +726,16 @@ th {
   text-align: left; }
 
 .flash-info {
-  color: #009900;
-  background-color: #101010;
+  color: #FFFFFF;
+  background-color: #27AE60;
   margin: 0 auto;
   padding: 7px;
   border-radius: 10px;
   display: inline-block; }
 
 .flash-success {
-  color: #009900;
-  background-color: #101010;
+  color: #FFFFFF;
+  background-color: #27AE60;
   margin: 0 auto;
   padding: 7px;
   border-radius: 10px;
@@ -756,46 +750,44 @@ th {
   display: inline-block; }
 
 .errors {
-  background-color: #202020;
+  background-color: #BDC3C7;
   opacity: .9; }
 
 .listErrors {
-  color: #33FF33;
+  color: #c0392b;
   text-align: left;
   padding-bottom: 3px; }
 
 .payment-errors {
-  color: red; }
+  color: #c0392b; }
 
 #leftSide {
   width: 21%;
   height: auto;
   margin: 0 auto;
   top: 8.5%;
-  background-color: #BDC3C7;
+  background-color: #ECF0F1;
   position: fixed;
   border-radius: 20px;
   border: 1px solid #BDC3C7;
   font-family: "Open Sans", Arial, serif;
-  left: 2em; }
+  left: 3em; }
 
 #rightSide {
   width: 21%;
   height: auto;
   margin: 0 auto;
   top: 8.5%;
-  background-color: #BDC3C7;
+  background-color: #ECF0F1;
   position: fixed;
   border-radius: 20px;
   border: 1px solid #BDC3C7;
   font-family: "Open Sans", Arial, serif;
-  right: 2em; }
+  right: 3em; }
 
 article {
   opacity: 0.97;
-  border: 2px solid;
-  border-radius: 12px;
-  background: linear-gradient(#F8F8F8, #C0C0C0); }
+  background-color: #ECF0F1; }
 
 #centerMenu {
   margin: 0 auto;
@@ -808,7 +800,7 @@ article {
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   color: #FFFFFF;
-  background-color: #27AE60;
+  background-color: #2ECC71;
   border: 1px solid #202020; }
 
 #centerTextContent > button:hover > div {
@@ -820,7 +812,7 @@ article {
 .createSubmit {
   margin: 7px auto;
   width: 180px;
-  background-color: #202020;
+  background-color: #ECF0F1;
   border: 1px solid;
   border-radius: 20px;
   opacity: 0.97; }
@@ -843,7 +835,7 @@ article {
   font-size: 110%; }
 
 #centerFooter {
-  background-color: #202020;
+  background-color: #ECF0F1 #ECF0F1;
   margin: 0 auto;
   display: inline-block;
   border-radius: 20px;
@@ -893,11 +885,12 @@ article {
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   color: #FFFFFF;
-  background-color: #27AE60;
+  background-color: #2ECC71;
   border: 1px solid #202020; }
   .navButton:hover {
     color: #FFFFFF;
-    background: linear-gradient(#2ECC71, #2ECC71); }
+    background: -webkit-linear-gradient(#27AE60, #27AE60);
+    background: linear-gradient(#27AE60, #27AE60); }
 
 .interactButton {
   padding: 8px 13px;
@@ -913,6 +906,7 @@ article {
   overflow: hidden; }
   .interactButton:hover {
     color: #FFFFFF;
+    background: -webkit-linear-gradient(#27AE60, #27AE60);
     background: linear-gradient(#27AE60, #27AE60); }
 
 .interactButtonLeft {
@@ -930,6 +924,7 @@ article {
   text-align: left; }
   .interactButtonLeft:hover {
     color: #FFFFFF;
+    background: -webkit-linear-gradient(#27AE60, #27AE60);
     background: linear-gradient(#27AE60, #27AE60); }
 
 .indexButton {
@@ -947,6 +942,7 @@ article {
   border: solid 1px; }
   .indexButton:hover {
     color: #FFFFFF;
+    background: -webkit-linear-gradient(#27AE60, #27AE60);
     background: linear-gradient(#27AE60, #27AE60); }
 
 @media screen and (min-width: 1501px) and (min-height: 850px) {
@@ -1442,4 +1438,4 @@ article {
   .profileNav > ul > li > div ul > li {
     display: block; } }
 
-/*# sourceMappingURL=app2.css.map */
+/*# sourceMappingURL=app.css.map */
