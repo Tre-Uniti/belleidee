@@ -32,7 +32,7 @@
                 <div class = "postCaptionExcerptSection">
 
                         @if(isset($post->excerpt))
-                            <p>
+                            <p class = "cardExcerpt">
                                 {{ $post->excerpt }}<a href="{{ action('PostController@show', [$post->id])}}">... Read More</a>
                             </p>
                         @elseif(isset($post->caption))
@@ -44,23 +44,30 @@
 
                 </div>
                 <div class = "postHandleSection">
-                    <p>                    By: <a href="{{ action('UserController@show', [$post->user_id])}}" style = "font-weight: bold">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
+                    <p>
+                        By: <a href="{{ action('UserController@show', [$post->user_id])}}" style = "font-weight: bold">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
                     </p>
-                </div>
-                <div class = "postTagsSection">
-
                 </div>
                 <div class = "influenceSection">
                     <div class = "elevationSection">
-                    @if($post->elevateStatus === 'Elevated')
-                        <a href="{{ url('/posts/'.$post->id) }}"><img src = '/img/elevate.png'></a>
-                    @else
-                        <a href="{{ url('/posts/elevate/'.$post->id) }}"> <a href="{{ url('/posts/'.$post->id) }}"><img src = '/img/elevate.png'></a></a>
-                    @endif
-                    <a href={{ url('/posts/listElevation/'.$post->id)}}>{{ $post->elevation }}</a>
-                        <span class="tooltiptext">Elevate to give thanks and recommend to others</span>
+                        <div class = "elevationIcon">
+                            @if($post->elevateStatus === 'Elevated')
+                                <img src = '/img/elevated.png'>
+                            @else
+                                <a href="{{ url('/posts/elevate/'.$post->id) }}"><img src = '/img/elevate.png'></a>
+                            @endif
+                                <span class="tooltiptext">Elevate to give thanks and recommend to others</span>
+                        </div>
+                        <div class = "elevationCounter">
+                            <a href={{ url('/posts/listElevation/'.$post->id)}}>{{ $post->elevation }}</a>
+                        </div>
                     </div>
-                    <a href="{{ url('/beacons/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a>
+
+                    <div class = "beaconSection">
+                        <a href="{{ url('/beacons/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a>
+                        <span class="tooltiptext">Beacon community where this post is located</span>
+                    </div>
+
                     <div class = "extensionSection">
                         <a href="{{ url('/extensions/post/'.$post->id) }}"><img src = '/img/extend.png'></a>
                         <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
