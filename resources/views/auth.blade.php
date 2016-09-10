@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="canonical" href="https://belle-idee.org/">
     <meta name="title" content="Belle Idee">
-    <meta name="description" content="Belle Idee - A place to share ideas, inspirations and influences.">
+    <meta name="description" content="Belle-idee - A platform for sharing spiritual ideas and inspirations.">
     <title>Belle Idee @yield('siteTitle')</title>
     <link rel = "stylesheet" href = "/css/normalize.css">
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
@@ -25,6 +25,7 @@
     <div id = "welcome">
         <a href="/"><img src={{secure_asset('img/idee.png')}} alt="idee" height = "35%" width = "35%"></a>
                 <div id = "login">
+                    <p>"Beautiful ideas"</p>
                     @include('partials.flash')
                     @include('errors.list')
                     @yield('login')
