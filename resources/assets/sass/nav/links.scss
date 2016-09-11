@@ -1,0 +1,20 @@
+.indexLink
+{
+  padding:8px 13px;
+  font-family: "Open Sans", Arial, serif;
+  border-radius:7px;
+  -moz-border-radius:7px;
+  -webkit-border-radius:7px;
+  border: 1px solid black;
+  display: inline-block;
+
+  &:hover
+  {
+    color: #FFFFFF;
+    background: -webkit-linear-gradient(#27AE60, #27AE60);
+    background: -o-linear-gradient(#27AE60, #27AE60);
+    background: -moz-linear-gradient(#27AE60, #27AE60);
+    background: linear-gradient(#27AE60, #27AE60);
+  }
+
+}
