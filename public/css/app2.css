@@ -252,7 +252,12 @@
 .contentNavTitle {
   text-align: center;
   padding-bottom: 5px;
-  padding-top: 5px;
+  font-weight: 700; }
+
+.contentMainTitle {
+  text-align: center;
+  padding-bottom: 5px;
+  margin-top: 15px;
   font-weight: 700; }
 
 .contentNavTitleLeft {
@@ -420,7 +425,7 @@
   overflow: auto;
   float: left; }
 
-.postCard {
+.contentCard {
   background-color: #FFFFFF;
   border-radius: 7px;
   border: 1px solid #BDC3C7;
@@ -472,6 +477,7 @@
   position: relative;
   display: inline-block;
   padding-right: 10px;
+  padding-left: 10px;
   padding-bottom: 3px; }
 
 .beaconSection .tooltiptext {
@@ -539,7 +545,6 @@
 
 #container {
   text-align: center;
-  position: fixed;
   height: 100%;
   width: 100%;
   overflow: auto; }
@@ -649,7 +654,7 @@
     background-image: url("/img/backgroundPortrait.jpg"); } }
 
 #welcome {
-  width: 35%;
+  width: 30%;
   min-width: 335px;
   height: auto;
   margin: 3% auto;
@@ -1059,8 +1064,6 @@ article {
     max-width: 40%; }
   .navButton {
     font-size: 100%; }
-  #centerText {
-    max-height: 425px; }
   #centerTextContent {
     max-height: 300px;
     padding-left: 15px;
@@ -1097,8 +1100,6 @@ article {
   #centerContent {
     width: 97%;
     height: 85%; }
-  #centerText {
-    max-height: 630px; }
   #centerTextContent {
     max-height: 545px; }
   .createTitleText {
@@ -1135,8 +1136,6 @@ article {
   #centerContent {
     width: 50%;
     height: 81%; }
-  #centerText {
-    max-height: 535px; }
   #centerTextContent {
     max-height: 385px; }
   .createTitleText {

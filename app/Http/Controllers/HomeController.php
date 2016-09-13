@@ -55,6 +55,7 @@ class HomeController extends Controller
     public function getHome()
     {
         $user = Auth::user();
+        $beacon = Beacon::where('beacon_tag', '=', $user->last_tag)->first();
 
         //Get users who have Elevated
         $posts = Post::where('user_id',$user->id )->count();
@@ -69,7 +70,7 @@ class HomeController extends Controller
         $sponsor = getSponsor($user);
 
         return view ('pages.home')
-                ->with(compact('user', 'posts', 'profilePosts', 'profileExtensions', 'question', 'sponsor'))
+                ->with(compact('user', 'posts', 'profilePosts', 'profileExtensions', 'question', 'sponsor', 'beacon'))
                 ->with('extensions', $extensions)
                 ->with('posts', $posts);
     }

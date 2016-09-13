@@ -23,13 +23,13 @@
             </div>
     </div>
         @foreach ($posts as $post)
-            <div class = "postCard">
-                <div class = "postTitleSection">
+            <div class = "contentCard">
+                <div class = "cardTitleSection">
                     <h3>
                         <a href="{{ action('PostController@show', [$post->id])}}">{{ $post->title }}</a>
                     </h3>
                 </div>
-                <div class = "postCaptionExcerptSection">
+                <div class = "cardCaptionExcerptSection">
 
                         @if(isset($post->excerpt))
                             <p class = "cardExcerpt">
@@ -43,7 +43,7 @@
                         @endif
 
                 </div>
-                <div class = "postHandleSection">
+                <div class = "cardHandleSection">
                     <p>
                         By: <a href="{{ action('UserController@show', [$post->user_id])}}" style = "font-weight: bold">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
                     </p>
