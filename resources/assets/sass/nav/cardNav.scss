@@ -7,6 +7,15 @@
   width: 80%;
 }
 
+.contentExtensionCard
+{
+  background-color: #FFFFFF;
+  border-radius: 7px;
+  border: 1px solid #27AE60;
+  margin: 0 auto 15px auto;
+  width: 80%;
+}
+
 .cardPhoto
 {
   img {
@@ -114,4 +123,22 @@
 
 .extensionSection:hover .tooltiptext {
   visibility: visible;
+}
+
+.cardImg
+{
+  width: 48%;
+  display: inline-block;
+}
+
+.cardImg  h4
+{
+  margin-top: 0;
+  margin-bottom: 0;
+  text-decoration: none;
+}
+
+.cardImg h4.underline
+{
+  text-decoration: underline;
 }

@@ -102,7 +102,7 @@
 
 .topNav > ul > li > a > .caret
 {
-  border-top: 4px solid #aaa;
+  border-top: 4px solid $topNavColor;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
   content: "";
@@ -126,7 +126,7 @@
 }
 .topNav > ul > li > p > .caret
 {
-  border-top: 4px solid #aaa;
+  border-top: 4px solid $topNavColor;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
   content: "";
@@ -143,7 +143,7 @@
 
 .topNav > ul > li:hover > a > .caret
 {
-  border-top-color: #FFFFFF;
+  border-top-color: $topNavColor;
 }
 
 

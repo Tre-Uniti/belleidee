@@ -124,7 +124,7 @@ class SponsorController extends Controller
 
             //Resize the image
             $imageResized = Image::make($image);
-            $imageResized->resize(450, 350, function ($constraint) {
+            $imageResized->resize(400, 150, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
@@ -259,7 +259,7 @@ class SponsorController extends Controller
 
             //Resize the image
             $imageResized = Image::make($image);
-            $imageResized->resize(450, 350, function ($constraint) {
+            $imageResized->resize(400, 200, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });

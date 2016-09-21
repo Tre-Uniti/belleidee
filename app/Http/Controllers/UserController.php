@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Beacon;
 use App\Bookmark;
 use App\Elevation;
 use App\Events\TransferUser;
@@ -93,32 +94,28 @@ class UserController extends Controller
         //Get requested post and add body
         $viewUser = Auth::user();
         $user = User::findOrFail($id);
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        //Get other Extensions of User
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+        $beacon = Beacon::where('beacon_tag', '=', $user->last_tag)->first();
 
-        $posts = Post::where('user_id', $user->id)->count();
-        $extensions = Extension::where('user_id', $user->id)->count();
+        //Get latest Posts
+        $posts = Post::where('user_id',$user->id )->latest()->take(5)->get();
+        $postCount = Post::where('user_id',$user->id )->count();
 
-        //Get path of photo and append correct Amazon bucket
-        //First check user has submitted their own photo otherwise default to medium background image
-        if ($user->photo_path == '') {
-            $sourcePhotoPath = '';
-        } else {
-            $sourcePhotoPath = $user->photo_path;
-        }
+        //Get latest Extensions
+        $extensions = Extension::where('user_id',$user->id )->latest()->take(5)->get();
+        $extensionCount = Extension::where('user_id',$user->id )->count();
+
+
+
+
+        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
+        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         $sponsor = getSponsor($user);
-        //Get Beacons of post user
-        $userBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
 
         return view('users.show')
-            ->with(compact('user', 'viewUser', 'profilePosts', 'profileExtensions'))
-            ->with('sourcePhotoPath', $sourcePhotoPath)
-            ->with('userBeacons', $userBeacons)
-            ->with('extensions', $extensions)
-            ->with('posts', $posts)
-            ->with('sponsor', $sponsor);
+            ->with(compact('user', 'viewUser', 'posts', 'extensions', 'profilePosts', 'profileExtensions', 'question', 'sponsor', 'beacon'))
+            ->with('extensionCount', $extensionCount)
+            ->with('postCount', $postCount);
     }
 
     /**

@@ -156,6 +156,7 @@ Route::get('extensions/extenception/{source}', 'ExtensionController@extenception
 Route::get('extensions/post/list/{id}', 'ExtensionController@postList');
 Route::get('extensions/extend/list/{id}', 'ExtensionController@extendList');
 Route::get('extensions/listElevation/{id}', 'ExtensionController@listElevation');
+Route::get('extensions/setExcerpt', 'ExtensionController@setExcerpt');
 Route::resource('extensions', 'ExtensionController');
 
 //Question Routes (Resource)

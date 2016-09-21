@@ -13,7 +13,7 @@
   transition: all 0.2s; }
 
 .topNav > ul > li > a > .caret {
-  border-top: 4px solid #aaa;
+  border-top: 4px solid #ECF0F1;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
   content: "";
@@ -33,7 +33,7 @@
   font-weight: bold; }
 
 .topNav > ul > li > p > .caret {
-  border-top: 4px solid #aaa;
+  border-top: 4px solid #ECF0F1;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
   content: "";
@@ -45,7 +45,7 @@
   transition: color 0.1s linear; }
 
 .topNav > ul > li:hover > a > .caret {
-  border-top-color: #FFFFFF; }
+  border-top-color: #ECF0F1; }
 
 .topNav > ul > li:hover > div {
   display: block;
@@ -272,6 +272,25 @@
   padding-bottom: 5px;
   padding-left: 20px; }
 
+.contentHeaderSeparator {
+  width: 80%;
+  background-color: #27AE60;
+  border-radius: 7px;
+  border: 1px solid #BDC3C7;
+  margin: 25px auto auto auto; }
+
+.contentHeaderSeparator > h3 {
+  color: #ECF0F1; }
+
+.sponsorContentLogo {
+  height: 40px;
+  margin: 0 auto;
+  width: 200px; }
+
+.sponsorContentLogo img {
+  max-width: 100%;
+  max-height: 100%; }
+
 .beliefNav {
   width: auto;
   margin: 0 auto;
@@ -432,6 +451,13 @@
   margin: 0 auto 15px auto;
   width: 80%; }
 
+.contentExtensionCard {
+  background-color: #FFFFFF;
+  border-radius: 7px;
+  border: 1px solid #27AE60;
+  margin: 0 auto 15px auto;
+  width: 80%; }
+
 .cardPhoto img {
   max-width: 100%;
   height: auto;
@@ -522,6 +548,18 @@
 .extensionSection:hover .tooltiptext {
   visibility: visible; }
 
+.cardImg {
+  width: 48%;
+  display: inline-block; }
+
+.cardImg h4 {
+  margin-top: 0;
+  margin-bottom: 0;
+  text-decoration: none; }
+
+.cardImg h4.underline {
+  text-decoration: underline; }
+
 .extensionContent {
   text-align: left;
   font-size: 100%;
@@ -573,12 +611,13 @@
   border-radius: 7px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
-  border: 1px solid black;
+  border: 1px solid #2C3E50;
   display: inline-block; }
   .indexLink:hover {
-    color: #FFFFFF;
-    background: -webkit-linear-gradient(#27AE60, #27AE60);
-    background: linear-gradient(#27AE60, #27AE60); }
+    color: #ECF0F1;
+    background: #27AE60; }
+    .indexLink:hover a {
+      color: #ECF0F1; }
 
 .formDataContainer {
   width: 80%;
@@ -632,6 +671,11 @@
   border-color: #BDC3C7;
   border-radius: 5px; }
 
+.inputField {
+  outline: none !important;
+  border: 1px solid #27AE60;
+  box-shadow: 0 0 10px #27AE60; }
+
 #welcome {
   width: 30%;
   min-width: 335px;
@@ -661,6 +705,11 @@ label.login {
 
 .welcomeInputText {
   width: 90%; }
+
+.welcomeInputText:focus {
+  outline: none !important;
+  border: 1px solid #27AE60;
+  box-shadow: 0 0 10px #27AE60; }
 
 .welcomeLink {
   color: black; }

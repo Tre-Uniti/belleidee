@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.19.6",
+            "version": "3.19.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "34060bf0db260031697b17dbb37fa1bbec92f1c4"
+                "reference": "33e8f7083fcb54fd926a8569cb81a0795e8c2633"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/34060bf0db260031697b17dbb37fa1bbec92f1c4",
-                "reference": "34060bf0db260031697b17dbb37fa1bbec92f1c4",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/33e8f7083fcb54fd926a8569cb81a0795e8c2633",
+                "reference": "33e8f7083fcb54fd926a8569cb81a0795e8c2633",
                 "shasum": ""
             },
             "require": {
@@ -85,7 +85,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-09-08 20:27:15"
+            "time": "2016-09-13 20:35:16"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -2677,16 +2677,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v3.21.0",
+            "version": "v3.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "0f4f89094b6a1ba9c9c1b5c32358d8d0acc19682"
+                "reference": "c8c8d384636b6b78c4c17e2b00102e914f0b7cc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/0f4f89094b6a1ba9c9c1b5c32358d8d0acc19682",
-                "reference": "0f4f89094b6a1ba9c9c1b5c32358d8d0acc19682",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/c8c8d384636b6b78c4c17e2b00102e914f0b7cc5",
+                "reference": "c8c8d384636b6b78c4c17e2b00102e914f0b7cc5",
                 "shasum": ""
             },
             "require": {
@@ -2728,7 +2728,7 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2016-08-25 22:58:28"
+            "time": "2016-09-13 18:14:15"
         },
         {
             "name": "swiftmailer/swiftmailer",

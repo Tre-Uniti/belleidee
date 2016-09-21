@@ -98,58 +98,7 @@
         </ul>
     </nav>
     <!-- Left --- --- -->
-    <div id = "leftContainer">
-        <div id = "leftSide">
-            <div>
-                <h2><a href="{{ action('UserController@show', [$user->id])}}">{{$user->handle}}</a></h2>
-                <div class = "innerPhotos">
-                    @if(isset($sourcePhotoPath))
-                        @if($sourcePhotoPath != NULL)
-                            <a href={{ url('/users/'. $user->id) }}><img src= {{ url(env('IMAGE_LINK'). $sourcePhotoPath) }} alt="{{$user->handle}}" height = "95%" width = "95%"></a>
-                        @else
-                            <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "95%" width = "95%"></a>
-                        @endif
-                    @elseif($photoPath != NULL)
-                        <a href={{ url('/users/'. $user->id) }}><img src= {{ url(env('IMAGE_LINK'). $photoPath) }} alt="{{$user->handle}}" height = "95%" width = "95%"></a>
-                    @else
-                        <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "95%" width = "95%"></a>
-                    @endif
-                </div>
-            </div>
-            <nav class = "profileNav">
-                <ul>
-                    @if ($profilePosts->isEmpty())
-                        <li><a href="{{url('/posts/create')}}">Posts</a></li>
-                    @else
-                        <li>
-                            <a href="{{ url('/posts/user/'. $user->id) }}">Posts</a>
-                            <div>
-                                <ul>
-                                    @foreach($profilePosts as $profilePost)
-                                        <li><a href={{ action('PostController@show', [$profilePost->id])}}>{{ $profilePost->created_at->format('M-d-Y')}}</a></li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </li>
-                    @endif
-                    @if ($profileExtensions->isEmpty())
-                        <li><a href="{{ url('/extensions/user/' .$user->id) }}">Extensions</a></li>
-                    @else
-                        <li>
-                            <a href="{{ url('/extensions/user/' .$user->id) }}">Extensions</a>
-                            <div>
-                                <ul>
-                                    @foreach($profileExtensions as $profileExtension)
-                                        <li><a href={{ action('ExtensionController@show', [$profileExtension->id])}}>{{ $profileExtension->created_at->format('M-d-Y')}}</a></li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </li>
-                    @endif
-                </ul>
-            </nav>
-        </div>
-    </div>
+
     <!-- --- Center --- -->
     <div id = "centerContent">
         <article>
@@ -169,64 +118,7 @@
         </div>
     </div>
     <!-- --- --- Right -->
-    <div id = "rightContainer">
-        <div id = "rightSide">
-            <h2>Hosted:</h2>
-            <div class = "innerPhotos">
-                @if(isset($beacon))
-                    @if($beacon != NULL)
-                    <a href={{ url('/beacons/'. $beacon->beacon_tag) }}><img src= {{ url(env('IMAGE_LINK'). $beacon->photo_path) }} alt="{{$beacon->name}}" height = "95%" width = "95%"></a>
-                    @endif
-                @elseif(isset($sponsor))
-                    @if($sponsor != NULL)
-                    <a href={{ url('/sponsors/click/'. $sponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $sponsor->photo_path) }} alt="{{$sponsor->name}}" height = "95%" width = "95%"></a>
-                    @endif
-                @elseif(isset($userSponsor))
-                    @if($userSponsor != NULL)
-                        <a href={{ url('/sponsors/click/'. $userSponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $userSponsor->photo_path) }} alt="{{$userSponsor->name}}" height = "95%" width = "95%"></a>
-                    @endif
-                @else
-                    <a href={{ url('/sponsors/US-SW-TreUniti') }}><img src= {{ asset('img/tre-uniti.png') }} alt="Tre-Uniti" height = "95%" width = "95%"></a>
-                @endif
-            </div>
-            <nav class = "profileNav">
-                <ul>
-                        <li>
-                            <a href="{{url('/beacons')}}">Beacons</a>
-                            <div>
-                                <ul>
-                                    @if(isset($userBeacons))
-                                        @foreach($userBeacons as $userBeacon)
-                                            <li><a href={{ action('BeaconController@show', [$userBeacon->pointer])}}>{{ $userBeacon->pointer }}</a></li>
-                                        @endforeach
-                                    @else
-                                        @foreach($profileBeacons as $profileBeacon)
-                                            <li><a href={{ action('BeaconController@show', [$profileBeacon->pointer])}}>{{ $profileBeacon->pointer }}</a></li>
-                                        @endforeach
-                                    @endif
-                                </ul>
-                            </div>
-                        </li>
-                            <li>
-                                <a href="{{ url('/legacyPosts') }}">Legacy</a>
-                                <div>
-                                    <ul>
-                                        @if(isset($userLegacies))
-                                            @foreach($userLegacies as $userLegacy)
-                                                <li><a href={{ action('LegacyPostController@show', [$userLegacy->legacy_post_id])}}>{{ $userLegacy->created_at->format('M-d-Y') }}</a></li>
-                                            @endforeach
-                                        @else
-                                            @foreach($profileLegacies as $profileLegacy)
-                                                <li><a href={{ action('LegacyPostController@show', [$profileLegacy->legacy_post_id])}}>{{ $profileLegacy->created_at->format('M-d-Y') }}</a></li>
-                                            @endforeach
-                                        @endif
-                                    </ul>
-                                </div>
-                            </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+
 </div>
 </body>
 </html>

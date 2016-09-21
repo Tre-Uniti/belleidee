@@ -27,46 +27,26 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     <div id="fb-root"></div>
 
     <h2>{{ $post->title }}</h2>
+    <h4>By: <a href = {{ url('/users/'. $post->user->id) }}>{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y')  }}</a></h4>
     <div class = "indexNav">
-            <a href="{{ action('BeliefController@show', $post->belief) }}"><button type = "button" class = "indexButton">{{ $post->belief }}</button></a>
-           <a href="{{ url('/beacons/'.$post->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $post->beacon_tag }}</button></a>
-            <a href="{{ url('/posts/source/'. $post->source) }}"><button type = "button" class = "indexButton">{{ $post->source }}</button></a>
-    </div>
-    <button class = "interactButton" id = "hiddenIndex">More</button>
-    <div class = "indexContent" id = "hiddenContent">
-        <a href={{ url('/posts/listElevation/'.$post->id)}}><button type = "button" class = "indexButton">Elevations</button></a>
-        <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}><button type = "button" class = "indexButton">{{ $post->created_at->format('M-d-Y') }}</button></a>
-        <a href={{ url('/extensions/post/list/'.$post->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
 
-                <div class = "indexNav">
-                    @if($post->user_id != Auth::id())
-                        <a href="{{ url('/intolerances/post/'.$post->id) }}"><button type = "button" class = "indexButton">Report Intolerance</button></a>
-                    @elseif ($post->status < 1)
-                        <a href="{{ url('/posts/'.$post->id) }}"><button type = "button" class = "indexButton">Status: Tolerant</button></a>
-                    @else
-                        <a href="{{ url('/posts/'. $post->id) }}"><button type = "button" class = "indexButton">Status: Intolerant</button></a>
-                    @endif
-                        @if($post->lat != NULL)
-                            <a href="{{ url($location) }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
-                        @endif
-                </div>
-                <div class = "indexNav">
-                    <a href="http://www.facebook.com/share.php?u={{Request::url()}}&title={{$post->title}}" target="_blank">
-                        <img src="{{ asset('img/facebook.png') }}" alt="Share on Facebook"/></a>
-                    <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank">
-                        <img src="{{ asset('img/gplus.png') }}" alt="Share on Google+"/></a>
-                    <a href="http://twitter.com/intent/tweet?status={{$post->title}} - {{Request::url()}}" target="_blank">
-                        <img src="{{ asset('img/twitter.png') }}" alt="Share on Twitter"/></a>
-                </div>
+
     </div>
+    <div class = "indexNav">
+        <p>
+            <a href="{{ action('BeliefController@show', $post->belief) }}">#{{ $post->belief }}</a>
+
+            <a href="{{ url('/posts/source/'. $post->source) }}">#{{ $post->source }}</a>
+        </p>
+
+    </div>
+
     @if($type != 'txt')
         <div class = "photoContent">
             <p>{!! nl2br($post->caption) !!}</p>
             <div class = "postPhoto">
                 <a href="{{ url(env('IMAGE_LINK'). $sourceOriginalPath) }}" data-lightbox="{{ $post->title }}" data-title="{{ $post->caption }}"><img src= {{ url(env('IMAGE_LINK'). $post->post_path) }} alt="{{$post->title}}" width = "99%" height = "99%"></a>
             </div>
-
-
         </div>
         @else
         <div id = "centerTextContent">
@@ -77,23 +57,57 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
 
 @section('centerFooter')
     <div id = "centerFooter">
+        <div class = "influenceSection">
+            <div class = "elevationSection">
+                <div class = "elevationIcon">
+                    @if($post->elevateStatus === 'Elevated')
+                        <img src = '/img/elevated.png'>
+                    @else
+                        <a href="{{ url('/posts/elevate/'.$post->id) }}"><img src = '/img/elevate.png'></a>
+                    @endif
+                    <span class="tooltiptext">Elevate to give thanks and recommend to others</span>
+                </div>
+                <div class = "elevationCounter">
+                    <a href={{ url('/posts/listElevation/'.$post->id)}}>{{ $post->elevation }}</a>
+                </div>
+            </div>
+
+            <div class = "beaconSection">
+                <a href="{{ url('/beacons/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a>
+                <span class="tooltiptext">The Beacon for this post:  {{ $beacon->name }}</span>
+            </div>
+
+            <div class = "extensionSection">
+                <a href="{{ url('/extensions/post/'.$post->id) }}"><img src = '/img/extend.png'></a>
+                <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
+                <span class="tooltiptext">Extend to add any inspiration you received</span>
+            </div>
+
+
+            @if($beacon->stripe_plan < 1)<p>Sponsored by:</p>
+
+                <div class = "sponsorContentLogo">
+
+                    <a href={{ url('/sponsors/click/'. $sponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $sponsor->photo_path) }} alt="{{$sponsor->name}}" ></a>
+                </div>
+            @endif
+
+
+        </div>
         @if($post->user_id == Auth::id())
             <a href="{{ url('/posts/'.$post->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
-        @else
-            @if($elevation === 'Elevated')
-                <a href="{{ url('/posts/'.$post->id) }}"><button type = "button" class = "navButton">{{ $elevation }}</button></a>
-            @else
-                <a href="{{ url('/posts/elevate/'.$post->id) }}"><button type = "button" class = "navButton">{{ $elevation }}</button></a>
-            @endif
-            <a href="{{ url('/bookmarks/posts/'.$post->id) }}"><button type = "button" class = "navButton">Bookmark</button></a>
         @endif
-        <a href="{{ url('/extensions/post/'. $post->id) }}"><button type = "button" class = "navButton">Extend</button></a>
+
         @if($post->elevation == 0 && $post->extension == 0 && $post->user_id == $viewUser->id)
                 {!! Form::open(['method' => 'DELETE', 'route' => ['posts.destroy', $post->id], 'class' => 'formDeletion']) !!}
                 {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}
         @endif
     </div>
+
+
+
+
     <script src="/js/lightbox.js"></script>
 @stop
 

@@ -10,11 +10,11 @@
     <div>
     <h2>{{ $location }} Recent Posts</h2>
     <div class = "indexNav">
-        <a href={{ url('/posts/elevation')}}><button type = "button" class = "indexButton">Elevated</button></a>
+        <a href={{ url('/posts/elevation')}}><button type = "button" class = "indexButton">Type Filter</button></a>
         <a href={{ url('/posts/search')}}><button type = "button" class = "indexButton">Search</button></a>
-        <a href={{ url('/posts/extension')}}><button type = "button" class = "indexButton">Extended</button></a>
+        <a href={{ url('/posts/extension')}}><button type = "button" class = "indexButton">Time Filter</button></a>
     </div>
-        <button class = "interactButton" id = "hiddenIndex">More</button>
+
             <div class = "indexContent" id = "hiddenContent">
                 <a href={{ url('/posts/timeFilter/Today')}}><button type = "button" class = "indexButton">Today</button></a>
                 <a href={{ url('/posts/timeFilter/Month') }}><button type = "button" class = "indexButton">Month</button></a>

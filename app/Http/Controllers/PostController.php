@@ -14,6 +14,7 @@ use function App\Http\filterContentLocationTime;
 use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
+use function App\Http\preparePostCards;
 use App\Intolerance;
 use App\Moderation;
 use App\Notification;
@@ -47,41 +48,6 @@ class PostController extends Controller
         $this->middleware('postOwner', ['only' => 'edit', 'update', 'destroy']);
         $this->post = $post;
     }
-    /*
-  * Prepare cards by getting content for posts
-  * @param $posts
-  * @param $user
-  */
-    public function prepareCards($posts ,$user)
-    {
-        //Filter each post for content and if it is an image or text
-        //Check for Elevation
-        foreach($posts as $post)
-        {
-            //Get type of post (i.e Image or Txt)
-            $type = substr($post->post_path, -3);
-            if($type == 'txt')
-            {
-                $post->excerpt = autolink($post->excerpt, array("target"=>"_blank","rel"=>"nofollow"));
-            }
-            else
-            {
-                $post->caption = autolink($post->caption, array("target"=>"_blank","rel"=>"nofollow"));
-            }
-            $post->type = $type;
-
-            //Check if viewing user has already elevated post
-            if(Elevation::where('post_id', $post->id)->where('user_id', $user->id)->exists())
-            {
-                $post->elevationStatus = 'Elevated';
-            }
-            else
-            {
-                $post->elevationStatus = 'Elevate';
-            }
-        }
-        return $posts;
-    }
 
     public function index()
     {
@@ -91,7 +57,7 @@ class PostController extends Controller
 
         $posts = filterContentLocation($user, 0, 'Post');
 
-        $posts = $this->prepareCards($posts, $user);
+        $posts = preparePostCards($posts, $user);
 
         $location = getLocation();
 
@@ -115,7 +81,7 @@ class PostController extends Controller
         $profilePosts = $this->getProfilePosts($user);
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->where('user_id', $user->id)->latest()->paginate(10);
-        $posts = $this->prepareCards($posts, $user);
+        $posts = preparePostCards($posts, $user);
 
         if($user->photo_path == '')
         {
@@ -148,7 +114,7 @@ class PostController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $posts = $this->post->where('user_id', $user->id)->orderBy('elevation', 'desc')->latest()->paginate(10);
-        $posts = $this->prepareCards($posts, $user);
+        $posts = preparePostCards($posts, $user);
 
         if($user->photo_path == '')
         {
@@ -407,23 +373,9 @@ class PostController extends Controller
         $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->take(7)->get();
 
         //Determine if beacon or sponsor shows and update
-        if($post->beacon_tag == 'No-Beacon')
-        {
-            $sponsor = getSponsor($user);
-            $beacon = NULL;
-        }
-        else
-        {
-            $beacon = getBeacon($post);
-            if($beacon == NULL)
-            {
-                $sponsor = getSponsor($user);
-            }
-            else
-            {
-                $sponsor = NULL;
-            }
-        }
+        $sponsor = getSponsor($user);
+        $beacon = getBeacon($post);
+
 
         //Check if viewing user has already elevated post
         if(Elevation::where('post_id', $post->id)->where('user_id', $viewUser->id)->exists())
@@ -753,7 +705,7 @@ class PostController extends Controller
         $profileExtensions = $this->getProfileExtensions($user);
 
         $posts = filterContentLocation($user, 4, $source);
-        $posts = $this->prepareCards($posts, $user);
+        $posts = preparePostCards($posts, $user);
         $sponsor = getSponsor($user);
 
         return view ('posts.listSources')
@@ -796,7 +748,7 @@ class PostController extends Controller
         
         //Filter by location
         $results = filterContentLocationSearch($user, 0, 'Post', $title);
-        $results = $this->prepareCards($results, $user);
+        $results = preparePostCards($results, $user);
 
         if(!count($results))
         {
@@ -1024,7 +976,7 @@ class PostController extends Controller
             $filter = 'All';
         }
 
-        $posts = $this->prepareCards($posts, $user);
+        $posts = preparePostCards($posts, $user);
         $sponsor = getSponsor($user);
 
         return view ('posts.sortByElevationTime')
@@ -1087,7 +1039,7 @@ class PostController extends Controller
             $filter = 'All';
         }
 
-        $posts = $this->prepareCards($posts, $user);
+        $posts = preparePostCards($posts, $user);
         $sponsor = getSponsor($user);
 
         return view ('posts.sortByExtensionTime')
@@ -1133,7 +1085,7 @@ class PostController extends Controller
             $filter = 'All';
         }
 
-        $posts = $this->prepareCards($posts, $user);
+        $posts = preparePostCards($posts, $user);
         $sponsor = getSponsor($user);
 
         return view ('posts.timeFilter')

@@ -31,12 +31,12 @@ function getSponsor($user)
         Event::fire(new SponsorViewed($sponsor));
         if($sponsor->views >= $sponsor->view_budget || $sponsor->clicks >= $sponsor->click_budget)
         {
-            $sponsor = NULL;
+            $sponsor = Sponsor::where('id', '=', 1)->first();
         }
     }
     else
     {
-        $sponsor = NULL;
+        $sponsor = Sponsor::where('id', '=', 1)->first();
     }
 
     return $sponsor;
@@ -53,15 +53,11 @@ function getBeacon($content)
 
     if(isset($beacon->stripe_plan))
     {
-        if($beacon->stripe_plan > 0)
-        {
-            //Beacon pays subscription
-            Event::fire(new BeaconViewed($beacon));
-        }
-        else
-        {
-            $beacon = NULL;
-        }
+
+        //Beacon pays subscription
+        Event::fire(new BeaconViewed($beacon));
+
+
     }
 
     return $beacon;
@@ -1055,5 +1051,68 @@ function autolink($str, $attributes=array()) {
     $str = substr($str, 1);
 
     return $str;
+}
+
+/*
+ * Prepare cards by getting content for posts
+ * @param $posts
+ * @param $user
+ */
+function preparePostCards($posts ,$user)
+{
+    //Filter each post for content and if it is an image or text
+    //Check for Elevation
+    foreach($posts as $post)
+    {
+        //Get type of post (i.e Image or Txt)
+        $type = substr($post->post_path, -3);
+        if($type == 'txt')
+        {
+            $post->excerpt = autolink($post->excerpt, array("target"=>"_blank","rel"=>"nofollow"));
+        }
+        else
+        {
+            $post->caption = autolink($post->caption, array("target"=>"_blank","rel"=>"nofollow"));
+        }
+        $post->type = $type;
+
+        //Check if viewing user has already elevated post
+        if(Elevation::where('post_id', $post->id)->where('user_id', $user->id)->exists())
+        {
+            $post->elevationStatus = 'Elevated';
+        }
+        else
+        {
+            $post->elevationStatus = 'Elevate';
+        }
+    }
+    return $posts;
+}
+
+/*
+ * Prepare cards by getting content for extensions
+ * @param $posts
+ * @param $user
+ */
+function prepareExtensionCards($extensions ,$user)
+{
+    //Filter each post for content and if it is an image or text
+    //Check for Elevation
+    foreach($extensions as $extension)
+    {
+
+        $extension->excerpt = autolink($extension->excerpt, array("target"=>"_blank","rel"=>"nofollow"));
+
+        //Check if viewing user has already elevated post
+        if(Elevation::where('extension_id', $extension->id)->where('user_id', $user->id)->exists())
+        {
+            $extension->elevationStatus = 'Elevated';
+        }
+        else
+        {
+            $extension->elevationStatus = 'Elevate';
+        }
+    }
+    return $extensions;
 }
 

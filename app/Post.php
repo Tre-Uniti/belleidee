@@ -10,6 +10,7 @@ class Post extends Model
     protected $fillable = [
         'title',
         'body',
+        'excerpt',
         'published_at',
         'belief',
         'beacon_tag',

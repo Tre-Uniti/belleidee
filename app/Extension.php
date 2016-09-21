@@ -8,6 +8,7 @@ class Extension extends Model
 {
     protected $fillable = [
         'title',
+        'excerpt',
         'body',
         'belief',
         'beacon_tag',

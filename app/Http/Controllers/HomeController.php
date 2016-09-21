@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Beacon;
+use App\Bookmark;
 use App\Elevation;
 use App\Events\SetLocation;
 use App\Events\SponsorViewed;
@@ -57,11 +58,24 @@ class HomeController extends Controller
         $user = Auth::user();
         $beacon = Beacon::where('beacon_tag', '=', $user->last_tag)->first();
 
-        //Get users who have Elevated
-        $posts = Post::where('user_id',$user->id )->count();
-        $extensions = Extension::where('user_id',$user->id )->count();
+        //Get latest Posts
+        $posts = Post::where('user_id',$user->id )->latest()->take(5)->get();
+        $postCount = Post::where('user_id',$user->id )->count();
 
-        $question = Question::orderBy('created_at', 'desc')->first();
+        //Get latest Extensions
+        $extensions = Extension::where('user_id',$user->id )->latest()->take(5)->get();
+        $extensionCount = Extension::where('user_id',$user->id )->count();
+
+        if($bookmark_user = Bookmark::where('pointer', '=', $user->id)->where('type', '=', 'User')->first())
+        {
+            $followerCount = DB::table('bookmark_user')->where('bookmark_id', $bookmark_user->id)->count();
+        }
+        else
+        {
+            $followerCount = 0;
+        }
+        //Get Number of Followers (those who have bookmarked the user)
+
 
 
         $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
@@ -70,9 +84,10 @@ class HomeController extends Controller
         $sponsor = getSponsor($user);
 
         return view ('pages.home')
-                ->with(compact('user', 'posts', 'profilePosts', 'profileExtensions', 'question', 'sponsor', 'beacon'))
-                ->with('extensions', $extensions)
-                ->with('posts', $posts);
+                ->with(compact('user', 'posts', 'extensions', 'profilePosts', 'profileExtensions', 'question', 'sponsor', 'beacon'))
+                ->with('followerCount', $followerCount)
+                ->with('extensionCount', $extensionCount)
+                ->with('postCount', $postCount);
     }
     public function getSettings()
     {
@@ -125,7 +140,7 @@ class HomeController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        return view('pages.photo')
+        return view ('pages.photo')
             ->with(compact('user', 'profilePosts', 'profileExtensions'));
     }
     /**

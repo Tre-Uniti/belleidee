@@ -1790,5 +1790,27 @@ class ExtensionController extends Controller
 
         return redirect('extensions/'. $extension->id);
     }
+
+    /*
+ * Add excerpt to db from posts
+ */
+    public function setExcerpt()
+    {
+        $extensions = Extension::latest()->get();
+        foreach($extensions as $extension)
+        {
+            if($content = Storage::get($extension->extension_path))
+            {
+                $inspiration = Purifier::clean($content);
+                $excerpt = substr($inspiration, 0, 300);
+                $extension->excerpt = $excerpt;
+                $extension->update();
+            }
+
+        }
+
+        flash()->overlay('Extension excerpts updated');
+        return redirect('extensions');
+    }
     
 }
