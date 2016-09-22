@@ -25,19 +25,25 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
 
 @section('centerText')
     <div id="fb-root"></div>
+<article>
+    <header>
+        <h2>{{ $post->title }}</h2>
+    </header>
 
-    <h2>{{ $post->title }}</h2>
     <h4>By: <a href = {{ url('/users/'. $post->user->id) }}>{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y')  }}</a></h4>
     <div class = "indexNav">
 
 
     </div>
     <div class = "indexNav">
-        <p>
-            <a href="{{ action('BeliefController@show', $post->belief) }}">#{{ $post->belief }}</a>
-
-            <a href="{{ url('/posts/source/'. $post->source) }}">#{{ $post->source }}</a>
-        </p>
+        <div class = "beliefIndex">
+            <a href="{{ action('BeliefController@show', $post->belief) }}"><i class="fa fa-hashtag" aria-hidden="true"></i>{{ $post->belief }}</a>
+            <span class="tooltiptext">Belief or way of life related to the post</span>
+        </div>
+        <div class = "sourceIndex">
+            <a href="{{ url('/posts/source/'. $post->source) }}"><i class="fa fa-hashtag" aria-hidden="true"></i>{{ $post->source }}</a>
+            <span class="tooltiptext">Source where the post came from</span>
+        </div>
 
     </div>
 
@@ -53,6 +59,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
             {!! nl2br($post->body) !!}
         </div>
     @endif
+</article>
 @stop
 
 @section('centerFooter')
@@ -61,9 +68,9 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
             <div class = "elevationSection">
                 <div class = "elevationIcon">
                     @if($post->elevateStatus === 'Elevated')
-                        <img src = '/img/elevated.png'>
+                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
                     @else
-                        <a href="{{ url('/posts/elevate/'.$post->id) }}"><img src = '/img/elevate.png'></a>
+                        <a href="{{ url('/posts/elevate/'.$post->id) }}" class = "iconLink"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i></a>
                     @endif
                     <span class="tooltiptext">Elevate to give thanks and recommend to others</span>
                 </div>
@@ -78,7 +85,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
             </div>
 
             <div class = "extensionSection">
-                <a href="{{ url('/extensions/post/'.$post->id) }}"><img src = '/img/extend.png'></a>
+                <a href="{{ url('/extensions/post/'.$post->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
                 <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
                 <span class="tooltiptext">Extend to add any inspiration you received</span>
             </div>
@@ -104,9 +111,6 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                 {!! Form::close() !!}
         @endif
     </div>
-
-
-
 
     <script src="/js/lightbox.js"></script>
 @stop

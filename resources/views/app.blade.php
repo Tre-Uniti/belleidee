@@ -19,6 +19,7 @@
         @endif
     @endif
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/9747c67e36.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/location.js"></script>
     @if(!App::environment('local'))
@@ -38,9 +39,9 @@
 <div id = "container">
     <nav class = "topNav">
         <ul>
-            <li><a href={{ url('/home') }}>Home</a></li>
+            <li><a href={{ url('/home') }}><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
             <li>
-                <p onclick="" class = "nav">Posts<span class="caret"></span></p>
+                <p onclick="" class = "nav"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Posts<span class="caret"></span></p>
                 <div>
                     <ul>
                         <li><a href={{ url('/posts/create') }}>Create</a></li>
@@ -52,7 +53,7 @@
                 </div>
             </li>
             <li>
-                <p onclick="" class = "nav">Directory<span class="caret"></span></p>
+                <p onclick="" class = "nav"> <i class="fa fa-users" aria-hidden="true"></i> Directory<span class="caret"></span></p>
                 <div>
                     <ul>
                         <li><a href="{{ url('/users') }}">Users</a></li>
@@ -64,7 +65,7 @@
                 </div>
             </li>
             <li>
-                <p onclick="" class = "nav">Settings<span class="caret"></span></p>
+                <p onclick="" class = "nav"> <i class="fa fa-cog" aria-hidden="true"></i> Settings<span class="caret"></span></p>
                 <div>
 
                     <ul>
@@ -92,7 +93,7 @@
             </li>
             @if($notifyCount > 0)
             <li>
-                <a href = "{{ url('/notifications') }}">/{{$notifyCount}}\</a>
+                <a href = "{{ url('/notifications') }}"><i class="fa fa-bell" aria-hidden="true"></i> {{$notifyCount}}</a>
             </li>
             @endif
         </ul>
@@ -101,18 +102,13 @@
 
     <!-- --- Center --- -->
     <div id = "centerContent">
-        <article>
         <div id = "centerMenu">
-        <header>
-
             @yield('centerMenu')
-        </header>
         </div>
         <div id = "centerText">
             @include('partials.flash')
             @yield('centerText')
         </div>
-        </article>
         <div id = "centerFooter">
             @yield('centerFooter')
         </div>

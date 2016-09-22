@@ -1,3 +1,25 @@
+/* unvisited link */
+a:link {
+  color: #2C3E50;
+  text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+  color: #2C3E50;
+
+}
+/* mouse over link */
+a:hover {
+  color: #27AE60;
+}
+
+/* selected link */
+a:active {
+  color: #27AE60;
+
+}
+
 .indexLink
 {
   padding:8px 13px;
@@ -20,4 +42,42 @@
 
   }
 
+}
+
+.elevationSection a.iconLink
+{
+  font-family: "Open Sans", Arial, serif;
+  color: #27AE60;
+  //border: 1px solid #27AE60;
+  display: inline-block;
+
+  &:hover
+  {
+    color: #2ECC71;
+
+  }
+}
+
+.extensionSection a.iconLink
+{
+  font-family: "Open Sans", Arial, serif;
+  color: #27AE60;
+  //border: 1px solid #27AE60;
+  display: inline-block;
+
+  &:hover
+  {
+    color: #2ECC71;
+
+  }
+}
+
+a.excerptText
+{
+  color: #000000;
+
+  &:hover
+  {
+      color: #2C3E50;
+  }
 }

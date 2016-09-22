@@ -22,14 +22,16 @@
   width: 50%;
   height: 100%;
   font-family: "Open Sans", Arial, serif;
-  margin: 1.5% auto;
+  margin: 71px auto;
 }
 
 #centerText
 {
-  margin: 5px auto;
-  width: 99%;
+  margin: 0 auto 5px auto;
+  width: 80%;
   height: auto;
+  border-radius: 7px;
+  background-color: #ECF0F1;
 }
 
 #centerTextContent

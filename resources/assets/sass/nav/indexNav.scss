@@ -54,3 +54,102 @@
   overflow: auto;
   float: left;
 }
+
+.beliefIndex
+{
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+
+  .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #2C3E50;
+    color: #ECF0F1;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+
+    position: absolute;
+    bottom: 0%;
+    right: 110%;
+    margin-left: -100px;
+  }
+}
+.beliefIndex:hover .tooltiptext {
+  visibility: visible;
+}
+
+.sourceIndex
+{
+  position: relative;
+  display: inline-block;
+  padding-left: 10px;
+  padding-bottom: 10px;
+
+  .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #2C3E50;
+    color: #ECF0F1;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+
+    /* Position the tooltip */
+    position: absolute;
+    bottom: 0%;
+    left: 110%;
+    margin-right: -100px;
+  }
+}
+.sourceIndex:hover .tooltiptext {
+  visibility: visible;
+}
+
+.testDiv
+{
+  #tooltip
+  {
+    text-align: center;
+    color: #fff;
+    background: #111;
+    position: absolute;
+    padding: 15px;
+  }
+
+  #tooltip:after /* triangle decoration */
+  {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #111;
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    margin-left: -10px;
+  }
+
+  #tooltip.top:after
+  {
+    border-top-color: transparent;
+    border-bottom: 10px solid #111;
+    top: -20px;
+    bottom: auto;
+  }
+
+  #tooltip.left:after
+  {
+    left: 10px;
+    margin: 0;
+  }
+
+  #tooltip.right:after
+  {
+    right: 10px;
+    left: auto;
+    margin: 0;
+  }
+}

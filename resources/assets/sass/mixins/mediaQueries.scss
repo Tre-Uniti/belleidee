@@ -54,9 +54,7 @@
 
   //Small Desktop
   @media screen and (min-width: 801px) and (max-width: 1500px) and (max-height: 1400px) {
-    .topNav {
-      width: 100%;
-    }
+
     .interactButton {
       font-size: 100%;
     }
@@ -65,6 +63,9 @@
     }
     .navButton {
       font-size: 100%;
+    }
+    #centerContent {
+      width: 65%;
     }
     #centerTextContent {
       max-height: 300px;
@@ -116,14 +117,8 @@
   @media screen and (max-width: 800px) and (min-height: 600px)
   {
 
-    .topNav
-    {
-      max-width: 100%;
-    }
-    #centerContent
-    {
-      width: 97%;
-      height: 85%;
+    #centerContent {
+      width: 95%;
     }
     #centerTextContent
     {
@@ -179,12 +174,9 @@
     html {
 
     }
-    .topNav {
-      max-width: 100%;
-    }
+
     #centerContent {
-      width: 50%;
-      height: 81%;
+      width: 65%;
     }
 
     #centerTextContent
@@ -257,9 +249,7 @@
   @media screen and (max-width: 419px) and (min-height: 541px) {
     html {
     }
-    .topNav {
-      max-width: 100%;
-    }
+
     .topNav > ul > li > a {
       padding: 0 1px;
     }
@@ -285,10 +275,9 @@
     }
 
     #centerContent {
-      width: 99%;
-      height: 84%;
-      margin: 1.5% auto;
+      width: 95%;
     }
+
     #centerText
     {
       max-height: 355px;
@@ -368,9 +357,7 @@
   {
     html {
     }
-    .topNav {
-      max-width: 100%;
-    }
+
     .topNav > ul > li > a {
       padding: 0 1px;
     }
@@ -384,9 +371,7 @@
       padding: 7px 1px;
     }
     #centerContent {
-      width: 57%;
-      height: 95%;
-      margin: 1.5% auto;
+      width: 65%;
     }
 
     .formDataContainer
@@ -477,9 +462,7 @@
 
     html {
     }
-    .topNav {
-      max-width: 100%;
-    }
+
     .topNav > ul > li > a {
       padding: 0 1px;
     }
@@ -588,9 +571,7 @@
   {
     html {
     }
-    .topNav {
-      max-width: 100%;
-    }
+
     .topNav > ul > li > a {
       padding: 0 1px;
     }

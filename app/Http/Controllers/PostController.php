@@ -380,11 +380,11 @@ class PostController extends Controller
         //Check if viewing user has already elevated post
         if(Elevation::where('post_id', $post->id)->where('user_id', $viewUser->id)->exists())
         {
-            $elevation = 'Elevated';
+            $post->elevateStatus = 'Elevated';
         }
         else
         {
-            $elevation = 'Elevate';
+            $post->elevateStatus = 'Elevate';
         }
 
         //Set Source User photo path
@@ -426,7 +426,6 @@ class PostController extends Controller
                 {
                     return view('posts.show')
                         ->with(compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'))
-                        ->with('elevation', $elevation)
                         ->with('beacon', $beacon)
                         ->with('sourcePhotoPath', $sourcePhotoPath)
                         ->with('location', $location)
@@ -455,7 +454,6 @@ class PostController extends Controller
 
         return view('posts.show')
             ->with(compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'))
-            ->with('elevation', $elevation)
             ->with('userBeacons', $userBeacons)
             ->with('beacon', $beacon)
             ->with('location', $location)

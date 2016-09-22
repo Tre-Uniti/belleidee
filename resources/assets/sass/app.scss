@@ -1,6 +1,7 @@
 // Utilities
 @import "utility/flatThemeVars";
 
+
 //Navigation
 @import 'nav/topNav';
   @include topNavColor($topNavBackgroundColor, $topNavColor, $topNavHoverBackground, $topNavHoverColor, $topNavDivBackground, $topNavDivColor, $topNavDivHoverColor, $topNavDivHoverBackground)
@@ -37,11 +38,6 @@
 html{
   background-color: $mainBackgroundColor;
 }
-/* unvisited link */
-a:link {
-  color: #2C3E50;
-  text-decoration: none;
-}
 
 #map
 {
@@ -49,21 +45,7 @@ a:link {
   width: 100%;
 }
 
-/* visited link */
-a:visited {
-  color: #2C3E50;
 
-}
-/* mouse over link */
-a:hover {
-  color: #27AE60;
-}
-
-/* selected link */
-a:active {
-  color: #27AE60;
-
-}
 p.verify
 {
   color: #000000;
@@ -184,25 +166,11 @@ th
   color: #c0392b;
 }
 
-//Sides
-#leftSide
-{
-  @include sideDiv($profileBackgroundColor);
-  left: 3em;
-}
-#rightSide
-{
-  @include sideDiv($profileBackgroundColor);
-  right: 3em;
-}
-
 //Content and Creation
 
 article
 {
-  opacity: $centerOpacity;
   background-color: #ECF0F1;
-
 }
 #centerMenu
 {

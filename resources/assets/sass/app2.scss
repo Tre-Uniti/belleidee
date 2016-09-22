@@ -17,7 +17,7 @@
 @import 'mixins/colorButton';
 @import 'mixins/baseButton';
 
-// Div Mixins
+  // Div Mixins
 @import 'mixins/menuDiv';
 @import 'mixins/sideDiv';
 @import 'mixins/innerMenu';
@@ -40,27 +40,6 @@ html
   background-color: $mainBackgroundColor;
 }
 
-/* unvisited link */
-a:link {
-  color: #202020;
-  text-decoration: none;
-}
-
-/* visited link */
-a:visited {
-  color: #202020;
-
-}
-/* mouse over link */
-a:hover {
-  color: #009900;
-}
-
-/* selected link */
-a:active {
-  color: #00CC33;
-
-}
 p.verify
 {
   color: #000000;
@@ -178,29 +157,13 @@ th
   color: red;
 }
 
-//Sides
-#leftSide
-{
-  @include sideDiv($profileBackgroundColor);
-  left: 2em;
-}
-#rightSide
-{
-  @include sideDiv($profileBackgroundColor);
-  right: 2em;
-}
+
 
 //Content and Creation
 article
 {
-  opacity: $centerOpacity;
-  border: 2px solid;
-  border-radius: 12px;
-  background: -webkit-linear-gradient(#F8F8F8  , #C0C0C0 );
-  background: -o-linear-gradient(#F8F8F8 , #C0C0C0 );
-  background: -moz-linear-gradient(#F8F8F8 , #C0C0C0 );
-  background: linear-gradient(#F8F8F8 , #C0C0C0 );
-
+  background-color: #ECF0F1;
+  border-radius: 7px;
 }
 #centerMenu
 {
