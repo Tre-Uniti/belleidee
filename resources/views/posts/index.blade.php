@@ -29,6 +29,11 @@
                         <a href="{{ action('PostController@show', [$post->id])}}">{{ $post->title }}</a>
                     </h3>
                 </div>
+                <div class = "cardHandleSection">
+                    <p>
+                        By: <a href="{{ action('UserController@show', [$post->user_id])}}" style = "font-weight: bold">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
+                    </p>
+                </div>
                 <div class = "cardCaptionExcerptSection">
 
                         @if(isset($post->excerpt))
@@ -43,11 +48,7 @@
                         @endif
 
                 </div>
-                <div class = "cardHandleSection">
-                    <p>
-                        By: <a href="{{ action('UserController@show', [$post->user_id])}}" style = "font-weight: bold">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
-                    </p>
-                </div>
+
                 <div class = "influenceSection">
                     <div class = "elevationSection">
                         <div class = "elevationIcon">

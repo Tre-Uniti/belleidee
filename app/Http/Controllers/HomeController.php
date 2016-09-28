@@ -17,6 +17,7 @@ use function App\Http\getSponsor;
 use App\Http\Requests\PhotoUploadRequest;
 use App\LegacyPost;
 use App\Mailers\NotificationMailer;
+use App\Notification;
 use App\Post;
 use App\Question;
 use App\Sponsor;
@@ -46,7 +47,7 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['terms', 'privacy', 'nymi']]);
+        $this->middleware('auth', ['except' => ['terms', 'privacy', 'nymi', 'about']]);
         $this->middleware('admin', ['only' => 'indexer']);
     }
 
@@ -745,11 +746,17 @@ class HomeController extends Controller
      */
     public function about()
     {
-        $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
+        if($user = Auth::user())
+        {
+            $notifyCount = Notification::where('source_user', $user->id)->count();
+        }
+        else
+        {
+            $notifyCount = 0;
+        }
 
         return view('pages.about')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'profilePosts', 'profileExtensions'))
+            ->with('notifyCount', $notifyCount);
     }
 }

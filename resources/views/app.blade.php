@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-    <title>Idee - @yield('siteTitle')</title>
+    <meta name="description" content="Belle-idee - An online community for sharing spiritual ideas, inspirations and experiences.">
+    <title>@yield('siteTitle')</title>
     <link rel = "stylesheet" href = "/css/normalize.css">
     @if(isset($viewUser))
         @if($viewUser->theme == 1)

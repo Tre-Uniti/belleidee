@@ -15,7 +15,7 @@
         <div class = "contentCard">
             <div class = "cardTitleSection">
                 <header>
-                <h2>{{$user->handle}}</h2>
+                <h1>{{$user->handle}}</h1>
                 </header>
             </div>
 
@@ -30,15 +30,10 @@
 
         </div>
             <div class = "indexNav">
-                <div class = "indexLink">
-                    <a href="{{ url('/posts/user/'. $user->id) }}">Posts: {{ $postCount }}</a>
-                </div>
-                <div class = "indexLink">
-                    <a href="{{ url('/extensions/user/'. $user->id) }}">Extensions: {{ $extensionCount }}</a>
-                </div>
-                <div class = "indexLink">
-                    <a href="{{ url('/extensions/user/'. $user->id) }}">Followers: {{ $followerCount }}</a>
-                </div>
+                <a href="{{ url('/posts/user/'. $user->id) }}" class = "indexLink">Posts: {{ $postCount }}</a>
+                <a href="{{ url('/extensions/user/'. $user->id) }}" class = "indexLink">Extensions: {{ $extensionCount }}</a>
+                <a href="{{ url('/extensions/user/'. $user->id) }}" class = "indexLink">Followers: {{ $followerCount }}</a>
+
             </div>
             <div class = "cardHandleSection">
                 <p>

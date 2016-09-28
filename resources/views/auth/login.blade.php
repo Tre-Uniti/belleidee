@@ -1,8 +1,9 @@
 @extends('auth')
 @section('siteTitle')
-    Idee - Login
+    Login
 @stop
-@section('login')
+@section('centerContent')
+    <div class = "authCard">
     <div id = "dataInput">
     <form role="form" method="POST" action="{{ secure_url('/auth/login') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -24,11 +25,12 @@
         </div>
         <div class = "formData">
                 <label for = "remember" class = "login"> Remember Me</label>
-                <input type="checkbox" id = "remember" name="remember">
+                <input type="checkbox" id = "remember" name="remember" class = "remember">
 
         </div>
         <button type="submit" class = "navButton">Login</button>
     </form>
+    </div>
     </div>
 @stop
 @section('footer')

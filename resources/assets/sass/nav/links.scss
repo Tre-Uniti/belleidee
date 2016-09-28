@@ -1,3 +1,7 @@
+.linkContainer
+{
+  padding: 10px;
+}
 /* unvisited link */
 a:link {
   color: #2C3E50;
@@ -11,16 +15,16 @@ a:visited {
 }
 /* mouse over link */
 a:hover {
-  color: #27AE60;
+  color: #2ECC71;
 }
 
 /* selected link */
 a:active {
-  color: #27AE60;
+  color: #2ECC71;
 
 }
 
-.indexLink
+a.indexLink
 {
   padding:8px 13px;
   font-family: "Open Sans", Arial, serif;
@@ -29,6 +33,7 @@ a:active {
   -webkit-border-radius:7px;
   border: 1px solid #2C3E50;
   display: inline-block;
+  font-weight: 500;
 
   &:hover
   {
@@ -41,7 +46,34 @@ a:active {
     }
 
   }
+}
 
+a.navLink
+{
+  padding:8px 13px;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  color: #ECF0F1;
+  font-family: "Open Sans", Arial, serif;
+  border-radius:7px;
+  -moz-border-radius:7px;
+  -webkit-border-radius:7px;
+  border: 1px solid #2C3E50;
+  background-color: #2ECC71;
+  font-weight: 500;
+
+  &:hover
+  {
+    background: #27AE60;
+    color: #FFFFFF;
+
+    a
+    {
+      color: #FFFFFF;
+    }
+
+  }
 }
 
 .elevationSection a.iconLink

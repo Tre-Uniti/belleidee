@@ -9,7 +9,7 @@
 @section('centerText')
     <div>
     <h2>{{ $location }} Sponsor Directory</h2>
-        <p>Sponsor: A business or non-profit promoting within Idee</p>
+        <p>Sponsor: A business or non-profit promoting within Belle-idee</p>
     <div class = "indexNav">
         <a href={{ url('/promotions')}}><button type = "button" class = "indexButton">Promotions</button></a>
         <a href={{ url('/sponsors/search')}}><button type = "button" class = "indexButton">Search</button></a>

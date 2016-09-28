@@ -38,6 +38,7 @@ class SessionController extends Controller
             return view('auth.authenticate');
         }
 
+
         return view('auth.login');
     }
 

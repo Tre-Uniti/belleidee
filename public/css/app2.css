@@ -294,6 +294,15 @@
   max-width: 100%;
   max-height: 100%; }
 
+p.test {
+  font-family: medium-content-serif-font,Georgia,Cambria,"Times New Roman",Times,serif;
+  letter-spacing: .01rem;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 21px;
+  line-height: 1.58;
+  letter-spacing: -.003em; }
+
 .beliefNav {
   width: auto;
   margin: 0 auto;
@@ -528,7 +537,8 @@
   border-radius: 7px;
   border: 1px solid #BDC3C7;
   margin: 0 auto 15px auto;
-  width: 99.7%; }
+  width: 99.7%;
+  height: auto; }
 
 .contentExtensionCard {
   background-color: #FFFFFF;
@@ -636,6 +646,9 @@
 .cardImg h4.underline {
   text-decoration: underline; }
 
+.linkContainer {
+  padding: 10px; }
+
 /* unvisited link */
 a:link {
   color: #2C3E50;
@@ -647,25 +660,45 @@ a:visited {
 
 /* mouse over link */
 a:hover {
-  color: #27AE60; }
+  color: #2ECC71; }
 
 /* selected link */
 a:active {
-  color: #27AE60; }
+  color: #2ECC71; }
 
-.indexLink {
+a.indexLink {
   padding: 8px 13px;
   font-family: "Open Sans", Arial, serif;
   border-radius: 7px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   border: 1px solid #2C3E50;
-  display: inline-block; }
-  .indexLink:hover {
+  display: inline-block;
+  font-weight: 500; }
+  a.indexLink:hover {
     color: #ECF0F1;
     background: #27AE60; }
-    .indexLink:hover a {
+    a.indexLink:hover a {
       color: #ECF0F1; }
+
+a.navLink {
+  padding: 8px 13px;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  color: #ECF0F1;
+  font-family: "Open Sans", Arial, serif;
+  border-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border: 1px solid #2C3E50;
+  background-color: #2ECC71;
+  font-weight: 500; }
+  a.navLink:hover {
+    background: #27AE60;
+    color: #FFFFFF; }
+    a.navLink:hover a {
+      color: #FFFFFF; }
 
 .elevationSection a.iconLink {
   font-family: "Open Sans", Arial, serif;
@@ -812,10 +845,10 @@ a.excerptText {
     background-image: url("/img/backgroundPortrait.jpg"); } }
 
 #welcome {
-  width: 30%;
-  min-width: 335px;
+  width: 35%;
+  min-width: 350px;
   height: auto;
-  margin: 3% auto;
+  margin: 60px auto;
   padding-top: 5px;
   background-color: #ECF0F1;
   filter: alpha(opacity=75);
@@ -823,14 +856,17 @@ a.excerptText {
   font-family: "Open Sans", Arial, serif;
   text-align: center; }
 
-#login {
-  width: 85%;
-  height: auto;
-  margin: 3% auto;
-  background-color: #ECF0F1;
-  filter: alpha(opacity=90);
-  border-radius: 25px;
-  min-width: 332px; }
+.authCard {
+  background-color: #FFFFFF;
+  border-radius: 7px;
+  border: 1px solid #BDC3C7;
+  margin: 0 auto 15px auto;
+  width: 60%;
+  min-width: 350px; }
+
+#logo {
+  width: auto;
+  min-width: 350px; }
 
 h3 {
   color: #2C3E50; }
@@ -842,6 +878,11 @@ label.login {
   width: 90%; }
 
 .welcomeInputText:focus {
+  outline: none !important;
+  border: 1px solid #27AE60;
+  box-shadow: 0 0 10px #27AE60; }
+
+.remember:focus {
   outline: none !important;
   border: 1px solid #27AE60;
   box-shadow: 0 0 10px #27AE60; }
@@ -881,17 +922,55 @@ p.verification {
   border-radius: 25px; }
 
 .topBar {
-  height: 56px;
+  border-radius: 4px;
+  color: #ECF0F1;
+  display: block;
+  margin: 0 auto;
   width: 100%;
+  position: fixed;
+  z-index: 1;
+  height: 53px;
   background-color: #27AE60; }
+
+@media screen and (min-width: 1501px) and (min-height: 850px) {
+  #welcome {
+    width: 35%;
+    min-width: 350px; } }
+
+@media screen and (min-width: 801px) and (max-width: 1500px) and (max-height: 1400px) {
+  #welcome {
+    width: 40%;
+    min-width: 350px; } }
+
+@media screen and (max-width: 800px) and (min-height: 600px) {
+  #welcome {
+    width: 45%;
+    min-width: 350px; } }
+
+@media screen and (min-width: 852px) and (max-width: 1500px) {
+  #welcome {
+    width: 45%;
+    min-width: 350px; } }
+
+@media screen and (max-width: 419px) and (min-height: 541px) {
+  #welcome {
+    width: 75%;
+    min-width: 200px; } }
+
+@media screen and (min-width: 419px) and (max-width: 751px) and (max-height: 450px) {
+  #welcome {
+    width: 65%;
+    min-width: 250px; } }
 
 @media screen and (max-width: 465px) and (max-height: 540px) {
   #welcome {
-    min-width: 302px; }
-  #login {
-    min-width: 296px; }
-  #tour {
-    min-width: 296px; } }
+    width: 75%;
+    min-width: 150px; } }
+
+@media screen and (min-width: 467px) and (max-width: 751px) and (max-height: 400px) {
+  #welcome {
+    width: 65%;
+    min-width: 350px; } }
 
 html {
   background-color: #ECF0F1; }
@@ -996,6 +1075,7 @@ article {
   border-radius: 7px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
+  font-weight: 500;
   color: #FFFFFF;
   background-color: #27AE60;
   border: 1px solid #202020; }
@@ -1081,6 +1161,7 @@ article {
   border-radius: 7px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
+  font-weight: 500;
   color: #FFFFFF;
   background-color: #27AE60;
   border: 1px solid #202020; }
@@ -1095,6 +1176,7 @@ article {
   border-radius: 7px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
+  font-weight: 500;
   color: #000000;
   outline: none;
   background-color: Transparent;
@@ -1112,6 +1194,7 @@ article {
   border-radius: 7px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
+  font-weight: 500;
   color: #000000;
   outline: none;
   background-color: Transparent;
@@ -1130,6 +1213,7 @@ article {
   border-radius: 7px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
+  font-weight: 500;
   color: #000000;
   outline: none;
   background-color: Transparent;
@@ -1184,7 +1268,6 @@ article {
   #centerContent {
     width: 65%; }
   #centerTextContent {
-    max-height: 300px;
     padding-left: 15px;
     padding-right: 15px; }
   #createOptions {
@@ -1216,8 +1299,6 @@ article {
 @media screen and (max-width: 800px) and (min-height: 600px) {
   #centerContent {
     width: 95%; }
-  #centerTextContent {
-    max-height: 545px; }
   .createTitleText {
     max-width: 40%; }
   #createOptions {
@@ -1249,8 +1330,6 @@ article {
 @media screen and (min-width: 852px) and (max-width: 1500px) {
   #centerContent {
     width: 65%; }
-  #centerTextContent {
-    max-height: 385px; }
   .createTitleText {
     max-width: 45%; }
   #createOptions {
@@ -1314,7 +1393,6 @@ article {
   #centerText {
     max-height: 355px; }
   #centerTextContent {
-    max-height: 190px;
     padding-left: 3px;
     padding-right: 3px; }
   #createBodyText {
@@ -1383,7 +1461,6 @@ article {
   #centerText {
     max-height: 270px; }
   #centerTextContent {
-    max-height: 150px;
     padding-left: 3px;
     padding-right: 3px; }
   #createBodyText {
@@ -1443,7 +1520,6 @@ article {
   .createTitleText {
     max-width: 70%; }
   #centerTextContent {
-    max-height: 130px;
     padding-left: 3px;
     padding-right: 3px; }
   .formDataContainer {

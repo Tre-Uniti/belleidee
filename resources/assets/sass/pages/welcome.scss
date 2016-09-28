@@ -1,9 +1,9 @@
 #welcome
 {
-  width: 30%;
-  min-width: 335px;
+  width: 35%;
+  min-width: 350px;
   height: auto;
-  margin: 3% auto;
+  margin: 60px auto;
   padding-top: 5px;
   background-color: #ECF0F1;
   filter:alpha(opacity=75);
@@ -11,15 +11,19 @@
   font-family: "Open Sans", Arial, serif;
   text-align: center;
 }
-#login
+.authCard
 {
-  width: 85%;
-  height: auto;
-  margin: 3% auto;
-  background-color: #ECF0F1;
-  filter:alpha(opacity=90);
-  border-radius: 25px;
-  min-width: 332px;
+  background-color: #FFFFFF;
+  border-radius: 7px;
+  border: 1px solid #BDC3C7;
+  margin: 0 auto 15px auto;
+  width: 60%;
+  min-width: 350px;
+}
+#logo
+{
+  width: auto;
+  min-width: 350px;
 }
 h3
 {
@@ -36,6 +40,13 @@ label.login
 
 }
 .welcomeInputText:focus
+{
+  outline: none !important;
+  border:1px solid #27AE60;
+  box-shadow: 0 0 10px #27AE60;
+}
+
+.remember:focus
 {
   outline: none !important;
   border:1px solid #27AE60;
@@ -91,33 +102,99 @@ p.verification
 
 .topBar
 {
-  height: 56px;
+  border-radius: 4px;
+  color: #ECF0F1;
+  display: block;
+  margin: 0 auto;
   width: 100%;
+  position: fixed;
+  z-index: 1;
+  height: 53px;
   background-color: #27AE60;
 }
 
 //Media Queries
 
-//Small screen mobile portrait
-@media screen and (max-width: 465px) and (max-height: 540px)
+//Desktop
+
+@media screen and (min-width: 1501px) and (min-height: 850px)
 {
   #welcome
   {
-    min-width: 302px;
+    width: 35%;
+    min-width: 350px;
   }
-
-  #login
-  {
-    min-width: 296px;
-  }
-
-  #tour
-  {
-    min-width: 296px;
-  }
-}
-//Small screen mobile landscape
-@media screen and (min-width: 467px) and (max-width: 751px) and (max-height: 400px)
-{
 
 }
+
+  //Small Desktop
+@media screen and (min-width: 801px) and (max-width: 1500px) and (max-height: 1400px) {
+  #welcome {
+    width: 40%;
+    min-width: 350px;
+  }
+
+}
+
+//Tablet Portrait
+  @media screen and (max-width: 800px) and (min-height: 600px) {
+    #welcome {
+      width: 45%;
+      min-width: 350px;
+    }
+
+  }
+
+  //Tablet Landscape
+  @media screen and (min-width: 852px) and (max-width: 1500px)
+  {
+    #welcome
+    {
+      width: 45%;
+      min-width: 350px;
+    }
+
+
+  }
+//Mobile Portrait
+
+  @media screen and (max-width: 419px) and (min-height: 541px) {
+    #welcome
+    {
+      width: 75%;
+      min-width: 200px;
+    }
+
+  }
+
+  //Mobile landscape
+  @media screen and (min-width: 419px) and (max-width: 751px) and (max-height: 450px) {
+    #welcome {
+      width: 65%;
+      min-width: 250px;
+    }
+
+  }
+
+  //Small screen mobile portrait
+  @media screen and (max-width: 465px) and (max-height: 540px) {
+    #welcome {
+      width: 75%;
+      min-width: 150px;
+    }
+
+  }
+
+
+  //Small screen mobile landscape
+  @media screen and (min-width: 467px) and (max-width: 751px) and (max-height: 400px)
+  {
+    #welcome
+    {
+      width: 65%;
+      min-width: 350px;
+    }
+
+  }
+
+

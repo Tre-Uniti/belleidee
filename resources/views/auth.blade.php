@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="canonical" href="https://belle-idee.org/">
     <meta name="title" content="Belle Idee">
-    <meta name="description" content="Belle-idee - A platform for sharing spiritual ideas and inspirations.">
-    <title>Belle Idee @yield('siteTitle')</title>
+    <meta name="description" content="Belle-idee - An online community for sharing spiritual ideas, inspirations and experiences.">
+    <title>@yield('siteTitle')</title>
     <link rel = "stylesheet" href = "/css/normalize.css">
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
+    <script src="https://use.fontawesome.com/9747c67e36.js"></script>
+
     <!--
        This code is maintained by the Tre-Uniti development ops
        Feature & Pull Requests decided at Belle-Creatori.org
@@ -20,16 +22,82 @@
 </head>
 <body>
 <div id = "container">
-<div class = "topBar">
-    </div>
+    @if(isset($user))
+        <nav class = "topNav">
+        <ul>
+            <li><a href={{ url('/home') }}><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+            <li>
+                <p onclick="" class = "nav"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Posts<span class="caret"></span></p>
+                <div>
+                    <ul>
+                        <li><a href={{ url('/posts/create') }}>Create</a></li>
+                        <li><a href={{ url('/posts') }}>Discover</a></li>
+                        <li><a href="{{ url('/drafts') }}">Drafts</a></li>
+                        <li><a href={{ url('/legacyPosts')}}>Legacy</a></li>
+                        <li><a href="{{ url('/extensions') }}">Extensions</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <p onclick="" class = "nav"> <i class="fa fa-users" aria-hidden="true"></i> Directory<span class="caret"></span></p>
+                <div>
+                    <ul>
+                        <li><a href="{{ url('/users') }}">Users</a></li>
+                        <li><a href="{{ url('/beacons') }}">Beacons</a></li>
+                        <li><a href="{{ url('/sponsors') }}">Sponsors</a></li>
+                        <li><a href="{{ url('/beliefs') }}">Beliefs</a></li>
+                        <li><a href="{{ url('/questions') }}">Questions</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <p onclick="" class = "nav"> <i class="fa fa-cog" aria-hidden="true"></i> Settings<span class="caret"></span></p>
+                <div>
+
+                    <ul>
+                        <li><a href="{{ url('/settings') }}">Personal</a></li>
+                        <li><a href="{{ url('/supports') }}">Support</a></li>
+                        <li><a href="{{ url('/invites') }}">Invite Friends</a></li>
+                        @if(isset($viewUser))
+                            @if($viewUser->type > 0)
+                                <li><a href="{{ url('/moderator') }}">Moderator</a></li>
+                            @endif
+                        @elseif($user->type > 0)
+                            <li><a href="{{ url('/moderator') }}">Moderator</a></li>
+                        @endif
+                        @if(isset($viewUser))
+                            @if($viewUser->type > 1)
+                                <li><a href="{{ url('/admin') }}">Admin</a></li>
+                            @endif
+                        @elseif($user->type > 1)
+                            <li><a href="{{ url('/admin') }}">Admin</a></li>
+                        @endif
+                        <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+                    </ul>
+
+                </div>
+            </li>
+            @if($notifyCount > 0)
+                <li>
+                    <a href = "{{ url('/notifications') }}"><i class="fa fa-bell" aria-hidden="true"></i> {{$notifyCount}}</a>
+                </li>
+            @endif
+        </ul>
+        </nav>
+        @else
+        <div class = "topBar">
+            </div>
+    @endif
     <div id = "welcome">
-        <a href="/"><img src={{secure_asset('img/idee.png')}} alt="idee" height = "35%" width = "35%"></a>
-                <div id = "login">
-                    <p>"Beautiful ideas"</p>
+        <div id = "logo">
+            <a href="/"><img src={{secure_asset('img/idee.png')}} alt="idee" width = "45%" height ="45%"></a>
+
+        </div>
+        <h3>"Beautiful ideas"</h3>
                     @include('partials.flash')
                     @include('errors.list')
-                    @yield('login')
-                </div>
+                    @yield('centerContent')
+
             @yield('footer')
     </div>
 </div>

@@ -27,7 +27,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     <div id="fb-root"></div>
 <article>
     <header>
-        <h2>{{ $post->title }}</h2>
+        <h1>{{ $post->title }}</h1>
     </header>
 
     <h4>By: <a href = {{ url('/users/'. $post->user->id) }}>{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y')  }}</a></h4>
@@ -56,7 +56,10 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
         </div>
         @else
         <div id = "centerTextContent">
-            {!! nl2br($post->body) !!}
+            <p class = "test">
+                {!! nl2br($post->body) !!}
+            </p>
+
         </div>
     @endif
 </article>
@@ -102,7 +105,10 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
 
         </div>
         @if($post->user_id == Auth::id())
-            <a href="{{ url('/posts/'.$post->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+            <div class = "linkContainer">
+                <a href="{{ url('/posts/'.$post->id.'/edit') }}" class = "navLink">Edit</a>
+            </div>
+
         @endif
 
         @if($post->elevation == 0 && $post->extension == 0 && $post->user_id == $viewUser->id)
