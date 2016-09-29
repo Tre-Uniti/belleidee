@@ -1,6 +1,7 @@
 @extends('app')
 @section('pageHeader')
     <script src = "/js/index.js"></script>
+    <script src = "/js/backToTop.js"></script>
 @stop
 @section('siteTitle')
     Posts
@@ -53,31 +54,40 @@
                     <div class = "elevationSection">
                         <div class = "elevationIcon">
                             @if($post->elevateStatus === 'Elevated')
-                                <img src = '/img/elevated.png'>
+                                <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
                             @else
-                                <a href="{{ url('/posts/elevate/'.$post->id) }}"><img src = '/img/elevate.png'></a>
+                                <a href="{{ url('/posts/elevate/'.$post->id) }}" class = "iconLink"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i></a>
                             @endif
-                                <span class="tooltiptext">Elevate to give thanks and recommend to others</span>
+                            <span class="tooltiptext">Elevate to give thanks and recommend to others</span>
                         </div>
+
                         <div class = "elevationCounter">
                             <a href={{ url('/posts/listElevation/'.$post->id)}}>{{ $post->elevation }}</a>
                         </div>
+
                     </div>
 
+
                     <div class = "beaconSection">
-                        <a href="{{ url('/beacons/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a>
+                        <a href="{{ url('/beacons/'.$post->beacon_tag) }}" >{{ $post->beacon_tag }}</a>
                         <span class="tooltiptext">Beacon community where this post is located</span>
                     </div>
 
                     <div class = "extensionSection">
-                        <a href="{{ url('/extensions/post/'.$post->id) }}"><img src = '/img/extend.png'></a>
+                        <a href="{{ url('/extensions/post/'.$post->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
                         <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
+
                         <span class="tooltiptext">Extend to add any inspiration you received</span>
                     </div>
 
                 </div>
             </div>
         @endforeach
+
+    <a href= "#" class= "back-to-top" >
+        Back to Top
+        <i class= "fa fa-arrow-circle-up 2x"></i>
+    </a>
 
 @stop
 

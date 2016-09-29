@@ -56,8 +56,6 @@
 @stop
 @section('footer')
     <h4>Guidelines:</h4>
-    <p>Share beautiful ideas, inspirations, and experiences instead of arguing belief validity</p>
-    <p>Handle (username) can be real or anonymous, max-length (14)</p>
-    <p>Passwords must be at least 8 characters long</p>
+    <p>Share beautiful ideas, inspirations, and experiences instead of arguing for/against beliefs</p>
 @stop
 

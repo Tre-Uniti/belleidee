@@ -251,12 +251,35 @@ class HomeController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
+
         //Get search title
         $identifier = $request->input('identifier');
 
         $type = $request->input('type');
 
-        if($type == 'Post')
+
+
+        if($type == NULL)
+        {
+            $posts = filterContentLocationSearch($user, 0, 'Post', $identifier);
+            $extensions = filterContentLocationSearch($user, 0, 'Extension', $identifier);
+            $users = filterContentLocationSearch($user, 0, 'User', $identifier);
+            $beacons = filterContentLocationSearch($user, 0, 'Beacon-Name', $identifier);
+            $sponsors = filterContentLocationSearch($user, 0, 'Sponsor', $identifier);
+
+            if(!count($posts) && !count($extensions) && !count($users) && !count($beacons) && !count($sponsors))
+            {
+                flash()->overlay('No results found for this search');
+                return redirect()->back();
+            }
+
+
+            return view ('pages.multiResults')
+                ->with(compact('user', 'profilePosts','profileExtensions','posts','extensions', 'users', 'beacons', 'sponsors', 'sponsor'))
+                ->with('type', $type)
+                ->with('identifier', $identifier);
+        }
+        elseif($type == 'Post')
         {
             $results = filterContentLocationSearch($user, 0, 'Post', $identifier);
             $results->appends($request->all());

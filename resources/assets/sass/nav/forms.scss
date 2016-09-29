@@ -72,3 +72,32 @@
   border:1px solid #27AE60;
   box-shadow: 0 0 10px #27AE60;
 }
+
+.searchButton
+{
+  outline: none !important;
+  border-radius:7px;
+
+  -moz-border-radius:7px;
+  -webkit-border-radius:7px;
+  background-color: #27AE60;
+  border: 1px solid #27AE60;
+  color: #ECF0F1;
+  &:hover
+  {
+    color: #27AE60;
+    background-color: #ECF0F1;
+  }
+}
+
+.searchField
+{
+  outline: none !important;
+  color: #2C3E50;
+  padding-left: 7px;
+  border: 1px solid #27AE60;
+  border-radius:7px;
+  -moz-border-radius:7px;
+  -webkit-border-radius:7px;
+
+}

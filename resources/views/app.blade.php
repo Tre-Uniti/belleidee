@@ -65,8 +65,15 @@
                     </ul>
                 </div>
             </li>
+            <li class = "iconBackground">
+                {!! Form::open(['url' => '/results', 'method' => 'GET']) !!}
+                {!! Form::text('identifier', null, ['placeholder' => 'Search Belle-idee', 'class' => 'searchField']) !!}
+                {{Form::button('<i class="fa fa-search" aria-hidden="true"></i>', array('type' => 'submit', 'class' => 'searchButton'))}}
+                {!! Form:: close() !!}
+            </li>
+
             <li>
-                <p onclick="" class = "nav"> <i class="fa fa-cog" aria-hidden="true"></i> Settings<span class="caret"></span></p>
+                <p onclick="" class = "nav" id = "pIcon"> <i class="fa fa-cog" aria-hidden="true"></i></p>
                 <div>
 
                     <ul>
@@ -78,23 +85,24 @@
                                 <li><a href="{{ url('/moderator') }}">Moderator</a></li>
                             @endif
                         @elseif($user->type > 0)
-                                    <li><a href="{{ url('/moderator') }}">Moderator</a></li>
+                            <li><a href="{{ url('/moderator') }}">Moderator</a></li>
                         @endif
                         @if(isset($viewUser))
                             @if($viewUser->type > 1)
                                 <li><a href="{{ url('/admin') }}">Admin</a></li>
                             @endif
                         @elseif($user->type > 1)
-                        <li><a href="{{ url('/admin') }}">Admin</a></li>
+                            <li><a href="{{ url('/admin') }}">Admin</a></li>
                         @endif
                         <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
                     </ul>
 
                 </div>
             </li>
+
             @if($notifyCount > 0)
-            <li>
-                <a href = "{{ url('/notifications') }}"><i class="fa fa-bell" aria-hidden="true"></i> {{$notifyCount}}</a>
+            <li class = "iconBackground">
+                <a href = "{{ url('/notifications') }}" class = "iconOnly"><i class="fa fa-bell" aria-hidden="true"></i> {{$notifyCount}}</a>
             </li>
             @endif
         </ul>

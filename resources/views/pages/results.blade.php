@@ -34,7 +34,16 @@
                 <h4>User</h4>
             @endif
         </div>
-    @if($type == 'Posts')
+    @if($type == 'Global')
+        <div class = "listResource">
+            <div class = "listResourceLeft">
+                <a href="{{ action('PostController@show', [$result->id])}}"><button type = "button" class = "interactButtonLeft">{{$result->title}}</button></a>
+            </div>
+            <div class = "listResourceRight">
+                <a href="{{ action('UserController@show', [$result->user_id])}}"><button type = "button" class = "interactButton">{{$result->user->handle}}</button></a>
+            </div>
+        </div>
+    @elseif($type == 'Posts')
         @foreach ($results as $result)
             <div class = "listResource">
                 <div class = "listResourceLeft">
@@ -114,7 +123,7 @@
     @endif
 @stop
 @section('centerFooter')
-        {!! $results->render() !!}
+
 @stop
 
 

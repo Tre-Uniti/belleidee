@@ -1,7 +1,5 @@
-@mixin topNavColor($topNavBackgroundColor, $topNavColor, $topNavHoverBackground, $topNavHoverColor, $topNavDivBackground, $topNavDivColor, $topNavDivHoverColor, $topNavDivHoverBackground)
-{
-  .topNav
-  {
+@mixin topNavColor($topNavBackgroundColor, $topNavColor, $topNavHoverBackground, $topNavHoverColor, $topNavDivBackground, $topNavDivColor, $topNavDivHoverColor, $topNavDivHoverBackground) {
+  .topNav {
     font-family: "Open Sans", Arial, serif;
     background-color: $topNavBackgroundColor;
     border-radius: 4px;
@@ -12,9 +10,55 @@
     position: fixed;
     z-index: 1;
   }
+  .topNav ul {
+    margin: 0;
+    padding: 0;
+  }
+  .topNav ul li {
+    display: inline-block;
+    width: auto;
+    list-style-type: none;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+  }
 
-  .topNav > ul > li > p
-  {
+  .topNav > ul > li:hover {
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    color: $topNavHoverColor;
+    background-color: $topNavHoverBackground;
+  }
+
+  .topNav > ul > .iconBackground {
+    display: inline-block;
+    width: auto;
+    list-style-type: none;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+  }
+  .topNav > ul > .iconBackground:hover {
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    color: $topNavColor;
+    background-color: $topNavBackgroundColor;
+
+  }
+
+  .topNav > ul > li > p {
     color: $topNavColor;
     display: block;
     padding: 0 24px;
@@ -22,28 +66,23 @@
     font-weight: bold;
   }
 
-  .topNav > ul > li:hover
-  {
-    border-radius:4px;
-    -moz-border-radius:4px;
-    -webkit-border-radius:4px;
+  .topNav > ul > li > #pIcon {
+    color: $topNavColor;
+    display: block;
+    padding: 0 12px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .topNav > ul > li:hover > a {
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
     color: $topNavHoverColor;
     background-color: $topNavHoverBackground;
   }
 
-  .topNav > ul > li:hover > a
-  {
-    border-radius:4px;
-    -moz-border-radius:4px;
-    -webkit-border-radius:4px;
-    color: $topNavHoverColor;
-    background-color: $topNavHoverBackground;
-  }
-
-
-
-  .topNav > ul > li > div
-  {
+  .topNav > ul > li > div {
     background-color: $topNavDivBackground;
     display: none;
     margin: 0;
@@ -58,111 +97,86 @@
     -o-transition: opacity 0.2s;
     -transition: opacity 0.2s;
   }
-  .topNav > ul > li > div ul > li > a
-  {
+  .topNav > ul > li > div ul > li > a {
     color: $topNavDivColor;
     display: block;
     padding: 12px 24px;
     text-decoration: none;
   }
-  .topNav > ul > li > div ul > li:hover > a
-  {
+  .topNav > ul > li > div ul > li:hover > a {
     background-color: $topNavDivHoverBackground;
     color: $topNavDivHoverColor;
   }
 
-  .topNav > ul > li:hover > p
-  {
+  .topNav > ul > li:hover > p {
+    color: $topNavHoverColor;
+  }
+  .topNav > ul > li:hover > #pIcon {
     color: $topNavHoverColor;
   }
 
-  .topNav > ul > li:hover > p > .caret
-  {
+  .topNav > ul > li:hover > p > .caret {
     border-top-color: $topNavHoverColor;
   }
 
-}
+  .topNav > ul > li > a > .caret {
+    border-top: 4px solid $topNavColor;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    content: "";
+    display: inline-block;
+    height: 0;
+    width: 0;
+    vertical-align: middle;
+    -webkit-transition: color 0.1s linear;
+    -moz-transition: color 0.1s linear;
+    -o-transition: color 0.1s linear;
+    transition: color 0.1s linear;
+  }
+  .topNav > ul > li > a {
+    color: #ECF0F1;
+    display: block;
+    line-height: 56px;
+    padding: 0 24px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .topNav > ul > li > .iconOnly {
+    padding: 0 7px;
+  }
 
-.topNav ul
-{
-  margin: 0;
-  padding: 0;
-}
-.topNav ul li
-{
-  display: inline-block;
-  width: auto;
-  list-style-type: none;
-  border-radius:4px;
-  -moz-border-radius:4px;
-  -webkit-border-radius:4px;
-  -webkit-transition: all 0.2s;
-  -moz-transition: all 0.2s;
-  -ms-transition: all 0.2s;
-  -o-transition: all 0.2s;
-  transition: all 0.2s;
-}
+  .topNav > ul > li > p > .caret {
+    border-top: 4px solid $topNavColor;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    content: "";
+    display: inline-block;
+    height: 0;
+    width: 0;
+    vertical-align: middle;
+    -webkit-transition: color 0.1s linear;
+    -moz-transition: color 0.1s linear;
+    -o-transition: color 0.1s linear;
+    transition: color 0.1s linear;
+  }
 
-.topNav > ul > li > a > .caret
-{
-  border-top: 4px solid $topNavColor;
-  border-right: 4px solid transparent;
-  border-left: 4px solid transparent;
-  content: "";
-  display: inline-block;
-  height: 0;
-  width: 0;
-  vertical-align: middle;
-  -webkit-transition: color 0.1s linear;
-  -moz-transition: color 0.1s linear;
-  -o-transition: color 0.1s linear;
-  transition: color 0.1s linear;
-}
-.topNav > ul > li > a
-{
-  color: #ECF0F1;
-  display: block;
-  line-height: 56px;
-  padding: 0 24px;
-  text-decoration: none;
-  font-weight: bold;
-}
-.topNav > ul > li > p > .caret
-{
-  border-top: 4px solid $topNavColor;
-  border-right: 4px solid transparent;
-  border-left: 4px solid transparent;
-  content: "";
-  display: inline-block;
-  height: 0;
-  width: 0;
-  vertical-align: middle;
-  -webkit-transition: color 0.1s linear;
-  -moz-transition: color 0.1s linear;
-  -o-transition: color 0.1s linear;
-  transition: color 0.1s linear;
-}
+  .topNav > ul > li:hover > a > .caret {
+    border-top-color: $topNavColor;
+  }
 
+  .topNav > ul > li:hover > div {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+  }
 
-.topNav > ul > li:hover > a > .caret
-{
-  border-top-color: $topNavColor;
+  .topNav > ul > li > div ul > li {
+    display: block;
+  }
 }
 
 
 
-
-.topNav > ul > li:hover > div
-{
-  display: block;
-  opacity: 1;
-  visibility: visible;
-}
-
-.topNav > ul > li > div ul > li
-{
-  display: block;
-}
 
 
 

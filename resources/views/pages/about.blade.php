@@ -1,5 +1,8 @@
 @extends('auth')
-
+@section('pageHeader')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src = "/js/backToTop.js"></script>
+@stop
 @section('siteTitle')
    About Belle-idee
 @stop
@@ -60,7 +63,7 @@
             </h3>
         </div>
         <div id = "centerTextContent">
-        <p>Users are encouraged to share beautiful ideas, inspirations, and experiences instead of critiquing or arguing the validity of a certain belief or way of life.
+        <p>Users are encouraged to share beautiful ideas, inspirations, and experiences instead of critiquing or arguing for or against a certain belief or way of life.
             If content is intolerant of any belief or way of life it may be flagged by other users and locked by an Admin.
             </p>
         <p>Intolerant review process:</p>
@@ -139,4 +142,8 @@
             </ul>
         </div>
     </div>
+    <a href= "#" class= "back-to-top" >
+        Back to Top
+        <i class= "fa fa-arrow-circle-up 2x"></i>
+    </a>
 @stop

@@ -10,6 +10,7 @@
     <link rel = "stylesheet" href = "/css/normalize.css">
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
     <script src="https://use.fontawesome.com/9747c67e36.js"></script>
+    @yield('pageHeader')
 
     <!--
        This code is maintained by the Tre-Uniti development ops
@@ -91,7 +92,6 @@
     <div id = "welcome">
         <div id = "logo">
             <a href="/"><img src={{secure_asset('img/idee.png')}} alt="idee" width = "45%" height ="45%"></a>
-
         </div>
         <h3>"Beautiful ideas"</h3>
                     @include('partials.flash')
