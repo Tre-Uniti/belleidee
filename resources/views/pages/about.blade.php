@@ -1,7 +1,7 @@
 @extends('auth')
 @section('pageHeader')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src = "/js/backToTop.js"></script>
+    <script src = "/js/required.js"></script>
 @stop
 @section('siteTitle')
    About Belle-idee

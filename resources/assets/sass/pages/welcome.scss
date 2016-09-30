@@ -1,7 +1,7 @@
 #welcome
 {
   width: 35%;
-  min-width: 350px;
+  min-width: 250px;
   height: auto;
   margin: 60px auto;
   padding-top: 5px;
@@ -18,12 +18,11 @@
   border: 1px solid #BDC3C7;
   margin: 0 auto 15px auto;
   width: 60%;
-  min-width: 350px;
 }
 #logo
 {
   width: auto;
-  min-width: 350px;
+  min-width: 250px;
 }
 h3
 {
@@ -139,19 +138,27 @@ p.verification
 //Tablet Portrait
   @media screen and (max-width: 800px) and (min-height: 600px) {
     #welcome {
-      width: 45%;
-      min-width: 350px;
+      width: 75%;
+      min-width: 250px;
+    }
+    .authCard
+    {
+      width: 75%;
     }
 
   }
 
   //Tablet Landscape
-  @media screen and (min-width: 852px) and (max-width: 1500px)
+  @media screen and (min-width: 801px) and (max-width: 1500px)
   {
     #welcome
     {
-      width: 45%;
-      min-width: 350px;
+      width: 55%;
+      min-width: 250px;
+    }
+    .authCard
+    {
+      width: 50%;
     }
 
 
@@ -161,26 +168,40 @@ p.verification
   @media screen and (max-width: 419px) and (min-height: 541px) {
     #welcome
     {
-      width: 75%;
-      min-width: 200px;
+      width: 95%;
+      min-width: 250px;
+    }
+    .authCard
+    {
+      width: 95%;
     }
 
   }
 
   //Mobile landscape
   @media screen and (min-width: 419px) and (max-width: 751px) and (max-height: 450px) {
-    #welcome {
-      width: 65%;
+    #welcome
+    {
+      width: 85%;
       min-width: 250px;
+    }
+    .authCard
+    {
+      width: 95%;
     }
 
   }
 
   //Small screen mobile portrait
   @media screen and (max-width: 465px) and (max-height: 540px) {
-    #welcome {
-      width: 75%;
-      min-width: 150px;
+    #welcome
+    {
+      width: 85%;
+      min-width: 250px;
+    }
+    .authCard
+    {
+      width: 95%;
     }
 
   }
@@ -191,8 +212,12 @@ p.verification
   {
     #welcome
     {
-      width: 65%;
-      min-width: 350px;
+      width: 85%;
+      min-width: 250px;
+    }
+    .authCard
+    {
+      width: 95%;
     }
 
   }
