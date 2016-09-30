@@ -258,26 +258,46 @@ class HomeController extends Controller
         $type = $request->input('type');
 
 
-
         if($type == NULL)
         {
-            $posts = filterContentLocationSearch($user, 0, 'Post', $identifier);
-            $extensions = filterContentLocationSearch($user, 0, 'Extension', $identifier);
             $users = filterContentLocationSearch($user, 0, 'User', $identifier);
-            $beacons = filterContentLocationSearch($user, 0, 'Beacon-Name', $identifier);
+            $beacons = filterContentLocationSearch($user, 0, 'Beacon', $identifier);
             $sponsors = filterContentLocationSearch($user, 0, 'Sponsor', $identifier);
+            $posts = filterContentLocationSearch($user, 0, 'Post', $identifier);
+            $legacies = filterContentLocationSearch($user, 0, 'Legacy', $identifier);
+            $extensions = filterContentLocationSearch($user, 0, 'Extension', $identifier);
 
-            if(!count($posts) && !count($extensions) && !count($users) && !count($beacons) && !count($sponsors))
+
+
+            if(!count($users) && !count($beacons) && !count($sponsors) && !count($posts) && !count($legacies) && !count($extensions))
             {
                 flash()->overlay('No results found for this search');
-                return redirect()->back();
+                return redirect('/search');
+            }
+            else
+            {
+                $userCount = count($users);
+                $beaconCount = count($beacons);
+                $sponsorCount = count($sponsors);
+                $postCount = count($posts);
+                $legacyCount = count($legacies);
+                $extensionCount = count($extensions);
+
             }
 
+            $location = getLocation();
 
             return view ('pages.multiResults')
-                ->with(compact('user', 'profilePosts','profileExtensions','posts','extensions', 'users', 'beacons', 'sponsors', 'sponsor'))
+                ->with(compact('user', 'profilePosts','profileExtensions', 'users', 'beacons', 'sponsors', 'posts', 'legacies', 'extensions', 'sponsor'))
+                ->with('userCount', $userCount)
+                ->with('beaconCount', $beaconCount)
+                ->with('sponsorCount', $sponsorCount)
+                ->with('postCount', $postCount)
+                ->with('legacyCount', $legacyCount)
+                ->with('extensionCount', $extensionCount)
                 ->with('type', $type)
-                ->with('identifier', $identifier);
+                ->with('identifier', $identifier)
+                ->with('location', $location);
         }
         elseif($type == 'Post')
         {
@@ -334,7 +354,7 @@ class HomeController extends Controller
         if(!count($results))
         {
             flash()->overlay('No '. $type . ' found for this search');
-            return redirect()->back();
+            return redirect('/search');
         }
 
         $sponsor = getSponsor($user);

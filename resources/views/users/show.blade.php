@@ -4,80 +4,79 @@
 @stop
 
 @section('centerText')
-    <div class = "contentCard">
-        <div class = "cardTitleSection">
-            <h2>{{$user->handle}}</h2>
-        </div>
-
-        <div class = "indexNav">
-            <div class = "cardImg">
-                @if($user->photo_path != NULL)
-                    <a href={{ url('/users/'. $user->id) }}><img src= {{ url(env('IMAGE_LINK'). $user->photo_path) }} alt="{{$user->handle}}" height = "99%" width = "99%"></a>
-                @else
-                    <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "99%" width = "99%"></a>
-                @endif
+    <article>
+        <div class = "contentCard">
+            <div class = "cardTitleSection">
+                <header>
+                    <h1>{{$user->handle}}</h1>
+                </header>
             </div>
 
-        </div>
-        <div class = "indexNav">
-            <div class = "indexLink">
-                <a href="{{ url('/posts/user/'. $user->id) }}">Posts: {{ $postCount }}</a>
+            <div class = "indexNav">
+                <div class = "cardImg">
+                    @if($user->photo_path != NULL)
+                        <a href={{ url('/users/'. $user->id) }}><img src= {{ url(env('IMAGE_LINK'). $user->photo_path) }} alt="{{$user->handle}}" height = "99%" width = "99%"></a>
+                    @else
+                        <a href={{ url('/users/'. $user->id) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "99%" width = "99%"></a>
+                    @endif
+                </div>
+
             </div>
-            <div class = "indexLink">
-                <a href="{{ url('/extensions/user/'. $user->id) }}">Extensions: {{ $extensionCount }}</a>
+            <div class = "indexNav">
+                <a href="{{ url('/posts/user/'. $user->id) }}" class = "indexLink">Posts: {{ $postCount }}</a>
+                <a href="{{ url('/extensions/user/'. $user->id) }}" class = "indexLink">Extensions: {{ $extensionCount }}</a>
+                <a href="{{ url('/extensions/user/'. $user->id) }}" class = "indexLink">Followers: {{ $followerCount }}</a>
+
             </div>
-            <div class = "indexLink">
-                <a href="{{ url('/extensions/user/'. $user->id) }}">Followers: {{ $extensionCount }}</a>
+            <div class = "cardHandleSection">
+                <p>
+                    Latest Activity: {{ $user->updated_at->format('M-d-Y') }}
+                </p>
             </div>
-        </div>
-        <div class = "cardHandleSection">
-            <p>
-                Latest Activity: {{ $user->updated_at->format('M-d-Y') }}
-            </p>
-        </div>
-        <div class = "influenceSection">
-            <div class = "elevationSection">
-                <div class = "elevationIcon">
-                    <a href="{{ url('/users/elevatedBy/'. $user->id) }}"><img src = "/img/elevate.png"> {{ $user->elevation }}</a>
-                    <span class="tooltiptext">Total elevation of your content</span>
+            <div class = "influenceSection">
+                <div class = "elevationSection">
+                    <div class = "elevationIcon">
+                        <a href="{{ url('/users/elevatedBy/'. $user->id) }}" class = "iconLink"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i></a>
+                        <span class="tooltiptext">Total elevation of your content</span>
+                        <a href="{{ url('/users/elevatedBy/'. $user->id) }}">{{ $user->elevation }}</a>
+                    </div>
+                </div>
+                <div class = "beaconSection">
+                </div>
+                <div class = "extensionSection">
+                    <a href="{{ url('/users/extendedBy/'. $user->id) }}" class = "iconLink" > <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i> </a>
+                    <span class="tooltiptext">Total extension of your content</span>
+                    <a href="{{ url('/users/extendedBy/'. $user->id) }}">{{ $user->extension }}</a>
+                </div>
+            </div>
+            <div class = "indexNav">
+                <div class = "cardImg">
+                    <h4 class = "underline">Beacon</h4>
+                    @if(isset($beacon))
+                        @if($beacon != NULL)
+                            <a href={{ url('/beacons/'. $beacon->beacon_tag) }}><h4>{{ $beacon->name }}</h4></a>
+                            <a href={{ url('/beacons/'. $beacon->beacon_tag) }}>{{ $beacon->beacon_tag }}</a>
+                        @endif
+                    @else
+                        <a href={{ url('/beacons') }}>No current beacon, discover one here</a>
+                    @endif
+                </div>
+                <div class = "cardImg">
+                    <h4 class = "underline">Sponsor</h4>
+                    @if(isset($sponsor))
+                        @if($sponsor != NULL)
+                            <a href={{ url('/sponsors/click/'. $sponsor->id) }}><h4>{{ $sponsor->name }}</h4></a>
+                            <a href={{ url('/sponsors/click/'. $sponsor->id) }}>{{ $sponsor->sponsor_tag }}</a>
+
+                        @endif
+                    @else
+                        <a href={{ url('/sponsors/US-SW-TreUniti') }}><h4>Tre-Uniti</h4></a>
+                        <a href={{ url('/sponsors/US-SW-TreUniti') }}>US-SW-TreUniti</a>
+
+                    @endif
                 </div>
             </div>
 
-            <div class = "extensionSection">
-                <a href="{{ url('/users/extendedBy/'. $user->id) }}"><img src = "/img/extend.png"> {{ $user->extension }}</a>
-                <span class="tooltiptext">Total extension of your content</span>
-            </div>
-
-        </div>
-        <div class = "indexNav">
-            <div class = "cardImg">
-                <h4 class = "underline">Beacon</h4>
-                @if(isset($beacon))
-                    @if($beacon != NULL)
-                        <a href={{ url('/beacons/'. $beacon->beacon_tag) }}><h4>{{ $beacon->name }}</h4></a>
-                        <a href={{ url('/beacons/'. $beacon->beacon_tag) }}>{{ $beacon->beacon_tag }}</a>
-                    @endif
-                @else
-                    <a href={{ url('/beacons') }}>No current beacon, discover one here</a>
-                @endif
-            </div>
-
-            <div class = "cardImg">
-                <h4 class = "underline">Sponsor</h4>
-                @if(isset($sponsor))
-                    @if($sponsor != NULL)
-                        <a href={{ url('/sponsors/click/'. $sponsor->id) }}><h4>{{ $sponsor->name }}</h4></a>
-                        <a href={{ url('/sponsors/click/'. $sponsor->id) }}>{{ $sponsor->sponsor_tag }}</a>
-
-                    @endif
-                @else
-                    <a href={{ url('/sponsors/US-SW-TreUniti') }}><h4>Tre-Uniti</h4></a>
-                    <a href={{ url('/sponsors/US-SW-TreUniti') }}>US-SW-TreUniti</a>
-
-                @endif
-            </div>
-
-        </div>
 
         @if(Auth::id() != $user->id)
             <a href="{{ url('/bookmarks/users/'.$user->id) }}"><button type = "button" class = "navButton">Follow</button></a>
@@ -90,7 +89,8 @@
             {!! Form::close() !!}
 
         @endif
-    </div>
+        </div>
+    </article>
 
     <div class = "contentHeaderSeparator">
         <h3>Recent Posts</h3>

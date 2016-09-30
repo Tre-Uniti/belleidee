@@ -83,6 +83,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
             </div>
 
             <div class = "beaconSection">
+                
                 <a href="{{ url('/beacons/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a>
                 <span class="tooltiptext">The Beacon for this post:  {{ $beacon->name }}</span>
             </div>

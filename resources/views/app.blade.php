@@ -22,7 +22,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://use.fontawesome.com/9747c67e36.js"></script>
     <script src="/js/app.js"></script>
-    <script src="/js/location.js"></script>
+    <script src="/js/required.js"></script>
     @if(!App::environment('local'))
         <script src="/js/googleAnalytics.js"></script>
     @endif
@@ -117,6 +117,10 @@
         <div id = "centerText">
             @include('partials.flash')
             @yield('centerText')
+            <a href= "#" class= "back-to-top" >
+                Back to Top
+                <i class= "fa fa-arrow-circle-up 2x"></i>
+            </a>
         </div>
         <div id = "centerFooter">
             @yield('centerFooter')

@@ -1,7 +1,6 @@
 @extends('app')
 @section('pageHeader')
     <script src = "/js/index.js"></script>
-    <script src = "/js/backToTop.js"></script>
 @stop
 @section('siteTitle')
     Posts
@@ -83,11 +82,6 @@
                 </div>
             </div>
         @endforeach
-
-    <a href= "#" class= "back-to-top" >
-        Back to Top
-        <i class= "fa fa-arrow-circle-up 2x"></i>
-    </a>
 
 @stop
 

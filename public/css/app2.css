@@ -748,7 +748,8 @@ a.excerptText {
 
 .back-to-top {
   margin: 0 auto;
-  text-decoration: none; }
+  text-decoration: none;
+  display: none; }
 
 .extensionContent {
   text-align: left;

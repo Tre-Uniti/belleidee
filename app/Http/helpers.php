@@ -8,6 +8,7 @@ use App\Elevation;
 use App\Events\BeaconViewed;
 use App\Events\SponsorViewed;
 use App\Extension;
+use App\LegacyPost;
 use App\Post;
 use App\Promotion;
 use App\Sponsor;
@@ -940,22 +941,6 @@ function filterContentLocationSearch($user, $number, $type, $search)
         //Filter by City
         if ($user->location == 0)
         {
-            if ($type == 'Global')
-            {
-                $postResults = Post::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%');
-                $extensionResults = Extension::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%');
-                $beaconNameResults = Beacon::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%');
-                $beaconTagResults = Beacon::where('status', '!=', 'deactivated')->where('beacon_tag', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%');
-                $sponsorName = Sponsor::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->where('sponsor_tag', 'LIKE', $location['shortTag'] . '%');
-                $searchFilteredContent = User::where('handle', 'LIKE', '%'.$search.'%')->where('last_tag', 'LIKE', $location['country'] . '-' . $location['cityCode']. '%')
-                    ->union($postResults)
-                    ->union($extensionResults)
-                    ->union($beaconNameResults)
-                    ->union($beaconTagResults)
-                    ->union($sponsorName)
-                    ->paginate(10);
-            }
-
             if ($type == 'Post')
             {
                 $searchFilteredContent = Post::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->latest('created_at')->paginate(10);
@@ -964,16 +949,10 @@ function filterContentLocationSearch($user, $number, $type, $search)
             {
                 $searchFilteredContent = Extension::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->latest('created_at')->paginate(10);
             }
-            elseif ($type == 'Beacon-Name' || $type == 'Beacon-Tag')
+            elseif ($type == 'Beacon')
             {
-                if($type == 'Beacon-Name')
-                {
-                    $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->paginate(10);
-                }
-                elseif($type == 'Beacon-Tag')
-                {
-                    $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('beacon_tag', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->paginate(10);
-                }
+
+                $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->orWhere('beacon_tag', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['shortTag'] . '%')->paginate(10);
             }
             elseif ($type == 'Sponsor')
             {
@@ -983,27 +962,17 @@ function filterContentLocationSearch($user, $number, $type, $search)
             {
                 $searchFilteredContent = User::where('handle', 'LIKE', '%'.$search.'%')->where('last_tag', 'LIKE', $location['country'] . '-' . $location['cityCode']. '%')->paginate(10);
             }
+            elseif ($type == 'Legacy')
+            {
+                $searchFilteredContent = LegacyPost::where('title', 'LIKE', '%' . $search . '%')->latest('created_at')->paginate(10);
+            }
 
         }
         //Filter by Country
         elseif ($user->location == 1)
         {
-            if ($type == 'Global')
-            {
-                $postResults = Post::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', $location['country'] . '%');
-                $extensionResults = Extension::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', $location['country'] . '%');
-                $beaconNameResults = Beacon::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['country'] . '%');
-                $beaconTagResults = Beacon::where('status', '!=', 'deactivated')->where('beacon_tag', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['country'] . '%');
-                $sponsorName = Sponsor::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->where('sponsor_tag', 'LIKE', $location['country'] . '%');
-                $searchFilteredContent = User::where('handle', 'LIKE', '%'.$search.'%')->where('last_tag', 'LIKE', $location['country'] . '-' . $location['cityCode']. '%')
-                    ->union($postResults)
-                    ->union($extensionResults)
-                    ->union($beaconNameResults)
-                    ->union($beaconTagResults)
-                    ->union($sponsorName)
-                    ->paginate(10);
-            }
-            elseif ($type == 'Post')
+
+            if ($type == 'Post')
             {
                 $searchFilteredContent = Post::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->latest('created_at')->paginate(10);
             }
@@ -1011,40 +980,29 @@ function filterContentLocationSearch($user, $number, $type, $search)
             {
                 $searchFilteredContent = Extension::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->latest('created_at')->paginate(10);
             }
-            elseif ($type == 'Beacon-Name' || $type == 'Beacon-Tag')
+            elseif ($type == 'Beacon')
             {
-                if($type == 'Beacon-Name')
-                {
-                    $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['country'] . '%')->paginate(10);
-                }
-                elseif($type == 'Beacon-Tag')
-                {
-                    $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('beacon_tag', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['country'] . '%')->paginate(10);
-                }
+                $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->orWhere('beacon_tag', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['country']. '-'. '%')->paginate(10);
+
             }
             elseif ($type == 'Sponsor')
             {
-                $searchFilteredContent = Sponsor::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->where('beacon_tag', 'LIKE', $location['country'] . '%')->paginate(10);
+                $searchFilteredContent = Sponsor::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->where('sponsor_tag', 'LIKE', $location['country'] . '%')->paginate(10);
             }
             elseif ($type == 'User')
             {
                 $searchFilteredContent = User::where('handle', 'LIKE', '%'.$search.'%')->where('last_tag', 'LIKE', $location['country'] . '%')->paginate(10);
             }
+            elseif ($type == 'Legacy')
+            {
+                $searchFilteredContent = LegacyPost::where('title', 'LIKE', '%' . $search . '%')->latest('created_at')->paginate(10);
+            }
         }
         //Filter by Global
         else
         {
-            if ($type == 'Global')
-            {
-                $postResults = Post::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->take(5)->get();
-                $extensionResults = Extension::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->take(5)->get();
-                $beaconResults = Beacon::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->orWhere('beacon_tag', 'LIKE', '%'.$search.'%')->take(5)->get();
-                $sponsorResults = Sponsor::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->take(5)->get();
-                $userResults = User::where('handle', 'LIKE', '%'.$search.'%')->take(5)->get();
 
-                return [$postResults, $extensionResults, $beaconResults, $sponsorResults, $userResults];
-            }
-            elseif ($type == 'Post')
+            if ($type == 'Post')
             {
                 $searchFilteredContent = Post::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->latest('created_at')->paginate(10);
             }
@@ -1052,16 +1010,10 @@ function filterContentLocationSearch($user, $number, $type, $search)
             {
                 $searchFilteredContent = Extension::whereNull('status')->where('title', 'LIKE', '%' . $search . '%')->latest('created_at')->paginate(10);
             }
-            elseif ($type == 'Beacon-Name' || $type == 'Beacon-Tag')
+            elseif ($type == 'Beacon')
             {
-                if($type == 'Beacon-Name')
-                {
-                    $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->paginate(10);
-                }
-                elseif($type == 'Beacon-Tag')
-                {
-                    $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('beacon_tag', 'LIKE', '%'.$search.'%')->paginate(10);
-                }
+
+                $searchFilteredContent = Beacon::where('status', '!=', 'deactivated')->where('name', 'LIKE', '%'.$search.'%')->orWhere('beacon_tag', 'LIKE', '%'.$search.'%')->paginate(10);
             }
             elseif ($type == 'Sponsor')
             {
@@ -1070,6 +1022,10 @@ function filterContentLocationSearch($user, $number, $type, $search)
             elseif ($type == 'User')
             {
                 $searchFilteredContent = User::where('handle', 'LIKE', '%'.$search.'%')->paginate(10);
+            }
+            elseif ($type == 'Legacy')
+            {
+                $searchFilteredContent = LegacyPost::where('title', 'LIKE', '%' . $search . '%')->latest('created_at')->paginate(10);
             }
         }
     }

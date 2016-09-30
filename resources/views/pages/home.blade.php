@@ -1,11 +1,4 @@
 @extends('app')
-@section('pageHeader')
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-
-    <script src='https://api.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.js'></script>
-    <script src="/js/maps.js"></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.css' rel='stylesheet' />
-@stop
 @section('siteTitle')
     Home
 @stop
@@ -209,11 +202,5 @@
         </article>
     @endforeach
 
-
-
-
 @stop
 
-@section('centerFooter')
-
-@stop
