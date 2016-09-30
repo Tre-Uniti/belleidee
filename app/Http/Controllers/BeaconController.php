@@ -477,18 +477,10 @@ class BeaconController extends Controller
     public function search()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-        $types = [
-            'Name' => 'Name',
-            'Tag' => 'Beacon Tag'
-        ];
-
         $location = getLocation();
 
         return view ('beacons.search')
             ->with(compact('user', 'profilePosts','profileExtensions'))
-            ->with('types', $types)
             ->with('location', $location);
     }
 
@@ -500,36 +492,27 @@ class BeaconController extends Controller
     public function results(Request $request)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
+        $location = getLocation();
 
-        //Get type
-        $type = $request->input('type');
         $identifier = $request->input('identifier');
 
-        if($type == 'Name')
+        $beacons = filterContentLocationSearch($user, 0, 'Beacon', $identifier);
+
+        if(!count($beacons))
         {
-            $results = filterContentLocationSearch($user, 0, 'Beacon-Name', $identifier);
-        }
-        elseif($type == 'Tag')
-        {
-            $results = filterContentLocationSearch($user, 0, 'Beacon-Tag', $identifier);
+            flash()->overlay('No beacons with this name or tag');
+            return redirect('/beacons/search');
         }
         else
         {
-            $results = null;
-        }
-
-        if(!count($results))
-        {
-            flash()->overlay('No beacons with this name or tag');
-            return redirect()->back();
+            $beaconCount = count($beacons);
         }
 
         return view ('beacons.results')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
-            ->with('type', $type)
-            ->with('identifier', $identifier);
+            ->with(compact('user', 'beacons'))
+            ->with('identifier', $identifier)
+            ->with('beaconCount', $beaconCount)
+            ->with('location', $location);
     }
 
     /**

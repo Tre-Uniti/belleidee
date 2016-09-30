@@ -1093,7 +1093,7 @@ function preparePostCards($posts ,$user)
  */
 function prepareExtensionCards($extensions ,$user)
 {
-    //Filter each post for content and if it is an image or text
+
     //Check for Elevation
     foreach($extensions as $extension)
     {
@@ -1111,5 +1111,31 @@ function prepareExtensionCards($extensions ,$user)
         }
     }
     return $extensions;
+}
+
+/*
+ * Prepare cards by getting content for Legacy Posts
+ * @param $posts
+ * @param $user
+ */
+function prepareLegacyPostCards($legacyPosts ,$user)
+{
+    //Check for Elevation
+    foreach($legacyPosts as $legacyPost)
+    {
+
+        $legacyPost->excerpt = autolink($legacyPost->excerpt, array("target"=>"_blank","rel"=>"nofollow"));
+
+        //Check if viewing user has already elevated post
+        if(Elevation::where('legacy_post_id', $legacyPost->id)->where('user_id', $user->id)->exists())
+        {
+            $legacyPost->elevationStatus = 'Elevated';
+        }
+        else
+        {
+            $legacyPost->elevationStatus = 'Elevate';
+        }
+    }
+    return $legacyPosts;
 }
 

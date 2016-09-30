@@ -7,6 +7,7 @@ use App\Elevation;
 use App\Events\BeliefInteraction;
 use App\Extension;
 use function App\Http\autolink;
+use function App\Http\filterContentLocationSearch;
 use function App\Http\getBeacon;
 use function App\Http\getBeliefs;
 use function App\Http\getProfileExtensions;
@@ -299,14 +300,12 @@ class LegacyPostController extends Controller
     public function search()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $beliefs = getBeliefs();
         $beliefs = array('All' => 'All') + $beliefs;
 
         return view ('legacyPosts.search')
-            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with(compact('user'))
             ->with('beliefs', $beliefs);
     }
 
@@ -321,30 +320,27 @@ class LegacyPostController extends Controller
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
-        //Get search title
-        $title = $request->input('title');
-        $belief = $request->input('belief');
+        $identifier = $request->input('identifier');
 
-        if($belief == 'All')
+        $legacyPosts = filterContentLocationSearch($user, 0, 'Legacy', $identifier);
+
+
+
+        if(!count($legacyPosts))
         {
-            $results = LegacyPost::where('title', 'LIKE', '%' . $title . '%')->latest()->paginate(10);
+            flash()->overlay('No legacy posts with this title');
+            return redirect('/legacyPosts/');
         }
         else
         {
-            $results = LegacyPost::where('title', 'LIKE', '%'. $title . '%')->where('belief', '=', $belief)->latest()->paginate(10);
-        }
+            $legacyPostCount = count($legacyPosts);
 
-
-        if(!count($results))
-        {
-            flash()->overlay('No legacy posts with this title');
-            return redirect()->back()->withInput();
         }
 
         return view ('legacyPosts.results')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
-            ->with('title', $title)
-            ->with('belief', $belief);
+            ->with(compact('user', 'legacyPosts'))
+            ->with('legacyPostCount', $legacyPostCount)
+            ->with('identifier', $identifier);
     }
 
     /**
@@ -640,5 +636,28 @@ class LegacyPostController extends Controller
             ->with(compact('user', 'legacyPosts', 'profilePosts','profileExtensions'))
             ->with('filter', $filter)
             ->with('time', $time);
+    }
+
+    //Add excerpt to posts
+    /*
+    * Add excerpt to db from legacy posts
+    */
+    public function setExcerpt()
+    {
+        $legacyPosts = LegacyPost::latest()->get();
+        foreach($legacyPosts as $legacyPost)
+        {
+            if($content = Storage::get($legacyPost->source_path))
+            {
+                $inspiration = Purifier::clean($content);
+                $excerpt = substr($inspiration, 0, 300);
+                $legacyPost->excerpt = $excerpt;
+                $legacyPost->update();
+            }
+
+        }
+
+        flash()->overlay('Legacy excerpts updated');
+        return redirect('legacyPosts');
     }
 }

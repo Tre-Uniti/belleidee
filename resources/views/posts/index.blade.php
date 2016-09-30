@@ -52,7 +52,7 @@
                 <div class = "influenceSection">
                     <div class = "elevationSection">
                         <div class = "elevationIcon">
-                            @if($post->elevateStatus === 'Elevated')
+                            @if($post->elevationStatus === 'Elevated')
                                 <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
                             @else
                                 <a href="{{ url('/posts/elevate/'.$post->id) }}" class = "iconLink"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i></a>

@@ -14,6 +14,9 @@ use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
+use function App\Http\prepareExtensionCards;
+use function App\Http\prepareLegacyPostCards;
+use function App\Http\preparePostCards;
 use App\Http\Requests\PhotoUploadRequest;
 use App\LegacyPost;
 use App\Mailers\NotificationMailer;
@@ -224,6 +227,7 @@ class HomeController extends Controller
 
         $types =
             [
+                'All' => 'All',
                 'Beacon' => 'Beacon',
                 'Extension' => 'Extension',
                 'Legacy' => 'Legacy',
@@ -258,18 +262,18 @@ class HomeController extends Controller
         $type = $request->input('type');
 
 
-        if($type == NULL)
+        if($type == NULL || $type == 'All')
         {
             $users = filterContentLocationSearch($user, 0, 'User', $identifier);
             $beacons = filterContentLocationSearch($user, 0, 'Beacon', $identifier);
             $sponsors = filterContentLocationSearch($user, 0, 'Sponsor', $identifier);
             $posts = filterContentLocationSearch($user, 0, 'Post', $identifier);
-            $legacies = filterContentLocationSearch($user, 0, 'Legacy', $identifier);
+            $legacyPosts = filterContentLocationSearch($user, 0, 'Legacy', $identifier);
             $extensions = filterContentLocationSearch($user, 0, 'Extension', $identifier);
 
 
 
-            if(!count($users) && !count($beacons) && !count($sponsors) && !count($posts) && !count($legacies) && !count($extensions))
+            if(!count($users) && !count($beacons) && !count($sponsors) && !count($posts) && !count($legacyPosts) && !count($extensions))
             {
                 flash()->overlay('No results found for this search');
                 return redirect('/search');
@@ -279,16 +283,20 @@ class HomeController extends Controller
                 $userCount = count($users);
                 $beaconCount = count($beacons);
                 $sponsorCount = count($sponsors);
-                $postCount = count($posts);
-                $legacyCount = count($legacies);
-                $extensionCount = count($extensions);
 
+                //Count and prepare cards
+                $postCount = count($posts);
+                $posts = preparePostCards($posts, $user);
+                $legacyCount = count($legacyPosts);
+                $legacyPosts = prepareLegacyPostCards($legacyPosts, $user);
+                $extensionCount = count($extensions);
+                $extensions = prepareExtensionCards($extensions, $user);
             }
 
             $location = getLocation();
 
             return view ('pages.multiResults')
-                ->with(compact('user', 'profilePosts','profileExtensions', 'users', 'beacons', 'sponsors', 'posts', 'legacies', 'extensions', 'sponsor'))
+                ->with(compact('user', 'profilePosts','profileExtensions', 'users', 'beacons', 'sponsors', 'posts', 'legacyPosts', 'extensions', 'sponsor'))
                 ->with('userCount', $userCount)
                 ->with('beaconCount', $beaconCount)
                 ->with('sponsorCount', $sponsorCount)

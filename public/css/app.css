@@ -775,17 +775,21 @@ a.navLink {
       color: #FFFFFF; }
 
 .elevationSection a.iconLink {
-  font-family: "Open Sans", Arial, serif;
   color: #27AE60;
   display: inline-block; }
   .elevationSection a.iconLink:hover {
     color: #2ECC71; }
 
 .extensionSection a.iconLink {
-  font-family: "Open Sans", Arial, serif;
   color: #27AE60;
   display: inline-block; }
   .extensionSection a.iconLink:hover {
+    color: #2ECC71; }
+
+.beaconSection a.iconLink {
+  color: #27AE60;
+  display: inline-block; }
+  .beaconSection a.iconLink:hover {
     color: #2ECC71; }
 
 a.excerptText {
