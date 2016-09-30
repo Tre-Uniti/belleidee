@@ -65,13 +65,14 @@
                     </ul>
                 </div>
             </li>
-            <li class = "iconBackground">
+            <li class = "searchIconBackground">
                 {!! Form::open(['url' => '/results', 'method' => 'GET']) !!}
                 {!! Form::text('identifier', null, ['placeholder' => 'Search Belle-idee', 'class' => 'searchField']) !!}
                 {{Form::button('<i class="fa fa-search" aria-hidden="true"></i>', array('type' => 'submit', 'class' => 'searchButton'))}}
                 {!! Form:: close() !!}
             </li>
-
+            <li class = "searchMobileIconBackground">
+                <i class="fa fa-search" aria-hidden="true"></i></li>
             <li>
                 <p onclick="" class = "nav" id = "pIcon"> <i class="fa fa-cog" aria-hidden="true"></i></p>
                 <div>
@@ -117,12 +118,13 @@
         <div id = "centerText">
             @include('partials.flash')
             @yield('centerText')
+
+        </div>
+        <div id = "centerFooter">
             <a href= "#" class= "back-to-top" >
                 Back to Top
                 <i class= "fa fa-arrow-circle-up 2x"></i>
             </a>
-        </div>
-        <div id = "centerFooter">
             @yield('centerFooter')
         </div>
     </div>

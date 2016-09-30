@@ -36,7 +36,7 @@
     background-color: $topNavHoverBackground;
   }
 
-  .topNav > ul > .iconBackground {
+  .topNav > ul > .searchIconBackground {
     display: inline-block;
     width: auto;
     list-style-type: none;
@@ -49,13 +49,33 @@
     -o-transition: all 0.2s;
     transition: all 0.2s;
   }
-  .topNav > ul > .iconBackground:hover {
+  .topNav > ul > .searchIconBackground:hover {
     border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     color: $topNavColor;
     background-color: $topNavBackgroundColor;
-
+  }
+  .topNav > ul > .searchMobileIconBackground
+  {
+    display: none;
+    width: auto;
+    list-style-type: none;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+  }
+  .topNav > ul > .searchMobileIconBackground:hover {
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    color: $topNavColor;
+    background-color: $topNavBackgroundColor;
   }
 
   .topNav > ul > li > p {
