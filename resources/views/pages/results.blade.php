@@ -8,32 +8,7 @@
         <div class = "indexNav">
               <a href={{ url('/search')}}><button type = "button" class = "indexButton">New Global Search</button></a>
         </div>
-        <div class = "indexLeft">
-            @if($type == 'Users')
-                <h4>Handle</h4>
-            @elseif($type == 'Questions')
-                <h4>Question</h4>
-            @elseif($type == 'Beacons' || $type == 'Sponsors')
-                <h4>Name</h4>
-            @else
-                <h4>Title</h4>
-            @endif
-        </div>
-        <div class = "indexRight">
-            @if($type == 'Users')
-                <h4>Joined</h4>
-            @elseif($type == 'Questions')
-                <h4>Asked By</h4>
-            @elseif($type == 'Beacons')
-                <h4>Beacon Tag</h4>
-            @elseif($type == 'Sponsors')
-                <h4>Sponsor Tag</h4>
-            @elseif($type == 'Legacy')
-                <h4>Belief</h4>
-            @else
-                <h4>User</h4>
-            @endif
-        </div>
+
     @if($type == 'Global')
         <div class = "listResource">
             <div class = "listResourceLeft">

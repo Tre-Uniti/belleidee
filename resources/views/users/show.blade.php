@@ -36,8 +36,8 @@
             <div class = "influenceSection">
                 <div class = "elevationSection">
                     <div class = "elevationIcon">
-                        <a href="{{ url('/users/elevatedBy/'. $user->id) }}" class = "iconLink"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i></a>
-                        <span class="tooltiptext">Total elevation of your content</span>
+                        <a href="{{ url('/users/elevatedBy/'. $user->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
+                        <span class="tooltiptext">Total elevation (hearts) of your content</span>
                         <a href="{{ url('/users/elevatedBy/'. $user->id) }}">{{ $user->elevation }}</a>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                         {{ $post->excerpt }}<a href="{{ action('PostController@show', [$post->id])}}">... Read More</a>
                     </p>
                 @elseif(isset($post->caption))
-                    <a href="{{ action('PostController@show', [$post->id])}}"><button type = "button" class = "interactButtonLeft">{{ $post->caption }}</button></a>
+                    <a href="{{ action('PostController@show', [$post->id])}}">{{ $post->caption }}</a>
                     <div class = "cardPhoto">
                         <a href="{{ url('/posts/'. $post->id) }}"><img src= {{ url(env('IMAGE_LINK'). $post->post_path) }} alt="{{$post->title}}"></a>
                     </div>
@@ -119,23 +119,24 @@
             </div>
             <div class = "cardHandleSection">
                 <p>
-                    By: <a href="{{ action('UserController@show', [$post->user_id])}}" style = "font-weight: bold">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
+                    By: <a href="{{ action('UserController@show', [$post->user_id])}}">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
                 </p>
             </div>
             <div class = "influenceSection">
-                <div class = "elevationSection">
-                    <div class = "elevationIcon">
-                        @if($post->elevateStatus === 'Elevated')
-                            <img src = '/img/elevated.png'>
-                        @else
-                            <a href="{{ url('/posts/elevate/'.$post->id) }}"><img src = '/img/elevate.png'></a>
-                        @endif
-                        <span class="tooltiptext">Elevate to give thanks and recommend to others</span>
+                    <div class = "elevationSection">
+                        <div class = "elevationIcon">
+                            @if($post->elevateStatus === 'Elevated')
+                                <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
+                            @else
+                                <a href="{{ url('/posts/elevate/'.$post->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
+                            @endif
+                            <span class="tooltiptext">Heart to give thanks and recommend to others</span>
+                        </div>
+                        <div class = "elevationCounter">
+                            <a href={{ url('/posts/listElevation/'.$post->id)}}>{{ $post->elevation }}</a>
+                        </div>
                     </div>
-                    <div class = "elevationCounter">
-                        <a href={{ url('/posts/listElevation/'.$post->id)}}>{{ $post->elevation }}</a>
-                    </div>
-                </div>
+
 
                 <div class = "beaconSection">
                     <a href="{{ url('/beacons/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a>
@@ -143,10 +144,27 @@
                 </div>
 
                 <div class = "extensionSection">
-                    <a href="{{ url('/extensions/post/'.$post->id) }}"><img src = '/img/extend.png'></a>
+                    <a href="{{ url('/extensions/post/'.$post->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
                     <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
                     <span class="tooltiptext">Extend to add any inspiration you received</span>
                 </div>
+                <div class = "moreSection">
+                    <p class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>
+                    <div class="moreOptionsMenu">
+                        <a href="{{ url('bookmarks/posts/'.$post->id) }}"><i class="fa fa-bookmark-o fa-lg" aria-hidden="true"></i></a>
+                        <a href="https://www.facebook.com/share.php?u={{Request::url()}}&title={{$post->title}}" target="_blank"><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i></a>
+                        <a href="https://twitter.com/intent/tweet?status={{$post->title}} - {{Request::url()}}" target="_blank"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>
+                        <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank"><i class="fa fa-google-plus-square fa-lg" aria-hidden="true"></i></a>
+                        @if($post->user_id != Auth::id())
+                            <a href="{{ url('/intolerances/post/'.$post->id) }}"><i class="fa fa-flag-o fa-lg" aria-hidden="true"></i></a>
+                        @elseif ($post->status < 1)
+                            Status: Tolerant
+                        @else
+                            Status: Intolerant
+                        @endif
+                    </div>
+                </div>
+
 
             </div>
         </div>
@@ -179,11 +197,11 @@
                 <div class = "elevationSection">
                     <div class = "elevationIcon">
                         @if($extension->elevateStatus === 'Elevated')
-                            <img src = '/img/elevated.png'>
+                            <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
                         @else
-                            <a href="{{ url('/posts/elevate/'.$post->id) }}"><img src = '/img/elevate.png'></a>
+                            <a href="{{ url('/posts/elevate/'.$post->id) }}"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
                         @endif
-                        <span class="tooltiptext">Elevate to give thanks and recommend to others</span>
+                        <span class="tooltiptext">Heart to give thanks and recommend to others</span>
                     </div>
                     <div class = "elevationCounter">
                         <a href={{ url('/extensions/listElevation/'.$extension->id)}}>{{ $extension->elevation }}</a>
@@ -209,9 +227,5 @@
 @stop
 
 @section('centerFooter')
-    <div id = "centerFooter">
-
-
-    </div>
 @stop
 

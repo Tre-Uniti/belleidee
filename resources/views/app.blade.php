@@ -76,8 +76,7 @@
             <li>
                 <p onclick="" class = "nav" id = "pIcon"> <i class="fa fa-cog" aria-hidden="true"></i></p>
                 <div>
-
-                    <ul>
+                    <ul class = "navSettings">
                         <li><a href="{{ url('/settings') }}">Personal</a></li>
                         <li><a href="{{ url('/supports') }}">Support</a></li>
                         <li><a href="{{ url('/invites') }}">Invite Friends</a></li>
@@ -121,11 +120,15 @@
 
         </div>
         <div id = "centerFooter">
-            <a href= "#" class= "back-to-top" >
-                Back to Top
-                <i class= "fa fa-arrow-circle-up 2x"></i>
-            </a>
+
             @yield('centerFooter')
+            <div>
+                <a href= "#" class= "back-to-top" >
+                    Back to Top
+                    <i class= "fa fa-arrow-circle-up 2x"></i>
+                </a>
+            </div>
+
         </div>
     </div>
     <!-- --- --- Right -->

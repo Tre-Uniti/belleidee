@@ -71,11 +71,11 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
             <div class = "elevationSection">
                 <div class = "elevationIcon">
                     @if($post->elevateStatus === 'Elevated')
-                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+                        <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
                     @else
-                        <a href="{{ url('/posts/elevate/'.$post->id) }}" class = "iconLink"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i></a>
+                        <a href="{{ url('/posts/elevate/'.$post->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
                     @endif
-                    <span class="tooltiptext">Elevate to give thanks and recommend to others</span>
+                    <span class="tooltiptext">Heart to give thanks and recommend to others</span>
                 </div>
                 <div class = "elevationCounter">
                     <a href={{ url('/posts/listElevation/'.$post->id)}}>{{ $post->elevation }}</a>

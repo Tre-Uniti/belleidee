@@ -738,26 +738,24 @@ class PostController extends Controller
     public function results(Request $request)
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
 
         //Get search title
         $title = $request->input('title');
         
         //Filter by location
-        $results = filterContentLocationSearch($user, 0, 'Post', $title);
-        $results = preparePostCards($results, $user);
+        $posts = filterContentLocationSearch($user, 0, 'Post', $title);
+        $posts = preparePostCards($posts, $user);
 
-        if(!count($results))
+        if(!count($posts))
         {
             flash()->overlay('No posts with this title');
-            return redirect()->back();
+            return redirect('/posts/search');
         }
 
         $sponsor = getSponsor($user);
 
         return view ('posts.results')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'results', 'sponsor'))
+            ->with(compact('user', 'posts', 'sponsor'))
             ->with('title', $title);
     }
 

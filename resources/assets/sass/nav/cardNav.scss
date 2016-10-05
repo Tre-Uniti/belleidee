@@ -41,6 +41,7 @@
 .elevationSection {
   position: relative;
   display: inline-block;
+  margin-left: 15px;
 }
 
 .elevationSection .tooltiptext {
@@ -78,8 +79,8 @@
 {
   position: relative;
   display: inline-block;
-  padding-right: 20px;
-  padding-left: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 .beaconSection .tooltiptext {
   visibility: hidden;
@@ -142,4 +143,38 @@
 .cardImg h4.underline
 {
   text-decoration: underline;
+}
+
+//More options menu
+.moreSection
+{
+  position: relative;
+  display: inline-block;
+  padding: 0 5px 0px 10px;
+}
+p.moreOptions
+{
+  color: #2C3E50;
+  margin: 0 auto;
+}
+
+
+/* Dropdown Content (Hidden by Default) */
+.moreOptionsMenu {
+  display: none;
+  background-color: #2C3E50;
+  color: #ECF0F1;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  bottom: 20px;
+  left: -40px;
+  width: 125px;
+  /* Position the menu */
+  position: absolute;
+}
+
+/* Show the dropdown menu on hover */
+.moreSection:hover .moreOptionsMenu {
+  display: inline-block;
 }

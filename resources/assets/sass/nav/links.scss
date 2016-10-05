@@ -129,3 +129,17 @@ a.excerptText
   text-decoration: none;
   display: none;
 }
+
+/* Links inside the dropdown */
+.moreOptionsMenu a {
+  color: #ECF0F1;
+  text-decoration: none;
+  display: inline-block;
+  padding: 1px;
+}
+/* Change color of dropdown links on hover */
+.moreOptionsMenu a:hover
+{
+  color: #27AE60;
+}
+

@@ -213,10 +213,19 @@ article
 #centerFooter
 {
   background-color: $bottomBackgroundColor;
+  color: #ECF0F1;
   margin: 0 auto;
   display: inline-block;
   border-radius: 20px;
   padding: 3px;
+}
+#centerFooter a
+{
+  color: #ECF0F1;
+  &:hover
+  {
+    color: #27AE60;
+  }
 }
 
 //Inner Menus
@@ -315,6 +324,7 @@ article
   }
   border: solid 1px ;
 }
+
 
 
 //Include Media Queries

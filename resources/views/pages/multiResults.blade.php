@@ -49,8 +49,8 @@
                     <div class = "influenceSection">
                         <div class = "elevationSection">
                             <div class = "elevationIcon">
-                                <a href="{{ url('/users/elevatedBy/'. $User->id) }}" class = "iconLink"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i></a>
-                                <span class="tooltiptext">Total elevation of user content</span>
+                                <a href="{{ url('/users/elevatedBy/'. $User->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
+                                <span class="tooltiptext">Total elevation (hearts) of user content</span>
                                 <a href="{{ url('/users/elevatedBy/'. $User->id) }}">{{ $User->elevation }}</a>
                             </div>
                         </div>
@@ -201,7 +201,7 @@
                         </div>
                         <div class = "cardHandleSection">
                             <p>
-                                By: <a href="{{ action('UserController@show', [$post->user_id])}}" style = "font-weight: bold">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
+                                By: <a href="{{ action('UserController@show', [$post->user_id])}}">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
                             </p>
                         </div>
                     </header>
@@ -223,11 +223,11 @@
                         <div class = "elevationSection">
                             <div class = "elevationIcon">
                                 @if($post->elevationStatus === 'Elevated')
-                                    <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+                                    <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
                                 @else
-                                    <a href="{{ url('/posts/elevate/'.$post->id) }}" class = "iconLink"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i></a>
+                                    <a href="{{ url('/posts/elevate/'.$post->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
                                 @endif
-                                <span class="tooltiptext">Elevate to give thanks and recommend to others</span>
+                                <span class="tooltiptext">Heart to give thanks and recommend to others</span>
                             </div>
 
                             <div class = "elevationCounter">
@@ -282,11 +282,11 @@
                             <div class = "elevationSection">
                                 <div class = "elevationIcon">
                                     @if($legacyPost->elevationStatus === 'Elevated')
-                                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+                                        <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
                                     @else
-                                        <a href="{{ url('/legacyPosts/elevate/'.$legacyPost->id) }}" class = "iconLink"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i></a>
+                                        <a href="{{ url('/legacyPosts/elevate/'.$legacyPost->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
                                     @endif
-                                    <span class="tooltiptext">Elevate to give thanks and recommend to others</span>
+                                    <span class="tooltiptext">Heart to give thanks and recommend to others</span>
                                 </div>
 
                                 <div class = "elevationCounter">
@@ -346,9 +346,9 @@
                         <div class = "elevationSection">
                             <div class = "elevationIcon">
                                 @if($extension->elevationStatus === 'Elevated')
-                                    <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+                                    <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
                                 @else
-                                    <a href="{{ url('/posts/elevate/'.$post->id) }}" class = "iconLink"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i></a>
+                                    <a href="{{ url('/posts/elevate/'.$post->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
                                 @endif
                                 <span class="tooltiptext">Elevate to give thanks and recommend to others</span>
                             </div>
