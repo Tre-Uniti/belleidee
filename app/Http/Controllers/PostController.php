@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Adjudication;
 use App\Beacon;
+use App\Bookmark;
 use App\Elevation;
 use App\Events\BeliefInteraction;
 use function App\Http\autolink;
@@ -760,29 +761,6 @@ class PostController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @param  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function getProfilePosts($user)
-    {
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        return $profilePosts;
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @param  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function getProfileExtensions($user)
-    {
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
-        return $profileExtensions;
-    }
-
-    /**
      * Elevate post if not already elevated and redirect to original post
      * @param int $id
      * @return \Illuminate\Http\Response
@@ -923,16 +901,11 @@ class PostController extends Controller
     public function sortByElevation()
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $elevations = filterContentLocation($user, 2, 'Post');
 
-
-        $sponsor = getSponsor($user);
-
         return view ('posts.sortByElevation')
-            ->with(compact('user', 'elevations', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'elevations'));
     }
 
     /**
@@ -944,8 +917,6 @@ class PostController extends Controller
     public function sortByElevationTime($time)
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
 
         if($time == 'Today')
         {
@@ -973,10 +944,9 @@ class PostController extends Controller
         }
 
         $posts = preparePostCards($posts, $user);
-        $sponsor = getSponsor($user);
 
         return view ('posts.sortByElevationTime')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'posts'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -988,14 +958,12 @@ class PostController extends Controller
     public function sortByExtension()
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
         
         $extensions = filterContentLocation($user, 3, 'Post');
         $sponsor = getSponsor($user);
 
         return view ('posts.sortByExtension')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'extensions', 'sponsor'));
     }
 
     /**
@@ -1007,8 +975,6 @@ class PostController extends Controller
     public function sortByExtensionTime($time)
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
 
         if($time == 'Today')
         {
@@ -1039,7 +1005,7 @@ class PostController extends Controller
         $sponsor = getSponsor($user);
 
         return view ('posts.sortByExtensionTime')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'posts', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -1053,8 +1019,6 @@ class PostController extends Controller
     public function timeFilter($time)
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
 
         if($time == 'Today')
         {
@@ -1085,7 +1049,7 @@ class PostController extends Controller
         $sponsor = getSponsor($user);
 
         return view ('posts.timeFilter')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'posts', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -1124,6 +1088,27 @@ class PostController extends Controller
 
         flash()->overlay('Post excerpts updated');
         return redirect('posts');
+    }
+
+    /*
+     * Sort posts based on User's list of "following"
+     */
+    public function forYou()
+    {
+        $user = Auth::user();
+
+        //Get list of users being followed
+        $bookmarks = $user->bookmarks()->where('type', '=', 'User')->pluck('pointer');
+
+        $posts = Post::latest()->whereIn('user_id', $bookmarks)->paginate(10);
+
+        $posts = preparePostCards($posts, $user);
+
+        $location = getLocation();
+
+        return view ('posts.forYou')
+            ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
+            ->with('location', $location);
     }
 
 }

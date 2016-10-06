@@ -8,15 +8,23 @@
 
 @section('centerText')
     <div>
-    <h2>{{ $location }} Recent Posts</h2>
+    <h2>Posts for You</h2>
+        <p>From <a href = " {{ url('bookmarks/users') }}">Users </a> you follow</p>
     <div class = "indexNav">
-        <a href="{{ url('/posts/forYou')}}" class = "indexLink">For You</a>
+        <a href="{{ url('/posts')}}" class = "indexLink">Recent</a>
         <a href="{{ url('/beacons/posts/'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
         <a href="{{ url('posts/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart" aria-hidden="true"></i></a>
         <a href="{{ url('posts/extensionTime/Month')}}" class = "indexLink">Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
     </div>
+
+            <div class = "indexContent" id = "hiddenContent">
+                <a href={{ url('/posts/timeFilter/Today')}}><button type = "button" class = "indexButton">Today</button></a>
+                <a href={{ url('/posts/timeFilter/Month') }}><button type = "button" class = "indexButton">Month</button></a>
+                <a href={{ url('/posts/timeFilter/Year')}}><button type = "button" class = "indexButton">Year</button></a>
+                <a href={{ url('/posts/timeFilter/All')}}><button type = "button" class = "indexButton">All-time</button></a>
+            </div>
     </div>
-  <hr class = "contentSeparator">
+    <hr class = "contentSeparator">
         @foreach ($posts as $post)
             <div class = "contentCard">
                 <div class = "cardTitleSection">
@@ -26,7 +34,7 @@
                 </div>
                 <div class = "cardHandleSection">
                     <p>
-                        By: <a href="{{ action('UserController@show', [$post->user_id])}}">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
+                        By: <a href="{{ action('UserController@show', [$post->user_id])}}" style = "font-weight: bold">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
                     </p>
                 </div>
                 <div class = "cardCaptionExcerptSection">
@@ -60,6 +68,7 @@
                         </div>
 
                     </div>
+
 
                     <div class = "beaconSection">
                         <a href="{{ url('/beacons/'.$post->beacon_tag) }}" >{{ $post->beacon_tag }}</a>

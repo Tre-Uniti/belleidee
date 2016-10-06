@@ -772,6 +772,14 @@ p.moreOptions {
 .moreSection:hover .moreOptionsMenu {
   display: inline-block; }
 
+hr.contentSeparator {
+  width: 99.5%;
+  background-color: #27AE60;
+  border: 1px solid #27AE60;
+  height: 5px;
+  border-radius: 7px;
+  margin: 25px auto auto auto; }
+
 .extensionContent {
   text-align: left;
   font-size: 100%;
@@ -849,10 +857,8 @@ a.indexLink {
   display: inline-block;
   font-weight: 500; }
   a.indexLink:hover {
-    color: #ECF0F1;
-    background: #27AE60; }
-    a.indexLink:hover a {
-      color: #ECF0F1; }
+    color: #FFFFFF;
+    background: #2ECC71; }
 
 a.navLink {
   padding: 8px 13px;
@@ -865,13 +871,11 @@ a.navLink {
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   border: 1px solid #2C3E50;
-  background-color: #2ECC71;
+  background-color: #27AE60;
   font-weight: 500; }
   a.navLink:hover {
-    background: #27AE60;
+    background: #2ECC71;
     color: #FFFFFF; }
-    a.navLink:hover a {
-      color: #FFFFFF; }
 
 .elevationSection a.iconLink {
   color: #27AE60;
@@ -1703,7 +1707,7 @@ article {
     width: 99%; }
   /* Dropdown Content (Hidden by Default) */
   .moreOptionsMenu {
-    left: -50px; }
+    left: -55px; }
   .topNav > ul > .searchIconBackground {
     display: none; }
   .topNav > ul > .searchMobileIconBackground {

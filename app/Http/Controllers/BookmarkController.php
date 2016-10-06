@@ -258,14 +258,14 @@ class BookmarkController extends Controller
             $bookmark_user = DB::table('bookmark_user')->where('user_id', $user->id)->where('bookmark_id', $bookmark->id)->first();
             if(count($bookmark_user))
             {
-                flash()->overlay('You have already bookmarked this User');
+                flash()->overlay('You are alreadying following this User');
                 return redirect()->back();
             }
             //Add beacon_tag to user's bookmarks
             $user->bookmarks()->attach($bookmark->id);
 
             //Notify user bookmark was successful
-            flash()->overlay('You have successfully bookmarked this User');
+            flash()->overlay('You are now following ' . $sourceUser->handle);
             return redirect('users/'. $sourceUser->id);
         }
         else

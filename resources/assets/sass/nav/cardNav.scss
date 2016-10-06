@@ -178,3 +178,13 @@ p.moreOptions
 .moreSection:hover .moreOptionsMenu {
   display: inline-block;
 }
+
+hr.contentSeparator
+{
+  width: 99.5%;
+  background-color: #27AE60;
+  border: 1px solid #27AE60;
+  height: 5px;
+  border-radius: 7px;
+  margin: 25px auto auto auto;
+}

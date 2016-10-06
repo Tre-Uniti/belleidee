@@ -1,4 +1,6 @@
 @extends('app')
+@section('pageHeader')
+
 @section('siteTitle')
     Create Post
 @stop

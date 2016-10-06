@@ -622,10 +622,10 @@ class BeaconController extends Controller
     /**
      * List posts and extensions with the specific beacon_tag
      *
-     * @param $id
+     * @param $tag
      * @return \Illuminate\Http\Response
      */
-    public function posts($id)
+    public function posts($tag)
     {
         //Get logged in user or set to Transferred for Guest
         if(Auth::user())
@@ -644,7 +644,7 @@ class BeaconController extends Controller
         //Check if Beacon_tag belongs to an Idee Beacon
         try
         {
-            $beacon = Beacon::findOrFail($id);
+            $beacon = Beacon::where('beacon_tag', '=', $tag)->first();
             if ($beacon->status == 'deactivated')
             {
                 flash()->overlay('Beacon deactivated or does not exist');

@@ -37,13 +37,8 @@ a.indexLink
 
   &:hover
   {
-    color: #ECF0F1;
-    background: #27AE60;
-
-    a
-    {
-      color: #ECF0F1;
-    }
+    color: #FFFFFF;
+    background: #2ECC71;
 
   }
 }
@@ -60,18 +55,13 @@ a.navLink
   -moz-border-radius:7px;
   -webkit-border-radius:7px;
   border: 1px solid #2C3E50;
-  background-color: #2ECC71;
+  background-color:  #27AE60;
   font-weight: 500;
 
   &:hover
   {
-    background: #27AE60;
+    background: #2ECC71;
     color: #FFFFFF;
-
-    a
-    {
-      color: #FFFFFF;
-    }
 
   }
 }
