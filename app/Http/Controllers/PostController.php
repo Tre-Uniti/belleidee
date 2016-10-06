@@ -175,8 +175,6 @@ class PostController extends Controller
     {
 
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
         $date = Carbon::now()->format('M-d-Y');
 
         //Get last beac of user and check if it was UTC today
@@ -213,7 +211,7 @@ class PostController extends Controller
         $sponsor = getSponsor($user);
 
         return view('posts.create')
-            ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sponsor', 'lastPost', 'lastBeacon'));
+            ->with(compact('user', 'date', 'beacons', 'sponsor', 'lastPost', 'lastBeacon'));
 
     }
 
