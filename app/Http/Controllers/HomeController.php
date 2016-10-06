@@ -9,6 +9,7 @@ use App\Events\SetLocation;
 use App\Events\SponsorViewed;
 use App\Extension;
 use function App\Http\filterContentLocationSearch;
+use function App\Http\getBeacon;
 use function App\Http\getCountries;
 use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
@@ -412,11 +413,13 @@ class HomeController extends Controller
     public function gettingStarted()
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
+        $beacon= getBeacon($user);
+        $sponsor = getSponsor($user);
+        $location = getLocation();
 
         return view ('pages.gettingStarted')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'beacon', 'sponsor'))
+            ->with('location', $location);
     }
 
     /*

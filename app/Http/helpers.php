@@ -50,15 +50,19 @@ function getSponsor($user)
  */
 function getBeacon($content)
 {
-    $beacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
+    if($content == Auth::user())
+    {
+        $beacon = Beacon::where('beacon_tag', '=', $content->last_tag)->first();
+    }
+    else
+    {
+        $beacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
+    }
 
     if(isset($beacon->stripe_plan))
     {
-
         //Beacon pays subscription
         Event::fire(new BeaconViewed($beacon));
-
-
     }
 
     return $beacon;
@@ -91,6 +95,7 @@ function getBeliefs()
         [
             'Adaptia' => 'Adaptia',
             'Atheism' => 'Atheism',
+            'Bahá’í' => 'Bahá’í',
             'Buddhism' => 'Buddhism',
             'Christianity' => 'Christianity',
             'Druze' => 'Druze',

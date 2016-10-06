@@ -3573,16 +3573,16 @@
         },
         {
             "name": "taxjar/taxjar-php",
-            "version": "v1.3.1",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/taxjar/taxjar-php.git",
-                "reference": "054bd755fb51e7334e3939e1b77bb0874efdf60b"
+                "reference": "13f88cadccd0dbbe3d6b1d1f94758bb07bb7386c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/taxjar/taxjar-php/zipball/054bd755fb51e7334e3939e1b77bb0874efdf60b",
-                "reference": "054bd755fb51e7334e3939e1b77bb0874efdf60b",
+                "url": "https://api.github.com/repos/taxjar/taxjar-php/zipball/13f88cadccd0dbbe3d6b1d1f94758bb07bb7386c",
+                "reference": "13f88cadccd0dbbe3d6b1d1f94758bb07bb7386c",
                 "shasum": ""
             },
             "require": {
@@ -3615,7 +3615,7 @@
                 "sales tax",
                 "taxjar"
             ],
-            "time": "2016-04-06 22:28:00"
+            "time": "2016-10-05 17:51:56"
         },
         {
             "name": "vlucas/phpdotenv",

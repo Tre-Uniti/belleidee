@@ -77,11 +77,62 @@
     color: $topNavColor;
     background-color: $topNavBackgroundColor;
   }
+  .topNav > ul > .searchMobileIconBackground > a
+  {
+    padding: 0 5px 0 5px;
+  }
+
+  .topNav > ul > .homeDesktopIcon {
+    display: inline-block;
+    width: auto;
+    list-style-type: none;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+  }
+  .topNav > ul > .homeDesktopIcon:hover {
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    color: $topNavColor;
+    background-color: $topNavBackgroundColor;
+  }
+  .topNav > ul > .homeMobileIcon
+  {
+    display: none;
+    width: auto;
+    list-style-type: none;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+  }
+  .topNav > ul > .homeMobileIcon > a
+  {
+    margin: 0 5px 0 0;
+    padding: 0 3px 0 3px;
+  }
+  .topNav > ul > .homeMobileIcon:hover {
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    color: $topNavColor;
+    background-color: $topNavBackgroundColor;
+  }
 
   .topNav > ul > li > p {
     color: $topNavColor;
     display: block;
-    padding: 0 24px;
+    padding: 0 10px;
     text-decoration: none;
     font-weight: bold;
   }
@@ -89,7 +140,7 @@
   .topNav > ul > li > #pIcon {
     color: $topNavColor;
     display: block;
-    padding: 0 12px;
+    padding: 0 8px;
     text-decoration: none;
     font-weight: bold;
   }
@@ -125,7 +176,7 @@
   .topNav > ul > li > div ul > li > a {
     color: $topNavDivColor;
     display: block;
-    padding: 12px 24px;
+    padding: 10px 20px;
     text-decoration: none;
     border-radius: 4px;
     -moz-border-radius: 4px;
@@ -202,7 +253,9 @@
   {
     position: absolute;
     left: -65px;
-    background-color: #BDC3C7;
+    background-color: $topNavDivBackground;
+    border-radius: 4px;
+    color: #ECF0F1;
   }
 
   .topNav > ul > li > div ul > li {

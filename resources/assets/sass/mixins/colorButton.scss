@@ -1,6 +1,7 @@
 @mixin colorNavButton($color1, $color2, $navTextColor)
 {
   color: $navTextColor;
+  outline:none;
   background-color: $color1;
   border: 1px solid #202020;
 }

@@ -41,7 +41,7 @@
                                 {{ $post->excerpt }}<a href="{{ action('PostController@show', [$post->id])}}">... Read More</a>
                             </p>
                         @elseif(isset($post->caption))
-                            <a href="{{ action('PostController@show', [$post->id])}}"><button type = "button" class = "interactButtonLeft">{{ $post->caption }}</button></a>
+                            <a href="{{ action('PostController@show', [$post->id])}}">{{ $post->caption }}</a>
                             <div class = "cardPhoto">
                             <a href="{{ url('/posts/'. $post->id) }}"><img src= {{ url(env('IMAGE_LINK'). $post->post_path) }} alt="{{$post->title}}"></a>
                             </div>
@@ -52,12 +52,12 @@
                 <div class = "influenceSection">
                     <div class = "elevationSection">
                         <div class = "elevationIcon">
-                            @if($post->elevationStatus === 'Elevated')
-                                <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+                            @if($post->elevateStatus === 'Elevated')
+                                <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
                             @else
-                                <a href="{{ url('/posts/elevate/'.$post->id) }}" class = "iconLink"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i></a>
+                                <a href="{{ url('/posts/elevate/'.$post->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
                             @endif
-                            <span class="tooltiptext">Elevate to give thanks and recommend to others</span>
+                            <span class="tooltiptext">Heart to give thanks and recommend to others</span>
                         </div>
 
                         <div class = "elevationCounter">
@@ -78,7 +78,22 @@
 
                         <span class="tooltiptext">Extend to add any inspiration you received</span>
                     </div>
-
+                    <div class = "moreSection">
+                        <p class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>
+                        <div class="moreOptionsMenu">
+                            <a href="{{ url('bookmarks/posts/'.$post->id) }}"><i class="fa fa-bookmark-o fa-lg" aria-hidden="true"></i></a>
+                            <a href="https://www.facebook.com/share.php?u={{Request::url()}}&title={{$post->title}}" target="_blank"><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i></a>
+                            <a href="https://twitter.com/intent/tweet?status={{$post->title}} - {{Request::url()}}" target="_blank"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>
+                            <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank"><i class="fa fa-google-plus-square fa-lg" aria-hidden="true"></i></a>
+                            @if($post->user_id != Auth::id())
+                                <a href="{{ url('/intolerances/post/'.$post->id) }}"><i class="fa fa-flag-o fa-lg" aria-hidden="true"></i></a>
+                            @elseif ($post->status < 1)
+                                Status: Tolerant
+                            @else
+                                Status: Intolerant
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         @endforeach

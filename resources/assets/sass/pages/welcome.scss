@@ -187,8 +187,9 @@ p.verification
     }
     .authCard
     {
-      width: 95%;
+      width: 85%;
     }
+
 
   }
 
@@ -196,12 +197,16 @@ p.verification
   @media screen and (max-width: 465px) and (max-height: 540px) {
     #welcome
     {
-      width: 85%;
+      width: 99%;
       min-width: 250px;
     }
     .authCard
     {
-      width: 95%;
+      width: 99.9%;
+    }
+    .formLabel
+    {
+      width: 31%;
     }
 
   }

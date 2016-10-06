@@ -284,6 +284,14 @@
     {
       display: inline-block;
     }
+    .topNav > ul > .homeDesktopIcon
+    {
+      display: none;
+    }
+    .topNav > ul > .homeMobileIcon
+    {
+      display: inline-block;
+    }
 
     #centerTextContent {
       padding-left: 3px;
@@ -489,11 +497,24 @@
     {
       width: 99%;
     }
+    /* Dropdown Content (Hidden by Default) */
+    .moreOptionsMenu {
+      left: -50px;
+    }
+
     .topNav > ul > .searchIconBackground
     {
       display: none;
     }
     .topNav > ul > .searchMobileIconBackground
+    {
+      display: inline-block;
+    }
+    .topNav > ul > .homeDesktopIcon
+    {
+      display: none;
+    }
+    .topNav > ul > .homeMobileIcon
     {
       display: inline-block;
     }
@@ -601,7 +622,22 @@
     {
       width: 90%;
     }
-
+    .topNav > ul > .searchIconBackground
+    {
+      display: inline-block
+    }
+    .topNav > ul > .searchMobileIconBackground
+    {
+      display: none;
+    }
+    .topNav > ul > .homeDesktopIcon
+    {
+      display: inline-block;
+    }
+    .topNav > ul > .homeMobileIcon
+    {
+      display: none;
+    }
 
     #centerTextContent {
 

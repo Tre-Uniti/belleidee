@@ -6,7 +6,7 @@
     <link rel="canonical" href="https://belle-idee.org/">
     <meta name="title" content="Belle Idee">
     <meta name="description" content="Belle-idee - An online community for sharing spiritual ideas, inspirations and experiences.">
-    <title>@yield('siteTitle')</title>
+    <title>Belle-idee: @yield('siteTitle')</title>
     <link rel = "stylesheet" href = "/css/normalize.css">
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
     <script src="https://use.fontawesome.com/9747c67e36.js"></script>
@@ -25,65 +25,76 @@
 <div id = "container">
     @if(isset($user))
         <nav class = "topNav">
-        <ul>
-            <li><a href={{ url('/home') }}><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-            <li>
-                <p onclick="" class = "nav"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Posts<span class="caret"></span></p>
-                <div>
-                    <ul>
-                        <li><a href={{ url('/posts/create') }}>Create</a></li>
-                        <li><a href={{ url('/posts') }}>Discover</a></li>
-                        <li><a href="{{ url('/drafts') }}">Drafts</a></li>
-                        <li><a href={{ url('/legacyPosts')}}>Legacy</a></li>
-                        <li><a href="{{ url('/extensions') }}">Extensions</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <p onclick="" class = "nav"> <i class="fa fa-users" aria-hidden="true"></i> Directory<span class="caret"></span></p>
-                <div>
-                    <ul>
-                        <li><a href="{{ url('/users') }}">Users</a></li>
-                        <li><a href="{{ url('/beacons') }}">Beacons</a></li>
-                        <li><a href="{{ url('/sponsors') }}">Sponsors</a></li>
-                        <li><a href="{{ url('/beliefs') }}">Beliefs</a></li>
-                        <li><a href="{{ url('/questions') }}">Questions</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <p onclick="" class = "nav"> <i class="fa fa-cog" aria-hidden="true"></i> Settings<span class="caret"></span></p>
-                <div>
-
-                    <ul>
-                        <li><a href="{{ url('/settings') }}">Personal</a></li>
-                        <li><a href="{{ url('/supports') }}">Support</a></li>
-                        <li><a href="{{ url('/invites') }}">Invite Friends</a></li>
-                        @if(isset($viewUser))
-                            @if($viewUser->type > 0)
+            <ul>
+                <li class = "homeDesktopIcon"><a href={{ url('/home') }}><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                <li class = "homeMobileIcon">
+                    <a href = "{{ url('/home') }}"><i class="fa fa-home fa-lg" aria-hidden="true"></i></a></li>
+                <li>
+                <li>
+                    <p onclick="" class = "nav"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Posts<span class="caret"></span></p>
+                    <div>
+                        <ul>
+                            <li><a href={{ url('/posts/create') }}>Create</a></li>
+                            <li><a href={{ url('/posts') }}>Discover</a></li>
+                            <li><a href="{{ url('/drafts') }}">Drafts</a></li>
+                            <li><a href={{ url('/legacyPosts')}}>Legacy</a></li>
+                            <li><a href="{{ url('/extensions') }}">Extensions</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <p onclick="" class = "nav"> <i class="fa fa-users" aria-hidden="true"></i> Directory<span class="caret"></span></p>
+                    <div>
+                        <ul>
+                            <li><a href="{{ url('/users') }}">Users</a></li>
+                            <li><a href="{{ url('/beacons') }}">Beacons</a></li>
+                            <li><a href="{{ url('/sponsors') }}">Sponsors</a></li>
+                            <li><a href="{{ url('/beliefs') }}">Beliefs</a></li>
+                            <li><a href="{{ url('/questions') }}">Questions</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class = "searchIconBackground">
+                    {!! Form::open(['url' => '/results', 'method' => 'GET']) !!}
+                    {!! Form::text('identifier', null, ['placeholder' => 'Search Belle-idee', 'class' => 'searchField']) !!}
+                    {{Form::button('<i class="fa fa-search" aria-hidden="true"></i>', array('type' => 'submit', 'class' => 'searchButton'))}}
+                    {!! Form:: close() !!}
+                </li>
+                <li class = "searchMobileIconBackground">
+                    <a href = "{{ url('/search') }}"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                <li>
+                    <p onclick="" class = "nav" id = "pIcon"> <i class="fa fa-cog" aria-hidden="true"></i></p>
+                    <div>
+                        <ul class = "navSettings">
+                            <li><a href="{{ url('/settings') }}">Personal</a></li>
+                            <li><a href="{{ url('/supports') }}">Support</a></li>
+                            <li><a href="{{ url('/invites') }}">Invite Friends</a></li>
+                            @if(isset($viewUser))
+                                @if($viewUser->type > 0)
+                                    <li><a href="{{ url('/moderator') }}">Moderator</a></li>
+                                @endif
+                            @elseif($user->type > 0)
                                 <li><a href="{{ url('/moderator') }}">Moderator</a></li>
                             @endif
-                        @elseif($user->type > 0)
-                            <li><a href="{{ url('/moderator') }}">Moderator</a></li>
-                        @endif
-                        @if(isset($viewUser))
-                            @if($viewUser->type > 1)
+                            @if(isset($viewUser))
+                                @if($viewUser->type > 1)
+                                    <li><a href="{{ url('/admin') }}">Admin</a></li>
+                                @endif
+                            @elseif($user->type > 1)
                                 <li><a href="{{ url('/admin') }}">Admin</a></li>
                             @endif
-                        @elseif($user->type > 1)
-                            <li><a href="{{ url('/admin') }}">Admin</a></li>
-                        @endif
-                        <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
-                    </ul>
+                            <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+                        </ul>
 
-                </div>
-            </li>
-            @if($notifyCount > 0)
-                <li>
-                    <a href = "{{ url('/notifications') }}"><i class="fa fa-bell" aria-hidden="true"></i> {{$notifyCount}}</a>
+                    </div>
                 </li>
-            @endif
-        </ul>
+
+                @if($notifyCount > 0)
+                    <li class = "iconBackground">
+                        <a href = "{{ url('/notifications') }}" class = "iconOnly"><i class="fa fa-bell" aria-hidden="true"></i> @if($notifyCount > 9) 9+ @else {{$notifyCount}} @endif</a>
+                    </li>
+                @endif
+            </ul>
         </nav>
         @else
         <div class = "topBar">

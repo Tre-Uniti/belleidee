@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="description" content="Belle-idee - An online community for sharing spiritual ideas, inspirations and experiences.">
-    <title>@yield('siteTitle')</title>
+    <title>Belle-idee: @yield('siteTitle')</title>
     <link rel = "stylesheet" href = "/css/normalize.css">
     @if(isset($viewUser))
         @if($viewUser->theme == 1)
@@ -40,7 +40,10 @@
 <div id = "container">
     <nav class = "topNav">
         <ul>
-            <li><a href={{ url('/home') }}><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+            <li class = "homeDesktopIcon"><a href={{ url('/home') }}><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+            <li class = "homeMobileIcon">
+                <a href = "{{ url('/home') }}"><i class="fa fa-home fa-lg" aria-hidden="true"></i></a></li>
+            <li>
             <li>
                 <p onclick="" class = "nav"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Posts<span class="caret"></span></p>
                 <div>
@@ -72,7 +75,7 @@
                 {!! Form:: close() !!}
             </li>
             <li class = "searchMobileIconBackground">
-                <i class="fa fa-search" aria-hidden="true"></i></li>
+                <a href = "{{ url('/search') }}"><i class="fa fa-search" aria-hidden="true"></i></a></li>
             <li>
                 <p onclick="" class = "nav" id = "pIcon"> <i class="fa fa-cog" aria-hidden="true"></i></p>
                 <div>
@@ -102,7 +105,7 @@
 
             @if($notifyCount > 0)
             <li class = "iconBackground">
-                <a href = "{{ url('/notifications') }}" class = "iconOnly"><i class="fa fa-bell" aria-hidden="true"></i> {{$notifyCount}}</a>
+                <a href = "{{ url('/notifications') }}" class = "iconOnly"><i class="fa fa-bell" aria-hidden="true"></i> @if($notifyCount > 9) 9+ @else {{$notifyCount}} @endif</a>
             </li>
             @endif
         </ul>

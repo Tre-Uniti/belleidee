@@ -102,8 +102,6 @@ class SessionController extends Controller
 
         $user = Auth::user();
 
-        flash()->overlay('Welcome '. $user->handle . ', login successful');
-
         //Create event to set location
         Event::fire(New SetLocation($user));
         return redirect()->intended($this->redirectPath());

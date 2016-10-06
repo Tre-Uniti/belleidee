@@ -123,7 +123,7 @@
             It started with a Jesuit giving a copy of his homily to a student at Gonzaga University.
             The idea to share the Jesuit's homily online was the spark for creating an online community focused on sharing spirituality.</p>
             <ul>
-                <li>Built on the Laravel framework and <a href = "https://github.com/tre-uniti/belle-idee">open source </a> since Nov 6th 2015.</li>
+                <li>Built on the Laravel framework and <a href = "https://github.com/tre-uniti/belle-idee">open source </a> since 2015.</li>
                 <li>Created to be a global online community of spiritual light and guidance.</li>
                 <li>Designed for the sharing of beautiful ideas instead of arguments of validity.</li>
             </ul>
@@ -134,10 +134,10 @@
             <h3>Contact</h3>
         </div>
         <div id = "centerTextContent">
-            <p>Belle-idee is one of the three applications built and maintained by Tre-Uniti</p>
+            <p>Belle-idee is one of the three applications built and maintained by <a href = "https://tre-uniti.org/">Tre-Uniti</a>.</p>
             <ul>
                 <li>Address: PO Box 888 Sedro-Woolley WA 98284.</li>
-                <li>Phone: 888-888-888</li>
+                <li>Phone: +1 (347) 897-5562</li>
                 <li>Email: tre-uniti@belle-idee.org</li>
             </ul>
         </div>

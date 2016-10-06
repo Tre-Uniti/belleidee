@@ -52,7 +52,7 @@ class RetrieveLatestLocation
             $user->location = 2;
             $user->update();
 
-            $this->flashLocation($user, $coordinates);
+            //$this->flashLocation($user, $coordinates);
             session()->put('coordinates', $coordinates);
         }
         else
@@ -92,7 +92,7 @@ class RetrieveLatestLocation
                 'location' => $user->location,
             ];
             session()->put('coordinates', $coordinates);
-            $this->flashLocation($user, $coordinates);
+            //$this->flashLocation($user, $coordinates);
         }
         else
         {
@@ -110,7 +110,7 @@ class RetrieveLatestLocation
             //Set user location to Global in database
             $user->location = 2;
             $user->update();
-            $this->flashLocation($user, $coordinates);
+            //$this->flashLocation($user, $coordinates);
             session()->put('coordinates', $coordinates);
         }
     }
@@ -128,7 +128,7 @@ class RetrieveLatestLocation
             }
             else
             {
-                flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $coordinates['city']);
+                flash()->overlay('Your location is set to: ' . $coordinates['city']);
             }
 
         }
@@ -142,13 +142,13 @@ class RetrieveLatestLocation
             }
             else
             {
-                flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $coordinates['country']);
+                flash()->overlay('Your location is set to: ' . $coordinates['country']);
             }
         }
         //Global
         else
         {
-            flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . 'Global');
+            flash()->overlay('Your location is set to: ' . 'Global');
         }
     }
 }
