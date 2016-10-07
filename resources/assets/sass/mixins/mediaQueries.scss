@@ -359,6 +359,30 @@
     {
       padding: 2px;
     }
+
+    /* Dropdown Content (Hidden by Default) */
+    .moreOptionsMenu {
+      left: -60px;
+    }
+
+    //Tooltip reposition
+    .extensionSection .tooltiptext {
+      margin-left: -180px;
+    }
+    .elevationSection .tooltiptext {
+      margin-left: -40px;
+    }
+    .beliefIndex .tooltiptext
+    {
+      bottom: 120%;
+      //left: 110%;
+      left: 85%;
+    }
+
+    .sourceIndex .tooltiptext {
+      bottom: 120%;
+      right: 1%;
+    }
   }
 
   //Mobile landscape
@@ -386,13 +410,10 @@
     {
       width: 85%;
     }
-    .topNav > ul > .searchIconBackground
+
+    .searchField
     {
-      display: none;
-    }
-    .topNav > ul > .searchMobileIconBackground
-    {
-      display: inline-block;
+      width: 65px;
     }
 
     .formDataContainer
@@ -479,10 +500,10 @@
     }
 
     .topNav > ul > li > a {
-      padding: 0 1px;
+      padding: 0 0;
     }
     .topNav > ul > li > p {
-      padding: 0 1px;
+      padding: 0 0;
     }
     .topNav > ul > li > div {
       width: 92px;
@@ -493,29 +514,21 @@
     #centerContent {
       width: 99%;
     }
-    #centerText
-    {
+    #centerText {
       width: 99%;
     }
-    /* Dropdown Content (Hidden by Default) */
-    .moreOptionsMenu {
-      left: -55px;
-    }
 
-    .topNav > ul > .searchIconBackground
-    {
+
+    .topNav > ul > .searchIconBackground {
       display: none;
     }
-    .topNav > ul > .searchMobileIconBackground
-    {
+    .topNav > ul > .searchMobileIconBackground {
       display: inline-block;
     }
-    .topNav > ul > .homeDesktopIcon
-    {
+    .topNav > ul > .navDesktopIcon {
       display: none;
     }
-    .topNav > ul > .homeMobileIcon
-    {
+    .topNav > ul > .navMobileIcon {
       display: inline-block;
     }
     .createTitleText {
@@ -527,14 +540,13 @@
       padding-right: 3px;
     }
 
-    .formDataContainer
-    {
+    .formDataContainer {
       width: 98%;
       height: auto;
       margin: 0 auto;
       background-color: #808080;
-      opacity:0.90;
-      filter:alpha(opacity=90);
+      opacity: 0.90;
+      filter: alpha(opacity=90);
       border: 2px solid;
       border-radius: 25px;
     }
@@ -577,22 +589,42 @@
       padding-left: 1%;
       width: 45%;
     }
-    .interactButton
-    {
+    .interactButton {
       padding: 3px 1px;
     }
-    .profileNav > ul > li > div ul > li
-    {
+    .profileNav > ul > li > div ul > li {
       display: block;
     }
-    #questionContainer
-    {
+    #questionContainer {
       margin: 0 auto;
       width: 80%;
     }
-    .indexContent
-    {
+    .indexContent {
       padding: 2px;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .moreOptionsMenu {
+      left: -60px;
+    }
+
+    //Tooltip reposition
+    .extensionSection .tooltiptext {
+      margin-left: -180px;
+    }
+    .elevationSection .tooltiptext {
+      margin-left: -40px;
+    }
+    .beliefIndex .tooltiptext
+    {
+      bottom: 120%;
+      //left: 110%;
+      left: 85%;
+    }
+
+    .sourceIndex .tooltiptext {
+      bottom: 120%;
+      right: 1%;
     }
 
   }
@@ -601,13 +633,6 @@
   @media screen and (min-width: 467px) and (max-width: 751px) and (max-height: 400px)
   {
     html {
-    }
-
-    .topNav > ul > li > a {
-      padding: 0 1px;
-    }
-    .topNav > ul > li > p {
-      padding: 0 1px;
     }
     .topNav > ul > li > div {
       width: 92px;
@@ -624,17 +649,22 @@
     }
     .topNav > ul > .searchIconBackground
     {
-      display: inline-block
+      display: inline-block;
+      width: 105px;
+    }
+    .searchField
+    {
+      width: 55px;
     }
     .topNav > ul > .searchMobileIconBackground
     {
       display: none;
     }
-    .topNav > ul > .homeDesktopIcon
+    .topNav > ul > .navDesktopIcon
     {
       display: inline-block;
     }
-    .topNav > ul > .homeMobileIcon
+    .topNav > ul > .navMobileIcon
     {
       display: none;
     }

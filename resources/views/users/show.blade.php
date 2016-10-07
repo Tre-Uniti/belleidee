@@ -182,7 +182,6 @@
             </div>
             <div class = "cardCaptionExcerptSection">
 
-
                 <p class = "cardExcerpt">
                     {{ $extension->excerpt }}<a href="{{ action('ExtensionController@show', [$extension->id])}}">... Read More</a>
                 </p>
@@ -199,7 +198,7 @@
                         @if($extension->elevateStatus === 'Elevated')
                             <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
                         @else
-                            <a href="{{ url('/posts/elevate/'.$post->id) }}"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
+                            <a href="{{ url('/extensions/elevate/'.$extension->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
                         @endif
                         <span class="tooltiptext">Heart to give thanks and recommend to others</span>
                     </div>
@@ -214,11 +213,26 @@
                 </div>
 
                 <div class = "extensionSection">
-                    <a href="{{ url('/extensions/extenception/'.$extension->id) }}"><img src = '/img/extend.png'></a>
+                    <a href="{{ url('/extensions/extenception/'.$extension->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
                     <a href={{ url('/extensions/extend/list/'.$extension->id)}}>{{ $extension->extension }}</a>
                     <span class="tooltiptext">Extend to add any inspiration you received</span>
                 </div>
-
+                <div class = "moreSection">
+                    <p class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>
+                    <div class="moreOptionsMenu">
+                        <a href="{{ url('bookmarks/extensions/'.$extension->id) }}"><i class="fa fa-bookmark-o fa-lg" aria-hidden="true"></i></a>
+                        <a href="https://www.facebook.com/share.php?u={{Request::url()}}&title={{$extension->title}}" target="_blank"><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i></a>
+                        <a href="https://twitter.com/intent/tweet?status={{$extension->title}} - {{Request::url()}}" target="_blank"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>
+                        <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank"><i class="fa fa-google-plus-square fa-lg" aria-hidden="true"></i></a>
+                        @if($extension->user_id != Auth::id())
+                            <a href="{{ url('/intolerances/extension/'.$extension->id) }}"><i class="fa fa-flag-o fa-lg" aria-hidden="true"></i></a>
+                        @elseif ($extension->status < 1)
+                            Status: Tolerant
+                        @else
+                            Status: Intolerant
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
     @endforeach

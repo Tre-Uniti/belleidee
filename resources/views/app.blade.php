@@ -40,11 +40,11 @@
 <div id = "container">
     <nav class = "topNav">
         <ul>
-            <li class = "homeDesktopIcon"><a href={{ url('/home') }}><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-            <li class = "homeMobileIcon">
+            <li class = "navDesktopIcon"><a href={{ url('/home') }}><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+            <li class = "navMobileIcon">
                 <a href = "{{ url('/home') }}"><i class="fa fa-home fa-lg" aria-hidden="true"></i></a></li>
             <li>
-            <li>
+            <li class = "navDesktopIcon">
                 <p onclick="" class = "nav"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Posts<span class="caret"></span></p>
                 <div>
                     <ul>
@@ -56,8 +56,32 @@
                     </ul>
                 </div>
             </li>
-            <li>
+            <li class = "navMobileIcon">
+                <p onclick="" class = "nav"><i class="fa fa-newspaper-o" aria-hidden="true"></i> <span class="caret"></span></p>
+                <div>
+                    <ul>
+                        <li><a href={{ url('/posts/create') }}>Create</a></li>
+                        <li><a href={{ url('/posts') }}>Discover</a></li>
+                        <li><a href="{{ url('/drafts') }}">Drafts</a></li>
+                        <li><a href={{ url('/legacyPosts')}}>Legacy</a></li>
+                        <li><a href="{{ url('/extensions') }}">Extensions</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class = "navDesktopIcon">
                 <p onclick="" class = "nav"> <i class="fa fa-users" aria-hidden="true"></i> Directory<span class="caret"></span></p>
+                <div>
+                    <ul>
+                        <li><a href="{{ url('/users') }}">Users</a></li>
+                        <li><a href="{{ url('/beacons') }}">Beacons</a></li>
+                        <li><a href="{{ url('/sponsors') }}">Sponsors</a></li>
+                        <li><a href="{{ url('/beliefs') }}">Beliefs</a></li>
+                        <li><a href="{{ url('/questions') }}">Questions</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class = "navMobileIcon">
+                <p onclick="" class = "nav"> <i class="fa fa-users" aria-hidden="true"></i> <span class="caret"></span></p>
                 <div>
                     <ul>
                         <li><a href="{{ url('/users') }}">Users</a></li>
