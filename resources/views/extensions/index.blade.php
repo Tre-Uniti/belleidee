@@ -10,39 +10,43 @@
     <div>
         <h2>{{ $location }} Recent Extensions</h2>
         <div id = "indexNav">
-           <a href={{ url('/extensions/elevation')}}><button type = "button" class = "indexButton">Elevated</button></a>
-            <a href={{ url('/extensions/search')}}><button type = "button" class = "indexButton">Search</button></a>
-            <a href={{ url('/extensions/extension')}}><button type = "button" class = "indexButton">Extended</button></a>
-        </div>
-        <button class = "interactButton" id = "hiddenIndex">More</button>
-        <div class = "indexContent" id = "hiddenContent">
-            <a href={{ url('/extensions/timeFilter/Today')}}><button type = "button" class = "indexButton">Today</button></a>
-            <a href={{ url('/extensions/timeFilter/Month') }}><button type = "button" class = "indexButton">Month</button></a>
-            <a href={{ url('/extensions/timeFilter/Year')}}><button type = "button" class = "indexButton">Year</button></a>
-            <a href={{ url('/extensions/timeFilter/All')}}><button type = "button" class = "indexButton">All-time</button></a>
+            <a href="{{ url('/extensions/forYou')}}" class = "indexLink">For You</a>
+            <a href="{{ url('/beacons/extensions/'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
+            <a href="{{ url('extensions/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart" aria-hidden="true"></i></a>
+            <a href="{{ url('extensions/extensionTime/Month')}}" class = "indexLink">Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
         </div>
     </div>
-
+    <hr class = "contentSeparator">
     @foreach ($extensions as $extension)
         <div class = "contentExtensionCard">
             <div class = "cardTitleSection">
                 <h3>
                     <a href="{{ action('ExtensionController@show', [$extension->id])}}">{{ $extension->title }}</a>
                 </h3>
-            </div>
-            <div class = "cardCaptionExcerptSection">
-
-
-                <p class = "cardExcerpt">
-                    {{ $extension->excerpt }}<a href="{{ action('ExtensionController@show', [$extension->id])}}">... Read More</a>
-                </p>
 
             </div>
             <div class = "cardHandleSection">
                 <p>
-                    By: <a href="{{ action('UserController@show', [$extension->user_id])}}" style = "font-weight: bold">{{ $extension->user->handle }}</a> on <a href = {{ url('$/extensions/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a>
+                    By: <a href="{{ action('UserController@show', [$extension->user_id])}}" class = "contentHandle">{{ $extension->user->handle }}</a> on <a href = {{ url('/extensions/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a>
+                </p>
+                <p>
+                    @if(isset($extension->extenception))
+                        Extends: <a href = "{{ url('/extensions/' . $extension->extenception) }}">{{ $extension->extenceptionTitle($extension->extenception) }}</a>
+                    @elseif(isset($extension->post_id))
+                        Extends: <a href = "{{ url('/posts/' . $extension->post_id) }}">{{ $extension->post->title }}</a>
+                    @elseif(isset($extension->question_id))
+                        Answers: <a href = "{{ url('/question/' . $extension->question_id) }}">{{ $extension->question->question }}</a>
+                    @elseif(isset($extension->question_id))
+                        Extends: <a href = "{{ url('/legacyPosts/' . $extension->legacy_post_id) }}">{{ $extension->legacyPost->title }}</a>
+                    @endif
                 </p>
             </div>
+            <div class = "cardCaptionExcerptSection">
+                <p class = "cardExcerpt">
+                    {{ $extension->excerpt }}<a href="{{ action('ExtensionController@show', [$extension->id])}}">... Read More</a>
+                </p>
+            </div>
+
             <div class = "influenceSection">
                 <div class = "elevationSection">
                     <div class = "elevationIcon">

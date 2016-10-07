@@ -375,7 +375,6 @@
     .beliefIndex .tooltiptext
     {
       bottom: 120%;
-      //left: 110%;
       left: 85%;
     }
 
@@ -556,23 +555,6 @@
       padding-right: 1px;
     }
 
-    #leftSide {
-      top: 80%;
-      height: 20%;
-      width: 45%;
-      visibility: visible;
-      left: .01em;
-      font-size: 0%;
-
-    }
-    #rightSide {
-      top: 80%;
-      height: 20%;
-      width: 45%;
-      visibility: visible;
-      right: .01em;
-      font-size: 0%;
-    }
 
     .infoNav > ul > li {
       width: 100%;
@@ -618,13 +600,12 @@
     .beliefIndex .tooltiptext
     {
       bottom: 120%;
-      //left: 110%;
       left: 85%;
     }
 
     .sourceIndex .tooltiptext {
       bottom: 120%;
-      right: 1%;
+      left: -60%;
     }
 
   }
@@ -650,11 +631,11 @@
     .topNav > ul > .searchIconBackground
     {
       display: inline-block;
-      width: 105px;
+      width: 109px;
     }
     .searchField
     {
-      width: 55px;
+      width: 53px;
     }
     .topNav > ul > .searchMobileIconBackground
     {

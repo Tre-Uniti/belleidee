@@ -30,9 +30,8 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
         <h1>{{ $post->title }}</h1>
     </header>
 
-    <h4>By: <a href = {{ url('/users/'. $post->user->id) }}>{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y')  }}</a></h4>
+    <h4>By: <a href = "{{ url('/users/'. $post->user->id) }}" class = "contentHandle">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y')  }}</a></h4>
     <div class = "indexNav">
-
 
     </div>
     <div class = "indexNav">
@@ -93,12 +92,27 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                 <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
                 <span class="tooltiptext">Extend to add any inspiration you received</span>
             </div>
+            <div class = "moreSection">
+                <p class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>
+                <div class="moreOptionsMenu">
+                    <a href="{{ url('bookmarks/posts/'.$post->id) }}"><i class="fa fa-bookmark-o fa-lg" aria-hidden="true"></i></a>
+                    <a href="https://www.facebook.com/share.php?u={{Request::url()}}&title={{$post->title}}" target="_blank"><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i></a>
+                    <a href="https://twitter.com/intent/tweet?status={{$post->title}} - {{Request::url()}}" target="_blank"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>
+                    <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank"><i class="fa fa-google-plus-square fa-lg" aria-hidden="true"></i></a>
+                    @if($post->user_id != Auth::id())
+                        <a href="{{ url('/intolerances/post/'.$post->id) }}"><i class="fa fa-flag-o fa-lg" aria-hidden="true"></i></a>
+                    @elseif ($post->status < 1)
+                        Status: Tolerant
+                    @else
+                        Status: Intolerant
+                    @endif
+                </div>
+            </div>
 
 
             @if($beacon->stripe_plan < 1)<p>Sponsored by:</p>
 
                 <div class = "sponsorContentLogo">
-
                     <a href={{ url('/sponsors/click/'. $sponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $sponsor->photo_path) }} alt="{{$sponsor->name}}" ></a>
                 </div>
             @endif

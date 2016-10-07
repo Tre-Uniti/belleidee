@@ -94,7 +94,7 @@
             </div>
             <div class = "cardHandleSection">
                 <p>
-                    By: <a href="{{ action('UserController@show', [$post->user_id])}}">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
+                    By: <a href="{{ action('UserController@show', [$post->user_id])}}" class = "contentHandle">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
                 </p>
             </div>
             </header>
@@ -129,7 +129,6 @@
 
                 </div>
 
-
                 <div class = "beaconSection">
                     <a href="{{ url('/beacons/'.$post->beacon_tag) }}" >{{ $post->beacon_tag }}</a>
                     <span class="tooltiptext">Beacon community where this post is located</span>
@@ -160,8 +159,8 @@
             </div>
         </div>
         </article>
-
     @endforeach
+
 <div class = "contentHeaderSeparator">
     <h3>Recent Extensions</h3>
 </div>
@@ -183,7 +182,7 @@
             </div>
             <div class = "cardHandleSection">
                 <p>
-                    By: <a href="{{ action('UserController@show', [$extension->user_id])}}" style = "font-weight: bold">{{ $extension->user->handle }}</a> on <a href = {{ url('$/extensions/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a>
+                    By: <a href="{{ action('UserController@show', [$extension->user_id])}}" class = "contentHandle">{{ $extension->user->handle }}</a> on <a href = {{ url('$/extensions/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a>
                 </p>
             </div>
             <div class = "influenceSection">

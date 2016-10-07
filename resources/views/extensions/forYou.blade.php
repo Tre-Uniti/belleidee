@@ -1,28 +1,22 @@
 @extends('app')
+@section('pageHeader')
+    <script src = "/js/index.js"></script>
+@stop
 @section('siteTitle')
-    Top Elevated
+    Extensions
 @stop
 
 @section('centerText')
-    <h2>Top Elevated Extensions ({{ $filter }})</h2>
-    <div id = "indexNav">
-        <a href="{{ url('/extensions/forYou')}}" class = "indexLink">For You</a>
+    <div>
+    <h2>Extensions for You</h2>
+        <p>From <a href = " {{ url('bookmarks/users') }}">Users </a> you follow</p>
+    <div class = "indexNav">
+        <a href="{{ url('/extensions')}}" class = "indexLink">Recent</a>
         <a href="{{ url('/beacons/extensions/'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
+        <a href="{{ url('extensions/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart" aria-hidden="true"></i></a>
         <a href="{{ url('extensions/extensionTime/Month')}}" class = "indexLink">Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
     </div>
-    <p>Sort by <i class="fa fa-heart" aria-hidden="true"></i></p>
-
-    <nav class = "infoNav">
-        <ul>
-            <li>
-                <a href = "{{ url('extensions/elevationTime/Today') }}" @if($time == 'Today')class = "navLink" @else class = "indexLink" @endif>Today</a>
-                <a href = "{{ url('extensions/elevationTime/Month') }}" @if($time == 'Month') class = "navLink" @else class = "indexLink" @endif>Month</a>
-                <a href = "{{ url('extensions/elevationTime/Year') }}" @if($time == 'Year') class = "navLink" @else class = "indexLink" @endif>Year</a>
-                <a href = "{{ url('extensions/elevationTime/All') }}" @if($time == 'All') class = "navLink" @else class = "indexLink" @endif>All Time</a>
-            </li>
-        </ul>
-    </nav>
-
+    </div>
     <hr class = "contentSeparator">
     @foreach ($extensions as $extension)
         <div class = "contentExtensionCard">
@@ -30,28 +24,19 @@
                 <h3>
                     <a href="{{ action('ExtensionController@show', [$extension->id])}}">{{ $extension->title }}</a>
                 </h3>
-
             </div>
             <div class = "cardHandleSection">
                 <p>
-                    By: <a href="{{ action('UserController@show', [$extension->user_id])}}" class = "contentHandle">{{ $extension->user->handle }}</a> on <a href = {{ url('/extensions/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a>
-                </p>
-                <p>
-                    @if(isset($extension->extenception))
-                        Extends: <a href = "{{ url('/extensions/' . $extension->extenception) }}">{{ $extension->extenceptionTitle($extension->extenception) }}</a>
-                    @elseif(isset($extension->post_id))
-                        Extends: <a href = "{{ url('/posts/' . $extension->post_id) }}">{{ $extension->post->title }}</a>
-                    @elseif(isset($extension->question_id))
-                        Answers: <a href = "{{ url('/question/' . $extension->question_id) }}">{{ $extension->question }}</a>
-                    @elseif(isset($extension->legacy_post_id))
-                        Extends: <a href = "{{ url('/legacyPosts/' . $extension->legacy_post_id) }}">{{ $extension->legacyPost->title }}</a>
-                    @endif
+                    By: <a href="{{ action('UserController@show', [$extension->user_id])}}" class = "contentHandle">{{ $extension->user->handle }}</a> on <a href = {{ url('$/extensions/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a>
                 </p>
             </div>
             <div class = "cardCaptionExcerptSection">
+
+
                 <p class = "cardExcerpt">
                     {{ $extension->excerpt }}<a href="{{ action('ExtensionController@show', [$extension->id])}}">... Read More</a>
                 </p>
+
             </div>
 
             <div class = "influenceSection">
@@ -98,8 +83,8 @@
             </div>
         </div>
     @endforeach
+
 @stop
 
-@section('centerFooter')
-    @include('pagination.custom-paginator', ['paginator' => $extensions])
-@stop
+
+

@@ -26,7 +26,7 @@
                 </div>
                 <div class = "cardHandleSection">
                     <p>
-                        By: <a href="{{ action('UserController@show', [$post->user_id])}}">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
+                        By: <a href="{{ action('UserController@show', [$post->user_id])}}" class = "contentHandle">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y') }}</a>
                     </p>
                 </div>
                 <div class = "cardCaptionExcerptSection">

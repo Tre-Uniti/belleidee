@@ -15,6 +15,7 @@ use function App\Http\filterContentLocationTime;
 use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
+use function App\Http\prepareExtensionCards;
 use App\Intolerance;
 use App\Legacy;
 use App\LegacyPost;
@@ -58,8 +59,6 @@ class ExtensionController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
 
         $extensions = filterContentLocation($user, 0, 'Extension');
 
@@ -68,7 +67,7 @@ class ExtensionController extends Controller
         $sponsor = getSponsor($user);
 
         return view ('extensions.index')
-            ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sponsor'))
+            ->with(compact('user', 'extensions', 'sponsor'))
             ->with('location', $location);
     }
 
@@ -1811,6 +1810,27 @@ class ExtensionController extends Controller
 
         flash()->overlay('Extension excerpts updated');
         return redirect('extensions');
+    }
+
+    /*
+     * Sort posts based on User's list of "following"
+     */
+    public function forYou()
+    {
+        $user = Auth::user();
+
+        //Get list of users being followed
+        $bookmarks = $user->bookmarks()->where('type', '=', 'User')->pluck('pointer');
+
+        $extensions = Extension::latest()->whereIn('user_id', $bookmarks)->paginate(10);
+
+        $extensions = prepareExtensionCards($extensions, $user);
+
+        $location = getLocation();
+
+        return view ('extensions.forYou')
+            ->with(compact('user', 'extensions'))
+            ->with('location', $location);
     }
     
 }

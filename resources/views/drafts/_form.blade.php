@@ -5,7 +5,7 @@
 @stop
 
 <div id = "createOptions">
-    <h2 id = "creationHeader">Select Creation Type:</h2>
+    <h2 id = "creationHeader">Select Draft Type:</h2>
     <button id = "imageButton" type = "button" class = "indexButton">Upload an Image</button>
     <button id = "textButton" type = "button" class = "indexButton">Write an Article</button>
     <div id = "indexInfo" class = "indexContent">

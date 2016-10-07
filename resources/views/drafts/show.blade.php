@@ -8,27 +8,48 @@
 @stop
 
 @section('centerText')
-    <h2>{{ $draft->title }}</h2>
-    <div class = "indexNav">
-        <a href="{{ action('BeliefController@show', $draft->belief) }}"><button type = "button" class = "indexButton">{{ $draft->belief }}</button></a>
-        <a href="{{ url('/beacons/'.$draft->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $draft->beacon_tag }}</button></a>
-        <a href="{{ url('/posts') }}"><button type = "button" class = "indexButton">{{ $draft->source }}</button></a>
-    </div>
-    <button class = "interactButton" id = "hiddenIndex">More</button>
-    <div class = "indexContent" id = "hiddenContent">
-        <button type = "button" class = "indexButton">{{ $draft->created_at->format('M-d-Y') }}</button>
+    <article>
+        <header>
+            <h1>{{ $draft->title }}</h1>
+        </header>
+
+        <h4>By: <a href = "{{ url('/users/'. $draft->user->id) }}" class = "contentHandle" >{{ $draft->user->handle }}</a> on <a href = {{ url('/posts/date/'.$draft->created_at->format('M-d-Y')) }}>{{ $draft->created_at->format('M-d-Y')  }}</a></h4>
+        <div class = "indexNav">
+
+
         </div>
+        <div class = "indexNav">
+            <div class = "beliefIndex">
+                <a href="{{ action('BeliefController@show', $draft->belief) }}"><i class="fa fa-hashtag" aria-hidden="true"></i>{{ $draft->belief }}</a>
+                <span class="tooltiptext">Belief or way of life related to the post</span>
+            </div>
+            <div class = "sourceIndex">
+                <a href="{{ url('/posts/source/'. $draft->source) }}"><i class="fa fa-hashtag" aria-hidden="true"></i>{{ $draft->source }}</a>
+                <span class="tooltiptext">Source where the post came from</span>
+            </div>
+
+        </div>
+
         @if($type != 'txt')
             <div class = "photoContent">
                 <p>{!! nl2br($draft->caption) !!}</p>
-                <img src="{!! $base64 !!}">
+                <div class = "postPhoto">
+                    <a href="{{ url(env('IMAGE_LINK'). $sourceOriginalPath) }}" data-lightbox="{{ $draft->title }}" data-title="{{ $draft->caption }}"><img src= {{ url(env('IMAGE_LINK'). $draft->draft_path) }} alt="{{$draft->title}}" width = "99%" height = "99%"></a>
+                </div>
             </div>
         @else
             <div id = "centerTextContent">
-                {!! nl2br($draft->body) !!}
+                <p class = "test">
+                    {!! nl2br($draft->body) !!}
+                </p>
+
             </div>
         @endif
+    </article>
+
 @stop
+
+
 
 @section('centerFooter')
     <div id = "centerFooter">
@@ -41,6 +62,7 @@
         @else
         @endif
     </div>
+    <script src="/js/lightbox.js"></script>
 @stop
 
 

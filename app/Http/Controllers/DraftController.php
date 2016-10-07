@@ -121,20 +121,13 @@ class DraftController extends Controller
             //Get image from request
             $image = $request->file('image');
             $caption = Purifier::clean($request->input('caption'));
+            $excerpt = null;
 
             //Create image file name
             $title = str_replace(' ', '_', $request['title']);
             $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
-            $path = '/drafts/photos/'. $user->id . '/' .$imageFileName;
-            $originalPath = '/drafts/photos/originals/'. $user->id . '/' .$imageFileName;
-            if (Storage::exists($path))
-            {
-                $error = "You've already saved an inspiration with this title.";
-                return redirect()
-                    ->back()
-                    ->withInput()
-                    ->withErrors([$error]);
-            }
+            $path = '/user_photos/drafts/'. $user->id . '/' .$imageFileName;
+            $originalPath = '/user_photos/drafts/originals/'. $user->id . '/' .$imageFileName;
 
             //Resize the image
             $imageResized = Image::make($image);
@@ -151,14 +144,15 @@ class DraftController extends Controller
             Storage::put($originalPath,  $originalImage->__toString());
             $request = array_add($request, 'draft_path', $path);
         }
-        else
-        {
+        //Process Post as a text file
+        else {
             $this->validate($request, [
-                'body' => 'required|min:5|max:3500'
+                'body' => 'required|min:5|max:5000'
             ]);
             $title = $request->input('title');
-            $path = '/drafts/'.$user_id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
+            $path = '/drafts/' . $user_id . '/' . $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';
             $inspiration = Purifier::clean($request->input('body'));
+            $excerpt = substr($inspiration, 0, 300);
             $caption = null;
 
             //Check if User has already has path set for title
@@ -176,8 +170,10 @@ class DraftController extends Controller
 
             $request = array_add($request, 'draft_path', $path);
         }
+
         $draft = new Draft($request->except('body'));
         $draft->caption = $caption;
+        $draft->excerpt = $excerpt;
         $draft->user()->associate($user);
         $draft->save();
         flash()->overlay('Your draft has been created');
@@ -202,30 +198,25 @@ class DraftController extends Controller
         //Get other Posts of User
         $user_id = $draft->user_id;
         $user = User::findOrFail($user_id);
-        $profilePosts = Post::where('user_id', $user_id)->latest('created_at')->take(7)->get();
-
-        //Get other Extensions of User
-        $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->take(7)->get();
-
 
         //Determine if beacon or sponsor shows and update
-        if($draft->beacon_tag == 'No-Beacon')
+        $beacon = getBeacon($draft);
+        if(isset($beacon->stripe_plan))
         {
-            $sponsor = getSponsor($user);
-            $beacon = NULL;
-        }
-        else
-        {
-            $beacon = getBeacon($draft);
-            if($beacon == NULL)
+            if($beacon->stripe_plan < 1)
             {
                 $sponsor = getSponsor($user);
             }
             else
             {
-                $sponsor = NULL;
+                $sponsor = null;
             }
         }
+        else
+        {
+            $sponsor = getSponsor($user);
+        }
+
         //Get type of post (i.e Image or Txt)
         $type = substr($draft->draft_path, -3);
         if($type == 'txt')
@@ -245,14 +236,14 @@ class DraftController extends Controller
             $img->encode('png');
             $imgtype = 'png';
             $base64 = 'data:image/' . $imgtype . ';base64,' . base64_encode($img);
-            //$sourceOriginalPath = substr_replace($draft->draft_path, 'originals/', 19, 0);
+            $sourceOriginalPath = substr_replace($draft->draft_path, 'originals/', 20, 0);
         }
 
 
         return view('drafts.show')
             ->with(compact('user', 'draft', 'profilePosts', 'profileExtensions', 'beacon', 'sponsor'))
-            //->with('sourceOriginalPath', $sourceOriginalPath)
-                ->with('base64', $base64)
+            ->with('sourceOriginalPath', $sourceOriginalPath)
+            ->with('base64', $base64)
             ->with('type', $type)
             ->with('sponsor', $sponsor);
     }
@@ -288,8 +279,6 @@ class DraftController extends Controller
         //Get other Posts of User
         $user_id = $draft->user_id;
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->take(7)->get();
 
         //
         $date = $draft->created_at->format('M-d-Y');
@@ -319,7 +308,7 @@ class DraftController extends Controller
         }
 
         return view('drafts.edit')
-            ->with(compact('user', 'draft', 'profilePosts', 'profileExtensions', 'beacons', 'date', 'beacon', 'sponsor'))
+            ->with(compact('user', 'draft', 'beacons', 'date', 'beacon', 'sponsor'))
             ->with('base64', $base64)
             ->with('type', $type);
     }
@@ -383,9 +372,9 @@ class DraftController extends Controller
                 //Create image file name
                 $title = str_replace(' ', '_', $request['title']);
                 $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
-                $newPath = '/drafts/photos/'. $user->id . '/' .$imageFileName;
-                $originalPath = '/drafts/photos/originals/'. $user->id . '/' .$imageFileName;
-                $sourceOriginalPath = substr_replace($draft->draft_path, 'originals/', 15, 0);
+                $newPath = '/user_photos/drafts/'. $user->id . '/' .$imageFileName;
+                $originalPath = '/user_photos/drafts/originals/'. $user->id . '/' .$imageFileName;
+                $sourceOriginalPath = substr_replace($draft->draft_path, 'originals/', 20, 0);
 
                 //Resize the image
                 $imageResized = Image::make($image);
@@ -502,7 +491,7 @@ class DraftController extends Controller
         {
             Storage::move($draft->draft_path, 'user_photos/posts/'. $user->id . '/'. $imageFileName);
 
-            $sourceOriginalPath = substr_replace($draft->draft_path, 'originals/', 15, 0);
+            $sourceOriginalPath = substr_replace($draft->draft_path, 'originals/', 20, 0);
             Storage::move($sourceOriginalPath, 'user_photos/posts/originals/'. $user->id . '/'. $imageFileName);
             $path = '/user_photos/posts/'. $user->id . '/'. $imageFileName;
         }
@@ -521,6 +510,7 @@ class DraftController extends Controller
 
         $post = new Post;
         $post->title = $draft->title;
+        $post->excerpt = $draft->excerpt;
         $post->belief = $draft->belief;
         $post->beacon_tag = $draft->beacon_tag;
         $post->source = $draft->source;

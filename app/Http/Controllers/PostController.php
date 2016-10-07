@@ -50,11 +50,12 @@ class PostController extends Controller
         $this->post = $post;
     }
 
+    /*
+     * Default posts index, shows most recent with filter options
+     */
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $posts = filterContentLocation($user, 0, 'Post');
 
@@ -62,10 +63,8 @@ class PostController extends Controller
 
         $location = getLocation();
 
-        $sponsor = getSponsor($user);
-
         return view ('posts.index')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'posts', 'sponsor'))
             ->with('location', $location);
     }
 
@@ -79,8 +78,6 @@ class PostController extends Controller
     {
         $user = User::findOrFail($user_id);
         $viewUser = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $posts = $this->post->where('user_id', $user->id)->latest()->paginate(10);
         $posts = preparePostCards($posts, $user);
 
@@ -97,7 +94,7 @@ class PostController extends Controller
         $sponsor = getSponsor($user);
 
         return view ('posts.userPosts')
-                ->with(compact('user', 'viewUser', 'posts', 'profilePosts','profileExtensions','sponsor'))
+                ->with(compact('user', 'viewUser', 'posts', 'sponsor'))
                 ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -111,8 +108,6 @@ class PostController extends Controller
     {
         $user = User::findOrFail($user_id);
         $viewUser = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $posts = $this->post->where('user_id', $user->id)->orderBy('elevation', 'desc')->latest()->paginate(10);
         $posts = preparePostCards($posts, $user);
@@ -127,10 +122,8 @@ class PostController extends Controller
             $sourcePhotoPath = $user->photo_path;
         }
 
-        $sponsor = getSponsor($user);
-
         return view ('posts.userTopElevated')
-            ->with(compact('user', 'viewUser', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'viewUser', 'posts', 'sponsor'))
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -144,8 +137,6 @@ class PostController extends Controller
     {
         $user = User::findOrFail($user_id);
         $viewUser = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $posts = $this->post->where('user_id', $user->id)->orderBy('extension', 'desc')->latest()->paginate(10);
 
@@ -159,10 +150,8 @@ class PostController extends Controller
             $sourcePhotoPath = $user->photo_path;
         }
 
-        $sponsor = getSponsor($user);
-
         return view ('posts.userMostExtended')
-            ->with(compact('user', 'viewUser', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'viewUser', 'posts', 'sponsor'))
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -366,15 +355,24 @@ class PostController extends Controller
         //Get other Posts of User
         $user_id = $post->user_id;
         $user = User::findOrFail($user_id);
-        $profilePosts = Post::where('user_id', $user_id)->latest('created_at')->take(7)->get();
-
-        //Get other Extensions of User
-        $profileExtensions = Extension::where('user_id', $user_id)->latest('created_at')->take(7)->get();
 
         //Determine if beacon or sponsor shows and update
-        $sponsor = getSponsor($user);
         $beacon = getBeacon($post);
-
+        if(isset($beacon->stripe_plan))
+        {
+            if($beacon->stripe_plan < 1)
+            {
+                $sponsor = getSponsor($user);
+            }
+            else
+            {
+                $sponsor = null;
+            }
+        }
+        else
+        {
+            $sponsor = getSponsor($user);
+        }
 
         //Check if viewing user has already elevated post
         if(Elevation::where('post_id', $post->id)->where('user_id', $viewUser->id)->exists())
@@ -415,7 +413,7 @@ class PostController extends Controller
                         $adjudication = Adjudication::where('moderation_id', $moderation->id)->first();
 
                         return view('posts.locked')
-                            ->with(compact('user', 'viewUser', 'post', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
+                            ->with(compact('user', 'viewUser', 'post', 'intolerance', 'moderation', 'adjudication'))
                             ->with('beacon', $beacon)
                             ->with('sponsor', $sponsor);
                     }
@@ -424,7 +422,7 @@ class PostController extends Controller
                 elseif($unlock['post_id'] != $post->id && $unlock['confirmed'] != 'Yes' )
                 {
                     return view('posts.show')
-                        ->with(compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'))
+                        ->with(compact('user', 'viewUser', 'post'))
                         ->with('beacon', $beacon)
                         ->with('sourcePhotoPath', $sourcePhotoPath)
                         ->with('location', $location)
@@ -439,7 +437,7 @@ class PostController extends Controller
                     $moderation = Moderation::where('intolerance_id', $intolerance->id)->first();
                     if ($adjudication = Adjudication::where('moderation_id', $moderation->id)->first()) {
                         return view('posts.locked')
-                            ->with(compact('user', 'viewUser', 'post', 'intolerance', 'moderation', 'adjudication', 'profilePosts', 'profileExtensions'))
+                            ->with(compact('user', 'viewUser', 'post', 'intolerance', 'moderation', 'adjudication'))
                             ->with('beacon', $beacon)
                             ->with('location', $location)
                             ->with('sponsor', $sponsor);
@@ -452,7 +450,7 @@ class PostController extends Controller
         $userBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
 
         return view('posts.show')
-            ->with(compact('user', 'viewUser', 'post', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user', 'viewUser', 'post'))
             ->with('userBeacons', $userBeacons)
             ->with('beacon', $beacon)
             ->with('location', $location)
@@ -482,8 +480,6 @@ class PostController extends Controller
         
         //Get other Posts of User
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $date = $post->created_at->format('M-d-Y');
 
@@ -511,7 +507,7 @@ class PostController extends Controller
         }
 
         return view('posts.edit')
-                ->with(compact('user', 'post', 'profilePosts', 'profileExtensions', 'beacons', 'date', 'sponsor', 'beacon'))
+                ->with(compact('user', 'post', 'beacons', 'date', 'sponsor', 'beacon'))
                 ->with('type', $type);
 
     }
@@ -698,15 +694,13 @@ class PostController extends Controller
     public function listSources($source)
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
 
         $posts = filterContentLocation($user, 4, $source);
         $posts = preparePostCards($posts, $user);
         $sponsor = getSponsor($user);
 
         return view ('posts.listSources')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'posts', 'sponsor'))
             ->with('source', $source);
     }
 
@@ -718,14 +712,12 @@ class PostController extends Controller
     public function search()
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
 
         $sponsor = getSponsor($user);
         $location = getLocation();
 
         return view ('posts.search')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'sponsor'))
             ->with('location', $location);
     }
 
@@ -879,16 +871,14 @@ class PostController extends Controller
         $user = Auth::user();
         $queryDate = Carbon::parse($date);
         $dateTime = $queryDate->toDateTimeString();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
 
         $posts = filterContentLocationTime($user, 2, 'Post', $dateTime, 'created_at');
-        $posts = $this->prepareCards($posts, $user);
+        $posts = preparePostCards($posts, $user);
 
         $sponsor = getSponsor($user);
 
         return view ('posts.listDates')
-                ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+                ->with(compact('user', 'posts', 'sponsor'))
                 ->with('date', $queryDate);
     }
 
@@ -1000,10 +990,9 @@ class PostController extends Controller
         }
 
         $posts = preparePostCards($posts, $user);
-        $sponsor = getSponsor($user);
 
         return view ('posts.sortByExtensionTime')
-            ->with(compact('user', 'posts', 'sponsor'))
+            ->with(compact('user', 'posts'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
