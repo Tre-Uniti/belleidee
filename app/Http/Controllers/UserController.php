@@ -114,14 +114,15 @@ class UserController extends Controller
         {
             $followerCount = 0;
         }
-
-
+        //Get Number of Users being followed
+        $followingCount = $user->bookmarks()->where('type', '=', 'User')->count();
 
         $sponsor = getSponsor($user);
 
         return view ('users.show')
             ->with(compact('user', 'viewUser', 'posts', 'extensions', 'profilePosts', 'profileExtensions', 'question', 'sponsor', 'beacon'))
             ->with('followerCount', $followerCount)
+            ->with('followingCount', $followingCount)
             ->with('extensionCount', $extensionCount)
             ->with('postCount', $postCount);
     }
@@ -619,6 +620,39 @@ class UserController extends Controller
         }
         flash()->overlay('User tokens set');
         return redirect('/users');
+    }
+
+    /*
+     * List all followers for a specific user
+     * $id user id
+     */
+    public function followers($id)
+    {
+        $user = User::findorFail($id);
+
+        if($bookmark_user = Bookmark::where('pointer', '=', $user->id)->where('type', '=', 'User')->first())
+        {
+            $followers = $bookmark_user->users()->paginate(10);
+        }
+
+        return view('users.followers')
+                ->with(compact('user', 'followers'));
+    }
+
+    /*
+     * List all users a specific user follows
+     * $id user id
+     */
+    public function following($id)
+    {
+        $user = User::findorFail($id);
+
+        $bookmarks = $user->bookmarks()->where('type', '=', 'User')->pluck('pointer');
+
+        $following = User::latest()->whereIn('id', $bookmarks)->paginate(10);
+
+        return view('users.following')
+            ->with(compact('user', 'following'));
     }
 
 }

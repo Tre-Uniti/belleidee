@@ -1102,7 +1102,6 @@ function prepareExtensionCards($extensions ,$user)
     //Check for Elevation
     foreach($extensions as $extension)
     {
-
         $extension->excerpt = autolink($extension->excerpt, array("target"=>"_blank","rel"=>"nofollow"));
 
         //Check if viewing user has already elevated post

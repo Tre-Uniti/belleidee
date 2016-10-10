@@ -23,9 +23,9 @@
 
             </div>
             <div class = "indexNav">
-                <a href="{{ url('/posts/user/'. $user->id) }}" class = "indexLink">Posts: {{ $postCount }}</a>
-                <a href="{{ url('/extensions/user/'. $user->id) }}" class = "indexLink">Extensions: {{ $extensionCount }}</a>
-                <a href="{{ url('/extensions/user/'. $user->id) }}" class = "indexLink">Followers: {{ $followerCount }}</a>
+                <a href="{{ url('/posts/user/'. $user->id) }}" class = "indexLink">Posts <div>{{ $postCount }}</div></a>
+                <a href="{{ url('/users/following/'. $user->id) }}" class = "indexLink">Following <div>{{ $followingCount }}</div></a>
+                <a href="{{ url('/users/followers/'. $user->id) }}" class = "indexLink">Followers <div>{{ $followerCount }}</div></a>
 
             </div>
             <div class = "cardHandleSection">
@@ -37,7 +37,7 @@
                 <div class = "elevationSection">
                     <div class = "elevationIcon">
                         <a href="{{ url('/users/elevatedBy/'. $user->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
-                        <span class="tooltiptext">Total elevation (hearts) of your content</span>
+                        <span class="tooltiptext">Total elevation (hearts) of user content</span>
                         <a href="{{ url('/users/elevatedBy/'. $user->id) }}">{{ $user->elevation }}</a>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                 </div>
                 <div class = "extensionSection">
                     <a href="{{ url('/users/extendedBy/'. $user->id) }}" class = "iconLink" > <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i> </a>
-                    <span class="tooltiptext">Total extension of your content</span>
+                    <span class="tooltiptext">Total extension of user content</span>
                     <a href="{{ url('/users/extendedBy/'. $user->id) }}">{{ $user->extension }}</a>
                 </div>
             </div>
@@ -76,22 +76,19 @@
                     @endif
                 </div>
             </div>
-
-
-        @if(Auth::id() != $user->id)
-            <a href="{{ url('/bookmarks/users/'.$user->id) }}"><button type = "button" class = "navButton">Follow</button></a>
-        @endif
-        @if(Auth::user()->type > 1)
-            <a href="{{ url('intolerances/userIndex/'. $user->id) }}"><button type = "button" class = "navButton">Intolerances</button></a>
-            <a href="{{ url('users/'. $user->id . '/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
-            {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id], 'class' => 'formDeletion']) !!}
-            {!! Form::submit('Delete User', ['class' => 'navButton', 'id' => 'delete']) !!}
-            {!! Form::close() !!}
-
-        @endif
         </div>
     </article>
+    @if(Auth::id() != $user->id)
+        <a href="{{ url('/bookmarks/users/'.$user->id) }}"><button type = "button" class = "navButton">Follow</button></a>
+    @endif
+    @if(Auth::user()->type > 1)
+        <a href="{{ url('intolerances/userIndex/'. $user->id) }}"><button type = "button" class = "navButton">Intolerances</button></a>
+        <a href="{{ url('users/'. $user->id . '/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+        {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id], 'class' => 'formDeletion']) !!}
+        {!! Form::submit('Delete User', ['class' => 'navButton', 'id' => 'delete']) !!}
+        {!! Form::close() !!}
 
+    @endif
     <div class = "contentHeaderSeparator">
         <h3>Recent Posts</h3>
     </div>

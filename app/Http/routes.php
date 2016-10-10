@@ -25,6 +25,8 @@ Route::get('users/deletion/', 'UserController@confirmDeletion');
 Route::get('users/timeFilter/{time}', 'UserController@timeFilter');
 Route::get('users/elevationTime/{time}', 'UserController@sortByElevationTime');
 Route::get('users/extensionTime/{time}', 'UserController@sortByExtensionTime');
+Route::get('users/followers/{id}', 'UserController@followers');
+Route::get('users/following/{id}', 'UserController@following');
 Route::get('users/token', 'UserController@token');
 Route::patch('users/frequency/{id}', 'UserController@frequency')->name('frequency');
 Route::patch('users/theme/{id}', 'UserController@theme')->name('theme');

@@ -71,6 +71,7 @@ class HomeController extends Controller
         $extensions = Extension::where('user_id',$user->id )->latest()->take(5)->get();
         $extensionCount = Extension::where('user_id',$user->id )->count();
 
+        //Get Number of Followers (those who have bookmarked the user)
         if($bookmark_user = Bookmark::where('pointer', '=', $user->id)->where('type', '=', 'User')->first())
         {
             $followerCount = DB::table('bookmark_user')->where('bookmark_id', $bookmark_user->id)->count();
@@ -80,17 +81,15 @@ class HomeController extends Controller
             $followerCount = 0;
         }
         //Get Number of Followers (those who have bookmarked the user)
+        $followingCount = $user->bookmarks()->where('type', '=', 'User')->count();
 
-
-
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         $sponsor = getSponsor($user);
 
         return view ('pages.home')
-                ->with(compact('user', 'posts', 'extensions', 'profilePosts', 'profileExtensions', 'question', 'sponsor', 'beacon'))
+                ->with(compact('user', 'posts', 'extensions', 'question', 'sponsor', 'beacon'))
                 ->with('followerCount', $followerCount)
+                ->with('followingCount', $followingCount)
                 ->with('extensionCount', $extensionCount)
                 ->with('postCount', $postCount);
     }

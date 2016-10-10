@@ -6,7 +6,7 @@
     <link rel="canonical" href="https://belle-idee.org/">
     <meta name="title" content="Belle Idee">
     <meta name="description" content="Belle-idee - An online community for sharing spiritual ideas, inspirations and experiences.">
-    <title>Belle-idee: @yield('siteTitle')</title>
+    <title>@yield('siteTitle')</title>
     <link rel = "stylesheet" href = "/css/normalize.css">
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
     <script src="https://use.fontawesome.com/9747c67e36.js"></script>

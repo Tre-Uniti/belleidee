@@ -4,11 +4,12 @@
 @stop
 
 @section('centerText')
-    <h2>Most Extended Posts by <a href={{ url('/users/'. $user->id)}}>{{ $user->handle }}</a></h2>
+    <h2>Posts by <a href={{ url('/users/'. $user->id)}}>{{ $user->handle }}</a></h2>
+    <p>Filter by: Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></p>
     <div class = "indexNav">
-        <a href={{ url('posts/user/elevated/'. $user->id)}}><button type = "button" class = "indexButton">Top Elevated</button></a>
-        <a href={{ url('/users/'. $user->id)}}><button type = "button" class = "indexButton">Profile</button></a>
-        <a href={{ url('posts/user/'. $user->id)}}><button type = "button" class = "indexButton">Recent</button></a>
+        <a href="{{ url('posts/user/elevated/'. $user->id)}}" class = "indexLink">Top <i class="fa fa-heart" aria-hidden="true"></i> </a>
+        <a href="{{ url('/users/'. $user->id)}}" class = "indexLink">Profile</a>
+        <a href="{{ url('posts/user/'. $user->id)}}" class = "indexLink">Recent</a>
     </div>
     <hr class = "contentSeparator">
     @foreach ($posts as $post)

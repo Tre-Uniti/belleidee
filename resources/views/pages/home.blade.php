@@ -23,10 +23,9 @@
 
         </div>
             <div class = "indexNav">
-                <a href="{{ url('/posts/user/'. $user->id) }}" class = "indexLink">Posts: {{ $postCount }}</a>
-                <a href="{{ url('/extensions/user/'. $user->id) }}" class = "indexLink">Extensions: {{ $extensionCount }}</a>
-                <a href="{{ url('/extensions/user/'. $user->id) }}" class = "indexLink">Followers: {{ $followerCount }}</a>
-
+                <a href="{{ url('/posts/user/'. $user->id) }}" class = "indexLink">Posts <div>{{ $postCount }}</div></a>
+                <a href="{{ url('/users/following/'. $user->id) }}" class = "indexLink">Following <div>{{ $followingCount }}</div></a>
+                <a href="{{ url('/users/followers/'. $user->id) }}" class = "indexLink">Followers <div>{{ $followerCount }}</div></a>
             </div>
             <div class = "cardHandleSection">
                 <p>

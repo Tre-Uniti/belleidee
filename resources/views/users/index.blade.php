@@ -14,29 +14,51 @@
             <a href={{ url('/users/search')}}><button type = "button" class = "indexButton">Search</button></a>
             <a href={{ url('/users/extension')}}><button type = "button" class = "indexButton">Extended</button></a>
         </div>
-    <button class = "interactButton" id = "hiddenIndex">More</button>
-    <div class = "indexContent" id = "hiddenContent">
-        <a href={{ url('/users/timeFilter/Today')}}><button type = "button" class = "indexButton">Today</button></a>
-        <a href={{ url('/users/timeFilter/Month') }}><button type = "button" class = "indexButton">Month</button></a>
-        <a href={{ url('/users/timeFilter/Year')}}><button type = "button" class = "indexButton">Year</button></a>
-        <a href={{ url('/users/timeFilter/All')}}><button type = "button" class = "indexButton">All-time</button></a>
-    </div>
-        </div>
-    <div class = "indexLeft">
-        <h4>Handle</h4>
-    </div>
-    <div class = "indexRight">
-        <h4>Joined</h4>
-    </div>
     @foreach ($users as $User)
-        <div class = "listResource">
-            <div class = "listResourceLeft">
-                <a href="{{ action('UserController@show', [$User->id])}}"><button type = "button" class = "interactButton">{{ $User->handle }}</button></a>
+        <article>
+            <div class = "contentCard">
+                <div class = "cardTitleSection">
+                    <header>
+                        <h3>
+                            <a href = "{{ url('/users/'. $User->id) }}">{{$User->handle}}</a>
+                        </h3>
+                    </header>
+                </div>
+
+                <div class = "indexNav">
+                    <div class = "cardImg">
+                        @if($User->photo_path != NULL)
+                            <a href={{ url('/users/'. $User->id) }}><img src= {{ url(env('IMAGE_LINK'). $User->photo_path) }} alt="{{$User->handle}}" height = "99%" width = "99%"></a>
+                        @else
+                            <a href={{ url('/users/'. $User->id) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "99%" width = "99%"></a>
+                        @endif
+                    </div>
+                </div>
+                <div class = "cardHandleSection">
+                    <p>
+                        Latest Activity: {{ $User->updated_at->format('M-d-Y') }}
+                    </p>
+                </div>
+                <div class = "influenceSection">
+                    <div class = "elevationSection">
+                        <div class = "elevationIcon">
+                            <a href="{{ url('/users/elevatedBy/'. $User->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
+                            <span class="tooltiptext">Total elevation (hearts) of user content</span>
+                            <a href="{{ url('/users/elevatedBy/'. $User->id) }}">{{ $User->elevation }}</a>
+                        </div>
+                    </div>
+                    <div class = "beaconSection">
+                        <a href="{{ url('/beacons/'.$User->last_tag) }}" >{{ $User->last_tag }}</a>
+                        <span class="tooltiptext">Beacon community where this user is located</span>
+                    </div>
+                    <div class = "extensionSection">
+                        <a href="{{ url('/users/extendedBy/'. $User->id) }}" class = "iconLink" > <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i> </a>
+                        <span class="tooltiptext">Total extension of user content</span>
+                        <a href="{{ url('/users/extendedBy/'. $User->id) }}">{{ $User->extension }}</a>
+                    </div>
+                </div>
             </div>
-            <div class = "listResourceRight">
-                <a href="{{ action('UserController@show', [$User->id])}}"><button type = "button" class = "interactButton">{{ $User->created_at->format('M-d-Y') }}</button></a>
-            </div>
-        </div>
+        </article>
     @endforeach
 @stop
 @section('centerFooter')

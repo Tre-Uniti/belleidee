@@ -62,6 +62,7 @@
         </div>
     </div>
     <div id = "centerTextContent">
+            {{ $extension->question }}
             {!! nl2br($extension->body) !!}
     </div>
 

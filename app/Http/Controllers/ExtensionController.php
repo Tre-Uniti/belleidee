@@ -63,11 +63,9 @@ class ExtensionController extends Controller
         $extensions = filterContentLocation($user, 0, 'Extension');
 
         $location = getLocation();
-        
-        $sponsor = getSponsor($user);
 
         return view ('extensions.index')
-            ->with(compact('user', 'extensions', 'sponsor'))
+            ->with(compact('user', 'extensions'))
             ->with('location', $location);
     }
 
@@ -193,6 +191,9 @@ class ExtensionController extends Controller
         $user->last_tag = $request['beacon_tag'];
         $user->update();
 
+        //Get excerpt
+        $excerpt = substr($inspiration, 0, 300);
+
         //Store body text at AWS insert into db with extenception and/or post
         //Check if extension is extending another extension
         if(isset($sources['extenception']))
@@ -240,6 +241,7 @@ class ExtensionController extends Controller
 
                 $extension = new Extension($request->except('body'));
                 $extension->question_id = $sourceId;
+                $extension->excerpt = $excerpt;
                 $extension->answer_id = $sourceExtension->answer_id;
                 $extension->extenception = $sources['extenception'];
                 $extension->source_user = $sources['user_id'];
@@ -300,6 +302,7 @@ class ExtensionController extends Controller
 
                 $extension = new Extension($request->except('body'));
                 $extension->legacy_post_id = $sourceId;
+                $extension->excerpt = $excerpt;
                 $extension->extenception = $sources['extenception'];
                 $extension->source_user = $sources['user_id'];
                 $extension->extension_path = $path;
@@ -363,6 +366,7 @@ class ExtensionController extends Controller
 
                 $extension = new Extension($request->except('body'));
                 $extension->post_id = $sourceId;
+                $extension->excerpt = $excerpt;
                 $extension->extenception = $sources['extenception'];
                 $extension->source_user = $sources['user_id'];
                 $extension->extension_path = $path;
@@ -415,6 +419,7 @@ class ExtensionController extends Controller
 
             $extension = new Extension($request->except('body'));
             $extension->question_id = $sources['question_id'];
+            $extension->excerpt = $excerpt;
             $extension->source_user = $sources['user_id'];
             $extension->extension_path = $path;
 
@@ -468,6 +473,7 @@ class ExtensionController extends Controller
             $extension = new Extension($request->except('body'));
             $extension->extension_path = $path;
             $extension->legacy_post_id = $sources['legacyPost_id'];
+            $extension->excerpt = $excerpt;
             $extension->source_user =  $sources['legacy_id'];
 
             //If localized get Beacon coordinates and add to extension
@@ -510,6 +516,7 @@ class ExtensionController extends Controller
 
             $extension = new Extension($request->except('body'));
             $extension->post_id = $sourceId;
+            $extension->excerpt = $excerpt;
             $extension->source_user = $sources['user_id'];
             $extension->extension_path = $path;
             $extension->user()->associate($user);
@@ -590,10 +597,6 @@ class ExtensionController extends Controller
         //Get other Posts and Extensions of User
         $user_id = $extension->user_id;
         $user = User::findOrFail($user_id);
-
-        //Get Posts and Extensions of user
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         //Determine if beacon or sponsor shows and update
         if($extension->beacon_tag == 'No-Beacon')
@@ -740,13 +743,11 @@ class ExtensionController extends Controller
             }
         }
         //Get Beacons of post user
-        $userBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
         $location = 'https://maps.google.com/?q=' . $extension->lat . ','. $extension->long;
 
         return view('extensions.show')
-            ->with(compact('user', 'viewUser', 'extension', 'profilePosts', 'profileExtensions', 'sources' ))
+            ->with(compact('user', 'viewUser', 'extension', 'sources' ))
             ->with ('elevation', $elevation)
-            ->with ('userBeacons', $userBeacons)
             ->with ('sourcePhotoPath', $sourcePhotoPath)
             ->with('beacon', $beacon)
             ->with('sponsor', $sponsor)
@@ -948,6 +949,7 @@ class ExtensionController extends Controller
         $user = Auth::user();
 
         $inspiration = Purifier::clean($request->input('body'));
+        $extension->excerpt = substr($inspiration, 0, 300);
         $path = $extension->extension_path;
         $newTitle = $request->input('title');
         $newPath = '/extensions/'.$user->id.'/'.$newTitle. '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';
@@ -1526,8 +1528,6 @@ class ExtensionController extends Controller
     {
         $user = User::findOrFail($user_id);
         $viewUser = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $extensions = $this->extension->where('user_id', $user->id)->latest()->paginate(10);
 
@@ -1541,10 +1541,10 @@ class ExtensionController extends Controller
             $sourcePhotoPath = $user->photo_path;
         }
 
-        $sponsor = getSponsor($user);
+        $extensions = prepareExtensionCards($extensions, $viewUser);
 
         return view ('extensions.userExtensions')
-            ->with(compact('user', 'viewUser', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'viewUser', 'extensions'))
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
     
@@ -1558,10 +1558,10 @@ class ExtensionController extends Controller
     {
         $user = User::findOrFail($user_id);
         $viewUser = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $extensions = $this->extension->where('user_id', $user->id)->orderBy('elevation', 'desc')->latest()->paginate(10);
+
+        $extensions = prepareExtensionCards($extensions, $viewUser);
 
         if($user->photo_path == '')
         {
@@ -1573,10 +1573,8 @@ class ExtensionController extends Controller
             $sourcePhotoPath = $user->photo_path;
         }
 
-        $sponsor = getSponsor($user);
-
         return view ('extensions.userTopElevated')
-            ->with(compact('user', 'viewUser', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'viewUser', 'extensions'))
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
     
@@ -1590,10 +1588,10 @@ class ExtensionController extends Controller
     {
         $user = User::findOrFail($user_id);
         $viewUser = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $extensions = $this->extension->where('user_id', $user->id)->orderBy('extension', 'desc')->latest()->paginate(10);
+
+        $extensions = prepareExtensionCards($extensions, $viewUser);
 
         if($user->photo_path == '')
         {
@@ -1605,10 +1603,8 @@ class ExtensionController extends Controller
             $sourcePhotoPath = $user->photo_path;
         }
 
-        $sponsor = getSponsor($user);
-
         return view ('extensions.userMostExtended')
-            ->with(compact('user', 'viewUser', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'viewUser', 'extensions'))
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -1619,14 +1615,11 @@ class ExtensionController extends Controller
     public function sortByElevation()
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $elevations = filterContentLocation($user, 2, 'Extension');
-        $sponsor = getSponsor($user);
 
         return view ('extensions.sortByElevation')
-            ->with(compact('user', 'elevations', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'elevations'));
 
     }
 
