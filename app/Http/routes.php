@@ -199,6 +199,7 @@ Route::get('legacyPosts/extensionTime/{time}', 'LegacyPostController@sortByExten
 Route::get('legacyPosts/timeFilter/{time}', 'LegacyPostController@timeFilter');
 Route::get('legacyPosts/search', 'LegacyPostController@search');
 Route::get('legacyPosts/results', 'LegacyPostController@results');
+Route::get('legacyPosts/forYou', 'LegacyPostController@forYou');
 Route::get('legacyPosts/setExcerpt', 'LegacyPostController@setExcerpt');
 Route::resource('legacyPosts', 'LegacyPostController');
 

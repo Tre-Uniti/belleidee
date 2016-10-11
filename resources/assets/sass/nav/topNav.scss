@@ -264,6 +264,13 @@
     display: block;
   }
 
+  .topNav > ul > li > div > ul
+  {
+    box-shadow: 0 1px 2px 1px #27AE60;
+    font-weight: 500;
+    border-radius: 4px;
+  }
+
 }
 
 

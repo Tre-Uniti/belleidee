@@ -1507,14 +1507,12 @@ class ExtensionController extends Controller
         $user = Auth::user();
         $queryDate = Carbon::parse($date);
         $dateTime = $queryDate->toDateTimeString();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
 
         $extensions = filterContentLocationTime($user, 2, 'Extension', $dateTime, 'created_at');
-        $sponsor = getSponsor($user);
+        $extensions = prepareExtensionCards($extensions, $user);
 
         return view ('extensions.listDates')
-            ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sponsor'))
+            ->with(compact('user', 'extensions'))
             ->with('date', $queryDate);
     }
 

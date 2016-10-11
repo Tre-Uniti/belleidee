@@ -9,7 +9,7 @@
 @section('centerText')
     <div>
     <h2>Extensions for You</h2>
-        <p>From <a href = " {{ url('bookmarks/users') }}">Users </a> you follow</p>
+        <p>From <a href = " {{ url('users/following/'. $user->id) }}">Users </a> you follow</p>
     <div class = "indexNav">
         <a href="{{ url('/extensions')}}" class = "indexLink">Recent</a>
         <a href="{{ url('/beacons/extensions/'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>

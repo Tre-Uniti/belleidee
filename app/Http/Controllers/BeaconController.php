@@ -638,8 +638,6 @@ class BeaconController extends Controller
             $user = User::where('handle', '=', 'Transferred')->first();
             $user->handle = 'Guest';
         }
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         //Check if Beacon_tag belongs to an Idee Beacon
         try

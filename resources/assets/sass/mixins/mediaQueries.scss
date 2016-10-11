@@ -517,12 +517,12 @@
       width: 99%;
     }
 
-
     .topNav > ul > .searchIconBackground {
       display: none;
     }
     .topNav > ul > .searchMobileIconBackground {
       display: inline-block;
+      padding-left: 10px;
     }
     .topNav > ul > .navDesktopIcon {
       display: none;
@@ -631,11 +631,11 @@
     .topNav > ul > .searchIconBackground
     {
       display: inline-block;
-      width: 112px;
+      width: 115px;
     }
     .searchField
     {
-      width: 53px;
+      width: 50px;
     }
     .topNav > ul > .searchMobileIconBackground
     {

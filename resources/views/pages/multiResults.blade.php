@@ -267,7 +267,7 @@
                             </div>
                             <div class = "cardHandleSection">
                                 <p>
-                                    Created on {{ $legacyPost->created_at->format('M-d-Y') }}
+                                    Created on <a href = {{ url('/legacyPosts/date/'.$legacyPost->created_at->format('M-d-Y')) }}>{{ $legacyPost->created_at->format('M-d-Y') }}</a>
                                 </p>
                             </div>
                         </header>
@@ -295,10 +295,9 @@
 
                             </div>
 
-
                             <div class = "beaconSection">
                                 <a href="{{ url('/beliefs/'.$legacyPost->belief) }}" >{{ $legacyPost->belief }}</a>
-                                <span class="tooltiptext">Belief or way of life this legacy belongs to</span>
+                                <span class="tooltiptext">Belief or way of life this legacy relates to</span>
                             </div>
 
                             <div class = "extensionSection">
@@ -311,7 +310,6 @@
                         </div>
                     </div>
                 </article>
-
             @endforeach
         @endif
 

@@ -221,6 +221,11 @@
 .topNav > ul > li > div ul > li {
   display: block; }
 
+.topNav > ul > li > div > ul {
+  box-shadow: 0 1px 2px 1px #27AE60;
+  font-weight: 500;
+  border-radius: 4px; }
+
 .profileNav ul {
   margin: 0;
   padding: 0; }
@@ -636,6 +641,7 @@ p.test {
   background-color: #FFFFFF;
   border-radius: 7px;
   border: 1px solid #BDC3C7;
+  box-shadow: 0 1px 4px #BDC3C7;
   margin: 0 auto 15px auto;
   width: 99.7%;
   height: auto; }
@@ -644,6 +650,7 @@ p.test {
   background-color: #FFFFFF;
   border-radius: 7px;
   border: 1px solid #27AE60;
+  box-shadow: 0 1px 4px #BDC3C7;
   margin: 0 auto 15px auto;
   width: 100%; }
 
@@ -1163,6 +1170,12 @@ p.verification {
 
 html {
   background-color: #ECF0F1; }
+
+h1 {
+  color: #2C3E50; }
+
+h2 {
+  color: #2C3E50; }
 
 p.verify {
   color: #000000; }
@@ -1745,7 +1758,8 @@ article {
   .topNav > ul > .searchIconBackground {
     display: none; }
   .topNav > ul > .searchMobileIconBackground {
-    display: inline-block; }
+    display: inline-block;
+    padding-left: 10px; }
   .topNav > ul > .navDesktopIcon {
     display: none; }
   .topNav > ul > .navMobileIcon {
@@ -1811,9 +1825,9 @@ article {
     width: 90%; }
   .topNav > ul > .searchIconBackground {
     display: inline-block;
-    width: 112px; }
+    width: 115px; }
   .searchField {
-    width: 53px; }
+    width: 50px; }
   .topNav > ul > .searchMobileIconBackground {
     display: none; }
   .topNav > ul > .navDesktopIcon {

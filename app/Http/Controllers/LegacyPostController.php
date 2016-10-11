@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Beacon;
 use App\Belief;
 use App\Elevation;
 use App\Events\BeliefInteraction;
@@ -13,6 +14,7 @@ use function App\Http\getBeliefs;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
+use function App\Http\prepareLegacyPostCards;
 use App\Legacy;
 use App\LegacyPost;
 use App\Post;
@@ -44,14 +46,13 @@ class LegacyPostController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-        $sponsor = getSponsor($user);
 
         $legacyPosts = LegacyPost::latest()->take(10)->get();
 
+        $legacyPosts = prepareLegacyPostCards($legacyPosts, $user);
+
         return view ('legacyPosts.index')
-            ->with(compact('user', 'legacyPosts', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'legacyPosts'));
     }
 
     /**
@@ -467,11 +468,9 @@ class LegacyPostController extends Controller
         $user = Auth::user();
         $queryDate = Carbon::parse($date);
         $dateTime = $queryDate->toDateTimeString();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $legacyPosts = LegacyPost::whereDate('created_at', '=', $dateTime)->latest()->paginate(10);
-
+        $legacyPosts = prepareLegacyPostCards($legacyPosts, $user);
 
         return view ('legacyPosts.listDates')
             ->with(compact('user', 'legacyPosts', 'profilePosts','profileExtensions'))
@@ -636,6 +635,23 @@ class LegacyPostController extends Controller
             ->with(compact('user', 'legacyPosts', 'profilePosts','profileExtensions'))
             ->with('filter', $filter)
             ->with('time', $time);
+    }
+
+    /*
+     * Show Legacy Posts for a specific user based on latest Beacon
+     */
+    public function forYou()
+    {
+        $user = Auth::user();
+
+        $beacon = Beacon::where('beacon_tag', '=', $user->last_tag)->first();
+
+        $legacyPosts = LegacyPost::where('belief', '=', $beacon->belief)->paginate(10);
+
+        $legacyPosts = prepareLegacyPostCards($legacyPosts, $user);
+
+        return view('legacyPosts.forYou')
+            ->with(compact('user', 'beacon', 'legacyPosts'));
     }
 
     //Add excerpt to posts

@@ -51,7 +51,7 @@
                         <li><a href={{ url('/posts/create') }}>Create</a></li>
                         <li><a href={{ url('/posts') }}>Discover</a></li>
                         <li><a href="{{ url('/drafts') }}">Drafts</a></li>
-                        <li><a href={{ url('/legacyPosts')}}>Legacy</a></li>
+                        <li><a href={{ url('/legacyPosts')}}>Legacies</a></li>
                         <li><a href="{{ url('/extensions') }}">Extensions</a></li>
                     </ul>
                 </div>
@@ -63,7 +63,7 @@
                         <li><a href={{ url('/posts/create') }}>Create</a></li>
                         <li><a href={{ url('/posts') }}>Discover</a></li>
                         <li><a href="{{ url('/drafts') }}">Drafts</a></li>
-                        <li><a href={{ url('/legacyPosts')}}>Legacy</a></li>
+                        <li><a href={{ url('/legacyPosts')}}>Legacies</a></li>
                         <li><a href="{{ url('/extensions') }}">Extensions</a></li>
                     </ul>
                 </div>
