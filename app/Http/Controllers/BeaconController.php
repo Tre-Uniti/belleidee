@@ -672,24 +672,24 @@ class BeaconController extends Controller
     /*
      * List guide posts for specific beacon
      *
-     * @param $id
+     * @param $tag
      */
-    public function guide($id)
+    public function guide($tag)
     {
         //Check if Beacon_tag belongs to an Idee Beacon
         try
         {
-            $beacon = Beacon::findOrFail($id);
+            $beacon = Beacon::where('beacon_tag', '=', $tag)->first();
             if ($beacon->status == 'deactivated')
             {
                 flash()->overlay('Beacon deactivated or does not exist');
-                return redirect()->back();
+                return redirect('beacons');
             }
         }
         catch(ModelNotFoundException $e)
         {
             flash()->overlay('No active Idee Beacon with this id');
-            return redirect()->back();
+            return redirect('beacons');
         }
 
         $user = User::where('id', '=', $beacon->guide)->first();
@@ -721,13 +721,11 @@ class BeaconController extends Controller
         }
         $posts = Post::where('user_id', '=', $user->id)->where('beacon_tag', '=', $beacon->beacon_tag)->paginate(10);
 
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         Event::fire(New BeaconViewed($beacon));
 
         return view('beacons.guide')
-                ->with(compact('user', 'viewUser', 'beacon', 'posts', 'profilePosts', 'profileExtensions'))
+                ->with(compact('user', 'viewUser', 'beacon', 'posts'))
                 ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -737,22 +735,22 @@ class BeaconController extends Controller
      * @param   $id
      * @return \Illuminate\Http\Response
      */
-    public function extensions($id)
+    public function extensions($tag)
     {
         //Check if Beacon_tag belongs to an Idee Beacon
         try
         {
-            $beacon = Beacon::findOrFail($id);
+            $beacon = Beacon::where('beacon_tag', '=', $tag)->first();
             if ($beacon->status == 'deactivated')
             {
                 flash()->overlay('Beacon deactivated or does not exist');
-                return redirect()->back();
+                return redirect('beacons');
             }
         }
         catch(ModelNotFoundException $e)
         {
             flash()->overlay('No active Idee Beacon with this id');
-            return redirect()->back();
+            return redirect('beacons');
         }
         //Get logged in user or set to Transferred for Guest
         if(Auth::user())
@@ -766,15 +764,43 @@ class BeaconController extends Controller
             $user->handle = 'Guest';
         }
 
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-
         $extensions = Extension::where('beacon_tag', $beacon->beacon_tag)->latest()->paginate(10);
 
         Event::fire(New BeaconViewed($beacon));
 
         return view ('beacons.extensions')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'beacon'));
+            ->with(compact('user', 'extensions', 'beacon'));
+    }
+
+    /*
+     * Retrieve all users who are connected to beacon
+     */
+    public function users($tag)
+    {
+        $user = Auth::user();
+        //Check if Beacon_tag belongs to an Idee Beacon
+        try
+        {
+            $beacon = Beacon::where('beacon_tag', '=', $tag)->first();
+            if ($beacon->status == 'deactivated')
+            {
+                flash()->overlay('Beacon deactivated or does not exist');
+                return redirect('beacons');
+            }
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('No active Idee Beacon with this id');
+            return redirect('beacons');
+        }
+
+        if($bookmark_user = Bookmark::where('pointer', '=', $beacon->beacon_tag)->where('type', '=', 'Beacon')->first())
+        {
+            $users = $bookmark_user->users()->paginate(10);
+        }
+
+        return view('beacons.users')
+            ->with(compact('user', 'users', 'beacon'));
     }
 
     /**

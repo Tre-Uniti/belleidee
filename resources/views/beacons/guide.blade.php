@@ -3,11 +3,11 @@
     Beacons
 @stop
 @section('centerText')
-    <h2><a href={{ url('/beacons/'. $beacon->beacon_tag)}}>{{$beacon->beacon_tag}}</a>: Guide Posts </h2>
+    <h2><a href={{ url('/beacons/'. $beacon->beacon_tag)}}>{{$beacon->beacon_tag}}</a> Guide</h2>
     <div class = "indexNav">
-        <a href={{ url('/beacons/'. $beacon->beacon_tag)}}><button type = "button" class = "indexButton">Beacon Profile</button></a>
-        <a href={{ url('/beacons/posts/'.$beacon->beacon_tag)}}><button type = "button" class = "indexButton">User Posts</button></a>
-        <a href={{ url('/beacons/extensions/'. $beacon->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
+        <a href="{{ url('/beacons/posts/'.$beacon->beacon_tag)}}" class = "indexLink">Posts</a>
+        <a href="{{ url('/beacons/extensions/'. $beacon->beacon_tag)}}" class = "indexLink">Extensions</a>
+        <a href="{{ url('/beacons/users/'. $beacon->beacon_tag)}}" class = "indexLink">Users</a>
     </div>
     <hr class = "contentSeparator">
     @foreach ($posts as $post)

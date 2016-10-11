@@ -1,15 +1,12 @@
 @extends('app')
 @section('siteTitle')
-    Beacons
+    Beacon Posts
 @stop
 @section('centerText')
     <h2><a href={{ url('/beacons/'. $beacon->beacon_tag)}}>{{$beacon->beacon_tag}}</a>: User Posts </h2>
-    <div class = "indexNav">
-        <a href={{ url('/beacons/guide/'.$beacon->id)}}><button type = "button" class = "indexButton">Guide Posts</button></a>
-        <a href={{ url('/beacons/'. $beacon->beacon_tag)}}><button type = "button" class = "indexButton">Beacon Profile</button></a>
-        <a href={{ url('/beacons/extensions/'. $beacon->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
-
-    </div>
+    <a href="{{ url('/beacons/guide/'.$beacon->beacon_tag)}}" class = "indexLink">Guide</a>
+    <a href="{{ url('/beacons/extensions/'. $beacon->beacon_tag)}}" class = "indexLink">Extensions</a>
+    <a href="{{ url('/beacons/users/'. $beacon->beacon_tag)}}" class = "indexLink">Users</a>
     <hr class = "contentSeparator">
     @foreach ($posts as $post)
         <div class = "contentCard">

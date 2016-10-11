@@ -217,15 +217,16 @@ article
   padding: 3px;
   height: auto;
 }
-.createTitleText
-{
-  width: 85%;
-}
 
 #createBodyText
 {
   @include baseTextField();
   font-size: 110%;
+}
+#createBodyText:focus
+{
+    outline: none !important;
+    box-shadow: 0 0 4px #27AE60;
 }
 
 #centerFooter

@@ -62,8 +62,13 @@
 }
 .tagSelector
 {
-  border-color: #BDC3C7;
   border-radius: 5px;
+}
+.tagSelector:focus
+{
+  outline: none !important;
+  border:1px solid #27AE60;
+  box-shadow: 0 0 10px #27AE60;
 }
 
 .inputField
@@ -100,4 +105,15 @@
   -moz-border-radius:7px;
   -webkit-border-radius:7px;
 
+}
+
+.createTitleText
+{
+  width: 85%;
+}
+.createTitleText:focus
+{
+  outline: none !important;
+  border:1px solid #27AE60;
+  box-shadow: 0 0 10px #27AE60;
 }

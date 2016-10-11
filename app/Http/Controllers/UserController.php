@@ -52,14 +52,11 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-        $sponsor = getSponsor($user);
         $users = filterContentLocation($user, 0, 'User');
         $location = getLocation();
 
         return view('users.index')
-            ->with(compact('user', 'users', 'profilePosts', 'profileExtensions', 'sponsor'))
+            ->with(compact('user', 'users'))
             ->with('location', $location);
     }
 
@@ -247,8 +244,6 @@ class UserController extends Controller
     public function results(Request $request)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         //Get search title
         $handle = $request->input('identifier');
@@ -265,7 +260,7 @@ class UserController extends Controller
         }
 
         return view('users.results')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'results'))
+            ->with(compact('user', 'results'))
             ->with('handle', $handle);
     }
 
@@ -277,11 +272,9 @@ class UserController extends Controller
     public function confirmDeletion()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         return view('users.confirmDeletion')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user'));
     }
 
     /**

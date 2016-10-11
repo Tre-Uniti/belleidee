@@ -977,8 +977,12 @@ a.excerptText {
   font-weight: bold; }
 
 .tagSelector {
-  border-color: #BDC3C7;
   border-radius: 5px; }
+
+.tagSelector:focus {
+  outline: none !important;
+  border: 1px solid #27AE60;
+  box-shadow: 0 0 10px #27AE60; }
 
 .inputField {
   outline: none !important;
@@ -1005,6 +1009,14 @@ a.excerptText {
   border-radius: 7px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px; }
+
+.createTitleText {
+  width: 85%; }
+
+.createTitleText:focus {
+  outline: none !important;
+  border: 1px solid #27AE60;
+  box-shadow: 0 0 10px #27AE60; }
 
 #welcome {
   width: 35%;
@@ -1285,9 +1297,6 @@ article {
   padding: 3px;
   height: auto; }
 
-.createTitleText {
-  width: 85%; }
-
 #createBodyText {
   background-color: #FFFFFF;
   color: #000000;
@@ -1296,6 +1305,10 @@ article {
   padding-left: 5px;
   padding-right: 5px;
   font-size: 110%; }
+
+#createBodyText:focus {
+  outline: none !important;
+  box-shadow: 0 0 4px #27AE60; }
 
 #centerFooter {
   background-color: #ECF0F1 #ECF0F1;
@@ -1801,9 +1814,9 @@ article {
     width: 90%; }
   .topNav > ul > .searchIconBackground {
     display: inline-block;
-    width: 115px; }
+    width: 105px; }
   .searchField {
-    width: 50px; }
+    width: 35px; }
   .topNav > ul > .searchMobileIconBackground {
     display: none; }
   .topNav > ul > .navDesktopIcon {

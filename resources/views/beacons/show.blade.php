@@ -13,6 +13,12 @@
             <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
             <a href="{{ $beacon->website }}" target="_blank"><button type = "button" class = "indexButton">Website</button></a>
         </div>
+    <div class = "indexNav">
+        <a href="{{ url('/beacons/guide/'.$beacon->beacon_tag)}}" class = "indexLink">Guide</a>
+        <a href="{{ url('/beacons/posts/'.$beacon->beacon_tag)}}" class = "indexLink">Posts</a>
+        <a href="{{ url('/beacons/extensions/'. $beacon->beacon_tag)}}" class = "indexLink">Extensions</a>
+        <a href="{{ url('/beacons/users/'. $beacon->beacon_tag)}}" class = "indexLink">Users</a>
+    </div>
     <div>
         <button class = "interactButton" id = "hiddenIndex">More</button>
     </div>

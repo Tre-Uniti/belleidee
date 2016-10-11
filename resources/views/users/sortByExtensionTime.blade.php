@@ -22,12 +22,6 @@
         </nav>
     </div>
 
-    <div class = "indexLeft">
-        <h4>Title</h4>
-    </div>
-    <div class = "indexRight">
-        <h4>Extensions</h4>
-    </div>
         @foreach ($users as $User)
             <div class = "listResource">
             <div class = "listResourceLeft">
