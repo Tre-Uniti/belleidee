@@ -89,6 +89,9 @@ class ExtensionController extends Controller
             $content = Storage::get($sourceModel->extension_path);
             $sourceOriginalPath = NULL;
             $type = substr($sourceModel->extension_path, -3);
+
+            //Get other extensions
+            $extensions = Extension::where('id', '=', $sourceModel->id)->latest()->paginate(10);
         }
         elseif(isset($sources['post_id']))
         {
@@ -102,6 +105,9 @@ class ExtensionController extends Controller
             $sourceOriginalPath = substr_replace($sourceModel->post_path, 'originals/', 19, 0);
             $type = substr($sourceModel->post_path, -3);
 
+            //Get other extensions
+            $extensions = Extension::where('post_id', '=', $sourceModel->id)->latest()->paginate(10);
+
         }
         elseif(isset($sources['question_id']))
         {
@@ -114,6 +120,9 @@ class ExtensionController extends Controller
             ];
             $sourceOriginalPath = NULL;
             $content = $sourceModel->question;
+
+            //Get other extensions
+            $extensions = Extension::where('question_id', '=', $sourceModel->id)->latest()->paginate(10);
         }
         elseif(isset($sources['legacy_id']))
         {
@@ -125,10 +134,11 @@ class ExtensionController extends Controller
                 ];
             $sourceOriginalPath = NULL;
             $content = Storage::get($sourceModel->source_path);
+
+            //Get other extensions
+            $extensions = Extension::where('legacy_post_id', '=', $sourceModel->id)->latest()->paginate(10);
         }
 
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
         $date = Carbon::now()->format('M-d-Y');
 
         //Populate Beacon options with user's bookmarked beacons
@@ -148,11 +158,13 @@ class ExtensionController extends Controller
             flash()->overlay('No recent Beacon interaction, please verify post tags');
         }
 
-
         $sponsor = getSponsor($user);
 
+        //Prepare other extensions into cards
+        $extensions = prepareExtensionCards($extensions, $user);
+
         return view('extensions.create')
-                    ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sourceUser', 'sourceModel', 'sponsor', 'content', 'lastBeacon'))
+                    ->with(compact('user', 'extensions', 'date', 'beacons', 'sources', 'sourceUser', 'sourceModel', 'sponsor', 'content', 'lastBeacon'))
                     ->with('sourceOriginalPath', $sourceOriginalPath)
                     ->with('type', $type);
     }

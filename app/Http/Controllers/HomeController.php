@@ -85,13 +85,15 @@ class HomeController extends Controller
 
 
         $sponsor = getSponsor($user);
+        $location = getLocation();
 
         return view ('pages.home')
                 ->with(compact('user', 'posts', 'extensions', 'question', 'sponsor', 'beacon'))
                 ->with('followerCount', $followerCount)
                 ->with('followingCount', $followingCount)
                 ->with('extensionCount', $extensionCount)
-                ->with('postCount', $postCount);
+                ->with('postCount', $postCount)
+                ->with('location', $location);
     }
     public function getSettings()
     {

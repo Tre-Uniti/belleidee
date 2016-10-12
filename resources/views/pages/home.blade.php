@@ -29,7 +29,7 @@
             </div>
             <div class = "cardHandleSection">
                 <p>
-                    Latest Activity: {{ $user->updated_at->format('M-d-Y') }}
+                Location set to: <a href = "{{ url('/newLocation') }}">{{ $location }}</a>
                 </p>
             </div>
             <div class = "influenceSection">
@@ -77,9 +77,13 @@
             </div>
         </div>
     </article>
+    <p>
+        <a href="{{ url('/posts/create') }}" class = " navLink">Create a Post</a>
+        <a href="{{ url('/posts') }}" class = "navLink">Discover Posts</a>
+    </p>
 
     <div class = "contentHeaderSeparator">
-        <h3>Recent Posts</h3>
+        <h3>Your Recent Posts</h3>
     </div>
 
     @foreach ($posts as $post)

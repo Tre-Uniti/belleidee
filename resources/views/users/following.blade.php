@@ -10,6 +10,7 @@
     <div>
         <h2>Followed by <a href = "{{ url('users/'. $user->id) }}">{{ $user->handle }}</a></h2>
         <div class = "indexNav">
+            <a href="{{ URL::previous() }}" class = "indexLink">Go Back</a>
             <a href="{{ url('/users/' . $user->id)}}" class = "indexLink">Profile</a>
         </div>
     </div>

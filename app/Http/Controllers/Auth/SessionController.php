@@ -16,7 +16,7 @@ use Event;
 class SessionController extends Controller
 {
     use RedirectsUsers, ThrottlesLogins;
-    protected $redirectTo = '/gettingStarted';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new authentication controller instance.
@@ -37,7 +37,6 @@ class SessionController extends Controller
         if (view()->exists('auth.authenticate')) {
             return view('auth.authenticate');
         }
-
 
         return view('auth.login');
     }

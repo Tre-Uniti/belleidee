@@ -7,6 +7,7 @@
     @include ('errors.list')
     {!! Form::open(['url' => 'extensions']) !!}
     @include ('extensions._form', ['submitButtonText' => 'Post Extension'])
+
 @stop
 
 

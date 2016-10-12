@@ -12,4 +12,19 @@ $(document).ready(function(){
         }
 
     });
+
+    //Show or Hide other extensions
+    $(document.getElementById("extensionIndex")).click(function(){
+        $("#otherExtensions").slideToggle();
+        var content = document.getElementById("extensionIndex");
+        if(content.innerHTML == "Show All Extensions")
+        {
+            content.innerHTML = "Hide Extensions";
+        }
+        else
+        {
+            content.innerHTML = "Show All Extensions"
+        }
+
+    });
 });

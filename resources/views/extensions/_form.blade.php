@@ -6,7 +6,6 @@
     <link href="/css/lightbox.css" rel="stylesheet">
 @stop
 
-<div id = "createOptions">
     @if(isset($sources['question_id']) && (!isset($sources['extenception'])))
         <p><button type = "button" class = "interactButton" id = "content">Answer to: {{ $sourceModel->question }}</button></p>
     @else
@@ -45,9 +44,6 @@
             <p>Legacy of: <a href = "{{ url('/beliefs/'. $sourceUser['belief']) }}" target="_blank">{{ $sourceUser['belief'] }}</a></p>
         @endif
     </div>
-        <div class = "formData">
-            {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Your Title']) !!}
-            </div>
     <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
     <div class = "indexContent" id = "hiddenIndexContent">
         <div class = "formData">
@@ -77,44 +73,106 @@
                 <div class = "formCreation">
                     <div class = "tagLabel">Beacon Tag:</div>
                     <div>
-                        {!! Form::select('beacon_tag', $beacons, $lastBeacon->beacon_tag, ['class' => 'tagSelector']) !!}
+                        {!! Form::select('beacon_tag', $beacons, $beacon->beacon_tag, ['class' => 'tagSelector']) !!}
                     </div>
                     </div>
-                <div class = "formCreation">
-                    <div class = "tagLabel">Source:</div>
-                    <div>
-            <select name = 'source' class = 'tagSelector' required>
-                @if(isset($sources['extenception']))
-                    <option value="Extension" @if (old('source') == 'Extension') selected="selected" @endif>Extension</option>
-                @elseif(isset($sources['post_id']))
+            <select name = 'source' class = 'tagSelector' required hidden>
                     <option value="Post" @if (old('source') == 'Post') selected="selected" @endif>Post</option>
-                @elseif(isset($sources['question_id']))
-                    <option value="Question" @if (old('source') == 'Question') selected="selected" @endif>Question</option>
-                @elseif(isset($sources['legacy_id']))
-                    <option value="Legacy" @if (old('source') == 'Legacy') selected="selected" @endif>Legacy</option>
-                @endif
             </select>
-                    </div>
-        </div>
         </div>
         </div>
 
 <!-- Body Form Input -->
     <div id = "centerTextContent">
-        @if(($sources['type'] == 'question'))
-            {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Answer the question here:', 'rows' => '17%', 'maxlength' => '3500']) !!}
-        @else
-            {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Continue your extension here:', 'rows' => '17%', 'maxlength' => '3500']) !!}
-        @endif
+            {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Add your extension here:', 'rows' => '7%', 'maxlength' => '3500']) !!}
 
     </div>
-    @section('centerFooter')
-        @if(($sources['type'] == 'question'))
-            {!! Form::submit('Answer', ['class' => 'navButton', 'id' => 'submit']) !!}
+    {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
+
+        <script src="/js/lightbox.js"></script>
+
+
+<div class = "contentHeaderSeparator">
+    <h3>Extensions</h3>
+
+</div>
+<div id = "otherExtensions">
+    @if(count($extensions) == 0)
+        <p>Be the first to extend!</p>
         @else
-            {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
+        @foreach ($extensions as $extension)
+            <div class = "contentExtensionCard">
+                <div class = "cardTitleSection">
+                    <h3>
+                        <a href="{{ action('ExtensionController@show', [$extension->id])}}">{{ $extension->title }}</a>
+                    </h3>
+
+                </div>
+                <div class = "cardHandleSection">
+                    <p>
+                        By: <a href="{{ action('UserController@show', [$extension->user_id])}}" class = "contentHandle">{{ $extension->user->handle }}</a> on <a href = {{ url('/extensions/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a>
+                    </p>
+                    <p>
+                        @if(isset($extension->extenception))
+                            Extends: <a href = "{{ url('/extensions/' . $extension->extenception) }}">{{ $extension->extenceptionTitle($extension->extenception) }}</a>
+                        @elseif(isset($extension->post_id))
+                            Extends: <a href = "{{ url('/posts/' . $extension->post_id) }}">{{ $extension->post->title }}</a>
+                        @elseif(isset($extension->question_id))
+                            Answers: <a href = "{{ url('/questions/' . $extension->question_id) }}">{{ $extension->question->question }}</a>
+                        @elseif(isset($extension->question_id))
+                            Extends: <a href = "{{ url('/legacyPosts/' . $extension->legacy_post_id) }}">{{ $extension->legacyPost->title }}</a>
+                        @endif
+                    </p>
+                </div>
+                <div class = "cardCaptionExcerptSection">
+                    <p class = "cardExcerpt">
+                        {{ $extension->excerpt }}<a href="{{ action('ExtensionController@show', [$extension->id])}}">... Read More</a>
+                    </p>
+                </div>
+
+                <div class = "influenceSection">
+                    <div class = "elevationSection">
+                        <div class = "elevationIcon">
+                            @if($extension->elevateStatus === 'Elevated')
+                                <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
+                            @else
+                                <a href="{{ url('/extensions/elevate/'.$extension->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
+                            @endif
+                            <span class="tooltiptext">Heart to give thanks and recommend to others</span>
+                        </div>
+                        <div class = "elevationCounter">
+                            <a href={{ url('/extensions/listElevation/'.$extension->id)}}>{{ $extension->elevation }}</a>
+                        </div>
+                    </div>
+
+                    <div class = "beaconSection">
+                        <a href="{{ url('/beacons/'.$extension->beacon_tag) }}">{{ $extension->beacon_tag }}</a>
+                        <span class="tooltiptext">Beacon community where this post is located</span>
+                    </div>
+
+                    <div class = "extensionSection">
+                        <a href="{{ url('/extensions/extenception/'.$extension->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
+                        <a href={{ url('/extensions/extend/list/'.$extension->id)}}>{{ $extension->extension }}</a>
+                        <span class="tooltiptext">Extend to add any inspiration you received</span>
+                    </div>
+                    <div class = "moreSection">
+                        <p class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>
+                        <div class="moreOptionsMenu">
+                            <a href="{{ url('bookmarks/extensions/'.$extension->id) }}"><i class="fa fa-bookmark-o fa-lg" aria-hidden="true"></i></a>
+                            <a href="https://www.facebook.com/share.php?u={{Request::url()}}&title={{$extension->title}}" target="_blank"><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i></a>
+                            <a href="https://twitter.com/intent/tweet?status={{$extension->title}} - {{Request::url()}}" target="_blank"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>
+                            <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank"><i class="fa fa-google-plus-square fa-lg" aria-hidden="true"></i></a>
+                            @if($extension->user_id != Auth::id())
+                                <a href="{{ url('/intolerances/extension/'.$extension->id) }}"><i class="fa fa-flag-o fa-lg" aria-hidden="true"></i></a>
+                            @elseif ($extension->status < 1)
+                                Status: Tolerant
+                            @else
+                                Status: Intolerant
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
         @endif
-    <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
-            <script src="/js/lightbox.js"></script>
-    @stop
 </div>

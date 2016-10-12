@@ -15,6 +15,7 @@ use function App\Http\filterContentLocationTime;
 use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
+use function App\Http\prepareExtensionCards;
 use function App\Http\preparePostCards;
 use App\Intolerance;
 use App\Moderation;
@@ -395,6 +396,18 @@ class PostController extends Controller
             $sourcePhotoPath = $user->photo_path;
         }
 
+        //Get extensions of Post
+        $extensions = Extension::where('post_id', '=', $post->id)->latest()->paginate(10);
+        //Prepare the extensions for cards
+        $extensions = prepareExtensionCards($extensions, $viewUser);
+        //Get the Beacon for the user viewing the post
+        $lastBeacon = Beacon::where('beacon_tag', '=', $viewUser->last_tag)->first();
+        //Get viewUser's beacons and add post beacon
+        $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
+        $beacons = array_add($beacons, $beacon->beacon_tag, $beacon->beacon_tag);
+        $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
+
+
         //Check if Post is intolerant and User hasn't unlocked
         if(isset($post->status))
         {
@@ -422,8 +435,9 @@ class PostController extends Controller
                 elseif($unlock['post_id'] != $post->id && $unlock['confirmed'] != 'Yes' )
                 {
                     return view('posts.show')
-                        ->with(compact('user', 'viewUser', 'post'))
+                        ->with(compact('user', 'viewUser', 'post', 'extensions', 'beacons'))
                         ->with('beacon', $beacon)
+                        ->with('lastBeacon', $lastBeacon)
                         ->with('sourcePhotoPath', $sourcePhotoPath)
                         ->with('location', $location)
                         ->with('sourceOriginalPath', $sourceOriginalPath)
@@ -446,13 +460,10 @@ class PostController extends Controller
             }
         }
 
-        //Get Beacons of post user
-        $userBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
-
         return view('posts.show')
-            ->with(compact('user', 'viewUser', 'post'))
-            ->with('userBeacons', $userBeacons)
+            ->with(compact('user', 'viewUser', 'post', 'extensions', 'beacons'))
             ->with('beacon', $beacon)
+            ->with('lastBeacon', $lastBeacon)
             ->with('location', $location)
             ->with('sourcePhotoPath', $sourcePhotoPath)
             ->with('sourceOriginalPath', $sourceOriginalPath)

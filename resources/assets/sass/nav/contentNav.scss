@@ -74,6 +74,36 @@ p.test
   line-height: 1.58;
 }
 
+.postPhoto
+{
+  height: auto;
+  width: auto;
+  max-width: 450px;
+  max-height: 500px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.showExtensions
+{
+  padding:15px 55px;
+  font-family: "Open Sans", Arial, serif;
+  border-radius:7px;
+  -moz-border-radius:7px;
+  -webkit-border-radius:7px;
+  background-color: #ECF0F1;
+  border: 1px solid #2C3E50;
+  font-weight: 500;
+  margin: 35px 0 0 0;
+
+  &:hover
+  {
+    color: #FFFFFF;
+    background: #2ECC71;
+
+  }
+}
+
 
 
 
