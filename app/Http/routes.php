@@ -53,6 +53,7 @@ Route::get('beacons/joinDate/', 'BeaconController@joinDate');
 Route::get('beacons/topTagged', 'BeaconController@topTagged');
 Route::get('beacons/topViewed', 'BeaconController@topViewed');
 Route::get('beacons/analytics/{id}', 'BeaconController@analytics');
+Route::get('beacons/contact/{id}', 'BeaconController@contact');
 Route::resource('beacons', 'BeaconController');
 
 //Announcements for Subscribed Beacons

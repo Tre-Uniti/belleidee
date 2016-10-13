@@ -6,6 +6,7 @@
 @section('centerText')
     <h2>Top Posts ({{ $filter }})</h2>
         <div class = "indexNav">
+            <a href="{{ url('/posts')}}" class = "indexLink">Recent</a>
             <a href="{{ url('/posts/forYou')}}" class = "indexLink">For You</a>
             <a href="{{ url('/beacons/posts/'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
             <a href="{{ url('posts/extensionTime/Month')}}" class = "indexLink">Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>

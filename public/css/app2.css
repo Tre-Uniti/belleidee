@@ -432,6 +432,9 @@ p.test {
 .showAll {
   margin: 10px 0 10px 0; }
 
+#hiddenManagerOptions {
+  display: none; }
+
 .beliefNav {
   width: auto;
   margin: 0 auto;
@@ -695,7 +698,7 @@ p.test {
 .elevationSection {
   position: relative;
   display: inline-block;
-  margin-left: 15px; }
+  margin-left: 5px; }
 
 .elevationSection .tooltiptext {
   visibility: hidden;

@@ -27,4 +27,19 @@ $(document).ready(function(){
         }
 
     });
+
+    //Show or Hide Manager Options
+    $(document.getElementById("managerOptions")).click(function(){
+        $("#hiddenManagerOptions").slideToggle();
+        var content = document.getElementById("managerOptions");
+        if(content.innerHTML == "Show Manager Options")
+        {
+            content.innerHTML = "Hide Manager Options";
+        }
+        else
+        {
+            content.innerHTML = "Show Manager Options"
+        }
+
+    });
 });

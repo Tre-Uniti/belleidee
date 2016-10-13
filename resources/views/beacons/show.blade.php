@@ -1,55 +1,92 @@
 @extends('app')
 @section('pageHeader')
     <script src = "/js/index.js"></script>
+    <script src = "/js/toggleSource.js"></script>
 @stop
 @section('siteTitle')
     Show Beacon
 @stop
 
 @section('centerText')
-    <h2>{{ $beacon->name }}</h2>
-        <div class = "indexNav">
-            <a href="{{ url('/beliefs/'. $beacon->belief) }}"><button type = "button" class = "indexButton">{{ $beacon->belief }}</button></a>
-            <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
-            <a href="{{ $beacon->website }}" target="_blank"><button type = "button" class = "indexButton">Website</button></a>
-        </div>
-    <div class = "indexNav">
-        <a href="{{ url('/beacons/guide/'.$beacon->beacon_tag)}}" class = "indexLink">Guide</a>
-        <a href="{{ url('/beacons/posts/'.$beacon->beacon_tag)}}" class = "indexLink">Posts</a>
-        <a href="{{ url('/beacons/extensions/'. $beacon->beacon_tag)}}" class = "indexLink">Extensions</a>
-        <a href="{{ url('/beacons/users/'. $beacon->beacon_tag)}}" class = "indexLink">Users</a>
-    </div>
-    <div>
-        <button class = "interactButton" id = "hiddenIndex">More</button>
-    </div>
-        <div class = "indexContent" id = "hiddenContent">
-            <a href="{{ url('/beacons/guide/'.$beacon->id) }}"><button type = "button" class = "indexButton">Guide Posts</button></a>
-            <a href="{{ url('/beacons/posts/'.$beacon->id) }}"><button type = "button" class = "indexButton">User Posts</button></a>
-            <a href="{{ url('/beacons/extensions/'.$beacon->id) }}"><button type = "button" class = "indexButton">Extensions</button></a>
+    <article>
+        <div class = "contentCard">
+            <div class = "cardTitleSection">
+                <header>
+                    <h1>{{ $beacon->name }}</h1>
+                </header>
+            </div>
 
+            <div class = "indexNav">
+                <div class = "cardImg">
+                    @if($beacon->photo_path != NULL)
+                        <img src= {{ url(env('IMAGE_LINK'). $beacon->photo_path) }} alt="{{$beacon->name}}" height = "99%" width = "99%">
+                    @else
+                        <img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "99%" width = "99%">
+                    @endif
+                </div>
+
+            </div>
+            <div class = "indexNav">
+                @if($guide != NULL)
+                <a href="{{ url('/beacons/guide/'.$beacon->beacon_tag)}}" class = "indexLink">Guide <div>{{ $guide->handle }}</div></a>
+                @endif
+                <a href="{{ url('/beacons/posts/'.$beacon->beacon_tag)}}" class = "indexLink">Posts <div>{{ $postCount }}</div></a>
+                <a href="{{ url('/beacons/users/'. $beacon->beacon_tag)}}" class = "indexLink">Users <div>{{ $userCount }}</div></a>
+
+            </div>
+            <p>Tag: {{ $beacon->beacon_tag }}</p>
+            <div class = "influenceSection">
+                <div class = "elevationSection">
+                    <div class = "elevationIcon">
+                        <span class="tooltiptext">Number of monthly tags for {{ $beacon->beacon_tag }}</span>
+                        <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}" class = "iconLink"><i class="fa fa-hashtag" aria-hidden="true"></i></a>
+                        <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->tag_usage }}</a>
+                    </div>
+                </div>
+                <div class = "beaconSection">
+                    <a href="{{ url('/beliefs/'. $beacon->belief) }}">{{ $beacon->belief }}</a>
+                </div>
+                <div class = "extensionSection">
+                    <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->tag_views }}</a>
+                    <span class="tooltiptext">Number of monthly views</span>
+                </div>
+            </div>
             @if($user->type > 1 || $user->id == $beacon->manager)
 
-                <div class = "indexNav">
-                    <p>Manager:</p>
-                    <a href="{{ url('/beacons/invoice/'. $beacon->id )}}"><button type = "button" class = "indexButton">Invoices</button></a>
-                    <a href="{{ url('/beacons/subscription/'. $beacon->id )}}"><button type = "button" class = "indexButton">Subscription</button></a>
-                    <a href="{{ url('/intolerances/beacon/'. $beacon->id) }}"><button type = "button" class = "indexButton">Intolerance</button></a>
+                <button type = "button" id = "managerOptions" class = "navButton">Show Manager Options</button>
+                <div id = "hiddenManagerOptions">
+                    <div class = "indexNav">
+                        <a href="{{ url('/beacons/invoice/'. $beacon->id )}}" class = "indexLink">Invoices</a>
+                        <a href="{{ url('/beacons/subscription/'. $beacon->id )}}" class = "indexLink">Subscription</a>
+                        <a href="{{ url('/intolerances/beacon/'. $beacon->id) }}" class = "indexLink">Intolerance</a>
+                    </div>
+                    <div class = "indexNav">
+                        <a href = "{{ url('/beacons/analytics/'. $beacon->id) }}" class = "indexLink">Analytics</a>
+                        <a href = "{{ url('/beacons/integration/'. $beacon->id) }}" class = "indexLink">Integration</a>
+                        <a href = "{{ url('/announcements/beaconIndex/'. $beacon->id) }}" class = "indexLink">Announcements</a>
+                    </div>
                 </div>
-                <div class = "indexNav">
-                    <a href = "{{ url('/beacons/analytics/'. $beacon->id) }}"><button type = "button" class = "indexButton">Analytics</button></a>
-                   <a href = "{{ url('/beacons/integration/'. $beacon->id) }}"><button type = "button" class = "indexButton">Integration</button></a>
-                   <a href = "{{ url('/announcements/beaconIndex/'. $beacon->id) }}"><button type = "button" class = "indexButton">Announcements</button></a>
-                </div>
-            @endif
-            <p>Tags this month ({{ $beacon->beacon_tag }}): {{ $beacon->tag_usage }}</p>
+                @endif
+        </div>
+    </article>
+        @if($user->type > 1)
+            <a href="{{ url('/beacons/'.$beacon->id .'/edit') }}" class = "navLink">Edit</a>
+            <a href="{{ url('beacons/deactivate/'. $beacon->id)}}" class = "navLink">Deactivate</a>
+        @endif
+        @if($userConnected == FALSE)
+            <a href="{{ url('/bookmarks/beacons/'.$beacon->beacon_tag) }}" class = "navLink">Connect to Beacon</a>
+        @endif
+    <a href="{{ url('/beacons/contact/' . $beacon->beacon_tag) }}" class = "navLink">Contact</a>
+
+
+    <hr class = "contentSeparator"/>
+    <div>
+        <div class = "indexNav">
 
         </div>
-        <div class = "indexLeft">
-            <h4>Announcement</h4>
-        </div>
-        <div class = "indexRight">
-            <h4>Created</h4>
-        </div>
+    </div>
+
 
         @if(!count($announcements))
             <p>No announcements to show</p>
@@ -65,19 +102,5 @@
             </div>
         @endforeach
     @endif
-@stop
-
-@section('centerFooter')
-    <div id = "centerFooter">
-        <a href = {{ url('/users/'. $beacon->guide) }}><button type = "button" class = "navButton">Guide</button></a>
-
-        @if($user->type > 1)
-            <a href="{{ url('/beacons/'.$beacon->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
-            <a href="{{ url('beacons/deactivate/'. $beacon->id)}}"><button type = "button" class = "navButton">Deactivate</button></a>
-        @endif
-        @if($beacon->beacon_tag != 'No-Beacon')
-            <a href="{{ url('/bookmarks/beacons/'.$beacon->beacon_tag) }}"><button type = "button" class = "navButton">Bookmark</button></a>
-        @endif
-    </div>
 @stop
 

@@ -521,7 +521,9 @@ class HomeController extends Controller
             return redirect('/newLocation');
         }
 
-        return redirect ('gettingStarted');
+        flash()->overlay('Location changed to: ' . $coordinates['city']);
+
+        return redirect ('/home');
     }
 
     /*
@@ -562,7 +564,9 @@ class HomeController extends Controller
             return redirect('/newLocation');
         }
 
-        return redirect ('gettingStarted');
+        flash()->overlay('Location changed to: ' . $coordinates['country']);
+
+        return redirect ('/home');
     }
 
     /*
@@ -576,7 +580,9 @@ class HomeController extends Controller
 
         Event::fire(New SetLocation($user));
 
-        return redirect ('gettingStarted');
+        flash()->overlay('Location set to: Global');
+
+        return redirect ('/home');
 
     }
 
@@ -597,7 +603,7 @@ class HomeController extends Controller
     }
 
     /*
-    * Add location for user and redirect to getting started
+    * Add location for user and redirect to home
      *
     */
     public function addLocation(Request $request)
@@ -620,7 +626,7 @@ class HomeController extends Controller
             $shortTag = $beacon->country . '-' . $cityCode;
             $user->location = 0;
             $user->update();
-            flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $city);
+            flash()->overlay('Location changed to: ' . $city);
         }
         else
         {
@@ -636,8 +642,7 @@ class HomeController extends Controller
             $cityCode = NULL;
             $user->location = 1;
             $user->update();
-            flash()->overlay('Greetings ' . $user->handle . ' your location is set to: ' . $request['country']);
-        }
+            flash()->overlay('Location changed to: ' . $country);        }
 
         $coordinates = [
             'lat' => $beacon->lat,
@@ -652,7 +657,7 @@ class HomeController extends Controller
 
         session()->put('coordinates', $coordinates);
 
-        return redirect ('/gettingStarted');
+        return redirect ('/home');
     }
 
     /*
@@ -661,15 +666,13 @@ class HomeController extends Controller
     public function theme()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
         $themes = [
             '1' => 'Simple Light',
             '2' => 'Starry Night',
         ];
 
         return view ('pages.themes')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'themes'));
+            ->with(compact('user', 'themes'));
     }
     
     /*

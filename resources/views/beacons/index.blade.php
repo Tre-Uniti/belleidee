@@ -10,17 +10,12 @@
     <h2>{{ $location }} Beacon Directory</h2>
         <p>Beacon: A place of worship or thought</p>
         <div class = "indexNav">
-            <a href={{ url('/announcements')}}><button type = "button" class = "indexButton">Announcements</button></a>
-            <a href={{ url('/beacons/search')}}><button type = "button" class = "indexButton">Search</button></a>
-            <a href={{ url('/beaconRequests')}}><button type = "button" class = "indexButton">Requests</button></a>
+            <a href="{{ url('/beacons/'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
+            <a href="{{ url('/beacons/topTagged')}}" class = "indexLink">Top <i class="fa fa-hashtag" aria-hidden="true"></i></a>
+            <a href="{{ url('/beacons/topViewed')}}" class = "indexLink">Most <i class="fa fa-eye" aria-hidden="true"></i></a>
+            <a href="{{ url('/beaconRequests')}}" class = "indexLink">Requests</a>
         </div>
-    <button class = "interactButton" id = "hiddenIndex">More</button>
-    <div class = "indexContent" id = "hiddenContent">
-        <a href={{ url('/beacons/joinDate')}}><button type = "button" class = "indexButton">Join Date</button></a>
-        <a href={{ url('/beacons/topTagged')}}><button type = "button" class = "indexButton">Top Tagged</button></a>
-        <a href={{ url('/beacons/topViewed')}}><button type = "button" class = "indexButton">Top Viewed</button></a>
-
-    </div>
+ <hr class = "contentSeparator"/>
         @foreach ($beacons as $beacon)
             <article>
                 <div class = "contentCard">
@@ -29,9 +24,6 @@
                             <h3>
                                 <a href = "{{ url('/beacons/'. $beacon->beacon_tag) }}">{{$beacon->name}}</a>
                             </h3>
-                            <p>
-                                <a href = "{{ url('/beacons/'. $beacon->beacon_tag) }}">{{$beacon->beacon_tag}}</a>
-                            </p>
                         </header>
                     </div>
 
@@ -46,7 +38,7 @@
                     </div>
                     <div class = "cardHandleSection">
                         <p>
-                            Latest Activity: {{ $beacon->updated_at->format('M-d-Y') }}
+                            Tag: <a href = "{{ url('/beacons/'. $beacon->beacon_tag) }}">{{$beacon->beacon_tag}}</a>
                         </p>
                     </div>
                     <div class = "influenceSection">

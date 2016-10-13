@@ -628,8 +628,10 @@ class UserController extends Controller
             $followers = $bookmark_user->users()->paginate(10);
         }
 
+        $viewUser = Auth::user();
+
         return view('users.followers')
-                ->with(compact('user', 'followers'));
+                ->with(compact('user', 'viewUser', 'followers'));
     }
 
     /*
@@ -640,12 +642,14 @@ class UserController extends Controller
     {
         $user = User::findorFail($id);
 
+        $viewUser = Auth::user();
+
         $bookmarks = $user->bookmarks()->where('type', '=', 'User')->pluck('pointer');
 
         $following = User::latest()->whereIn('id', $bookmarks)->paginate(10);
 
         return view('users.following')
-            ->with(compact('user', 'following'));
+            ->with(compact('user', 'viewUser', 'following'));
     }
 
 }

@@ -14,6 +14,8 @@
             <a href="{{ url('users/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart" aria-hidden="true"></i></a>
             <a href="{{ url('users/extensionTime/Month')}}" class = "indexLink">Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
         </div>
+
+    <hr class = "contentSeparator"/>
     @foreach ($users as $User)
         <article>
             <div class = "contentCard">

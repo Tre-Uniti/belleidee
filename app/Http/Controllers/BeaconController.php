@@ -246,9 +246,6 @@ class BeaconController extends Controller
             $user->handle = 'Guest';
         }
 
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-
 
         //Check Beacon exists and is active belongs to an Idee Beacon
         try
@@ -266,7 +263,38 @@ class BeaconController extends Controller
             return redirect()->back();
         }
         $beaconPath = $beacon->photo_path;
-        
+        if($beacon->guide != NULL)
+        {
+            $guide = User::where('id', '=', $beacon->id)->first();
+        }
+        else
+        {
+            $guide = NULL;
+        }
+
+        //Check if User is already connected to Beacon
+        $beacons = $user->bookmarks()->where('type', '=', 'Beacon')->pluck('pointer')->toArray();
+        if (in_array($beacon->beacon_tag, $beacons) && $beacon->beacon_tag != 'No-Beacon') {
+            $userConnected = true;
+        }
+        else
+        {
+            $userConnected = false;
+        }
+
+        //Count number of posts
+        $postCount = Post::where('beacon_tag', '=', $beacon->beacon_tag)->count();
+
+        //Count number of users connected
+        if($bookmark_user = Bookmark::where('pointer', '=', $beacon->beacon_tag)->where('type', '=', 'Beacon')->first())
+        {
+            $userCount = DB::table('bookmark_user')->where('bookmark_id', $bookmark_user->id)->count();
+        }
+        else
+        {
+            $userCount = 0;
+        }
+
         $announcements = Announcement::where('beacon_id', '=', $beacon->id)->latest()->take(10)->get();
 
         //Get location of beacon and setup link to Google maps
@@ -276,6 +304,10 @@ class BeaconController extends Controller
 
         return view ('beacons.show')
                     ->with(compact('user', 'beacon', 'profilePosts','profileExtensions', 'announcements'))
+                    ->with('guide', $guide)
+                    ->with('postCount', $postCount)
+                    ->with('userCount', $userCount)
+                    ->with('userConnected', $userConnected)
                     ->with('beaconPath', $beaconPath)
                     ->with('location' , $location)
                     ->with('month', $month);
@@ -663,7 +695,7 @@ class BeaconController extends Controller
         $beaconPath = $beacon->photo_path;
 
         return view ('beacons.posts')
-            ->with(compact('user', 'posts', 'beacon', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'posts', 'beacon'))
             ->with('beaconPath', $beaconPath)
             ->with('location', $location);
 
@@ -814,8 +846,6 @@ class BeaconController extends Controller
         $beacon = Beacon::findOrFail($id);
 
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $beaconUrl = url('/beacons/'. $beacon->beacon_tag);
         $beaconSocialUrl = "<a href = ". '"'. "$beaconUrl". '"'."><img src= ". '"'. "Add image location". '"'. "></a>";
@@ -827,7 +857,7 @@ class BeaconController extends Controller
         $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
 
         return view('beacons.integration')
-                ->with(compact('user', 'beacon', 'profilePosts', 'profileExtensions'))
+                ->with(compact('user', 'beacon'))
                 ->with('beaconUrl', $beaconUrl)
                 ->with('beaconSocialUrl', $beaconSocialUrl)
                 ->with('imageLink', $imageLink)
@@ -848,14 +878,47 @@ class BeaconController extends Controller
         $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
 
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         return view('beacons.analytics')
-            ->with(compact('beacon', 'user', 'profilePosts', 'profileExtensions'))
+            ->with(compact('beacon', 'user'))
             ->with('location', $location)
             ->with('guidePosts', $guidePosts)
             ->with('userPosts', $userPosts)
             ->with('extensions', $extensions);
+    }
+
+    /*
+     * Show the contact info for a specific Beacon
+     */
+    public function contact($tag)
+    {
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+            $user->handle = 'Guest';
+        }
+        try
+        {
+            $beacon = Beacon::where('beacon_tag', '=', $tag)->first();
+            if ($beacon->status == 'deactivated')
+            {
+                flash()->overlay('Beacon deactivated or does not exist');
+                return redirect('beacons');
+            }
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('No active Idee Beacon with this id');
+            return redirect('beacons');
+        }
+
+        return view('beacons.contact')
+            ->with(compact('user', 'beacon'));
     }
 }

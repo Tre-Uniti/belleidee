@@ -11,7 +11,7 @@
 @section('centerText')
     <h2>Idee Map:</h2>
     <div class = "contentCard">
-        <div id='map' style='width: auto; height: 500px;'></div>
+        <div id='map'></div>
         <script>
             mapboxgl.accessToken = 'pk.eyJ1IjoidHJldW5pdGkiLCJhIjoiY2lzd3I4eG5wMDZkajJva2gxaDRlMmZ1cSJ9.eCMHtRz8U82MkHThsnyafA';
             var map = new mapboxgl.Map({
