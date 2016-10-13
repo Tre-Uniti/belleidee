@@ -1023,14 +1023,12 @@ class ExtensionController extends Controller
     public function results(Request $request)
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         //Get search title
         $title = $request->input('title');
-        $results = filterContentLocationSearch($user, 0, 'Extension', $title);
+        $extensions = filterContentLocationSearch($user, 0, 'Extension', $title);
 
-        if(!count($results))
+        if(!count($extensions))
         {
             flash()->overlay('No extensions with this title');
             return redirect()->back();
@@ -1039,7 +1037,7 @@ class ExtensionController extends Controller
         $sponsor = getSponsor($user);
 
         return view ('extensions.results')
-            ->with(compact('user', 'profilePosts','profileExtensions','results', 'sponsor'))
+            ->with(compact('user', 'extensions', 'sponsor'))
             ->with('title', $title);
     }
 
@@ -1408,6 +1406,7 @@ class ExtensionController extends Controller
         $notification->source_type = 'Extension';
         $notification->source_id = $extension->id;
         $notification->title = 'Extension';
+
         $notification->source_user = $sourceUser->id;
         $notification->user()->associate($user);
         $notification->save();

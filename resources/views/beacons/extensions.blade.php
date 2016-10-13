@@ -4,26 +4,27 @@
 @stop
 
 @section('centerText')
-    <h2>Extensions of <a href={{ url('/beacons/'. $beacon->beacon_tag)}}>{{ $beacon->beacon_tag }}</a></h2>
-        <div class = "indexNav">
-            <a href="{{ url('/beacons/guide/'. $beacon->beacon_tag)}}" class = "indexLink">Guide</a>
-            <a href="{{ url('/beacons/posts/'.$beacon->beacon_tag)}}" class = "indexLink">Posts</a>
-            <a href="{{ url('/beacons/users/'. $beacon->beacon_tag)}}" class = "indexLink">Users</a>
-        </div>
+    <h2><a href={{ url('/beacons/'. $beacon->beacon_tag)}}>{{$beacon->name}}</a></h2>
+    <div class = "indexNav">
+        <a href="{{ url('/beacons/'. $beacon->beacon_tag)}}" class = "indexLink">Profile</a>
+        <a href="{{ url('/beacons/contact/' . $beacon->beacon_tag)}}" class = "indexLink">Contact</a>
+        <p>Extensions tagged to: <a href = "{{ url('/beacons/' . $beacon->beacon_tag) }}" class = "contentHandle">{{ $beacon->beacon_tag }}</a></p>
+        <nav class = "infoNav">
+            <ul>
+                <li>
+                    <a href="{{ url('/beacons/guide/'.$beacon->beacon_tag)}}" @if($type == 'Guide')class = "navLink" @else class = "indexLink" @endif>Guide</a>
+                    <a href = "{{ url('/beacons/posts/' . $beacon->beacon_tag) }}" @if($type == 'Posts') class = "navLink" @else class = "indexLink" @endif>Posts</a>
+                    <a href = "{{ url('/beacons/extensions/'. $beacon->beacon_tag) }}" @if($type == 'Extensions') class = "navLink" @else class = "indexLink" @endif>Extensions</a>
+                    <a href = "{{ url('/beacons/users/'. $beacon->beacon_tag) }}" @if($type == 'Users') class = "navLink" @else class = "indexLink" @endif>Users</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
     <hr class = "contentSeparator">
     @foreach ($extensions as $extension)
         <div class = "contentExtensionCard">
             <div class = "cardTitleSection">
                 <h3>
-                    <a href="{{ action('ExtensionController@show', [$extension->id])}}">{{ $extension->title }}</a>
-                </h3>
-
-            </div>
-            <div class = "cardHandleSection">
-                <p>
-                    By: <a href="{{ action('UserController@show', [$extension->user_id])}}" class = "contentHandle">{{ $extension->user->handle }}</a> on <a href = {{ url('/extensions/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a>
-                </p>
-                <p>
                     @if(isset($extension->extenception))
                         Extends: <a href = "{{ url('/extensions/' . $extension->extenception) }}">{{ $extension->extenceptionTitle($extension->extenception) }}</a>
                     @elseif(isset($extension->post_id))
@@ -33,6 +34,12 @@
                     @elseif(isset($extension->question_id))
                         Extends: <a href = "{{ url('/legacyPosts/' . $extension->legacy_post_id) }}">{{ $extension->legacyPost->title }}</a>
                     @endif
+                </h3>
+
+            </div>
+            <div class = "cardHandleSection">
+                <p>
+                    By: <a href="{{ action('UserController@show', [$extension->user_id])}}" class = "contentHandle">{{ $extension->user->handle }}</a> on <a href = {{ url('/extensions/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a>
                 </p>
             </div>
             <div class = "cardCaptionExcerptSection">
@@ -67,7 +74,7 @@
                     <span class="tooltiptext">Extend to add any inspiration you received</span>
                 </div>
                 <div class = "moreSection">
-                    <p class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>
+                    <p onclick="" class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>
                     <div class="moreOptionsMenu">
                         <a href="{{ url('bookmarks/extensions/'.$extension->id) }}"><i class="fa fa-bookmark-o fa-lg" aria-hidden="true"></i></a>
                         <a href="https://www.facebook.com/share.php?u={{Request::url()}}&title={{$extension->title}}" target="_blank"><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i></a>

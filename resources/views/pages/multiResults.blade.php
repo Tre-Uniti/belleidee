@@ -83,9 +83,7 @@
                             <h3>
                                 <a href = "{{ url('/beacons/'. $beacon->beacon_tag) }}">{{$beacon->name}}</a>
                             </h3>
-                            <p>
-                                <a href = "{{ url('/beacons/'. $beacon->beacon_tag) }}">{{$beacon->beacon_tag}}</a>
-                            </p>
+
                         </header>
                     </div>
 
@@ -100,7 +98,7 @@
                     </div>
                     <div class = "cardHandleSection">
                         <p>
-                            Latest Activity: {{ $beacon->updated_at->format('M-d-Y') }}
+                            <a href = "{{ url('/beacons/'. $beacon->beacon_tag) }}">{{$beacon->beacon_tag}}</a>
                         </p>
                     </div>
                     <div class = "influenceSection">
@@ -140,9 +138,7 @@
                                 <h3>
                                     <a href = "{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{$sponsor->name}}</a>
                                 </h3>
-                                <p>
-                                    <a href = "{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{$sponsor->sponsor_tag}}</a>
-                                </p>
+
                             </header>
                         </div>
 
@@ -157,7 +153,7 @@
                         </div>
                         <div class = "cardHandleSection">
                             <p>
-                                Latest Activity: {{ $sponsor->updated_at->format('M-d-Y') }}
+                                <a href = "{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{$sponsor->sponsor_tag}}</a>
                             </p>
                         </div>
                         <div class = "influenceSection">
@@ -244,6 +240,22 @@
                             <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
                             <span class="tooltiptext">Extend to add any inspiration you received</span>
                         </div>
+                        <div class = "moreSection">
+                            <p onclick="" class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>
+                            <div class="moreOptionsMenu">
+                                <a href="{{ url('bookmarks/posts/'.$post->id) }}"><i class="fa fa-bookmark-o fa-lg" aria-hidden="true"></i></a>
+                                <a href="https://www.facebook.com/share.php?u={{Request::url()}}&title={{$post->title}}" target="_blank"><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i></a>
+                                <a href="https://twitter.com/intent/tweet?status={{$post->title}} - {{Request::url()}}" target="_blank"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>
+                                <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank"><i class="fa fa-google-plus-square fa-lg" aria-hidden="true"></i></a>
+                                @if($post->user_id != Auth::id())
+                                    <a href="{{ url('/intolerances/post/'.$post->id) }}"><i class="fa fa-flag-o fa-lg" aria-hidden="true"></i></a>
+                                @elseif ($post->status < 1)
+                                    Status: Tolerant
+                                @else
+                                    Status: Intolerant
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
             </article>
@@ -326,7 +338,15 @@
                     <header>
                         <div class = "cardTitleSection">
                             <h3>
-                                <a href="{{ action('ExtensionController@show', [$extension->id])}}">{{ $extension->title }}</a>
+                                @if(isset($extension->extenception))
+                                    Extends: <a href = "{{ url('/extensions/' . $extension->extenception) }}">{{ $extension->extenceptionTitle($extension->extenception) }}</a>
+                                @elseif(isset($extension->post_id))
+                                    Extends: <a href = "{{ url('/posts/' . $extension->post_id) }}">{{ $extension->post->title }}</a>
+                                @elseif(isset($extension->question_id))
+                                    Answers: <a href = "{{ url('/questions/' . $extension->question_id) }}">{{ $extension->question->question }}</a>
+                                @elseif(isset($extension->question_id))
+                                    Extends: <a href = "{{ url('/legacyPosts/' . $extension->legacy_post_id) }}">{{ $extension->legacyPost->title }}</a>
+                                @endif
                             </h3>
                         </div>
                         <div class = "cardHandleSection">

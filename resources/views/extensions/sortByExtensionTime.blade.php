@@ -27,8 +27,15 @@
         <div class = "contentExtensionCard">
             <div class = "cardTitleSection">
                 <h3>
-                    <a href="{{ action('ExtensionController@show', [$extension->id])}}">{{ $extension->title }}</a>
-                </h3>
+                    @if(isset($extension->extenception))
+                        Extends: <a href = "{{ url('/extensions/' . $extension->extenception) }}">{{ $extension->extenceptionTitle($extension->extenception) }}</a>
+                    @elseif(isset($extension->post_id))
+                        Extends: <a href = "{{ url('/posts/' . $extension->post_id) }}">{{ $extension->post->title }}</a>
+                    @elseif(isset($extension->question_id))
+                        Answers: <a href = "{{ url('/questions/' . $extension->question_id) }}">{{ $extension->question->question }}</a>
+                    @elseif(isset($extension->question_id))
+                        Extends: <a href = "{{ url('/legacyPosts/' . $extension->legacy_post_id) }}">{{ $extension->legacyPost->title }}</a>
+                    @endif                </h3>
             </div>
             <div class = "cardHandleSection">
                 <p>

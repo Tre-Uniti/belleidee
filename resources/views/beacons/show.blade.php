@@ -81,25 +81,31 @@
 
 
     <hr class = "contentSeparator"/>
-    <div>
-        <div class = "indexNav">
-
-        </div>
-    </div>
-
 
         @if(!count($announcements))
             <p>No announcements to show</p>
         @else
         @foreach ($announcements as $announcement)
-            <div class = "listResource">
-                <div class = "listResourceLeft">
-                    <a href="{{ action('AnnouncementController@show', [$announcement->id])}}"><button type = "button" class = "interactButtonLeft">{{ $announcement->title }}</button></a>
+            <article>
+                <div class = "contentCard">
+                    <div class = "cardTitleSection">
+                        <header>
+                            <h3>
+                                <a href = "{{ url('/announcements/'. $announcement->id) }}">{{$announcement->title}}</a>
+                            </h3>
+                        </header>
+                    </div>
+
+                    <div class = "indexNav">
+                       <p>{{ $announcement->description }}</p>
+                    </div>
+                    <div class = "cardHandleSection">
+                        <p>
+                            Created: {{ $announcement->created_at->format('M-d-Y') }}
+                        </p>
+                    </div>
                 </div>
-                <div class = "listResourceRight">
-                    <a href="{{ action('AnnouncementController@show', [$announcement->id])}}"><button type = "button" class = "interactButton">{{ $announcement->created_at->format('M-d-Y') }}</button></a>
-                </div>
-            </div>
+            </article>
         @endforeach
     @endif
 @stop

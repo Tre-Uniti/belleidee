@@ -33,7 +33,7 @@
 
                         @if(isset($post->excerpt))
                             <p class = "cardExcerpt">
-                                {{ $post->excerpt }}<a href="{{ action('PostController@show', [$post->id])}}">... Read More</a>
+                                <a href="{{ action('PostController@show', [$post->id])}}">{{ $post->excerpt }}</a><a href="{{ action('PostController@show', [$post->id])}}">... Read More</a>
                             </p>
                         @elseif(isset($post->caption))
                             <a href="{{ action('PostController@show', [$post->id])}}">{{ $post->caption }}</a>

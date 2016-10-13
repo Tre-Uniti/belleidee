@@ -154,11 +154,9 @@ class BeaconController extends Controller
         $beacon = Beacon::findOrFail($id);
 
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         return view ('beacons.signup')
-            ->with(compact('user', 'beacon', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'beacon'));
     }
 
     /**
@@ -190,14 +188,13 @@ class BeaconController extends Controller
     {
         $beacon = $this->beacon->findOrFail($id);
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
+
         $beaconPath = $beacon->photo_path;
         //Get location of beacon and setup link to Google maps
         $location = 'http://www.google.com/maps/place/' . $beacon->lat . ','. $beacon->long;
 
         return view ('beacons.subscription')
-            ->with(compact('user', 'beacon', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'beacon'))
             ->with('beaconPath', $beaconPath)
             ->with('location' , $location);
     }
@@ -245,7 +242,6 @@ class BeaconController extends Controller
             $user = User::where('handle', '=', 'Transferred')->first();
             $user->handle = 'Guest';
         }
-
 
         //Check Beacon exists and is active belongs to an Idee Beacon
         try
@@ -303,7 +299,7 @@ class BeaconController extends Controller
         $month = Carbon::today()->format('M');
 
         return view ('beacons.show')
-                    ->with(compact('user', 'beacon', 'profilePosts','profileExtensions', 'announcements'))
+                    ->with(compact('user', 'beacon', 'announcements'))
                     ->with('guide', $guide)
                     ->with('postCount', $postCount)
                     ->with('userCount', $userCount)
@@ -408,13 +404,11 @@ class BeaconController extends Controller
     public function deactivate($id)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $beacon = Beacon::findOrFail($id);
 
         return view ('beacons.deactivate')
-            ->with(compact('user', 'beacon', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'beacon'));
     }
 
 
@@ -555,14 +549,12 @@ class BeaconController extends Controller
     public function topTagged()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
         $location = getLocation();
 
         $beacons = filterContentLocationAllTime($user, 0, 'Beacon', 'total_tag_usage');
 
         return view ('beacons.topTagged')
-            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'beacons'))
             ->with('location', $location);
     }
 
@@ -574,14 +566,12 @@ class BeaconController extends Controller
     public function topViewed()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
         $location = getLocation();
 
         $beacons = filterContentLocationAllTime($user, 0, 'Beacon', 'tag_views');
 
         return view ('beacons.topViewed')
-            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'beacons'))
             ->with('location', $location);
     }
     /**
@@ -592,14 +582,12 @@ class BeaconController extends Controller
     public function joinDate()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
         $location = getLocation();
 
         $beacons = filterContentLocationAllTime($user, 0, 'Beacon', 'created_at');
 
         return view ('beacons.joinDate')
-            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'beacons'))
             ->with('location', $location);
     }
 
@@ -616,9 +604,6 @@ class BeaconController extends Controller
         $beacon = Beacon::findOrFail($id);
         
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-
 
         $invoices = $beacon->invoices();
 
@@ -632,7 +617,7 @@ class BeaconController extends Controller
         }
 
         return view ('beacons.invoices')
-            ->with(compact('user', 'beacon', 'profilePosts','profileExtensions', 'invoices'))
+            ->with(compact('user', 'beacon', 'invoices'))
             ->with('location', $location);
     }
     
@@ -687,17 +672,16 @@ class BeaconController extends Controller
             return redirect()->back();
         }
 
-        $posts = Post::where('beacon_tag', $beacon->beacon_tag)->latest()->paginate(10);
+        $posts = Post::where('beacon_tag', $beacon->beacon_tag)->latest()->whereNull('status')->paginate(10);
 
-        //Get location of beacon and setup link to Google maps
-        $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
+        $type = 'Posts';
 
         $beaconPath = $beacon->photo_path;
 
         return view ('beacons.posts')
             ->with(compact('user', 'posts', 'beacon'))
             ->with('beaconPath', $beaconPath)
-            ->with('location', $location);
+            ->with('type', $type);
 
     }
 
@@ -756,9 +740,12 @@ class BeaconController extends Controller
 
         Event::fire(New BeaconViewed($beacon));
 
+        $type = 'Guide';
+
         return view('beacons.guide')
                 ->with(compact('user', 'viewUser', 'beacon', 'posts'))
-                ->with('sourcePhotoPath', $sourcePhotoPath);
+                ->with('sourcePhotoPath', $sourcePhotoPath)
+                ->with('type', $type);
     }
 
     /**
@@ -800,8 +787,11 @@ class BeaconController extends Controller
 
         Event::fire(New BeaconViewed($beacon));
 
+        $type = 'Extensions';
+
         return view ('beacons.extensions')
-            ->with(compact('user', 'extensions', 'beacon'));
+            ->with(compact('user', 'extensions', 'beacon'))
+            ->with('type', $type);
     }
 
     /*
@@ -831,8 +821,11 @@ class BeaconController extends Controller
             $users = $bookmark_user->users()->paginate(10);
         }
 
+        $type = 'Users';
+
         return view('beacons.users')
-            ->with(compact('user', 'users', 'beacon'));
+            ->with(compact('user', 'users', 'beacon'))
+            ->with('type', $type);
     }
 
     /**

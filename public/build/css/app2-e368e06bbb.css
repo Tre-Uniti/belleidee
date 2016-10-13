@@ -435,6 +435,10 @@ p.test {
 #hiddenManagerOptions {
   display: none; }
 
+#map {
+  text-align: left;
+  width: 100%; }
+
 .beliefNav {
   width: auto;
   margin: 0 auto;
