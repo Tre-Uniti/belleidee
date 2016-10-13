@@ -417,18 +417,20 @@ p.test {
   margin: 0 auto; }
 
 .showExtensions {
-  padding: 15px 55px;
-  font-family: "Open Sans", Arial, serif;
+  padding: 5px 45px;
   border-radius: 7px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   background-color: #ECF0F1;
   border: 1px solid #2C3E50;
-  font-weight: 500;
-  margin: 35px 0 0 0; }
+  font-weight: 400;
+  margin: 15px 0 5px 0; }
   .showExtensions:hover {
     color: #FFFFFF;
     background: #2ECC71; }
+
+.showAll {
+  margin: 10px 0 10px 0; }
 
 .beliefNav {
   width: auto;
@@ -1043,8 +1045,13 @@ a.excerptText {
 #otherExtensions {
   display: none; }
 
+#otherExtensions:focus {
+  outline: none !important;
+  border: 1px solid #27AE60;
+  box-shadow: 0 0 10px #27AE60; }
+
 .newExtension {
-  padding-top: 5px; }
+  padding-top: 2px; }
 
 @media screen and (min-width: 1301px) {
   html {

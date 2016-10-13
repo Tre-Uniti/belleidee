@@ -181,23 +181,8 @@ class ExtensionController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
 
-        $title = $request->input('title');
-        $path = '/extensions/'.$user_id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';
+        $path = '/extensions/'.$user_id.'/'.$request->input('type'). '/' . $request->input('id'). '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';
         $inspiration = Purifier::clean($request->input('body'));
-
-        //Check if user has already created an extension with this title
-        $extensions = Extension::where('user_id', '=', $user->id)->where('title', '=', $request['title'])->get()->count();
-        if ($extensions != 0)
-        {
-            $error = "You've already saved an inspiration with this title.";
-            return redirect()
-                ->back()
-                ->withInput()
-                ->withErrors([$error]);
-        }
-
-        //Get sources from session (what type of extension this is)
-        $sources = Session::get('sources');
 
         //Update user's last_tag
         $user->last_tag = $request['beacon_tag'];
@@ -208,13 +193,13 @@ class ExtensionController extends Controller
 
         //Store body text at AWS insert into db with extenception and/or post
         //Check if extension is extending another extension
-        if(isset($sources['extenception']))
+        if($request['type'] == 'Extenception')
         {
             Storage::put($path, $inspiration);
 
-            if(isset($sources['question_id']))
+            if($request['original'] == 'Question')
             {
-                $sourceId = $sources['question_id'];
+                $sourceId = $request['original_id'];
 
                 //Add 1 extension to original question
                 $question = Question::findOrFail($sourceId);
@@ -223,7 +208,7 @@ class ExtensionController extends Controller
 
 
                 //Add 1 extension to source extension and answer extension
-                $sourceExtension = Extension::findOrFail($sources['extenception']);
+                $sourceExtension = Extension::findOrFail($request['id']);
                 if($sourceExtension->id != $sourceExtension->answer_id)
                 {
                     $sourceExtension->where('id', $sourceExtension->id)
@@ -255,8 +240,8 @@ class ExtensionController extends Controller
                 $extension->question_id = $sourceId;
                 $extension->excerpt = $excerpt;
                 $extension->answer_id = $sourceExtension->answer_id;
-                $extension->extenception = $sources['extenception'];
-                $extension->source_user = $sources['user_id'];
+                $extension->extenception = $sourceExtension->id;
+                $extension->source_user = $sourceExtension->user_id;
                 $extension->extension_path = $path;
                 //If localized get Beacon coordinates and add to extension
                 if($request['beacon_tag'] != 'No-Beacon')
@@ -276,7 +261,7 @@ class ExtensionController extends Controller
                 $notification->type = 'Extended';
                 $notification->source_type = 'Extension';
                 $notification->source_id = $extension->id;
-                $notification->title = $extension->title;
+                $notification->title = $question->question;
                 $notification->source_user = $sourceUser->id;
                 $notification->user()->associate($user);
                 $notification->save();
@@ -293,17 +278,16 @@ class ExtensionController extends Controller
                 flash()->overlay('Your extension has been created');
                 return redirect('extensions/'. $extension->id);
             }
-            if(isset($sources['legacy_post_id']))
+            if($request['original'] == 'Legacy')
             {
-                $sourceId = $sources['legacy_post_id'];
 
                 //Add 1 extension to original legacy
-                $legacyPost = LegacyPost::findOrFail($sourceId);
+                $legacyPost = LegacyPost::findOrFail($request['original_id']);
                 $legacyPost->where('id', $legacyPost->id)
                     ->update(['extension' => $legacyPost->extension + 1]);
 
                 //Add 1 extension to source extension
-                $sourceExtension = Extension::findOrFail($sources['extenception']);
+                $sourceExtension = Extension::findOrFail($request['id']);
                 $sourceExtension->where('id', $sourceExtension->id)
                     ->update(['extension' => $sourceExtension->extension + 1]);
 
@@ -313,10 +297,10 @@ class ExtensionController extends Controller
                     ->update(['extension' => $sourceUser->extension + 1]);
 
                 $extension = new Extension($request->except('body'));
-                $extension->legacy_post_id = $sourceId;
+                $extension->legacy_post_id = $request['original_id'];
                 $extension->excerpt = $excerpt;
-                $extension->extenception = $sources['extenception'];
-                $extension->source_user = $sources['user_id'];
+                $extension->extenception = $request['id'];
+                $extension->source_user = $sourceExtension->user_id;
                 $extension->extension_path = $path;
 
                 //If localized get Beacon coordinates and add to extension
@@ -340,7 +324,7 @@ class ExtensionController extends Controller
                 $notification->type = 'Extended';
                 $notification->source_type = 'Extension';
                 $notification->source_id = $extension->id;
-                $notification->title = $extension->title;
+                $notification->title = $legacyPost->title;
                 $notification->source_user = $sourceUser->id;
                 $notification->user()->associate($user);
                 $notification->save();
@@ -357,17 +341,16 @@ class ExtensionController extends Controller
                 flash()->overlay('Your extension has been created');
                 return redirect('extensions/'. $extension->id);
             }
-            elseif(isset($sources['post_id']))
+            elseif($request['original'] == 'Post')
             {
-                $sourceId = $sources['post_id'];
 
                 //Add 1 extension to original post
-                $post = Post::findOrFail($sourceId);
+                $post = Post::findOrFail($request['original_id']);
                 $post->where('id', $post->id)
                     ->update(['extension' => $post->extension + 1]);
 
                 //Add 1 extension to source extension
-                $sourceExtension = Extension::findOrFail($sources['extenception']);
+                $sourceExtension = Extension::findOrFail($request['id']);
                 $sourceExtension->where('id', $sourceExtension->id)
                     ->update(['extension' => $sourceExtension->extension + 1]);
 
@@ -377,10 +360,10 @@ class ExtensionController extends Controller
                     ->update(['extension' => $sourceUser->extension + 1]);
 
                 $extension = new Extension($request->except('body'));
-                $extension->post_id = $sourceId;
+                $extension->post_id = $post->id;
                 $extension->excerpt = $excerpt;
-                $extension->extenception = $sources['extenception'];
-                $extension->source_user = $sources['user_id'];
+                $extension->extenception = $sourceExtension->id;
+                $extension->source_user = $sourceUser->id;
                 $extension->extension_path = $path;
 
                 //If localized get Beacon coordinates and add to extension
@@ -403,8 +386,8 @@ class ExtensionController extends Controller
                 $notification = new Notification();
                 $notification->type = 'Extended';
                 $notification->source_type = 'Extension';
+                $notification->title = $post->title;
                 $notification->source_id = $extension->id;
-                $notification->title = $extension->title;
                 $notification->source_user = $sourceUser->id;
                 $notification->user()->associate($user);
                 $notification->save();
@@ -424,15 +407,15 @@ class ExtensionController extends Controller
         }
 
         //Extension is directly from Question
-        elseif(isset($sources['question_id']))
+        elseif($request['type'] == 'Question')
         {
 
-            Storage::put($path, $inspiration);
+            $question = Question::findOrFail($request['id']);
 
             $extension = new Extension($request->except('body'));
-            $extension->question_id = $sources['question_id'];
+            $extension->question_id = $question->id;
             $extension->excerpt = $excerpt;
-            $extension->source_user = $sources['user_id'];
+            $extension->source_user = $question->user_id;
             $extension->extension_path = $path;
 
             //If localized get Beacon coordinates and add to extension
@@ -450,13 +433,13 @@ class ExtensionController extends Controller
 
             $extension->user()->associate($user);
             $extension->save();
+            Storage::put($path, $inspiration);
 
             //Track future extenception of this answer
             $extension->answer_id = $extension->id;
             $extension->update();
 
             //Add 1 extension to original question
-            $question = Question::findOrFail($sources['question_id']);
             $question->where('id', $question->id)
                 ->update(['extension' => $question->extension + 1]);
 
@@ -472,21 +455,19 @@ class ExtensionController extends Controller
             return redirect('extensions/'. $extension->id);
         }
         //Extension is directly from Legacy Post
-        elseif(isset($sources['legacyPost_id']))
+        elseif($request['type'] == 'Legacy')
         {
-            $sourceId = $sources['legacyPost_id'];
-            Storage::put($path, $inspiration);
+            $legacyPost = LegacyPost::findOrFail($request['id']);
 
             //Add 1 extension to original question
-            $legacyPost = LegacyPost::findOrFail($sourceId);
             $legacyPost->where('id', $legacyPost->id)
                 ->update(['extension' => $legacyPost->extension + 1]);
 
             $extension = new Extension($request->except('body'));
             $extension->extension_path = $path;
-            $extension->legacy_post_id = $sources['legacyPost_id'];
+            $extension->legacy_post_id = $request['id'];
             $extension->excerpt = $excerpt;
-            $extension->source_user =  $sources['legacy_id'];
+            $extension->source_user =  $legacyPost->legacy_id;
 
             //If localized get Beacon coordinates and add to extension
             if($request['beacon_tag'] != 'No-Beacon')
@@ -503,6 +484,7 @@ class ExtensionController extends Controller
 
             $extension->user()->associate($user);
             $extension->save();
+            Storage::put($path, $inspiration);
 
             //Add 1 to Belief extensions
             Event::fire(New BeliefInteraction($extension->belief, '+extension'));
@@ -510,14 +492,13 @@ class ExtensionController extends Controller
             flash()->overlay('Your legacy extension has been created');
             return redirect('extensions/'. $extension->id);
         }
+
         //Extension is directly off of Post (no extenception)
-        elseif(isset($sources['post_id']))
+        elseif($request['type'] == 'Post')
         {
-            $sourceId = $sources['post_id'];
-            Storage::put($path, $inspiration);
+            $post = Post::findOrFail($request['id']);
 
             //Add 1 extension to original post
-            $post = Post::findOrFail($sourceId);
             $post->where('id', $post->id)
                 ->update(['extension' => $post->extension + 1]);
 
@@ -527,12 +508,13 @@ class ExtensionController extends Controller
                 ->update(['extension' => $sourceUser->extension + 1]);
 
             $extension = new Extension($request->except('body'));
-            $extension->post_id = $sourceId;
+            $extension->post_id = $post->id;
             $extension->excerpt = $excerpt;
-            $extension->source_user = $sources['user_id'];
+            $extension->source_user = $post->user_id;
             $extension->extension_path = $path;
             $extension->user()->associate($user);
             $extension->save();
+            Storage::put($path, $inspiration);
         }
         else
         {
@@ -540,8 +522,7 @@ class ExtensionController extends Controller
             return redirect()->back()->withInput();
         }
 
-
-
+        //Finish extension process for a post
         //If localized get Beacon coordinates and add to extension
         if($request['beacon_tag'] != 'No-Beacon')
         {
@@ -561,7 +542,7 @@ class ExtensionController extends Controller
         $notification->type = 'Extended';
         $notification->source_type = 'Extension';
         $notification->source_id = $extension->id;
-        $notification->title = $extension->title;
+        $notification->title = $post->title;
         $notification->source_user = $sourceUser->id;
         $notification->user()->associate($user);
         $notification->save();
@@ -611,72 +592,45 @@ class ExtensionController extends Controller
         $user = User::findOrFail($user_id);
 
         //Determine if beacon or sponsor shows and update
-        if($extension->beacon_tag == 'No-Beacon')
+        $beacon = getBeacon($extension);
+        if(isset($beacon->stripe_plan))
         {
-            $sponsor = getSponsor($user);
-            $beacon = NULL;
-        }
-        else
-        {
-            $beacon = getBeacon($extension);
-            if($beacon == NULL)
+            if($beacon->stripe_plan < 1)
             {
                 $sponsor = getSponsor($user);
             }
             else
             {
-                $sponsor = NULL;
+                $sponsor = null;
             }
+        }
+        else
+        {
+            $sponsor = getSponsor($user);
         }
 
         //Get Source info of extension
         if(isset($extension->post_id))
         {
-            $post_id = $extension->post_id;
-            $post = Post::findOrFail($post_id);
-
-            if(isset($extension->extenception))
-            {
-                $extenception = Extension::findOrFail($extension->extenception);
-                $sources = [
-                    'type' => 'extensions',
-                    'post_id' => $extenception->post_id,
-                    'extenception' => $extenception->id,
-                    'extension_title' => $extenception->title,
-                    'post_title' => $post->title
-                ];
-            }
-            else
-            {
-                $sources = [
-                    'type' => 'posts',
-                    'post_id' => $post->id,
-                    'post_title' => $post->title
-                ];
-            }
+            $source = Post::findOrFail($extension->post_id);
+            $sourceType = 'Post';
         }
         elseif(isset($extension->question_id))
         {
-            $question_id = $extension->question_id;
-            $question = Question::findOrFail($question_id);
-
+            $source = Question::findOrFail($extension->question_id);
+            $sourceType = 'Question';
+        }
+        elseif(isset($extension->legacy_post_id))
+        {
+            $source = LegacyPost::findOrFail($extension->legacy_post_id);
+            $sourceType = 'Legacy';
+        }
+        else
+        {
             if(isset($extension->extenception))
             {
-                $extenception = Extension::findOrFail($extension->extenception);
-                $sources = [
-                    'type' => 'extensions',
-                    'question_id' => $extenception->question_id,
-                    'extenception' => $extenception->id,
-                    'extension_title' => $extenception->title,
-                ];
-            }
-            else
-            {
-                $sources = [
-                    'type' => 'question',
-                    'question_id' => $question->id,
-                    'question' => $question->question
-                ];
+                $source = Extension::findOrFail($extension->extenception);
+                $sourceType = 'Extenception';
             }
         }
 
@@ -732,6 +686,8 @@ class ExtensionController extends Controller
                         {
                             return view('extensions.show')
                                 ->with(compact('user', 'viewUser', 'extension', 'profilePosts', 'profileExtensions', 'sources' ))
+                                ->with('source', $source)
+                                ->with('type', $sourceType)
                                 ->with ('elevation', $elevation)
                                 ->with ('sourcePhotoPath', $sourcePhotoPath)
                                 ->with('beacon', $beacon)
@@ -759,6 +715,8 @@ class ExtensionController extends Controller
 
         return view('extensions.show')
             ->with(compact('user', 'viewUser', 'extension', 'sources' ))
+            ->with('source', $source)
+            ->with('sourceType', $sourceType)
             ->with ('elevation', $elevation)
             ->with ('sourcePhotoPath', $sourcePhotoPath)
             ->with('beacon', $beacon)
@@ -1449,7 +1407,7 @@ class ExtensionController extends Controller
         $notification->type = 'Elevated';
         $notification->source_type = 'Extension';
         $notification->source_id = $extension->id;
-        $notification->title = $extension->title;
+        $notification->title = 'Extension';
         $notification->source_user = $sourceUser->id;
         $notification->user()->associate($user);
         $notification->save();

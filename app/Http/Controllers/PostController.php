@@ -397,7 +397,12 @@ class PostController extends Controller
         }
 
         //Get extensions of Post
-        $extensions = Extension::where('post_id', '=', $post->id)->latest()->paginate(10);
+        $extensions = Extension::where('post_id', '=', $post->id)->orderBy('elevation', 'desc')->take(10)->get();
+        $moreExtensions = Extension::where('post_id', '=', $post->id)->count();
+        if($moreExtensions <= 10)
+        {
+            $moreExtensions = null;
+        }
         //Prepare the extensions for cards
         $extensions = prepareExtensionCards($extensions, $viewUser);
         //Get the Beacon for the user viewing the post
@@ -436,6 +441,7 @@ class PostController extends Controller
                 {
                     return view('posts.show')
                         ->with(compact('user', 'viewUser', 'post', 'extensions', 'beacons'))
+                        ->with('moreExtensions', $moreExtensions)
                         ->with('beacon', $beacon)
                         ->with('lastBeacon', $lastBeacon)
                         ->with('sourcePhotoPath', $sourcePhotoPath)
@@ -462,6 +468,7 @@ class PostController extends Controller
 
         return view('posts.show')
             ->with(compact('user', 'viewUser', 'post', 'extensions', 'beacons'))
+            ->with('moreExtensions', $moreExtensions)
             ->with('beacon', $beacon)
             ->with('lastBeacon', $lastBeacon)
             ->with('location', $location)

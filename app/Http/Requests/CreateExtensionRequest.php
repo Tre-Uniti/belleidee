@@ -25,9 +25,9 @@ class CreateExtensionRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|min:1|max:40',
-            'body'  => 'required|min:5|max:3500',
+            'body'  => 'required|min:1|max:3500',
             'belief'=> 'required',
+            'beacon_tag' => 'required',
             'source' => 'required'
         ];
     }

@@ -16,23 +16,21 @@
 
 @section('centerText')
     <div id="fb-root"></div>
-    <h2>{{ $extension->title }}</h2>
+    <h2>
+        @if($sourceType == 'Post')
+            Extends: <a href = "{{ url('/posts/' . $source->id) }}">{{ $source->title }}</a>
+        @elseif($sourceType == 'Legacy')
+            Extends: <a href = "{{ url('/legacyPosts/' . $source->id) }}">{{ $source->title }}</a>
+        @elseif($sourceType == 'Question')
+            Answers: <a href = "{{ url('/questions/' . $source->id) }}">{{ $source->question }}</a>
+        @else
+            Extends another <a href = "{{ url('/extensions/'. $source->id) }}">Extension</a>
+        @endif
+    </h2>
             <div class = "indexNav">
-                <a href="{{ action('BeliefController@show', $extension->belief) }}"><button type = "button" class = "indexButton">{{ $extension->belief }}</button></a>
-                <a href="{{ url('/beacons/'.$extension->beacon_tag) }}"><button type = "button" class = "indexButton">{{ $extension->beacon_tag }}</button></a>
-                @if($extension->source === 'Post')
-                    <a href="{{ url('/posts/'.$extension->post_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
-                @elseif($extension->source === 'Extension')
-                    @if($extension->answer_id == $extension->extenception)
-                        <a href="{{ url('/extensions/'.$extension->extenception ) }}"><button type = "button" class = "indexButton">Answer</button></a>
-                    @else
-                        <a href="{{ url('/extensions/'.$extension->extenception ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
-                    @endif
-                @elseif($extension->source === 'Question')
-                    <a href="{{ url('/questions/'.$extension->question_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
-                @elseif($extension->source === 'Legacy')
-                    <a href="{{ url('/legacyPosts/'.$extension->legacy_post_id ) }}"><button type = "button" class = "indexButton">{{ $extension->source }}</button></a>
-                @endif
+                <a href="{{ action('BeliefController@show', $extension->belief) }}" class = "indexLink">{{ $extension->belief }}</a>
+                <a href="{{ url('/beacons/'.$extension->beacon_tag) }}" class = "indexLink">{{ $extension->beacon_tag }}</a>
+
             </div>
     <button class = "interactButton" id = "hiddenIndex">More</button>
     <div class = "indexContent" id = "hiddenContent">

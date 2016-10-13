@@ -1,6 +1,5 @@
 @extends('app')
 @section('pageHeader')
-    <script src = "/js/index.js"></script>
     <script src = "/js/caffeine.js"></script>
     <script src = "/js/toggleSource.js"></script>
     <script src = "/js/submit.js"></script>
@@ -29,15 +28,13 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
 
 @section('centerText')
     <div id="fb-root"></div>
+    <div id = "postContent">
 <article>
     <header>
         <h1>{{ $post->title }}</h1>
     </header>
 
     <h4>By: <a href = "{{ url('/users/'. $post->user->id) }}" class = "contentHandle">{{ $post->user->handle }}</a> on <a href = {{ url('/posts/date/'.$post->created_at->format('M-d-Y')) }}>{{ $post->created_at->format('M-d-Y')  }}</a></h4>
-    <div class = "indexNav">
-
-    </div>
     <div class = "indexNav">
         <div class = "beliefIndex">
             <a href="{{ action('BeliefController@show', $post->belief) }}"><i class="fa fa-hashtag" aria-hidden="true"></i>{{ $post->belief }}</a>
@@ -66,8 +63,8 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
         </div>
     @endif
 </article>
-
-    <div id = "centerFooter">
+    </div>
+    <div id = "postDetails">
         <div class = "influenceSection">
             <div class = "elevationSection">
                 <div class = "elevationIcon">
@@ -111,7 +108,6 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                 </div>
             </div>
 
-
             @if($beacon->stripe_plan < 1)<p>Sponsored by:</p>
 
                 <div class = "sponsorContentLogo">
@@ -119,7 +115,6 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                 </div>
             @endif
             <script src="/js/lightbox.js"></script>
-
 
         </div>
         @if($post->user_id == Auth::id())
@@ -135,101 +130,33 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                 {!! Form::close() !!}
         @endif
     </div>
-    <hr class = "contentSeparator"/>
-    <div class = "newExtension">
-        @include ('errors.list')
-        {!! Form::open(['url' => 'extensions']) !!}
 
-
-    <!-- Body Form Input -->
-    <div id = "centerTextContent">
-            {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Add your extension here:', 'rows' => '4%', 'maxlength' => '3500']) !!}
+    <div>
+        <button class = "showExtensions" type = "button" id = "extensionIndex">Show Extensions</button>
     </div>
-            <div class = "indexContent" id = "hiddenIndexContent">
-                <div class = "formData">
-                    <div class = "formCreation">
-                        <div class = "tagLabel">Belief or Way:</div>
-                        <div>
-                            <select name = 'belief' class = "tagSelector" required >
-                                <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @elseif($lastBeacon->belief == 'Adaptia' & (old('belief') == '')) selected="selected" @endif>Adaptia</option>
-                                <option value="Atheism" @if (old('belief') == 'Atheism') selected="selected" @elseif($lastBeacon->belief == 'Atheism' & (old('belief') == '')) selected="selected" @endif>Atheism</option>
-                                <option value="Bahá’í" @if (old('belief') == 'Bahá’í') selected="selected" @elseif($lastBeacon->belief == 'Bahá’í' & (old('belief') == '')) selected="selected" @endif>Bahá’í</option>
-                                <option value="Buddhism" @if (old('belief') == 'Buddhism') selected="selected" @elseif($lastBeacon->belief == 'Buddhism' & (old('belief') == '')) selected="selected" @endif>Buddhism</option>
-                                <option value="Christianity" @if (old('belief') == 'Christianity') selected="selected" @elseif($lastBeacon->belief == 'Christianity' & (old('belief') == '')) selected="selected" @endif>Christianity</option>
-                                <option value="Druze" @if (old('belief') == 'Druze') selected="selected" @elseif($lastBeacon->belief == 'Druze' & (old('belief') == '')) selected="selected" @endif>Druze</option>
-                                <option value="Hinduism" @if (old('belief') == 'Hinduism') selected="selected" @elseif($lastBeacon->belief == 'Hinduism' & (old('belief') == '')) selected="selected" @endif>Hinduism</option>
-                                <option value="Islam" @if (old('belief') == 'Islam') selected="selected" @elseif($lastBeacon->belief == 'Islam' & (old('belief') == '')) selected="selected" @endif>Islam</option>
-                                <option value="Indigenous" @if (old('belief') == 'Indigenous') selected="selected" @elseif($lastBeacon->belief == 'Indigenous' & (old('belief') == '')) selected="selected" @endif>Indigenous</option>
-                                <option value="Judaism" @if (old('belief') == 'Judaism') selected="selected" @elseif($lastBeacon->belief == 'Judaism' & (old('belief') == '')) selected="selected" @endif>Judaism</option>
-                                <option value="Shinto" @if (old('belief') == 'Shinto') selected="selected" @elseif($lastBeacon->belief == 'Shinto' & (old('belief') == '')) selected="selected" @endif>Shinto</option>
-                                <option value="Sikhism" @if (old('belief') == 'Sikhism') selected="selected" @elseif($lastBeacon->belief == 'Sikhism' & (old('belief') == '')) selected="selected" @endif>Sikhism</option>
-                                <option value="Taoism" @if (old('belief') == 'Taoism') selected="selected" @elseif($lastBeacon->belief == 'Taoism'& (old('belief') == '')) selected="selected" @endif>Taoism</option>
-                                <option value="Urantia" @if (old('belief') == 'Urantia') selected="selected" @elseif($lastBeacon->belief == 'Urantia' & (old('belief') == '')) selected="selected" @endif>Urantia</option>
-                                <option value="Zoroastrianism" @if (old('belief') == 'Zoroastrianism') selected="selected" @elseif($lastBeacon->belief == 'Zoroastrianism' & (old('belief') == '')) selected="selected" @endif>Zoroastrianism</option>
-                                <option value="Other" @if (old('belief') == 'Other') selected="selected" @elseif($lastBeacon->belief == 'Other' & (old('belief') == '')) selected="selected" @endif>Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class = "formCreation">
-                        <div class = "tagLabel">Beacon Tag:</div>
-                        <div>
-                            {!! Form::select('beacon_tag', $beacons, $lastBeacon->beacon_tag, ['class' => 'tagSelector']) !!}
-                        </div>
-                    </div>
-                    <select name = 'source' class = 'tagSelector' required hidden>
-                        <option value="Post" @if (old('source') == 'Post') selected="selected" @endif>Post</option>
-                    </select>
-                </div>
-            </div>
-    </div>
-
-<div>
-    <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
-    {!! Form::submit('Add Extension', ['class' => 'navButton', 'id' => 'submit']) !!}
-    <button class = "interactButton" type = "button" id = "extensionTags">Full Screen</button>
-</div>
-<div>
-    <button class = "showExtensions" type = "button" id = "extensionIndex">Show All Extensions</button>
-</div>
-
     <div id = "otherExtensions">
-        @if(count($extensions) == 0)
+        <div id = "listExtensions">
+    <hr class = "contentSeparator" id = "contentSeparator"/>
+            @if(count($extensions) == 0)
             <p>Be the first to extend!</p>
         @else
             @foreach ($extensions as $extension)
                 <div class = "contentExtensionCard">
-                    <div class = "cardTitleSection">
-                        <h3>
-                            <a href="{{ action('ExtensionController@show', [$extension->id])}}">{{ $extension->title }}</a>
-                        </h3>
 
+                    <div class = "cardCaptionExcerptSection">
+                        <p class = "cardExcerpt">
+                            <a href="{{ action('ExtensionController@show', [$extension->id])}}">{{ $extension->excerpt }}</a><a href="{{ action('ExtensionController@show', [$extension->id])}}">... Read More</a>
+                        </p>
                     </div>
                     <div class = "cardHandleSection">
                         <p>
                             By: <a href="{{ action('UserController@show', [$extension->user_id])}}" class = "contentHandle">{{ $extension->user->handle }}</a> on <a href = {{ url('/extensions/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a>
                         </p>
-                        <p>
-                            @if(isset($extension->extenception))
-                                Extends: <a href = "{{ url('/extensions/' . $extension->extenception) }}">{{ $extension->extenceptionTitle($extension->extenception) }}</a>
-                            @elseif(isset($extension->post_id))
-                                Extends: <a href = "{{ url('/posts/' . $extension->post_id) }}">{{ $extension->post->title }}</a>
-                            @elseif(isset($extension->question_id))
-                                Answers: <a href = "{{ url('/questions/' . $extension->question_id) }}">{{ $extension->question->question }}</a>
-                            @elseif(isset($extension->question_id))
-                                Extends: <a href = "{{ url('/legacyPosts/' . $extension->legacy_post_id) }}">{{ $extension->legacyPost->title }}</a>
-                            @endif
-                        </p>
                     </div>
-                    <div class = "cardCaptionExcerptSection">
-                        <p class = "cardExcerpt">
-                            {{ $extension->excerpt }}<a href="{{ action('ExtensionController@show', [$extension->id])}}">... Read More</a>
-                        </p>
-                    </div>
-
                     <div class = "influenceSection">
                         <div class = "elevationSection">
                             <div class = "elevationIcon">
-                                @if($extension->elevateStatus === 'Elevated')
+                                @if($extension->elevationStatus === 'Elevated')
                                     <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
                                 @else
                                     <a href="{{ url('/extensions/elevate/'.$extension->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
@@ -270,7 +197,67 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                     </div>
                 </div>
             @endforeach
+                @if($moreExtensions != 'null')
+                    <div class = "showAll">
+                        <a href = "{{ url('/extensions/post/list' . $post->id) }}" class = "indexLink">View all extensions ({{ $moreExtensions }})</a>
+                    </div>
+                @endif
         @endif
+        </div>
+        <div class = "newExtension">
+        @include ('errors.list')
+        {!! Form::open(['url' => 'extensions']) !!}
+
+
+        <!-- Body Form Input -->
+            <div id = "centerTextContent">
+                {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Add your extension here:', 'rows' => '3', 'maxlength' => '3500']) !!}
+            </div>
+            <div class = "indexContent" id = "hiddenIndexContent">
+                <div class = "formData">
+                    <div class = "formCreation">
+                        <div class = "tagLabel">Belief or Way:</div>
+                        <div>
+                            <select name = 'belief' class = "tagSelector" required >
+                                <option value="Adaptia" @if (old('belief') == 'Adaptia') selected="selected" @elseif($lastBeacon->belief == 'Adaptia' & (old('belief') == '')) selected="selected" @endif>Adaptia</option>
+                                <option value="Atheism" @if (old('belief') == 'Atheism') selected="selected" @elseif($lastBeacon->belief == 'Atheism' & (old('belief') == '')) selected="selected" @endif>Atheism</option>
+                                <option value="Bahá’í" @if (old('belief') == 'Bahá’í') selected="selected" @elseif($lastBeacon->belief == 'Bahá’í' & (old('belief') == '')) selected="selected" @endif>Bahá’í</option>
+                                <option value="Buddhism" @if (old('belief') == 'Buddhism') selected="selected" @elseif($lastBeacon->belief == 'Buddhism' & (old('belief') == '')) selected="selected" @endif>Buddhism</option>
+                                <option value="Christianity" @if (old('belief') == 'Christianity') selected="selected" @elseif($lastBeacon->belief == 'Christianity' & (old('belief') == '')) selected="selected" @endif>Christianity</option>
+                                <option value="Druze" @if (old('belief') == 'Druze') selected="selected" @elseif($lastBeacon->belief == 'Druze' & (old('belief') == '')) selected="selected" @endif>Druze</option>
+                                <option value="Hinduism" @if (old('belief') == 'Hinduism') selected="selected" @elseif($lastBeacon->belief == 'Hinduism' & (old('belief') == '')) selected="selected" @endif>Hinduism</option>
+                                <option value="Islam" @if (old('belief') == 'Islam') selected="selected" @elseif($lastBeacon->belief == 'Islam' & (old('belief') == '')) selected="selected" @endif>Islam</option>
+                                <option value="Indigenous" @if (old('belief') == 'Indigenous') selected="selected" @elseif($lastBeacon->belief == 'Indigenous' & (old('belief') == '')) selected="selected" @endif>Indigenous</option>
+                                <option value="Judaism" @if (old('belief') == 'Judaism') selected="selected" @elseif($lastBeacon->belief == 'Judaism' & (old('belief') == '')) selected="selected" @endif>Judaism</option>
+                                <option value="Shinto" @if (old('belief') == 'Shinto') selected="selected" @elseif($lastBeacon->belief == 'Shinto' & (old('belief') == '')) selected="selected" @endif>Shinto</option>
+                                <option value="Sikhism" @if (old('belief') == 'Sikhism') selected="selected" @elseif($lastBeacon->belief == 'Sikhism' & (old('belief') == '')) selected="selected" @endif>Sikhism</option>
+                                <option value="Taoism" @if (old('belief') == 'Taoism') selected="selected" @elseif($lastBeacon->belief == 'Taoism'& (old('belief') == '')) selected="selected" @endif>Taoism</option>
+                                <option value="Urantia" @if (old('belief') == 'Urantia') selected="selected" @elseif($lastBeacon->belief == 'Urantia' & (old('belief') == '')) selected="selected" @endif>Urantia</option>
+                                <option value="Zoroastrianism" @if (old('belief') == 'Zoroastrianism') selected="selected" @elseif($lastBeacon->belief == 'Zoroastrianism' & (old('belief') == '')) selected="selected" @endif>Zoroastrianism</option>
+                                <option value="Other" @if (old('belief') == 'Other') selected="selected" @elseif($lastBeacon->belief == 'Other' & (old('belief') == '')) selected="selected" @endif>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class = "formCreation">
+                        <div class = "tagLabel">Beacon Tag:</div>
+                        <div>
+                            {!! Form::select('beacon_tag', $beacons, $lastBeacon->beacon_tag, ['class' => 'tagSelector']) !!}
+                        </div>
+                    </div>
+                    <select name = 'source' class = 'tagSelector' required hidden>
+                        <option value="Post" @if (old('source') == 'Post') selected="selected" @endif>Post</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="type" value="Post">
+        <input type="hidden" name="id" value="{{ $post->id }}">
+        <div>
+            <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
+            {!! Form::submit('Add Extension', ['class' => 'navButton', 'id' => 'submit']) !!}
+            <button class = "interactButton" type = "button" id = "fullScreen">Full Screen</button>
+        </div>
     </div>
 @stop
 

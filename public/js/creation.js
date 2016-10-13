@@ -34,33 +34,44 @@ $(document).ready(function() {
 
     $(document.getElementById("hiddenIndex")).click(function(){
         $("#hiddenIndexContent").slideToggle();
-        var content = document.getElementById("hiddenIndex");
-        if(content.innerHTML == "Show Tags")
+        var tagIndex = document.getElementById("hiddenIndex");
+        if(tagIndex.innerHTML == "Show Tags")
         {
-            content.innerHTML = "Hide Tags";
+            tagIndex.innerHTML = "Hide Tags";
         }
         else
         {
-            content.innerHTML = "Show Tags"
+            tagIndex.innerHTML = "Show Tags";
+        }
+
+    });
+
+    $(document.getElementById("fullScreen")).click(function () {
+
+        var fullScreen = document.getElementById("fullScreen");
+        if(fullScreen.innerHTML == "Full Screen")
+        {
+            fullScreen.innerHTML = "Exit Full Screen";
+            document.getElementById("extensionIndex").style.display = "None";
+            document.getElementById("listExtensions").style.display = "None";
+            document.getElementById("contentSeparator").style.display = "None";
+            document.getElementById("postDetails").style.display = "None";
+            document.getElementById("postContent").style.display = "None";
+            $("#createBodyText").attr('rows', '20');
+        }
+        else
+        {
+            fullScreen.innerHTML = "Full Screen";
+            $("#createBodyText").attr('rows', '5');
+            document.getElementById("extensionIndex").style.display = "Inline";
+            document.getElementById("listExtensions").style.display = "Inline";
+            document.getElementById("contentSeparator").style.display = "Block";
+            document.getElementById("postDetails").style.display = "Inline";
+            document.getElementById("postContent").style.display = "Block";
         }
 
     });
 
 });
-//Function for pictures
-//<![CDATA[
-(function (w, d) {
-    if (!w.Pikiz || (w.Pikiz && typeof w.Pikiz.init !== "function") ) {
-        var s = d.createElement("script");
-        var g = d.getElementsByTagName("script")[0];
-        s.addEventListener("load", function () {
-            w.Pikiz.init("9913fcaf-93bf-4550-b917-b2e3e740ece0", {"appUrl":"https://app.getpikiz.com","style":"orange","position":"topLeft","size":"default","hover":false,"language":"en"});
-        });
-        s.async = true;
-        s.src="https://app.getpikiz.com/scripts/embed/pikiz.js";
-        g.parentNode.insertBefore(s,g);
-    }
-})(window, document);
-//]]>
 
 

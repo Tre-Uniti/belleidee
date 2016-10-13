@@ -17,13 +17,13 @@ $(document).ready(function(){
     $(document.getElementById("extensionIndex")).click(function(){
         $("#otherExtensions").slideToggle();
         var content = document.getElementById("extensionIndex");
-        if(content.innerHTML == "Show All Extensions")
+        if(content.innerHTML == "Show Extensions")
         {
             content.innerHTML = "Hide Extensions";
         }
         else
         {
-            content.innerHTML = "Show All Extensions"
+            content.innerHTML = "Show Extensions"
         }
 
     });
