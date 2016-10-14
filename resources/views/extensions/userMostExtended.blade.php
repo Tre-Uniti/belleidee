@@ -22,25 +22,15 @@
                         Extends: <a href = "{{ url('/posts/' . $extension->post_id) }}">{{ $extension->post->title }}</a>
                     @elseif(isset($extension->question_id))
                         Answers: <a href = "{{ url('/questions/' . $extension->question_id) }}">{{ $extension->question->question }}</a>
-                    @elseif(isset($extension->question_id))
+                    @elseif(isset($extension->legacy_post_id))
                         Extends: <a href = "{{ url('/legacyPosts/' . $extension->legacy_post_id) }}">{{ $extension->legacyPost->title }}</a>
-                    @endif                </h3>
+                    @endif
+                </h3>
 
             </div>
             <div class = "cardHandleSection">
                 <p>
                     By: <a href="{{ action('UserController@show', [$extension->user_id])}}" class = "contentHandle">{{ $extension->user->handle }}</a> on <a href = {{ url('/extensions/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a>
-                </p>
-                <p>
-                    @if(isset($extension->extenception))
-                        Extends: <a href = "{{ url('/extensions/' . $extension->extenception) }}">{{ $extension->extenceptionTitle($extension->extenception) }}</a>
-                    @elseif(isset($extension->post_id))
-                        Extends: <a href = "{{ url('/posts/' . $extension->post_id) }}">{{ $extension->post->title }}</a>
-                    @elseif(isset($extension->question_id))
-                        Answers: <a href = "{{ url('/questions/' . $extension->question_id) }}">{{ $extension->question->question }}</a>
-                    @elseif(isset($extension->question_id))
-                        Extends: <a href = "{{ url('/legacyPosts/' . $extension->legacy_post_id) }}">{{ $extension->legacyPost->title }}</a>
-                    @endif
                 </p>
             </div>
             <div class = "cardCaptionExcerptSection">
@@ -75,7 +65,7 @@
                     <span class="tooltiptext">Extend to add any inspiration you received</span>
                 </div>
                 <div class = "moreSection">
-                    <p class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>
+                    <p onclick="" class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>
                     <div class="moreOptionsMenu">
                         <a href="{{ url('bookmarks/extensions/'.$extension->id) }}"><i class="fa fa-bookmark-o fa-lg" aria-hidden="true"></i></a>
                         <a href="https://www.facebook.com/share.php?u={{Request::url()}}&title={{$extension->title}}" target="_blank"><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i></a>

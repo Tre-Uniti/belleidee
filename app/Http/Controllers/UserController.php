@@ -117,7 +117,7 @@ class UserController extends Controller
         $sponsor = getSponsor($user);
 
         return view ('users.show')
-            ->with(compact('user', 'viewUser', 'posts', 'extensions', 'profilePosts', 'profileExtensions', 'question', 'sponsor', 'beacon'))
+            ->with(compact('user', 'viewUser', 'posts', 'extensions', 'question', 'sponsor', 'beacon'))
             ->with('followerCount', $followerCount)
             ->with('followingCount', $followingCount)
             ->with('extensionCount', $extensionCount)
@@ -133,22 +133,11 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = $this->user->findorFail($id);
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         //Get user photo
         if ($user->photo_path == '') {
             $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
         } else {
             $sourcePhotoPath = $user->photo_path;
-        }
-        //Get and set user's sponsor logo
-        if (Sponsorship::where('user_id', '=', $user->id)->exists()) {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            $sponsor->where('id', $sponsor->id)
-                ->update(['views' => $sponsor->views + 1]);
-        } else {
-            $sponsor = NULL;
         }
 
         $frequencies = [
@@ -158,8 +147,7 @@ class UserController extends Controller
         ];
 
         return view('users.edit')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'frequencies'))
-            ->with('sponsor', $sponsor)
+            ->with(compact('user', 'frequencies'))
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -225,13 +213,11 @@ class UserController extends Controller
     public function search()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $location = getLocation();
 
         return view('users.search')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user'))
             ->with('location', $location);
 
     }
@@ -312,13 +298,11 @@ class UserController extends Controller
     public function sortByElevation()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $elevations = filterContentLocation($user, 0, 'Elevation');
 
         return view('users.sortByElevation')
-            ->with(compact('user', 'elevations', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'elevations'));
     }
 
     /**
@@ -330,8 +314,6 @@ class UserController extends Controller
     public function sortByElevationTime($time)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         if ($time == 'Today') {
             $users = filterContentLocationTime($user, 1, 'User', 'today', 'elevation');
@@ -349,10 +331,8 @@ class UserController extends Controller
             $filter = 'All';
         }
 
-        $sponsor = getSponsor($user);
-
         return view('users.sortByElevationTime')
-            ->with(compact('user', 'users', 'profilePosts', 'profileExtensions', 'sponsor'))
+            ->with(compact('user', 'users'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -364,13 +344,11 @@ class UserController extends Controller
     public function sortByExtension()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $extensions = filterContentLocation($user, 0, 'Extension');
 
         return view('users.sortByExtension')
-            ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'extensions'));
     }
 
     /**
@@ -382,8 +360,6 @@ class UserController extends Controller
     public function sortByExtensionTime($time)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         if ($time == 'Today') {
             $users = filterContentLocationTime($user, 1, 'User', 'today', 'extension');
@@ -401,10 +377,8 @@ class UserController extends Controller
             $filter = 'All';
         }
 
-        $sponsor = getSponsor($user);
-
         return view('users.sortByExtensionTime')
-            ->with(compact('user', 'users', 'profilePosts', 'profileExtensions', 'sponsor'))
+            ->with(compact('user', 'users'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -420,8 +394,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $viewUser = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $extensions = Extension::where('source_user', $user->id)->latest('created_at')->paginate(10);
 
@@ -441,7 +413,7 @@ class UserController extends Controller
             $sponsor = NULL;
         }
         return view('users.extendedBy')
-            ->with(compact('user', 'viewUser', 'extensions', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user', 'viewUser', 'extensions'))
             ->with('sponosr', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
@@ -456,8 +428,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $viewUser = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $elevations = Elevation::where('source_user', $user->id)->latest('created_at')->paginate(10);
 
@@ -477,7 +447,7 @@ class UserController extends Controller
             $sponsor = NULL;
         }
         return view('users.elevatedBy')
-            ->with(compact('user', 'viewUser', 'elevations', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user', 'viewUser', 'elevations'))
             ->with('sponsor', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
@@ -492,8 +462,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $viewUser = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
         $bookmarks = $user->bookmarks()->where('type', '=', 'Beacon')->paginate(10);
 
         if ($user->photo_path == '') {
@@ -511,7 +480,7 @@ class UserController extends Controller
             $sponsor = NULL;
         }
         return view('users.beacons')
-            ->with(compact('user', 'viewUser', 'bookmarks', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user', 'viewUser', 'bookmarks'))
             ->with('sponsor', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
@@ -525,8 +494,6 @@ class UserController extends Controller
     public function timeFilter($time)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         if ($time == 'Today') {
             $users = filterContentLocationTime($user, 0, 'User', 'today', 'created_at');
@@ -544,10 +511,8 @@ class UserController extends Controller
             $filter = 'All';
         }
 
-        $sponsor = getSponsor($user);
-
         return view('users.timeFilter')
-            ->with(compact('user', 'users', 'profilePosts', 'profileExtensions', 'sponsor'))
+            ->with(compact('user', 'users'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -625,7 +590,7 @@ class UserController extends Controller
 
         if($bookmark_user = Bookmark::where('pointer', '=', $user->id)->where('type', '=', 'User')->first())
         {
-            $followers = $bookmark_user->users()->paginate(10);
+            $followers = $bookmark_user->users()->where('verified', '=', 1)->paginate(10);
         }
 
         $viewUser = Auth::user();
@@ -646,7 +611,7 @@ class UserController extends Controller
 
         $bookmarks = $user->bookmarks()->where('type', '=', 'User')->pluck('pointer');
 
-        $following = User::latest()->whereIn('id', $bookmarks)->paginate(10);
+        $following = User::where('verified', '=', 1)->latest()->whereIn('id', $bookmarks)->paginate(10);
 
         return view('users.following')
             ->with(compact('user', 'viewUser', 'following'));

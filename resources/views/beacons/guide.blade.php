@@ -21,6 +21,9 @@
         </nav>
     </div>
     <hr class = "contentSeparator">
+    @if(count($posts) == 0)
+        <p>No Guide Posts yet!</p>
+    @else
     @foreach ($posts as $post)
         <div class = "contentCard">
             <div class = "cardTitleSection">
@@ -98,6 +101,7 @@
 @stop
 @section('centerFooter')
     @include('pagination.custom-paginator', ['paginator' => $posts])
+    @endif
 @stop
 
 

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Extension extends Model
 {
@@ -50,7 +51,14 @@ class Extension extends Model
     //Return title of extenception
     public function extenceptionTitle($id)
     {
-        $extension = Extension::findOrFail($id);
+        try
+        {
+            $extension = Extension::findOrFail($id);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            return 'Extension not found';
+        }
         return $extension->title;
     }
 

@@ -59,12 +59,6 @@ function getBeacon($content)
         $beacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
     }
 
-    if(isset($beacon->stripe_plan))
-    {
-        //Beacon pays subscription
-        Event::fire(new BeaconViewed($beacon));
-    }
-
     return $beacon;
 }
 
@@ -511,7 +505,7 @@ function filterContentLocation($user, $number, $type)
             }
             elseif($type == 'User')
             {
-                $filteredContent = User::where('verified', '=', 1)->where('last_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->paginate(10);
+                $filteredContent = User::where('verified', '=', 1)->where('last_tag', 'LIKE', $location['shortTag'].'%')->where('verified', '=', 1)->latest('created_at')->paginate(10);
             }
             elseif($type == 'Beacon')
             {
@@ -549,7 +543,7 @@ function filterContentLocation($user, $number, $type)
             }
             elseif($type == 'User')
             {
-                $filteredContent = User::where('verified', '=', 1)->where('last_tag', 'LIKE', $location['country'].'%')->latest('created_at')->paginate(10);
+                $filteredContent = User::where('verified', '=', 1)->where('last_tag', 'LIKE', $location['country'].'%')->where('verified', '=', 1)->latest('created_at')->paginate(10);
             }
             elseif($type == 'Beacon')
             {
@@ -587,7 +581,7 @@ function filterContentLocation($user, $number, $type)
             }
             elseif($type == 'User')
             {
-                $filteredContent = User::where('verified', '=', 1)->latest('created_at')->paginate(10);
+                $filteredContent = User::where('verified', '=', 1)->latest('created_at')->where('verified', '=', 1)->paginate(10);
             }
             elseif($type == 'Beacon')
             {
@@ -965,7 +959,7 @@ function filterContentLocationSearch($user, $number, $type, $search)
             }
             elseif ($type == 'User')
             {
-                $searchFilteredContent = User::where('handle', 'LIKE', '%'.$search.'%')->where('last_tag', 'LIKE', $location['country'] . '-' . $location['cityCode']. '%')->paginate(10);
+                $searchFilteredContent = User::where('verified', '=', 1)->where('handle', 'LIKE', '%'.$search.'%')->where('last_tag', 'LIKE', $location['country'] . '-' . $location['cityCode']. '%')->paginate(10);
             }
             elseif ($type == 'Legacy')
             {
@@ -996,7 +990,7 @@ function filterContentLocationSearch($user, $number, $type, $search)
             }
             elseif ($type == 'User')
             {
-                $searchFilteredContent = User::where('handle', 'LIKE', '%'.$search.'%')->where('last_tag', 'LIKE', $location['country'] . '%')->paginate(10);
+                $searchFilteredContent = User::where('verified', '=', 1)->where('handle', 'LIKE', '%'.$search.'%')->where('last_tag', 'LIKE', $location['country'] . '%')->paginate(10);
             }
             elseif ($type == 'Legacy')
             {
@@ -1026,7 +1020,7 @@ function filterContentLocationSearch($user, $number, $type, $search)
             }
             elseif ($type == 'User')
             {
-                $searchFilteredContent = User::where('handle', 'LIKE', '%'.$search.'%')->paginate(10);
+                $searchFilteredContent = User::where('verified', '=', 1)->where('handle', 'LIKE', '%'.$search.'%')->paginate(10);
             }
             elseif ($type == 'Legacy')
             {

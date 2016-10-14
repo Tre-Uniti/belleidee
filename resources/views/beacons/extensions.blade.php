@@ -21,6 +21,9 @@
         </nav>
     </div>
     <hr class = "contentSeparator">
+    @if(count($extensions) == 0)
+        <p>No extensions tagged yet!</p>
+    @else
     @foreach ($extensions as $extension)
         <div class = "contentExtensionCard">
             <div class = "cardTitleSection">
@@ -31,7 +34,7 @@
                         Extends: <a href = "{{ url('/posts/' . $extension->post_id) }}">{{ $extension->post->title }}</a>
                     @elseif(isset($extension->question_id))
                         Answers: <a href = "{{ url('/questions/' . $extension->question_id) }}">{{ $extension->question->question }}</a>
-                    @elseif(isset($extension->question_id))
+                    @elseif(isset($extension->legacy_post_id))
                         Extends: <a href = "{{ url('/legacyPosts/' . $extension->legacy_post_id) }}">{{ $extension->legacyPost->title }}</a>
                     @endif
                 </h3>
@@ -92,7 +95,7 @@
             </div>
         </div>
     @endforeach
-
+    @endif
 @stop
 
 @section('centerFooter')

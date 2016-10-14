@@ -56,14 +56,11 @@ class BeaconController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $sponsor = getSponsor($user);
         $beacons = filterContentLocation($user, 1, 'Beacon');
         $location = getLocation();
         
         return view ('beacons.index')
-            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'beacons'))
             ->with('location', $location);
     }
 
@@ -75,8 +72,6 @@ class BeaconController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         
         //Get beliefs for drop down select (from helpers.php)
         $beliefs = getBeliefs();
@@ -84,7 +79,7 @@ class BeaconController extends Controller
         $countries = getCountries();
 
         return view('beacons.create')
-                    ->with(compact('user', 'profilePosts', 'profileExtensions'))
+                    ->with(compact('user'))
                     ->with('beliefs', $beliefs)
                     ->with('countries', $countries);
     }
@@ -258,7 +253,7 @@ class BeaconController extends Controller
             flash()->overlay('No active Idee Beacon with this id');
             return redirect()->back();
         }
-        $beaconPath = $beacon->photo_path;
+
         if($beacon->guide != NULL)
         {
             $guide = User::where('id', '=', $beacon->id)->first();
@@ -293,20 +288,14 @@ class BeaconController extends Controller
 
         $announcements = Announcement::where('beacon_id', '=', $beacon->id)->latest()->take(10)->get();
 
-        //Get location of beacon and setup link to Google maps
-        $location = 'https://maps.google.com/?q=' . $beacon->lat . ','. $beacon->long;
-        
-        $month = Carbon::today()->format('M');
+        Event::fire(new BeaconViewed($beacon));
 
         return view ('beacons.show')
                     ->with(compact('user', 'beacon', 'announcements'))
                     ->with('guide', $guide)
                     ->with('postCount', $postCount)
                     ->with('userCount', $userCount)
-                    ->with('userConnected', $userConnected)
-                    ->with('beaconPath', $beaconPath)
-                    ->with('location' , $location)
-                    ->with('month', $month);
+                    ->with('userConnected', $userConnected);
     }
 
     /**
@@ -735,8 +724,7 @@ class BeaconController extends Controller
         {
             $sourcePhotoPath = $user->photo_path;
         }
-        $posts = Post::where('user_id', '=', $user->id)->where('beacon_tag', '=', $beacon->beacon_tag)->paginate(10);
-
+        $posts = Post::where('user_id', '=', $user->id)->where('beacon_tag', '=', $beacon->beacon_tag)->whereNull('status')->latest()->paginate(10);
 
         Event::fire(New BeaconViewed($beacon));
 
@@ -783,8 +771,7 @@ class BeaconController extends Controller
             $user->handle = 'Guest';
         }
 
-        $extensions = Extension::where('beacon_tag', $beacon->beacon_tag)->latest()->paginate(10);
-
+        $extensions = Extension::where('beacon_tag', '=', $beacon->beacon_tag)->whereNull('status')->latest()->paginate(10);
         Event::fire(New BeaconViewed($beacon));
 
         $type = 'Extensions';
@@ -818,7 +805,11 @@ class BeaconController extends Controller
 
         if($bookmark_user = Bookmark::where('pointer', '=', $beacon->beacon_tag)->where('type', '=', 'Beacon')->first())
         {
-            $users = $bookmark_user->users()->paginate(10);
+            $users = $bookmark_user->users()->where('verified', '=', 1)->paginate(10);
+        }
+        else
+        {
+            $users = null;
         }
 
         $type = 'Users';

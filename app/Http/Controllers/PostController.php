@@ -6,6 +6,7 @@ use App\Adjudication;
 use App\Beacon;
 use App\Bookmark;
 use App\Elevation;
+use App\Events\BeaconViewed;
 use App\Events\BeliefInteraction;
 use function App\Http\autolink;
 use function App\Http\filterContentLocation;
@@ -359,6 +360,7 @@ class PostController extends Controller
 
         //Determine if beacon or sponsor shows and update
         $beacon = getBeacon($post);
+        Event::fire(new BeaconViewed($beacon));
         if(isset($beacon->stripe_plan))
         {
             if($beacon->stripe_plan < 1)

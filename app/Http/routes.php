@@ -104,6 +104,31 @@ Route::get('posts/setExcerpt', 'PostController@setExcerpt');
 Route::get('posts/forYou', 'PostController@forYou');
 Route::resource('posts', 'PostController');
 
+//Extension Routes (Resource)
+Route::get('extensions/elevation', 'ExtensionController@sortByElevation');
+Route::get('extensions/extension', 'ExtensionController@sortByExtension');
+Route::get('extensions/unlock/{id}', 'ExtensionController@unlockExtension');
+Route::get('extensions/date/{date}', 'ExtensionController@listDates');
+Route::get('extensions/elevationTime/{time}', 'ExtensionController@sortByElevationTime');
+Route::get('extensions/extensionTime/{time}', 'ExtensionController@sortByExtensionTime');
+Route::get('extensions/timeFilter/{time}', 'ExtensionController@timeFilter');
+Route::get('extensions/search', 'ExtensionController@search');
+Route::get('extensions/results', 'ExtensionController@results');
+Route::get('extensions/user/{id}', 'ExtensionController@userExtensions');
+Route::get('extensions/user/elevated/{id}', 'ExtensionController@userTopElevated');
+Route::get('extensions/user/extended/{id}', 'ExtensionController@userMostExtended');
+Route::get('extensions/elevate/{id}', 'ExtensionController@elevateExtension');
+Route::get('extensions/question/{source}', 'ExtensionController@extendQuestion');
+Route::get('extensions/legacy/{source}', 'ExtensionController@extendLegacy');
+Route::get('extensions/post/{source}', 'ExtensionController@extendPost');
+Route::get('extensions/extenception/{source}', 'ExtensionController@extenception');
+Route::get('extensions/post/list/{id}', 'ExtensionController@postList');
+Route::get('extensions/extend/list/{id}', 'ExtensionController@extendList');
+Route::get('extensions/listElevation/{id}', 'ExtensionController@listElevation');
+Route::get('extensions/setExcerpt', 'ExtensionController@setExcerpt');
+Route::get('extensions/forYou', 'ExtensionController@forYou');
+Route::resource('extensions', 'ExtensionController');
+
 //Draft Routes (Resource)
 Route::get('drafts/convert/{id}', 'DraftController@convert');
 Route::resource('drafts', 'DraftController');
@@ -139,31 +164,6 @@ Route::resource('sponsorRequests', 'SponsorRequestController');
 
 //Support Routes (Resource)
 Route::resource('supports', 'SupportController');
-
-//Extension Routes (Resource)
-Route::get('extensions/elevation', 'ExtensionController@sortByElevation');
-Route::get('extensions/extension', 'ExtensionController@sortByExtension');
-Route::get('extensions/unlock/{id}', 'ExtensionController@unlockExtension');
-Route::get('extensions/date/{date}', 'ExtensionController@listDates');
-Route::get('extensions/elevationTime/{time}', 'ExtensionController@sortByElevationTime');
-Route::get('extensions/extensionTime/{time}', 'ExtensionController@sortByExtensionTime');
-Route::get('extensions/timeFilter/{time}', 'ExtensionController@timeFilter');
-Route::get('extensions/search', 'ExtensionController@search');
-Route::get('extensions/results', 'ExtensionController@results');
-Route::get('extensions/user/{id}', 'ExtensionController@userExtensions');
-Route::get('extensions/user/elevated/{id}', 'ExtensionController@userTopElevated');
-Route::get('extensions/user/extended/{id}', 'ExtensionController@userMostExtended');
-Route::get('extensions/elevate/{id}', 'ExtensionController@elevateExtension');
-Route::get('extensions/question/{source}', 'ExtensionController@extendQuestion');
-Route::get('extensions/legacy/{source}', 'ExtensionController@extendLegacy');
-Route::get('extensions/post/{source}', 'ExtensionController@extendPost');
-Route::get('extensions/extenception/{source}', 'ExtensionController@extenception');
-Route::get('extensions/post/list/{id}', 'ExtensionController@postList');
-Route::get('extensions/extend/list/{id}', 'ExtensionController@extendList');
-Route::get('extensions/listElevation/{id}', 'ExtensionController@listElevation');
-Route::get('extensions/setExcerpt', 'ExtensionController@setExcerpt');
-Route::get('extensions/forYou', 'ExtensionController@forYou');
-Route::resource('extensions', 'ExtensionController');
 
 //Question Routes (Resource)
 Route::get('questions/elevate/{id}', 'QuestionController@elevateQuestion');

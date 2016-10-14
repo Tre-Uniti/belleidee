@@ -91,7 +91,12 @@ class ExtensionController extends Controller
             $type = substr($sourceModel->extension_path, -3);
 
             //Get other extensions
-            $extensions = Extension::where('id', '=', $sourceModel->id)->latest()->paginate(10);
+            $extensions = Extension::where('id', '=', $sourceModel->id)->whereNull('status')->orderBy('elevation', 'desc')->take(10)->get();
+            $moreExtensions = Extension::where('id', '=', $sourceModel->id)->count();
+            if($moreExtensions <= 10)
+            {
+                $moreExtensions = null;
+            }
         }
         elseif(isset($sources['post_id']))
         {
@@ -106,7 +111,12 @@ class ExtensionController extends Controller
             $type = substr($sourceModel->post_path, -3);
 
             //Get other extensions
-            $extensions = Extension::where('post_id', '=', $sourceModel->id)->latest()->paginate(10);
+            $extensions = Extension::where('post_id', '=', $sourceModel->id)->whereNull('status')->orderBy('elevation', 'desc')->take(10)->get();
+            $moreExtensions = Extension::where('post_id', '=', $sourceModel->id)->count();
+            if($moreExtensions <= 10)
+            {
+                $moreExtensions = null;
+            }
 
         }
         elseif(isset($sources['question_id']))
@@ -122,7 +132,12 @@ class ExtensionController extends Controller
             $content = $sourceModel->question;
 
             //Get other extensions
-            $extensions = Extension::where('question_id', '=', $sourceModel->id)->latest()->paginate(10);
+            $extensions = Extension::where('question_id', '=', $sourceModel->id)->whereNull('status')->orderBy('elevation', 'desc')->take(10)->get();
+            $moreExtensions = Extension::where('question_id', '=', $sourceModel->id)->count();
+            if($moreExtensions <= 10)
+            {
+                $moreExtensions = null;
+            }
         }
         elseif(isset($sources['legacy_id']))
         {
@@ -136,7 +151,12 @@ class ExtensionController extends Controller
             $content = Storage::get($sourceModel->source_path);
 
             //Get other extensions
-            $extensions = Extension::where('legacy_post_id', '=', $sourceModel->id)->latest()->paginate(10);
+            $extensions = Extension::where('legacy_post_id', '=', $sourceModel->id)->whereNull('status')->orderBy('elevation', 'desc')->take(10)->get();
+            $moreExtensions = Extension::where('legacy_post_id', '=', $sourceModel->id)->count();
+            if($moreExtensions <= 10)
+            {
+                $moreExtensions = null;
+            }
         }
 
         $date = Carbon::now()->format('M-d-Y');
@@ -146,7 +166,8 @@ class ExtensionController extends Controller
         $beacons = array_add($beacons, $sources['beacon_tag'], $sources['beacon_tag']);
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
-
+        //Get last beacon of user
+        $beacon = Beacon::where('beacon_tag', '=', $user->last_tag)->first();
         //Fetch last beacon used or set to No-Beacon
         try
         {
@@ -158,14 +179,14 @@ class ExtensionController extends Controller
             flash()->overlay('No recent Beacon interaction, please verify post tags');
         }
 
-        $sponsor = getSponsor($user);
-
         //Prepare other extensions into cards
         $extensions = prepareExtensionCards($extensions, $user);
 
+
         return view('extensions.create')
-                    ->with(compact('user', 'extensions', 'date', 'beacons', 'sources', 'sourceUser', 'sourceModel', 'sponsor', 'content', 'lastBeacon'))
+                    ->with(compact('user', 'extensions', 'beacon', 'date', 'beacons', 'sources', 'sourceUser', 'sourceModel', 'content', 'lastBeacon'))
                     ->with('sourceOriginalPath', $sourceOriginalPath)
+                    ->with('moreExtensions', $moreExtensions)
                     ->with('type', $type);
     }
 
@@ -593,6 +614,7 @@ class ExtensionController extends Controller
 
         //Determine if beacon or sponsor shows and update
         $beacon = getBeacon($extension);
+        Event::fire(new BeaconViewed($beacon));
         if(isset($beacon->stripe_plan))
         {
             if($beacon->stripe_plan < 1)
@@ -1241,11 +1263,6 @@ class ExtensionController extends Controller
         $user_id = $post->user_id;
         $user = User::findOrFail($user_id);
 
-
-        //Get Posts and Extensions of user
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
-
         $extensions = Extension::where('post_id', $id)->latest('created_at')->paginate(14);
 
         if($user->photo_path == '')
@@ -1278,7 +1295,7 @@ class ExtensionController extends Controller
         }
 
         return view('extensions.postList')
-                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources', 'beacon', 'sponsor', 'post', 'viewUser'))
+                    ->with(compact('user', 'extensions', 'sources', 'beacon', 'sponsor', 'post', 'viewUser'))
                     ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -1309,8 +1326,6 @@ class ExtensionController extends Controller
         //Get other Posts and Extensions of User
         $user_id = $extension->user_id;
         $user = User::findOrFail($user_id);
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         //Get all extensions for question answer
         if($extension->answer_id == $extension->id)
@@ -1354,7 +1369,7 @@ class ExtensionController extends Controller
         }
 
         return view('extensions.postList')
-                    ->with(compact('user', 'extensions', 'profilePosts', 'profileExtensions', 'sources', 'beacon', 'sponsor', 'extension', 'viewUser'))
+                    ->with(compact('user', 'extensions', 'sources', 'beacon', 'sponsor', 'extension', 'viewUser'))
                     ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -1428,8 +1443,6 @@ class ExtensionController extends Controller
         $extension = Extension::findOrFail($id);
 
         $user = User::findOrFail($extension->user_id);
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $elevations = Elevation::where('extension_id', $id)->latest('created_at')->paginate(10);
 
         if($user->photo_path == '')
@@ -1462,7 +1475,7 @@ class ExtensionController extends Controller
         }
 
         return view ('extensions.listElevation')
-            ->with(compact('user', 'elevations', 'extension', 'profilePosts','profileExtensions', 'beacon', 'sponsor'))
+            ->with(compact('user', 'elevations', 'extension', 'beacon', 'sponsor'))
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 
@@ -1599,8 +1612,6 @@ class ExtensionController extends Controller
     public function sortByElevationTime($time)
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         if($time == 'Today')
         {
             $extensions = filterContentLocationTime($user, 1, 'Extension', 'today', 'elevation');
@@ -1629,7 +1640,7 @@ class ExtensionController extends Controller
         $sponsor = getSponsor($user);
 
         return view ('extensions.sortByElevationTime')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions','sponsor'))
+            ->with(compact('user', 'extensions', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -1641,14 +1652,12 @@ class ExtensionController extends Controller
     public function sortByExtension()
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $extensions =
         $extensions = filterContentLocation($user, 3, 'Extension');
         $sponsor = getSponsor($user);
 
         return view ('extensions.sortByExtension')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'extensions', 'sponsor'));
     }
 
     /**
@@ -1660,8 +1669,6 @@ class ExtensionController extends Controller
     public function sortByExtensionTime($time)
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         if($time == 'Today')
         {
             $extensions = filterContentLocationTime($user, 1, 'Extension', 'today', 'extension');
@@ -1690,7 +1697,7 @@ class ExtensionController extends Controller
         $sponsor = getSponsor($user);
 
         return view ('extensions.sortByExtensionTime')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'extensions', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -1704,8 +1711,6 @@ class ExtensionController extends Controller
     public function timeFilter($time)
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         if($time == 'Today')
         {
             $extensions = filterContentLocationTime($user, 0, 'Extension', 'today', 'created_at');
@@ -1734,7 +1739,7 @@ class ExtensionController extends Controller
         $sponsor = getSponsor($user);
 
         return view ('extensions.timeFilter')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'extensions', 'sponsor'))
             ->with('filter', $filter)
             ->with('time', $time);
     }

@@ -4,31 +4,39 @@
 @stop
 
 @section('centerText')
-    <div>
-    <h2>Recent Beacon Requests</h2>
+    <h2>Your Beacon Requests</h2>
     <div id = "indexNav">
-        <a href={{ url('/beacons/')}}><button type = "button" class = "indexButton">All Beacons</button></a>
-        <a href={{ url('/beaconRequests/create')}}><button type = "button" class = "indexButton">New Request</button></a>
-        <a href="{{ url('/beaconRequests/agreement')}}" target ="_blank"><button type = "button" class = "indexButton">Agreement</button></a>
+        <a href="{{ url('/beacons/')}}" class = "indexLink">All Beacons</a>
+        <a href="{{ url('/beaconRequests/create')}}" class = "indexLink">New Request</a>
+        <a href="{{ url('/beaconRequests/agreement')}}" class = "indexLink" target ="_blank">Agreement</a>
     </div>
 
-    </div>
-    <div class = "indexLeft">
-        <h4>Name</h4>
-    </div>
-    <div class = "indexRight">
-        <h4>Created</h4>
-    </div>
+    <hr class = "contentSeparator"/>
+    @if(count($beaconRequests) == 0)
+        <p>No requests at the moment!</p>
+    @else
     @foreach ($beaconRequests as $request)
-        <div class = "listResource">
-            <div class = "listResourceLeft">
-                <a href="{{ action('BeaconRequestController@show', [$request->id])}}"><button type = "button" class = "interactButtonLeft">{{ $request->name }} </button></a>
+        <article>
+            <div class = "contentCard">
+                <div class = "cardTitleSection">
+                    <header>
+                        <h3>
+                            <a href = "{{ url('/beaconRequests/'. $request->id) }}">{{$request->name}}</a>
+                        </h3>
+                    </header>
+                </div>
+
+                <div class = "cardHandleSection">
+                    <p>
+                        Status: <a href = "{{ url('/beaconRequests/'. $request->id) }}" class ="contentHandle">{{$request->status}}</a>
+                    </p>
+                    <p>Created: {{ $request->created_at->format('M-d-Y')}}</p>
+                </div>
+
             </div>
-            <div class = "listResourceRight">
-                <a href="{{ action('BeaconRequestController@show', [$request->id])}}"><button type = "button" class = "interactButton">{{ $request->created_at->format('M-d-Y')}}</button></a>
-            </div>
-        </div>
+        </article>
     @endforeach
+    @endif
 @stop
 @section('centerFooter')
     @include('pagination.custom-paginator', ['paginator' => $beaconRequests])

@@ -33,13 +33,11 @@ class BookmarkController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
         $bookmarks = $user->bookmarks()->paginate(10);
 
-
         return view ('bookmarks.index')
-                    ->with(compact('user', 'bookmarks', 'profilePosts','profileExtensions'));
+                    ->with(compact('user', 'bookmarks'));
     }
 
     /**
@@ -138,8 +136,6 @@ class BookmarkController extends Controller
     public function listUsers()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $bookmarks = $user->bookmarks()->where('type', '=', 'User')->paginate(10);
         //Get user photo
         if($user->photo_path == '')
@@ -153,7 +149,7 @@ class BookmarkController extends Controller
         }
 
         return view ('bookmarks.users')
-            ->with(compact('user', 'bookmarks', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'bookmarks'))
             ->with('photoPath', $photoPath);
     }
 
@@ -165,8 +161,7 @@ class BookmarkController extends Controller
     public function listBeacons()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
         $bookmarks = $user->bookmarks()->where('type', '=', 'Beacon')->paginate(10);
         //Get user photo
         if($user->photo_path == '')
@@ -180,7 +175,7 @@ class BookmarkController extends Controller
         }
 
         return view ('bookmarks.beacons')
-            ->with(compact('user', 'bookmarks', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'bookmarks'))
             ->with('photoPath', $photoPath);
     }
 
@@ -192,8 +187,6 @@ class BookmarkController extends Controller
     public function listPosts()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $bookmarks = $user->bookmarks()->where('type', '=', 'Post')->paginate(10);
         //Get user photo
         if($user->photo_path == '')
@@ -207,7 +200,7 @@ class BookmarkController extends Controller
         }
 
         return view ('bookmarks.posts')
-            ->with(compact('user', 'bookmarks', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'bookmarks'))
             ->with('photoPath', $photoPath);
     }
 
@@ -219,8 +212,6 @@ class BookmarkController extends Controller
     public function listExtensions()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $bookmarks = $user->bookmarks()->where('type', '=', 'Extension')->paginate(10);
         //Get user photo
         if($user->photo_path == '')
@@ -234,7 +225,7 @@ class BookmarkController extends Controller
         }
 
         return view ('bookmarks.extensions')
-            ->with(compact('user', 'bookmarks', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'bookmarks'))
             ->with('photoPath', $photoPath);
     }
 
@@ -258,7 +249,7 @@ class BookmarkController extends Controller
             $bookmark_user = DB::table('bookmark_user')->where('user_id', $user->id)->where('bookmark_id', $bookmark->id)->first();
             if(count($bookmark_user))
             {
-                flash()->overlay('You are alreadying following this User');
+                flash()->overlay('You are already following'. $sourceUser->handle);
                 return redirect()->back();
             }
             //Add beacon_tag to user's bookmarks
@@ -281,13 +272,13 @@ class BookmarkController extends Controller
             $user->bookmarks()->attach($newBookmark->id);
 
             //Notify user bookmark was successful
-            flash()->overlay('You have successfully bookmarked this User');
+            flash()->overlay('You are now following' . $sourceUser->handle);
             return redirect('users/'. $sourceUser->id);
         }
     }
 
     /**
-     * Bookmark specific beacon for user
+     * Bookmark specific beacon for user (Connect to Beacon)
      *
      * @param  string  $beacon_tag
      * @return \Illuminate\Http\Response
@@ -310,7 +301,7 @@ class BookmarkController extends Controller
             $bookmark_user = DB::table('bookmark_user')->where('user_id', $user->id)->where('bookmark_id', $bookmark->id)->first();
             if(count($bookmark_user))
             {
-                flash()->overlay('You have already bookmarked this Beacon');
+                flash()->overlay('You already connected to' . $beacon->beacon_tag);
                 return redirect()->back();
             }
             //Add beacon_tag to user's bookmarks
@@ -321,7 +312,7 @@ class BookmarkController extends Controller
             $user->update();
 
             //Notify user bookmark was successful
-            flash()->overlay('You have successfully bookmarked this beacon');
+            flash()->overlay('You are now connected to' . $beacon->beacon_tag);
             return redirect('/beacons/'. $beacon->beacon_tag);
         }
         else
@@ -337,7 +328,7 @@ class BookmarkController extends Controller
             $user->bookmarks()->attach($newBookmark->id);
 
             //Notify user bookmark was successful
-            flash()->overlay('You have successfully bookmarked this beacon');
+            flash()->overlay('You are now connected to' . $beacon->beacon_tag);
             return redirect('/beacons/'. $beacon->beacon_tag);
         }
     }

@@ -20,6 +20,9 @@
         </nav>
     </div>
     <hr class = "contentSeparator">
+    @if(count($posts) == 0)
+        <p>No posts tagged yet!</p>
+    @endif
     @foreach ($posts as $post)
         <div class = "contentCard">
             <div class = "cardTitleSection">

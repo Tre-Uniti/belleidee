@@ -20,6 +20,9 @@
         </nav>
     </div>
     <hr class = "contentSeparator">
+    @if(count($users) == 0)
+        <p>No users connected yet!</p>
+    @else
     @foreach ($users as $User)
         <article>
             <div class = "contentCard">
@@ -66,8 +69,9 @@
             </div>
         </article>
     @endforeach
+
 @stop
 @section('centerFooter')
     @include('pagination.custom-paginator', ['paginator' => $users])
-
+    @endif
 @stop
