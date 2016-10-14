@@ -182,7 +182,6 @@ class ExtensionController extends Controller
         //Prepare other extensions into cards
         $extensions = prepareExtensionCards($extensions, $user);
 
-
         return view('extensions.create')
                     ->with(compact('user', 'extensions', 'beacon', 'date', 'beacons', 'sources', 'sourceUser', 'sourceModel', 'content', 'lastBeacon'))
                     ->with('sourceOriginalPath', $sourceOriginalPath)
@@ -893,35 +892,11 @@ class ExtensionController extends Controller
         }
 
         //Get other Posts of User
-        $user_id = $extension->user_id;
-        $user = User::findOrFail($user_id);
-
-        //Get Posts and Extensions of user
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
+        $user = User::findOrFail($extension->user_id);
 
         //Populate Beacon options with user's bookmarked beacons
         $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
-
-        //Determine if beacon or sponsor shows and update
-        if ($extension->beacon_tag == 'No-Beacon')
-        {
-            $sponsor = getSponsor($user);
-            $beacon = NULL;
-        }
-        else
-        {
-            $beacon = getBeacon($extension);
-            if ($beacon == NULL)
-            {
-                $sponsor = getSponsor($user);
-            }
-            else
-            {
-                $sponsor = NULL;
-            }
-        }
 
         return view('extensions.edit')
                     ->with(compact('user', 'extension', 'profilePosts', 'profileExtensions', 'beacons', 'sources', 'sponsor', 'beacon', 'content', 'sourceUser', 'sourceModel'))
@@ -943,8 +918,7 @@ class ExtensionController extends Controller
         $inspiration = Purifier::clean($request->input('body'));
         $extension->excerpt = substr($inspiration, 0, 300);
         $path = $extension->extension_path;
-        $newTitle = $request->input('title');
-        $newPath = '/extensions/'.$user->id.'/'.$newTitle. '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';
+        $newPath = '/extensions/'.$user->id.'/'.$request->input('type'). '/' . $request->input('id'). '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';
         //Update AWS document if Title changes
         if($path != $newPath)
         {
@@ -1025,15 +999,13 @@ class ExtensionController extends Controller
     public function search()
     {
         $user = Auth::user();
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
 
         $location = getLocation();
 
         $sponsor = getSponsor($user);
 
         return view ('extensions.search')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'sponsor'))
             ->with('location', $location);
     }
 

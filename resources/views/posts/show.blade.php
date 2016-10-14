@@ -199,7 +199,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
             @endforeach
                 @if($moreExtensions != 'null')
                     <div class = "showAll">
-                        <a href = "{{ url('/extensions/post/list' . $post->id) }}" class = "indexLink">View all extensions ({{ $moreExtensions }})</a>
+                        <a href = "{{ url('/extensions/post/list/' . $post->id) }}" class = "indexLink">View all extensions ({{ $moreExtensions }})</a>
                     </div>
                 @endif
         @endif
@@ -208,8 +208,6 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
         @include ('errors.list')
         {!! Form::open(['url' => 'extensions']) !!}
 
-
-        <!-- Body Form Input -->
             <div id = "centerTextContent">
                 {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Add your extension here:', 'rows' => '3', 'maxlength' => '3500']) !!}
             </div>
@@ -256,6 +254,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
         <div>
             <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
             {!! Form::submit('Add Extension', ['class' => 'navButton', 'id' => 'submit']) !!}
+            {!! Form::close()   !!}
             <button class = "interactButton" type = "button" id = "fullScreen">Full Screen</button>
         </div>
     </div>

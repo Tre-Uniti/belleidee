@@ -12,7 +12,7 @@
         <a href="/img/tour.png" target="_blank"><img id = "tourImage" src = "/img/tour.png" alt="tour" width="100%" height="100%"></a>
 
     </div>
-    <h4>An online community for sharing spiritual ideas, inspirations and experiences.</h4>
+    <h4>An online community sharing spiritual ideas, values and experiences.</h4>
     <div class = "linkContainer">
     @if(isset($user))
     @else
@@ -63,7 +63,7 @@
             </h3>
         </div>
         <div id = "centerTextContent">
-        <p>Users are encouraged to share beautiful ideas, inspirations, and experiences instead of critiquing or arguing for or against a certain belief or way of life.
+        <p>Users are encouraged to share beautiful ideas, values, and experiences instead of critiquing or arguing for or against a certain belief or way of life.
             If content is intolerant of any belief or way of life it may be flagged by other users and locked by an Admin.
             </p>
         <p>Intolerant review process:</p>
@@ -88,13 +88,13 @@
         </div>
         <div id = "centerTextContent">
         <p>Beacons are places of worship and/or thought.
-            They represent physical locations where groups of people come together to share ideas, inspirations, and experiences in person.
+            They represent physical locations where groups of people come together to share spiritual ideas, values, and experiences in person.
             Beacons utilize Belle-idee to extend their sharing into the digital world and engage with a wider online audience both locally and globally.</p>
         <ul>
             <li>Common Beacons are libraries, churches, temples, mosques, synagogues, etc.</li>
             <li>Beacons designate a specific user as their "Guide" to lead their community online.</li>
             <li>A "Beacon Tag" is the identifier for a Beacon: Country-City-Shortname (US-SW-ACE)</li>
-            <li>Users select a Beacon Tag to connect their content to a specific place/community.</li>
+            <li>Users choose a Beacon Tag to connect their content to a specific place/community.</li>
             <li>Beacons can subscribe for an ad-free experience as well as additional features.</li>
         </ul>
         </div>
@@ -107,7 +107,7 @@
         <p>Sponsors are businesses promoting their goods or services within Belle-idee.</p>
         <ul>
             <li>Each user may select their own sponsor to receive exclusive promotions.</li>
-            <li>Sponsor logo shows when a user posts content to a Beacon without a subscription.</li>
+            <li>The Sponsor's logo shows when a user posts content to a Beacon without a subscription.</li>
             <li>Promotions can be open to all or exclusive to loyal sponsored users.</li>
             <li>Users can change their sponsor at any time but will also lose exclusive promos.</li>
             <li>Users control how they receive promotions (email or sponsor's Belle-idee page).</li>
@@ -119,7 +119,7 @@
             <h3>History</h3>
         </div>
         <div id = "centerTextContent">
-        <p>Belle-idee was created for the world to share beautiful ideas from the various beliefs and ways of life.
+        <p>Belle-idee was created for the world to share beautiful ideas, values and experiences from the various beliefs and ways of life.
             It started with a Jesuit giving a copy of his homily to a student at Gonzaga University.
             The idea to share the Jesuit's homily online was the spark for creating an online community focused on sharing spirituality.</p>
             <ul>
@@ -134,7 +134,7 @@
             <h3>Contact</h3>
         </div>
         <div id = "centerTextContent">
-            <p>Belle-idee is one of the three applications built and maintained by <a href = "https://tre-uniti.org/">Tre-Uniti</a>.</p>
+            <p>Belle-idee is one of the three applications built and maintained by <a href = "https://tre-uniti.org/" target = "_blank">Tre-Uniti</a>.</p>
             <ul>
                 <li>Address: PO Box 888 Sedro-Woolley WA 98284.</li>
                 <li>Phone: +1 (347) 897-5562</li>

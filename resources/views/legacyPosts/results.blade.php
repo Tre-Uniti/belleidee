@@ -58,8 +58,8 @@
                     </div>
 
                     <div class = "extensionSection">
-                        <a href="{{ url('/legacyPost/post/'.$legacyPost->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
-                        <a href={{ url('/legacyPost/post/list/'.$legacyPost->id)}}>{{ $legacyPost->extension }}</a>
+                        <a href="{{ url('/extensions/legacy/'.$legacyPost->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
+                        <a href={{ url('/legacyPost/list/extension/'.$legacyPost->id)}}>{{ $legacyPost->extension }}</a>
 
                         <span class="tooltiptext">Extend to add any inspiration you received</span>
                     </div>

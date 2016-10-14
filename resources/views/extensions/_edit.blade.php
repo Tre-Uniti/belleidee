@@ -3,51 +3,68 @@
     <script src = "/js/toggleSource.js"></script>
     <script src = "/js/submit.js"></script>
     <script src = "/js/creation.js"></script>
+    <link href="/css/lightbox.css" rel="stylesheet">
 @stop
-@section('title')
-    Edit Extension
-@stop
-<div id = "createOptions">
-    <p><button type = "button" class = "interactButton" id = "content">Show Source</button></p>
-    @if(isset($sources['extenception']))
-        <div class = "extensionContent" id = "hiddenContent">
-            @if($type != 'txt')
-                <div class = "photoContent">
-                    <a href = "{{ url('/extensions/'. $sourceModel->id) }}" target = "_blank"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->extension_path) }} alt="{{$sourceModel->title}}"></a>
-                </div>
+<div>
+    @if(isset($sources['question_id']) && (!isset($sources['extenception'])))
+        <h3>Answer to: <a href = "{{ url('/questions/' . $sources['question_id']) }}">{{ $sourceModel->question }}</a></h3>
+    @else
+        <h3>Extends:
+
+            @if(isset($sources['post_id']))
+                <a href = "{{ url('/posts/' . $sources['post_id'] ) }}">{{ $sourceModel->title }}</a>
+            @elseif(isset($sources['legacy_post']))
+                <a href = "{{ url('/legacyPosts/' . $sources['legacy_post_id'] ) }}">{{ $sourceModel->title }}</a>
             @else
-                {!! nl2br(e($content)) !!}
+                <a href = "{{ url('/extensions/' . $sources['extenception']) }}">An Extension</a>
             @endif
-            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
-        </div>
-    @elseif(isset($sources['post_id']))
-        <div class = "extensionContent" id = "hiddenContent">
-            @if($type != 'txt')
-                <div class = "photoContent">
-                    <a href = "{{ url('/posts/'. $sourceModel->id) }}" target = "_blank"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->post_path) }} alt="{{$sourceModel->title}}"></a>
-                </div>
-            @else
-                {!! nl2br(e($content)) !!}
-            @endif
-            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
-        </div>
-    @elseif(isset($sources['question_id']))
-        <div class = "extensionContent" id = "hiddenContent">
-            {!! nl2br(e($content)) !!}
-            <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
-        </div>
-    @elseif(isset($sources['legacy_id']))
-        <div class = "extensionContent" id = "hiddenContent">
-            {!! nl2br(e($content)) !!}
-            <p>Legacy of: <a href = "{{ url('/beliefs/'. $sourceUser['belief']) }}" target="_blank">{{ $sourceUser['belief'] }}</a></p>
-        </div>
+        </h3>
     @endif
+</div>
+<div class = "extensionContent" id = "hiddenContent">
+    @if(isset($sources['extenception']))
+        @if($type != 'txt')
+            <div class = "photoContent">
+                <a href = "{{ url('/extensions/'. $sourceModel->id) }}" target = "_blank"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->extension_path) }} alt="{{$sourceModel->title}}"></a>
+            </div>
+        @else
+            {!! nl2br(e($content)) !!}
+        @endif
+        <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
+    @elseif(isset($sources['post_id']))
+        @if($type != 'txt')
+            <div class = "photoContent">
+                <p>{{$sourceModel->caption}}</p>
+                <div class = "postPhoto">
+                    <a href="{{ url(env('IMAGE_LINK'). $sourceOriginalPath) }}" data-lightbox="{{ $sourceModel->title }}" data-title="{{ $sourceModel->caption }}"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->post_path) }} alt="{{$sourceModel->title}}" width="99%" height="99%"></a>
+                </div>
+            </div>
+        @else
+            {!! nl2br(e($content)) !!}
+        @endif
+        <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
 
+    @elseif(isset($sources['question_id']))
+        {!! nl2br(e($content)) !!}
+        <p>Asked by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
 
-    <div class = "formData">
-            {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
-        </div>
-    <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
+    @elseif(isset($sources['legacy_id']))
+        {!! nl2br(e($content)) !!}
+        <p>Legacy of: <a href = "{{ url('/beliefs/'. $sourceUser['belief']) }}" target="_blank">{{ $sourceUser['belief'] }}</a></p>
+    @endif
+</div>
+<div class = "newExtension">
+@include ('errors.list')
+{!! Form::open(['url' => 'extensions']) !!}
+
+<!-- Body Form Input -->
+    <div id = "centerTextContent">
+        @if(($sources['type'] == 'question'))
+            {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Answer the question here:', 'rows' => '7%', 'maxlength' => '3500']) !!}
+        @else
+            {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Add your extension here:', 'rows' => '7%', 'maxlength' => '3500']) !!}
+        @endif
+    </div>
     <div class = "indexContent" id = "hiddenIndexContent">
         <div class = "formData">
             <div class = "formCreation">
@@ -77,36 +94,37 @@
             <div class = "formCreation">
                 <div class = "tagLabel">Beacon Tag:</div>
                 <div>
-                    {!! Form::select('beacon_tag', $beacons,$extension->beacon_tag, ['class' => 'tagSelector'] ) !!}
-                </div>
-            </div>
-            <div class = "formCreation">
-                <div class = "tagLabel">Source:</div>
-                <div>
-                    <select name = 'source' class = "tagSelector" required>
-                        <option  disabled>Source:</option>
-                        @if(isset($sources['extenception']))
-                            <option value="Extension" @if (old('source') == 'Extension') selected="selected" @elseif($extension->source == 'Extension' & (old('category') == '')) selected="selected" @endif>Extension</option>
-                        @elseif(isset($sources['post_id']))
-                            <option value="Post" @if (old('source') == 'Post') @elseif($extension->source == 'Post' & (old('category') == '')) selected="selected" @endif>Post</option>
-                        @elseif(isset($sources['question_id']))
-                            <option value="Question" @if (old('source') == 'Question') selected="selected" @elseif($extension->source == 'Question' & (old('category') == '')) @endif>Question</option>
-                        @elseif(isset($sources['legacy_id']))
-                            <option value="Legacy" @if (old('source') == 'Legacy') selected="selected" @endif>Legacy</option>
-                        @endif
-                    </select>
+                    {!! Form::select('beacon_tag', $beacons, $extension->beacon_tag, ['class' => 'tagSelector']) !!}
                 </div>
             </div>
         </div>
     </div>
-
-
-    <!-- Body Form Input -->
-        @if(($sources['type'] == 'question'))
-            {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Answer the question here:', 'rows' => '17%', 'maxlength' => '3500']) !!}
-        @else
-            {!! Form::textarea('body', null, ['id' => 'createBodyText', 'placeholder' => 'Continue your extension here:', 'rows' => '17%', 'maxlength' => '3500']) !!}
+    @if(isset($sources['extenception']))
+        @if(isset($sourceModel->question_id))
+            <input type="hidden" name="original" value="Question">
+            <input type="hidden" name="original_id" value="{{ $sourceModel->question_id }}">
+        @elseif(isset($sourceModel->legacy_post_id))
+            <input type="hidden" name="original" value="Legacy">
+            <input type="hidden" name="original_id" value="{{ $sourceModel->legacy_post_id }}">
+        @elseif(isset($sourceModel->post_id))
+            <input type="hidden" name="original" value="Post">
+            <input type="hidden" name="original_id" value="{{ $sourceModel->post_id }}">
         @endif
+        <input type="hidden" name="type" value="Extenception">
+        <input type="hidden" name="id" value="{{ $sourceModel->id }}">
+    @elseif(isset($sources['post_id']))
+        <input type="hidden" name="type" value="Post">
+        <input type="hidden" name="id" value="{{ $sourceModel->id }}">
+    @elseif(isset($sources['question_id']))
+        <input type="hidden" name="type" value="Question">
+        <input type="hidden" name="id" value="{{ $sourceModel->id }}">
+    @elseif(isset($sources['legacy_id']))
+        <input type="hidden" name="type" value="Legacy">
+        <input type="hidden" name="id" value="{{ $sourceModel->id }}">
+    @endif
+    <div>
+        <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
+
         @section('centerFooter')
             @if(($sources['type'] == 'question'))
                 {!! Form::submit('Update Answer', ['class' => 'navButton', 'id' => 'submit']) !!}
@@ -115,4 +133,7 @@
             @endif
             <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
         @stop
+        {!! Form::close()   !!}
+        <button type = "button" class = "interactButton" id = "content">View Source</button>
+    </div>
 </div>
