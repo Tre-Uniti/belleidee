@@ -6,7 +6,7 @@
 @section('centerText')
         <h2>{{ $location }} Beacon Directory</h2>
         <div class = "indexNav">
-            <a href={{ url('/beacons/')}}><button type = "button" class = "indexButton">Show All Beacons</button></a>
+            <a href={{ url('/beacons/')}}><button type = "button" class = "indexButton">All Beacons</button></a>
             <a href="{{ url('/results?identifier=' . $identifier) }}" class = "indexLink">Expand Search</a>
             <a href="{{ url('/beaconRequests/create') }}"><button type = "button" class = "indexButton">Request New Beacon</button></a>
         </div>

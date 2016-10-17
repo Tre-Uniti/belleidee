@@ -39,9 +39,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 use League\Flysystem\Filesystem;
-use League\Flysystem\ZipArchive\ZipArchiveAdapter as Adapter;
 use Event;
-use JavaScript;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Response;
@@ -58,7 +56,7 @@ class HomeController extends Controller
     /*
     * Return the home page for the logged in user
     */
-    public function getHome()
+    public function index()
     {
         $user = Auth::user();
         $beacon = Beacon::where('beacon_tag', '=', $user->last_tag)->first();
@@ -83,17 +81,16 @@ class HomeController extends Controller
         //Get Number of Followers (those who have bookmarked the user)
         $followingCount = $user->bookmarks()->where('type', '=', 'User')->count();
 
-
         $sponsor = getSponsor($user);
         $location = getLocation();
 
         return view ('pages.home')
-                ->with(compact('user', 'posts', 'extensions', 'question', 'sponsor', 'beacon'))
-                ->with('followerCount', $followerCount)
-                ->with('followingCount', $followingCount)
-                ->with('extensionCount', $extensionCount)
-                ->with('postCount', $postCount)
-                ->with('location', $location);
+            ->with(compact('user', 'posts', 'extensions', 'question', 'sponsor', 'beacon'))
+            ->with('followerCount', $followerCount)
+            ->with('followingCount', $followingCount)
+            ->with('extensionCount', $extensionCount)
+            ->with('postCount', $postCount)
+            ->with('location', $location);
     }
     public function getSettings()
     {
@@ -117,8 +114,8 @@ class HomeController extends Controller
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         return view ('pages.settings')
-                    ->with(compact('user', 'profilePosts', 'profileExtensions', 'sponsor'))
-                    ->with('days', $days);
+            ->with(compact('user', 'profilePosts', 'profileExtensions', 'sponsor'))
+            ->with('days', $days);
     }
 
     /*
@@ -132,7 +129,7 @@ class HomeController extends Controller
 
 
         return view ('pages.indev')
-                    ->with(compact('user', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'profilePosts', 'profileExtensions'));
     }
 
     /**
@@ -384,7 +381,7 @@ class HomeController extends Controller
         $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         return view ('pages.tutorials')
-                ->with(compact('user', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'profilePosts', 'profileExtensions'));
     }
 
     /*
@@ -464,7 +461,7 @@ class HomeController extends Controller
             'Content-Disposition' => 'inline; '.$filename,
         ]);
     }
-    
+
     /*
      * Display email frequency options
      */
@@ -482,14 +479,14 @@ class HomeController extends Controller
         return view ('pages.frequency')
             ->with(compact('user', 'profilePosts', 'profileExtensions', 'frequencies'));
     }
-    
+
     /*
     * Change user location to local (based off last post or extension)
     */
     public function local()
     {
         $user = Auth::user();
-        
+
         if($user->last_tag == 'No-Beacon' || $user->last_tag == NULL)
         {
             $lat = NULL;
@@ -508,7 +505,7 @@ class HomeController extends Controller
             session()->put('coordinates', $coordinates);
             return redirect ('newLocation');
         }
-        
+
         $user->location = 0;
         $user->update();
 
@@ -674,7 +671,7 @@ class HomeController extends Controller
         return view ('pages.themes')
             ->with(compact('user', 'themes'));
     }
-    
+
     /*
      * Display an Idee Map
      * @param $location Supplied by either the user or set from auth user
@@ -692,7 +689,7 @@ class HomeController extends Controller
             //Set Here Maps location type
             $hereLocation = '&c=52.378,13.520';
         }
-        
+
         //Get Idee location type
         $location = getLocation();
 
@@ -700,7 +697,7 @@ class HomeController extends Controller
         JavaScript::put([
             'hereLocation' => $hereLocation,
         ]);
-        
+
         $profilePosts = getProfilePosts($user);
         $profileExtensions = getProfileExtensions($user);
 
@@ -757,9 +754,9 @@ class HomeController extends Controller
         echo "Archive created successfully.";
         dd($zip);
 
-            // Download .zip file.
-            return Response::download(public_path() . '/' . $zipname);
-        
+        // Download .zip file.
+        return Response::download(public_path() . '/' . $zipname);
+
     }
 
     /*
@@ -794,7 +791,7 @@ class HomeController extends Controller
                 $extension->update();
             }
         }
-        
+
         flash()->overlay('GPS added');
         return redirect('home');
     }

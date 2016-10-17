@@ -58,12 +58,12 @@
 
 @section('centerFooter')
     <div id = "centerFooter">
-        <a href="{{ url('/sponsorRequests/') }}"><button type = "button" class = "navButton">Requests</button></a>
+        <a href="{{ url('/sponsorRequests/') }}" class = "navLink">Requests</a>
         @if($sponsorRequest->user_id == $user->id)
-            <a href="{{ url('/sponsorRequests/'.$sponsorRequest->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+            <a href="{{ url('/sponsorRequests/'.$sponsorRequest->id .'/edit') }}" class = "navLink">Edit</a>
         @endif
         @if($user->type > 1)
-                <a href="{{ url('/admin/sponsor/review/'.$sponsorRequest->id) }}"><button type = "button" class = "navButton">Review</button></a>
+                <a href="{{ url('/admin/sponsor/review/'.$sponsorRequest->id) }}" class = "navLink">Review</a>
         @endif
     </div>
 @stop

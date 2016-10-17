@@ -540,7 +540,7 @@ class BeaconController extends Controller
         $user = Auth::user();
         $location = getLocation();
 
-        $beacons = filterContentLocationAllTime($user, 0, 'Beacon', 'total_tag_usage');
+        $beacons = filterContentLocationAllTime($user, 0, 'Beacon', 'tag_usage');
 
         return view ('beacons.topTagged')
             ->with(compact('user', 'beacons'))

@@ -14,6 +14,7 @@ class SponsorRequest extends Model
         'email',
         'address',
         'country',
+        'city',
         'location',
         'status',
         'admin',

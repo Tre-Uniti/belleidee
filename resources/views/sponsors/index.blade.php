@@ -8,19 +8,15 @@
 
 @section('centerText')
     <h2>{{ $location }} Sponsor Directory</h2>
-        <p>Sponsor: A business or non-profit promoting within Belle-idee</p>
-    <div class = "indexNav">
-        <a href={{ url('/promotions')}}><button type = "button" class = "indexButton">Promotions</button></a>
-        <a href={{ url('/sponsors/search')}}><button type = "button" class = "indexButton">Search</button></a>
-        <a href={{ url('/sponsorRequests')}}><button type = "button" class = "indexButton">Requests</button></a>
-    </div>
-        <button class = "interactButton" id = "hiddenIndex">More</button>
-    <div class = "indexContent" id = "hiddenContent">
-        <a href={{ url('/sponsors/joinDate')}}><button type = "button" class = "indexButton">Join Date</button></a>
-        <a href={{ url('/sponsors/topSponsored')}}><button type = "button" class = "indexButton">Top Sponsored</button></a>
-        <a href={{ url('/sponsors/topViewed')}}><button type = "button" class = "indexButton">Top Viewed</button></a>
-    </div>
 
+    <div class = "indexNav">
+        <a href="{{ url('/sponsors/' . $userSponsor->sponsor_tag)}}" class = "indexLink">{{ $userSponsor->sponsor_tag }}</a>
+        <a href="{{ url('/sponsors/topSponsored')}}" class = "indexLink">Top <i class="fa fa-user-plus" aria-hidden="true"></i></a>
+        <a href="{{ url('/sponsors/topViewed')}}" class = "indexLink">Most <i class="fa fa-eye" aria-hidden="true"></i></a>
+        <a href="{{ url('/sponsorRequests')}}" class = "indexLink">Requests</a>
+    </div>
+    <p>Sponsor: A business or non-profit promoting within Belle-idee</p>
+    <hr class = "contentSeparator"/>
     @foreach ($sponsors as $sponsor)
         <article>
             <div class = "contentCard">
@@ -29,9 +25,7 @@
                         <h3>
                             <a href = "{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{$sponsor->name}}</a>
                         </h3>
-                        <p>
-                            <a href = "{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{$sponsor->sponsor_tag}}</a>
-                        </p>
+
                     </header>
                 </div>
 
@@ -46,7 +40,7 @@
                 </div>
                 <div class = "cardHandleSection">
                     <p>
-                        Latest Activity: {{ $sponsor->updated_at->format('M-d-Y') }}
+                        <a href = "{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{$sponsor->sponsor_tag}}</a>
                     </p>
                 </div>
                 <div class = "influenceSection">

@@ -243,7 +243,7 @@ Route::get('demo', 'WelcomeController@getDemo');
 Route::get('tour', 'WelcomeController@getTour');
 
 // Home routes
-Route::get('home', 'HomeController@getHome');
+Route::get('home', 'HomeController@index');
 Route::get('settings', 'HomeController@getSettings');
 Route::get('indev', 'HomeController@getIndev');
 Route::get('photo', 'HomeController@userPhoto');
@@ -301,3 +301,7 @@ $api->version('v1', ['middleware' => 'api.auth', 'api.throttle', 'limit' => 500,
 {
     $api->get('beacons/{id}', ['as' => 'beacons.show', 'uses' => 'App\Api\Controllers\BeaconController@show']);
 });*/
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');

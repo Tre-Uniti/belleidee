@@ -4,28 +4,39 @@
 @stop
 
 @section('centerText')
-    <h2>Recent Sponsor Requests</h2>
-    <div class = "indexNav">
-        <a href={{ url('/sponsors')}}><button type = "button" class = "indexButton">All Sponsors</button></a>
-         <a href={{ url('/sponsorRequests/create')}}><button type = "button" class = "indexButton">New Request</button></a>
-         <a href="{{ url('/sponsorRequests/agreement')}}" target="_blank"><button type = "button" class = "indexButton">Agreement</button></a>
+    <h2>Your Sponsor Requests</h2>
+    <div id = "indexNav">
+        <a href="{{ url('/sponsors')}}" class = "indexLink">All Sponsors</a>
+        <a href="{{ url('/sponsorRequests/create')}}" class = "indexLink">New Request</a>
+        <a href="{{ url('/sponsorRequests/agreement')}}" class = "indexLink" target ="_blank">Agreement</a>
     </div>
-    <div class = "indexLeft">
-        <h4>Name</h4>
-    </div>
-    <div class = "indexRight">
-        <h4>Created</h4>
-    </div>
-    @foreach ($sponsorRequests as $request)
-        <div class = "listResource">
-            <div class = "listResourceLeft">
-                <a href="{{ action('SponsorRequestController@show', [$request->id])}}"><button type = "button" class = "interactButtonLeft">{{ $request->name }} </button></a>
-            </div>
-            <div class = "listResourceRight">
-                <a href="{{ action('SponsorRequestController@show', [$request->id])}}"><button type = "button" class = "interactButton">{{ $request->created_at->format('M-d-Y')}}</button></a>
-            </div>
-        </div>
-    @endforeach
+
+    <hr class = "contentSeparator"/>
+    @if(count($sponsorRequests) == 0)
+        <p>No requests at the moment!</p>
+    @else
+        @foreach ($sponsorRequests as $request)
+            <article>
+                <div class = "contentCard">
+                    <div class = "cardTitleSection">
+                        <header>
+                            <h3>
+                                <a href = "{{ url('/sponsorRequests/'. $request->id) }}">{{$request->name}}</a>
+                            </h3>
+                        </header>
+                    </div>
+
+                    <div class = "cardHandleSection">
+                        <p>
+                            Status: <a href = "{{ url('/sponsorRequests/'. $request->id) }}" class ="contentHandle">{{$request->status}}</a>
+                        </p>
+                        <p>Created: {{ $request->created_at->format('M-d-Y')}}</p>
+                    </div>
+
+                </div>
+            </article>
+        @endforeach
+    @endif
 @stop
 @section('centerFooter')
     @include('pagination.custom-paginator', ['paginator' => $sponsorRequests])

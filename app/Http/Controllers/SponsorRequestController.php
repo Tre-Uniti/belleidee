@@ -38,12 +38,10 @@ class SponsorRequestController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $sponsorRequests = $this->sponsorRequest->where('user_id', '=', $user->id)->paginate(10);
 
         return view ('sponsorRequests.index')
-            ->with(compact('user', 'sponsorRequests', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'sponsorRequests'));
     }
 
     /**
@@ -54,14 +52,12 @@ class SponsorRequestController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         //Get countries for drop down select
         $countries = getCountries();
 
         return view('sponsorRequests.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user'))
             ->with('countries', $countries);
     }
 
@@ -92,12 +88,11 @@ class SponsorRequestController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
         $sponsorRequest = $this->sponsorRequest->findOrFail($id);
 
         return view('sponsorRequests.show')
-            ->with(compact('user', 'sponsorRequest', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'sponsorRequest'));
     }
 
     /**
@@ -112,11 +107,13 @@ class SponsorRequestController extends Controller
         $sponsorRequest = $this->sponsorRequest->findOrFail($id);
 
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
+        //Get countries for drop down select
+        $countries = getCountries();
 
         return view('sponsorRequests.edit')
-            ->with(compact('user', 'sponsorRequest', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'sponsorRequest'))
+            ->with('countries', $countries);
     }
 
     /**

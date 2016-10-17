@@ -51,8 +51,6 @@ class SponsorController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
         $sponsors = filterContentLocation($user, 1, 'Sponsor');
         $location = getLocation();
 
@@ -60,11 +58,14 @@ class SponsorController extends Controller
         {
             $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
             $userSponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            Event::fire(new SponsorViewed($userSponsor));
+        }
+        else
+        {
+            $userSponsor = Sponsor::where('name', '=', 'Tre-Uniti')->first();
         }
 
         return view ('sponsors.index')
-            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions', 'userSponsor'))
+            ->with(compact('user', 'sponsors', 'userSponsor'))
             ->with('location', $location);
     }
 
@@ -76,13 +77,10 @@ class SponsorController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-
         $countries = getCountries();
 
         return view('sponsors.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions','countries'));
+            ->with(compact('user', 'countries'));
     }
 
     /**
@@ -95,6 +93,7 @@ class SponsorController extends Controller
     {
         $sponsor = new Sponsor;
         $sponsor->name = $request['name'];
+        $sponsor->sponsor_tag = $request['sponsor_tag'];
         $sponsor->address = $request['address'];
         $sponsor->website = $request['website'];
         $sponsor->phone = $request['phone'];
@@ -159,9 +158,6 @@ class SponsorController extends Controller
             $user->handle = 'Guest';
         }
 
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-
         //Check Sponsor exists and is active belongs to an Idee Beacon
         try
         {
@@ -177,7 +173,9 @@ class SponsorController extends Controller
             flash()->overlay('No active Idee Sponsor with this id');
             return redirect()->back();
         }
-        $sponsorPath = $sponsor->photo_path;
+
+        //Count number of promotions
+        $promoCount = Promotion::where('sponsor_id', '=', $sponsor->id)->where('status', '!=', 'Closed')->count();
 
         Event::fire(new SponsorViewed($sponsor));
 
@@ -203,12 +201,9 @@ class SponsorController extends Controller
             $eligibleUser = 'no';
         }
 
-
-        $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
-
         return view ('sponsors.show')
-            ->with(compact('user', 'sponsor', 'eligibleUser', 'promotions', 'profilePosts','profileExtensions'))
-            ->with('location', $location);
+            ->with(compact('user', 'sponsor', 'eligibleUser', 'promotions'))
+            ->with('promoCount', $promoCount);
     }
 
     /**
@@ -223,13 +218,11 @@ class SponsorController extends Controller
         $sponsor = $this->sponsor->findOrFail($id);
 
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $countries = getCountries();
 
         return view('sponsors.edit')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'sponsor', 'countries'));
+            ->with(compact('user', 'sponsor', 'countries'));
     }
 
     /**
@@ -356,8 +349,6 @@ class SponsorController extends Controller
         $sponsor = Sponsor::findOrfail($id);
 
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         if($user->type > 1 || $user->id == $sponsor->user_id || Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('user_id', '=', $user->id)->exists())
         {
@@ -369,12 +360,8 @@ class SponsorController extends Controller
             return redirect()->back();
         }
 
-
-        $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
-
         return view('sponsors/sponsorships')
-            ->with(compact('user', 'sponsorships', 'sponsor', 'profilePosts', 'profileExtensions'))
-            ->with('location', $location);
+            ->with(compact('user', 'sponsorships', 'sponsor'));
     }
 
     //Page to supply sponsor payments
@@ -382,8 +369,6 @@ class SponsorController extends Controller
     {
         $sponsor = Sponsor::findOrFail($id);
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         //Customer exists charge card on file
         $amount = $sponsor->views * .5 + $sponsor->clicks * 5;
@@ -411,7 +396,7 @@ class SponsorController extends Controller
         }
 
         return view('sponsors.pay')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'sponsor'));
+            ->with(compact('user', 'sponsor'));
 
     }
 
@@ -487,15 +472,13 @@ class SponsorController extends Controller
     public function search()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
         $types = [
             'Name' => 'Name',
         ];
         $location = getLocation();
 
         return view ('sponsors.search')
-            ->with(compact('user', 'profilePosts','profileExtensions'))
+            ->with(compact('user'))
             ->with('types', $types)
             ->with('location', $location);
     }
@@ -508,22 +491,27 @@ class SponsorController extends Controller
     public function results(Request $request)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-        
+        $location = getLocation();
+
         $identifier = $request->input('identifier');
 
-        $results = filterContentLocationSearch($user, 0, 'Sponsor', $identifier);
+        $sponsors = filterContentLocationSearch($user, 0, 'Sponsor', $identifier);
 
-        if(!count($results))
+        if(!count($sponsors))
         {
             flash()->overlay('No Sponsors with this name or location');
-            return redirect()->back();
+            return redirect('/sponsors/search');
+        }
+        else
+        {
+            $sponsorCount = count($sponsors);
         }
 
         return view ('sponsors.results')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'results'))
-            ->with('identifier', $identifier);
+            ->with(compact('user', 'sponsors'))
+            ->with('identifier', $identifier)
+            ->with('sponsorCount', $sponsorCount)
+            ->with('location', $location);
     }
 
     /**
@@ -534,14 +522,21 @@ class SponsorController extends Controller
     public function topSponsored()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
         $location = getLocation();
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $userSponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+        }
+        else
+        {
+            $userSponsor = Sponsor::where('name', '=', 'Tre-Uniti')->first();
+        }
 
         $sponsors = filterContentLocationAllTime($user, 0, 'Sponsor', 'sponsorships');
 
         return view ('sponsors.topSponsored')
-            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'sponsors', 'userSponsor'))
             ->with('location', $location);
     }
 
@@ -553,14 +548,22 @@ class SponsorController extends Controller
     public function topViewed()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
+
         $location = getLocation();
+        if(Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
+            $userSponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
+        }
+        else
+        {
+            $userSponsor = Sponsor::where('name', '=', 'Tre-Uniti')->first();
+        }
 
         $sponsors = filterContentLocationAllTime($user, 0, 'Sponsor', 'views');
 
         return view ('sponsors.topViewed')
-            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'sponsors', 'userSponsor'))
             ->with('location', $location);
     }
     /**
@@ -572,41 +575,15 @@ class SponsorController extends Controller
     public function joinDate()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
         $location = getLocation();
 
         $sponsors = filterContentLocationAllTime($user, 0, 'Sponsor', 'created_at');
 
         return view ('sponsors.joinDate')
-            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'sponsors'))
             ->with('location', $location);
     }
 
-    /**
-     * Display a top beacons by usage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    /*public function topUsage()
-    {
-        $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-        $sponsors = filterContentLocationAllTime($user, 0, 'Sponsor', 'sponsorships');
-        $location = getLocation();
-
-        if(Sponsorship::where('user_id', '=', $user->id)->exists())
-        {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $userSponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            Event::fire(new SponsorViewed($userSponsor));
-        }
-
-        return view ('sponsors.top')
-            ->with(compact('user', 'sponsors', 'profilePosts','profileExtensions', 'userSponsor'))
-            ->with('location', $location);
-    }*/
 
     /*
      * Charge Sponsor for a click and redirect to their page
@@ -632,8 +609,6 @@ class SponsorController extends Controller
         $sponsor = Sponsor::findOrFail($id);
 
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         //User must have sponsorship for at least 7 days
         $date = Carbon::today()->subDays(7);
@@ -641,12 +616,8 @@ class SponsorController extends Controller
         $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date)->paginate();
         $eligibleCount = count($sponsorships);
 
-
-        $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
-
         return view('sponsors/eligible')
-                ->with(compact('user', 'sponsor', 'sponsorships', 'profilePosts', 'profileExtensions'))
-                ->with('location', $location)
+                ->with(compact('user', 'sponsor', 'sponsorships'))
                 ->with('eligibleCount', $eligibleCount);
     }
 
@@ -660,8 +631,6 @@ class SponsorController extends Controller
         $sponsor = Sponsor::findOrFail($id);
 
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         //User must have sponsorship for at least 7 days
         $date = Carbon::today()->subDays(7);
@@ -672,7 +641,7 @@ class SponsorController extends Controller
         $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
 
         return view('sponsors/eligibleSearch')
-            ->with(compact('user', 'sponsor', 'sponsorships', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user', 'sponsor', 'sponsorships'))
             ->with('location', $location)
             ->with('eligibleCount', $eligibleCount);
     }
@@ -685,8 +654,6 @@ class SponsorController extends Controller
     public function eligibleResults(Request $request)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $handle = $request->input('handle');
         try
@@ -715,8 +682,6 @@ class SponsorController extends Controller
             return redirect()->back();
         }
 
-        $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
-
         if(!count($results))
         {
             flash()->overlay('No Eligible user with this handle');
@@ -728,9 +693,8 @@ class SponsorController extends Controller
         }
 
         return view ('sponsors.eligibleResults')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'results', 'sponsor'))
+            ->with(compact('user', 'results', 'sponsor'))
             ->with('handle', $handle)
-            ->with('location', $location)
             ->with('eligibleCount', $eligibleCount);
     }
 
@@ -745,8 +709,6 @@ class SponsorController extends Controller
         $sponsor = Sponsor::findOrFail($id);
 
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $sponsorUrl = url('/sponsors/'. $sponsor->sponsor_tag);
         $sponsorSocialUrl = "<a href = ". '"'. "$sponsorUrl". '"'."><img src= ". '"'. "Add image location". '"'. "></a>";
@@ -755,14 +717,11 @@ class SponsorController extends Controller
         $sponsorSocialUrl = htmlspecialchars($sponsorSocialUrl);
         $imageLink = htmlspecialchars($imageLink);
 
-        $location = 'https://maps.google.com/?q=' . $sponsor->lat . ','. $sponsor->long;
-
         return view('sponsors.social')
-            ->with(compact('user', 'sponsor', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user', 'sponsor'))
             ->with('sponsorUrl', $sponsorUrl)
             ->with('sponsorSocialUrl', $sponsorSocialUrl)
-            ->with('imageLink', $imageLink)
-            ->with('location', $location);
+            ->with('imageLink', $imageLink);
     }
 
     /*
