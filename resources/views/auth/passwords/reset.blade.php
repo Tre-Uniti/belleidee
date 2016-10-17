@@ -2,7 +2,8 @@
 @section('siteTitle')
     Reset Password
 @stop
-@section('login')
+@section('centerContent')
+    <div class=" authCard">
     @if (session('status'))
         <div class = "flash-success">
             {{ session('status') }}
@@ -15,7 +16,7 @@
             <input type="hidden" name="token" value="{{ $token }}">
 
             <div class="formData{{ $errors->has('email') ? ' has-error' : '' }}">
-                <label for="email" class="inputLabel">E-Mail Address</label>
+                <label for="email" class="formLabel">E-Mail Address</label>
 
                 <div class="formInput">
                     <input id="email" type="email" class="welcomeInputText" name="email" value="{{ $email or old('email') }}">
@@ -29,13 +30,14 @@
                 </div>
             </div>
             <div class="formData{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                <label for="password-confirm" class="formLabel">Confirm Password</label>
+                <label for="password-confirm" class="formLabel">Confirm</label>
                 <div class="formInput">
                     <input id="password-confirm" type="password" class="welcomeInputText" name="password_confirmation">
                 </div>
             </div>
             <button type="submit" class="navButton">Reset Password</button>
         </form>
+    </div>
     </div>
 @stop
 @section('footer')

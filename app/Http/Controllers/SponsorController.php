@@ -61,7 +61,7 @@ class SponsorController extends Controller
         }
         else
         {
-            $userSponsor = Sponsor::where('name', '=', 'Tre-Uniti')->first();
+            $userSponsor = null;
         }
 
         return view ('sponsors.index')
@@ -530,7 +530,7 @@ class SponsorController extends Controller
         }
         else
         {
-            $userSponsor = Sponsor::where('name', '=', 'Tre-Uniti')->first();
+            $userSponsor = null;
         }
 
         $sponsors = filterContentLocationAllTime($user, 0, 'Sponsor', 'sponsorships');
@@ -557,7 +557,7 @@ class SponsorController extends Controller
         }
         else
         {
-            $userSponsor = Sponsor::where('name', '=', 'Tre-Uniti')->first();
+            $userSponsor = null;
         }
 
         $sponsors = filterContentLocationAllTime($user, 0, 'Sponsor', 'views');

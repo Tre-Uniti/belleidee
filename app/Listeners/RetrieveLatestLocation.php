@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Beacon;
 use App\Events\SetLocation;
 use App\Extension;
+use function App\Http\setCoordinates;
 use App\Post;
 use App\User;
 use Illuminate\Queue\InteractsWithQueue;
@@ -57,62 +58,9 @@ class RetrieveLatestLocation
         }
         else
         {
-            $this->setCoordinates($user, $last_tag);
+            setCoordinates($user, $last_tag);
         }
 
-    }
-
-    //Get beacon tag and set coordinates
-    public function setCoordinates($user, $last_tag)
-    {
-        $beacon = Beacon::where('beacon_tag', '=', $last_tag)->first();
-        if($last_tag != 'No-Beacon' && !is_null($beacon))
-        {
-            $country = $beacon->country;
-
-            //Separate out city code and name
-            $cityCode = substr($beacon->beacon_tag, 3);
-            $cityCode = substr($cityCode, 0, strpos($cityCode, "-"));
-            $cityName = $beacon->city;
-
-            //Add country to city name
-            $city = $beacon->country . '-' . $cityName;
-
-            //Add country to city code
-            $shortTag = $beacon->country . '-' . $cityCode;
-
-            $coordinates = [
-                'lat' => $beacon->lat,
-                'long' => $beacon->long,
-                'country' => $country,
-                'city' => $city,
-                'shortTag' => $shortTag,
-                'cityCode' => $cityCode,
-                'cityName' => $cityName,
-                'location' => $user->location,
-            ];
-            session()->put('coordinates', $coordinates);
-            //$this->flashLocation($user, $coordinates);
-        }
-        else
-        {
-            $coordinates = [
-                'lat' => NULL,
-                'long' => NULL,
-                'country' => NULL,
-                'city' => NULL,
-                'cityCode' => NULL,
-                'cityName' => NULL,
-                'shortTag' => NULL,
-                'location' => 2,
-            ];
-
-            //Set user location to Global in database
-            $user->location = 2;
-            $user->update();
-            //$this->flashLocation($user, $coordinates);
-            session()->put('coordinates', $coordinates);
-        }
     }
 
     //Flash message to be sent to user once logged in

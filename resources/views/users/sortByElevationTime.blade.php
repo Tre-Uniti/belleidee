@@ -11,7 +11,9 @@
     <h2>Top Elevated Users ({{ $filter }})</h2>
         <div class = "indexNav">
             <a href={{ url('/users')}}><button type = "button" class = "indexButton">New Users</button></a>
-            <a href={{ url('/users/search')}}><button type = "button" class = "indexButton">Search</button></a>
+            @if($user->last_tag != null)
+                <a href="{{ url('/beacons/users'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
+            @endif
             <a href={{ url('/users/extensionTime/'. $time)}}><button type = "button" class = "indexButton">Extended</button></a>
         <nav class = "infoNav">
             <ul>

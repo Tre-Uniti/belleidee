@@ -19,6 +19,7 @@ use function App\Http\prepareExtensionCards;
 use function App\Http\prepareLegacyPostCards;
 use function App\Http\preparePostCards;
 use App\Http\Requests\PhotoUploadRequest;
+use function App\Http\setCoordinates;
 use App\LegacyPost;
 use App\Mailers\NotificationMailer;
 use App\Notification;
@@ -110,11 +111,9 @@ class HomeController extends Controller
             $days = 0;
         }
 
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         return view ('pages.settings')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'sponsor'))
+            ->with(compact('user', 'sponsor'))
             ->with('days', $days);
     }
 
@@ -124,12 +123,9 @@ class HomeController extends Controller
     public function getIndev()
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
-
 
         return view ('pages.indev')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user'));
     }
 
     /**
@@ -140,11 +136,9 @@ class HomeController extends Controller
     public function userPhoto()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         return view ('pages.photo')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user'));
     }
     /**
      * Upload profile photo to S3 and set in database.
@@ -219,8 +213,6 @@ class HomeController extends Controller
     public function search()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $sponsor = getSponsor($user);
 
@@ -239,7 +231,7 @@ class HomeController extends Controller
         $location = getLocation();
 
         return view ('pages.search')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'types', 'sponsor'))
+            ->with(compact('user', 'types', 'sponsor'))
             ->with('location', $location);
     }
 
@@ -251,9 +243,6 @@ class HomeController extends Controller
     public function results(Request $request)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-
 
         //Get search title
         $identifier = $request->input('identifier');
@@ -295,7 +284,7 @@ class HomeController extends Controller
             $location = getLocation();
 
             return view ('pages.multiResults')
-                ->with(compact('user', 'profilePosts','profileExtensions', 'users', 'beacons', 'sponsors', 'posts', 'legacyPosts', 'extensions', 'sponsor'))
+                ->with(compact('user', 'users', 'beacons', 'sponsors', 'posts', 'legacyPosts', 'extensions', 'sponsor'))
                 ->with('userCount', $userCount)
                 ->with('beaconCount', $beaconCount)
                 ->with('sponsorCount', $sponsorCount)
@@ -377,11 +366,9 @@ class HomeController extends Controller
     public function tutorials()
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         return view ('pages.tutorials')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user'));
     }
 
     /*
@@ -390,11 +377,9 @@ class HomeController extends Controller
     public function workshops()
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         return view ('pages.workshops')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user'));
     }
 
     /*
@@ -468,8 +453,7 @@ class HomeController extends Controller
     public function frequency()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
+
         $frequencies = [
             '1' => 'Least',
             '2' => 'Often',
@@ -477,7 +461,7 @@ class HomeController extends Controller
         ];
 
         return view ('pages.frequency')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'frequencies'));
+            ->with(compact('user', 'frequencies'));
     }
 
     /*
@@ -501,8 +485,7 @@ class HomeController extends Controller
                 'location' => 2,
             ];
 
-            flash()->overlay('Last Beacon Tag: '. $user->last_tag . ", please select location");
-            session()->put('coordinates', $coordinates);
+            flash()->overlay('No recently localized content, please set a custom location or request a new beacon');            session()->put('coordinates', $coordinates);
             return redirect ('newLocation');
         }
 
@@ -544,7 +527,7 @@ class HomeController extends Controller
                 'location' => 2,
             ];
 
-            flash()->overlay('Last Beacon Tag: '. $user->last_tag . ', please select location');
+            flash()->overlay('No recently localized content, please set a custom location or request a new beacon');
             session()->put('coordinates', $coordinates);
             return redirect ('newLocation');
         }
@@ -589,13 +572,11 @@ class HomeController extends Controller
     public function newLocation()
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         $countries = getCountries();
 
         return view ('pages.newLocation')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user'))
             ->with('countries', $countries);
     }
 
@@ -611,16 +592,13 @@ class HomeController extends Controller
         {
             $city = $request['city'];
             $beacon = Beacon::where('city', '=', $city)->where('country', '=', $request['country'])->first();
+            //dd($beacon);
             if(is_null($beacon))
             {
                 flash()->overlay('No beacons in this area yet, please submit a beacon request');
-                return redirect()->back()->withInput();
+                return redirect('newLocation');
             }
-            $cityCode = substr($beacon->beacon_tag, 3);
-            $cityCode = substr($cityCode, 0, strpos($cityCode, "-"));
-            $cityName = $beacon->city;
-            $city = $beacon->country . '-' . $cityName;
-            $shortTag = $beacon->country . '-' . $cityCode;
+            setCoordinates($user, $beacon->beacon_tag);
             $user->location = 0;
             $user->update();
             flash()->overlay('Location changed to: ' . $city);
@@ -631,28 +609,14 @@ class HomeController extends Controller
             if(is_null($beacon))
             {
                 flash()->overlay('No beacons in this country yet, please submit a beacon request');
-                return redirect()->back()->withInput();
+                return redirect('/newLocation');
             }
-            $city = NULL;
-            $cityName = NULL;
-            $shortTag = NULL;
-            $cityCode = NULL;
+
+            setCoordinates($user, $beacon->beacon_tag);
             $user->location = 1;
             $user->update();
-            flash()->overlay('Location changed to: ' . $country);        }
-
-        $coordinates = [
-            'lat' => $beacon->lat,
-            'long' => $beacon->long,
-            'country' => $request['country'],
-            'city' => $city,
-            'shortTag' => $shortTag,
-            'cityName' => $cityName,
-            'cityCode' => $cityCode,
-            'location' => $user->location,
-        ];
-
-        session()->put('coordinates', $coordinates);
+            flash()->overlay('Location changed to: ' . $beacon->country);
+        }
 
         return redirect ('/home');
     }

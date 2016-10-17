@@ -63,7 +63,8 @@
             </article>
         @endforeach
     @else
-        <p>No followers yet!</p>
+        <p>Not following anyone yet!</p>
+        <p>Find a user to follow <a href = " {{ url('/users') }}">here</a></p>
     @endif
 
 @stop

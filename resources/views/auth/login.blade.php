@@ -12,14 +12,14 @@
                     <label for="email" class="formLabel">E-Mail Address</label>
 
                     <div class="formInput">
-                        <input id="email" type="email" name="email" value="{{ old('email') }}">
+                        <input id="email" type="email" name="email" class="welcomeInputText" value="{{ old('email') }}">
                     </div>
                 </div>
                 <div class="formData{{ $errors->has('password') ? ' has-error' : '' }}">
                     <label for="password" class="formLabel">Password</label>
 
                     <div class="formInput">
-                        <input id="password" type="password" name="password">
+                        <input id="password" type="password" class="welcomeInputText" name="password">
                     </div>
                 </div>
                 <div class = "formData">

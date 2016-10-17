@@ -29,7 +29,11 @@
             </div>
             <div class = "cardHandleSection">
                 <p>
+                    @if($location == null)
+                        Set your location <a href = "{{ url('/newLocation') }}">here</a>
+                    @else
                 Location set to: <a href = "{{ url('/newLocation') }}">{{ $location }}</a>
+                    @endif
                 </p>
             </div>
             <div class = "influenceSection">
@@ -57,7 +61,8 @@
                             <a href={{ url('/beacons/'. $beacon->beacon_tag) }}>{{ $beacon->beacon_tag }}</a>
                         @endif
                     @else
-                        <a href={{ url('/beacons') }}>No current beacon, discover one here</a>
+                        <h4>No Beacon yet</h4>
+                        <a href = " {{ url('/beacons') }}">Discover one here</a>
                     @endif
                 </div>
                 <div class = "cardImg">
@@ -69,8 +74,8 @@
 
                             @endif
                         @else
-                            <a href={{ url('/sponsors/US-SW-TreUniti') }}><h4>Tre-Uniti</h4></a>
-                            <a href={{ url('/sponsors/US-SW-TreUniti') }}>US-SW-TreUniti</a>
+                        <h4>No Sponsor yet</h4>
+                        <a href = " {{ url('/sponsors') }}">Discover one here</a>
 
                         @endif
                 </div>
@@ -85,7 +90,9 @@
     <div class = "contentHeaderSeparator">
         <h3>Your Recent Posts</h3>
     </div>
-
+@if(count($posts) == 0)
+    <p>No posts yet!<p>
+        <p>Create your first <a href = "{{ url('/posts/create') }}">here</a></p>
     @foreach ($posts as $post)
         <article>
         <div class = "contentCard">
@@ -163,11 +170,14 @@
         </div>
         </article>
     @endforeach
-
+@endif
 <div class = "contentHeaderSeparator">
     <h3>Recent Extensions</h3>
 </div>
-
+@if(count($extensions) == 0)
+    <p>No extensions yet!<p>
+        <p>Find a post to extend <a href = "{{ url('/posts') }}">here</a></p>
+    @else
     @foreach ($extensions as $extension)
         <div class = "contentExtensionCard">
             <div class = "cardTitleSection">
@@ -232,6 +242,6 @@
             </div>
         </div>
     @endforeach
-
+    @endif
 @stop
 

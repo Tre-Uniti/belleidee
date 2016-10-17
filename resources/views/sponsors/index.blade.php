@@ -10,7 +10,9 @@
     <h2>{{ $location }} Sponsor Directory</h2>
 
     <div class = "indexNav">
+        @if(isset($userSponsor))
         <a href="{{ url('/sponsors/' . $userSponsor->sponsor_tag)}}" class = "indexLink">{{ $userSponsor->sponsor_tag }}</a>
+        @endif
         <a href="{{ url('/sponsors/topSponsored')}}" class = "indexLink">Top <i class="fa fa-user-plus" aria-hidden="true"></i></a>
         <a href="{{ url('/sponsors/topViewed')}}" class = "indexLink">Most <i class="fa fa-eye" aria-hidden="true"></i></a>
         <a href="{{ url('/sponsorRequests')}}" class = "indexLink">Requests</a>

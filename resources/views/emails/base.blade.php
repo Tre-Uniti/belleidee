@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset = "UTF-8">
-    <title>Please Verify Email</title>
+    <title>Mail from Belle-idee</title>
 </head>
 <body>
 <table align = "center" width="100%" style = "text-align: center;">
@@ -18,6 +18,9 @@
                     <td colspan="3" style="text-align:center">
                         <img src="https://belle-idee.org/img/idee.png" alt="idee" height="50%" width="40%">
                     </td>
+                </tr>
+                <tr>
+                    <td colspan="3"><hr/></td>
                 </tr>
                 <tr>
                     @yield('emailContent')

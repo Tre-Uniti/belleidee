@@ -593,6 +593,7 @@ class UserController extends Controller
             $followers = $bookmark_user->users()->where('verified', '=', 1)->paginate(10);
         }
 
+
         $viewUser = Auth::user();
 
         return view('users.followers')
@@ -609,9 +610,14 @@ class UserController extends Controller
 
         $viewUser = Auth::user();
 
-        $bookmarks = $user->bookmarks()->where('type', '=', 'User')->pluck('pointer');
+        if($bookmarks = $user->bookmarks()->where('type', '=', 'User')->pluck('pointer'))
+        {
+            if(count($bookmarks))
+            {
+                $following = User::where('verified', '=', 1)->latest()->whereIn('id', $bookmarks)->paginate(10);
+            }
 
-        $following = User::where('verified', '=', 1)->latest()->whereIn('id', $bookmarks)->paginate(10);
+        }
 
         return view('users.following')
             ->with(compact('user', 'viewUser', 'following'));

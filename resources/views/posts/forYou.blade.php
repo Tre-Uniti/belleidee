@@ -12,12 +12,17 @@
         <p>From <a href = " {{ url('users/following/'. $user->id) }}">Users </a> you follow</p>
     <div class = "indexNav">
         <a href="{{ url('/posts')}}" class = "indexLink">Recent</a>
-        <a href="{{ url('/beacons/posts/'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
+        @if($user->last_tag != null)
+            <a href="{{ url('/beacons/posts'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
+        @endif
         <a href="{{ url('posts/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart" aria-hidden="true"></i></a>
         <a href="{{ url('posts/extensionTime/Month')}}" class = "indexLink">Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
     </div>
     </div>
     <hr class = "contentSeparator">
+    @if(!count($posts))
+        <p>Follow <a href = " {{ url('/users') }}">Users</a> to load their posts here</p>
+        @else
         @foreach ($posts as $post)
             <div class = "contentCard">
                 <div class = "cardTitleSection">
@@ -93,7 +98,7 @@
                 </div>
             </div>
         @endforeach
-
+    @endif
 @stop
 
 

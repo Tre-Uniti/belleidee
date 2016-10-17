@@ -12,8 +12,9 @@
         <p>From <a href = " {{ url('users/following/'. $user->id) }}">Users </a> you follow</p>
     <div class = "indexNav">
         <a href="{{ url('/extensions')}}" class = "indexLink">Recent</a>
-        <a href="{{ url('/beacons/extensions/'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
-        <a href="{{ url('extensions/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart" aria-hidden="true"></i></a>
+        @if($user->last_tag != null)
+            <a href="{{ url('/beacons/extensions/'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
+        @endif        <a href="{{ url('extensions/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart" aria-hidden="true"></i></a>
         <a href="{{ url('extensions/extensionTime/Month')}}" class = "indexLink">Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
     </div>
     </div>

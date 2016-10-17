@@ -182,7 +182,6 @@ class PostController extends Controller
         catch(ModelNotFoundException $e)
         {
             $lastPost = NULL;
-            flash()->overlay('Your first post:');
         }
 
         //Fetch last beacon used or set to No-Beacon

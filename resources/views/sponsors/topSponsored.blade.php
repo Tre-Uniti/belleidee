@@ -9,7 +9,9 @@
 @section('centerText')
     <h2>{{ $location }} Top Sponsors</h2>
         <div class = "indexNav">
-            <a href="{{ url('/sponsors/' . $userSponsor->sponsor_tag)}}" class = "indexLink">{{ $userSponsor->sponsor_tag }}</a>
+            @if(isset($userSponsor))
+                <a href="{{ url('/sponsors/' . $userSponsor->sponsor_tag)}}" class = "indexLink">{{ $userSponsor->sponsor_tag }}</a>
+            @endif
             <a href="{{ url('/sponsors/topSponsored')}}" class = "indexLink">Recent </a>
             <a href="{{ url('/sponsors/topViewed')}}" class = "indexLink">Most <i class="fa fa-eye" aria-hidden="true"></i></a>
             <a href="{{ url('/sponsorRequests')}}" class = "indexLink">Requests</a>

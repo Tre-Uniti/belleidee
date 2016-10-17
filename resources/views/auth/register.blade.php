@@ -6,14 +6,12 @@
 
     <div class=" authCard">
         <div id = "dataInput">
-
-
-            <form role="form" method="POST" action="{{ url('/register') }}">
+            <form role="form" method="POST" action="{{ url('/auth/register') }}">
                 {{ csrf_field() }}
                 <div class="formData{{ $errors->has('handle') ? ' has-error' : '' }}">
                     <label for="name" class="formLabel">Username</label>
                     <div class="formInput">
-                        <input id="name" type="text" class="welcomeInputText" name="name" value="{{ old('handle') }}">
+                        <input id="name" type="text" class="welcomeInputText" name="handle" value="{{ old('handle') }}">
                     </div>
                 </div>
 

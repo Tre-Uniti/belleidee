@@ -37,7 +37,7 @@ function getSponsor($user)
     }
     else
     {
-        $sponsor = Sponsor::where('id', '=', 1)->first();
+        $sponsor = null;
     }
 
     return $sponsor;
@@ -385,6 +385,59 @@ function getCountries()
     return ($countries);
 }
 
+//Get beacon tag and set coordinates
+function setCoordinates($user, $last_tag)
+{
+    $beacon = Beacon::where('beacon_tag', '=', $last_tag)->first();
+    if($last_tag != 'No-Beacon' && !is_null($beacon))
+    {
+        $country = $beacon->country;
+
+        //Separate out city code and name
+        $cityCode = substr($beacon->beacon_tag, 3);
+        $cityCode = substr($cityCode, 0, strpos($cityCode, "-"));
+        $cityName = $beacon->city;
+
+        //Add country to city name
+        $city = $beacon->country . '-' . $cityName;
+
+        //Add country to city code
+        $shortTag = $beacon->country . '-' . $cityCode;
+
+        $coordinates = [
+            'lat' => $beacon->lat,
+            'long' => $beacon->long,
+            'country' => $country,
+            'city' => $city,
+            'shortTag' => $shortTag,
+            'cityCode' => $cityCode,
+            'cityName' => $cityName,
+            'location' => $user->location,
+        ];
+        session()->put('coordinates', $coordinates);
+        //$this->flashLocation($user, $coordinates);
+    }
+    else
+    {
+        $coordinates = [
+            'lat' => NULL,
+            'long' => NULL,
+            'country' => NULL,
+            'city' => NULL,
+            'cityCode' => NULL,
+            'cityName' => NULL,
+            'shortTag' => NULL,
+            'location' => 2,
+        ];
+
+        //Set user location to Global in database
+        $user->location = 2;
+        $user->update();
+        //$this->flashLocation($user, $coordinates);
+        session()->put('coordinates', $coordinates);
+    }
+}
+
 /*
  * Get the coordinates of a logged in user and return location
  */
@@ -428,7 +481,7 @@ function filterContentLocation($user, $number, $type)
     if($number == 0)
     {
         //Filter by local
-        if($user->location == 0)
+        if($user->location == 0 && $user->location != null)
         {
             if($type == 'Post')
             {
@@ -467,6 +520,7 @@ function filterContentLocation($user, $number, $type)
             {
                 $filteredContent = User::where('verified', '=', 1)->where('last_tag', 'LIKE', $location['country'].'%')->latest('created_at')->take(10)->get();
             }
+
         }
         //Filter by Global
         else
@@ -487,13 +541,14 @@ function filterContentLocation($user, $number, $type)
             {
                 $filteredContent = User::where('verified', '=', 1)->latest('created_at')->take(10)->get();
             }
+
         }
     }
     //Paginated indexes (i.e All time posts/extensions)
     elseif($number == 1)
     {
         //Filter by local
-        if($user->location == 0)
+        if($user->location == 0 && $user->location != null)
         {
             if($type == 'Post')
             {
@@ -605,7 +660,7 @@ function filterContentLocation($user, $number, $type)
     elseif($number == 2)
     {
         //Filter by local
-        if($user->location == 0)
+        if($user->location == 0 && $user->location != null)
         {
             if($type == 'Post')
             {
@@ -645,7 +700,7 @@ function filterContentLocation($user, $number, $type)
     //Extension filter for latest content
     elseif($number == 3)
     {
-        if($user->location == 0)
+        if($user->location == 0 && $user->location != null)
         {
             if ($type == 'Post')
             {
@@ -683,7 +738,7 @@ function filterContentLocation($user, $number, $type)
     //Source Specific Content location (posts only, extensions have source built-in)
     elseif ($number == 4)
     {
-        if($user->location == 0)
+        if($user->location == 0 && $user->location != null)
         {
             $filteredContent = Post::whereNull('status')->where('source', '=', $type)->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->paginate(10);
         }
@@ -707,7 +762,7 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
     //Time-based filters
     if($number == 0) {
         //Filter by City
-        if ($user->location == 0)
+        if ($user->location == 0 && $user->location != null)
         {
             if ($type == 'Post')
             {
@@ -758,7 +813,7 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
     //Order by Time, Elevation and Location
     elseif($number == 1)
     {
-        if ($user->location == 0)
+        if ($user->location == 0 && $user->location != null)
         {
             if ($type == 'Post')
             {
@@ -810,7 +865,7 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
     elseif($number == 2)
     {
         $location = session('coordinates');
-        if($user->location == 0)
+        if($user->location == 0 && $user->location != null)
         {
             if($type == 'Post')
             {
@@ -855,7 +910,7 @@ function filterContentLocationAllTime($user, $number, $type, $order)
     //Used for All time location filtering with orderBy (i.e all time elevations)
     $location = session('coordinates');
     if($number == 0) {
-        if ($user->location == 0) 
+        if ($user->location == 0 && $user->location != null)
         {
             if ($type == 'Post')
             {
@@ -938,7 +993,7 @@ function filterContentLocationSearch($user, $number, $type, $search)
     if ($number == 0)
     {
         //Filter by City
-        if ($user->location == 0)
+        if ($user->location == 0 && $user->location != null)
         {
             if ($type == 'Post')
             {
