@@ -4,22 +4,18 @@
 @stop
 
 @section('centerText')
-
-    <h2>{{ $sponsor->name }} Eligible Sponsorships</h2>
+    <h2><a href = "{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{ $sponsor->name }}</a></h2>
 
     <div class = "indexNav">
-        <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}"><button type = "button" class = "indexButton">Sponsor Profile</button></a>
-        <a href = "{{ $location }}" target = "_blank"><button type = "button" class = "indexButton">Location</button></a>
-        <a href="{{ $sponsor->website }}" target="_blank"><button type = "button" class = "indexButton">Website</button></a>
+        <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}" class = "indexLink">Profile</a>
+        <a href="{{ url('/sponsors/contact/' . $sponsor->sponsor_tag) }}" class = "indexLink">Contact</a>
     </div>
-    <div class = "indexNav">
-        <a href="{{ url('/sponsors/eligible/'. $sponsor->id) }}"><button type = "button" class = "indexButton">Total Eligible: {{ $eligibleCount }}</button></a>
-        <a href="{{ url('/sponsors/sponsorships/'. $sponsor->id) }}"><button type = "button" class = "indexButton">All Sponsorships</button></a>
-    </div>
+    <p>Search Eligible Users for: <a href = "{{ url('/sponsors/' . $sponsor->sponsor_tag) }}" class = "contentHandle">{{ $sponsor->sponsor_tag }}</a></p>
+
     <div class = "formDataContainer">
         {!! Form::open(['url' => 'sponsors/eligibleResults', 'method' => 'GET']) !!}
         <div class = "formInput">
-            {!!  Form::label('handle', 'Handle:') !!}
+            {!!  Form::label('handle', 'Username:') !!}
         </div>
         <div class = "formInput">
             {!! Form::text('handle', null, ['placeholder' => 'Search text']) !!}

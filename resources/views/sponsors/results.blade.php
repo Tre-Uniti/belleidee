@@ -22,8 +22,10 @@
                         <h3>
                             <a href = "{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{$sponsor->name}}</a>
                         </h3>
+
                     </header>
                 </div>
+
                 <div class = "indexNav">
                     <div class = "cardImg">
                         @if($sponsor->photo_path != NULL)
@@ -47,8 +49,8 @@
                         </div>
                     </div>
                     <div class = "beaconSection">
-                        <a href="{{ url('/sponsors/' . $sponsor->sponsor_tag) }}" class = "iconLink"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
-                        <a href = "{{ url('/sponsors'. $sponsor->sponsor_tag) }}">{{ $sponsor->sponsorships }}</a>
+                        <a href="{{ url('/sponsors/sponsorships' . $sponsor->sponsor_tag) }}" class = "iconLink"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
+                        <a href = "{{ url('/sponsors/sponsorships'. $sponsor->sponsor_tag) }}">{{ $sponsor->sponsorships }}</a>
                         <span class="tooltiptext">Number of sponsored users</span>
                     </div>
                     <div class = "extensionSection">

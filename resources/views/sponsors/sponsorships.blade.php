@@ -13,7 +13,6 @@
     <p>Users sponsored by: <a href = "{{ url('/sponsors/' . $sponsor->sponsor_tag) }}" class = "contentHandle">{{ $sponsor->sponsor_tag }}</a></p>
 
     <div class = "indexNav">
-        <button type = "button" class = "indexButton">Total: {{ $sponsor->sponsorships }}</button>
         @if($user->id == $sponsor->user_id || $user->type > 1 )
         <a href="{{ url('/sponsors/eligible/'. $sponsor->id) }}" class = "indexLink">Promo Eligible</a>
         @endif

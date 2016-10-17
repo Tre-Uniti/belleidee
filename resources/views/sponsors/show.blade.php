@@ -73,7 +73,9 @@
     @endif
         <a href=" {{ url('/sponsors/contact/' . $sponsor->sponsor_tag) }}" class = "navLink">Contact</a>
 
-    <hr class = "contentSeparator"/>
+    <div class = "contentHeaderSeparator">
+        <h3>Promotions</h3>
+    </div>
 
     @if(!count($promotions))
         <p>No Promotions to show</p>

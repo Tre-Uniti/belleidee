@@ -638,11 +638,8 @@ class SponsorController extends Controller
         $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date)->paginate();
         $eligibleCount = count($sponsorships);
 
-        $location = 'http://www.google.com/maps/place/'. $sponsor->lat . ','. $sponsor->long;
-
         return view('sponsors/eligibleSearch')
             ->with(compact('user', 'sponsor', 'sponsorships'))
-            ->with('location', $location)
             ->with('eligibleCount', $eligibleCount);
     }
 
@@ -674,7 +671,7 @@ class SponsorController extends Controller
 
         if($user->type > 1 || $user->id == $sponsor->user_id || Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date)->where('user_id', '=', $user->id)->exists())
         {
-            $results = Sponsorship::where('user_id', '=', $searchUser->id)->where('sponsor_id', '=', $sponsorId)->where('created_at', '<=', $date )->paginate();
+            $sponsorships = Sponsorship::where('user_id', '=', $searchUser->id)->where('sponsor_id', '=', $sponsorId)->where('created_at', '<=', $date )->paginate();
         }
         else
         {
@@ -682,18 +679,18 @@ class SponsorController extends Controller
             return redirect()->back();
         }
 
-        if(!count($results))
+        if(!count($sponsorships))
         {
             flash()->overlay('No Eligible user with this handle');
             return redirect()->back();
         }
         else
         {
-            $eligibleCount = count($results);
+            $eligibleCount = count($sponsorships);
         }
 
         return view ('sponsors.eligibleResults')
-            ->with(compact('user', 'results', 'sponsor'))
+            ->with(compact('user', 'sponsorships', 'sponsor'))
             ->with('handle', $handle)
             ->with('eligibleCount', $eligibleCount);
     }

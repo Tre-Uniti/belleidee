@@ -80,8 +80,9 @@
     <a href="{{ url('/beacons/contact/' . $beacon->beacon_tag) }}" class = "navLink">Contact</a>
 
 
-    <hr class = "contentSeparator"/>
-
+    <div class = "contentHeaderSeparator">
+        <h3>Announcements</h3>
+    </div>
         @if(!count($announcements))
             <p>No announcements to show</p>
         @else
