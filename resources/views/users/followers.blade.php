@@ -54,9 +54,11 @@
                         <span class="tooltiptext">Beacon community where this user is located</span>
                     </div>
                     <div class = "extensionSection">
-                        <a href="{{ url('/users/extendedBy/'. $follower->id) }}" class = "iconLink" > <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i> </a>
-                        <span class="tooltiptext">Total extension of user content</span>
-                        <a href="{{ url('/users/extendedBy/'. $follower->id) }}">{{ $follower->extension }}</a>
+                        <div class = "extensionIcon">
+                            <a href="{{ url('/users/extendedBy/'. $user->id) }}" class = "iconLink" > <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i> </a>
+                            <span class="tooltiptext">Total extension of user content</span>
+                            <a href="{{ url('/users/extendedBy/'. $user->id) }}">{{ $user->extension }}</a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -70,9 +70,13 @@
                 </div>
 
                 <div class = "extensionSection">
-                    <a href="{{ url('/extensions/extenception/'.$extension->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
-                    <a href={{ url('/extensions/extend/list/'.$extension->id)}}>{{ $extension->extension }}</a>
-                    <span class="tooltiptext">Extend to add any inspiration you received</span>
+                    <div class = "extensionIcon">
+                        <a href="{{ url('/extensions/extenception/'.$extension->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
+                        <span class="tooltiptext">Extend to add any inspiration you received</span>
+                    </div>
+                    <div class = "extensionCounter">
+                        <a href={{ url('/extensions/extend/list/'.$extension->id)}}>{{ $extension->extension }}</a>
+                    </div>
                 </div>
                 <div class = "moreSection">
                     <p class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>

@@ -10,128 +10,111 @@
             <header>
                 <div class = "cardTitleSection">
                     <h3>
-                        Let's get Started!
+                        Startup Guide
                     </h3>
-                </div>
-                <div class = "cardHandleSection">
 
+                    <p class = "contentHandle">We recommend completing this guide to help you get started.</p>
+                    <div>
+                        <progress max="5" value="{{ $user->startup }}">
+                            <div class="progress-bar">
+                                <span style="width: {{ $user->startup * 2 }}%;">Progress: {{ $user->startup }} / 5</span>
+                            </div>
+                        </progress>
+                    </div>
                 </div>
             </header>
-            <div class = "cardCaptionExcerptSection">
-                <a href="{{ url('/posts/create') }}" class = " indexLink">Create a Post</a>
-                <a href="{{ url('/posts') }}" class = "indexLink">Discover Posts</a>
-                <p>Location set to: {{ $location }}</p>
-
-            </div>
             </div>
     </article>
-    <div class = "contentHeaderSeparator">
-        <h3>Your Beacon Community</h3>
-    </div>
-        <article>
-            <div class = "contentCard">
-                <div class = "cardTitleSection">
-                    <header>
-                        <h3>
-                            <a href = "{{ url('/beacons/'. $beacon->beacon_tag) }}">{{$beacon->name}}</a>
-                        </h3>
-                        <p>
-                            <a href = "{{ url('/beacons/'. $beacon->beacon_tag) }}">{{$beacon->beacon_tag}}</a>
-                        </p>
-                    </header>
-                </div>
 
-                <div class = "indexNav">
-                    <div class = "cardImg">
-                        @if($beacon->photo_path != NULL)
-                            <a href={{ url('/beacons/'. $beacon->beacon_tag) }}><img src= {{ url(env('IMAGE_LINK'). $beacon->photo_path) }} alt="{{$beacon->name}}" height = "99%" width = "99%"></a>
-                        @else
-                            <a href={{ url('/beacons/'. $beacon->beacon_tag) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "99%" width = "99%"></a>
-                        @endif
-                    </div>
-                </div>
-                <div class = "cardHandleSection">
-                    <p>
-                        Latest Activity: {{ $beacon->updated_at->format('M-d-Y') }}
-                    </p>
-                </div>
-                <div class = "influenceSection">
-                    <div class = "elevationSection">
-                        <div class = "elevationIcon">
-                            <span class="tooltiptext">Number of monthly tags for {{ $beacon->beacon_tag }}</span>
-                            <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}" class = "iconLink"><i class="fa fa-hashtag" aria-hidden="true"></i></a>
-                            <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->tag_usage }}</a>
-                        </div>
-                    </div>
-                    <div class = "beaconSection">
-                        <a href="{{ url('/beliefs/' . $beacon->belief) }}">{{ $beacon->belief }}</a>
-                        <span class="tooltiptext">Belief or way of life associated to the Beacon </span>
-                    </div>
-                    <div class = "extensionSection">
-                        <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                        <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->tag_views }}</a>
-                        <span class="tooltiptext">Number of monthly views</span>
-                    </div>
-                </div>
+    <a href="{{ url('/home/skip') }}" class = " navLink">Skip for Now</a>
+<hr class = "contentSeparator"/>
+    @if($startupList['following'] == 0)
+    <article>
+        <div class = "contentCard">
+            <div class = "cardTitleSection">
+                <header>
+                    <h3>Follow a User</h3>
+
+                    <p>Anyone can join, <a href =" {{ url('/invites') }}">invite your friends!</a> </p>
+                    <p>Following a User adds their posts to the "For You" areas.</p>
+
+                    <a href = "{{ url('/users') }}" class = "indexLink">User Directory</a>
+                    <a href = "{{ url('/users/nearby') }}" class = "indexLink">Find Nearby</a>
+                </header>
             </div>
-        </article>
+        </div>
+    </article>
+    @endif
+    @if($startupList['beacon'] == 0)
+    <article>
+        <div class = "contentCard">
+            <div class = "cardTitleSection">
+                <header>
+                    <h3>Connect to a Beacon</h3>
+                    <p>Beacons are places of worship or thought.</p>
+                    <p>Connecting allows you to engage with their online community.</p>
 
-    <div class = "contentHeaderSeparator">
-        <h3>Your Sponsor</h3>
-    </div>
-            <article>
-                <div class = "contentCard">
-                    <div class = "cardTitleSection">
-                        <header>
-                            <h3>
-                                <a href = "{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{$sponsor->name}}</a>
-                            </h3>
-                            <p>
-                                <a href = "{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{$sponsor->sponsor_tag}}</a>
-                            </p>
-                        </header>
-                    </div>
+                    <a href = "{{ url('/beacons') }}" class = "indexLink">Beacon Directory</a>
+                    <a href = "{{ url('/beacons/nearby') }}" class = "indexLink">Find Nearby</a>
+                </header>
+            </div>
+        </div>
+    </article>
+    @endif
+    @if($startupList['sponsor'] == 0)
+    <article>
+        <div class = "contentCard">
+            <div class = "cardTitleSection">
+                <header>
+                    <h3>Start a Sponsorship</h3>
 
-                    <div class = "indexNav">
-                        <div class = "cardImg">
-                            @if($sponsor->photo_path != NULL)
-                                <a href={{ url('/sponsors/'. $sponsor->sponsor_tag) }}><img src= {{ url(env('IMAGE_LINK'). $sponsor->photo_path) }} alt="{{$sponsor->name}}" height = "99%" width = "99%"></a>
-                            @else
-                                <a href={{ url('/sponsors/'. $sponsor->sponsor_tag) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "99%" width = "99%"></a>
-                            @endif
-                        </div>
-                    </div>
-                    <div class = "cardHandleSection">
-                        <p>
-                            Latest Activity: {{ $sponsor->updated_at->format('M-d-Y') }}
-                        </p>
-                    </div>
-                    <div class = "influenceSection">
-                        <div class = "elevationSection">
-                            <div class = "elevationIcon">
-                                <span class="tooltiptext">Number of monthly clicks for {{ $sponsor->sponsor_tag }}</span>
-                                <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}" class = "iconLink"><i class="fa fa-mouse-pointer" aria-hidden="true"></i></a>
-                                <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{ $sponsor->clicks }}</a>
-                            </div>
-                        </div>
-                        <div class = "beaconSection">
-                            <a href="{{ url('/sponsors/' . $sponsor->sponsor_tag) }}" class = "iconLink"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
-                            <a href = "{{ url('/sponsors'. $sponsor->sponsor_tag) }}">{{ $sponsor->sponsorships }}</a>
-                            <span class="tooltiptext">Number of sponsored users</span>
-                        </div>
-                        <div class = "extensionSection">
-                            <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                            <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{ $sponsor->views }}</a>
-                            <span class="tooltiptext">Number of monthly views</span>
-                        </div>
-                    </div>
-                </div>
-            </article>
+                    <p>Sponsors are businesses or non-profits.</p>
+                    <p>Sponsorships give you access to exclusive promotions.</p>
 
+                    <a href = "{{ url('/sponsors') }}" class = "indexLink">Sponsor Directory</a>
+                    <a href = "{{ url('/sponsors/nearby') }}" class = "indexLink">Find Nearby</a>
+                </header>
+            </div>
+        </div>
+    </article>
+    @endif
+    @if($startupList['post'] == 0)
+    <article>
+        <div class = "contentCard">
+            <div class = "cardTitleSection">
+                <header>
+                    <h3>Create a Post</h3>
+
+                    <p>Each Post is connected to a Beacon.</p>
+                    <p>Drafts are private until converted to public Posts.</p>
+                    <p>Share beautiful ideas, values, and experiences instead of criticisms.</p>
+
+                    <a href = "{{ url('/drafts/create') }}" class = "indexLink">Create Draft</a>
+                    <a href = "{{ url('/posts/create') }}" class = "indexLink">Create Post</a>
+                </header>
+            </div>
+        </div>
+    </article>
+    @endif
+    @if($startupList['extension'] == 0)
+    <article>
+        <div class = "contentCard">
+            <div class = "cardTitleSection">
+                <header>
+                    <h3>Create an Extension</h3>
+                    <p>Each Extension is connected to a Beacon.</p>
+                    <p>Posts, Questions, and Legacies can all be extended.</p>
+                    <p>An extension should add to the source instead of criticising it.</p>
+
+                    <a href = "{{ url('/posts') }}" class = "indexLink">Posts</a>
+                    <a href = "{{ url('/questions') }}" class = "indexLink">Questions</a>
+                    <a href = "{{ url('/legacies') }}" class = "indexLink">Legacies</a>
+                </header>
+            </div>
+        </div>
+    </article>
+    @endif
 @stop
 
-@section('centerFooter')
-    <a href="{{ url('/tutorials') }}"><button type = "button" class = "navButton">Tutorials</button></a>
-@stop
 
 

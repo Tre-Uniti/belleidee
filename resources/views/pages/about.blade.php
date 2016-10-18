@@ -63,7 +63,7 @@
             </h3>
         </div>
         <div id = "centerTextContent">
-        <p>Users are encouraged to share beautiful ideas, values, and experiences instead of critiquing or arguing for or against a certain belief or way of life.
+        <p>Users are encouraged to share beautiful ideas, values, and experiences instead of criticizing or arguing for or against a certain belief or way of life.
             If content is intolerant of any belief or way of life it may be flagged by other users and locked by an Admin.
             </p>
         <p>Intolerant review process:</p>

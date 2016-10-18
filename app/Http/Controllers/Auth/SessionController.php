@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Events\SetLocation;
+use function App\Http\startupGuide;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -103,6 +104,7 @@ class SessionController extends Controller
 
         //Create event to set location
         Event::fire(New SetLocation($user));
+
         return redirect()->intended($this->redirectPath());
     }
 

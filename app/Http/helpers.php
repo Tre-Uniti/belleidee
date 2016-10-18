@@ -385,6 +385,92 @@ function getCountries()
     return ($countries);
 }
 
+//Run user through Getting started guide if needed
+function startupGuide($user)
+{
+    if($user->startup < 5 || $user->startup == null)
+    {
+        $startup = 0;
+        if(session('startupList'))
+        {
+            $startupList = session('startupList');
+        }
+        else
+        {
+            $startupList = [
+                'beacon' => null,
+                'sponsor' => null,
+                'following' => null,
+                'post' => null,
+                'extension' => null,
+                'skip' => 'No'
+            ];
+        }
+
+        //Check if user has selected a beacon
+        if($user->last_tag == null)
+        {
+            $startupList['beacon'] = '0';
+        }
+        else
+        {
+            $startupList['beacon'] = '1';
+            $startup = $startup + 1;
+        }
+
+        //Check if user has selected a sponsor
+        if(!Sponsorship::where('user_id', '=', $user->id)->exists())
+        {
+            $startupList['sponsor'] = '0';
+        }
+        else
+        {
+            $startupList['sponsor'] = '1';
+            $startup = $startup + 1;
+        }
+
+        //Check if user has followed any users
+        if(!$bookmarks = $user->bookmarks()->where('type', '=', 'User')->exists())
+        {
+            $startupList['following'] = '0';
+        }
+        else
+        {
+            $startupList['following'] = '1';
+            $startup = $startup + 1;
+        }
+
+        //Check if user has created their first post
+        if(!Post::where('user_id', '=', $user->id)->exists())
+        {
+            $startupList['post'] = '0';
+        }
+        else
+        {
+            $startupList['post'] = '1';
+            $startup = $startup + 1;
+        }
+
+        //Check if user has created their first extensions
+        if(!Extension::where('user_id', '=', $user->id)->exists())
+        {
+            $startupList['extension'] = '0';
+        }
+        else
+        {
+            $startupList['extension'] = '1';
+            $startup = $startup + 1;
+        }
+
+        //Update User
+        $user->startup = $startup;
+        $user->update();
+
+        //Add startupList to session
+        session()->put('startupList', $startupList);
+    }
+}
+
 //Get beacon tag and set coordinates
 function setCoordinates($user, $last_tag)
 {

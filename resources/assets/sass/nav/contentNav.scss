@@ -118,6 +118,49 @@ p.test
   width: 100%;
 }
 
+progress[value]  {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* Get rid of default border in Firefox. */
+  border: none;
+
+  /* Dimensions */
+  width: 250px;
+  height: 20px;
+
+  /* For IE10 */
+  color: #27AE60;
+}
+progress[value]::-webkit-progress-bar {
+  background-color: #ECF0F1;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+progress[value]::-webkit-progress-value {
+  background-color: #27AE60;
+  border-radius: 5px;
+}
+
+.progress-bar {
+  background-color: #FFFFFF;
+  border-radius: 5px;
+  border: 2px solid #2C3E50;
+
+  position: relative;
+  display: block;
+}
+
+.progress-bar > span {
+  background-color: #27AE60;
+  border-radius: 2px;
+
+  display: block;
+  text-indent: -9999px;
+}
+
 
 
 

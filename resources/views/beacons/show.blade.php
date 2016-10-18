@@ -47,9 +47,11 @@
                     <a href="{{ url('/beliefs/'. $beacon->belief) }}">{{ $beacon->belief }}</a>
                 </div>
                 <div class = "extensionSection">
+                    <div class = 'extensionIcon'>
                     <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
                     <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->tag_views }}</a>
                     <span class="tooltiptext">Number of monthly views</span>
+                    </div>
                 </div>
             </div>
             @if($user->type > 1 || $user->id == $beacon->manager)

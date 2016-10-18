@@ -55,9 +55,13 @@
                             <span class="tooltiptext">Belief or way of life associated to the Beacon </span>
                         </div>
                         <div class = "extensionSection">
-                            <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                            <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->tag_views }}</a>
-                            <span class="tooltiptext">Number of monthly views</span>
+                            <div class = "extensionIcon">
+                                <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                <span class="tooltiptext">Number of monthly views</span>
+                            </div>
+                            <div class = "extensionCounter">
+                                <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->tag_views }}</a>
+                            </div>
                         </div>
                     </div>
                 </div>

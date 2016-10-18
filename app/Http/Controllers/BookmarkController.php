@@ -272,7 +272,7 @@ class BookmarkController extends Controller
             $user->bookmarks()->attach($newBookmark->id);
 
             //Notify user bookmark was successful
-            flash()->overlay('You are now following' . $sourceUser->handle);
+            flash()->overlay('You are now following ' . $sourceUser->handle);
             return redirect('users/'. $sourceUser->id);
         }
     }
@@ -301,7 +301,7 @@ class BookmarkController extends Controller
             $bookmark_user = DB::table('bookmark_user')->where('user_id', $user->id)->where('bookmark_id', $bookmark->id)->first();
             if(count($bookmark_user))
             {
-                flash()->overlay('You already connected to' . $beacon->beacon_tag);
+                flash()->overlay('You already connected to ' . $beacon->beacon_tag);
                 return redirect()->back();
             }
             //Add beacon_tag to user's bookmarks
@@ -312,7 +312,7 @@ class BookmarkController extends Controller
             $user->update();
 
             //Notify user bookmark was successful
-            flash()->overlay('You are now connected to' . $beacon->beacon_tag);
+            flash()->overlay('You are now connected to ' . $beacon->beacon_tag);
             return redirect('/beacons/'. $beacon->beacon_tag);
         }
         else
@@ -328,7 +328,7 @@ class BookmarkController extends Controller
             $user->bookmarks()->attach($newBookmark->id);
 
             //Notify user bookmark was successful
-            flash()->overlay('You are now connected to' . $beacon->beacon_tag);
+            flash()->overlay('You are now connected to ' . $beacon->beacon_tag);
             return redirect('/beacons/'. $beacon->beacon_tag);
         }
     }

@@ -1174,7 +1174,7 @@ class ExtensionController extends Controller
         }
         elseif(isset($sourceExtension->legacy_post_id))
         {
-            $fullSource = ['type' => 'extensions', 'user_id' => $sourceExtension->user_id, 'legacy_post_id' => $sourceExtension->legacy_post_id,   'extenception' => $id, 'extension_title' => $sourceExtension->title, 'beacon_tag' => $sourceExtension->beacon_tag];
+            $fullSource = ['type' => 'extensions', 'user_id' => $sourceExtension->user_id, 'legacyPost_id' => $sourceExtension->legacy_post_id,   'extenception' => $id, 'extension_title' => $sourceExtension->title, 'beacon_tag' => $sourceExtension->beacon_tag];
         }
 
         Session::put('sources', $fullSource);

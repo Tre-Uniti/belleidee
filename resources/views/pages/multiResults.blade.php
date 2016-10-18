@@ -59,9 +59,11 @@
                             <span class="tooltiptext">Beacon community where this user is located</span>
                         </div>
                         <div class = "extensionSection">
-                            <a href="{{ url('/users/extendedBy/'. $User->id) }}" class = "iconLink" > <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i> </a>
-                            <span class="tooltiptext">Total extension of user content</span>
-                            <a href="{{ url('/users/extendedBy/'. $User->id) }}">{{ $User->extension }}</a>
+                            <div class = "extensionIcon">
+                                <a href="{{ url('/users/extendedBy/'. $user->id) }}" class = "iconLink" > <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i> </a>
+                                <span class="tooltiptext">Total extension of user content</span>
+                                <a href="{{ url('/users/extendedBy/'. $user->id) }}">{{ $user->extension }}</a>
+                            </div>
                         </div>
                     </div>
                     </div>
@@ -114,9 +116,13 @@
                             <span class="tooltiptext">Belief or way of life associated to the Beacon </span>
                         </div>
                         <div class = "extensionSection">
-                            <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                            <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->tag_views }}</a>
-                            <span class="tooltiptext">Number of monthly views</span>
+                            <div class = "extensionIcon">
+                                <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                <span class="tooltiptext">Number of monthly views</span>
+                            </div>
+                            <div class = "extensionCounter">
+                                <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->tag_views }}</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -170,9 +176,13 @@
                                 <span class="tooltiptext">Number of sponsored users</span>
                             </div>
                             <div class = "extensionSection">
+                                <div class = "extensionIcon">
                                 <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{ $sponsor->views }}</a>
-                                <span class="tooltiptext">Number of monthly views</span>
+                                    <span class="tooltiptext">Number of monthly views</span>
+                                </div>
+                                <div class = "extensionCounter">
+                                    <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{ $sponsor->views }}</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -236,9 +246,14 @@
                         </div>
 
                         <div class = "extensionSection">
-                            <a href="{{ url('/extensions/post/'.$post->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
-                            <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
-                            <span class="tooltiptext">Extend to add any inspiration you received</span>
+                            <div class = "extensionIcon">
+                                <a href="{{ url('/extensions/post/'.$post->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
+                                <span class="tooltiptext">Extend to add any inspiration you received</span>
+                            </div>
+                            <div class = "extensionCounter">
+                                <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
+
+                            </div>
                         </div>
                         <div class = "moreSection">
                             <p onclick="" class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>
@@ -313,10 +328,14 @@
                             </div>
 
                             <div class = "extensionSection">
-                                <a href="{{ url('/extensions/legacy/'.$legacyPost->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
-                                <a href={{ url('/legacyPost/list/extension/'.$legacyPost->id)}}>{{ $legacyPost->extension }}</a>
+                                <div class = "extensionIcon">
+                                    <a href="{{ url('/extensions/legacy/'.$legacyPost->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
+                                    <span class="tooltiptext">Extend to add any inspiration you received</span>
+                                </div>
+                                <div class = "extensionCounter">
+                                    <a href={{ url('/legacyPost/list/extension/'.$legacyPost->id)}}>{{ $legacyPost->extension }}</a>
 
-                                <span class="tooltiptext">Extend to add any inspiration you received</span>
+                                </div>
                             </div>
 
                         </div>
@@ -381,9 +400,13 @@
                         </div>
 
                         <div class = "extensionSection">
-                            <a href="{{ url('/extensions/extenception/'.$extension->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
-                            <a href={{ url('/extensions/extend/list/'.$extension->id)}}>{{ $extension->extension }}</a>
-                            <span class="tooltiptext">Extend to add any inspiration you received</span>
+                            <div class = "extensionIcon">
+                                <a href="{{ url('/extensions/extenception/'.$extension->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
+                                <span class="tooltiptext">Extend to add any inspiration you received</span>
+                            </div>
+                            <div class = "extensionCounter">
+                                <a href={{ url('/extensions/extend/list/'.$extension->id)}}>{{ $extension->extension }}</a>
+                            </div>
                         </div>
 
                     </div>

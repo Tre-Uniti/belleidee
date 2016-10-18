@@ -58,9 +58,13 @@
                         <span class="tooltiptext">Number of sponsored users</span>
                     </div>
                     <div class = "extensionSection">
-                        <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                        <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{ $sponsor->views }}</a>
-                        <span class="tooltiptext">Number of monthly views</span>
+                        <div class = "extensionIcon">
+                            <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <span class="tooltiptext">Number of monthly views</span>
+                        </div>
+                        <div class = "extensionCounter">
+                            <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{ $sponsor->views }}</a>
+                        </div>
                     </div>
                 </div>
             </div>

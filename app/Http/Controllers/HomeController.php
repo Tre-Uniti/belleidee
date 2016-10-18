@@ -20,6 +20,7 @@ use function App\Http\prepareLegacyPostCards;
 use function App\Http\preparePostCards;
 use App\Http\Requests\PhotoUploadRequest;
 use function App\Http\setCoordinates;
+use function App\Http\startupGuide;
 use App\LegacyPost;
 use App\Mailers\NotificationMailer;
 use App\Notification;
@@ -60,6 +61,22 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        //Check and update User startup
+
+        if ($user->startup < 5 || $user->startup == null)
+        {
+            startupGuide($user);
+            $startupList = session('startupList');
+            if($user->startup < 5 && $startupList['skip'] != 'Yes')
+            {
+                return redirect('/gettingStarted');
+            }
+        }
+        else
+        {
+            $startupList = null;
+        }
         $beacon = Beacon::where('beacon_tag', '=', $user->last_tag)->first();
 
         //Get latest Posts
@@ -91,8 +108,18 @@ class HomeController extends Controller
             ->with('followingCount', $followingCount)
             ->with('extensionCount', $extensionCount)
             ->with('postCount', $postCount)
+            ->with('startupList', $startupList)
             ->with('location', $location);
     }
+    public function skipSetup()
+    {
+        $startupList = session('startupList');
+        $startupList['skip'] = 'Yes';
+        session()->put('startupList', $startupList);
+
+        return redirect('/home');
+    }
+
     public function getSettings()
     {
         $user = Auth::user();
@@ -249,7 +276,6 @@ class HomeController extends Controller
 
         $type = $request->input('type');
 
-
         if($type == NULL || $type == 'All')
         {
             $users = filterContentLocationSearch($user, 0, 'User', $identifier);
@@ -353,10 +379,9 @@ class HomeController extends Controller
             return redirect('/search');
         }
 
-        $sponsor = getSponsor($user);
 
         return view ('pages.results')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'results', 'sponsor'))
+            ->with(compact('user', 'results'))
             ->with('type', $type)
             ->with('identifier', $identifier);
     }
@@ -396,13 +421,26 @@ class HomeController extends Controller
     public function gettingStarted()
     {
         $user = Auth::user();
-        $beacon= getBeacon($user);
-        $sponsor = getSponsor($user);
-        $location = getLocation();
+
+        //Check and update User startup
+        $startupList = session('startupList');
+        if ($user->startup < 5 || $user->startup == null)
+        {
+            startupGuide($user);
+            if($user->startup < 5)
+            {
+                $startupList = session('startupList');
+            }
+            else
+            {
+                return redirect('/home');
+            }
+        }
+
 
         return view ('pages.gettingStarted')
-            ->with(compact('user', 'beacon', 'sponsor'))
-            ->with('location', $location);
+            ->with(compact('user', 'beacon'))
+            ->with('startupList', $startupList);
     }
 
     /*

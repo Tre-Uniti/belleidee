@@ -42,9 +42,11 @@
                     <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">Status: {{ $sponsor->status }}</a>
                 </div>
                 <div class = "extensionSection">
+                    <div class = "extensionIcon">
                     <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
                     <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{ $sponsor->views }}</a>
                     <span class="tooltiptext">Number of monthly views</span>
+                    </div>
                 </div>
             </div>
             @if($user->type > 1 || $user->email == $sponsor->email)

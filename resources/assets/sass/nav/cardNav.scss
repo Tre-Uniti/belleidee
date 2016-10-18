@@ -109,7 +109,13 @@
   padding-bottom: 3px;
 }
 
-.extensionSection .tooltiptext {
+.extensionIcon
+{
+  display: inline-block;
+  color: #27AE60;
+}
+
+.extensionIcon .tooltiptext {
   visibility: hidden;
   width: 200px;
   background-color: #2C3E50;
@@ -125,8 +131,13 @@
   margin-left: -100px;
 }
 
-.extensionSection:hover .tooltiptext {
+.extensionIcon:hover .tooltiptext {
   visibility: visible;
+}
+
+.extensionCounter
+{
+  display: inline-block;
 }
 
 .cardImg

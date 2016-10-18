@@ -44,9 +44,11 @@
                 <div class = "beaconSection">
                 </div>
                 <div class = "extensionSection">
-                    <a href="{{ url('/users/extendedBy/'. $user->id) }}" class = "iconLink" > <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i> </a>
-                    <span class="tooltiptext">Total extension of user content</span>
-                    <a href="{{ url('/users/extendedBy/'. $user->id) }}">{{ $user->extension }}</a>
+                    <div class = "extensionIcon">
+                        <a href="{{ url('/users/extendedBy/'. $user->id) }}" class = "iconLink" > <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i> </a>
+                        <span class="tooltiptext">Total extension of user content</span>
+                        <a href="{{ url('/users/extendedBy/'. $user->id) }}">{{ $user->extension }}</a>
+                    </div>
                 </div>
             </div>
             <div class = "indexNav">
@@ -140,9 +142,13 @@
                 </div>
 
                 <div class = "extensionSection">
-                    <a href="{{ url('/extensions/post/'.$post->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
-                    <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
-                    <span class="tooltiptext">Extend to add any inspiration you received</span>
+                    <div class = "extensionIcon">
+                        <a href="{{ url('/extensions/post/'.$post->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
+                        <span class="tooltiptext">Extend to add any inspiration you received</span>
+                    </div>
+                    <div class = "extensionCounter">
+                        <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
+                    </div>
                 </div>
                 <div class = "moreSection">
                     <p class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>
@@ -209,9 +215,13 @@
                 </div>
 
                 <div class = "extensionSection">
-                    <a href="{{ url('/extensions/extenception/'.$extension->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
-                    <a href={{ url('/extensions/extend/list/'.$extension->id)}}>{{ $extension->extension }}</a>
-                    <span class="tooltiptext">Extend to add any inspiration you received</span>
+                    <div class = "extensionIcon">
+                        <a href="{{ url('/extensions/extenception/'.$extension->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
+                        <span class="tooltiptext">Extend to add any inspiration you received</span>
+                    </div>
+                    <div class = "extensionCounter">
+                        <a href={{ url('/extensions/extend/list/'.$extension->id)}}>{{ $extension->extension }}</a>
+                    </div>
                 </div>
                 <div class = "moreSection">
                     <p class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>

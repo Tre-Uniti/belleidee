@@ -244,6 +244,7 @@ Route::get('tour', 'WelcomeController@getTour');
 
 // Home routes
 Route::get('home', 'HomeController@index');
+Route::get('home/skip', 'HomeController@skipSetup');
 Route::get('settings', 'HomeController@getSettings');
 Route::get('indev', 'HomeController@getIndev');
 Route::get('photo', 'HomeController@userPhoto');

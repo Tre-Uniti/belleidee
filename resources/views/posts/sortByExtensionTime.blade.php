@@ -11,7 +11,7 @@
         <a href="{{ url('/posts')}}" class = "indexLink">Recent</a>
         <a href="{{ url('/posts/forYou')}}" class = "indexLink">For You</a>
         @if($user->last_tag != null)
-            <a href="{{ url('/beacons/posts'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
+            <a href="{{ url('/beacons/posts/'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
         @endif
         <a href="{{ url('posts/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart" aria-hidden="true"></i></i></a>
         <p>Sort by  <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i> </p>
@@ -76,12 +76,15 @@
                     <a href="{{ url('/beacons/'.$post->beacon_tag) }}" >{{ $post->beacon_tag }}</a>
                     <span class="tooltiptext">Beacon community where this post is located</span>
                 </div>
-
                 <div class = "extensionSection">
-                    <a href="{{ url('/extensions/post/'.$post->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
-                    <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
+                    <div class = "extensionIcon">
+                        <a href="{{ url('/extensions/post/'.$post->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
+                        <span class="tooltiptext">Extend to add any inspiration you received</span>
+                    </div>
+                    <div class = "extensionCounter">
+                        <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
 
-                    <span class="tooltiptext">Extend to add any inspiration you received</span>
+                    </div>
                 </div>
                 <div class = "moreSection">
                     <p onclick="" class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>

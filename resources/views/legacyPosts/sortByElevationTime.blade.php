@@ -69,10 +69,14 @@
                     </div>
 
                     <div class = "extensionSection">
-                        <a href="{{ url('/extensions/legacy/'.$legacyPost->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
-                        <a href={{ url('/legacyPost/list/extension/'.$legacyPost->id)}}>{{ $legacyPost->extension }}</a>
+                        <div class = "extensionIcon">
+                            <a href="{{ url('/extensions/legacy/'.$legacyPost->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
+                            <span class="tooltiptext">Extend to add any inspiration you received</span>
+                        </div>
+                        <div class = "extensionCounter">
+                            <a href={{ url('/legacyPost/list/extension/'.$legacyPost->id)}}>{{ $legacyPost->extension }}</a>
 
-                        <span class="tooltiptext">Extend to add any inspiration you received</span>
+                        </div>
                     </div>
 
                 </div>
