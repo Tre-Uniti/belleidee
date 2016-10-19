@@ -28,7 +28,7 @@
                 </li>
             </ul>
         </nav>
-
+    <hr class = "contentSeparator"/>
     @include ('users._userCards')
 
 @stop

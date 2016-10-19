@@ -402,11 +402,9 @@
   max-width: 100%;
   max-height: 100%; }
 
-p.test {
-  letter-spacing: .01rem;
-  font-weight: 400;
-  font-style: normal;
-  line-height: 1.58; }
+p.textContent {
+  line-height: 1.5;
+  padding: 0 3px 5px 3px; }
 
 .postPhoto {
   height: auto;
@@ -425,9 +423,13 @@ p.test {
   border: 1px solid #2C3E50;
   font-weight: 400;
   margin: 15px 0 5px 0; }
-  .showExtensions:hover {
-    color: #FFFFFF;
-    background: #2ECC71; }
+
+.showExtensions:hover {
+  color: #FFFFFF;
+  background: #2ECC71; }
+
+.showExtensions:focus {
+  outline: none; }
 
 .showAll {
   margin: 10px 0 10px 0; }
@@ -1693,13 +1695,13 @@ article {
   /* Dropdown Content (Hidden by Default) */
   .moreOptionsMenu {
     left: -60px; }
-  .extensionSection .tooltiptext {
+  .leftSection .tooltiptext {
     display: none; }
-  .extensionIcon:hover .tooltiptext {
+  .leftIcon:hover .tooltiptext {
     display: none; }
-  .elevationSection .tooltiptext {
+  .rightSection .tooltiptext {
     display: none; }
-  .elevationIcon:hover .tooltiptext {
+  .rightIcon:hover .tooltiptext {
     display: none; }
   .beliefIndex .tooltiptext {
     bottom: 120%;
@@ -1723,13 +1725,13 @@ article {
     width: 85%; }
   .searchField {
     width: 65px; }
-  .extensionSection .tooltiptext {
+  .leftSection .tooltiptext {
     display: none; }
-  .extensionIcon:hover .tooltiptext {
+  .leftIcon:hover .tooltiptext {
     display: none; }
-  .elevationSection .tooltiptext {
+  .rightSection .tooltiptext {
     display: none; }
-  .elevationIcon:hover .tooltiptext {
+  .rightIcon:hover .tooltiptext {
     display: none; }
   .formDataContainer {
     width: 98%;
@@ -1824,13 +1826,13 @@ article {
   /* Dropdown Content (Hidden by Default) */
   .moreOptionsMenu {
     left: -60px; }
-  .extensionSection .tooltiptext {
+  .leftSection .tooltiptext {
     display: none; }
-  .extensionIcon:hover .tooltiptext {
+  .leftIcon:hover .tooltiptext {
     display: none; }
-  .elevationSection .tooltiptext {
+  .rightSection .tooltiptext {
     display: none; }
-  .elevationIcon:hover .tooltiptext {
+  .rightIcon:hover .tooltiptext {
     display: none; }
   .beliefIndex .tooltiptext {
     bottom: 120%;
@@ -1840,13 +1842,13 @@ article {
     left: -60%; } }
 
 @media screen and (min-width: 467px) and (max-width: 751px) and (max-height: 400px) {
-  .extensionSection .tooltiptext {
+  .leftSection .tooltiptext {
     display: none; }
-  .extensionIcon:hover .tooltiptext {
+  .leftIcon:hover .tooltiptext {
     display: none; }
-  .elevationSection .tooltiptext {
+  .rightSection .tooltiptext {
     display: none; }
-  .elevationIcon:hover .tooltiptext {
+  .rightIcon:hover .tooltiptext {
     display: none; }
   .topNav > ul > li > div {
     width: 92px; }

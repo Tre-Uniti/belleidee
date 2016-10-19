@@ -646,7 +646,7 @@ class LegacyPostController extends Controller
 
         $beacon = Beacon::where('beacon_tag', '=', $user->last_tag)->first();
 
-        $legacyPosts = LegacyPost::where('belief', '=', $beacon->belief)->paginate(10);
+        $legacyPosts = LegacyPost::where('belief', '=', $beacon->belief)->latest()->paginate(10);
 
         $legacyPosts = prepareLegacyPostCards($legacyPosts, $user);
 

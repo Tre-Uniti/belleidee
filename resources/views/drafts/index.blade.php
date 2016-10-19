@@ -38,8 +38,8 @@
                     @endif
 
                 </div>
-                <div class = "influenceSection">
-                    <div class = "beaconSection">
+                <div class = "footerSection">
+                    <div class = "centerSection">
                         <a href="{{ url('/beacons/'.$draft->beacon_tag) }}" >{{ $draft->beacon_tag }}</a>
                         <span class="tooltiptext">Beacon community where this draft is located</span>
                     </div>

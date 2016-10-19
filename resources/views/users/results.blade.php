@@ -10,7 +10,7 @@
             <a href={{ url('/users/search')}}><button type = "button" class = "indexButton">User Search</button></a>
             <a href={{ url('/search')}}><button type = "button" class = "indexButton">Global Search</button></a>
         </div>
-
+    <hr class = "contentSeparator"/>
     @include ('users._userCards')
 
 @stop

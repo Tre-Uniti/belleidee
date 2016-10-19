@@ -35,22 +35,26 @@
 
             </div>
             <p>Tag: {{ $beacon->beacon_tag }}</p>
-            <div class = "influenceSection">
-                <div class = "elevationSection">
-                    <div class = "elevationIcon">
+            <div class = "footerSection">
+                <div class = "leftSection">
+                    <div class = "leftIcon">
                         <span class="tooltiptext">Number of monthly tags for {{ $beacon->beacon_tag }}</span>
                         <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}" class = "iconLink"><i class="fa fa-hashtag" aria-hidden="true"></i></a>
+                    </div>
+                    <div class = "leftCounter">
                         <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->tag_usage }}</a>
                     </div>
                 </div>
-                <div class = "beaconSection">
+                <div class = "centerSection">
                     <a href="{{ url('/beliefs/'. $beacon->belief) }}">{{ $beacon->belief }}</a>
                 </div>
-                <div class = "extensionSection">
-                    <div class = 'extensionIcon'>
-                    <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                    <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->tag_views }}</a>
-                    <span class="tooltiptext">Number of monthly views</span>
+                <div class = "rightSection">
+                    <div class = 'rightIcon'>
+                        <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        <span class="tooltiptext">Number of monthly views</span>
+                    </div>
+                    <div class = "rightCounter">
+                        <a href="{{ url('/beacons/'. $beacon->beacon_tag) }}">{{ $beacon->tag_views }}</a>
                     </div>
                 </div>
             </div>

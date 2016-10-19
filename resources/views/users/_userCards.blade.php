@@ -1,4 +1,3 @@
-<hr class = "contentSeparator"/>
 @foreach ($users as $User)
     <article>
         <div class = "contentCard">

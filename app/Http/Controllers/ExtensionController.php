@@ -681,9 +681,8 @@ class ExtensionController extends Controller
             $sourcePhotoPath = $user->photo_path;
         }
 
-
         //Get extensions of Extension
-        $extensions = Extension::where('id', '=', $extension->id)->orderBy('elevation', 'desc')->take(10)->get();
+        $extensions = Extension::where('extenception', '=', $extension->id)->orderBy('elevation', 'desc')->take(10)->get();
         $moreExtensions = Extension::where('id', '=', $extension->id)->count();
         if($moreExtensions <= 10)
         {
@@ -1309,20 +1308,17 @@ class ExtensionController extends Controller
         }
 
         //Get extension and set sources for extension
-        $extension = Extension::findOrFail($id);
-        $sources = [
-            'extenception' => $extension->id,
-            'extension_title' => $extension->title
-        ];
+        $source = Extension::findOrFail($id);
+
 
         //Get other Posts and Extensions of User
-        $user_id = $extension->user_id;
+        $user_id = $source->user_id;
         $user = User::findOrFail($user_id);
 
         //Get all extensions for question answer
-        if($extension->answer_id == $extension->id)
+        if($source->answer_id == $source->id)
         {
-            $extensions = Extension::where('answer_id', $id)->where('id', '!=', $extension->id)->latest('created_at')->paginate(10);
+            $extensions = Extension::where('answer_id', $id)->where('id', '!=', $source->id)->latest('created_at')->paginate(10);
         }
         //Get all extensions for other types of extension
         else
@@ -1342,14 +1338,14 @@ class ExtensionController extends Controller
         }
 
         //Determine if beacon or sponsor shows and update
-        if($extension->beacon_tag == 'No-Beacon')
+        if($source->beacon_tag == 'No-Beacon')
         {
             $sponsor = getSponsor($user);
             $beacon = NULL;
         }
         else
         {
-            $beacon = getBeacon($extension);
+            $beacon = getBeacon($source);
             if($beacon == NULL)
             {
                 $sponsor = getSponsor($user);
@@ -1360,8 +1356,8 @@ class ExtensionController extends Controller
             }
         }
 
-        return view('extensions.postList')
-                    ->with(compact('user', 'extensions', 'sources', 'beacon', 'sponsor', 'extension', 'viewUser'))
+        return view('extensions.extendList')
+                    ->with(compact('user', 'extensions', 'beacon', 'sponsor', 'source', 'viewUser'))
                     ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 

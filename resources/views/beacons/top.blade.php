@@ -10,22 +10,8 @@
         <a href={{ url('/beacons/search')}}><button type = "button" class = "indexButton">Beacon Search</button></a>
         <a href={{ url('/beaconRequests')}}><button type = "button" class = "indexButton">New Requests</button></a>
     </div>
-    <div class = "indexLeft">
-        <h4>Beacon</h4>
-    </div>
-    <div class = "indexRight">
-        <h4>Beacon Tag</h4>
-    </div>
-    @foreach ($beacons as $beaconIndex)
-        <div class = "listResource">
-            <div class = "listResourceLeft">
-                <a href="{{ action('BeaconController@show', [$beaconIndex->beacon_tag])}}"><button type = "button" class = "interactButtonLeft">{{$beaconIndex->name}}</button></a>
-            </div>
-            <div class = "listResourceRight">
-                <a href="{{ action('BeaconController@show', [$beaconIndex->beacon_tag])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$beaconIndex->beacon_tag}}</button></a>
-            </div>
-        </div>
-    @endforeach
+  <hr class = "contentSeparator"/>
+    @include('beacons._beaconCards')
 @stop
 @section('centerFooter')
     @include('pagination.custom-paginator', ['paginator' => $beacons])

@@ -65,13 +65,10 @@
   max-height:100%;
 }
 
-p.test
+p.textContent
 {
-
-  letter-spacing: .01rem;
-  font-weight: 400;
-  font-style: normal;
-  line-height: 1.58;
+  line-height: 1.5;
+  padding: 0 3px 5px 3px;
 }
 
 .postPhoto
@@ -94,12 +91,15 @@ p.test
   border: 1px solid #2C3E50;
   font-weight: 400;
   margin: 15px 0 5px 0;
-
-  &:hover
-  {
+}
+.showExtensions:hover
+{
     color: #FFFFFF;
     background: #2ECC71;
-  }
+}
+.showExtensions:focus
+{
+  outline:none;
 }
 
 .showAll

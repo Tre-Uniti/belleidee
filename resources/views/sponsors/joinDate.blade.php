@@ -21,22 +21,8 @@
         </div>
     </div>
 
-    <div class = "indexLeft">
-        <h4>Sponsor</h4>
-    </div>
-    <div class = "indexRight">
-        <h4>Joined</h4>
-    </div>
-    @foreach ($sponsors as $sponsorIndex)
-        <div class = "listResource">
-            <div class = "listResourceLeft">
-                <a href="{{ action('BeaconController@show', [$sponsorIndex->beacon_tag])}}"><button type = "button" class = "interactButtonLeft">{{$sponsorIndex->name}}</button></a>
-            </div>
-            <div class = "listResourceRight">
-                <a href="{{ action('BeaconController@show', [$sponsorIndex->beacon_tag])}}"><button type = "button" class = "interactButton" style = "text-align: left;">{{$sponsorIndex->created_at->format('M-d-Y')}}</button></a>
-            </div>
-        </div>
-    @endforeach
+    <hr class = "contentSeparator"/>
+    @include('sponsors._sponsorCards')
 @stop
 @section('centerFooter')
     @include('pagination.custom-paginator', ['paginator' => $sponsors])

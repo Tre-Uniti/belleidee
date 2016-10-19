@@ -30,19 +30,21 @@
                 <a href="{{ url('/sponsors/sponsorships/'.$sponsor->id)}}" class = "indexLink">Sponsorships <div>{{ $sponsor->sponsorships }}</div></a>
             </div>
             <p>Tag: {{ $sponsor->sponsor_tag }}</p>
-            <div class = "influenceSection">
-                <div class = "elevationSection">
-                    <div class = "elevationIcon">
+            <div class = "footerSection">
+                <div class = "leftSection">
+                    <div class = "leftIcon">
                         <span class="tooltiptext">Number of monthly clicks for {{ $sponsor->sponsor_tag }}</span>
                         <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}" class = "iconLink"><i class="fa fa-hashtag" aria-hidden="true"></i></a>
+                        </div>
+                    <div class = "leftCounter">
                         <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{ $sponsor->clicks }}</a>
                     </div>
                 </div>
-                <div class = "beaconSection">
+                <div class = "centerSection">
                     <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">Status: {{ $sponsor->status }}</a>
                 </div>
-                <div class = "extensionSection">
-                    <div class = "extensionIcon">
+                <div class = "rightSection">
+                    <div class = "rightIcon">
                     <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}" class = "iconLink"><i class="fa fa-eye" aria-hidden="true"></i></a>
                     <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{ $sponsor->views }}</a>
                     <span class="tooltiptext">Number of monthly views</span>
