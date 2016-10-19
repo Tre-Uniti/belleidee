@@ -9,14 +9,13 @@
 @if(isset($sources['question_id']) && (!isset($sources['extenception'])))
     <h3>Answer to: <a href = "{{ url('/questions/' . $sources['question_id']) }}">{{ $sourceModel->question }}</a></h3>
 @else
-    <h3>Extends:
-
+    <h3>
         @if(isset($sources['post_id']))
-            <a href = "{{ url('/posts/' . $sources['post_id'] ) }}">{{ $sourceModel->title }}</a>
+            Extends:  <a href = "{{ url('/posts/' . $sources['post_id'] ) }}">{{ $sourceModel->title }}</a>
         @elseif(isset($sources['legacyPost_id']))
-            <a href = "{{ url('/legacyPosts/' . $sources['legacyPost_id'] ) }}">{{ $sourceModel->title }}</a>
+            Extends: <a href = "{{ url('/legacyPosts/' . $sources['legacyPost_id'] ) }}">{{ $sourceModel->title }}</a>
         @else
-            <a href = "{{ url('/extensions/' . $sources['extenception']) }}">An Extension</a>
+            Extends<a href = "{{ url('/extensions/' . $sources['extenception']) }}"> another Extension</a>
         @endif
     </h3>
 @endif

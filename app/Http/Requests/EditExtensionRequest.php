@@ -31,8 +31,7 @@ class EditExtensionRequest extends Request
         return [
             'body'  => 'required|min:1|max:3500',
             'belief'=> 'required',
-            'beacon_tag' => 'required',
-            'source' => 'required'
+            'beacon_tag' => 'required'
         ];
     }
     // override to redirect back

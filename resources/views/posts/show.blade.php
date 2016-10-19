@@ -206,7 +206,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                     </div>
                 </div>
             @endforeach
-                @if($moreExtensions != 'null')
+                @if($moreExtensions > 10)
                     <div class = "showAll">
                         <a href = "{{ url('/extensions/post/list/' . $post->id) }}" class = "indexLink">View all extensions ({{ $moreExtensions }})</a>
                     </div>

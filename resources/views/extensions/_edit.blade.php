@@ -54,9 +54,6 @@
     @endif
 </div>
 <div class = "newExtension">
-@include ('errors.list')
-{!! Form::open(['url' => 'extensions']) !!}
-
 <!-- Body Form Input -->
     <div id = "centerTextContent">
         @if(($sources['type'] == 'question'))
@@ -124,15 +121,12 @@
     @endif
     <div>
         <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
-
-        @section('centerFooter')
             @if(($sources['type'] == 'question'))
                 {!! Form::submit('Update Answer', ['class' => 'navButton', 'id' => 'submit']) !!}
             @else
                 {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
             @endif
             <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
-        @stop
         {!! Form::close()   !!}
         <button type = "button" class = "interactButton" id = "content">View Source</button>
     </div>

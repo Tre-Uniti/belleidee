@@ -631,7 +631,12 @@ class ExtensionController extends Controller
         }
 
         //Get Source info of extension
-        if(isset($extension->post_id))
+        if(isset($extension->extenception))
+        {
+            $source = Extension::findOrFail($extension->extenception);
+            $sourceType = 'Extenception';
+        }
+        elseif(isset($extension->post_id))
         {
             $source = Post::findOrFail($extension->post_id);
             $sourceType = 'Post';
@@ -645,14 +650,6 @@ class ExtensionController extends Controller
         {
             $source = LegacyPost::findOrFail($extension->legacy_post_id);
             $sourceType = 'Legacy';
-        }
-        else
-        {
-            if(isset($extension->extenception))
-            {
-                $source = Extension::findOrFail($extension->extenception);
-                $sourceType = 'Extenception';
-            }
         }
 
         //Check if viewing user has already elevated extension
@@ -684,6 +681,23 @@ class ExtensionController extends Controller
             $sourcePhotoPath = $user->photo_path;
         }
 
+
+        //Get extensions of Extension
+        $extensions = Extension::where('id', '=', $extension->id)->orderBy('elevation', 'desc')->take(10)->get();
+        $moreExtensions = Extension::where('id', '=', $extension->id)->count();
+        if($moreExtensions <= 10)
+        {
+            $moreExtensions = null;
+        }
+        //Prepare the extensions for cards
+        $extensions = prepareExtensionCards($extensions, $viewUser);
+        //Get the Beacon for the user viewing the post
+        $lastBeacon = Beacon::where('beacon_tag', '=', $viewUser->last_tag)->first();
+        //Get viewUser's beacons and add post beacon
+        $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
+        $beacons = array_add($beacons, $beacon->beacon_tag, $beacon->beacon_tag);
+        $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
+
         //Check if Post is intolerant and User hasn't unlocked
         if(isset($extension->status))
         {
@@ -706,8 +720,11 @@ class ExtensionController extends Controller
                         else
                         {
                             return view('extensions.show')
-                                ->with(compact('user', 'viewUser', 'extension', 'profilePosts', 'profileExtensions', 'sources' ))
+                                ->with(compact('user', 'viewUser', 'extension', 'extensions', 'sources' ))
                                 ->with('source', $source)
+                                ->with('moreExtensions', $moreExtensions)
+                                ->with('beacons', $beacons)
+                                ->with('lastBeacon', $lastBeacon)
                                 ->with('type', $sourceType)
                                 ->with ('elevation', $elevation)
                                 ->with ('sourcePhotoPath', $sourcePhotoPath)
@@ -735,8 +752,11 @@ class ExtensionController extends Controller
         $location = 'https://maps.google.com/?q=' . $extension->lat . ','. $extension->long;
 
         return view('extensions.show')
-            ->with(compact('user', 'viewUser', 'extension', 'sources' ))
+            ->with(compact('user', 'viewUser', 'extension', 'extensions', 'sources' ))
             ->with('source', $source)
+            ->with('moreExtensions', $moreExtensions)
+            ->with('beacons', $beacons)
+            ->with('lastBeacon', $lastBeacon)
             ->with('sourceType', $sourceType)
             ->with ('elevation', $elevation)
             ->with ('sourcePhotoPath', $sourcePhotoPath)

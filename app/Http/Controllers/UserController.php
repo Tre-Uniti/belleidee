@@ -235,18 +235,18 @@ class UserController extends Controller
         $handle = $request->input('identifier');
 
         //Filter by location
-        $results = filterContentLocationSearch($user, 0, 'User', $handle);
+        $users = filterContentLocationSearch($user, 0, 'User', $handle);
 
         //Get search title
         $handle = $request->input('identifier');
 
-        if (!count($results)) {
+        if (!count($users)) {
             flash()->overlay('No users with this handle');
             return redirect()->back();
         }
 
         return view('users.results')
-            ->with(compact('user', 'results'))
+            ->with(compact('user', 'users'))
             ->with('handle', $handle);
     }
 
@@ -590,14 +590,14 @@ class UserController extends Controller
 
         if($bookmark_user = Bookmark::where('pointer', '=', $user->id)->where('type', '=', 'User')->first())
         {
-            $followers = $bookmark_user->users()->where('verified', '=', 1)->paginate(10);
+            $users = $bookmark_user->users()->where('verified', '=', 1)->paginate(10);
         }
 
 
         $viewUser = Auth::user();
 
         return view('users.followers')
-                ->with(compact('user', 'viewUser', 'followers'));
+                ->with(compact('user', 'viewUser', 'users'));
     }
 
     /*
@@ -614,13 +614,13 @@ class UserController extends Controller
         {
             if(count($bookmarks))
             {
-                $following = User::where('verified', '=', 1)->latest()->whereIn('id', $bookmarks)->paginate(10);
+                $users = User::where('verified', '=', 1)->latest()->whereIn('id', $bookmarks)->paginate(10);
             }
 
         }
 
         return view('users.following')
-            ->with(compact('user', 'viewUser', 'following'));
+            ->with(compact('user', 'viewUser', 'users'));
     }
 
 }

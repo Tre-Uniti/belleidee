@@ -35,18 +35,18 @@
   padding-right: 20px;
 }
 
-.influenceSection
+.footerSection
 {
   padding-bottom: 5px;
 }
 
-.elevationSection {
+.leftSection {
   position: relative;
   display: inline-block;
   margin-left: 5px;
 }
 
-.elevationSection .tooltiptext {
+.leftSection .tooltiptext {
   visibility: hidden;
   width: 200px;
   background-color: #2C3E50;
@@ -62,29 +62,29 @@
   margin-left: -100px;
 }
 
-.elevationIcon
+.leftIcon
 {
   display: inline-block;
   color: #27AE60;
 
 }
-.elevationIcon:hover .tooltiptext {
+.leftIcon:hover .tooltiptext {
   visibility: visible;
 }
 
-.elevationCounter
+.leftCounter
 {
   display: inline-block;
 }
 
-.beaconSection
+.centerSection
 {
   position: relative;
   display: inline-block;
   padding-right: 10px;
   padding-left: 10px;
 }
-.beaconSection .tooltiptext {
+.centerSection .tooltiptext {
   visibility: hidden;
   width: 200px;
   background-color: #2C3E50;
@@ -99,23 +99,23 @@
   left: 50%;
   margin-left: -100px;
 }
-.beaconSection:hover .tooltiptext {
+.centerSection:hover .tooltiptext {
   visibility: visible;
 }
 
-.extensionSection {
+.rightSection {
   position: relative;
   display: inline-block;
   padding-bottom: 3px;
 }
 
-.extensionIcon
+.rightIcon
 {
   display: inline-block;
   color: #27AE60;
 }
 
-.extensionIcon .tooltiptext {
+.rightIcon .tooltiptext {
   visibility: hidden;
   width: 200px;
   background-color: #2C3E50;
@@ -131,11 +131,11 @@
   margin-left: -100px;
 }
 
-.extensionIcon:hover .tooltiptext {
+.rightIcon:hover .tooltiptext {
   visibility: visible;
 }
 
-.extensionCounter
+.rightCounter
 {
   display: inline-block;
 }
