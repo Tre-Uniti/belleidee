@@ -36,20 +36,24 @@
                     @endif
                 </p>
             </div>
-            <div class = "influenceSection">
-                <div class = "elevationSection">
-                    <div class = "elevationIcon">
+            <div class = "footerSection">
+                <div class = "leftSection">
+                    <div class = "leftIcon">
                         <a href="{{ url('/users/elevatedBy/'. $user->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
                         <span class="tooltiptext">Total elevation (hearts) of your content</span>
+                        </div>
+                    <div class = "leftCounter">
                         <a href="{{ url('/users/elevatedBy/'. $user->id) }}">{{ $user->elevation }}</a>
                     </div>
                 </div>
-                <div class = "beaconSection">
+                <div class = "centerSection">
                 </div>
-                <div class = "extensionSection">
-                    <div class = "extensionIcon">
+                <div class = "rightSection">
+                    <div class = "rightIcon">
                         <a href="{{ url('/users/extendedBy/'. $user->id) }}" class = "iconLink" > <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i> </a>
                         <span class="tooltiptext">Total extension of your content</span>
+                        </div>
+                    <div class = "rightCounter">
                         <a href="{{ url('/users/extendedBy/'. $user->id) }}">{{ $user->extension }}</a>
                     </div>
                 </div>

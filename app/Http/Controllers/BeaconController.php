@@ -256,7 +256,7 @@ class BeaconController extends Controller
 
         if($beacon->guide != NULL)
         {
-            $guide = User::where('id', '=', $beacon->id)->first();
+            $guide = User::where('id', '=', $beacon->guide)->first();
         }
         else
         {
@@ -681,6 +681,7 @@ class BeaconController extends Controller
      */
     public function guide($tag)
     {
+        $user = Auth::user();
         //Check if Beacon_tag belongs to an Idee Beacon
         try
         {
@@ -697,7 +698,7 @@ class BeaconController extends Controller
             return redirect('beacons');
         }
 
-        $user = User::where('id', '=', $beacon->guide)->first();
+        $guide = User::where('id', '=', $beacon->guide)->first();
         //Get logged in user or set to Transferred for Guest
         if(Auth::user())
         {
@@ -710,11 +711,6 @@ class BeaconController extends Controller
             $viewUser->handle = 'Guest';
         }
 
-        if(!count($user))
-        {
-            flash()->overlay('Guide User does not exist for ' . $beacon->beacon_tag . ', please submit a support ticket');
-            return redirect('supports/create');
-        }
         if($user->photo_path == '')
         {
 
@@ -724,14 +720,14 @@ class BeaconController extends Controller
         {
             $sourcePhotoPath = $user->photo_path;
         }
-        $posts = Post::where('user_id', '=', $user->id)->where('beacon_tag', '=', $beacon->beacon_tag)->whereNull('status')->latest()->paginate(10);
+        $posts = Post::where('user_id', '=', $guide->id)->where('beacon_tag', '=', $beacon->beacon_tag)->whereNull('status')->latest()->paginate(10);
 
         Event::fire(New BeaconViewed($beacon));
 
         $type = 'Guide';
 
         return view('beacons.guide')
-                ->with(compact('user', 'viewUser', 'beacon', 'posts'))
+                ->with(compact('user', 'viewUser', 'beacon', 'posts', 'guide'))
                 ->with('sourcePhotoPath', $sourcePhotoPath)
                 ->with('type', $type);
     }
