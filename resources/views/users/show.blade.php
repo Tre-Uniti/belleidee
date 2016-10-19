@@ -64,7 +64,7 @@
                             <a href={{ url('/beacons/'. $beacon->beacon_tag) }}>{{ $beacon->beacon_tag }}</a>
                         @endif
                     @else
-                        <a href={{ url('/beacons') }}>No current beacon, discover one here</a>
+                        <a href={{ url('/beacons') }}>No connected Beacon</a>
                     @endif
                 </div>
                 <div class = "cardImg">

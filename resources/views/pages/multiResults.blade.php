@@ -39,7 +39,7 @@
         @if($sponsorCount == 0)
             <p>0 sponsors with this name or tag</p>
         @else
-           @include('sponsors._sponsorCards)
+           @include('sponsors._sponsorCards')
         @endif
 
         <div class = "contentHeaderSeparator">
@@ -48,7 +48,7 @@
         @if($postCount == 0)
             <p>0 posts with this title</p>
         @else
-            @include('posts.postCards')
+            @include('posts._postCards')
         @endif
 
         <div class = "contentHeaderSeparator">
@@ -66,7 +66,7 @@
         @if($extensionCount == 0)
             <p>0 extensions with this title</p>
         @else
-            @include('extensions.extensionCards')
+            @include('extensions._extensionCards')
     @endif
 
 @stop
