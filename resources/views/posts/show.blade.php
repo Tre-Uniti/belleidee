@@ -114,7 +114,11 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
             @if($beacon->stripe_plan < 1)<p>Sponsored by:</p>
 
                 <div class = "sponsorContentLogo">
-                    <a href={{ url('/sponsors/click/'. $sponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $sponsor->photo_path) }} alt="{{$sponsor->name}}" ></a>
+                    @if(!$sponsor == null)
+                        <a href={{ url('/sponsors/click/'. $sponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $sponsor->photo_path) }} alt="{{$sponsor->name}}" ></a>
+                    @else
+                        <a href={{ url('/sponsors/click/1') }}><img src= "/img/tre-uniti.png" alt="{{$sponsor->name}}" ></a>
+                    @endif
                 </div>
             @endif
             <script src="/js/lightbox.js"></script>

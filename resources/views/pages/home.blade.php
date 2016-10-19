@@ -108,7 +108,7 @@
         <h3>Your Recent Extensions</h3>
     </div>
     @include('extensions._extensionCards')
-    @if(count($extensions) == 0))
+    @if(count($extensions) == 0)
     <p>Find a post to extend <a href = "{{ url('/posts') }}">here</a></p>
     @endif
 @stop
