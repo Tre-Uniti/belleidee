@@ -118,7 +118,7 @@
     </div>
     <div class = "formData">
         <div class = "formLabel">
-            {!! Form::label('Max Upload size: 2MB') !!}
+            {!! Form::label('Max Upload size: 10MB') !!}
         </div>
         <div class = "formInput">
             {!! Form::file('image', null, ['class' => 'navButton']) !!}

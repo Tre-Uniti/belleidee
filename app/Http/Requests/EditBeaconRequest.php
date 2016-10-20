@@ -37,7 +37,7 @@ class EditBeaconRequest extends Request
             'guide' => 'required',
             'lat' => 'min:3',
             'long' => 'min: 3',
-            'image' => 'mimes:jpeg,jpg,png|max:8000',
+            'image' => 'mimes:jpeg,jpg,png|max:10000',
             'zip' => 'min:3|max:10',
         ];
     }

@@ -8,14 +8,20 @@ use App\Extension;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
+use App\Http\Requests\CreateBeliefRequest;
+use App\Http\Requests\UpdateBeliefRequest;
 use App\Legacy;
 use App\LegacyPost;
 use App\Post;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Mews\Purifier\Facades\Purifier;
 
 class BeliefController extends Controller
 {
@@ -42,15 +48,12 @@ class BeliefController extends Controller
             $user = User::where('handle', '=', 'Transferred')->first();
             $user->handle = 'Guest';
         }
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-        $sponsor = getSponsor($user);
 
 
         $beliefs = Belief::latest()->get();
 
         return view ('beliefs.index')
-            ->with(compact('user', 'beliefs', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'beliefs'));
     }
 
     /**
@@ -61,22 +64,48 @@ class BeliefController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-        $sponsor = getSponsor($user);
 
         return view ('beliefs.create')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'posts'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CreateBeliefRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBeliefRequest $request)
     {
+        if($request->hasFile('image')) {
+            if (!$request->file('image')->isValid()) {
+                $error = "Image File invalid.";
+                return redirect()
+                    ->back()
+                    ->withErrors([$error]);
+            }
+            //Get image from request
+            $image = $request->file('image');
+            $request['description'] = Purifier::clean($request->input('description'));
+
+            //Create image file name
+            $title = str_replace(' ', '_', $request['name']);
+            $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
+            $path = '/belief_photos/' . $request['name'] . '/' . $imageFileName;
+
+            //Resize the image
+            $imageResized = Image::make($image);
+            $imageResized->resize(450, 400, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $imageResized = $imageResized->stream();
+
+            //Store new photo in storage (S3)
+            Storage::put($path, $imageResized->__toString());
+            $request = array_add($request, 'photo_path', $path);
+        }
+
         $belief = new Belief($request->all());
         $belief->save();
 
@@ -110,16 +139,13 @@ class BeliefController extends Controller
             $user = User::where('handle', '=', 'Transferred')->first();
             $user->handle = 'Guest';
         }
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-        $sponsor = getSponsor($user);
 
         $belief = Belief::where('name', '=', $name)->first();
 
         $legacyPosts = LegacyPost::where('belief', '=', $belief->name)->latest()->take(10)->get();
 
         return view ('beliefs.show')
-            ->with(compact('user', 'belief', 'legacyPosts', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'belief', 'legacyPosts'));
     }
 
     /**
@@ -131,26 +157,50 @@ class BeliefController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-        $sponsor = getSponsor($user);
-
         $belief = Belief::findOrFail($id);
 
         return view ('beliefs.edit')
-            ->with(compact('user', 'belief', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'belief'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  UpdateBeliefRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBeliefRequest $request, $id)
     {
         $belief = Belief::findOrFail($id);
+        if($request->hasFile('image')) {
+            if (!$request->file('image')->isValid()) {
+                $error = "Image File invalid.";
+                return redirect()
+                    ->back()
+                    ->withErrors([$error]);
+            }
+            //Get image from request
+            $image = $request->file('image');
+            $request['description'] = Purifier::clean($request->input('description'));
+
+            //Create image file name
+            $title = str_replace(' ', '_', $request['name']);
+            $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
+            $path = '/belief_photos/' . $request['name'] . '/' . $imageFileName;
+
+            //Resize the image
+            $imageResized = Image::make($image);
+            $imageResized->resize(450, 400, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $imageResized = $imageResized->stream();
+
+            //Store new photo in storage (S3)
+            Storage::put($path, $imageResized->__toString());
+            $request = array_add($request, 'photo_path', $path);
+        }
         $belief->update($request->all());
 
         flash()->overlay('Belief has been updated');
@@ -183,13 +233,10 @@ class BeliefController extends Controller
     public function beacons($belief)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-        $sponsor = getSponsor($user);
         $beacons = Beacon::where('belief', $belief)->where('status', '!=', 'deactivated')->latest()->paginate(10);
 
         return view ('beliefs.beacons')
-            ->with(compact('user', 'beacons', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'beacons'))
             ->with('belief', $belief);
     }
 
@@ -202,13 +249,10 @@ class BeliefController extends Controller
     public function posts($belief)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-        $sponsor = getSponsor($user);
-        $posts = Post::where('belief', $belief)->latest()->paginate(10);
+        $posts = Post::where('belief', $belief)->whereNull('status')->latest()->paginate(10);
 
         return view ('beliefs.posts')
-            ->with(compact('user', 'posts', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'posts' ))
             ->with('belief', $belief);
     }
 
@@ -221,13 +265,10 @@ class BeliefController extends Controller
     public function extensions($belief)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-        $sponsor = getSponsor($user);
-        $extensions = Extension::where('belief', $belief)->latest()->paginate(10);
+        $extensions = Extension::where('belief', $belief)->whereNull('status')->latest()->paginate(10);
 
         return view ('beliefs.extensions')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'extensions'))
             ->with('belief', $belief);
     }
 
@@ -240,16 +281,11 @@ class BeliefController extends Controller
     public function legacyPosts($belief)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-        $sponsor = getSponsor($user);
         $legacyPosts = LegacyPost::where('belief', $belief)->latest()->paginate(10);
 
         return view ('beliefs.extensions')
-            ->with(compact('user', 'legacyPosts', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user', 'legacyPosts'))
             ->with('belief', $belief);
     }
-
-
 
 }

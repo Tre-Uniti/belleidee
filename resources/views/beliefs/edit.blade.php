@@ -8,7 +8,7 @@
         @include ('errors.list')
     </div>
 
-    {!! Form::model($belief, ['route' => ['beliefs.update', $belief->id], 'method' => 'patch']) !!}
+    {!! Form::model($belief, ['route' => ['beliefs.update', $belief->id], 'method' => 'patch', 'files' => true]) !!}
     @include ('beliefs._edit', ['submitButtonText' => 'Update Belief'])
 
 @stop

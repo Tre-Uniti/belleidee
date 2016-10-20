@@ -8,6 +8,13 @@
                     </h3>
                 </header>
             </div>
+            <div class = "cardPhoto">
+            @if($belief->photo_path != NULL)
+                <img src= {{ url(env('IMAGE_LINK'). $belief->photo_path) }} alt="{{$belief->name}}" height = "99%" width = "99%">
+            @else
+                <img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "99%" width = "99%">
+            @endif
+            </div>
 
             <div class = "cardCaptionExcerptSection">
                 <p class = "cardExcerpt">

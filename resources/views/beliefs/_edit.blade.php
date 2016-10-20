@@ -5,14 +5,23 @@
 @section('title')
     Edit Belief
 @stop
-<div id = "createOptions">
+<div class = "formDataContainer">
     <div class = "formData">
-        {!! Form::label('name', 'Belief Name:') !!}
-        {!! Form::text('name', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Title']) !!}
+        <div class = "formLabel">{!! Form::label('name', 'Belief Name:') !!}</div>
+        {!! Form::text('name', null, ['class' => 'createTitleText', 'autofocus', 'placeholder' => 'Belief Name']) !!}
     </div>
     <!-- Body Form Input -->
+    <h4>{!! Form::label('description', 'Description') !!}</h4>
     <div id = "centerTextContent">
-        {!! Form::textarea('description', null, ['id' => 'createBodyText', 'placeholder' => 'Description of belief:', 'rows' => '3%', 'maxlength' => '255']) !!}
+        {!! Form::textarea('description', null, ['id' => 'createBodyText', 'placeholder' => 'Description of belief:', 'rows' => '5%', 'maxlength' => '1000']) !!}
+    </div>
+    <div class = "formData">
+        <div class = "formLabel">
+            {!! Form::label('Max Upload size: 10MB') !!}
+        </div>
+        <div class = "formInput">
+            {!! Form::file('image', null, ['class' => 'navButton']) !!}
+        </div>
     </div>
     @section('centerFooter')
         {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}

@@ -9,6 +9,7 @@ class Belief extends Model
     protected $fillable = [
         'name',
         'description',
+        'photo_path',
     ];
 
     public function legacy()

@@ -310,16 +310,13 @@ class BeaconController extends Controller
         $beacon = $this->beacon->findOrFail($id);
 
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-
         //Get beliefs for drop down select (from helpers.php)
         $beliefs = getBeliefs();
         //Get countries for drop down select
         $countries = getCountries();
 
         return view('beacons.edit')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'beacon'))
+            ->with(compact('user', 'beacon'))
             ->with('beliefs', $beliefs)
             ->with('countries', $countries);
     }
