@@ -11,22 +11,8 @@
             <a href={{ url('/beliefs/extensions/'. $belief)}}><button type = "button" class = "indexButton">Extensions</button></a>
         </div>
 
-    <div class = "indexLeft">
-        <h4>Name</h4>
-    </div>
-    <div class = "indexRight">
-        <h4>Beacon Tag</h4>
-    </div>
-    @foreach ($beacons as $beacon)
-        <div class = "listResource">
-            <div class = "listResourceLeft">
-                <a href="{{ action('BeaconController@show', [$beacon->beacon_tag])}}"><button type = "button" class = "interactButtonLeft">{{ $beacon->name }}</button></a>
-            </div>
-            <div class = "listResourceRight">
-                <a href="{{ action('BeaconController@show', [$beacon->beacon_tag])}}"><button type = "button" class = "interactButton">{{ $beacon->beacon_tag }}</button></a>
-            </div>
-        </div>
-    @endforeach
+    <hr class = "contentSeparator"/>
+    @include('beacons._beaconCards')
 
 @stop
 @section('centerFooter')

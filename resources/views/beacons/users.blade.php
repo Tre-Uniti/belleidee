@@ -19,6 +19,7 @@
             </ul>
         </nav>
     </div>
+    <hr class = "contentSeparator"/>
     @include('users._userCards')
 
 @stop

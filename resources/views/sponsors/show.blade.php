@@ -27,7 +27,7 @@
             </div>
             <div class = "indexNav">
                 <a href="{{ url('promotions/sponsor/'.$sponsor->id)}}" class = "indexLink">Promotions <div>{{ $promoCount }}</div></a>
-                <a href="{{ url('/sponsors/sponsorships/'.$sponsor->id)}}" class = "indexLink">Sponsorships <div>{{ $sponsor->sponsorships }}</div></a>
+                <a href="{{ url('/sponsors/sponsorships/'.$sponsor->sponsor_tag)}}" class = "indexLink">Sponsorships <div>{{ $sponsor->sponsorships }}</div></a>
             </div>
             <p>Tag: {{ $sponsor->sponsor_tag }}</p>
             <div class = "footerSection">

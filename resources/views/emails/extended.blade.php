@@ -21,12 +21,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan = "3">
-            <p><b>Extension Title:</b></p>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">{{ $extension->title }}</td>
+        <td colspan="3">Extended by: {{ $extension->user->handle }}</td>
     </tr>
     <tr>
         <td colspan="3">{{ $extension->belief }} - {{ $extension->beacon_tag }} - {{ $extension->source }} </td>

@@ -14,7 +14,7 @@
 
     <div class = "indexNav">
         @if($user->id == $sponsor->user_id || $user->type > 1 )
-        <a href="{{ url('/sponsors/eligible/'. $sponsor->id) }}" class = "indexLink">Promo Eligible</a>
+        <a href="{{ url('/sponsors/eligible/'. $sponsor->sponsor_tag) }}" class = "indexLink">Promo Eligible</a>
         @endif
     </div>
     <hr class = "contentSeparator"/>

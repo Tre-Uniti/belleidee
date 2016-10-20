@@ -344,10 +344,9 @@ class SponsorController extends Controller
     /*
      * Show sponsorships for a given sponsor
      */
-    public function sponsorships($id)
+    public function sponsorships($tag)
     {
-        $sponsor = Sponsor::findOrfail($id);
-
+        $sponsor = Sponsor::where('sponsor_tag', '=', $tag)->first();
         $user = Auth::user();
 
         if($user->type > 1 || $user->id == $sponsor->user_id || Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('user_id', '=', $user->id)->exists())
@@ -602,11 +601,11 @@ class SponsorController extends Controller
    /*
     * List users who are eligible for a promotion
     *
-    * @param $id
+    * @param $tag
     */
-    public function eligible($id)
+    public function eligible($tag)
     {
-        $sponsor = Sponsor::findOrFail($id);
+        $sponsor = Sponsor::where('sponsor_tag', '=', $tag)->first();
 
         $user = Auth::user();
 
@@ -624,12 +623,11 @@ class SponsorController extends Controller
     /*
     * Search eligible sponsorships for specific user
     *
-    * @param $id
+    * @param $tag
     */
-    public function eligibleSearch($id)
+    public function eligibleSearch($tag)
     {
-        $sponsor = Sponsor::findOrFail($id);
-
+        $sponsor = Sponsor::where('sponsor_tag', '=', $tag)->first();
         $user = Auth::user();
 
         //User must have sponsorship for at least 7 days

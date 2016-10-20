@@ -13,8 +13,8 @@
     <p>Eligible Users: <a href = "{{ url('/sponsors/' . $sponsor->sponsor_tag) }}" class = "contentHandle">{{ $sponsor->sponsor_tag }}</a></p>
 
     <div class = "indexNav">
-        <a href="{{ url('/sponsors/eligibleSearch/'. $sponsor->id) }}" class = "indexLink">Search Eligible</a>
-        <a href="{{ url('/sponsors/sponsorships/'. $sponsor->id) }}" class = "indexLink">All Sponsorships</a>
+        <a href="{{ url('/sponsors/eligibleSearch/'. $sponsor->sponsor_tag) }}" class = "indexLink">Search Eligible</a>
+        <a href="{{ url('/sponsors/sponsorships/'. $sponsor->sponsor_tag) }}" class = "indexLink">All Sponsorships</a>
     </div>
 
     <div class = "contentHeaderSeparator">

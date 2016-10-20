@@ -13,8 +13,8 @@
     </div>
     <p>Users sponsored by: <a href = "{{ url('/sponsors/' . $sponsor->sponsor_tag) }}" class = "contentHandle">{{ $sponsor->sponsor_tag }}</a></p>
     <div class = "indexNav">
-        <a href="{{ url('/sponsors/eligibleSearch/'. $sponsor->id) }}"><button type = "button" class = "indexButton">Search Eligible</button></a>
-        <a href="{{ url('/sponsors/sponsorships/'. $sponsor->id) }}"><button type = "button" class = "indexButton">All Sponsorships</button></a>
+        <a href="{{ url('/sponsors/eligibleSearch/'. $sponsor->sponsor_tag) }}"><button type = "button" class = "indexButton">Search Eligible</button></a>
+        <a href="{{ url('/sponsors/sponsorships/'. $sponsor->sponsor_tag) }}"><button type = "button" class = "indexButton">All Sponsorships</button></a>
     </div>
 
     <div class = "contentHeaderSeparator">

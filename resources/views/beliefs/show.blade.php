@@ -8,28 +8,16 @@
     <h2>{{ $belief->name }}</h2>
     <p>{{ $belief->description }}</p>
         <div class = "indexNav">
-            <a href="{{ url('/beliefs/beacons/'. $belief->name) }}"><button type = "button" class = "indexButton">Beacons: {{ $belief->beacons }}</button></a>
-            <a href="{{ url('/beliefs/posts/'.$belief->name) }}"><button type = "button" class = "indexButton">Posts: {{ $belief->posts }}</button></a>
-            <a href="{{ url('/beliefs/extensions/'.$belief->name) }}"><button type = "button" class = "indexButton">Extensions: {{ $belief->extensions }}</button></a>
+            <a href="{{ url('/beliefs/posts/'. $belief->name) }}" class = "indexLink">Posts <div>{{ $belief->posts }}</div></a>
+            <a href="{{ url('/beliefs/extensions/'. $belief->name) }}" class = "indexLink">Extensions <div>{{ $belief->extensions }}</div></a>
+            <a href="{{ url('/beliefs/beacons/'. $belief->name) }}" class = "indexLink">Beacons <div>{{ $belief->beacons }}</div></a>
         </div>
-    <h4>Recent Legacy</h4>
-    <div class = "indexLeft">
-        <h4>Title</h4>
+    <div class = "contentHeaderSeparator">
+        <h3>
+            Legacy Posts
+        </h3>
     </div>
-    <div class = "indexRight">
-        <h4>Created</h4>
-    </div>
-
-    @foreach($legacyPosts as $legacyPost)
-        <div class = "listResource">
-            <div class = "listResourceLeft">
-                <a href = {{ url('/legacyPosts/'. $legacyPost->id) }}><button type = "button" class = "interactButton">{{ $legacyPost->title }}</button></a>
-            </div>
-            <div class = "listResourceRight">
-                <a href = {{ url('/legacyPosts/'. $legacyPost->id) }}><button type = "button" class = "interactButton">{{ $legacyPost->created_at->format('M-d-Y') }}</button></a>
-            </div>
-        </div>
-    @endforeach
+    @include('legacyPosts._legacyPostCards')
 @stop
 
 @section('centerFooter')

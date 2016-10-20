@@ -28,6 +28,8 @@
                     <div class = "leftIcon">
                         <a href="{{ url('/users/elevatedBy/'. $sponsorship->user->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
                         <span class="tooltiptext">Total elevation (hearts) of user content</span>
+                       </div>
+                    <div class = "leftCounter">
                         <a href="{{ url('/users/elevatedBy/'. $sponsorship->user->id) }}">{{ $sponsorship->user->elevation }}</a>
                     </div>
                 </div>
@@ -36,11 +38,13 @@
                     <span class="tooltiptext">Beacon community where this user is located</span>
                 </div>
                 <div class = "rightSection">
+                    <div class = "rightIcon">
                     <a href="{{ url('/users/extendedBy/'. $sponsorship->user->id) }}" class = "iconLink" > <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i> </a>
                     <span class="tooltiptext">Total extension of user content</span>
                 </div>
                 <div class = "rightCounter">
                     <a href="{{ url('/users/extendedBy/'. $sponsorship->user->id) }}">{{ $sponsorship->user->extension }}</a>
+                </div>
                 </div>
             </div>
         </div>

@@ -25,13 +25,13 @@ class CreateBasicSponsorRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:50',
+            'name' => 'required|min:2|max:50',
             'address' => 'required|min: 5',
             'country' => 'required|min: 2',
             'city' => 'required|min: 2',
-            'zip' => 'min:5|max:10',
+            'zip' => 'min:3|max:10',
             'website' => 'min:10|max:275',
-            'phone' => 'required|min: 10|max:18',
+            'phone' => 'required|min: 9|max:18',
             'email' => 'required|email|max:255|unique:sponsor_requests|unique:sponsors',
         ];
     }
