@@ -19,10 +19,11 @@
         </nav>
     </div>
     <hr class = "contentSeparator"/>
-    @include('extensions._extensionCards')
+    @include('legacyPosts._legacyPostCards')
 
 @stop
 @section('centerFooter')
-    @include('pagination.custom-paginator', ['paginator' => $extensions])
+    @include('pagination.custom-paginator', ['paginator' => $legacyPosts])
 @stop
+
 

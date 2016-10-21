@@ -142,18 +142,34 @@
 
 .cardImg
 {
-  width: 48%;
+  width: 50%;
   display: inline-block;
+
+}
+.cardImg > img
+{
+  max-width: 450px;
+  max-height: 350px;
+}
+.cardImg > a > img
+{
+  max-width: 450px;
+  max-height: 350px;
 }
 
-.cardImg  h4
+.userConnections
+{
+  width: 49%;
+  display: inline-block;
+}
+.userConnections  h4
 {
   margin-top: 0;
   margin-bottom: 0;
   text-decoration: none;
 }
 
-.cardImg h4.underline
+.userConnections h4.underline
 {
   text-decoration: underline;
 }

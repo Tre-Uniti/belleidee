@@ -29,7 +29,7 @@ class UpdateBeliefRequest extends Request
         return [
             'name' => 'required|min:1|max:200',
             'description' => 'required|min:1|max:1000',
-            'image' => 'required|mimes:jpeg,jpg,png|max:10000'
+            'image' => 'mimes:jpeg,jpg,png|max:10000'
         ];
     }
 }

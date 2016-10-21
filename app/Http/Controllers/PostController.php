@@ -250,7 +250,7 @@ class PostController extends Controller
             //Resize the image
             $imageResized = Image::make($image);
             $originalImage = Image::make($image);
-            $imageResized->resize(450, 400, function ($constraint) {
+            $imageResized->resize(450, 350, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
@@ -596,7 +596,7 @@ class PostController extends Controller
                 //Resize the image
                 $imageResized = Image::make($image);
                 $originalImage = Image::make($image);
-                $imageResized->resize(450, 400, function ($constraint) {
+                $imageResized->resize(450, 350, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 });

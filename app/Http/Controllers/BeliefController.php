@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Beacon;
 use App\Belief;
 use App\Extension;
+use function App\Http\autolink;
+use function App\Http\getBeacon;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
@@ -49,11 +51,13 @@ class BeliefController extends Controller
             $user->handle = 'Guest';
         }
 
+        //Determine if beacon or sponsor shows and update
+        $beacon = getBeacon($user);
 
         $beliefs = Belief::latest()->get();
 
         return view ('beliefs.index')
-            ->with(compact('user', 'beliefs'));
+            ->with(compact('user', 'beliefs','beacon'));
     }
 
     /**
@@ -95,7 +99,7 @@ class BeliefController extends Controller
 
             //Resize the image
             $imageResized = Image::make($image);
-            $imageResized->resize(450, 400, function ($constraint) {
+            $imageResized->resize(450, 350, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
@@ -140,7 +144,9 @@ class BeliefController extends Controller
             $user->handle = 'Guest';
         }
 
+
         $belief = Belief::where('name', '=', $name)->first();
+        $belief->description = autolink($belief->description, array("target"=>"_blank","rel"=>"nofollow"));
 
         $legacyPosts = LegacyPost::where('belief', '=', $belief->name)->latest()->take(10)->get();
 
@@ -191,7 +197,7 @@ class BeliefController extends Controller
 
             //Resize the image
             $imageResized = Image::make($image);
-            $imageResized->resize(450, 400, function ($constraint) {
+            $imageResized->resize(450, 350, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
@@ -235,8 +241,11 @@ class BeliefController extends Controller
         $user = Auth::user();
         $beacons = Beacon::where('belief', $belief)->where('status', '!=', 'deactivated')->latest()->paginate(10);
 
+        $type = 'Beacon';
+
         return view ('beliefs.beacons')
             ->with(compact('user', 'beacons'))
+            ->with('type', $type)
             ->with('belief', $belief);
     }
 
@@ -251,8 +260,11 @@ class BeliefController extends Controller
         $user = Auth::user();
         $posts = Post::where('belief', $belief)->whereNull('status')->latest()->paginate(10);
 
+        $type = 'Post';
+
         return view ('beliefs.posts')
             ->with(compact('user', 'posts' ))
+            ->with('type', $type)
             ->with('belief', $belief);
     }
 
@@ -267,8 +279,11 @@ class BeliefController extends Controller
         $user = Auth::user();
         $extensions = Extension::where('belief', $belief)->whereNull('status')->latest()->paginate(10);
 
+        $type = 'Extension';
+
         return view ('beliefs.extensions')
             ->with(compact('user', 'extensions'))
+            ->with('type', $type)
             ->with('belief', $belief);
     }
 
@@ -283,8 +298,11 @@ class BeliefController extends Controller
         $user = Auth::user();
         $legacyPosts = LegacyPost::where('belief', $belief)->latest()->paginate(10);
 
-        return view ('beliefs.extensions')
+        $type = 'Legacy';
+
+        return view ('beliefs.legacyPosts')
             ->with(compact('user', 'legacyPosts'))
+            ->with('type', $type)
             ->with('belief', $belief);
     }
 

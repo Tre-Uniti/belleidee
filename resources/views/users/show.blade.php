@@ -56,7 +56,7 @@
                 </div>
             </div>
             <div class = "indexNav">
-                <div class = "cardImg">
+                <div class = "userConnections">
                     <h4 class = "underline">Beacon</h4>
                     @if(isset($beacon))
                         @if($beacon != NULL)
@@ -67,7 +67,7 @@
                         <a href={{ url('/beacons') }}>No connected Beacon</a>
                     @endif
                 </div>
-                <div class = "cardImg">
+                <div class = "userConnections">
                     <h4 class = "underline">Sponsor</h4>
                     @if(isset($sponsor))
                         @if($sponsor != NULL)
@@ -76,9 +76,7 @@
 
                         @endif
                     @else
-                        <a href={{ url('/sponsors/US-SW-TreUniti') }}><h4>Tre-Uniti</h4></a>
-                        <a href={{ url('/sponsors/US-SW-TreUniti') }}>US-SW-TreUniti</a>
-
+                        <a href={{ url('/sponsors') }}>No Sponsorship</a>
                     @endif
                 </div>
             </div>

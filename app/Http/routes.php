@@ -70,6 +70,7 @@ Route::resource('beaconRequests', 'BeaconRequestController');
 Route::get('beliefs/beacons/{name}', 'BeliefController@beacons');
 Route::get('beliefs/posts/{name}', 'BeliefController@posts');
 Route::get('beliefs/extensions/{name}', 'BeliefController@extensions');
+Route::get('beliefs/legacies/{name}', 'BeliefController@legacyPosts');
 Route::resource('beliefs', 'BeliefController');
 
 //Bookmark Routes (Resources)

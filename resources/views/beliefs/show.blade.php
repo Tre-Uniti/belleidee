@@ -29,22 +29,20 @@
                 <a href="{{ url('/beliefs/extensions/'. $belief->name) }}" class = "indexLink">Extensions <div>{{ $belief->extensions }}</div></a>
                 <a href="{{ url('/beliefs/beacons/'. $belief->name) }}" class = "indexLink">Beacons <div>{{ $belief->beacons }}</div></a>
             </div>
-            <p>{{ $belief->description }}</p>
+            <p class = "textContent">
+                {!! nl2br($belief->description) !!}
+            </p>
         </div>
     </article>
-
-    <div class = "contentHeaderSeparator">
-        <h3>
-            Legacy Posts
-        </h3>
-    </div>
-    @include('legacyPosts._legacyPostCards')
-@stop
-
-@section('centerFooter')
-    <a href="{{ url('/beliefs/') }}"><button type = "button" class = "navButton">Belief Directory</button></a>
-    <a href="{{ url('/legacyPosts/belief/'. $belief->name) }}"><button type = "button" class = "navButton">More Legacy</button></a>
     @if($user->type > 2)
         <a href="{{ url('/beliefs/'.$belief->id .'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
     @endif
+    <div class = "contentHeaderSeparator">
+        <h3>
+            Recent Legacy Posts
+        </h3>
+    </div>
+    @include('legacyPosts._legacyPostCards')
+    <a href="{{ url('/beliefs/legacies/'. $belief->name) }}" class = "indexLink">View All Legacies</a>
+
 @stop

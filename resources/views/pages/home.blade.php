@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class = "indexNav">
-                <div class = "cardImg">
+                <div class = "userConnections">
                     <h4 class = "underline">Beacon</h4>
                     @if(isset($beacon))
                         @if($beacon != NULL)
@@ -71,7 +71,7 @@
                         <a href = " {{ url('/beacons') }}">Discover one here</a>
                     @endif
                 </div>
-                <div class = "cardImg">
+                <div class = "userConnections">
                     <h4 class = "underline">Sponsor</h4>
                         @if(isset($sponsor))
                             @if($sponsor != NULL)

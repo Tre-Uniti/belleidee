@@ -6,6 +6,9 @@
 @section('centerText')
     <h2>Belief Directory</h2>
     <div class = "indexNav">
+        @if($beacon != null)
+            <a href = "{{ url('/beliefs/' . $beacon->belief) }}" class = "indexLink">{{ $beacon->belief }}</a>
+        @endif
         <a href="{{ url('/beliefs/topPosts')}}" class = "indexLink">Top Posts</a>
         <a href="{{ url('/beliefs/mostBeacons')}}" class = "indexLink">Most Beacons</a>
     </div>
