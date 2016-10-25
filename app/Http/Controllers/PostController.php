@@ -842,8 +842,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         $user = User::findOrFail($post->user_id);
-        $profilePosts = $this->getProfilePosts($user);
-        $profileExtensions = $this->getProfileExtensions($user);
+        $viewUser = Auth::user();
 
         $elevations = Elevation::where('post_id', $id)->latest('created_at')->paginate(10);
 
@@ -857,27 +856,9 @@ class PostController extends Controller
             $sourcePhotoPath = $user->photo_path;
         }
 
-        //Determine if beacon or sponsor shows and update
-        if($post->beacon_tag == 'No-Beacon')
-        {
-            $sponsor = getSponsor($user);
-            $beacon = NULL;
-        }
-        else
-        {
-            $beacon = getBeacon($post);
-            if($beacon == NULL)
-            {
-                $sponsor = getSponsor($user);
-            }
-            else
-            {
-                $sponsor = NULL;
-            }
-        }
 
         return view ('posts.listElevation')
-            ->with(compact('user', 'elevations', 'post', 'profilePosts','profileExtensions', 'sponsor', 'beacon'))
+            ->with(compact('user', 'viewUser', 'elevations', 'post'))
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
     /**

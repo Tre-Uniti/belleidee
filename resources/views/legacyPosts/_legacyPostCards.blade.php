@@ -35,7 +35,7 @@
                     </div>
 
                     <div class = "leftCounter">
-                        <a href={{ url('/legacyPosts/listElevation/'.$legacyPost->id)}}>{{ $legacyPost->elevation }}</a>
+                        <a href={{ url('/legacyPosts/list/elevation/'.$legacyPost->id)}}>{{ $legacyPost->elevation }}</a>
                     </div>
 
                 </div>

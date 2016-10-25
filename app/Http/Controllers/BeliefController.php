@@ -306,4 +306,56 @@ class BeliefController extends Controller
             ->with('belief', $belief);
     }
 
+    /*
+     * Filter beliefs by Top Tagged
+     */
+    public function topTagged()
+    {
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+            $user->handle = 'Guest';
+        }
+
+        //Determine if beacon or sponsor shows and update
+        $beacon = getBeacon($user);
+
+        $beliefs = Belief::orderBy('posts', 'desc')->get();
+
+        return view ('beliefs.topTagged')
+            ->with(compact('user', 'beliefs','beacon'));
+    }
+
+    /*
+ * Filter beliefs by Most Beacons
+ */
+    public function mostBeacons()
+    {
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+            $user->handle = 'Guest';
+        }
+
+        //Determine if beacon or sponsor shows and update
+        $beacon = getBeacon($user);
+
+        $beliefs = Belief::orderBy('beacons', 'desc')->get();
+
+        return view ('beliefs.mostBeacons')
+            ->with(compact('user', 'beliefs','beacon'));
+    }
+
 }

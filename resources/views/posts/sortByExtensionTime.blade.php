@@ -13,7 +13,7 @@
         @if($user->last_tag != null)
             <a href="{{ url('/beacons/posts/'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
         @endif
-        <a href="{{ url('posts/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart" aria-hidden="true"></i></i></a>
+        <a href="{{ url('posts/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
         <p>Sort by  <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i> </p>
         <nav class = "infoNav">
             <ul>

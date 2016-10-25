@@ -10,26 +10,12 @@
             <a href={{ url('/questions/search')}}><button type = "button" class = "indexButton">Question Search</button></a>
             <a href={{ url('/search')}}><button type = "button" class = "indexButton">Global Search</button></a>
         </div>
-        <div class = "indexLeft">
-            <h4>Question</h4>
-        </div>
-        <div class = "indexRight">
-            <h4>Asked by</h4>
-        </div>
-        @foreach ($results as $result)
-            <div class = "listResource">
-                <div class = "listResourceLeft">
-                    <a href="{{ action('QuestionController@show', [$result->id])}}"><button type = "button" class = "interactButtonLeft">{{$result->question}}</button></a>
-                </div>
-                <div class = "listResourceRight">
-                    <a href="{{ action('UserController@show', [$result->user_id])}}"><button type = "button" class = "interactButton">{{$result->user->handle}}</button></a>
-                </div>
-            </div>
-        @endforeach
+<hr class = "contentSeparator"/>
+    @include('questions._questionCards')
 
 @stop
 @section('centerFooter')
-    @include('pagination.custom-paginator', ['paginator' => $results->appends(['question' => $question])])
+    @include('pagination.custom-paginator', ['paginator' => $questions->appends(['question' => $question])])
 @stop
 
 

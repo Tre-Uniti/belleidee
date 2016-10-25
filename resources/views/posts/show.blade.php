@@ -110,7 +110,17 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                     @endif
                 </div>
             </div>
+            <div class = "linkContainer">
+                @if($post->user_id == Auth::id())
+                    <a href="{{ url('/posts/'.$post->id.'/edit') }}" class = "navLink">Edit</a>
+                @endif
 
+                @if($post->elevation == 0 && $post->extension == 0 && $post->user_id == $viewUser->id)
+                    {!! Form::open(['method' => 'DELETE', 'route' => ['posts.destroy', $post->id], 'class' => 'formDeletion']) !!}
+                    {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
+                    {!! Form::close() !!}
+                @endif
+            </div>
             @if($beacon->stripe_plan < 1)<p>Sponsored by:</p>
 
                 <div class = "sponsorContentLogo">
@@ -122,22 +132,8 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                 </div>
             @endif
             <script src="/js/lightbox.js"></script>
-
         </div>
-        @if($post->user_id == Auth::id())
-            <div class = "linkContainer">
-                <a href="{{ url('/posts/'.$post->id.'/edit') }}" class = "navLink">Edit</a>
-            </div>
-
-        @endif
-
-        @if($post->elevation == 0 && $post->extension == 0 && $post->user_id == $viewUser->id)
-                {!! Form::open(['method' => 'DELETE', 'route' => ['posts.destroy', $post->id], 'class' => 'formDeletion']) !!}
-                {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
-                {!! Form::close() !!}
-        @endif
     </div>
-
     <div>
         <button class = "showExtensions" type = "button" id = "extensionIndex">Show Extensions</button>
     </div>

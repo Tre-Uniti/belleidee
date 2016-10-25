@@ -118,6 +118,16 @@ class BookmarkController extends Controller
         $user = Auth::user();
         //Get bookmark to be removed
 
+        $bookmark = $user->bookmarks()->where('bookmark_id', '=', $id)->first();
+        if($bookmark->type == 'User')
+        {
+            $followedUser = $bookmark->pointer;
+            //Find Specific bookmark for user and detach
+            $user->bookmarks()->detach($id);
+            flash()->overlay('No longer following this user.');
+            return redirect('/users/'. $followedUser);
+        }
+
         //Find Specific bookmark for user and detach
         $user->bookmarks()->detach($id);
 

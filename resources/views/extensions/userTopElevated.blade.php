@@ -5,7 +5,7 @@
 
 @section('centerText')
     <h2>Extensions by <a href={{ url('/users/'. $user->id)}}>{{ $user->handle }}</a></h2>
-    <p>Filter by: Top <i class="fa fa-heart" aria-hidden="true"></i></p>
+    <p>Filter by: Top <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></p>
     <div class = "indexNav">
         <a href="{{ url('extensions/user/'. $user->id)}}" class = "indexLink">Recent</a>
         <a href="{{ url('/users/'.$user->id)}}" class = "indexLink">Profile</a>

@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="formData{{ $errors->has('email') ? ' has-error' : '' }}">
-                    <label for="email" class="formLabel">E-Mail Address</label>
+                    <label for="email" class="formLabel">Email</label>
 
                     <div class="formInput">
                         <input id="email" type="email" class="welcomeInputText" name="email" value="{{ old('email') }}">

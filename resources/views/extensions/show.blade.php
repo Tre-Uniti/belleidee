@@ -30,14 +30,14 @@
                 <a href = "{{ url('/legacyPosts/' . $source->legacy_post_id) }}">a Legacy</a>
             @elseif(isset($source->question_id))
                 <a href = "{{ url('/extensions/'. $source->id) }}">Answer</a> to
-                <a href = "{{ url('/questions/' . $question->id) }}">a Question</a>
+                <a href = "{{ url('/questions/' . $source->question_id) }}">a Question</a>
             @endif
         @elseif($sourceType == 'Post')
             Extends: <a href = "{{ url('/posts/' . $source->id) }}">{{ $source->title }}</a>
         @elseif($sourceType == 'Legacy')
             Extends: <a href = "{{ url('/legacyPosts/' . $source->id) }}">{{ $source->title }}</a>
         @elseif($sourceType == 'Question')
-            Answers: <a href = "{{ url('/questions/' . $source->question_id) }}">{{ $source->question }}</a>
+            Answers: <a href = "{{ url('/questions/' . $source->id) }}">{{ $source->question }}</a>
         @else
 
         @endif
@@ -111,8 +111,7 @@
             @endif
         </div>
         @endif
-
-        <div id = "centerFooter">
+    </div>
             @if($extension->user_id == Auth::id())
                 <a href="{{ url('/extensions/'.$extension->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
             @else
@@ -122,7 +121,6 @@
                 {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}
             @endif
-        </div>
         <div>
     </div>
         <button class = "showExtensions" type = "button" id = "extensionIndex">Show Extensions</button>
@@ -191,6 +189,7 @@
             <button class = "interactButton" type = "button" id = "fullScreen">Full Screen</button>
         </div>
     </div>
+
 
 @stop
 

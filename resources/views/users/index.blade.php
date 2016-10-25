@@ -19,5 +19,8 @@
     <hr class = "contentSeparator"/>
     @include ('users._userCards')
 @stop
+@section('centerFooter')
+    @include('pagination.custom-paginator', ['paginator' => $users])
+@stop
 
 

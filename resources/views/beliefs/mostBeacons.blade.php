@@ -1,6 +1,6 @@
 @extends('app')
 @section('siteTitle')
-    Beliefs
+    Beliefs with Most Beacons
 @stop
 
 @section('centerText')
@@ -10,9 +10,9 @@
             <a href = "{{ url('/beliefs/' . $beacon->belief) }}" class = "indexLink"> {{ $beacon->belief }}</a>
         @endif
         <a href="{{ url('/beliefs/topTagged')}}" class = "indexLink">Top <i class="fa fa-hashtag" aria-hidden="true"></i></a>
-        <a href="{{ url('/beliefs/mostBeacons')}}" class = "indexLink">Most Beacons</a>
+        <a href="{{ url('/beliefs')}}" class = "indexLink">Recent</a>
     </div>
-    <p>Filter by: Recent Interaction</p>
+    <p>Filter by: Most Beacons</p>
     <hr class = "contentSeparator"/>
     @include('beliefs._beliefCards')
 @stop
@@ -23,6 +23,3 @@
         <a href = {{ url('/legacyPosts/create') }}><button type = "button" class = "navButton">Create Legacy Post</button></a>
     @endif
 @stop
-
-
-

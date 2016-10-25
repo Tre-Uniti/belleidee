@@ -1,15 +1,16 @@
 @extends('app')
 @section('siteTitle')
-    Most Extended Answers
+    Show Answers
 @stop
+
 @section('centerText')
     <h2><a href = "{{ url('/questions/'. $question->id) }}">{{ $question->question }}</a></h2>
     <div class = "indexNav">
         <a href="{{ url('/questions/sortByElevation/'. $question->id)}}" class = "indexLink">Top <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
         <a href = "{{ url('/users/'. $question->user_id) }}" class = "indexLink">Asked by: {{ $question->user->handle }}</a>
-        <a href="{{ url('/questions/showAnswers/'. $question->id)}}" class = "indexLink">Recent</a>
+        <a href="{{ url('/questions/sortByExtension/'. $question->id)}}" class = "indexLink">Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
     </div>
-    <p>Filter: Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></p>
+    <p>Filter: Recent Answers</p>
     <hr class = "contentSeparator"/>
 
     @include('questions._answerCards')
@@ -30,7 +31,7 @@
                 <span class="tooltiptext">Heart to give thanks and recommend to others</span>
             </div>
             <div class = "leftCounter">
-                <a href={{ url('/questions/listElevation/'.$question->id)}}>{{ $question->elevation }}</a>
+                <a href={{ url('/questions/list/elevation/'.$question->id)}}>{{ $question->elevation }}</a>
             </div>
         </div>
 
@@ -53,6 +54,5 @@
 @section('centerFooter')
     {!! $extensions->render() !!}
 @stop
-
 
 

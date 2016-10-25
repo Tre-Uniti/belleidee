@@ -6,6 +6,8 @@ use App\Elevation;
 use App\Extension;
 use function App\Http\getLocation;
 use function App\Http\getSponsor;
+use function App\Http\prepareExtensionCards;
+use function App\Http\prepareQuestionCards;
 use App\Mailers\NotificationMailer;
 use App\Notification;
 use App\Post;
@@ -38,14 +40,12 @@ class QuestionController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
         $questions = $this->question->latest()->paginate(10);
 
-        $sponsor = getSponsor($user);
+        $questions = prepareQuestionCards($questions, $user);
 
         return view ('questions.index')
-            ->with(compact('user', 'questions', 'profilePosts', 'profileExtensions', 'sponsor'));
+            ->with(compact('user', 'questions'));
     }
 
     /**
@@ -56,9 +56,6 @@ class QuestionController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
-
         $date = Carbon::today()->subDays(13);
 
         try
@@ -75,10 +72,8 @@ class QuestionController extends Controller
             flash()->overlay('First Question:');
         }
 
-        $sponsor = getSponsor($user);
-
         return view ('questions.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'sponsor'));
+            ->with(compact('user'));
     }
 
     /**
@@ -122,40 +117,23 @@ class QuestionController extends Controller
             $viewUser = User::findOrFail(20);
         }
 
-        //Set Source User photo path
-        if($user->photo_path == '')
-        {
-
-            $sourcePhotoPath = '';
-        }
-        else
-        {
-            $sourcePhotoPath = $user->photo_path;
-        }
         //Get Beacons of post user
-        $userBeacons = $user->bookmarks()->where('type', '=', 'Beacon')->take(7)->get();
-
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
-        $sponsor = getSponsor($user);
         
-        $extensions = Extension::where('question_id', '=', $id)->where('extenception', '=', NULL)->latest()->paginate(10);
+        $extensions = Extension::where('question_id', '=', $id)->where('extenception', '=', NULL)->whereNull('status')->orderBy('elevation', 'desc')->take(3)->get();
+        $extensions = prepareExtensionCards($extensions, $user);
         
         //Check if viewing user has already elevated question
         if(Elevation::where('question_id', $question->id)->where('user_id', $viewUser->id)->exists())
         {
-            $elevation = 'Elevated';
+            $question->elevationStatus = 'Elevated';
         }
         else
         {
-            $elevation = 'Elevate';
+            $question->elevationStatus = 'Elevate';
         }
 
         return view ('questions.show')
-            ->with(compact('user', 'question', 'extensions', 'profilePosts', 'profileExtensions', 'sponsor', 'viewUser'))
-            ->with('sourcePhotoPath', $sourcePhotoPath)
-            ->with('userBeacons', $userBeacons)
-            ->with('elevation', $elevation);
+            ->with(compact('user', 'question', 'extensions', 'viewUser'));
 
     }
 
@@ -168,12 +146,10 @@ class QuestionController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $question = $this->question->findOrFail($id);
 
         return view ('questions.edit')
-            ->with(compact('user', 'question', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'question'));
     }
 
     /**
@@ -203,14 +179,10 @@ class QuestionController extends Controller
     public function search()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-
-        $sponsor = getSponsor($user);
         $location = getLocation();
 
         return view ('questions.search')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'sponsor'))
+            ->with(compact('user'))
             ->with('location', $location);
     }
 
@@ -222,24 +194,22 @@ class QuestionController extends Controller
     public function results(Request $request)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         //Get search title
         $question = $request->input('title');
 
-        $results = Question::where('question', 'LIKE', '%'.$question.'%')->paginate(10);
+        $questions = Question::where('question', 'LIKE', '%'.$question.'%')->paginate(10);
 
-        if(!count($results))
+        $question = prepareQuestionCards($questions, $user);
+
+        if(!count($questions))
         {
             flash()->overlay('No questions with this wording');
-            return redirect()->back();
+            return redirect('/search');
         }
 
-        $sponsor = getSponsor($user);
-
         return view ('questions.results')
-            ->with(compact('user', 'profilePosts','profileExtensions', 'results', 'sponsor'))
+            ->with(compact('user', 'results'))
             ->with('question', $question);
 
     }
@@ -324,15 +294,12 @@ class QuestionController extends Controller
     public function sortByElevation()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-
         $questions = $this->question->orderBy('extension', 'desc')->paginate(10);
 
-        $sponsor = getSponsor($user);
+        $questions = prepareQuestionCards($questions, $user);
 
         return view ('questions.sortByElevation')
-            ->with(compact('user', 'questions', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'questions'));
     }
     /**
      * Sort Questions by highest Extension
@@ -342,15 +309,39 @@ class QuestionController extends Controller
     public function sortByExtension()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $questions = $this->question->orderBy('elevation', 'desc')->paginate(10);
 
-        $sponsor = getSponsor($user);
+        $questions = prepareQuestionCards($questions, $user);
 
         return view ('questions.sortByExtension')
-            ->with(compact('user', 'questions', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'questions'));
+    }
+
+    /*
+     * Show latest Answers for a given Question
+     */
+    public function showAnswers($id)
+    {
+        $user = Auth::user();
+        $question = Question::findOrFail($id);
+
+        $extensions = Extension::where('question_id', '=', $question->id)->whereNull('status')->whereNull('extenception')->latest()->paginate(10);
+
+        $extensions = prepareExtensionCards($extensions, $user);
+
+        //Check if viewing user has already elevated question
+        if(Elevation::where('question_id', $question->id)->where('user_id', $user->id)->exists())
+        {
+            $question->elevationStatus = 'Elevated';
+        }
+        else
+        {
+            $question->elevationStatus = 'Elevate';
+        }
+
+        return view('questions.showAnswers')
+            ->with(compact('user', 'question', 'extensions'));
     }
 
     /**
@@ -361,25 +352,23 @@ class QuestionController extends Controller
     public function sortByExtensionElevation($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $question = Question::findOrFail($id);
         $extensions = Extension::where('question_id', '=', $id)->where('extenception', '=', NULL)->orderBy('elevation', 'desc')->paginate(10);
 
-        $sponsor = getSponsor($user);
+        $extensions = prepareExtensionCards($extensions, $user);
 
         if(Elevation::where('question_id', $question->id)->where('user_id', $user->id)->exists())
         {
-            $elevation = 'Elevated';
+            $question->elevationStatus = 'Elevated';
         }
         else
         {
-            $elevation = 'Elevate';
+            $question->elevationStatus = 'Elevate';
         }
 
         return view ('questions.sortByExtensionElevation')
-            ->with(compact('user', 'question', 'extensions', 'profilePosts','profileExtensions', 'elevation', 'sponsor'));
+            ->with(compact('user', 'question', 'extensions'));
     }
     /**
      * Sort and show all extensions of Question by highest Extension
@@ -389,25 +378,41 @@ class QuestionController extends Controller
     public function sortByMostExtensions($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         $question = Question::findOrFail($id);
         $extensions = Extension::where('question_id', '=', $id)->where('extenception', '=', NULL)->orderBy('extension', 'desc')->paginate(10);
 
-        $sponsor = getSponsor($user);
+        $extensions = prepareExtensionCards($extensions, $user);
 
         if(Elevation::where('question_id', $question->id)->where('user_id', $user->id)->exists())
         {
-            $elevation = 'Elevated';
+            $question->elevationStatus = 'Elevated';
         }
         else
         {
-            $elevation = 'Elevate';
+            $question->elevationStatus = 'Elevate';
         }
         
         return view ('questions.sortByMostExtension')
-            ->with(compact('user', 'question', 'extensions', 'profilePosts','profileExtensions', 'elevation', 'sponsor'));
+            ->with(compact('user', 'question', 'extensions', 'elevation'));
+    }
+
+    /*
+     * List Elevation of specific Question
+     * @param id
+     */
+    public function listElevation($id)
+    {
+        //Get Question associated with id
+        $question = Question::findOrFail($id);
+
+        $user = User::findOrFail($question->user_id);
+        $viewUser = Auth::user();
+
+        $elevations = Elevation::where('question_id', $id)->latest('created_at')->paginate(10);
+
+        return view ('questions.listElevation')
+            ->with(compact('user', 'viewUser', 'elevations', 'question'));
     }
 
 

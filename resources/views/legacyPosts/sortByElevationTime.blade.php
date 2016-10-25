@@ -10,7 +10,7 @@
         <a href="{{ url('/legacyPosts')}}" class = "indexLink">Recent</a>
         <a href="{{ url('/legacyPosts/extensionTime/Month')}}" class = "indexLink">Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
     </div>
-            <p>Sort by <i class="fa fa-heart" aria-hidden="true"></i></p>
+            <p>Sort by <i class="fa fa-heart-o" aria-hidden="true"></i></p>
 
             <nav class = "infoNav">
                 <ul>
@@ -28,7 +28,6 @@
 @stop
 @section('centerFooter')
     @include('pagination.custom-paginator', ['paginator' => $legacyPosts])
-
 @stop
 
 

@@ -47,7 +47,7 @@ class LegacyPostController extends Controller
     {
         $user = Auth::user();
 
-        $legacyPosts = LegacyPost::latest()->take(10)->get();
+        $legacyPosts = LegacyPost::latest()->paginate(10);
 
         $legacyPosts = prepareLegacyPostCards($legacyPosts, $user);
 

@@ -67,6 +67,8 @@ Route::post('beaconRequests/convertBeacon', 'BeaconRequestController@convert')->
 Route::resource('beaconRequests', 'BeaconRequestController');
 
 //Belief Routes
+Route::get('beliefs/topTagged', 'BeliefController@topTagged');
+Route::get('beliefs/mostBeacons', 'BeliefController@mostBeacons');
 Route::get('beliefs/beacons/{name}', 'BeliefController@beacons');
 Route::get('beliefs/posts/{name}', 'BeliefController@posts');
 Route::get('beliefs/extensions/{name}', 'BeliefController@extensions');
@@ -168,6 +170,8 @@ Route::resource('supports', 'SupportController');
 
 //Question Routes (Resource)
 Route::get('questions/elevate/{id}', 'QuestionController@elevateQuestion');
+Route::get('questions/showAnswers/{id}', 'QuestionController@showAnswers');
+Route::get('questions/list/elevation/{id}', 'QuestionController@listElevation');
 Route::get('questions/search', 'QuestionController@search');
 Route::get('questions/results', 'QuestionController@results');
 Route::get('questions/sortByElevation', 'QuestionController@sortByElevation');

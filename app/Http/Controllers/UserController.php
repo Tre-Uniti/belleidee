@@ -11,10 +11,12 @@ use function App\Http\filterContentLocation;
 use function App\Http\filterContentLocationAllTime;
 use function App\Http\filterContentLocationSearch;
 use function App\Http\filterContentLocationTime;
+use function App\Http\getBeacon;
 use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
+use function App\Http\prepareExtensionCards;
 use App\Listeners\TransferUserContent;
 use App\Post;
 use App\Sponsor;
@@ -92,7 +94,7 @@ class UserController extends Controller
         //Get requested post and add body
         $viewUser = Auth::user();
         $user = User::findOrFail($id);
-        $beacon = Beacon::where('beacon_tag', '=', $user->last_tag)->first();
+
 
         //Get latest Posts
         $posts = Post::where('user_id',$user->id )->latest()->take(5)->get();
@@ -106,22 +108,27 @@ class UserController extends Controller
         if($bookmark_user = Bookmark::where('pointer', '=', $user->id)->where('type', '=', 'User')->first())
         {
             $followerCount = DB::table('bookmark_user')->where('bookmark_id', $bookmark_user->id)->count();
-        }
+            $following = $viewUser->bookmarks()->where('type', '=', 'User')->where('bookmark_id', '=', $bookmark_user->id)->first();      }
         else
         {
             $followerCount = 0;
+            $following = null;
         }
+
         //Get Number of Users being followed
         $followingCount = $user->bookmarks()->where('type', '=', 'User')->count();
 
+        $beacon = getBeacon($user);
         $sponsor = getSponsor($user);
+
 
         return view ('users.show')
             ->with(compact('user', 'viewUser', 'posts', 'extensions', 'question', 'sponsor', 'beacon'))
             ->with('followerCount', $followerCount)
             ->with('followingCount', $followingCount)
             ->with('extensionCount', $extensionCount)
-            ->with('postCount', $postCount);
+            ->with('postCount', $postCount)
+            ->with('following', $following);
     }
 
     /**
@@ -397,24 +404,17 @@ class UserController extends Controller
 
         $extensions = Extension::where('source_user', $user->id)->latest('created_at')->paginate(10);
 
+        $extensions = prepareExtensionCards($extensions, $viewUser);
+
         //Set sourcePhotoPath so the viewing user's photo is replaced with this user's photo
         if ($user->photo_path == '') {
             $sourcePhotoPath = '';
         } else {
             $sourcePhotoPath = $user->photo_path;
         }
-        //Get and set user's sponsor logo
-        if (Sponsorship::where('user_id', '=', $user->id)->exists()) {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $sponsor = Sponsor::where('id', '=', $sponsorship->sponsor_id)->first();
-            $sponsor->where('id', $sponsor->id)
-                ->update(['views' => $sponsor->views + 1]);
-        } else {
-            $sponsor = NULL;
-        }
+
         return view('users.extendedBy')
             ->with(compact('user', 'viewUser', 'extensions'))
-            ->with('sponosr', $sponsor)
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 

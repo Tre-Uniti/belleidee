@@ -9,7 +9,7 @@
     <h2>Most Extended Legacy ({{$filter}})</h2>
         <div id = "indexNav">
             <a href="{{ url('/legacyPosts/forYou')}}" class = "indexLink">For You</a>
-            <a href="{{ url('/legacyPosts/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart" aria-hidden="true"></i></a>
+            <a href="{{ url('/legacyPosts/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
             <a href="{{ url('/legacyPosts')}}" class = "indexLink">Recent</a>
         </div>
     <p>Filter by:  <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></p>

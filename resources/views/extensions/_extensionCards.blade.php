@@ -6,30 +6,30 @@
         <div class = "cardTitleSection">
             <h4>
                 @if(isset($extension->extenception))
-                    Extends<a href="{{ action('ExtensionController@show', [$extension->extenception])}}"> another Extension</a>
+                    <a href = "{{ url('/extensions/'. $extension->id) }}">Extends:</a> <a href="{{ action('ExtensionController@show', [$extension->extenception])}}"> another Extension</a>
                 @elseif(isset($extension->post_id))
-                    Extends: <a href="{{ url('posts/' . $extension->post_id)}}">{{ $extension->post->title }}</a>
+                    <a href = "{{ url('/extensions/'. $extension->id) }}">Extends:</a> <a href="{{ url('posts/' . $extension->post_id)}}">{{ $extension->post->title }}</a>
                 @elseif(isset($extension->question_id))
-                    Answers: <a href="{{ url('/questions/'. $extension->question_id) }}">{{ $extension->question->question }}</a>
+                    <a href = "{{ url('/extensions/'. $extension->id) }}">Answers:</a> <a href="{{ url('/questions/'. $extension->question_id) }}">{{ $extension->question->question }}</a>
                 @elseif(isset($extension->legacy_post_id))
-                    Extends: <a href="{{ url('/legacyPosts/'. $extension->legacy_post_id) }}">{{ $extension->legacyPost->title }}</a>
+                    <a href = "{{ url('/extensions/'. $extension->id) }}">Extends:</a> <a href="{{ url('/legacyPosts/'. $extension->legacy_post_id) }}">{{ $extension->legacyPost->title }}</a>
                 @endif
             </h4>
+            <div class = "cardHandleSection">
+                <p>
+                    By: <a href="{{ action('UserController@show', [$extension->user_id])}}" class = "contentHandle">{{ $extension->user->handle }}</a> on <a href = {{ url('$/extensions/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a>
+                </p>
+            </div>
         </div>
         <div class = "cardCaptionExcerptSection">
             <p class = "cardExcerpt">
                 <a href="{{ action('ExtensionController@show', [$extension->id])}}">{{ $extension->excerpt }}</a><a href="{{ action('ExtensionController@show', [$extension->id])}}">... Read More</a>
             </p>
         </div>
-        <div class = "cardHandleSection">
-            <p>
-                By: <a href="{{ action('UserController@show', [$extension->user_id])}}" class = "contentHandle">{{ $extension->user->handle }}</a> on <a href = {{ url('$/extensions/date/'.$extension->created_at->format('M-d-Y')) }}>{{ $extension->created_at->format('M-d-Y') }}</a>
-            </p>
-        </div>
         <div class = "footerSection">
             <div class = "leftSection">
                 <div class = "leftIcon">
-                    @if($extension->elevateStatus === 'Elevated')
+                    @if($extension->elevationStatus === 'Elevated')
                         <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
                     @else
                         <a href="{{ url('/extensions/elevate/'.$extension->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
@@ -43,7 +43,7 @@
 
             <div class = "centerSection">
                 <a href="{{ url('/beacons/'.$extension->beacon_tag) }}">{{ $extension->beacon_tag }}</a>
-                <span class="tooltiptext">Beacon community where this post is located</span>
+                <span class="tooltiptext">Beacon community where this extension is located</span>
             </div>
 
             <div class = "rightSection">

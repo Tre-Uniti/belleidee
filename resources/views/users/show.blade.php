@@ -84,7 +84,11 @@
     </article>
 
     @if(Auth::id() != $user->id)
-        <a href="{{ url('/bookmarks/users/'.$user->id) }}"><button type = "button" class = "navButton">Follow</button></a>
+        @if($following == null)
+            <a href="{{ url('/bookmarks/users/'.$user->id) }}" class = "navLink">Follow</a>
+        @else
+            <a href="{{ action('BookmarkController@remove', $following->id)}}" class = "navLink">Unfollow</a>
+        @endif
     @endif
     @if(Auth::user()->type > 1)
         <a href="{{ url('intolerances/userIndex/'. $user->id) }}"><button type = "button" class = "navButton">Intolerances</button></a>

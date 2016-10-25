@@ -12,7 +12,8 @@
             <a href="{{ url('/extensions/forYou')}}" class = "indexLink">For You</a>
             @if($user->last_tag != null)
                 <a href="{{ url('/beacons/extensions/'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
-            @endif            <a href="{{ url('extensions/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart" aria-hidden="true"></i></a>
+            @endif
+            <a href="{{ url('extensions/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
             <a href="{{ url('extensions/extensionTime/Month')}}" class = "indexLink">Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
         </div>
     <hr class = "contentSeparator">
@@ -20,3 +21,6 @@
 
 @stop
 
+@section('centerFooter')
+    @include('pagination.custom-paginator', ['paginator' => $extensions])
+@stop

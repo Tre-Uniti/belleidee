@@ -12,7 +12,7 @@
                 <a href="{{ url('/beacons/posts/'. $user->last_tag)}}" class = "indexLink">{{ $user->last_tag }}</a>
             @endif
             <a href="{{ url('posts/extensionTime/Month')}}" class = "indexLink">Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
-<p>Sort by <i class="fa fa-heart" aria-hidden="true"></i></p>
+<p>Sort by <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></p>
         <nav class = "infoNav">
             <ul>
                 <li>
