@@ -130,6 +130,7 @@ Route::get('extensions/extend/list/{id}', 'ExtensionController@extendList');
 Route::get('extensions/listElevation/{id}', 'ExtensionController@listElevation');
 Route::get('extensions/setExcerpt', 'ExtensionController@setExcerpt');
 Route::get('extensions/forYou', 'ExtensionController@forYou');
+Route::get('extensions/setAnswerId', 'ExtensionController@setAnswerId');
 Route::resource('extensions', 'ExtensionController');
 
 //Draft Routes (Resource)

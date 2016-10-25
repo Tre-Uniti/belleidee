@@ -11,6 +11,9 @@
         @elseif(isset($source->legacy_post_id))
             <a href = "{{ url('/extensions/'. $source->id) }}"> Extension</a> of
             <a href = "{{ url('/legacyPosts/' . $source->legacy_post_id) }}">a Legacy</a>
+        @elseif(isset($source->extenception))
+            <a href = "{{ url('/extensions/' . $source->id) }}"> Extension</a> of
+            <a href = "{{ url('/extensions/' . $source->extenception) }}">previous Extension</a>
         @elseif(isset($source->question_id))
             <a href = "{{ url('/extensions/'. $source->id) }}">Answer</a> to
             <a href = "{{ url('/questions/' . $source->question_id) }}">a Question</a>

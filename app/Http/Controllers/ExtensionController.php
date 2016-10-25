@@ -229,6 +229,7 @@ class ExtensionController extends Controller
 
                 //Add 1 extension to source extension and answer extension
                 $sourceExtension = Extension::findOrFail($request['id']);
+
                 if($sourceExtension->id != $sourceExtension->answer_id)
                 {
                     $sourceExtension->where('id', $sourceExtension->id)
@@ -1784,6 +1785,24 @@ class ExtensionController extends Controller
         return view ('extensions.forYou')
             ->with(compact('user', 'extensions'))
             ->with('location', $location);
+    }
+
+    /*
+     * Set Answer_id for old questions
+     */
+    public function setAnswerId()
+    {
+        $answers = Extension::whereNotNull('question_id')->whereNull('extenception')->get();
+
+        $counter = 0;
+        foreach($answers as $answer)
+        {
+            $answer->answer_id = $answer->id;
+            $answer->update();
+            $counter++;
+        }
+        flash()->overlay('Num updated' . $counter);
+        return redirect('extensions');
     }
     
 }

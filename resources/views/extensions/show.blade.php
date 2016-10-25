@@ -28,6 +28,9 @@
             @elseif(isset($source->legacy_post_id))
                 <a href = "{{ url('/extensions/'. $source->id) }}"> Extension</a> of
                 <a href = "{{ url('/legacyPosts/' . $source->legacy_post_id) }}">a Legacy</a>
+            @elseif(isset($source->extenception))
+                <a href = "{{ url('/extensions/' . $source->id) }}"> Extension</a> of
+                <a href = "{{ url('/extensions/' . $source->extenception) }}">previous Extension</a>
             @elseif(isset($source->question_id))
                 <a href = "{{ url('/extensions/'. $source->id) }}">Answer</a> to
                 <a href = "{{ url('/questions/' . $source->question_id) }}">a Question</a>
@@ -100,7 +103,17 @@
                 @endif
             </div>
         </div>
-
+        <div class = "linkContainer">
+            @if($extension->user_id == Auth::id())
+                <a href="{{ url('/extensions/'.$extension->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+            @else
+            @endif
+            @if($extension->elevation == 0 && $extension->extension == 0 && $extension->user_id == $viewUser->id)
+                {!! Form::open(['method' => 'DELETE', 'route' => ['extensions.destroy', $extension->id], 'class' => 'formDeletion']) !!}
+                {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
+                {!! Form::close() !!}
+            @endif
+        </div>
         @if($beacon->stripe_plan < 1)<p>Sponsored by:</p>
 
         <div class = "sponsorContentLogo">
@@ -112,15 +125,7 @@
         </div>
         @endif
     </div>
-            @if($extension->user_id == Auth::id())
-                <a href="{{ url('/extensions/'.$extension->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
-            @else
-            @endif
-            @if($extension->elevation == 0 && $extension->extension == 0 && $extension->user_id == $viewUser->id)
-                {!! Form::open(['method' => 'DELETE', 'route' => ['extensions.destroy', $extension->id], 'class' => 'formDeletion']) !!}
-                {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
-                {!! Form::close() !!}
-            @endif
+
         <div>
     </div>
         <button class = "showExtensions" type = "button" id = "extensionIndex">Show Extensions</button>

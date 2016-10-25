@@ -6,7 +6,7 @@
         <div class = "cardTitleSection">
             <h4>
                 @if(isset($extension->extenception))
-                    <a href = "{{ url('/extensions/'. $extension->id) }}">Extends:</a> <a href="{{ action('ExtensionController@show', [$extension->extenception])}}"> another Extension</a>
+                    <a href = "{{ url('/extensions/'. $extension->id) }}">Extends:</a> <a href="{{ action('ExtensionController@show', [$extension->extenception])}}"> previous Extension</a>
                 @elseif(isset($extension->post_id))
                     <a href = "{{ url('/extensions/'. $extension->id) }}">Extends:</a> <a href="{{ url('posts/' . $extension->post_id)}}">{{ $extension->post->title }}</a>
                 @elseif(isset($extension->question_id))
