@@ -1,33 +1,19 @@
 @extends('app')
 @section('siteTitle')
-    Elevated Posts
+    Promotions for {{ $sponsor->name }}
 @stop
 
 @section('centerText')
     <h2>Promotions for {{ $sponsor->name }}</h2>
     <div class = "indexNav">
-        <a href={{ url('/sponsors/'. $sponsor->sponsor_tag)}}><button type = "button" class = "indexButton">About</button></a>
-        <a href={{ url('/sponsors/sponsorships/'. $sponsor->id)}}><button type = "button" class = "indexButton">Sponsorships</button></a>
+        <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag)}}" class = "indexLink">About</a>
+        <a href="{{ url('/sponsors/sponsorships/'. $sponsor->sponsor_tag)}}" class = "indexLink">Sponsorships</a>
         @if($user->type > 1 || $user->id == $sponsor->user_id)
-        <a href={{ url('/sponsors/eligible/'. $sponsor->id)}}><button type = "button" class = "indexButton">Promo Eligible</button></a>
+        <a href="{{ url('/sponsors/eligible/'. $sponsor->sponsor_tag)}}" class = "indexLink">Promo Eligible</a>
         @endif
     </div>
-    <div class = "indexLeft">
-        <h4>Status</h4>
-    </div>
-    <div class = "indexRight">
-        <h4>Created At</h4>
-    </div>
-    @foreach ($promotions as $promotion)
-        <div class = "listResource">
-            <div class = "indexLeft">
-                <a href="{{ action('PromotionController@show', [$promotion->id])}}"><button type = "button" class = "interactButtonLeft">{{ $promotion->status }}</button></a>
-            </div>
-            <div class = "listResourceRight">
-                <a href="{{ action('PromotionController@show', [$promotion->id])}}"><button type = "button" class = "interactButton">{{ $promotion->created_at->format('M-d-Y') }}</button></a>
-            </div>
-        </div>
-    @endforeach
+    <hr class = "contentSeparator"/>
+    @include('promotions._promotionCards')
 @stop
 @section('centerFooter')
     @if($user->id == $sponsor->user_id || $user->type > 1)

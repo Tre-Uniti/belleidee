@@ -17,11 +17,19 @@
                 </div>
             </header>
             <div class = "cardCaptionExcerptSection">
-                <p class = "cardExcerpt">
-                    <a href="{{ action('LegacyPostController@show', [$legacyPost->id])}}" class = "excerptText">{{ $legacyPost->excerpt }}</a>
-                    <a href="{{ action('LegacyPostController@show', [$legacyPost->id])}}">... Read More</a>
-                </p>
-
+                @if($legacyPost->excerpt != null)
+                    <p class = "cardExcerpt">
+                        <a href="{{ action('LegacyPostController@show', [$legacyPost->id])}}" class = "excerptText">{{ $legacyPost->excerpt }}</a>
+                        <a href="{{ action('LegacyPostController@show', [$legacyPost->id])}}">... Read More</a>
+                    </p>
+                @elseif(isset($legacyPost->caption))
+                    <p>
+                        <a href="{{ action('LegacyPostController@show', [$legacyPost->id])}}">{{ $legacyPost->caption }}</a>
+                    </p>
+                    <div class = "cardPhoto">
+                        <a href="{{ url('/legacyPosts/'. $legacyPost->id) }}"><img src= {{ url(env('IMAGE_LINK'). $legacyPost->source_path) }} alt="{{$legacyPost->title}}"></a>
+                    </div>
+                 @endif
             </div>
             <div class = "footerSection">
                 <div class = "leftSection">

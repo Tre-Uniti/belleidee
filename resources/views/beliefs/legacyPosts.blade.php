@@ -6,7 +6,6 @@
 @section('centerText')
     <h2><a href = "{{ url('/beliefs/' . $belief) }}">{{ $belief }}</a></h2>
     <div class = "indexNav">
-        <p>Filter by latest:</p>
         <nav class = "infoNav">
             <ul>
                 <li>
@@ -18,6 +17,7 @@
             </ul>
         </nav>
     </div>
+    <p>Filter by: Recent</p>
     <hr class = "contentSeparator"/>
     @include('legacyPosts._legacyPostCards')
 

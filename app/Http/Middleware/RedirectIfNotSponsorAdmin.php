@@ -18,8 +18,8 @@ class RedirectIfNotSponsorAdmin
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        $id = $request->route('id');
-        $sponsor = Sponsor::findOrFail($id); // Fetch the Sponsor
+        $tag = $request->route('tag');
+        $sponsor = Sponsor::where('sponsor_tag', '=', $tag)->first(); // Fetch the Sponsor
         $user = Auth::user();
 
         if($sponsor->user_id == $user->id)

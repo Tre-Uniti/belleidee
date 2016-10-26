@@ -61,7 +61,7 @@
     <div class = "footerSection">
         <div class = "leftSection">
             <div class = "leftIcon">
-                @if($extension->elevateStatus === 'Elevated')
+                @if($extension->elevationStatus === 'Elevated')
                     <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
                 @else
                     <a href="{{ url('/extensions/elevate/'.$extension->id) }}" class = "iconLink"><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>

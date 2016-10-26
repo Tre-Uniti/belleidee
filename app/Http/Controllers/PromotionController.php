@@ -38,28 +38,13 @@ class PromotionController extends Controller
      */
     public function index()
     {
-
-
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-
-        try
-        {
-            $sponsorship = Sponsorship::where('user_id', '=', $user->id)->first();
-            $sponsor = Sponsor::where('id','=', $sponsorship->sponsor_id)->first();
-
-        }
-        catch(ModelNotFoundException $e)
-        {
-            $sponsor = Sponsor::where('sponsor_tag', '=', 'US-SW-TreUniti');
-        }
 
         $promotions = filterContentLocation($user, 1, 'Promotion');
         $location = getLocation();
 
         return view('promotions.index')
-            ->with(compact('user', 'promotions', 'sponsor', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user', 'promotions', 'sponsor', 'eligibleUser'))
             ->with('location', $location);
 
     }
@@ -74,8 +59,6 @@ class PromotionController extends Controller
         $sponsor = Sponsor::findOrFail($id);
 
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $statuses = [
             'Eligible Only' => 'Eligible Only',
@@ -124,8 +107,6 @@ class PromotionController extends Controller
             $user = User::where('handle', '=', 'Transferred')->first();
             $user->handle = 'Guest';
         }
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $promotion = Promotion::findOrFail($id);
 
@@ -134,7 +115,7 @@ class PromotionController extends Controller
             if($promotion->status == 'closed' && $user->id != $promotion->sponsor->user_id)
             {
                 flash()->overlay('Must be the manager of this sponsor or be an admin to view');
-                return redirect()->back();
+                return redirect('sponsors/'. $promotion->sponsor->id);
             }
             elseif($promotion->status == 'Eligible Only' && $user->id != $promotion->sponsor->user_id)
             {
@@ -144,7 +125,7 @@ class PromotionController extends Controller
                 if(!count($eligibleUser))
                 {
                     flash()->overlay('Not eligible to view this promo (must be sponsored for 7+ days');
-                    return redirect()->back();
+                    return redirect('sponsors/' . $promotion->sponsor->id);
                 }
             }
         }
@@ -152,7 +133,7 @@ class PromotionController extends Controller
         $promotion->description = autolink($promotion->description, array("target"=>"_blank","rel"=>"nofollow"));
 
         return view('promotions.show')
-            ->with(compact('user', 'promotion', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'promotion', 'eligibleUser'));
     }
 
     /*
@@ -167,8 +148,6 @@ class PromotionController extends Controller
         $sponsor = Sponsor::findOrFail($promotion->sponsor_id);
 
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $statuses = [
             'Eligible Only' => 'Eligible Only',
@@ -178,7 +157,7 @@ class PromotionController extends Controller
 
 
         return view('promotions/edit')
-            ->with(compact('user', 'promotion', 'sponsor', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user', 'promotion', 'sponsor'))
             ->with('statuses', $statuses);
     }
 
@@ -205,26 +184,37 @@ class PromotionController extends Controller
     public function sponsorIndex($id)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $sponsor = Sponsor::findOrFail($id);
 
+        $promotions = Promotion::where('sponsor_id', '=', $sponsor->id)->where('status', '!=', 'Closed')->paginate(10);
         //User must have sponsorship for at least 7 days
         $date = Carbon::today()->subDays(7);
+        try
+        {
+            $eligibleUser = Sponsorship::where('user_id', '=', $user->id)->where('sponsor_id', '=', $sponsor->id)->first();
 
-        if($user->type > 1 || $user->id == $sponsor->user_id || Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date)->where('user_id', '=', $user->id)->exists())
-        {
-            $promotions = Promotion::where('sponsor_id', '=', $sponsor->id)->where('status', '!=', 'closed')->paginate(10);
         }
-        else
+        catch(ModelNotFoundException $e)
         {
-            flash()->overlay('Not eligible to view all sponsor promotions (min 7 days)');
-            return redirect()->back();
+            $eligibleUser = NULL;
+            flash()->overlay('Must be sponsored for 7 days to view');
+            return redirect('sponsors/'. $sponsor->sponsor_tag);
         }
+
+        if($eligibleUser != NULL && $eligibleUser->created_at <= $date)
+        {
+            $eligibleUser = 'yes';
+        }
+        elseif($eligibleUser != NULL && $eligibleUser->created_at > $date)
+        {
+            flash()->overlay('Must be sponsored for 7 days to view');
+            return redirect('sponsors/'. $sponsor->sponsor_tag);
+        }
+
 
         return view('promotions/sponsorIndex')
-            ->with(compact('user', 'promotions', 'sponsor', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'promotions', 'sponsor', 'eligibleUser'));
     }
 
 }

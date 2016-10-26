@@ -6,6 +6,7 @@
 @section('centerText')
     <h2>Elevations of  <a href={{ url('/legacyPosts/'. $legacyPost->id)}}>{{ $legacyPost->title }}</a></h2>
     <div class = "indexNav">
+        <a href="{{ url('/legacyPosts/'. $legacyPost->id)}}" class = "indexLink">Show Legacy</a>
         <a href="{{ url('/legacyPosts/'. $legacyPost->id)}}" class = "indexLink">Total: {{ $legacyPost->elevation }}</a>
         <a href="{{ url('/legacyPosts/list/extension/'.$legacyPost->id)}}" class = "indexLink">Extensions <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
     </div>

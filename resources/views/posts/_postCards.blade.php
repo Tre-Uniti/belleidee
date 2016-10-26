@@ -17,10 +17,13 @@
 
             @if(isset($post->excerpt))
                 <p class = "cardExcerpt">
-                    {{ $post->excerpt }}<a href="{{ action('PostController@show', [$post->id])}}">... Read More</a>
+                    <a href="{{ action('PostController@show', [$post->id])}}" class = "excerptText">{{ $post->excerpt }}</a><a href="{{ action('PostController@show', [$post->id])}}">... Read More</a>
                 </p>
             @elseif(isset($post->caption))
-                <a href="{{ action('PostController@show', [$post->id])}}">{{ $post->caption }}</a>
+                <p>
+                    <a href="{{ action('PostController@show', [$post->id])}}">{{ $post->caption }}</a>
+
+                </p>
                 <div class = "cardPhoto">
                     <a href="{{ url('/posts/'. $post->id) }}"><img src= {{ url(env('IMAGE_LINK'). $post->post_path) }} alt="{{$post->title}}"></a>
                 </div>

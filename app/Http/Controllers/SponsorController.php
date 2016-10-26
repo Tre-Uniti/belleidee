@@ -606,7 +606,6 @@ class SponsorController extends Controller
     public function eligible($tag)
     {
         $sponsor = Sponsor::where('sponsor_tag', '=', $tag)->first();
-
         $user = Auth::user();
 
         //User must have sponsorship for at least 7 days
@@ -744,6 +743,41 @@ class SponsorController extends Controller
             ->with('promotions', $promotions)
             ->with('location', $location)
             ->with('eligibleCount', $eligibleCount);
+    }
+
+    /*
+     * Show the contact info for a specific Sponsor
+     */
+    public function contact($tag)
+    {
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+            $user->handle = 'Guest';
+        }
+        try
+        {
+            $sponsor = Sponsor::where('sponsor_tag', '=', $tag)->first();
+            if ($sponsor->status == 'deactivated')
+            {
+                flash()->overlay('Sponsor deactivated or does not exist');
+                return redirect('sponsors');
+            }
+        }
+        catch(ModelNotFoundException $e)
+        {
+            flash()->overlay('No active Idee Sponsor with this id');
+            return redirect('sponsors');
+        }
+
+        return view('sponsors.contact')
+            ->with(compact('user', 'sponsor'));
     }
 
 }

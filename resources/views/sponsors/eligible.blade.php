@@ -4,7 +4,6 @@
 @stop
 
 @section('centerText')
-
     <h2><a href = "{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{ $sponsor->name }}</a></h2>
 
     <div class = "indexNav">
@@ -18,7 +17,7 @@
     </div>
 
     <div class = "contentHeaderSeparator">
-        <h3>Eligible Users ( {{ $eligibleCount}}@if($eligibleCount == 10)+  @endif ) </h3>
+        <h3>Eligible Users ( {{ $eligibleCount}} @if($eligibleCount == 10)+  @endif ) </h3>
     </div>
     @include('sponsors._sponsorshipCards')
 

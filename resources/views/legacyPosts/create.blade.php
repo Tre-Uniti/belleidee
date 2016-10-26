@@ -4,10 +4,9 @@
 @stop
 
 @section('centerText')
-    <h2>Create Legacy Post</h2>
     @include ('errors.list')
 
-    {!! Form::open(['url' => 'legacyPosts']) !!}
+    {!! Form::open(['url' => 'legacyPosts', 'files' => true]) !!}
     @include ('legacyPosts._form', ['submitButtonText' => 'Create Legacy Post'])
 @stop
 

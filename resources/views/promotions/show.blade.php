@@ -32,7 +32,7 @@
 
 @section('centerFooter')
     @if($user->type > 1 || $user->id == $promotion->sponsor_id)
-        <a href="{{ url('/sponsors/eligible/'. $promotion->sponsor_id) }}"><button type = "button" class = "navButton">Eligible Users</button></a>
+        <a href="{{ url('/sponsors/eligible/'. $promotion->sponsor->sponsor_tag) }}"><button type = "button" class = "navButton">Eligible Users</button></a>
     @endif
     @if($user->type > 1)
         <a href="{{ url('/promotions/'.$promotion->id .'/edit')}}"><button type = "button" class = "navButton">Edit</button></a>

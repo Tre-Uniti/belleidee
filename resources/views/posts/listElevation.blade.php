@@ -6,6 +6,7 @@
 @section('centerText')
     <h2>Elevation of  <a href={{ url('/posts/'. $post->id)}}>{{ $post->title }}</a></h2>
     <div class = "indexNav">
+        <a href = "{{ action('PostController@show', $post->id)}}" class = "indexLink">Show Post</a>
         <a href="{{ url('/posts/'. $post->id)}}" class = "indexLink">Total: {{ $post->elevation }}</a>
         <a href="{{ url('/extensions/post/list/'.$post->id)}}" class = "indexLink">Extensions <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
     </div>

@@ -14,7 +14,10 @@ use function App\Http\getBeliefs;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
+use function App\Http\prepareExtensionCards;
 use function App\Http\prepareLegacyPostCards;
+use App\Http\Requests\CreateLegacyRequest;
+use App\Http\Requests\UpdateLegacyRequest;
 use App\Legacy;
 use App\LegacyPost;
 use App\Post;
@@ -25,6 +28,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Mews\Purifier\Facades\Purifier;
 use Event;
 
@@ -63,8 +67,6 @@ class LegacyPostController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         if($user->type < 1)
         {
@@ -86,16 +88,16 @@ class LegacyPostController extends Controller
             }
         }
         return view('legacyPosts.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'beliefs'));
+            ->with(compact('user', 'beliefs'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CreateLegacyRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateLegacyRequest $request)
     {
         $legacy = Legacy::where('id', '=', $request['belief'])->first();
 
@@ -109,34 +111,63 @@ class LegacyPostController extends Controller
                 ->withInput()
                 ->withErrors([$error]);
         }
-        else
-        {
-            $this->validate($request, [
-                'body' => 'required|min:5|max:1000',
-                'title' => 'required|min:1|max:40'
-            ]);
-            $title = $request->input('title');
-            $source_path = '/legacy/'.$legacy->belief->name.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
-            $body = Purifier::clean($request->input('body'));
+        else {
+            if ($request->hasFile('image')) {
+                if (!$request->file('image')->isValid()) {
+                    $error = "Image File invalid.";
+                    return redirect()
+                        ->back()
+                        ->withErrors([$error]);
+                }
+                //Get image from request
+                $image = $request->file('image');
+                $caption = Purifier::clean($request->input('caption'));
+                $excerpt = null;
 
-            //Check if User has already has path set for title
-            if (Storage::exists($source_path))
-            {
-                $error = "You've already saved an inspiration with this title.";
-                return redirect()
-                    ->back()
-                    ->withInput()
-                    ->withErrors([$error]);
+                //Create image file name
+                $title = str_replace(' ', '_', $request['title']);
+                $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
+                $path = '/belief_photos/' . $legacy->belief->name . '/' . $imageFileName;
+                $originalPath = '/belief_photos/' . $legacy->belief->name . '/originals/' . $title . '-' . $imageFileName;
+
+                //Resize the image
+                $imageResized = Image::make($image);
+                $originalImage = Image::make($image);
+                $imageResized->resize(450, 350, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $imageResized = $imageResized->stream();
+                $originalImage = $originalImage->stream();
+
+                //Store new photo in storage (S3)
+                Storage::put($path, $imageResized->__toString());
+                Storage::put($originalPath, $originalImage->__toString());
+                $request = array_add($request, 'source_path', $path);
+                $request = array_add($request, 'original_source_path', $originalPath);
+            } //Process Post as a text file
+            else
+                {
+                $this->validate($request, [
+                    'body' => 'required|min:5|max:1000'
+                ]);
+                $title = $request->input('title');
+                $source_path = '/legacy/' . $legacy->belief->name . '/' . $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';
+                $inspiration = Purifier::clean($request->input('body'));
+                $excerpt = substr($inspiration, 0, 300);
+                $caption = null;
+
+                //Store body text at AWS
+                Storage::put($source_path, $inspiration);
+
+                $request = array_add($request, 'source_path', $source_path);
             }
-
-            //Store body text at AWS
-            Storage::put($source_path, $body);
-
-            $request = array_add($request, 'source_path', $source_path);
         }
 
         $legacyPost = new legacyPost($request->except('body'));
         $legacyPost->belief = $legacy->belief->name;
+        $legacyPost->caption = $caption;
+        $legacyPost->excerpt = $excerpt;
         $legacyPost->legacy()->associate($legacy);
         $legacyPost->save();
 
@@ -145,7 +176,6 @@ class LegacyPostController extends Controller
 
         flash()->overlay('Your legacy post has been created');
         return redirect('legacyPosts/'. $legacyPost->id);
-
     }
 
     /**
@@ -167,27 +197,47 @@ class LegacyPostController extends Controller
             $user = User::where('handle', '=', 'Transferred')->first();
             $user->handle = 'Guest';
         }
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $legacyPost = legacyPost::findOrfail($id);
 
-        $contents = Storage::get($legacyPost->source_path);
-        $contents = autolink($contents, array("target"=>"_blank","rel"=>"nofollow"));
-        $legacyPost = array_add($legacyPost, 'body', $contents);
+        //Get type of post (i.e Image or Txt)
+        if($legacyPost->original_source_path != null)
+        {
+            $type = 'img';
+        }
+        else
+        {
+            $type = 'txt';
+        }
+        if($type == 'txt')
+        {
+            $contents = Storage::get($legacyPost->source_path);
+            $contents = autolink($contents, array("target"=>"_blank","rel"=>"nofollow"));
+
+            $legacyPost = array_add($legacyPost, 'body', $contents);
+            $sourceOriginalPath = '';
+        }
+        else
+        {
+            //Get path to original image for lightbox preview
+            $legacyPost->caption = autolink($legacyPost->caption, array("target"=>"_blank","rel"=>"nofollow"));
+            $sourceOriginalPath = $legacyPost->original_source_path;
+        }
 
         //Check if viewing user has already elevated post
         if(Elevation::where('legacy_post_id', $legacyPost->id)->where('user_id', $user->id)->exists())
         {
-            $elevation = 'Elevated';
+            $legacyPost->elevationStatus = 'Elevated';
         }
         else
         {
-            $elevation = 'Elevate';
+            $legacyPost->elevationStatus = 'Elevate';
         }
 
         return view('legacyPosts.show')
-            ->with(compact('user', 'legacyPost', 'elevation', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'legacyPost'))
+            ->with('type', $type)
+            ->with('sourceOriginalPath', $sourceOriginalPath);
     }
 
     /**
@@ -220,27 +270,42 @@ class LegacyPostController extends Controller
                 $beliefs = array_add($beliefs, $legacy->id, $legacy->belief->name);
             }
         }
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
+        if($legacyPost->original_source_path != null)
+        {
+            $type = 'img';
+        }
+        else
+        {
+            $type = 'txt';
+        }
 
         $contents = Storage::get($legacyPost->source_path);
         $legacyPost = array_add($legacyPost, 'body', $contents);
 
         return view('legacyPosts.edit')
-            ->with(compact('user', 'legacyPost', 'beliefs', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'legacyPost', 'beliefs'))
+            ->with('type', $type);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  UpdateLegacyRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateLegacyRequest $request, $id)
     {
         $legacyPost = LegacyPost::findOrFail($id);
         $legacy = Legacy::where('id', '=', $legacyPost->legacy_id)->first();
+        if($legacy->original_source_path != null)
+        {
+            $type = 'img';
+        }
+        else
+        {
+            $type = 'txt';
+        }
 
         $newTitle = $request->input('title');
         //If post contains new title check if there is already a post with this title
@@ -262,16 +327,73 @@ class LegacyPostController extends Controller
                 ->withErrors([$error]);
         }
 
-            $title = $request->input('title');
-            $newPath = '/legacy/'.$legacy->id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
-            $this->validate($request, [
-                'body' => 'required|min:5|max:1000',
-            ]);
-            $body = Purifier::clean($request->input('body'));
 
-            Storage::put($newPath, $body);
+        //If post contains image upload using S3
+        if($type != 'txt')
+        {
+            //Get image from request
+            $this->validate($request, [
+                'image' => 'mimes:jpeg,jpg,png|max:10000'
+            ]);
+            if($request->hasFile('image'))
+            {
+                if(!$request->file('image')->isValid())
+                {
+                    $error = "Image File invalid.";
+                    return redirect()
+                        ->back()
+                        ->withErrors([$error]);
+                }
+
+                $image = $request->file('image');
+
+                //Clean caption
+                $legacyPost->caption = Purifier::clean($request->input('caption'));
+
+                //Create image file name
+                $title = str_replace(' ', '_', $request['title']);
+                $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
+                $newPath = '/belief_photos/' . $legacy->belief->name . '/' . $imageFileName;
+                $newOriginalPath = '/belief_photos/' . $legacy->belief->name . '/originals/' . $title . '-' . $imageFileName;
+                $originalPath = $legacyPost->source_path;
+                $sourceOriginalPath = $legacyPost->original_source_path;
+
+                //Resize the image
+                $imageResized = Image::make($image);
+                $originalImage = Image::make($image);
+                $imageResized->resize(450, 350, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $imageResized = $imageResized->stream();
+                $originalImage = $originalImage->stream();
+
+                //Store new photo in storage (S3)
+                Storage::put($newPath,  $imageResized->__toString());
+                Storage::put($newOriginalPath,  $originalImage->__toString());
+                Storage::delete($originalPath);
+                Storage::delete($sourceOriginalPath);
+
+                $request = array_add($request, 'source_path', $newPath);
+                $request = array_add($request, 'original_source_path', $newOriginalPath);
+            }
+        }
+        elseif($type == 'txt')
+        {
+            $title = $request->input('title');
+            $newPath = '/legacy/' . $legacy->belief->name . '/' . $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';
+            $this->validate($request, [
+                'body' => 'required|min:5|max:5000',
+            ]);
+            $inspiration = Purifier::clean($request->input('body'));
+            $excerpt = substr($inspiration, 0, 300);
+            $caption = null;
+            $legacyPost->excerpt = $excerpt;
+
+            Storage::put($newPath, $inspiration);
             Storage::delete($legacyPost->source_path);
             $request = array_add($request, 'source_path', $newPath);
+        }
 
         //Update database with new values
         $legacyPost->belief = $legacy->belief->name;
@@ -318,14 +440,10 @@ class LegacyPostController extends Controller
     public function results(Request $request)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $identifier = $request->input('identifier');
 
         $legacyPosts = filterContentLocationSearch($user, 0, 'Legacy', $identifier);
-
-
 
         if(!count($legacyPosts))
         {
@@ -399,13 +517,11 @@ class LegacyPostController extends Controller
         $legacyPost = LegacyPost::findOrFail($id);
 
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $elevations = Elevation::where('legacy_post_id', $id)->latest('created_at')->paginate(10);
 
         return view ('legacyPosts.listElevation')
-            ->with(compact('user', 'elevations', 'legacyPost', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'elevations', 'legacyPost'));
     }
 
     /**
@@ -419,13 +535,13 @@ class LegacyPostController extends Controller
         $legacyPost = LegacyPost::findOrFail($id);
 
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
-        $extensions = Extension::whereNull('status')->where('legacy_post_id', $id)->latest('created_at')->paginate(10);
+        $extensions = Extension::whereNull('status')->where('legacy_post_id', $id)->whereNull('extenception')->latest('created_at')->paginate(10);
+
+        $extensions = prepareExtensionCards($extensions, $user);
 
         return view ('legacyPosts.listExtension')
-            ->with(compact('user', 'extensions', 'legacyPost', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'extensions', 'legacyPost'));
     }
 
     /*
@@ -446,15 +562,15 @@ class LegacyPostController extends Controller
             $user = User::where('handle', '=', 'Transferred')->first();
             $user->handle = 'Guest';
         }
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $legacyPosts = LegacyPost::where('belief', '=', $belief)->latest()->take(10)->get();
+
+        $legacyPosts = prepareLegacyPostCards($legacyPosts, $user);
 
         $belief = Belief::where('name', '=', $belief)->first();
 
         return view('legacyPosts.beliefIndex')
-                ->with(compact('user', 'legacyPosts', 'belief', 'profilePosts', 'profileExtensions'));
+                ->with(compact('user', 'legacyPosts', 'belief'));
 
     }
 
@@ -484,13 +600,11 @@ class LegacyPostController extends Controller
     public function sortByElevation()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $elevations = Elevation::where('legacy_post_id', '!=', 'NULL')->orderByRaw('max(created_at) desc')->groupBy('legacy_post_id')->take(10)->get();
 
         return view ('legacyPosts.sortByElevation')
-            ->with(compact('user', 'elevations', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'elevations'));
     }
 
     /**
@@ -502,8 +616,6 @@ class LegacyPostController extends Controller
     public function sortByElevationTime($time)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         if($time == 'Today')
         {
@@ -531,6 +643,8 @@ class LegacyPostController extends Controller
             $filter = 'All';
         }
 
+        $legacyPosts = prepareLegacyPostCards($legacyPosts, $user);
+
         return view ('legacyPosts.sortByElevationTime')
             ->with(compact('user', 'legacyPosts', 'profilePosts','profileExtensions'))
             ->with('filter', $filter)
@@ -544,13 +658,11 @@ class LegacyPostController extends Controller
     public function sortByExtension()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $extensions = Extension::whereNotNull('legacy_post_id')->whereNull('status')->latest('created_at')->take(10)->get();
 
         return view ('legacyPosts.sortByExtension')
-            ->with(compact('user', 'extensions', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'extensions'));
     }
 
     /**
@@ -562,8 +674,6 @@ class LegacyPostController extends Controller
     public function sortByExtensionTime($time)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         if($time == 'Today')
         {
@@ -587,8 +697,10 @@ class LegacyPostController extends Controller
             $filter = 'All';
         }
 
+        $legacyPosts = prepareLegacyPostCards($legacyPosts, $user);
+
         return view ('legacyPosts.sortByExtensionTime')
-            ->with(compact('user', 'legacyPosts', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'legacyPosts'))
             ->with('filter', $filter)
             ->with('time', $time);
     }
@@ -602,8 +714,6 @@ class LegacyPostController extends Controller
     public function timeFilter($time)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         if($time == 'Today')
         {
@@ -631,8 +741,10 @@ class LegacyPostController extends Controller
             $filter = 'All';
         }
 
+        $legacyPosts = prepareLegacyPostCards($legacyPosts, $user);
+
         return view ('legacyPosts.timeFilter')
-            ->with(compact('user', 'legacyPosts', 'profilePosts','profileExtensions'))
+            ->with(compact('user', 'legacyPosts'))
             ->with('filter', $filter)
             ->with('time', $time);
     }

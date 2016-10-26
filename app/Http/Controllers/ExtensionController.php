@@ -142,7 +142,14 @@ class ExtensionController extends Controller
         elseif(isset($sources['legacy_id']))
         {
             $sourceModel = LegacyPost::findOrFail($sources['legacyPost_id']);
-            $type = 'txt';
+            if($sourceModel->original_source_path != null)
+            {
+                $type = 'img';
+            }
+            else
+            {
+                $type = 'txt';
+            }
             $sourceUser=
                 [
                     'belief' => $sourceModel->legacy->belief->name
@@ -659,32 +666,21 @@ class ExtensionController extends Controller
 
             if(Elevation::where('extension_id', $extension->id)->where('user_id', $viewUser->id)->exists())
             {
-                $elevation = 'Elevated';
+                $extension->elevationStatus = 'Elevated';
             }
             else
             {
-                $elevation = 'Elevate';
+                $extension->elevationStatus = 'Elevate';
             }
         }
         else
         {
-            $elevation = 'Elevate';
-        }
-
-        //Set Source User photo path
-        if($user->photo_path == '')
-        {
-
-            $sourcePhotoPath = '';
-        }
-        else
-        {
-            $sourcePhotoPath = $user->photo_path;
+            $extension = 'Elevate';
         }
 
         //Get extensions of Extension
         $extensions = Extension::where('extenception', '=', $extension->id)->orderBy('elevation', 'desc')->take(10)->get();
-        $moreExtensions = Extension::where('id', '=', $extension->id)->count();
+        $moreExtensions = Extension::where('extenception', '=', $extension->id)->count();
         if($moreExtensions <= 10)
         {
             $moreExtensions = null;
@@ -726,8 +722,6 @@ class ExtensionController extends Controller
                                 ->with('beacons', $beacons)
                                 ->with('lastBeacon', $lastBeacon)
                                 ->with('type', $sourceType)
-                                ->with ('elevation', $elevation)
-                                ->with ('sourcePhotoPath', $sourcePhotoPath)
                                 ->with('beacon', $beacon)
                                 ->with('sponsor', $sponsor);
                         }
@@ -758,8 +752,6 @@ class ExtensionController extends Controller
             ->with('beacons', $beacons)
             ->with('lastBeacon', $lastBeacon)
             ->with('sourceType', $sourceType)
-            ->with ('elevation', $elevation)
-            ->with ('sourcePhotoPath', $sourcePhotoPath)
             ->with('beacon', $beacon)
             ->with('sponsor', $sponsor)
             ->with('location', $location);
@@ -1146,30 +1138,6 @@ class ExtensionController extends Controller
         return redirect('extensions');
     }
 
-    /**
-     * Display the recent posts of the user.
-     *
-     * @param $user
-     * @return \Illuminate\Http\Response
-     */
-    public function getProfilePosts($user)
-    {
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        return $profilePosts;
-    }
-
-    /**
-     * Display the recent extensions of the user.
-     *
-     * @param $user
-     * @return \Illuminate\Http\Response
-     */
-    public function getProfileExtensions($user)
-    {
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
-        return $profileExtensions;
-    }
-
     //Used to setup extension of post
     public function extendPost($id)
     {
@@ -1316,27 +1284,8 @@ class ExtensionController extends Controller
         $user_id = $source->user_id;
         $user = User::findOrFail($user_id);
 
-        //Get all extensions for question answer
-        if($source->answer_id == $source->id)
-        {
-            $extensions = Extension::where('answer_id', $id)->where('id', '!=', $source->id)->latest('created_at')->paginate(10);
-        }
-        //Get all extensions for other types of extension
-        else
-        {
-            $extensions = Extension::where('extenception', $id)->latest('created_at')->paginate(10);
-        }
-
-
-        if($user->photo_path == '')
-        {
-
-            $sourcePhotoPath = '';
-        }
-        else
-        {
-            $sourcePhotoPath = $user->photo_path;
-        }
+        //Get all direct extensions
+        $extensions = Extension::where('extenception', '=', $id)->latest()->paginate(10);
 
         //Determine if beacon or sponsor shows and update
         if($source->beacon_tag == 'No-Beacon')
@@ -1358,8 +1307,7 @@ class ExtensionController extends Controller
         }
 
         return view('extensions.extendList')
-                    ->with(compact('user', 'extensions', 'beacon', 'sponsor', 'source', 'viewUser'))
-                    ->with('sourcePhotoPath', $sourcePhotoPath);
+                    ->with(compact('user', 'extensions', 'beacon', 'sponsor', 'source', 'viewUser'));
     }
 
     /**
@@ -1778,7 +1726,7 @@ class ExtensionController extends Controller
         //Get list of users being followed
         $bookmarks = $user->bookmarks()->where('type', '=', 'User')->pluck('pointer');
 
-        $extensions = Extension::latest()->whereIn('user_id', $bookmarks)->paginate(10);
+        $extensions = Extension::latest()->whereNull('status')->whereIn('user_id', $bookmarks)->paginate(10);
 
         $extensions = prepareExtensionCards($extensions, $user);
 

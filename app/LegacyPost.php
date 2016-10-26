@@ -10,7 +10,10 @@ class LegacyPost extends Model
         'title',
         'belief',
         'body',
-        'source_path'
+        'caption',
+        'source_path',
+        'original_source_path',
+
     ];
 
     public function legacy()

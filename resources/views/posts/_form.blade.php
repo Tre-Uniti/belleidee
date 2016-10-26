@@ -74,7 +74,6 @@
     </div>
 
 
-
     @section('centerFooter')
         <div id = "footerButtons" class = "indexContent">
             {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}

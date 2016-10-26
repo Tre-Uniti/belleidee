@@ -359,7 +359,17 @@ class PostController extends Controller
 
         //Determine if beacon or sponsor shows and update
         $beacon = getBeacon($post);
-        Event::fire(new BeaconViewed($beacon));
+        if($beacon != null)
+        {
+            Event::fire(new BeaconViewed($beacon));
+        }
+        else
+        {
+            //Beacon Doesn't exist
+            $beacon = Beacon::where('beacon_tag', '=', 'No-Beacon')->first();
+            $post->beacon_tag = 'No-Beacon';
+        }
+
         if(isset($beacon->stripe_plan))
         {
             if($beacon->stripe_plan < 1)
@@ -386,19 +396,8 @@ class PostController extends Controller
             $post->elevateStatus = 'Elevate';
         }
 
-        //Set Source User photo path
-        if($user->photo_path == '')
-        {
-
-            $sourcePhotoPath = '';
-        }
-        else
-        {
-            $sourcePhotoPath = $user->photo_path;
-        }
-
         //Get extensions of Post
-        $extensions = Extension::where('post_id', '=', $post->id)->orderBy('elevation', 'desc')->take(10)->get();
+        $extensions = Extension::where('post_id', '=', $post->id)->whereNull('extenception')->orderBy('elevation', 'desc')->take(10)->get();
         $moreExtensions = Extension::where('post_id', '=', $post->id)->count();
         if($moreExtensions <= 10)
         {
@@ -445,7 +444,6 @@ class PostController extends Controller
                         ->with('moreExtensions', $moreExtensions)
                         ->with('beacon', $beacon)
                         ->with('lastBeacon', $lastBeacon)
-                        ->with('sourcePhotoPath', $sourcePhotoPath)
                         ->with('location', $location)
                         ->with('sourceOriginalPath', $sourceOriginalPath)
                         ->with('sponsor', $sponsor);
@@ -473,7 +471,6 @@ class PostController extends Controller
             ->with('beacon', $beacon)
             ->with('lastBeacon', $lastBeacon)
             ->with('location', $location)
-            ->with('sourcePhotoPath', $sourcePhotoPath)
             ->with('sourceOriginalPath', $sourceOriginalPath)
             ->with('sponsor', $sponsor)
             ->with('type', $type);

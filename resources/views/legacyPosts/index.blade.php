@@ -14,16 +14,15 @@
             <a href="{{ url('/legacyPosts/extensionTime/Month')}}" class = "indexLink">Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
         </div>
         <p>Legacy posts are created by Admins to help Users discover the inspirational texts of each belief.</p>
-
+    @if($user->type >= 2)
+        <a href = "{{ url('/legacyPosts/create') }}" class = "navLink">Create Legacy Post</a>
+    @endif
     <hr class = "contentSeparator"/>
    @include('legacyPosts._legacyPostCards')
 @stop
 
 @section('centerFooter')
     @include('pagination.custom-paginator', ['paginator' => $legacyPosts])
-    @if($user->type >= 2)
-        <a href = {{ url('/legacyPosts/create') }}><button type = "button" class = "navButton">Create Legacy Post</button></a>
-    @endif
 @stop
 
 

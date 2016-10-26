@@ -48,7 +48,16 @@
             <p>Asked by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
 
     @elseif(isset($sources['legacy_id']))
-            {!! nl2br(e($content)) !!}
+            @if($type != 'txt')
+                <div class = "photoContent">
+                    <p>{{$sourceModel->caption}}</p>
+                    <div class = "postPhoto">
+                        <a href="{{ url(env('IMAGE_LINK'). $sourceModel->original_source_path) }}" data-lightbox="{{ $sourceModel->title }}" data-title="{{ $sourceModel->caption }}"><img src= {{ url(env('IMAGE_LINK'). $sourceModel->source_path) }} alt="{{$sourceModel->title}}" width="99%" height="99%"></a>
+                    </div>
+                </div>
+            @else
+                {!! nl2br(e($content)) !!}
+            @endif
             <p>Legacy of: <a href = "{{ url('/beliefs/'. $sourceUser['belief']) }}" target="_blank">{{ $sourceUser['belief'] }}</a></p>
         @endif
     </div>
