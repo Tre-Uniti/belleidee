@@ -54,7 +54,7 @@ class BeliefController extends Controller
         //Determine if beacon or sponsor shows and update
         $beacon = getBeacon($user);
 
-        $beliefs = Belief::latest()->get();
+        $beliefs = Belief::orderBy('updated_at', 'desc')->get();
 
         return view ('beliefs.index')
             ->with(compact('user', 'beliefs','beacon'));

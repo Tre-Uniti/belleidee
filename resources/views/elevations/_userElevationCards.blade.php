@@ -18,7 +18,7 @@
                                 <a href="{{ action('LegacyPostController@show', [$elevation->legacy_post_id])}}">{{ $elevation->legacyPost->title }}</a>
                             @endif
                         </h4>
-                        <div class = "cardHandleSection">
+                        <div class = "footerSection">
                             <div class = "leftIcon"><i class="fa fa-heart fa-lg" aria-hidden="true"></i></div> by
                             <a href = "{{ url('/users/'. $elevation->user->id) }}">{{ $elevation->user->handle }}</a> on {{ $elevation->created_at->format('M-d-Y') }}
                         </div>

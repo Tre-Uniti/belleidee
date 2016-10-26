@@ -22,15 +22,15 @@
     <h2>
         @if($sourceType == 'Extenception')
             Extends:
-            @if(isset($source->post_id))
+            @if(isset($source->extenception))
+                <a href = "{{ url('/extensions/' . $source->id) }}"> previous Extension</a>
+            @elseif(isset($source->post_id))
                 <a href = "{{ url('/extensions/'. $source->id) }}"> Extension</a> of
-                <a href = "{{ url('/posts/' . $source->post_id) }}">a Post</a>
+                <a href = "{{ url('/posts/' . $source->post_id) }}">{{ $source->post->title }}</a>
             @elseif(isset($source->legacy_post_id))
                 <a href = "{{ url('/extensions/'. $source->id) }}"> Extension</a> of
                 <a href = "{{ url('/legacyPosts/' . $source->legacy_post_id) }}">a Legacy</a>
-            @elseif(isset($source->extenception))
-                <a href = "{{ url('/extensions/' . $source->id) }}"> Extension</a> of
-                <a href = "{{ url('/extensions/' . $source->extenception) }}">previous Extension</a>
+
             @elseif(isset($source->question_id))
                 <a href = "{{ url('/extensions/'. $source->id) }}">Answer</a> to
                 <a href = "{{ url('/questions/' . $source->question_id) }}">a Question</a>
@@ -181,12 +181,21 @@
                     <select name = 'source' class = 'tagSelector' required hidden>
                         <option value="Post" @if (old('source') == 'Post') selected="selected" @endif>Post</option>
                     </select>
+                        @if(isset($extension->question_id))
+                            <input type="hidden" name="original" value="Question">
+                            <input type="hidden" name="original_id" value="{{ $extension->question_id }}">
+                        @elseif(isset($extension->legacy_post_id))
+                            <input type="hidden" name="original" value="Legacy">
+                            <input type="hidden" name="original_id" value="{{ $extension->legacy_post_id }}">
+                        @elseif(isset($extension->post_id))
+                            <input type="hidden" name="original" value="Post">
+                            <input type="hidden" name="original_id" value="{{ $extension->post_id }}">
+                        @endif
+                        <input type="hidden" name="type" value="Extenception">
+                        <input type="hidden" name="id" value="{{ $extension->id }}">
                 </div>
             </div>
         </div>
-
-        <input type="hidden" name="type" value="Extenception">
-        <input type="hidden" name="id" value="{{ $extension->id }}">
         <div>
             <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
             {!! Form::submit('Add Extension', ['class' => 'navButton', 'id' => 'submit']) !!}

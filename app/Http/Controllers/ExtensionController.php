@@ -1255,7 +1255,7 @@ class ExtensionController extends Controller
         $user_id = $post->user_id;
         $user = User::findOrFail($user_id);
 
-        $extensions = Extension::where('post_id', $id)->latest('created_at')->paginate(14);
+        $extensions = Extension::where('post_id', $id)->whereNull('extenception')->latest('created_at')->paginate(10);
 
         if($user->photo_path == '')
         {
@@ -1431,6 +1431,8 @@ class ExtensionController extends Controller
         //Get Extension associated with id
         $extension = Extension::findOrFail($id);
 
+        $viewUser = Auth::user();
+
         $user = User::findOrFail($extension->user_id);
         $elevations = Elevation::where('extension_id', $id)->latest('created_at')->paginate(10);
 
@@ -1464,7 +1466,7 @@ class ExtensionController extends Controller
         }
 
         return view ('extensions.listElevation')
-            ->with(compact('user', 'elevations', 'extension', 'beacon', 'sponsor'))
+            ->with(compact('user', 'viewUser', 'elevations', 'extension', 'beacon', 'sponsor'))
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 

@@ -19,7 +19,7 @@
     </div>
     </div>
     <hr class = "contentSeparator">
-    @include('extensions._extensionCards')
+    @include('extensions._extensionTitleCards')
 @stop
 @section('centerFooter')
     @include('pagination.custom-paginator', ['paginator' => $extensions])

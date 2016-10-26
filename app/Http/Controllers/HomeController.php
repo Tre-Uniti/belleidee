@@ -77,7 +77,6 @@ class HomeController extends Controller
         {
             $startupList = null;
         }
-        $beacon = Beacon::where('beacon_tag', '=', $user->last_tag)->first();
 
         //Get latest Posts
         $posts = Post::where('user_id',$user->id )->latest()->take(5)->get();
@@ -99,6 +98,7 @@ class HomeController extends Controller
         //Get Number of Followers (those who have bookmarked the user)
         $followingCount = $user->bookmarks()->where('type', '=', 'User')->count();
 
+        $beacon = getBeacon($user);
         $sponsor = getSponsor($user);
         $location = getLocation();
 

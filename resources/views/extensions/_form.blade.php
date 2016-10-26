@@ -10,12 +10,12 @@
     <h3>Answer to: <a href = "{{ url('/questions/' . $sources['question_id']) }}">{{ $sourceModel->question }}</a></h3>
 @else
     <h3>
-        @if(isset($sources['post_id']))
+        @if(isset($sources['extenception']))
+            Extends <a href = "{{ url('/extensions/' . $sources['extenception']) }}"> previous Extension</a>
+        @elseif(isset($sources['post_id']))
             Extends:  <a href = "{{ url('/posts/' . $sources['post_id'] ) }}">{{ $sourceModel->title }}</a>
         @elseif(isset($sources['legacyPost_id']))
             Extends: <a href = "{{ url('/legacyPosts/' . $sources['legacyPost_id'] ) }}">{{ $sourceModel->title }}</a>
-        @else
-            Extends<a href = "{{ url('/extensions/' . $sources['extenception']) }}"> another Extension</a>
         @endif
     </h3>
 @endif

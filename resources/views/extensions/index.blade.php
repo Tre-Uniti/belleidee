@@ -17,7 +17,7 @@
             <a href="{{ url('extensions/extensionTime/Month')}}" class = "indexLink">Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
         </div>
     <hr class = "contentSeparator">
-        @include('extensions._extensionCards')
+        @include('extensions._extensionTitleCards')
 
 @stop
 

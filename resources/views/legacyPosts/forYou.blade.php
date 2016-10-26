@@ -9,7 +9,7 @@
     <h2>Legacies For You</h2>
     <div id = "indexNav">
         <a href="{{ url('/legacyPosts')}}" class = "indexLink">Recent</a>
-        <a href="{{ url('/legacyPosts/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart" aria-hidden="true"></i></a>
+        <a href="{{ url('/legacyPosts/elevationTime/Month')}}" class = "indexLink">Top <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></a>
         <a href="{{ url('/legacyPosts/extensionTime/Month')}}" class = "indexLink">Most <i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
     </div>
     <p>Filter by: {{ $beacon->belief }}</p>

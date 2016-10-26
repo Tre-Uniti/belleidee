@@ -7,7 +7,7 @@
     <h2>Belief Directory</h2>
     <div class = "indexNav">
         @if($beacon != null)
-            <a href = "{{ url('/beliefs/' . $beacon->belief) }}" class = "indexLink"> {{ $beacon->belief }}</a>
+            <a href = "{{ url('/beliefs/' . $beacon->belief) }}" class = "indexLink">For You</a>
         @endif
         <a href="{{ url('/beliefs/topTagged')}}" class = "indexLink">Top <i class="fa fa-hashtag" aria-hidden="true"></i></a>
         <a href="{{ url('/beliefs/mostBeacons')}}" class = "indexLink">Most Beacons</a>

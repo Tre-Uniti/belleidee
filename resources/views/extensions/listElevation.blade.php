@@ -10,24 +10,8 @@
         <a href={{ url('/extensions/'. $extension->id)}}><button type = "button" class = "indexButton">Total: {{ $extension->elevation }}</button></a>
         <a href={{ url('/extensions/extend/list/'.$extension->id)}}><button type = "button" class = "indexButton">Extensions</button></a>
     </div>
-    <div class = "indexLeft">
-        <h4>Date</h4>
-    </div>
-    <div class = "indexRight">
-        <h4>Elevated By</h4>
-    </div>
-
-    @foreach ($elevations as $elevate)
-
-        <div class = "listResource">
-            <div class = "listResourceLeft">
-                <a href="{{ action('ExtensionController@show', [$extension->id])}}"><button type = "button" class = "interactButton">{{ $elevate->created_at->format('M-d-Y') }}</button></a>
-            </div>
-            <div class = "listResourceRight">
-                <a href="{{ action('UserController@show', [$elevate->user_id])}}"><button type = "button" class = "interactButton">{{ $elevate->user->handle }}</button></a>
-            </div>
-        </div>
-    @endforeach
+<hr class = "contentSeparator"/>
+    @include('elevations._elevationCards')
 
 @stop
 @section('centerFooter')

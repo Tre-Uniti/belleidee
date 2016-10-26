@@ -50,13 +50,18 @@ function getSponsor($user)
  */
 function getBeacon($content)
 {
-    if($content == Auth::user())
+    if(isset($content->last_tag))
     {
         $beacon = Beacon::where('beacon_tag', '=', $content->last_tag)->first();
     }
     else
     {
         $beacon = Beacon::where('beacon_tag', '=', $content->beacon_tag)->first();
+    }
+
+    if($beacon != null)
+    {
+        Event::fire(new BeaconViewed($beacon));
     }
 
     return $beacon;
