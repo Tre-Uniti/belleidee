@@ -15,27 +15,13 @@
         <a href="{{ url('/admin/beacon/requests') }}"><button type = "button" class = "indexButton">Beacons</button></a>
         <a href="{{ url('/admin/sponsor/requests') }}"><button type = "button" class = "indexButton">Sponsors</button></a>
     </div>
-    <div class = "indexLeft">
-        <h4>Admins</h4>
-    </div>
-    <div class = "indexRight">
-        <h4>Joined</h4>
-    </div>
 
-    @foreach ($admins as $admin)
-        <div class = "listResource">
-            <div class = "listResourceLeft">
-                <a href="{{ action('UserController@show', [$admin->id])}}"><button type = "button" class = "interactButton">{{ $admin->handle }}</button></a>
-            </div>
-            <div class = "listResourceRight">
-                <a href="{{ action('UserController@show', [$admin->id])}}"><button type = "button" class = "interactButton">{{ $admin->created_at->format('M-d-Y') }}</button></a>
-            </div>
-        </div>
-    @endforeach
+    <hr class = "contentSeparator"/>
+    @include('users._userCards')
 
 @stop
 @section('centerFooter')
-    {!! $admins->render() !!}
+    {!! $users->render() !!}
 @stop
 
 

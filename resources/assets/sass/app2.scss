@@ -78,11 +78,6 @@ ul.tour
   text-align: left;
 }
 
-.selectMenu
-{
-  max-width: 80%;
-}
-
 .bookmarkLeft
 {
   width: 60%;
@@ -152,6 +147,10 @@ th
 {
   background-color: #202020;
   opacity: .9;
+}
+.errors h3
+{
+  color: #E8E8E8;
 }
 .listErrors
 {

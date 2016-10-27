@@ -124,9 +124,11 @@
         <div class = "footerSection">
 
             <div class = "centerSection">
-                <a href="{{ url('/gettingStarted') }}"><button type = "button" class = "indexButton">Getting Started</button></a>
-                <a href="{{ url('/tutorials') }}"><button type = "button" class = "indexButton">Tutorials</button></a>
-                <a href="{{ url('/about') }}"><button type = "button" class = "indexButton">About Idee</button></a>
+                @if($user->startup < 5)
+                <a href="{{ url('/gettingStarted') }}" class = "indexLink">Getting Started</a>
+                @endif
+                <a href="{{ url('/tutorials') }}" class = "indexLink">Tutorials</a>
+                <a href="{{ url('/about') }}" class = "indexLink">About Belle-idee</a>
             </div>
 
         </div>

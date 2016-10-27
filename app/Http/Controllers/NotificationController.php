@@ -33,14 +33,10 @@ class NotificationController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $notifications = $this->notification->where('source_user', $user->id)->latest()->paginate(10);
 
-        $sponsor = getSponsor($user);
-
         return view ('notifications.index')
-            ->with(compact('user', 'notifications', 'profilePosts', 'profileExtensions', 'sponsor'));
+            ->with(compact('user', 'notifications'));
 
     }
 

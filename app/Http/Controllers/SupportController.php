@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
+use App\Http\Requests\CreateSupportRequest;
 use App\Support;
 use Huddle\Zendesk\Facades\Zendesk;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Zendesk\API\Traits\Resource\Create;
 
 class SupportController extends Controller
 {
@@ -30,12 +32,10 @@ class SupportController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
         $supports = $this->support->where('user_id', $user->id)->latest()->paginate(10);
 
         return view ('supports.index')
-            ->with(compact('user', 'supports', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'supports'));
     }
 
     /**
@@ -46,8 +46,6 @@ class SupportController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $types =
             [
@@ -62,17 +60,17 @@ class SupportController extends Controller
             ];
 
         return view('supports.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user'))
             ->with('types', $types);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CreateSupportRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateSupportRequest $request)
     {
         $user = Auth::user();
 
@@ -114,8 +112,6 @@ class SupportController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
         $support = $this->support->findOrFail($id);
 
         // Get ticket and update Idee status and type if it has changed
@@ -129,7 +125,7 @@ class SupportController extends Controller
         }
 
         return view ('supports.show')
-            ->with(compact('user', 'support', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'support'));
     }
 
     /**
@@ -156,25 +152,21 @@ class SupportController extends Controller
             ];
 
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-
 
         return view('supports.edit')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'support', 'types'));
+            ->with(compact('user', 'support', 'types'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CreateSupportRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateSupportRequest $request, $id)
     {
         $support = $this->support->findOrFail($id);
-
 
         // Update ticket in Zendesk
         Zendesk::tickets()->update($support->zendesk_id,[

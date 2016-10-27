@@ -1062,6 +1062,9 @@ a.excerptText {
 .formDeletion {
   display: inline-block; }
 
+.selectMenu {
+  max-width: 80%; }
+
 .tagLabel {
   font-weight: bold; }
 
@@ -1289,9 +1292,6 @@ p.extras {
 ul.tour {
   color: #ECF0F1;
   text-align: left; }
-
-.selectMenu {
-  max-width: 80%; }
 
 .bookmarkLeft {
   width: 60%;

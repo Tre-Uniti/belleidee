@@ -412,20 +412,13 @@ class HomeController extends Controller
         $user = Auth::user();
 
         //Check and update User startup
+        startupGuide($user);
         $startupList = session('startupList');
-        if ($user->startup < 5 || $user->startup == null)
-        {
-            startupGuide($user);
-            if($user->startup < 5)
-            {
-                $startupList = session('startupList');
-            }
-            else
-            {
-                return redirect('/home');
-            }
-        }
 
+        if($user->startUp >= 5)
+        {
+            return redirect('/home');
+        }
 
         return view ('pages.gettingStarted')
             ->with(compact('user', 'beacon'))

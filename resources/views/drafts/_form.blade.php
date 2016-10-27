@@ -61,7 +61,7 @@
                 </div>
             </div>
         </div>
-
+    </div>
     <!-- Body Form Input -->
 
     <div class = "indexContent" id = "imageUpload">

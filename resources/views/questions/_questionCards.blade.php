@@ -33,7 +33,7 @@
 
                 <div class = "rightSection">
                     <div class = "rightIcon">
-                        <a href="{{ url('/extensions/questions/'.$question->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
+                        <a href="{{ url('/extensions/question/'.$question->id) }}" class = "iconLink"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
                         <span class="tooltiptext">Extend to add any inspiration you received</span>
                     </div>
                     <div class = "rightCounter">

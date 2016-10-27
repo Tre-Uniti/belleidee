@@ -4,12 +4,15 @@
 @stop
 @section('centerText')
     <h2>Are you sure you want to delete?</h2>
-    <p>The content you have created that is part of the Idee community is transferred while the rest is deleted.</p>
+    <p>The content you have created that has been interacted with by the Belle-idee community is transferred while the rest is deleted.</p>
 
     <div class = "formInput">
-        <a href="{{ url('/settings') }}"><button type = "button" class = "interactButton">Cancel</button></a>
+        <p>
+            <a href="{{ url('/settings') }}" class = "indexLink">Cancel</a>
+
+        </p>
           {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) !!}
-                {!! Form::submit('Delete Account', ['class' => 'interactButton', 'id' => 'delete']) !!}
+                {!! Form::submit('Delete Account', ['class' => 'navButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}
     </div>
     <hr/>

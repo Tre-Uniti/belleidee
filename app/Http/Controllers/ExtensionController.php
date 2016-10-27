@@ -289,7 +289,7 @@ class ExtensionController extends Controller
                 $notification->type = 'Extended';
                 $notification->source_type = 'Extension';
                 $notification->source_id = $extension->id;
-                $notification->title = $question->question;
+                $notification->title = 'Extension';
                 $notification->source_user = $sourceUser->id;
                 $notification->user()->associate($user);
                 $notification->save();
@@ -352,7 +352,7 @@ class ExtensionController extends Controller
                 $notification->type = 'Extended';
                 $notification->source_type = 'Extension';
                 $notification->source_id = $extension->id;
-                $notification->title = $legacyPost->title;
+                $notification->title = 'Extension';
                 $notification->source_user = $sourceUser->id;
                 $notification->user()->associate($user);
                 $notification->save();
@@ -414,7 +414,7 @@ class ExtensionController extends Controller
                 $notification = new Notification();
                 $notification->type = 'Extended';
                 $notification->source_type = 'Extension';
-                $notification->title = $post->title;
+                $notification->title = 'Extension';
                 $notification->source_id = $extension->id;
                 $notification->source_user = $sourceUser->id;
                 $notification->user()->associate($user);

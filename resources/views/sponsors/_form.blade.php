@@ -17,7 +17,7 @@
             {!! Form::label('sponsor_tag', 'Sponsor Tag') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('sponsor_tag', null, ['class' => 'infoTitleText', 'autofocus']) !!}
+            {!! Form::text('sponsor_tag', null, ['class' => 'createTitleText']) !!}
         </div>
     </div>
     <div class = "formData">
@@ -33,7 +33,7 @@
             {!! Form::label('address', 'Address:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::text('address', null, ['class' => 'infoTitleText']) !!}
+            {!! Form::text('address', null, ['class' => 'createTitleText']) !!}
         </div>
     </div>
 

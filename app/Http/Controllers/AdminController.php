@@ -32,12 +32,10 @@ class AdminController extends Controller
     public function portal()
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
-        $admins = User::where('type', '>' , 1)->latest()->paginate(10);
+        $users = User::where('type', '>' , 1)->latest()->paginate(10);
 
         return view ('admin.portal')
-            ->with(compact('user', 'admins', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'users'));
     }
 
     /**
@@ -48,12 +46,11 @@ class AdminController extends Controller
     public function indexBeaconRequests()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
         $beaconRequests = BeaconRequest::latest()->paginate(10);
 
         return view ('admin.beaconRequests')
-            ->with(compact('user', 'beaconRequests', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'beaconRequests'));
     }
 
     /**
@@ -65,8 +62,6 @@ class AdminController extends Controller
     public function reviewBeaconRequest($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $beaconRequest = BeaconRequest::findOrFail($id);
         
         $admins = User::where('type', '>', 1)->get();
@@ -79,7 +74,7 @@ class AdminController extends Controller
         ];
 
         return view('admin.beaconReview')
-            ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions', 'admins', 'status'));
+            ->with(compact('user', 'beaconRequest', 'admins', 'status'));
     }
     /**
      * Display the specified resource.
@@ -90,8 +85,7 @@ class AdminController extends Controller
     public function editBeaconRequest($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
         $beaconRequest = BeaconRequest::findOrFail($id);
 
         //Get list of Admin users and format for drop-down list
@@ -114,7 +108,7 @@ class AdminController extends Controller
         $countries = getCountries();
 
         return view('admin.editBeaconRequest')
-            ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions', 'admins', 'status', 'beliefs', 'countries'));
+            ->with(compact('user', 'beaconRequest', 'admins', 'status', 'beliefs', 'countries'));
     }
     /**
      * Update the specified resource in storage.
@@ -143,15 +137,13 @@ class AdminController extends Controller
     public function convertBeaconRequest($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $beaconRequest = BeaconRequest::findOrFail($id);
 
         $beliefs = getBeliefs();
         $countries = getCountries();
         
         return view('admin.convertBeacon')
-            ->with(compact('user', 'beaconRequest', 'profilePosts', 'profileExtensions', 'countries'))
+            ->with(compact('user', 'beaconRequest', 'countries'))
             ->with('beliefs', $beliefs);
     }
 
@@ -163,12 +155,11 @@ class AdminController extends Controller
     public function indexSponsorRequests()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
         $sponsorRequests = SponsorRequest::latest()->paginate(10);
 
         return view ('admin.sponsorRequests')
-            ->with(compact('user', 'sponsorRequests', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'sponsorRequests'));
     }
 
     /**
@@ -180,12 +171,11 @@ class AdminController extends Controller
     public function reviewSponsorRequest($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
         $sponsorRequest = SponsorRequest::findOrFail($id);
 
         return view('admin.sponsorReview')
-            ->with(compact('user', 'sponsorRequest', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'sponsorRequest'));
     }
 
     /**
@@ -197,14 +187,13 @@ class AdminController extends Controller
     public function convertSponsorRequest($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
         $sponsorRequest = SponsorRequest::findOrFail($id);
 
         $countries = getCountries();
 
         return view('admin.convertSponsor')
-            ->with(compact('user', 'sponsorRequest', 'profilePosts', 'profileExtensions', 'countries'));
+            ->with(compact('user', 'sponsorRequest', 'countries'));
     }
 
 }

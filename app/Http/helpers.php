@@ -474,6 +474,18 @@ function startupGuide($user)
         //Add startupList to session
         session()->put('startupList', $startupList);
     }
+    else
+    {
+        $startupList = [
+            'beacon' => 1,
+            'sponsor' => 1,
+            'following' => 1,
+            'post' => 1,
+            'extension' => 1,
+            'skip' => 'Yes'
+        ];
+        session()->put('startupList', $startupList);
+    }
 }
 
 //Get beacon tag and set coordinates

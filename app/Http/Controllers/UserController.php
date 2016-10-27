@@ -17,6 +17,7 @@ use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
 use function App\Http\prepareExtensionCards;
+use function App\Http\preparePostCards;
 use App\Listeners\TransferUserContent;
 use App\Post;
 use App\Sponsor;
@@ -95,13 +96,14 @@ class UserController extends Controller
         $viewUser = Auth::user();
         $user = User::findOrFail($id);
 
-
         //Get latest Posts
         $posts = Post::where('user_id',$user->id )->latest()->take(5)->get();
+        $posts = preparePostCards($posts, $viewUser);
         $postCount = Post::where('user_id',$user->id )->count();
 
         //Get latest Extensions
         $extensions = Extension::where('user_id',$user->id )->latest()->take(5)->get();
+        $extensions = prepareExtensionCards($extensions, $viewUser);
         $extensionCount = Extension::where('user_id',$user->id )->count();
 
         //Get Number of Followers (those who have bookmarked the user)
