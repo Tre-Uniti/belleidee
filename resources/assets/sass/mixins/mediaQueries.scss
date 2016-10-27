@@ -203,7 +203,10 @@
     }
 
     #centerContent {
-      width: 95%;
+      width: 98%;
+    }
+    #centerText {
+      width: 98%;
     }
     .topNav > ul > .searchIconBackground
     {
@@ -270,7 +273,6 @@
       padding: 2px;
     }
 
-    /* Dropdown Content (Hidden by Default) */
     .moreOptionsMenu {
       left: -60px;
     }
@@ -293,10 +295,9 @@
       bottom: 120%;
       left: 85%;
     }
-
     .sourceIndex .tooltiptext {
       bottom: 120%;
-      right: 1%;
+      left: -60%;
     }
   }
 
@@ -514,7 +515,6 @@
       bottom: 120%;
       left: 85%;
     }
-
     .sourceIndex .tooltiptext {
       bottom: 120%;
       left: -60%;

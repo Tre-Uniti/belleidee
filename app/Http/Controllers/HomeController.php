@@ -123,25 +123,14 @@ class HomeController extends Controller
     public function getSettings()
     {
         $user = Auth::user();
-        //Get Sponsorship of user
 
-        if(Sponsorship::where('user_id', $user->id)->exists())
-        {
-            $sponsorship = Sponsorship::where('user_id', $user->id)->first();
-            $sponsor = Sponsor::where('id', $sponsorship->sponsor_id)->first();
-            $days = Carbon::now()->diffInDays(new Carbon($sponsorship->created_at));
-            Event::fire(new SponsorViewed($sponsor));
-        }
-        else
-        {
-            $sponsor = Sponsor::where('id', 1)->first();
-            $days = 0;
-        }
-
+        $sponsor = getSponsor($user);
+        $beacon = getBeacon($user);
+        $location = getLocation();
 
         return view ('pages.settings')
-            ->with(compact('user', 'sponsor'))
-            ->with('days', $days);
+            ->with(compact('user', 'beacon', 'sponsor'))
+            ->with('location', $location);
     }
 
     /*

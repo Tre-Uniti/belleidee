@@ -1638,7 +1638,9 @@ article {
     border: 2px solid;
     border-radius: 25px; }
   #centerContent {
-    width: 95%; }
+    width: 98%; }
+  #centerText {
+    width: 98%; }
   .topNav > ul > .searchIconBackground {
     display: none; }
   .topNav > ul > .searchMobileIconBackground {
@@ -1676,7 +1678,6 @@ article {
     width: 80%; }
   .indexContent {
     padding: 2px; }
-  /* Dropdown Content (Hidden by Default) */
   .moreOptionsMenu {
     left: -60px; }
   .leftSection .tooltiptext {
@@ -1692,7 +1693,7 @@ article {
     left: 85%; }
   .sourceIndex .tooltiptext {
     bottom: 120%;
-    right: 1%; } }
+    left: -60%; } }
 
 @media screen and (min-width: 419px) and (max-width: 751px) and (max-height: 450px) {
   .topNav > ul > li > a {

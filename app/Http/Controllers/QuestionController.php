@@ -294,7 +294,7 @@ class QuestionController extends Controller
     public function sortByElevation()
     {
         $user = Auth::user();
-        $questions = $this->question->orderBy('extension', 'desc')->paginate(10);
+        $questions = $this->question->orderBy('elevation', 'desc')->paginate(10);
 
         $questions = prepareQuestionCards($questions, $user);
 
@@ -310,7 +310,7 @@ class QuestionController extends Controller
     {
         $user = Auth::user();
 
-        $questions = $this->question->orderBy('elevation', 'desc')->paginate(10);
+        $questions = $this->question->orderBy('extension', 'desc')->paginate(10);
 
         $questions = prepareQuestionCards($questions, $user);
 

@@ -142,6 +142,7 @@ class User extends Model implements AuthenticatableContract,
         }
         $this->verified = true;
         $this->emailToken = null;
+        $this->location = 3;
         $this->frequency = 3;
         $this->theme = 1;
         $this->api_token = $api_token;

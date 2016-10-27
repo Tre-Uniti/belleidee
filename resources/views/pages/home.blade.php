@@ -32,7 +32,7 @@
                     @if($location == null)
                         Set your location <a href = "{{ url('/newLocation') }}">here</a>
                     @else
-                Location set to: <a href = "{{ url('/newLocation') }}">{{ $location }}</a>
+                    Location set to: <a href = "{{ url('/settings') }}">{{ $location }}</a>
                     @endif
                 </p>
             </div>

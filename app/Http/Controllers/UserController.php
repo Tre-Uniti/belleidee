@@ -623,4 +623,21 @@ class UserController extends Controller
             ->with(compact('user', 'viewUser', 'users'));
     }
 
+    /*
+     * Set location to Global for all users
+     */
+    public function setGlobal()
+    {
+        $users = User::latest()->get();
+        $counter = 0;
+        foreach($users as $user)
+        {
+            $user->location = 2;
+            $user->update();
+            $counter++;
+        }
+
+        flash()->overlay('Total:' . $counter);
+        return redirect('home');
+    }
 }

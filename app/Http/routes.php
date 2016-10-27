@@ -28,6 +28,7 @@ Route::get('users/extensionTime/{time}', 'UserController@sortByExtensionTime');
 Route::get('users/followers/{id}', 'UserController@followers');
 Route::get('users/following/{id}', 'UserController@following');
 Route::get('users/token', 'UserController@token');
+Route::get('users/setGlobal', 'UserController@setGlobal');
 Route::patch('users/frequency/{id}', 'UserController@frequency')->name('frequency');
 Route::patch('users/theme/{id}', 'UserController@theme')->name('theme');
 Route::resource('users', 'UserController');
@@ -103,7 +104,6 @@ Route::get('posts/extension', 'PostController@sortByExtension');
 Route::get('posts/search', 'PostController@search');
 Route::get('posts/results', 'PostController@results');
 Route::get('posts/listElevation/{id}', 'PostController@listElevation');
-Route::get('posts/setExcerpt', 'PostController@setExcerpt');
 Route::get('posts/forYou', 'PostController@forYou');
 Route::resource('posts', 'PostController');
 
@@ -128,9 +128,7 @@ Route::get('extensions/extenception/{source}', 'ExtensionController@extenception
 Route::get('extensions/post/list/{id}', 'ExtensionController@postList');
 Route::get('extensions/extend/list/{id}', 'ExtensionController@extendList');
 Route::get('extensions/listElevation/{id}', 'ExtensionController@listElevation');
-Route::get('extensions/setExcerpt', 'ExtensionController@setExcerpt');
 Route::get('extensions/forYou', 'ExtensionController@forYou');
-Route::get('extensions/setAnswerId', 'ExtensionController@setAnswerId');
 Route::resource('extensions', 'ExtensionController');
 
 //Draft Routes (Resource)

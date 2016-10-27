@@ -572,7 +572,7 @@ function filterContentLocation($user, $number, $type)
     if($number == 0)
     {
         //Filter by local
-        if($user->location == 0 && $user->location != null)
+        if($user->location == 0)
         {
             if($type == 'Post')
             {
@@ -588,8 +588,10 @@ function filterContentLocation($user, $number, $type)
             }
             elseif($type == 'User')
             {
+
                 $filteredContent = User::where('verified', '=', 1)->where('last_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->paginate(10);
             }
+
 
         }
         //Filter by Country
@@ -614,8 +616,10 @@ function filterContentLocation($user, $number, $type)
 
         }
         //Filter by Global
+
         else
         {
+
             if($type == 'Post')
             {
                 $filteredContent = Post::whereNull('status')->latest('created_at')->paginate(10);
@@ -634,12 +638,13 @@ function filterContentLocation($user, $number, $type)
             }
 
         }
+
     }
     //Paginated indexes (i.e All time posts/extensions)
     elseif($number == 1)
     {
         //Filter by local
-        if($user->location == 0 && $user->location != null)
+        if($user->location == 0)
         {
             if($type == 'Post')
             {
@@ -751,7 +756,7 @@ function filterContentLocation($user, $number, $type)
     elseif($number == 2)
     {
         //Filter by local
-        if($user->location == 0 && $user->location != null)
+        if($user->location == 0)
         {
             if($type == 'Post')
             {
@@ -791,7 +796,7 @@ function filterContentLocation($user, $number, $type)
     //Extension filter for latest content
     elseif($number == 3)
     {
-        if($user->location == 0 && $user->location != null)
+        if($user->location == 0)
         {
             if ($type == 'Post')
             {
@@ -829,7 +834,7 @@ function filterContentLocation($user, $number, $type)
     //Source Specific Content location (posts only, extensions have source built-in)
     elseif ($number == 4)
     {
-        if($user->location == 0 && $user->location != null)
+        if($user->location == 0)
         {
             $filteredContent = Post::whereNull('status')->where('source', '=', $type)->where('beacon_tag', 'LIKE', $location['shortTag'].'%')->latest('created_at')->paginate(10);
         }
@@ -853,7 +858,7 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
     //Time-based filters
     if($number == 0) {
         //Filter by City
-        if ($user->location == 0 && $user->location != null)
+        if ($user->location == 0)
         {
             if ($type == 'Post')
             {
@@ -904,7 +909,7 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
     //Order by Time, Elevation and Location
     elseif($number == 1)
     {
-        if ($user->location == 0 && $user->location != null)
+        if ($user->location == 0)
         {
             if ($type == 'Post')
             {
@@ -956,7 +961,7 @@ function filterContentLocationTime($user, $number, $type, $time, $order)
     elseif($number == 2)
     {
         $location = session('coordinates');
-        if($user->location == 0 && $user->location != null)
+        if($user->location == 0)
         {
             if($type == 'Post')
             {
@@ -1001,7 +1006,7 @@ function filterContentLocationAllTime($user, $number, $type, $order)
     //Used for All time location filtering with orderBy (i.e all time elevations)
     $location = session('coordinates');
     if($number == 0) {
-        if ($user->location == 0 && $user->location != null)
+        if ($user->location == 0)
         {
             if ($type == 'Post')
             {
@@ -1084,7 +1089,7 @@ function filterContentLocationSearch($user, $number, $type, $search)
     if ($number == 0)
     {
         //Filter by City
-        if ($user->location == 0 && $user->location != null)
+        if ($user->location == 0)
         {
             if ($type == 'Post')
             {
