@@ -26,7 +26,7 @@ class UserDeletion
             {
                 return $response;
             }
-            elseif($viewUser->type > 1)
+            elseif($viewUser->type > 2)
             {
                 return $response;
             }

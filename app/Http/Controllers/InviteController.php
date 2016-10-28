@@ -25,13 +25,11 @@ class InviteController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         $invites = $user->invites()->latest('created_at')->take(7)->get();
 
         return view('invites.invite')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'invites'));
+            ->with(compact('user', 'invites'));
     }
 
     /**
@@ -42,8 +40,6 @@ class InviteController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         $count = Invite::where('user_id', '=', $user->id)->count();
         if($count > 9)
@@ -53,7 +49,7 @@ class InviteController extends Controller
         }
 
         return view('invites.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user'));
     }
 
     /**

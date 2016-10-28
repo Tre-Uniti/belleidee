@@ -23,7 +23,18 @@
         {!! Form::select('frequency', $frequencies, array('frequency' => $user->frequency)) !!}
     </div>
     <div class = "formLabel">
-        Type: {{ $user->type }}
+        Type:
+        @if($user->type == 0)
+            User
+        @elseif($user->type == 1)
+            Beacon Mod
+        @elseif($user->type == 2)
+            Global Mod
+        @elseif($user->type == 3)
+            Admin
+        @elseif($user->type == 4)
+            Guardian
+        @endif
     </div>
     <div class = "formInput">
         <a href="{{ url('users/descend/'. $user->id) }}"><button type = "button" class = "navButton">Descend</button></a>

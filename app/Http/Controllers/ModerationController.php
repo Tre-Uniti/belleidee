@@ -39,20 +39,11 @@ class ModerationController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
         $moderations = $this->moderation->latest()->paginate(10);
 
-        if ($user->photo_path == '') {
-
-            $photoPath = '';
-        } else {
-            $photoPath = $user->photo_path;
-        }
-
         return view('moderations.index')
-            ->with(compact('user', 'moderations', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'moderations'));
     }
 
     /**
@@ -73,8 +64,6 @@ class ModerationController extends Controller
             return redirect('moderations/' . $moderation->id);
         }
 
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         if($intolerance->post_id != null)
         {
@@ -100,7 +89,7 @@ class ModerationController extends Controller
         }
 
         return view('moderations.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'intolerance', 'sourceUser', 'content'))
+            ->with(compact('user', 'intolerance', 'sourceUser', 'content'))
             ->with('type', $type);
     }
 
@@ -135,8 +124,6 @@ class ModerationController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         //Get moderation with associated id
         $moderation = $this->moderation->findOrFail($id);
@@ -174,7 +161,7 @@ class ModerationController extends Controller
         }
 
         return view('moderations.show')
-            ->with(compact('user', 'moderation', 'intolerance', 'profilePosts', 'profileExtensions', 'sourceUser', 'content'))
+            ->with(compact('user', 'moderation', 'intolerance', 'sourceUser', 'content'))
             ->with('type', $type);
     }
 
@@ -187,8 +174,6 @@ class ModerationController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $moderation = $this->moderation->findOrFail($id);
         $intolerance = Intolerance::where('id', $moderation->intolerance_id)->first();
 
@@ -216,7 +201,7 @@ class ModerationController extends Controller
         }
 
         return view('moderations.edit')
-            ->with(compact('user', 'moderation', 'intolerance', 'profilePosts', 'profileExtensions', 'sourceUser', 'content'))
+            ->with(compact('user', 'moderation', 'intolerance', 'sourceUser', 'content'))
             ->with('type', $type);
     }
 
@@ -280,13 +265,10 @@ class ModerationController extends Controller
     public function userIndex($id)
     {
         $user = User::findOrFail($id);
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $moderations = $this->moderation->where('user_id', '=', $user->id)->latest()->paginate(10);
 
-
         return view('moderations.userIndex')
-            ->with(compact('user', 'moderations', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'moderations'));
 
     }
 }

@@ -27,7 +27,7 @@ class RedirectIfNotAnnouncementOwner
         {
             return $response;
         }
-        elseif($user->type > 1)
+        elseif($user->type > 2)
         {
             return $response;
         }

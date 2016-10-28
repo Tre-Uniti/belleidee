@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class EditBeaconRequest extends Request
@@ -14,7 +15,8 @@ class EditBeaconRequest extends Request
      */
     public function authorize()
     {
-        return Auth::check();
+        return User::where('id', Auth::id())
+            ->where('tier', '>', 2);
     }
 
     /**

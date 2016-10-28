@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
-class RedirectIfNotGuardian
+class RedirectIfNotGlobalMod
 {
     /**
      * Handle an incoming request.
@@ -17,9 +16,9 @@ class RedirectIfNotGuardian
     public function handle($request, Closure $next)
     {
         $user = Auth::user();
-        if ($user->type < 4)
+        if ($user->type < 2)
         {
-            flash()->overlay('Must be a Guardian to view this page');
+            flash()->overlay('Must be a Global Moderator to view this page.');
             return redirect()->back();
         }
         else

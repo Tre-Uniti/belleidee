@@ -17,28 +17,49 @@ class ModeratorController extends Controller
         $this->middleware('moderator');
     }
     /**
-     * Display Admin Portal.
+     * Display Moderator Portal.
      *
      * @return \Illuminate\Http\Response
      */
     public function portal()
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
-        $moderators = User::where('type', '>' , 0)->latest()->paginate(10);
-        if($user->photo_path == '')
-        {
 
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
+        $users = User::where('type', '>' , 0)->latest()->paginate(10);
+
 
         return view ('moderation.portal')
-            ->with(compact('user', 'moderators', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'users'));
+    }
+
+    /**
+     * Display Beacon Moderators.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function beaconMods()
+    {
+        $user = Auth::user();
+
+        $users = User::where('type', '=' , 1)->latest()->paginate(10);
+
+
+        return view ('moderation.beaconMods')
+            ->with(compact('user', 'users'));
+    }
+
+    /**
+     * Display Global Moderators.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function globalMods()
+    {
+        $user = Auth::user();
+
+        $users = User::where('type', '=' , 2)->latest()->paginate(10);
+
+        return view ('moderation.globalMods')
+            ->with(compact('user', 'users'));
     }
 }

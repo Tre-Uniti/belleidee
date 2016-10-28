@@ -68,10 +68,10 @@ class LegacyPostController extends Controller
     {
         $user = Auth::user();
 
-        if($user->type < 1)
+        if($user->type < 3)
         {
             flash()->overlay('Must be an Admin to post legacy content');
-            return redirect()->back();
+            return redirect('legacyPosts');
         }
         else
         {
@@ -251,10 +251,10 @@ class LegacyPostController extends Controller
         $legacyPost = LegacyPost::findOrfail($id);
 
         $user = Auth::user();
-        if($user->type < 1)
+        if($user->type < 3)
         {
             flash()->overlay('Must be an Admin to post legacy content');
-            return redirect()->back();
+            return redirect('legacyPosts');
         }
         else
         {

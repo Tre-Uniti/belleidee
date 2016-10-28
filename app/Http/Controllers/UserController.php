@@ -42,7 +42,8 @@ class UserController extends Controller
     public function __construct(User $user)
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['only' => ['edit', 'update', 'delete', 'ascend', 'descend', 'token']]);
+        $this->middleware('admin', ['only' => ['edit', 'update']]);
+        $this->middleware('guardian', ['only' => ['ascend', 'descend', 'delete', 'token']]);
         $this->middleware('userDeletion', ['only' => ['destroy']]);
         $this->user = $user;
     }
@@ -142,6 +143,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = $this->user->findorFail($id);
+        $viewUser = Auth::user();
+
         //Get user photo
         if ($user->photo_path == '') {
             $sourcePhotoPath = '/user_photos/1/Tre-Uniti.jpg';
@@ -156,7 +159,7 @@ class UserController extends Controller
         ];
 
         return view('users.edit')
-            ->with(compact('user', 'frequencies'))
+            ->with(compact('user', 'viewUser', 'frequencies'))
             ->with('sourcePhotoPath', $sourcePhotoPath);
     }
 

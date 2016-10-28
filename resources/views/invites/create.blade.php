@@ -18,7 +18,7 @@
     @include('errors.list')
 @stop
 @section('centerText')
-    <h2>Send <a href = {{url('/invites')}}>Invites:</a></h2>
+    <h2>Send <a href = {{url('/invites')}}>Invites</a></h2>
     {!! Form::open(['url' => 'invites']) !!}
     <div class = "formInput">
            <b>{!! Form::label('email', 'Email') !!}</b>
@@ -29,12 +29,9 @@
 
     <!--{!! Form::hidden('betaToken', str_random(7), ['class' => 'createAttributes']) !!}-->
 
-
 @stop
 
 @section('centerFooter')
-    <div class = "createSubmit">
         {!! Form::submit('Send Invite', ['class' => 'navButton', 'id' => 'submit']) !!}
         {!! Form::close()   !!}
-    </div>
 @stop

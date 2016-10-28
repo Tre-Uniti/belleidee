@@ -66,4 +66,9 @@ class Beacon extends Model implements BillableContract
         return $this->hasMany('App\Announcement');
     }
 
+    public function beaconModerator()
+    {
+        return $this->hasMany('App\BeaconModerator');
+    }
+
 }

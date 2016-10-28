@@ -110,7 +110,7 @@ class PromotionController extends Controller
 
         $promotion = Promotion::findOrFail($id);
 
-        if($user->type < 2)
+        if($user->type < 3)
         {
             if($promotion->status == 'closed' && $user->id != $promotion->sponsor->user_id)
             {

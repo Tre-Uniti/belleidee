@@ -16,7 +16,7 @@ class AdjudicationRequest extends Request
     public function authorize()
     {
         return User::where('id', Auth::id())
-            ->where('tier', '>', 1);
+            ->where('tier', '>', 2);
     }
 
     /**

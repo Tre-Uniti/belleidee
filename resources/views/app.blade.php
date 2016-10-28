@@ -115,10 +115,10 @@
                             <li><a href="{{ url('/moderator') }}">Moderator</a></li>
                         @endif
                         @if(isset($viewUser))
-                            @if($viewUser->type > 1)
+                            @if($viewUser->type > 2)
                                 <li><a href="{{ url('/admin') }}">Admin</a></li>
                             @endif
-                        @elseif($user->type > 1)
+                        @elseif($user->type > 2)
                             <li><a href="{{ url('/admin') }}">Admin</a></li>
                         @endif
                         <li><a href="{{ url('/auth/logout') }}">Logout</a></li>

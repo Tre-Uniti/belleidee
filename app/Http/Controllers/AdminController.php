@@ -32,7 +32,7 @@ class AdminController extends Controller
     public function portal()
     {
         $user = Auth::user();
-        $users = User::where('type', '>' , 1)->latest()->paginate(10);
+        $users = User::where('type', '>' , 2)->latest()->paginate(10);
 
         return view ('admin.portal')
             ->with(compact('user', 'users'));

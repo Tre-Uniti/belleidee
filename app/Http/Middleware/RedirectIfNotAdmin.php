@@ -18,7 +18,7 @@ class RedirectIfNotAdmin
     {
 
         $user = Auth::user();
-        if ($user->type < 2)
+        if ($user->type < 3)
         {
             flash()->overlay('Must be an Admin or Guardian to view this page');
             return redirect()->back();

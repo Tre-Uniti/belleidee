@@ -349,7 +349,7 @@ class SponsorController extends Controller
         $sponsor = Sponsor::where('sponsor_tag', '=', $tag)->first();
         $user = Auth::user();
 
-        if($user->type > 1 || $user->id == $sponsor->user_id || Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('user_id', '=', $user->id)->exists())
+        if($user->type > 2 || $user->id == $sponsor->user_id || Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('user_id', '=', $user->id)->exists())
         {
             $sponsorships = Sponsorship::where('sponsor_id', '=', $sponsor->id)->paginate(10);
         }
@@ -666,7 +666,7 @@ class SponsorController extends Controller
         $sponsorId = $request->input('sponsorId');
         $sponsor = Sponsor::findOrFail($sponsorId);
 
-        if($user->type > 1 || $user->id == $sponsor->user_id || Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date)->where('user_id', '=', $user->id)->exists())
+        if($user->type > 2 || $user->id == $sponsor->user_id || Sponsorship::where('sponsor_id', '=', $sponsor->id)->where('created_at', '<=', $date)->where('user_id', '=', $user->id)->exists())
         {
             $sponsorships = Sponsorship::where('user_id', '=', $searchUser->id)->where('sponsor_id', '=', $sponsorId)->where('created_at', '<=', $date )->paginate();
         }

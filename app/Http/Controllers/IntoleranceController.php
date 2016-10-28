@@ -43,13 +43,11 @@ class IntoleranceController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $intolerances = $this->intolerance->latest()->paginate(10);
 
 
         return view ('intolerances.index')
-            ->with(compact('user', 'intolerances', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'intolerances'));
     }
 
     /**
@@ -104,12 +102,8 @@ class IntoleranceController extends Controller
             }
         }
 
-
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
-
         return view('intolerances.create')
-            ->with(compact('user', 'profilePosts', 'profileExtensions', 'sources', 'sourceUser', 'content'))
+            ->with(compact('user', 'sources', 'sourceUser', 'content'))
             ->with('type', $type);
     }
 
@@ -153,12 +147,10 @@ class IntoleranceController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
         $intolerance = $this->intolerance->findOrFail($id);
 
         //Check if user requesting is the one who created the intolerance
-        if($user->type < 1 && $intolerance->user_id != $user->id)
+        if($user->type < 2 && $intolerance->user_id != $user->id)
         {
             flash()->overlay('This intolerance belongs to another user');
             return redirect()->back();
@@ -188,7 +180,7 @@ class IntoleranceController extends Controller
         }
 
         return view ('intolerances.show')
-            ->with(compact('user', 'intolerance', 'profilePosts','profileExtensions', 'sourceUser', 'content'))
+            ->with(compact('user', 'intolerance', 'sourceUser', 'content'))
             ->with('type', $type);
     }
 
@@ -201,8 +193,7 @@ class IntoleranceController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
+
         $intolerance = $this->intolerance->findOrFail($id);
 
         if($intolerance->post_id != null)
@@ -230,7 +221,7 @@ class IntoleranceController extends Controller
 
 
         return view ('intolerances.edit')
-            ->with(compact('user', 'intolerance', 'profilePosts','profileExtensions', 'sourceUser', 'content'))
+            ->with(compact('user', 'intolerance', 'sourceUser', 'content'))
             ->with('type', $type);
     }
 
@@ -340,12 +331,11 @@ class IntoleranceController extends Controller
     public function userIndex($id)
     {
         $user = User::findOrFail($id);
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
+
         $intolerances = $this->intolerance->where('user_id', '=', $user->id)->latest()->paginate(10);
         
         return view ('intolerances.userIndex')
-            ->with(compact('user', 'intolerances', 'profilePosts', 'profileExtensions'));
+            ->with(compact('user', 'intolerances'));
 
     }
 
@@ -357,12 +347,11 @@ class IntoleranceController extends Controller
     {
         $beacon = Beacon::findOrFail($id);
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
+
         $intolerances = $this->intolerance->where('beacon_tag', '=', $beacon->beacon_tag)->latest()->paginate(10);
 
         return view ('intolerances.beaconIndex')
-            ->with(compact('user', 'intolerances', 'profilePosts', 'profileExtensions', 'beacon'));
+            ->with(compact('user', 'intolerances', 'beacon'));
 
     }
     

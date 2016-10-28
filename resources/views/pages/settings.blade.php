@@ -70,14 +70,13 @@
     <div class = "contentCard">
         <div class = "cardTitleSection">
             <h3>
-                Beacon and Sponsor
+                Beacon
             </h3>
         </div>
         <div class = "cardHandleSection">
             <p>
                 Beacon is set by connecting and posting with their beacon tag.
             </p>
-            <p>Sponsor is set by starting a sponsorship, min 7 days to be eligible for all promos.</p>
         </div>
         <div class = "indexNav">
             <div class = "userConnections">
@@ -93,6 +92,19 @@
                     <a href = " {{ url('/beacons') }}">Discover one here</a>
                 @endif
             </div>
+        </div>
+    </div>
+
+    <div class = "contentCard">
+        <div class = "cardTitleSection">
+            <h3>
+                Sponsor
+            </h3>
+        </div>
+        <div class = "cardHandleSection">
+            <p>Sponsor is set by starting a sponsorship, min 7 days to be eligible for all promos.</p>
+        </div>
+        <div class = "indexNav">
             <div class = "userConnections">
                 <h4 class = "underline">Sponsor</h4>
                 @if(isset($sponsor))

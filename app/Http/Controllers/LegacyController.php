@@ -82,7 +82,7 @@ class LegacyController extends Controller
         try
         {
             $user = User::where('handle', '=', ($request['handle']))->firstOrFail();
-            if($user->type < 2)
+            if($user->type < 3)
             {
                 flash()->overlay('User must be at least an admin to post for Legacy');
                 return redirect()->back();
@@ -172,7 +172,7 @@ class LegacyController extends Controller
         try
         {
             $user = User::where('handle', '=', ($request['handle']))->firstOrFail();
-            if($user->type < 2)
+            if($user->type < 3)
             {
                 flash()->overlay('User must be at least an admin to post for Legacy');
                 return redirect()->back();
