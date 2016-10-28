@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BeaconModerator;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,7 @@ class ModeratorController extends Controller
         $users = User::where('type', '>' , 0)->latest()->paginate(10);
 
 
-        return view ('moderation.portal')
+        return view ('moderator.portal')
             ->with(compact('user', 'users'));
     }
 
@@ -44,7 +45,7 @@ class ModeratorController extends Controller
         $users = User::where('type', '=' , 1)->latest()->paginate(10);
 
 
-        return view ('moderation.beaconMods')
+        return view ('moderator.beaconMods')
             ->with(compact('user', 'users'));
     }
 
@@ -59,7 +60,20 @@ class ModeratorController extends Controller
 
         $users = User::where('type', '=' , 2)->latest()->paginate(10);
 
-        return view ('moderation.globalMods')
+        return view ('moderator.globalMods')
             ->with(compact('user', 'users'));
+    }
+
+    /*
+     *
+     */
+    public function yourBeacons()
+    {
+        $user = Auth::user();
+
+        $beacons = BeaconModerator::where('user_id', '=', $user->id)->latest()->paginate(10);
+
+        return view('moderator.yourBeacons')
+            ->with(compact('user', 'beacons'));
     }
 }

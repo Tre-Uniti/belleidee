@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Announcement;
+use App\BeaconModerator;
 use App\BeaconRequest;
 use App\Bookmark;
 use App\Events\BeaconViewed;
@@ -897,5 +898,39 @@ class BeaconController extends Controller
 
         return view('beacons.contact')
             ->with(compact('user', 'beacon'));
+    }
+
+    /*
+     * List all moderators for a specific Beacon
+     * @param $tag
+     */
+    public function moderators($tag)
+    {
+        $beacon = Beacon::where('beacon_tag', '=', $tag)->first();
+
+        $user = Auth::user();
+
+        //Find all moderators or higher that are connected to this beacon
+        $moderators = BeaconModerator::where('beacon_id', '=', $beacon->id)->latest()->paginate(10);
+
+        return view('beacons.moderators')
+            ->with(compact('user', 'beacon', 'moderators'));
+    }
+
+    /*
+    * List all moderators for a specific Beacon
+    * @param $tag
+    */
+    public function findModerators($tag)
+    {
+        $beacon = Beacon::where('beacon_tag', '=', $tag)->first();
+
+        $user = Auth::user();
+
+        //Find all moderators or higher that are connected to this beacon
+        $users = User::where('last_tag', '=', $beacon->beacon_tag)->where('type', '>', 0);
+
+        return view('beacons.findModerators')
+            ->with(compact('user', 'beacon', 'users'));
     }
 }

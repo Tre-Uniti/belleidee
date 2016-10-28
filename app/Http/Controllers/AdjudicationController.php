@@ -150,10 +150,10 @@ class AdjudicationController extends Controller
         $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
-        //Get moderation with associated id
+        //Get moderator with associated id
         $adjudication = $this->adjudication->findOrFail($id);
 
-        //Get moderation associated with adjudication
+        //Get moderator associated with adjudication
         $moderation = Moderation::where('id', $adjudication->moderation_id)->first();
         $intolerance = Intolerance::where('id', $moderation->intolerance_id)->first();
 
@@ -197,7 +197,7 @@ class AdjudicationController extends Controller
         $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $adjudication = $this->adjudication->findOrFail($id);
 
-        //Get moderation associated with adjudication
+        //Get moderator associated with adjudication
         $moderation = Moderation::where('id', $adjudication->moderation_id)->first();
         $intolerance = Intolerance::where('id', $moderation->intolerance_id)->first();
 
@@ -300,7 +300,7 @@ class AdjudicationController extends Controller
 
     }
 
-    //Used to setup moderation of intolerance
+    //Used to setup moderator of intolerance
     public function moderation($id)
     {
         $moderationId = $id;

@@ -16,7 +16,7 @@ class UpdateBeliefRequest extends Request
     public function authorize()
     {
         return User::where('id', Auth::id())
-            ->where('tier', '>', 2);
+            ->where('tier', '>', 3);
     }
 
     /**

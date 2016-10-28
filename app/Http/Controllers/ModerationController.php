@@ -58,7 +58,7 @@ class ModerationController extends Controller
         $intoleranceId = Session::get('intoleranceId');
         $intolerance = Intolerance::findOrFail($intoleranceId);
 
-        //Check if User has already posted moderation for intolerance
+        //Check if User has already posted moderator for intolerance
         if ($moderation = Moderation::where('intolerance_id', $intolerance['id'])->where('user_id', $user->id)->first()) {
             flash()->overlay('You have already moderated for this intolerance');
             return redirect('moderations/' . $moderation->id);
@@ -111,7 +111,7 @@ class ModerationController extends Controller
         $moderation->intolerance()->associate($intolerance);
         $moderation->user()->associate($user);
         $moderation->save();
-        flash()->overlay('Your moderation has been created and will be reviewed');
+        flash()->overlay('Your moderator has been created and will be reviewed');
         return redirect('moderations/' . $moderation->id);
     }
 
@@ -125,15 +125,15 @@ class ModerationController extends Controller
     {
         $user = Auth::user();
 
-        //Get moderation with associated id
+        //Get moderator with associated id
         $moderation = $this->moderation->findOrFail($id);
 
-        //Get intolerance associated with moderation
+        //Get intolerance associated with moderator
         $intolerance = Intolerance::where('id', $moderation->intolerance_id)->first();
 
         //Check if user requesting is the one who created the intolerance
         if ($user->type < 1 && $moderation->user_id != $user->id) {
-            flash()->overlay('This moderation belongs to another user');
+            flash()->overlay('This moderator belongs to another user');
             return redirect()->back();
         }
 
@@ -230,9 +230,9 @@ class ModerationController extends Controller
     public function destroy($id)
     {
         $moderation = Moderation::findOrFail($id);
-        //dd($moderation);
+        //dd($moderator);
 
-        //Check if moderation has been used in an Adjudication
+        //Check if moderator has been used in an Adjudication
         if ($adjudication = Adjudication::where('moderation_id', '=', $moderation->id)->first()) {
             return redirect('adjudications/' . $adjudication->id);
         }
@@ -242,7 +242,7 @@ class ModerationController extends Controller
         return redirect('moderations');
     }
 
-    //Used to setup moderation of intolerance
+    //Used to setup moderator of intolerance
     public function intolerance($id)
     {
         $intoleranceId = $id;

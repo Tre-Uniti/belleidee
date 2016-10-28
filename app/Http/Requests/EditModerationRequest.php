@@ -16,7 +16,7 @@ class EditModerationRequest extends Request
     public function authorize()
     {
         $user = Auth::user();
-        if($user->tier > 1)
+        if($user->tier > 0)
         {
             return true;
         }

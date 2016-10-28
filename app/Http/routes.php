@@ -55,6 +55,8 @@ Route::get('beacons/topTagged', 'BeaconController@topTagged');
 Route::get('beacons/topViewed', 'BeaconController@topViewed');
 Route::get('beacons/analytics/{id}', 'BeaconController@analytics');
 Route::get('beacons/contact/{tag}', 'BeaconController@contact');
+Route::get('beacons/moderators/{tag}', 'BeaconController@moderators');
+Route::get('beacons/moderators/find/{tag}', 'BeaconController@findModerators');
 Route::resource('beacons', 'BeaconController');
 
 //Announcements for Subscribed Beacons
@@ -212,13 +214,17 @@ Route::resource('legacyPosts', 'LegacyPostController');
 
 //Moderation routes (resource)
 Route::get('moderator', 'ModeratorController@portal');
+Route::get('moderator/yourBeacons', 'ModeratorController@yourBeacons');
+Route::get('moderator/globalMods', 'ModeratorController@globalMods');
+Route::get('moderator/beaconMods', 'ModeratorController@beaconMods');
+
 Route::get('moderations/intolerance/{source}', 'ModerationController@intolerance');
 Route::get('moderations/userIndex/{id}', 'ModerationController@userIndex');
 Route::get('moderations/beacon/{id}', 'ModerationController@beaconIndex');
 Route::resource('moderations', 'ModerationController');
 
 //Adjudication routes (resource)
-Route::get('adjudications/moderation/{source}', 'AdjudicationController@moderation');
+Route::get('adjudications/moderator/{source}', 'AdjudicationController@moderator');
 Route::resource('adjudications', 'AdjudicationController');
 
 //Notification routes (resource)
