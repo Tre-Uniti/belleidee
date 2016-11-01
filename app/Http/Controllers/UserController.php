@@ -194,7 +194,7 @@ class UserController extends Controller
         $user->type = $user->type + 1;
         $user->update();
 
-        flash()->overlay('User: ' . $user->handle . ' ascended');
+        flash()->overlay($user->handle . ' has ascended to '. $user->type);
 
         return redirect('users/' . $user->id);
     }
@@ -212,7 +212,7 @@ class UserController extends Controller
         $user->type = $user->type - 1;
         $user->update();
 
-        flash()->overlay('User: ' . $user->handle . ' descended');
+        flash()->overlay($user->handle . ' has descended to '. $user->type);
 
         return redirect('users/' . $user->id);
     }

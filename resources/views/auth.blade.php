@@ -128,7 +128,7 @@
         <div id = "logo">
             <a href="/"><img src={{secure_asset('img/idee.png')}} alt="idee" width = "45%" height ="45%"></a>
         </div>
-        <h3>"Beautiful ideas"</h3>
+        <h2>"Beautiful ideas"</h2>
                     @include('partials.flash')
                     @include('errors.list')
                     @yield('centerContent')

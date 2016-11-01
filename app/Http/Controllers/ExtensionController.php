@@ -689,6 +689,10 @@ class ExtensionController extends Controller
         $extensions = prepareExtensionCards($extensions, $viewUser);
         //Get the Beacon for the user viewing the post
         $lastBeacon = Beacon::where('beacon_tag', '=', $viewUser->last_tag)->first();
+        if($lastBeacon == NULL)
+        {
+            $lastBeacon = Beacon::where('beacon_tag', '=', 'No-Beacon')->first();
+        }
         //Get viewUser's beacons and add post beacon
         $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
         $beacons = array_add($beacons, $beacon->beacon_tag, $beacon->beacon_tag);

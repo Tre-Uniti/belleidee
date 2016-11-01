@@ -28,7 +28,6 @@ class ModeratorController extends Controller
 
         $users = User::where('type', '>' , 0)->latest()->paginate(10);
 
-
         return view ('moderator.portal')
             ->with(compact('user', 'users'));
     }
@@ -44,7 +43,6 @@ class ModeratorController extends Controller
 
         $users = User::where('type', '=' , 1)->latest()->paginate(10);
 
-
         return view ('moderator.beaconMods')
             ->with(compact('user', 'users'));
     }
@@ -58,7 +56,7 @@ class ModeratorController extends Controller
     {
         $user = Auth::user();
 
-        $users = User::where('type', '=' , 2)->latest()->paginate(10);
+        $users = User::where('type', '>=' , 2)->latest()->paginate(10);
 
         return view ('moderator.globalMods')
             ->with(compact('user', 'users'));

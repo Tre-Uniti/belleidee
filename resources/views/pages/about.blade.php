@@ -22,6 +22,22 @@
     </div>
     <div class = "contentCard">
         <div class = "cardTitleSection">
+            <h3>History</h3>
+        </div>
+        <div id = "centerTextContent">
+            <p>Belle-idee was created for the world to share beautiful ideas, values and experiences from the various beliefs and ways of life.
+                It started with a Jesuit giving a copy of his homily to a student at Gonzaga University.
+                The idea to share the Jesuit's homily online was the spark for creating an online community focused on sharing spirituality.</p>
+            <ul>
+                <li>Built on the Laravel framework and <a href = "https://github.com/tre-uniti/belle-idee">open source </a> since 2015.</li>
+                <li>Created to be a global online community of spiritual light and guidance.</li>
+                <li>Designed for the sharing of beautiful ideas instead of arguments of validity.</li>
+                <li>Administered by users who are inspirational within the community.</li>
+            </ul>
+        </div>
+    </div>
+    <div class = "contentCard">
+        <div class = "cardTitleSection">
             <h3>
                 Users
             </h3>
@@ -29,8 +45,8 @@
         <div id = "centerTextContent">
         <p>
             Anyone can register for a free user account and share within the Belle-idee community.
-            If a user is influential within the community then they may ascend the administrative roles (Moderator -> Admin -> Guardian).
-            These roles guarantee the community is administered by influential and experienced users.
+            If a user continually inspires others within the community then they may ascend the administrative roles (Moderator -> Admin -> Guardian).
+            These roles guarantee the community is administered by inspirational and experienced users.
         </p>
         <p>
             Moderators:
@@ -112,21 +128,6 @@
             <li>Users can change their sponsor at any time but will also lose exclusive promos.</li>
             <li>Users control how they receive promotions (email or sponsor's Belle-idee page).</li>
         </ul>
-        </div>
-    </div>
-    <div class = "contentCard">
-        <div class = "cardTitleSection">
-            <h3>History</h3>
-        </div>
-        <div id = "centerTextContent">
-        <p>Belle-idee was created for the world to share beautiful ideas, values and experiences from the various beliefs and ways of life.
-            It started with a Jesuit giving a copy of his homily to a student at Gonzaga University.
-            The idea to share the Jesuit's homily online was the spark for creating an online community focused on sharing spirituality.</p>
-            <ul>
-                <li>Built on the Laravel framework and <a href = "https://github.com/tre-uniti/belle-idee">open source </a> since 2015.</li>
-                <li>Created to be a global online community of spiritual light and guidance.</li>
-                <li>Designed for the sharing of beautiful ideas instead of arguments of validity.</li>
-            </ul>
         </div>
     </div>
     <div class = "contentCard">

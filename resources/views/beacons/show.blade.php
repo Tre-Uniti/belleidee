@@ -63,6 +63,10 @@
                 <button type = "button" id = "managerOptions" class = "navButton">Show Manager Options</button>
                 <div id = "hiddenManagerOptions">
                     <div class = "indexNav">
+                        <a href = "{{ url('/beacons/moderators/' . $beacon->id) }}" class = "indexLink">Moderators</a>
+                        <a href = "{{ url('/beacons/moderators/find/' . $beacon->id) }}" class = "indexLink">Find Moderators</a>
+                    </div>
+                    <div class = "indexNav">
                         <a href="{{ url('/beacons/invoice/'. $beacon->id )}}" class = "indexLink">Invoices</a>
                         <a href="{{ url('/beacons/subscription/'. $beacon->id )}}" class = "indexLink">Subscription</a>
                         <a href="{{ url('/intolerances/beacon/'. $beacon->id) }}" class = "indexLink">Intolerance</a>

@@ -55,8 +55,8 @@ Route::get('beacons/topTagged', 'BeaconController@topTagged');
 Route::get('beacons/topViewed', 'BeaconController@topViewed');
 Route::get('beacons/analytics/{id}', 'BeaconController@analytics');
 Route::get('beacons/contact/{tag}', 'BeaconController@contact');
-Route::get('beacons/moderators/{tag}', 'BeaconController@moderators');
-Route::get('beacons/moderators/find/{tag}', 'BeaconController@findModerators');
+Route::get('beacons/moderators/{id}', 'BeaconController@moderators');
+Route::get('beacons/moderators/find/{id}', 'BeaconController@findModerators');
 Route::resource('beacons', 'BeaconController');
 
 //Announcements for Subscribed Beacons

@@ -1,3 +1,6 @@
+@if(!count($users))
+    <p>No users to show.</p>
+@endif
 @foreach ($users as $User)
     <article>
         <div class = "contentCard">

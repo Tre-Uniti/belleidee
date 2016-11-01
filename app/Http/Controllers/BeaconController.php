@@ -45,7 +45,7 @@ class BeaconController extends Controller
     {
         $this->middleware('auth', ['except' => ['show', 'guide', 'posts', 'extensions']]);
         $this->middleware('admin', ['only' => 'create', 'store', 'update', 'edit', 'deactivate', 'destroy']);
-        $this->middleware('beaconAdmin', ['only' => ['subscription', 'invoice', 'downloadInvoice', 'integration', 'analytics']]);
+        $this->middleware('beaconAdmin', ['only' => ['subscription', 'invoice', 'downloadInvoice', 'integration', 'analytics', 'moderators', 'findModerators']]);
         $this->beacon = $beacon;
     }
 
@@ -902,33 +902,42 @@ class BeaconController extends Controller
 
     /*
      * List all moderators for a specific Beacon
-     * @param $tag
+     * @param $id
      */
-    public function moderators($tag)
+    public function moderators($id)
     {
-        $beacon = Beacon::where('beacon_tag', '=', $tag)->first();
 
+        $beacon = Beacon::findOrFail($id);
         $user = Auth::user();
 
         //Find all moderators or higher that are connected to this beacon
-        $moderators = BeaconModerator::where('beacon_id', '=', $beacon->id)->latest()->paginate(10);
+        $users = BeaconModerator::where('beacon_id', '=', $beacon->id)->latest()->paginate(10);
 
         return view('beacons.moderators')
-            ->with(compact('user', 'beacon', 'moderators'));
+            ->with(compact('user', 'beacon', 'users'));
     }
 
     /*
     * List all moderators for a specific Beacon
-    * @param $tag
+    * @param $id
     */
-    public function findModerators($tag)
+    public function findModerators($id)
     {
-        $beacon = Beacon::where('beacon_tag', '=', $tag)->first();
+        $beacon = Beacon::findOrFail($id);
 
         $user = Auth::user();
 
-        //Find all moderators or higher that are connected to this beacon
-        $users = User::where('last_tag', '=', $beacon->beacon_tag)->where('type', '>', 0);
+        $moderators = BeaconModerator::where('beacon_id', '=', $beacon->id)->latest()->lists('user_id');
+        
+
+        if($bookmark_beacon = Bookmark::where('pointer', '=', $beacon->beacon_tag)->where('type', '=', 'Beacon')->first())
+        {
+            $users = $bookmark_beacon->users()->where('verified', '=', 1)->where('type', '>', 0)->paginate(10);
+        }
+        else
+        {
+            $users = null;
+        }
 
         return view('beacons.findModerators')
             ->with(compact('user', 'beacon', 'users'));
