@@ -82,6 +82,13 @@ class HomeController extends Controller
         $posts = Post::where('user_id',$user->id )->latest()->take(5)->get();
         $postCount = Post::where('user_id',$user->id )->count();
 
+        $location = getLocation();
+        if($location == null)
+        {
+            Event::fire(New SetLocation($user));
+            $location = getLocation();
+        }
+
         //Get latest Extensions
         $extensions = Extension::where('user_id',$user->id )->latest()->take(5)->get();
         $extensionCount = Extension::where('user_id',$user->id )->count();
@@ -126,7 +133,13 @@ class HomeController extends Controller
 
         $sponsor = getSponsor($user);
         $beacon = getBeacon($user);
+
         $location = getLocation();
+        if($location == null)
+        {
+            Event::fire(New SetLocation($user));
+            $location = getLocation();
+        }
 
         return view ('pages.settings')
             ->with(compact('user', 'beacon', 'sponsor'))
@@ -612,7 +625,7 @@ class HomeController extends Controller
         {
             $city = $request['city'];
             $beacon = Beacon::where('city', '=', $city)->where('country', '=', $request['country'])->first();
-            //dd($beacon);
+
             if(is_null($beacon))
             {
                 flash()->overlay('No beacons in this area yet, please submit a beacon request');
@@ -795,7 +808,7 @@ class HomeController extends Controller
         }
 
         return view('pages.about')
-            ->with(compact('user', 'profilePosts', 'profileExtensions'))
+            ->with(compact('user'))
             ->with('notifyCount', $notifyCount);
     }
 }

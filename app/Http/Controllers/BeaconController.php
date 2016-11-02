@@ -942,4 +942,14 @@ class BeaconController extends Controller
         return view('beacons.findModerators')
             ->with(compact('user', 'beacon', 'users'));
     }
+
+    /*
+     * Add a new moderator to the beacon
+     * Request @request
+     */
+    public function addModerator(Request $request)
+    {
+        //
+    }
+
 }

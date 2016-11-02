@@ -46,7 +46,13 @@
             <p>
                 Change the scope of your location (set by latest Beacon interaction, or by custom).
             </p>
-            <p>Current Location: {{ $location }}</p>
+            <p>
+            @if($location == null)
+                Set your location <a href = "{{ url('/newLocation') }}">here</a>
+            @else
+                Location set to: <a href = "{{ url('/settings') }}">{{ $location }}</a>
+            @endif
+            </p>
         </div>
         <div class = "footerSection">
             <div class = "leftSection">

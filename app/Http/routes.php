@@ -36,6 +36,7 @@ Route::resource('users', 'UserController');
 //Beacon Routes (Resource)
 Route::get('beacons/search', 'BeaconController@search');
 Route::get('beacons/results', 'BeaconController@results');
+Route::post('beacons/addModerator', 'BeaconController@addModerator')->name('addModerator');
 Route::get('beacons/signup/{id}', 'BeaconController@signup');
 Route::post('beacons/subscribe', 'BeaconController@subscribe')->name('subscribe');
 Route::post('beacons/swap', 'BeaconController@swap')->name('swap');

@@ -101,6 +101,7 @@ class SessionController extends Controller
         }
 
         $user = Auth::user();
+        dd($user);
 
         //Create event to set location
         Event::fire(New SetLocation($user));
