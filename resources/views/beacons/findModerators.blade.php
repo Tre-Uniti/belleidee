@@ -8,10 +8,10 @@
         <a href="{{ url('/beacons/'. $beacon->beacon_tag)}}" class = "indexLink">Profile</a>
         <a href="{{ url('/beacons/contact/' . $beacon->beacon_tag)}}" class = "indexLink">Contact</a>
         <p>Searching Moderators for: <a href = "{{ url('/beacons/' . $beacon->beacon_tag) }}" class = "contentHandle">{{ $beacon->beacon_tag }}</a></p>
-        <a href = "{{ url('/beacons/moderators/' . $beacon->id) }}" class = "navLink">Existing Moderators</a>
+        <a href = "{{ url('/beacons/moderators/' . $beacon->id) }}" class = "indexLink">Existing Moderators</a>
     </div>
     <hr class = "contentSeparator">
-    @include('users._userCards')
+    @include('users._addModCards')
 @stop
 @section('centerFooter')
     @include('pagination.custom-paginator', ['paginator' => $users])

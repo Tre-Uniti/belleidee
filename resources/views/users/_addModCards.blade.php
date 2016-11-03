@@ -10,10 +10,6 @@
                         <a href = "{{ url('/users/'. $User->id) }}">{{$User->handle}}</a>
                     </h3>
                 </header>
-                {!! Form::open(['url' => 'beacons.addModerator']) !!}
-                <input type="hidden" name="beacon" value={{ $beacon->id }}>
-                {!! Form::submit('Add Moderator', ['class' => 'navButton', 'id' => 'submit']) !!}
-                {!! Form::close() !!}
             </div>
 
             <div class = "indexNav">
@@ -25,6 +21,13 @@
                     @endif
                 </div>
             </div>
+            <p>
+                {!! Form::open(['route' => 'addModerator', 'role' => 'form']) !!}
+                <input type="hidden" name="beacon_id" value={{ $beacon->id }}>
+                <input type="hidden" name="user_id" value={{ $User->id }}>
+                {!! Form::submit('Add Moderator', ['class' => 'navButton', 'id' => 'submit']) !!}
+                {!! Form::close() !!}
+            </p>
             <div class = "cardHandleSection">
                 <p>
                     Latest Activity: {{ $User->updated_at->format('M-d-Y') }}

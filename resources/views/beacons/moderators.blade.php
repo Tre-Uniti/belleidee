@@ -11,8 +11,8 @@
         <a href = "{{ url('/beacons/moderators/find/' . $beacon->id) }}" class = "indexLink">Find Moderators</a>
     </div>
     <hr class = "contentSeparator">
-    @include('users._userCards')
+    @include('users._moderatorCards')
 @stop
 @section('centerFooter')
-    @include('pagination.custom-paginator', ['paginator' => $users])
+    @include('pagination.custom-paginator', ['paginator' => $moderators])
 @stop

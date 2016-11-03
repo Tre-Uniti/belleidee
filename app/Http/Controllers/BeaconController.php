@@ -19,6 +19,7 @@ use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
+use App\Http\Requests\AddModeratorRequest;
 use App\Http\Requests\CreateBeaconRequest;
 use App\Http\Requests\EditBeaconRequest;
 use App\Intolerance;
@@ -911,10 +912,10 @@ class BeaconController extends Controller
         $user = Auth::user();
 
         //Find all moderators or higher that are connected to this beacon
-        $users = BeaconModerator::where('beacon_id', '=', $beacon->id)->latest()->paginate(10);
+        $moderators = BeaconModerator::where('beacon_id', '=', $beacon->id)->latest()->paginate(10);
 
         return view('beacons.moderators')
-            ->with(compact('user', 'beacon', 'users'));
+            ->with(compact('user', 'beacon', 'moderators'));
     }
 
     /*
@@ -927,12 +928,12 @@ class BeaconController extends Controller
 
         $user = Auth::user();
 
+        //Get list of existing Beacon moderators
         $moderators = BeaconModerator::where('beacon_id', '=', $beacon->id)->latest()->lists('user_id');
-        
 
         if($bookmark_beacon = Bookmark::where('pointer', '=', $beacon->beacon_tag)->where('type', '=', 'Beacon')->first())
         {
-            $users = $bookmark_beacon->users()->where('verified', '=', 1)->where('type', '>', 0)->paginate(10);
+            $users = $bookmark_beacon->users()->where('verified', '=', 1)->where('type', '>', 0)->whereNotIn('id', $moderators)->paginate(10);
         }
         else
         {
@@ -947,9 +948,37 @@ class BeaconController extends Controller
      * Add a new moderator to the beacon
      * Request @request
      */
-    public function addModerator(Request $request)
+    public function addModerator(AddModeratorRequest $request)
     {
-        //
+
+        $beacon = Beacon::findOrFail($request['beacon_id']);
+        $moderator = User::findOrFail($request['user_id']);
+
+        $beaconModerator = new BeaconModerator($request->all());
+        $beaconModerator->user()->associate($moderator);
+        $beaconModerator->beacon()->associate($beacon);
+        $beaconModerator->save();
+
+        flash()->overlay($moderator->handle . ' is now a moderator for ' . $beacon->beacon_tag);
+        return redirect('beacons/moderators/' . $beacon->id);
+    }
+
+    /*
+     * Remove a moderator from a Beacon
+     * @param $id
+     */
+    public function removeModerator($id)
+    {
+
+        $beaconModerator = BeaconModerator::findOrFail($id);
+
+        $beacon = Beacon::findOrFail($beaconModerator->beacon_id);
+        $moderator = User::findOrFail($beaconModerator->user_id);
+
+        $beaconModerator->delete();
+
+        flash()->overlay($moderator->handle . ' is no longer a moderator for ' . $beacon->beacon_tag);
+        return redirect('beacons/moderators/' . $beacon->id);
     }
 
 }
