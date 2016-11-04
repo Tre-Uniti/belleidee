@@ -62,19 +62,19 @@
 
                 <button type = "button" id = "managerOptions" class = "navButton">Show Manager Options</button>
                 <div id = "hiddenManagerOptions">
-                    <div class = "indexNav">
+                    <div class = "contentExtensionCard">
+                        <h3>Management</h3>
                         <a href = "{{ url('/beacons/moderators/' . $beacon->id) }}" class = "indexLink">Moderators</a>
                         <a href = "{{ url('/beacons/moderators/find/' . $beacon->id) }}" class = "indexLink">Find Moderators</a>
-                    </div>
-                    <div class = "indexNav">
+                    <h3>Content</h3>
+                        <a href = "{{ url('/beacons/safePost/' . $beacon->id) }}" class = "indexLink">Safe Post</a>
+                        <a href="{{ url('/intolerances/beacon/'. $beacon->id) }}" class = "indexLink">Intolerance</a>
+                        <a href = "{{ url('/announcements/beaconIndex/'. $beacon->id) }}" class = "indexLink">Announcements</a>
+                    <h3>Administration</h3>
                         <a href="{{ url('/beacons/invoice/'. $beacon->id )}}" class = "indexLink">Invoices</a>
                         <a href="{{ url('/beacons/subscription/'. $beacon->id )}}" class = "indexLink">Subscription</a>
-                        <a href="{{ url('/intolerances/beacon/'. $beacon->id) }}" class = "indexLink">Intolerance</a>
-                    </div>
-                    <div class = "indexNav">
                         <a href = "{{ url('/beacons/analytics/'. $beacon->id) }}" class = "indexLink">Analytics</a>
                         <a href = "{{ url('/beacons/integration/'. $beacon->id) }}" class = "indexLink">Integration</a>
-                        <a href = "{{ url('/announcements/beaconIndex/'. $beacon->id) }}" class = "indexLink">Announcements</a>
                     </div>
                 </div>
                 @endif

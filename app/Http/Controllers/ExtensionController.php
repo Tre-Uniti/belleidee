@@ -46,7 +46,7 @@ class ExtensionController extends Controller
 
     public function __construct(Extension $extension)
     {
-        $this->middleware('auth', ['except' => 'show']);
+        $this->middleware('auth', ['except' => 'show', 'index']);
         $this->middleware('extensionOwner', ['only' => 'edit', 'update', 'destroy']);
         $this->extension = $extension;
     }
@@ -58,7 +58,16 @@ class ExtensionController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+        }
 
         $extensions = filterContentLocation($user, 0, 'Extension');
 

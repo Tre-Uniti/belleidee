@@ -1069,7 +1069,7 @@ a.excerptText {
   padding: 2px;
   margin: 0 auto; }
 
-.formDeletion {
+.formBlock {
   display: inline-block; }
 
 .selectMenu {
@@ -1527,6 +1527,24 @@ article {
     color: #FFFFFF;
     background: -webkit-linear-gradient(#27AE60, #27AE60);
     background: linear-gradient(#27AE60, #27AE60); }
+
+.redButton {
+  padding: 8px 13px;
+  text-decoration: none;
+  font-family: "Open Sans", Arial, serif;
+  border-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  font-weight: 500;
+  color: #FFFFFF;
+  outline: none;
+  background-color: #F44336;
+  border: 1px solid #202020;
+  border: solid 1px; }
+  .redButton:hover {
+    color: #FFFFFF;
+    background: -webkit-linear-gradient(#B71C1C, #B71C1C);
+    background: linear-gradient(#B71C1C, #B71C1C); }
 
 @media screen and (min-width: 1501px) and (min-height: 850px) {
   .topNav {

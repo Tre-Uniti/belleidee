@@ -14,3 +14,11 @@
   cursor: pointer;
   overflow: hidden;
 }
+
+@mixin colorRedButton($color1, $color2, $redTextColor)
+{
+  color: $redTextColor;
+  outline:none;
+  background-color: $color1;
+  border: 1px solid #202020;
+}

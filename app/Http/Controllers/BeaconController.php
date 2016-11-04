@@ -19,6 +19,7 @@ use function App\Http\getLocation;
 use function App\Http\getProfileExtensions;
 use function App\Http\getProfilePosts;
 use function App\Http\getSponsor;
+use function App\Http\preparePostCards;
 use App\Http\Requests\AddModeratorRequest;
 use App\Http\Requests\CreateBeaconRequest;
 use App\Http\Requests\EditBeaconRequest;
@@ -44,9 +45,10 @@ class BeaconController extends Controller
 
     public function __construct(Beacon $beacon)
     {
-        $this->middleware('auth', ['except' => ['show', 'guide', 'posts', 'extensions']]);
+        $this->middleware('auth', ['except' => ['show', 'guide', 'posts', 'extensions', 'index']]);
         $this->middleware('admin', ['only' => 'create', 'store', 'update', 'edit', 'deactivate', 'destroy']);
-        $this->middleware('beaconAdmin', ['only' => ['subscription', 'invoice', 'downloadInvoice', 'integration', 'analytics', 'moderators', 'findModerators']]);
+        $this->middleware('beaconMod', ['only' => 'safePost', 'confirmPost', 'denyPost']);
+        $this->middleware('beaconAdmin', ['only' => ['subscription', 'invoice', 'downloadInvoice', 'integration', 'analytics', 'moderators', 'findModerators', 'enableSafePost', 'disableSafePost']]);
         $this->beacon = $beacon;
     }
 
@@ -57,7 +59,16 @@ class BeaconController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+        }
         $beacons = filterContentLocation($user, 1, 'Beacon');
         $location = getLocation();
         
@@ -660,7 +671,7 @@ class BeaconController extends Controller
             return redirect()->back();
         }
 
-        $posts = Post::where('beacon_tag', $beacon->beacon_tag)->latest()->whereNull('status')->paginate(10);
+        $posts = Post::where('beacon_tag', $beacon->beacon_tag)->whereNull('status')->where('safePost', '=', false)->latest()->paginate(10);
 
         $type = 'Posts';
 
@@ -719,7 +730,7 @@ class BeaconController extends Controller
         {
             $sourcePhotoPath = $user->photo_path;
         }
-        $posts = Post::where('user_id', '=', $guide->id)->where('beacon_tag', '=', $beacon->beacon_tag)->whereNull('status')->latest()->paginate(10);
+        $posts = Post::where('user_id', '=', $guide->id)->where('beacon_tag', '=', $beacon->beacon_tag)->whereNull('status')->where('safePost', '=', false)->latest()->paginate(10);
 
         Event::fire(New BeaconViewed($beacon));
 
@@ -980,5 +991,104 @@ class BeaconController extends Controller
         flash()->overlay($moderator->handle . ' is no longer a moderator for ' . $beacon->beacon_tag);
         return redirect('beacons/moderators/' . $beacon->id);
     }
+
+    /*
+     * Show status of SafePost and any waiting posts
+     * @param $id
+     */
+    public function safePost($id)
+    {
+        $user = Auth::user();
+
+        $beacon = Beacon::findOrFail($id);
+
+        $posts = Post::where('beacon_tag', '=', $beacon->beacon_tag)->whereNull('status')->where('safePost', '=', true)->paginate(10);
+
+        $posts = preparePostCards($posts, $user);
+
+        return view('beacons.safePost')
+            ->with(compact('user', 'beacon', 'posts'));
+    }
+
+    /*
+     * Enable Safe Post for a Beacon
+     * @param $id
+     */
+    public function enableSafePost($id)
+    {
+        $beacon = Beacon::findOrFail($id);
+
+        $beacon->safePost = true;
+        $beacon->update();
+
+        flash()->overlay('Safe post enabled for ' . $beacon->beacon_tag);
+        return redirect('beacons/safePost/' . $beacon->id);
+    }
+
+    /*
+    * Enable Safe Post for a Beacon
+    * @param $id
+    */
+    public function disableSafePost($id)
+    {
+        $beacon = Beacon::findOrFail($id);
+
+        $beacon->safePost = false;
+        $beacon->update();
+
+        $posts = Post::where('beacon_tag', '=', $beacon->beacon_tag)->whereNull('status')->where('safePost', '=', true)->get();
+
+        foreach($posts as $post)
+        {
+            $post->safePost = false;
+            $post->update();
+        }
+
+        flash()->overlay('Safe post disabled for ' . $beacon->beacon_tag);
+        return redirect('beacons/safePost/' . $beacon->id);
+    }
+
+    /*
+     * Approve post to show on Beacon feed
+     */
+    public function approvePost(Request $request)
+    {
+        $post = Post::where('id', '=', $request['post_id'])->first();
+
+        //Post is approved, set to false
+        $post->safePost = false;
+        $post->update();
+
+        flash()->overlay('Post is now approved for ' . $post->beacon_tag);
+        return redirect('/posts/'. $post->id);
+    }
+
+    /*
+     * Deny post and convert tag to No-Beacon
+     */
+    public function denyPost(Request $request)
+    {
+        $user = Auth::user();
+
+        $post = Post::where('id', '=', $request['post_id'])->first();
+        $beacon = Beacon::where('id', '=', $request['beacon_id'])->first();
+        $transferBeacon = Beacon::where('beacon_tag', '=', 'No-Beacon')->first();
+
+        $post->safePost = false;
+        $post->beacon_tag = 'No-Beacon';
+        $post->update();
+
+        //Remove post from old beacon
+        $beacon->posts = $beacon->posts - 1;
+        $beacon->update();
+
+        //Add to No-Beacon
+        $transferBeacon->posts = $transferBeacon->posts + 1;
+        $beacon->update();
+
+        flash()->overlay('Post denied and transferred to No-Beacon');
+        return redirect('/posts/' . $post->id);
+    }
+
 
 }

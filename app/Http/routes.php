@@ -38,6 +38,11 @@ Route::get('beacons/search', 'BeaconController@search');
 Route::get('beacons/results', 'BeaconController@results');
 Route::post('beacons/addModerator', 'BeaconController@addModerator')->name('addModerator');
 Route::delete('beacons/removeModerator/{id}', 'BeaconController@removeModerator')->name('removeModerator');
+Route::get('beacons/safePost/{id}', 'BeaconController@safePost');
+Route::get('beacons/enableSafePost/{id}', 'BeaconController@enableSafePost');
+Route::get('beacons/disableSafePost/{id}', 'BeaconController@disableSafePost');
+Route::post('beacons/approvePost/' , 'BeaconController@approvePost')->name('approvePost');
+Route::post('beacons/denyPost', 'BeaconController@denyPost')->name('denyPost');
 Route::get('beacons/signup/{id}', 'BeaconController@signup');
 Route::post('beacons/subscribe', 'BeaconController@subscribe')->name('subscribe');
 Route::post('beacons/swap', 'BeaconController@swap')->name('swap');
@@ -109,6 +114,7 @@ Route::get('posts/search', 'PostController@search');
 Route::get('posts/results', 'PostController@results');
 Route::get('posts/listElevation/{id}', 'PostController@listElevation');
 Route::get('posts/forYou', 'PostController@forYou');
+Route::get('posts/setSafePost', 'PostController@setSafePost');
 Route::resource('posts', 'PostController');
 
 //Extension Routes (Resource)

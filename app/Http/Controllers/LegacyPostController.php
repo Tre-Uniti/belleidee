@@ -38,7 +38,7 @@ class LegacyPostController extends Controller
 
     public function __construct(LegacyPost $legacyPost)
     {
-        $this->middleware('auth', ['except' => 'show', 'beliefIndex']);
+        $this->middleware('auth', ['except' => 'show', 'beliefIndex', 'index']);
         $this->middleware('admin', ['only' => ['create', 'store', 'edit', 'update']]);
     }
 
@@ -49,7 +49,16 @@ class LegacyPostController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+        }
 
         $legacyPosts = LegacyPost::latest()->paginate(10);
 

@@ -27,7 +27,7 @@ class QuestionController extends Controller
 
     public function __construct(Question $question)
     {
-        $this->middleware('auth', ['except' => 'show']);
+        $this->middleware('auth', ['except' => 'show', 'index']);
         $this->middleware('guardian',['only' => ['create, edit, update, store']]);
         $this->question = $question;
     }
@@ -39,7 +39,16 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+        }
         $questions = $this->question->latest()->paginate(10);
 
         $questions = prepareQuestionCards($questions, $user);

@@ -47,7 +47,7 @@ class PostController extends Controller
 
     public function __construct(Post $post)
     {
-        $this->middleware('auth', ['except' => 'show']);
+        $this->middleware('auth', ['except' => 'show', 'index']);
         $this->middleware('postOwner', ['only' => 'edit', 'update', 'destroy']);
         $this->post = $post;
     }
@@ -57,7 +57,16 @@ class PostController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+        }
 
         $posts = filterContentLocation($user, 0, 'Post');
 
@@ -295,6 +304,16 @@ class PostController extends Controller
             
             $beacon->tag_usage = $beacon->tag_usage + 1;
             $beacon->update();
+
+            //Check if Beacon uses Safe Post and if so add to queue
+            if($beacon->safePost == true)
+            {
+                $post->safePost = true;
+            }
+            else
+            {
+                $post->safePost = false;
+            }
         }
 
         $post->user()->associate($user);
@@ -639,6 +658,16 @@ class PostController extends Controller
             $beacon->tag_usage = $beacon->tag_usage + 1;
             $oldBeacon->update();
             $beacon->update();
+
+            //Check if new beacon has safe post enabled
+            if($beacon->safePost == true)
+            {
+                $post->safePost = true;
+            }
+            else
+            {
+                $post->safePost = false;
+            }
         }
         //If localized get Beacon coordinates and add to post
         if($request['beacon_tag'] != 'No-Beacon')
@@ -1097,6 +1126,22 @@ class PostController extends Controller
         return view ('posts.forYou')
             ->with(compact('user', 'posts', 'profilePosts','profileExtensions'))
             ->with('location', $location);
+    }
+
+    public function setSafePost()
+    {
+        $posts = Post::latest()->get();
+        $counter = 0;
+
+        foreach($posts as $post)
+        {
+            $post->safePost = false;
+            $post->update();
+            $counter++;
+        }
+
+        flash()->overlay('Updated ' . $counter);
+        return redirect('/posts');
     }
 
 }

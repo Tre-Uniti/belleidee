@@ -316,6 +316,21 @@ article
   border: solid 1px ;
 }
 
+  .redButton
+  {
+    @include baseButton;
+    @include colorRedButton($redButtonColor1, $redButtonColor2, $redTextColor);
+    &:hover
+    {
+      color: $redTextHoverColor;
+      background: -webkit-linear-gradient($redHoverColor1, $redHoverColor2);
+      background: -o-linear-gradient($redHoverColor1, $redHoverColor2);
+      background: -moz-linear-gradient($redHoverColor1, $redHoverColor2);
+      background: linear-gradient($redHoverColor1, $redHoverColor2);
+    }
+    border: solid 1px;
+  }
+
 
 
 //Include Media Queries

@@ -47,5 +47,6 @@ class Kernel extends HttpKernel
         'sponsorAdmin' => \App\Http\Middleware\RedirectIfNotSponsorAdmin::class,
         'announcementOwner' => \App\Http\Middleware\RedirectIfNotAnnouncementOwner::class,
         'beaconAdmin' => \App\Http\Middleware\RedirectIfNotBeaconAdmin::class,
+        'beaconMod' => \App\Http\Middleware\RedirectIfNotBeaconMod::class,
     ];
 }
