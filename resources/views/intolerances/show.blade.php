@@ -6,7 +6,13 @@
     Show Intolerance
 @stop
 @section('centerText')
-    <h2><a href = {{ url('intolerances') }}>Intolerance Report</a></h2>
+    <h2>Intolerance Report for
+        @if($intolerance->post_id != null)
+            <a href="{{ action('PostController@show', [$intolerance->post_id])}}" target = "_blank">Post {{ $intolerance->post_id }}</a>
+        @elseif($intolerance->extension_id != null)
+            <a href="{{ action('ExtensionController@show', [$intolerance->extension_id])}}" target = "_blank">Extension {{ $intolerance->extension_id }}</a>
+        @endif
+    </h2>
     <p><button type = "button" class = "interactButton" id = "content">Show Source</button></p>
     <div class = "extensionContent" id = "hiddenContent">
     @if($intolerance->post_id != null)
@@ -39,9 +45,9 @@
 @section('centerFooter')
     <div id = "centerFooter">
         @if($intolerance->user_id == Auth::id())
-            <a href="{{ url('/intolerances/'.$intolerance->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+            <a href="{{ url('/intolerances/'.$intolerance->id.'/edit') }}" class = "navLink">Edit</a>
         @elseif($user->type > 0)
-            <a href="{{ url('/moderations/intolerance/'. $intolerance->id) }}"><button type = "button" class = "navButton">Moderate</button></a>
+            <a href="{{ url('/moderations/intolerance/'. $intolerance->id) }}" class = "navLink">Moderate</a>
         @endif
         @if($user->type > 2)
                 <a href="{{ url('intolerances/userIndex/'. $user->id) }}"><button type = "button" class = "navButton">Others</button></a>

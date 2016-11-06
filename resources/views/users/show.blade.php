@@ -91,10 +91,10 @@
         @endif
     @endif
     @if(Auth::user()->type > 1)
-        <a href="{{ url('intolerances/userIndex/'. $user->id) }}"><button type = "button" class = "navButton">Intolerances</button></a>
-        <a href="{{ url('users/'. $user->id . '/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
+        <a href="{{ url('intolerances/userIndex/'. $user->id) }}" class = "navLink">Intolerances</a>
+        <a href="{{ url('users/'. $user->id . '/edit') }}" class = "navLink">Edit</a>
         {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id], 'class' => 'formDeletion']) !!}
-        {!! Form::submit('Delete User', ['class' => 'navButton', 'id' => 'delete']) !!}
+        {!! Form::submit('Delete User', ['class' => 'redButton', 'id' => 'delete']) !!}
         {!! Form::close() !!}
     @endif
 
