@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Intolerance extends Model
 {
     protected $fillable = [
-    'user_ruling',
+        'user_ruling',
+        'source_user',
 ];
 
     public function user()
@@ -22,6 +23,6 @@ class Intolerance extends Model
 
     public function adjudication()
     {
-        return $this->hasOne('App\Moderation');
+        return $this->hasOne('App\Adjudication');
     }
 }

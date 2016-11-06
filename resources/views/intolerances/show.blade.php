@@ -6,7 +6,7 @@
     Show Intolerance
 @stop
 @section('centerText')
-    <h2><a href = {{ url('intolerances') }}>Intolerance</a></h2>
+    <h2><a href = {{ url('intolerances') }}>Intolerance Report</a></h2>
     <p><button type = "button" class = "interactButton" id = "content">Show Source</button></p>
     <div class = "extensionContent" id = "hiddenContent">
     @if($intolerance->post_id != null)
@@ -31,7 +31,7 @@
     </div>
     <div id = "centerTextContent">
             <p>
-                {{ $intolerance->user_ruling }}
+                This content is intolerant because it contains: {{ $intolerance->user_ruling }}
             </p>
     </div>
 @stop
@@ -43,10 +43,10 @@
         @elseif($user->type > 0)
             <a href="{{ url('/moderations/intolerance/'. $intolerance->id) }}"><button type = "button" class = "navButton">Moderate</button></a>
         @endif
-        @if($user->type > 1)
+        @if($user->type > 2)
                 <a href="{{ url('intolerances/userIndex/'. $user->id) }}"><button type = "button" class = "navButton">Others</button></a>
                 {!! Form::open(['method' => 'DELETE', 'route' => ['intolerances.destroy', $intolerance->id], 'class' => 'formDeletion']) !!}
-                {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
+                {!! Form::submit('Delete', ['class' => 'redButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}
         @endif
 

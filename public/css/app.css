@@ -1382,7 +1382,7 @@ article {
   color: #FFFFFF;
   outline: none;
   background-color: #2ECC71;
-  border: 1px solid #202020; }
+  border: 1px solid #2C3E50; }
 
 #centerTextContent > button:hover > div {
   display: inline-block; }
@@ -1460,10 +1460,11 @@ article {
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   font-weight: 500;
+  border: 1px solid #2C3E50;
   color: #FFFFFF;
   outline: none;
   background-color: #2ECC71;
-  border: 1px solid #202020; }
+  border: 1px solid #2C3E50; }
   .navButton:hover {
     color: #FFFFFF;
     background: -webkit-linear-gradient(#27AE60, #27AE60);
@@ -1479,7 +1480,7 @@ article {
   font-weight: 500;
   color: #000000;
   outline: none;
-  background-color: Transparent;
+  background-color: #ECF0F1;
   border: none;
   cursor: pointer;
   overflow: hidden; }
@@ -1498,7 +1499,7 @@ article {
   font-weight: 500;
   color: #000000;
   outline: none;
-  background-color: Transparent;
+  background-color: #ECF0F1;
   border: none;
   cursor: pointer;
   overflow: hidden;
@@ -1518,11 +1519,11 @@ article {
   font-weight: 500;
   color: #000000;
   outline: none;
-  background-color: Transparent;
+  background-color: #ECF0F1;
   border: none;
   cursor: pointer;
   overflow: hidden;
-  border: solid 1px; }
+  border: 1px solid #2C3E50; }
   .indexButton:hover {
     color: #FFFFFF;
     background: -webkit-linear-gradient(#27AE60, #27AE60);
@@ -1539,8 +1540,7 @@ article {
   color: #FFFFFF;
   outline: none;
   background-color: #F44336;
-  border: 1px solid #202020;
-  border: solid 1px; }
+  border: 1px solid #2C3E50; }
   .redButton:hover {
     color: #FFFFFF;
     background: -webkit-linear-gradient(#B71C1C, #B71C1C);

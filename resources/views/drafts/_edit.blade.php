@@ -10,7 +10,6 @@
     <div class = "formData">
         {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
     </div>
-    <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
     <div class = "indexContent" id = "hiddenIndexContent">
         <div class = "formData">
             <div class = "formCreation">
@@ -74,6 +73,7 @@
         </div>
     @endif
     @section('centerFooter')
+        <button class = "interactButton" type = "button" id = "hiddenIndex">Tags</button>
         {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
         <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
     @stop

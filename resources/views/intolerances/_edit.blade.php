@@ -27,10 +27,16 @@
             <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
         @endif
     </div>
-    <div id = "centerTextContent">
-        {!! Form::textarea('user_ruling', null, ['id' => 'createBodyText', 'placeholder' => 'Why is this intolerant?:', 'rows' => '3%', 'maxlength' => '300']) !!}
+    <div id = "formDataContainer">
+        <div class = "formData">
+            <div class = "formLabel">
+                {!! Form::label('user_ruling', 'Why is this content intolerant?') !!}
+            </div>
+            <div class = "formInput">
+                {!! Form::select('user_ruling', $options, $intolerance->user_ruling, ['class' => 'tagSelector']) !!}
+            </div>
+        </div>
     </div>
-
     @section('centerFooter')
         {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
         <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>

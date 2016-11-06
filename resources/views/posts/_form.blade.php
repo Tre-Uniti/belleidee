@@ -74,7 +74,7 @@
         </div>
     @section('centerFooter')
         <div id = "footerButtons" class = "indexContent">
-            <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
+            <button class = "interactButton" type = "button" id = "hiddenIndex">Tags</button>
             {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
             <button type = "button" id = "back" class = "indexButton">Back</button>
             {!! Form::close()   !!}

@@ -87,10 +87,21 @@
         <div class = "indexNav">
             <div class = "userConnections">
                 <h4 class = "underline">Beacon</h4>
+
                 @if(isset($beacon))
                     @if($beacon != NULL)
                         <a href={{ url('/beacons/'. $beacon->beacon_tag) }}><h4>{{ $beacon->name }}</h4></a>
-                        <a href={{ url('/beacons/'. $beacon->beacon_tag) }}>{{ $beacon->beacon_tag }}</a>
+                        <div class = "cardImg">
+                            @if($beacon->photo_path != NULL)
+                                <a href={{ url('/beacons/'. $beacon->beacon_tag) }}> <img src= {{ url(env('IMAGE_LINK'). $beacon->photo_path) }} alt="{{$beacon->name}}" height = "99%" width = "99%"></a>
+                            @else
+                                <a href={{ url('/beacons/'. $beacon->beacon_tag) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "99%" width = "99%"></a>
+                            @endif
+                        </div>
+                    <p>
+                        Tag:<a href={{ url('/beacons/'. $beacon->beacon_tag) }}> {{ $beacon->beacon_tag }}</a>
+                    </p>
+
                         <div><a href="{{ url('/beacons') }}" class = "indexLink">Change Beacon</a></div>
                     @endif
                 @else
@@ -116,7 +127,16 @@
                 @if(isset($sponsor))
                     @if($sponsor != NULL)
                         <a href={{ url('/sponsors/click/'. $sponsor->id) }}><h4>{{ $sponsor->name }}</h4></a>
-                        <a href={{ url('/sponsors/click/'. $sponsor->id) }}>{{ $sponsor->sponsor_tag }}</a>
+                        <div class = "cardImg">
+                            @if($sponsor->photo_path != NULL)
+                                <a href={{ url('/sponsors/click/'. $sponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $sponsor->photo_path) }} alt="{{$sponsor->name}}" height = "99%" width = "99%"></a>
+                            @else
+                                <a href={{ url('/sponsors/click/'. $sponsor->id) }}><img src= {{ asset('img/backgroundLandscape.jpg') }} alt="idee" height = "99%" width = "99%"></a>
+                            @endif
+                        </div>
+                    <p>
+                        Tag: <a href={{ url('/sponsors/click/'. $sponsor->id) }}>{{ $sponsor->sponsor_tag }}</a>
+                    </p>
                         <div><a href="{{ url('/sponsors') }}" class = "indexLink">Change Sponsor</a></div>
                     @endif
                 @else
@@ -126,8 +146,6 @@
             </div>
         </div>
     </div>
-
-
     <div class = "contentCard">
         <div class = "cardTitleSection">
             <h3>
@@ -148,7 +166,6 @@
                 <a href="{{ url('/tutorials') }}" class = "indexLink">Tutorials</a>
                 <a href="{{ url('/about') }}" class = "indexLink">About Belle-idee</a>
             </div>
-
         </div>
     </div>
 
@@ -184,13 +201,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
 @stop
 @section('centerFooter')
     @if($user->type > 0)

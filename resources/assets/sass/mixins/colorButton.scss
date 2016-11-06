@@ -3,13 +3,13 @@
   color: $navTextColor;
   outline:none;
   background-color: $color1;
-  border: 1px solid #202020;
+  border: 1px solid #2C3E50;
 }
 @mixin colorActButton($color1, $color2, $actTextColor)
 {
   color: $actTextColor;
   outline:none;
-  background-color: Transparent;
+  background-color: #ECF0F1;
   border: none;
   cursor: pointer;
   overflow: hidden;
@@ -20,5 +20,4 @@
   color: $redTextColor;
   outline:none;
   background-color: $color1;
-  border: 1px solid #202020;
 }

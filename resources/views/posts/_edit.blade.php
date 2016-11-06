@@ -73,7 +73,7 @@
         </div>
     </div>
     @section('centerFooter')
-        <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
+        <button class = "interactButton" type = "button" id = "hiddenIndex">Tags</button>
         {!! Form::submit($submitButtonText, ['class' => 'indexButton', 'id' => 'submit']) !!}
         <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
     @stop

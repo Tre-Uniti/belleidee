@@ -264,6 +264,7 @@ article
 .navButton
 {
   @include baseButton;
+  border: 1px solid #2C3E50;
   @include colorNavButton($navButtonColor1, $navButtonColor2, $navTextColor);
   &:hover
   {
@@ -314,7 +315,7 @@ article
     background: -moz-linear-gradient($actHoverColor1, $actHoverColor2);
     background: linear-gradient($actHoverColor1, $actHoverColor2);
   }
-  border: solid 1px;
+  border: 1px solid #2C3E50;
 }
 
 .redButton
@@ -329,7 +330,7 @@ article
     background: -moz-linear-gradient($redHoverColor1, $redHoverColor2);
     background: linear-gradient($redHoverColor1, $redHoverColor2);
   }
-  border: solid 1px;
+  border: 1px solid #2C3E50;
 }
 
 

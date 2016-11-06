@@ -133,7 +133,7 @@
         <input type="hidden" name="id" value="{{ $sourceModel->id }}">
     @endif
     <div>
-        <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
+        <button class = "interactButton" type = "button" id = "hiddenIndex">Tags</button>
         {!! Form::submit('Add Extension', ['class' => 'navButton', 'id' => 'submit']) !!}
         {!! Form::close()   !!}
         <button type = "button" class = "interactButton" id = "content">View Source</button>

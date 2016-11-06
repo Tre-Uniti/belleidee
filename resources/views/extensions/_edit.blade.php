@@ -128,7 +128,7 @@
         <input type="hidden" name="id" value="{{ $sourceModel->id }}">
     @endif
     <div>
-        <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
+        <button class = "interactButton" type = "button" id = "hiddenIndex">Tags</button>
             @if(($sources['type'] == 'question'))
                 {!! Form::submit('Update Answer', ['class' => 'navButton', 'id' => 'submit']) !!}
             @else

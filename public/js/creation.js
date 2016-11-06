@@ -35,13 +35,13 @@ $(document).ready(function() {
     $(document.getElementById("hiddenIndex")).click(function(){
         $("#hiddenIndexContent").slideToggle();
         var tagIndex = document.getElementById("hiddenIndex");
-        if(tagIndex.innerHTML == "Show Tags")
+        if(tagIndex.innerHTML == "Tags")
         {
             tagIndex.innerHTML = "Hide Tags";
         }
         else
         {
-            tagIndex.innerHTML = "Show Tags";
+            tagIndex.innerHTML = "Tags";
         }
 
     });

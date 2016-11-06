@@ -16,7 +16,7 @@
             {!! Form::label('belief', 'Belief:') !!}
         </div>
         <div class = "formInput">
-            {!! Form::select('belief', $beliefs) !!}
+            {!! Form::select('belief', $beliefs, null, ['class' => 'selectMenu']) !!}
         </div>
     </div>
     <div class = "formData">

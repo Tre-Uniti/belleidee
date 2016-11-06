@@ -30,12 +30,13 @@ class IntoleranceController extends Controller
     public function __construct(Intolerance $intolerance)
     {
         $this->middleware('auth');
+        $this->middleware('beaconMod', ['only' => 'beaconIndex']);
         $this->middleware('moderator', ['only' => 'index']);
         $this->middleware('admin', ['only' => 'delete']);
         $this->intolerance = $intolerance;
     }
 
-    /**
+    /*
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -45,9 +46,25 @@ class IntoleranceController extends Controller
         $user = Auth::user();
         $intolerances = $this->intolerance->latest()->paginate(10);
 
-
         return view ('intolerances.index')
             ->with(compact('user', 'intolerances'));
+    }
+
+    /*
+     * List the index of intolerances for a given beacon id
+     *
+     * @param $id
+     */
+    public function beaconIndex($id)
+    {
+        $beacon = Beacon::findOrFail($id);
+
+        $user = Auth::user();
+
+        $intolerances = $this->intolerance->where('beacon_tag', '=', $beacon->beacon_tag)->latest()->paginate(10);
+
+        return view('intolerances.beaconIndex')
+            ->with(compact('user', 'beacon', 'intolerances'));
     }
 
     /**
@@ -102,9 +119,21 @@ class IntoleranceController extends Controller
             }
         }
 
+        //Options for user to report intolerance
+        $options =
+        [
+            'Aggressive Behavior' => 'Aggressive Behavior',
+            'Suggestive or Leud Content' => 'Suggestive or Leud Content',
+            'Inappropriate Language' => 'Inappropriate Language',
+            'Hate Speech or Violence' => 'Hate Speech or Violence',
+            'Other' => 'Other'
+        ];
+
+
         return view('intolerances.create')
             ->with(compact('user', 'sources', 'sourceUser', 'content'))
-            ->with('type', $type);
+            ->with('type', $type)
+            ->with('options', $options);
     }
 
     /**
@@ -125,11 +154,13 @@ class IntoleranceController extends Controller
         {
             $intolerance->post_id = $sources['post_id'];
             $intolerance->beacon_tag = $sources['beacon_tag'];
+            $intolerance->source_user = $sources['user_id'];
         }
         elseif($sources['type'] == 'extension')
         {
             $intolerance->extension_id = $sources['extension_id'];
             $intolerance->beacon_tag = $sources['beacon_tag'];
+            $intolerance->source_user = $sources['user_id'];
         }
 
         $intolerance->user()->associate($user);
@@ -219,10 +250,21 @@ class IntoleranceController extends Controller
             $type = substr($sourceModel->post_path, -3);
         }
 
+        //Options for user to report intolerance
+        $options =
+            [
+                'Aggressive Behavior' => 'Aggressive Behavior',
+                'Suggestive or Leud Content' => 'Suggestive or Leud Content',
+                'Inappropriate Language' => 'Inappropriate Language',
+                'Hate Speech or Violence' => 'Hate Speech or Violence',
+                'Other' => 'Other'
+            ];
+
 
         return view ('intolerances.edit')
             ->with(compact('user', 'intolerance', 'sourceUser', 'content'))
-            ->with('type', $type);
+            ->with('type', $type)
+            ->with('options', $options);
     }
 
     /**
@@ -299,7 +341,7 @@ class IntoleranceController extends Controller
     public function intolerantExtension($id)
     {
         $sourceExtension = Extension::findOrFail($id);
-        $fullSource = ['type' => 'extension', 'user_id' => $sourceExtension->user_id,  'extension_id' => $sourceExtension->id, 'extension_title' => $sourceExtension->title, 'beacon_tag' => $sourceExtension->beacon_tag];
+        $fullSource = ['type' => 'extension', 'user_id' => $sourceExtension->user_id,  'extension_id' => $sourceExtension->id, 'extension_title' => 'Extension', 'beacon_tag' => $sourceExtension->beacon_tag];
         Session::put('intolerantSource', $fullSource);
 
         return redirect('intolerances/create');
@@ -336,22 +378,6 @@ class IntoleranceController extends Controller
         
         return view ('intolerances.userIndex')
             ->with(compact('user', 'intolerances'));
-
-    }
-
-    /* List the intolerances for a given beacon
-    *
-    * @param $id
-    */
-    public function beaconIndex($id)
-    {
-        $beacon = Beacon::findOrFail($id);
-        $user = Auth::user();
-
-        $intolerances = $this->intolerance->where('beacon_tag', '=', $beacon->beacon_tag)->latest()->paginate(10);
-
-        return view ('intolerances.beaconIndex')
-            ->with(compact('user', 'intolerances', 'beacon'));
 
     }
     

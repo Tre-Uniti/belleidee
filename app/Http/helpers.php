@@ -6,6 +6,7 @@ use App\Announcement;
 use App\Beacon;
 use App\Elevation;
 use App\Events\BeaconViewed;
+use App\Events\SetLocation;
 use App\Events\SponsorViewed;
 use App\Extension;
 use App\LegacyPost;
@@ -579,6 +580,13 @@ function getLocation()
 function filterContentLocation($user, $number, $type)
 {
     $location = session('coordinates');
+
+    if($location == null)
+    {
+        Event::fire(New SetLocation($user));
+        $location = session('coordinates');
+    }
+    //dd($location);
 
     //Simple Index (i.e Post and Extension main indexes)
     if($number == 0)
