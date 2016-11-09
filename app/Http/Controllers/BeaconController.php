@@ -47,8 +47,8 @@ class BeaconController extends Controller
     {
         $this->middleware('auth', ['except' => ['show', 'guide', 'posts', 'extensions', 'index']]);
         $this->middleware('admin', ['only' => 'create', 'store', 'update', 'edit', 'deactivate', 'destroy']);
-        $this->middleware('beaconMod', ['only' => 'safePost', 'confirmPost', 'denyPost']);
-        $this->middleware('beaconAdmin', ['only' => ['subscription', 'invoice', 'downloadInvoice', 'integration', 'analytics', 'moderators', 'findModerators', 'enableSafePost', 'disableSafePost']]);
+        $this->middleware('beaconMod', ['only' => 'moderators', 'safePost', 'confirmPost', 'denyPost']);
+        $this->middleware('beaconAdmin', ['only' => ['subscription', 'invoice', 'downloadInvoice', 'integration', 'analytics', 'findModerators', 'enableSafePost', 'disableSafePost']]);
         $this->beacon = $beacon;
     }
 
@@ -301,6 +301,16 @@ class BeaconController extends Controller
 
         $announcements = Announcement::where('beacon_id', '=', $beacon->id)->latest()->take(10)->get();
 
+        //Check if viewing user is a moderator for this Beacon
+        if($moderator = BeaconModerator::where('beacon_id', '=', $beacon->id)->where('user_id', '=', $user->id)->exists())
+        {
+            $moderator = true;
+        }
+        else
+        {
+            $moderator = false;
+        }
+
         Event::fire(new BeaconViewed($beacon));
 
         return view ('beacons.show')
@@ -308,6 +318,7 @@ class BeaconController extends Controller
                     ->with('guide', $guide)
                     ->with('postCount', $postCount)
                     ->with('userCount', $userCount)
+                    ->with('moderator', $moderator)
                     ->with('userConnected', $userConnected);
     }
 
@@ -961,8 +972,16 @@ class BeaconController extends Controller
      */
     public function addModerator(AddModeratorRequest $request)
     {
-
+        $user = Auth::user();
         $beacon = Beacon::findOrFail($request['beacon_id']);
+
+        //Verify user is able to make request
+        if($user->type <= 2 && $user->id != $beacon->manager)
+        {
+            flash()->overlay('Must be manager or admin to remove');
+            return redirect('/beacons/' . $beacon->beacon_tag);
+        }
+
         $moderator = User::findOrFail($request['user_id']);
 
         $beaconModerator = new BeaconModerator($request->all());
@@ -980,10 +999,17 @@ class BeaconController extends Controller
      */
     public function removeModerator($id)
     {
+        $user = Auth::user();
 
         $beaconModerator = BeaconModerator::findOrFail($id);
 
         $beacon = Beacon::findOrFail($beaconModerator->beacon_id);
+        //Verify user is able to make request
+        if($user->type <= 2 && $user->id != $beacon->manager)
+        {
+            flash()->overlay('Must be manager or admin to remove');
+            return redirect('/beacons/' . $beacon->beacon_tag);
+        }
         $moderator = User::findOrFail($beaconModerator->user_id);
 
         $beaconModerator->delete();

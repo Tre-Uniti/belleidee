@@ -9,6 +9,7 @@
         <a href="{{ url('/beacons/contact/' . $beacon->beacon_tag)}}" class = "indexLink">Contact</a>
         <p>Moderators for: <a href = "{{ url('/beacons/' . $beacon->beacon_tag) }}" class = "contentHandle">{{ $beacon->beacon_tag }}</a></p>
         <a href = "{{ url('/beacons/moderators/find/' . $beacon->id) }}" class = "indexLink">Find Moderators</a>
+        <a href = "{{ url('/beacons/safePost/' . $beacon->id) }}" class = "indexLink">Safe Post</a>
     </div>
     <hr class = "contentSeparator">
     @include('users._moderatorCards')

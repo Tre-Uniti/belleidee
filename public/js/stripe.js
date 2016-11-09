@@ -1,5 +1,5 @@
-//Stripe.setPublishableKey('pk_live_SHdiu1qmmJ7wAjqFs2cZgstg');
-Stripe.setPublishableKey('pk_test_5UQPslTg5VlQSDkE64mtG7TJ');
+Stripe.setPublishableKey('pk_live_SHdiu1qmmJ7wAjqFs2cZgstg');
+//Stripe.setPublishableKey('pk_test_5UQPslTg5VlQSDkE64mtG7TJ');
 var stripeResponseHandler = function(status, response) {
     var $form = $('#payment-form');
     if (response.error) {

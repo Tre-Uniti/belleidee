@@ -10,9 +10,9 @@
     <p>Your Beacons</p>
 
     <hr class = "contentSeparator"/>
-    @include('beacons._beaconCards')
+    @include('beacons._beaconModCards')
 
 @stop
 @section('centerFooter')
-    {!! $beacons->render() !!}
+    {!! $beaconMods->render() !!}
 @stop

@@ -69,9 +69,9 @@ class ModeratorController extends Controller
     {
         $user = Auth::user();
 
-        $beacons = BeaconModerator::where('user_id', '=', $user->id)->latest()->paginate(10);
+        $beaconMods = BeaconModerator::where('user_id', '=', $user->id)->latest()->paginate(10);
 
         return view('moderator.yourBeacons')
-            ->with(compact('user', 'beacons'));
+            ->with(compact('user', 'beaconMods'));
     }
 }

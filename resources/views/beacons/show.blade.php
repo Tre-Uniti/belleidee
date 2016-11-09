@@ -84,6 +84,9 @@
             <a href="{{ url('/beacons/'.$beacon->id .'/edit') }}" class = "navLink">Edit</a>
             <a href="{{ url('beacons/deactivate/'. $beacon->id)}}" class = "navLink">Deactivate</a>
         @endif
+        @if($moderator == true)
+            <a href = "{{ url('/beacons/moderators/' . $beacon->id) }}" class = "navLink">Moderation</a>
+        @endif
         @if($userConnected == FALSE)
             <a href="{{ url('/bookmarks/beacons/'.$beacon->beacon_tag) }}" class = "navLink">Connect to Beacon</a>
         @endif
