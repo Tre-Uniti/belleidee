@@ -35,8 +35,12 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     </header>
     <div class = "indexNav">
         <div class = "beliefIndex">
-            <a href="{{ action('BeliefController@show', $legacyPost->belief) }}"><i class="fa fa-hashtag" aria-hidden="true"></i>Legacies</a>
-            <span class="tooltiptext">Legacy posts for {{ $legacyPost->belief }}</span>
+            <a href="{{ action('BeliefController@show', $legacyPost->belief) }}"><i class="fa fa-hashtag" aria-hidden="true"></i>{{$legacyPost->belief}}</a>
+            <span class="tooltiptext">Belief for this specific Legacy</span>
+        </div>
+        <div class = "sourceIndex">
+            <a href="{{ url('/legacyPosts') }}"><i class="fa fa-hashtag" aria-hidden="true"></i>Legacies</a>
+            <span class="tooltiptext">Legacy posts for all beliefs</span>
         </div>
     </div>
     @if($type != 'txt')
@@ -74,8 +78,8 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
             </div>
 
             <div class = "centerSection">
-                <a href="{{ url('/beliefs/'.$legacyPost->belief) }}" >{{ $legacyPost->belief }}</a>
-                <span class="tooltiptext">More {{ $legacyPost->belief }} Legacies</span>
+                <a href="{{ url('beliefs/legacies/'.$legacyPost->belief) }}" >{{ $legacyPost->belief }} Legacy </a>
+                <span class="tooltiptext">More {{ $legacyPost->belief }} Legacy posts</span>
             </div>
 
             <div class = "rightSection">

@@ -86,8 +86,6 @@
         </div>
         <div class = "indexNav">
             <div class = "userConnections">
-                <h4 class = "underline">Beacon</h4>
-
                 @if(isset($beacon))
                     @if($beacon != NULL)
                         <a href={{ url('/beacons/'. $beacon->beacon_tag) }}><h4>{{ $beacon->name }}</h4></a>
@@ -123,7 +121,6 @@
         </div>
         <div class = "indexNav">
             <div class = "userConnections">
-                <h4 class = "underline">Sponsor</h4>
                 @if(isset($sponsor))
                     @if($sponsor != NULL)
                         <a href={{ url('/sponsors/click/'. $sponsor->id) }}><h4>{{ $sponsor->name }}</h4></a>
