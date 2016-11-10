@@ -177,7 +177,7 @@ class PostController extends Controller
         $user = Auth::user();
         $date = Carbon::now()->format('M-d-Y');
 
-        //Get last beac of user and check if it was UTC today
+        //Get last beacon of user and check if it was UTC today
         //If the dates match redirect them to their post
         try
         {

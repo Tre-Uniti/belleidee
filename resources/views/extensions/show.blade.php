@@ -110,7 +110,7 @@
             @endif
             @if($extension->elevation == 0 && $extension->extension == 0 && $extension->user_id == $viewUser->id)
                 {!! Form::open(['method' => 'DELETE', 'route' => ['extensions.destroy', $extension->id], 'class' => 'formDeletion']) !!}
-                {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
+                {!! Form::submit('Delete', ['class' => 'redButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}
             @endif
         </div>

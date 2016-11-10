@@ -183,8 +183,8 @@
         <div class = "footerSection">
 
             <div class = "centerSection">
-                <a href = "{{ url('/users/deletion') }}"><button type = "button" class = "indexButton">Delete Account</button></a>
-                <a href="{{ url('/home') }}"><button type = "button" class = "indexButton">Joined: {{$user->created_at->format('M-d-Y')}}</button></a>
+                <a href = "{{ url('/users/deletion') }}" class = "indexLink">Delete Account</a>
+                <a href="{{ url('/home') }}" class = "indexLink">Joined: {{$user->created_at->format('M-d-Y')}}</a>
             </div>
             <div class = "indexNav"></div>
             <p>
@@ -207,7 +207,7 @@
         <a href="{{ url('/moderator') }}" class = "navLink">Moderator</a>
     @endif
     @if($user->type > 1)
-        <a href="{{ url('/admin') }}" class = "NavLink">Admin</a>
+        <a href="{{ url('/admin') }}" class = "navLink">Admin</a>
     @endif
 @stop
 

@@ -6,8 +6,8 @@
 @section('centerText')
     @include ('errors.list')
 
-    {!! Form::open(['url' => 'beliefs']) !!}
-    @include ('beliefs._form', ['submitButtonText' => 'Create Belief', 'files' => true])
+    {!! Form::open(['url' => 'beliefs', 'files' => true]) !!}
+    @include ('beliefs._form', ['submitButtonText' => 'Create Belief'])
 @stop
 
 

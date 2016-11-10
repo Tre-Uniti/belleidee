@@ -102,6 +102,7 @@ function getBeliefs()
             'Hinduism' => 'Hinduism',
             'Islam' => 'Islam',
             'Indigenous' => 'Indigenous',
+            'Jainism' => 'Jainism',
             'Judaism' => 'Judaism',
             'Shinto' => 'Shinto',
             'Sikhism' => 'Sikhism',

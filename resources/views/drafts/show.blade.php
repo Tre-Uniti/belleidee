@@ -16,7 +16,6 @@
         <h4>By: <a href = "{{ url('/users/'. $draft->user->id) }}" class = "contentHandle" >{{ $draft->user->handle }}</a> on <a href = {{ url('/posts/date/'.$draft->created_at->format('M-d-Y')) }}>{{ $draft->created_at->format('M-d-Y')  }}</a></h4>
         <div class = "indexNav">
 
-
         </div>
         <div class = "indexNav">
             <div class = "beliefIndex">
@@ -42,14 +41,10 @@
                 <p class = "test">
                     {!! nl2br($draft->body) !!}
                 </p>
-
             </div>
         @endif
     </article>
-
 @stop
-
-
 
 @section('centerFooter')
     <div id = "centerFooter">
@@ -57,7 +52,7 @@
         @if($draft->user_id == Auth::id())
             <a href="{{ url('/drafts/'.$draft->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
             {!! Form::open(['method' => 'DELETE', 'route' => ['drafts.destroy', $draft->id], 'class' => 'formDeletion']) !!}
-            {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
+            {!! Form::submit('Delete', ['class' => 'redButton', 'id' => 'delete']) !!}
             {!! Form::close() !!}
         @else
         @endif

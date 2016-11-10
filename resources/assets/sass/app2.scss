@@ -65,6 +65,15 @@ p.extras
   cursor: pointer;
 }
 
+  a.back-to-top:link {
+    color: white;
+  }
+  a.back-to-top:visited {
+    color: white;
+  }
+  a.back-to-top:hover {
+    color: #27AE60;
+  }
 
 .hover {
   -webkit-user-select: none;

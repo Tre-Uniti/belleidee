@@ -54,5 +54,5 @@
 @stop
 @section('footer')
     <h4>Guidelines:</h4>
-    <p>Share beautiful ideas, inspirations, and experiences instead of arguing for/against beliefs</p>
+    <p>Share beautiful ideas, values, and experiences instead of arguing for/against beliefs</p>
 @stop

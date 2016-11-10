@@ -86,6 +86,7 @@
                         <option value="Hinduism" @if (old('belief') == 'Hinduism') selected="selected" @elseif($extension->belief == 'Hinduism' & (old('belief') == '')) selected="selected" @endif>Hinduism</option>
                         <option value="Islam" @if (old('belief') == 'Islam') selected="selected" @elseif($extension->belief == 'Islam' & (old('belief') == '')) selected="selected" @endif>Islam</option>
                         <option value="Indigenous" @if (old('belief') == 'Indigenous') selected="selected" @elseif($extension->belief == 'Indigenous' & (old('belief') == '')) selected="selected" @endif>Indigenous</option>
+                        <option value="Jainism" @if (old('belief') == 'Jainism') selected="selected" @elseif($extension->belief == 'Jainism' & (old('belief') == '')) selected="selected" @endif>Jainism</option>
                         <option value="Judaism" @if (old('belief') == 'Judaism') selected="selected" @elseif($extension->belief == 'Judaism' & (old('belief') == '')) selected="selected" @endif>Judaism</option>
                         <option value="Shinto" @if (old('belief') == 'Shinto') selected="selected" @elseif($extension->belief == 'Shinto' & (old('belief') == '')) selected="selected" @endif>Shinto</option>
                         <option value="Sikhism" @if (old('belief') == 'Sikhism') selected="selected" @elseif($extension->belief == 'Sikhism' & (old('belief') == '')) selected="selected" @endif>Sikhism</option>

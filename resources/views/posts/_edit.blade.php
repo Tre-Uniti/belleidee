@@ -43,6 +43,7 @@
                     <option value="Hinduism" @if (old('belief') == 'Hinduism') selected="selected" @elseif($post->belief == 'Hinduism' & (old('belief') == '')) selected="selected" @endif>Hinduism</option>
                     <option value="Islam" @if (old('belief') == 'Islam') selected="selected" @elseif($post->belief == 'Islam' & (old('belief') == '')) selected="selected" @endif>Islam</option>
                     <option value="Indigenous" @if (old('belief') == 'Indigenous') selected="selected" @elseif($post->belief == 'Indigenous' & (old('belief') == '')) selected="selected" @endif>Indigenous</option>
+                    <option value="Jainism" @if (old('belief') == 'Jainism') selected="selected" @elseif($post->belief == 'Jainism' & (old('belief') == '')) selected="selected" @endif>Jainism</option>
                     <option value="Judaism" @if (old('belief') == 'Judaism') selected="selected" @elseif($post->belief == 'Judaism' & (old('belief') == '')) selected="selected" @endif>Judaism</option>
                     <option value="Shinto" @if (old('belief') == 'Shinto') selected="selected" @elseif($post->belief == 'Shinto' & (old('belief') == '')) selected="selected" @endif>Shinto</option>
                     <option value="Sikhism" @if (old('belief') == 'Sikhism') selected="selected" @elseif($post->belief == 'Sikhism' & (old('belief') == '')) selected="selected" @endif>Sikhism</option>
@@ -75,6 +76,6 @@
     @section('centerFooter')
         <button class = "interactButton" type = "button" id = "hiddenIndex">Tags</button>
         {!! Form::submit($submitButtonText, ['class' => 'indexButton', 'id' => 'submit']) !!}
-        <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
+        <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "interactButton">Cancel</button></a>
     @stop
 </div>

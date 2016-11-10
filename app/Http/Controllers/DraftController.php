@@ -44,14 +44,11 @@ class DraftController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
         $drafts = $this->draft->where('user_id', $user->id)->latest()->paginate(10);
 
-        $sponsor = getSponsor($user);
-
         return view ('drafts.index')
-            ->with(compact('user', 'drafts', 'profilePosts','profileExtensions', 'sponsor'));
+            ->with(compact('user', 'drafts'));
     }
 
     /**
@@ -62,8 +59,7 @@ class DraftController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
+
         $date = Carbon::now()->format('M-d-Y');
 
         //Populate Beacon options with user's bookmarked beacons
@@ -81,10 +77,10 @@ class DraftController extends Controller
             flash()->overlay('No recent Beacon interaction, please verify post tags');
         }
 
-        $sponsor = getSponsor($user);
+
 
         return view('drafts.create')
-            ->with(compact('user', 'date', 'profilePosts', 'profileExtensions', 'beacons', 'sponsor', 'lastBeacon'));
+            ->with(compact('user', 'date', 'beacons', 'lastBeacon'));
     }
 
     /**
@@ -132,7 +128,7 @@ class DraftController extends Controller
             //Resize the image
             $imageResized = Image::make($image);
             $originalImage = Image::make($image);
-            $imageResized->resize(450, 400, function ($constraint) {
+            $imageResized->resize(450, 350, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
@@ -379,7 +375,7 @@ class DraftController extends Controller
                 //Resize the image
                 $imageResized = Image::make($image);
                 $originalImage = Image::make($image);
-                $imageResized->resize(450, 400, function ($constraint) {
+                $imageResized->resize(450, 350, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 });
@@ -481,7 +477,7 @@ class DraftController extends Controller
         }
         catch(ModelNotFoundException $e)
         {
-            flash()->overlay('Your first draft:');
+            flash()->overlay('Your first conversion to post:');
         }
 
         //Determine if draft is image or text and move to new location
@@ -508,7 +504,17 @@ class DraftController extends Controller
         $beacon->tag_usage = $beacon->tag_usage + 1;
         $beacon->update();
 
+
         $post = new Post;
+        //Check if Beacon uses Safe Post and if so add to queue
+        if($beacon->safePost == true)
+        {
+            $post->safePost = true;
+        }
+        else
+        {
+            $post->safePost = false;
+        }
         $post->title = $draft->title;
         $post->excerpt = $draft->excerpt;
         $post->belief = $draft->belief;

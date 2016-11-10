@@ -90,7 +90,7 @@
             <a href="{{ action('BookmarkController@remove', $following->id)}}" class = "navLink">Unfollow</a>
         @endif
     @endif
-    @if(Auth::user()->type > 1)
+    @if(Auth::user()->type > 2)
         <a href="{{ url('intolerances/userIndex/'. $user->id) }}" class = "navLink">Intolerances</a>
         <a href="{{ url('users/'. $user->id . '/edit') }}" class = "navLink">Edit</a>
         {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id], 'class' => 'formDeletion']) !!}

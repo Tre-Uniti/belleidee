@@ -39,7 +39,11 @@
                     <p>Following a User adds their posts to the "For You" areas.</p>
 
                     <a href = "{{ url('/users') }}" class = "indexLink">User Directory</a>
-                    <a href = "{{ url('/indev') }}" class = "indexLink">Find Nearby</a>
+                    @if($user->last_tag == null)
+                        <a href = "{{ url('/users') }}" class = "indexLink">Find Nearby</a>
+                    @else
+                    <a href = "{{ url('/users') }}" class = "indexLink">Find Nearby</a>
+                    @endif
                 </header>
             </div>
         </div>
@@ -55,7 +59,7 @@
                     <p>Connecting allows you to engage with their online community.</p>
 
                     <a href = "{{ url('/beacons') }}" class = "indexLink">Beacon Directory</a>
-                    <a href = "{{ url('/indev') }}" class = "indexLink">Find Nearby</a>
+                    <a href = "{{ url('/beacons') }}" class = "indexLink">Find Nearby</a>
                 </header>
             </div>
         </div>
@@ -72,7 +76,7 @@
                     <p>Sponsorships give you access to exclusive promotions.</p>
 
                     <a href = "{{ url('/sponsors') }}" class = "indexLink">Sponsor Directory</a>
-                    <a href = "{{ url('/indev') }}" class = "indexLink">Find Nearby</a>
+                    <a href = "{{ url('/sponsors') }}" class = "indexLink">Find Nearby</a>
                 </header>
             </div>
         </div>

@@ -115,6 +115,7 @@ Route::get('posts/results', 'PostController@results');
 Route::get('posts/listElevation/{id}', 'PostController@listElevation');
 Route::get('posts/forYou', 'PostController@forYou');
 Route::get('posts/setSafePost', 'PostController@setSafePost');
+Route::get('posts/setExcerpt', 'PostController@setExcerpt');
 Route::resource('posts', 'PostController');
 
 //Extension Routes (Resource)
@@ -139,6 +140,7 @@ Route::get('extensions/post/list/{id}', 'ExtensionController@postList');
 Route::get('extensions/extend/list/{id}', 'ExtensionController@extendList');
 Route::get('extensions/listElevation/{id}', 'ExtensionController@listElevation');
 Route::get('extensions/forYou', 'ExtensionController@forYou');
+Route::get('extensions/setExcerpt', 'ExtensionController@setExcerpt');
 Route::resource('extensions', 'ExtensionController');
 
 //Draft Routes (Resource)
