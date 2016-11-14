@@ -7,7 +7,7 @@
     <div class = "contentCard">
         <a href="{{ url('/about') }}"><img id = "tourImage" src = "/img/tour.png" alt="tour" width="100%" height="100%"></a>
     </div>
-
+    <h4>An online community sharing spiritual ideas, values and experiences.</h4>
 @stop
 @section('footer')
     @if(isset($user))

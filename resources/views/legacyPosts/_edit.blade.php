@@ -13,7 +13,7 @@
         {!! Form::label('belief', 'Belief:', ['class' => 'tagLabel']) !!}
     </div>
     <div class = "formData">
-        {!! Form::select('belief', $beliefs) !!}
+        {!! Form::select('belief', $beliefs, $legacyPost->belief, ['class' => 'tagSelector']) !!}
     </div>
 
     @if($type != 'txt')

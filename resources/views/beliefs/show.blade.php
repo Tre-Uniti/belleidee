@@ -29,7 +29,7 @@
                 <a href="{{ url('/beliefs/extensions/'. $belief->name) }}" class = "indexLink">Extensions <div>{{ $belief->extensions }}</div></a>
                 <a href="{{ url('/beliefs/beacons/'. $belief->name) }}" class = "indexLink">Beacons <div>{{ $belief->beacons }}</div></a>
             </div>
-            <p class = "textContent">
+            <p class = "beliefContent">
                 {!! nl2br($belief->description) !!}
             </p>
         </div>

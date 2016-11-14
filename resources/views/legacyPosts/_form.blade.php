@@ -19,7 +19,7 @@
             {!! Form::label('belief', 'Belief:', ['class' => 'tagLabel']) !!}
         </div>
         <div class = "formData">
-        {!! Form::select('belief', $beliefs) !!}
+        {!! Form::select('belief', $beliefs, null, ['class' => 'tagSelector']) !!}
         </div>
 
     <div class = "indexContent" id = "imageUpload">

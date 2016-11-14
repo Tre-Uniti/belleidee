@@ -19,7 +19,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     @elseif(isset($photoPath) && $photoPath != NULL)
         <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $photoPath) }}"/>
     @else
-        <meta property="og:image"         content={{ url('/img/idee-med.png') }}/>
+        <meta property="og:image"         content={{ url('/img/idee.png') }}/>
     @endif
 @stop
 @section('siteTitle')
