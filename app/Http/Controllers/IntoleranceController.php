@@ -117,6 +117,7 @@ class IntoleranceController extends Controller
                 flash()->overlay('You have already posted intolerance for this question');
                 return redirect('intolerances/'. $intolerance->id);
             }
+            $sourceModel = Question::where('id', '=', $sources['question_id']);
         }
 
         //Options for user to report intolerance
@@ -131,7 +132,7 @@ class IntoleranceController extends Controller
 
 
         return view('intolerances.create')
-            ->with(compact('user', 'sources', 'sourceUser', 'content'))
+            ->with(compact('user', 'sources', 'sourceModel', 'sourceUser', 'content'))
             ->with('type', $type)
             ->with('options', $options);
     }
