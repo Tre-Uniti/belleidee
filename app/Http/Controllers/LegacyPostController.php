@@ -307,14 +307,8 @@ class LegacyPostController extends Controller
     {
         $legacyPost = LegacyPost::findOrFail($id);
         $legacy = Legacy::where('id', '=', $legacyPost->legacy_id)->first();
-        if($legacy->original_source_path != null)
-        {
-            $type = 'img';
-        }
-        else
-        {
-            $type = 'txt';
-        }
+
+        $type = substr($legacyPost->source_path, -3);
 
         $newTitle = $request->input('title');
         //If post contains new title check if there is already a post with this title

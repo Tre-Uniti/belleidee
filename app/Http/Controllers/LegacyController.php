@@ -150,13 +150,11 @@ class LegacyController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        $profilePosts = getProfilePosts($user);
-        $profileExtensions = getProfileExtensions($user);
 
         $legacy = Legacy::findOrFail($id);
 
         return view ('legacies.edit')
-            ->with(compact('user', 'legacy', 'profilePosts','profileExtensions'));
+            ->with(compact('user', 'legacy'));
     }
 
     /**

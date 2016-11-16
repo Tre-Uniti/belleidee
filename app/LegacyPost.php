@@ -13,7 +13,6 @@ class LegacyPost extends Model
         'caption',
         'source_path',
         'original_source_path',
-
     ];
 
     public function legacy()
