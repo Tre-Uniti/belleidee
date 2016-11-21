@@ -951,7 +951,7 @@ class BeaconController extends Controller
         $user = Auth::user();
 
         //Get list of existing Beacon moderators
-        $moderators = BeaconModerator::where('beacon_id', '=', $beacon->id)->latest()->lists('user_id');
+        $moderators = BeaconModerator::where('beacon_id', '=', $beacon->id)->latest()->pluck('user_id');
 
         if($bookmark_beacon = Bookmark::where('pointer', '=', $beacon->beacon_tag)->where('type', '=', 'Beacon')->first())
         {

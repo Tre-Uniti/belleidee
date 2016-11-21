@@ -37,7 +37,7 @@ class RedirectIfAuthenticated
 
         if ($this->auth->check()) {
 
-            return redirect('/gettingStarted');
+            return redirect('/home');
         }
 
         return $next($request);

@@ -204,7 +204,7 @@ class PostController extends Controller
         }
 
         //Populate Beacon options with user's bookmarked beacons
-        $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
+        $beacons = $user->bookmarks->where('type', 'Beacon')->pluck('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
         $sponsor = getSponsor($user);
@@ -431,7 +431,7 @@ class PostController extends Controller
             $lastBeacon = Beacon::where('beacon_tag', '=', 'No-Beacon')->first();
         }
         //Get viewUser's beacons and add post beacon
-        $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
+        $beacons = $user->bookmarks->where('type', 'Beacon')->pluck('pointer', 'pointer');
         $beacons = array_add($beacons, $beacon->beacon_tag, $beacon->beacon_tag);
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
@@ -523,7 +523,7 @@ class PostController extends Controller
         $date = $post->created_at->format('M-d-Y');
 
         //Populate Beacon options with user's bookmarked beacons
-        $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
+        $beacons = $user->bookmarks->where('type', 'Beacon')->pluck('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
         //Determine if beacon or sponsor shows and update

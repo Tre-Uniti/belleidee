@@ -18,7 +18,7 @@ class RedirectIfNotExtensionOwner
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        $id = $request->route('extensions');
+        $id = $request->extension;
         $extension = Extension::findOrFail($id); // Fetch the extension
 
         if($extension->user_id == Auth::id())

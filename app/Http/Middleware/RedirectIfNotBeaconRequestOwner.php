@@ -18,7 +18,7 @@ class RedirectIfNotBeaconRequestOwner
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        $id = $request->route('beaconRequests');
+        $id = $request->beaconRequest;
         $beaconRequest = BeaconRequest::findOrFail($id); // Fetch the Support
         $user = Auth::user();
 

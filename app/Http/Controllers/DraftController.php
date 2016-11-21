@@ -63,7 +63,7 @@ class DraftController extends Controller
         $date = Carbon::now()->format('M-d-Y');
 
         //Populate Beacon options with user's bookmarked beacons
-        $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
+        $beacons = $user->bookmarks->where('type', 'Beacon')->pluck('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
         //Fetch last beacon used or set to No-Beacon
@@ -185,7 +185,8 @@ class DraftController extends Controller
     public function show($id)
     {
 
-        $draft = $this->draft->findOrFail($id);
+        $draft = Draft::findOrFail($id);
+
         $draft_path = $draft->draft_path;
 
         $contents = Storage::get($draft_path);
@@ -197,6 +198,7 @@ class DraftController extends Controller
 
         //Determine if beacon or sponsor shows and update
         $beacon = getBeacon($draft);
+
         if(isset($beacon->stripe_plan))
         {
             if($beacon->stripe_plan < 1)
@@ -235,9 +237,8 @@ class DraftController extends Controller
             $sourceOriginalPath = substr_replace($draft->draft_path, 'originals/', 20, 0);
         }
 
-
         return view('drafts.show')
-            ->with(compact('user', 'draft', 'profilePosts', 'profileExtensions', 'beacon', 'sponsor'))
+            ->with(compact('user', 'draft', 'beacon', 'sponsor'))
             ->with('sourceOriginalPath', $sourceOriginalPath)
             ->with('base64', $base64)
             ->with('type', $type)
@@ -280,7 +281,7 @@ class DraftController extends Controller
         $date = $draft->created_at->format('M-d-Y');
 
         //Populate Beacon options with user's bookmarked beacons
-        $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
+        $beacons = $user->bookmarks->where('type', 'Beacon')->pluck('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
 

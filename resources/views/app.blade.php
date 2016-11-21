@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-    <meta name="description" content="Belle-idee - An online community sharing spiritual ideas, values and experiences.">
+    <meta name="description" content="Belle-idee - We are an online community sharing spiritual ideas, values and experiences.">
     <title>@yield('siteTitle')</title>
     <link rel = "stylesheet" href = "/css/normalize.css">
     @if(isset($viewUser))
@@ -121,7 +121,10 @@
                         @elseif($user->type > 2)
                             <li><a href="{{ url('/admin') }}">Admin</a></li>
                         @endif
-                        <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+                        <li>  <form id="logout-form" action="{{ url('/logout') }}" method="POST">
+                                {!! Form::submit('Logout', ['class' => 'indexButton', 'id' => 'submit']) !!}
+                                {{ csrf_field() }}
+                            </form></li>
                     </ul>
 
                 </div>

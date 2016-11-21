@@ -1,7 +1,6 @@
 // Utilities
 @import "utility/flatThemeVars";
 
-
 //Navigation
 @import 'nav/topNav';
   @include topNavColor($topNavBackgroundColor, $topNavColor, $topNavHoverBackground, $topNavHoverColor, $topNavDivBackground, $topNavDivColor, $topNavDivHoverColor, $topNavDivHoverBackground)
@@ -38,8 +37,6 @@
 html{
   background-color: $mainBackgroundColor;
 }
-
-
 
 h1
 {

@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="canonical" href="https://belle-idee.org/">
-    <meta name="title" content="Belle Idee">
-    <meta name="description" content="Belle-idee - An online community for sharing spiritual ideas, inspirations and experiences.">
+    <meta name="title" content="Belle-idee">
+    <meta name="description" content="Belle-idee - We are an online community sharing spiritual ideas, values and experiences.">
     <title>@yield('siteTitle')</title>
     <link rel = "stylesheet" href = "/css/normalize.css">
     <link rel = "stylesheet" href = "{{ elixir('css/app.css') }}">
     <script src="https://use.fontawesome.com/9747c67e36.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src = "/js/required.js"></script>
     @yield('pageHeader')
 
     <!--
@@ -107,7 +109,10 @@
                             @elseif($user->type > 1)
                                 <li><a href="{{ url('/admin') }}">Admin</a></li>
                             @endif
-                            <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+                            <li> <form id="logout-form" action="{{ url('/logout') }}" method="POST">
+                                    {!! Form::submit('Logout', ['class' => 'indexButton', 'id' => 'submit']) !!}
+                                    {{ csrf_field() }}
+                                </form></li>
                         </ul>
 
                     </div>
@@ -125,15 +130,11 @@
             </div>
     @endif
     <div id = "welcome">
-        <div id = "logo">
-            <a href="/"><img src={{secure_asset('img/idee.png')}} alt="idee" width = "45%" height ="45%"></a>
-        </div>
-        <h2>"Beautiful ideas"</h2>
+        <a href= "{{ url('/') }}"><h1 class = "welcome">Belle-idee</h1></a>
+        <h2 class = "welcome">"Beautiful ideas"</h2>
                     @include('partials.flash')
                     @include('errors.list')
                     @yield('centerContent')
-
-            @yield('footer')
     </div>
 </div>
 </body>

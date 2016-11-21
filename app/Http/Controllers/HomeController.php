@@ -87,6 +87,8 @@ class HomeController extends Controller
         {
             Event::fire(New SetLocation($user));
             $location = getLocation();
+
+            //dd($location);
         }
 
         //Get latest Extensions

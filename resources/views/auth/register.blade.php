@@ -3,10 +3,9 @@
     Register
 @stop
 @section('centerContent')
-
     <div class=" authCard">
         <div id = "dataInput">
-            <form role="form" method="POST" action="{{ url('/auth/register') }}">
+            <form role="form" method="POST" action="{{ url('/register') }}">
                 {{ csrf_field() }}
                 <div class="formData{{ $errors->has('handle') ? ' has-error' : '' }}">
                     <label for="name" class="formLabel">Username</label>

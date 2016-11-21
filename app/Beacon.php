@@ -2,12 +2,11 @@
 
 namespace App;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Cashier\Billable;
-use Laravel\Cashier\Contracts\Billable as BillableContract;
-use TaxJar;
 
-class Beacon extends Model implements BillableContract
+class Beacon extends Model
 {
 
     use Billable;

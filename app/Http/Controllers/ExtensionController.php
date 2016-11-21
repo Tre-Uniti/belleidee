@@ -178,7 +178,7 @@ class ExtensionController extends Controller
         $date = Carbon::now()->format('M-d-Y');
 
         //Populate Beacon options with user's bookmarked beacons
-        $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
+        $beacons = $user->bookmarks->where('type', 'Beacon')->pluck('pointer', 'pointer');
         $beacons = array_add($beacons, $sources['beacon_tag'], $sources['beacon_tag']);
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
@@ -703,7 +703,7 @@ class ExtensionController extends Controller
             $lastBeacon = Beacon::where('beacon_tag', '=', 'No-Beacon')->first();
         }
         //Get viewUser's beacons and add post beacon
-        $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
+        $beacons = $user->bookmarks->where('type', 'Beacon')->pluck('pointer', 'pointer');
         $beacons = array_add($beacons, $beacon->beacon_tag, $beacon->beacon_tag);
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
@@ -920,7 +920,7 @@ class ExtensionController extends Controller
         $user = User::findOrFail($extension->user_id);
 
         //Populate Beacon options with user's bookmarked beacons
-        $beacons = $user->bookmarks->where('type', 'Beacon')->lists('pointer', 'pointer');
+        $beacons = $user->bookmarks->where('type', 'Beacon')->pluck('pointer', 'pointer');
         $beacons = array_add($beacons, 'No-Beacon', 'No-Beacon');
 
         return view('extensions.edit')

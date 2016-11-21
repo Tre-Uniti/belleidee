@@ -18,7 +18,7 @@ class RedirectIfNotDraftOwner
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        $id = $request->route('drafts');
+        $id = $request->draft;
         $draft = Draft::findOrFail($id); // Fetch the Draft
 
         if($draft->user_id == Auth::id())

@@ -1,39 +1,82 @@
 <?php
-namespace App\Http\Controllers\Auth;
-use App\Invite;
-use App\User;
-use App\Mailers\UserMailer;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
-use Validator;
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class AuthController extends Controller
+namespace App\Http\Controllers\Auth;
+
+use Illuminate\Http\Request;
+use App\Invite;
+use App\Mailers\UserMailer;
+use App\User;
+use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Validator;
+
+class RegisterController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Registration & Login Controller
+    | Register Controller
     |--------------------------------------------------------------------------
     |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
+    | This controller handles the registration of new users as well as their
+    | validation and creation. By default this controller uses a trait to
+    | provide this functionality without requiring any additional code.
     |
     */
-    use AuthenticatesUsers, ThrottlesLogins;
 
-    protected $redirectPath = '/home';
     /**
-     * Create a new authentication controller instance.
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  Illuminate\Http\Request
+     * @param UserMailer $mailer
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request, UserMailer $mailer)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        //Delete invite if user was invited by another user
+        if(Invite::where('email', '=', $request->input('email'))->exists())
+        {
+            $invite = Invite::where('email', '=', $request->input('email'))->firstOrFail();
+            $invite->delete();
+        }
+
+        //Email the confirmation email to the new user
+        $mailer->sendEmailConfirmationTo($user);
+        flash()->success('Registration Successful');
+        return redirect('/auth/verify');
+    }
+
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/home';
+
+    /**
+     * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->middleware('guest');
     }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -47,9 +90,9 @@ class AuthController extends Controller
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:8',
             'agreement' => 'required',
-            //'betaToken' => 'required|exists:invites,betaToken',
         ]);
     }
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -64,6 +107,7 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
     public function verify()
     {
         return view ('auth.verify');
@@ -91,17 +135,7 @@ class AuthController extends Controller
         }
 
         flash('You are now confirmed. Please login.');
-        return redirect('/auth/login');
-    }
-    /**
-     * Show the application registration form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-    public function getRegister()
-    {
-        return view('auth.register');
+        return redirect('/login');
     }
 
     /**
@@ -135,19 +169,6 @@ class AuthController extends Controller
                 ->withErrors([$error]);
         }*/
 
-        //Delete invite if user was invited by another user
-        if(Invite::where('email', '=', $request->input('email'))->exists())
-        {
-            $invite = Invite::where('email', '=', $request->input('email'))->firstOrFail();
-            $invite->delete();
-        }
 
-        //Create the new user
-        $user = $this->create($request->all());
-
-        //Email the confirmation email to the new user
-        $mailer->sendEmailConfirmationTo($user);
-        flash()->success('Registration Successful');
-        return redirect('/auth/verify');
     }
 }

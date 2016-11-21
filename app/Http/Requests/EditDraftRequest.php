@@ -15,7 +15,8 @@ class EditDraftRequest extends Request
      */
     public function authorize()
     {
-        $draftId = $this->route('drafts');
+        //$draftId = route()->parameter('id');
+        //dd($draftId);
 
         return Draft::where('id', $draftId)
             ->where('user_id', Auth::id())->exists();

@@ -24,6 +24,23 @@
   width: auto;
   min-width: 250px;
 }
+
+h1.welcome
+{
+  font-weight: bold;
+  text-shadow:
+          -1px -1px 0 #fff,
+          1px -1px 0 #fff,
+          -1px  1px 0 #fff,
+          1px  1px 0 #fff;
+  color: #2ECC71;
+  font-size: 5em;
+  margin: 0 0 0 0;
+}
+h2.welcome
+{
+  margin: 0 0 20px 0;
+}
 h3
 {
   color: #2C3E50;
@@ -175,6 +192,10 @@ p.verification
     {
       width: 98%;
     }
+    h1.welcome
+    {
+      font-size: 3.5em;
+    }
 
   }
 
@@ -188,6 +209,10 @@ p.verification
     .authCard
     {
       width: 89%;
+    }
+    h1.welcome
+    {
+      font-size: 3.5em;
     }
 
 
@@ -208,6 +233,10 @@ p.verification
     {
       width: 33%;
     }
+    h1.welcome
+    {
+      font-size: 3.5em;
+    }
 
   }
 
@@ -223,6 +252,10 @@ p.verification
     .authCard
     {
       width: 95%;
+    }
+    h1.welcome
+    {
+      font-size: 4em;
     }
 
   }

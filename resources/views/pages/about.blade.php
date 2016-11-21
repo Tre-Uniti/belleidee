@@ -12,12 +12,12 @@
         <a href="/img/tour.png" target="_blank"><img id = "tourImage" src = "/img/tour.png" alt="tour" width="100%" height="100%"></a>
 
     </div>
-    <h4>An online community sharing spiritual ideas, values and experiences.</h4>
+    <h4>We are an online community sharing spiritual ideas, values and experiences.</h4>
     <div class = "linkContainer">
     @if(isset($user))
     @else
-        <a href="{{ secure_url('/auth/login') }}" class = "navLink">Login</a>
-        <a href="{{ secure_url('/auth/register') }}" class = "navLink">Join</a>
+        <a href="{{ secure_url('/login') }}" class = "navLink">Login</a>
+        <a href="{{ secure_url('/register') }}" class = "navLink">Join</a>
     @endif
     </div>
     <div class = "contentCard">
@@ -29,7 +29,7 @@
                 It started with a Jesuit giving a copy of his homily to a student at Gonzaga University.
                 The idea to share the Jesuit's homily online was the spark for creating an online community focused on sharing spirituality.</p>
             <ul>
-                <li>Built on the Laravel framework and <a href = "https://github.com/tre-uniti/belle-idee">open source </a> since 2015.</li>
+                <li>Built on the Laravel framework and <a href = "https://github.com/tre-uniti/belle-idee" target="_blank">open source </a> since 2015.</li>
                 <li>Created to be a global online community of spiritual light and guidance.</li>
                 <li>Designed for the sharing of beautiful ideas instead of arguments of validity.</li>
                 <li>Administered by users who are inspirational within the community.</li>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\PostExtended;
+use App\LegacyPost;
 use App\Notification;
 use App\Question;
 use App\User;
@@ -25,8 +26,11 @@ class WelcomeController extends Controller
         {
             $notifyCount = 0;
         }
+
+        $legacyPosts = LegacyPost::latest()->take(5)->get();
+
         return view ('pages.welcome')
-                ->with(compact('user'))
+                ->with(compact('user', 'legacyPosts'))
                 ->with('notifyCount', $notifyCount);
     }
     public function getTour()

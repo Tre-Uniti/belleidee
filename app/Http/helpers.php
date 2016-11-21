@@ -519,6 +519,7 @@ function setCoordinates($user, $last_tag)
             'cityName' => $cityName,
             'location' => $user->location,
         ];
+
         session()->put('coordinates', $coordinates);
         //$this->flashLocation($user, $coordinates);
     }

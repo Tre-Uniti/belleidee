@@ -2,16 +2,20 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
 
+
 //User Routes (Resource)
+use Illuminate\Support\Facades\Auth;
+Auth::routes();
+Route::auth();
 Route::get('users/elevation', 'UserController@sortByElevation');
 Route::get('users/extension', 'UserController@sortByExtension');
 Route::get('users/search', 'UserController@search');
@@ -245,16 +249,11 @@ Route::get('notifications/clear', 'NotificationController@clearAll');
 Route::resource('notifications', 'NotificationController');
 
 //Password Route (Laravel)
-Route::controllers(['password' => 'Auth\PasswordController',]);
+//Route::controllers(['password' => 'Auth\PasswordController',]);
 
-// Authentication routes
-Route::get('auth/login', 'Auth\SessionController@getLogin');
-Route::post('auth/login', 'Auth\SessionController@postLogin');
-Route::get('auth/logout', 'Auth\SessionController@getLogout');
 
-// Registration routes
-Route::get('auth/confirm/{token}', 'Auth\AuthController@confirmEmail');
-Route::get('auth/verify', 'Auth\AuthController@verify');
+Route::get('auth/confirm/{token}', 'Auth\RegisterController@confirmEmail');
+Route::get('auth/verify', 'Auth\RegisterController@verify');
 
 //Welcome routes
 Route::get('/', 'WelcomeController@getWelcome');
@@ -322,7 +321,5 @@ $api->version('v1', ['middleware' => 'api.auth', 'api.throttle', 'limit' => 500,
 {
     $api->get('beacons/{id}', ['as' => 'beacons.show', 'uses' => 'App\Api\Controllers\BeaconController@show']);
 });*/
-
-Route::auth();
 
 Route::get('/home', 'HomeController@index');
