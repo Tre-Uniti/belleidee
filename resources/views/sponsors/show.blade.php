@@ -34,7 +34,7 @@
                 <div class = "leftSection">
                     <div class = "leftIcon">
                         <span class="tooltiptext">Number of monthly clicks for {{ $sponsor->sponsor_tag }}</span>
-                        <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}" class = "iconLink"><i class="fa fa-hashtag" aria-hidden="true"></i></a>
+                        <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}" class = "iconLink"><i class="fa fa-mouse-pointer" aria-hidden="true"></i></a>
                         </div>
                     <div class = "leftCounter">
                         <a href="{{ url('/sponsors/'. $sponsor->sponsor_tag) }}">{{ $sponsor->clicks }}</a>

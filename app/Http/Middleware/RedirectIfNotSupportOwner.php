@@ -18,7 +18,7 @@ class RedirectIfNotSupportOwner
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        $id = $request->route('supports');
+        $id = $request->support;
         $support = Support::findOrFail($id); // Fetch the Support
         $user = Auth::user();
 

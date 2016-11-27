@@ -15,7 +15,7 @@ class EditIntoleranceRequest extends Request
      */
     public function authorize()
     {
-        $intoleranceId = $this->route('intolerances');
+        $intoleranceId = $this->intolerance;
 
         return Intolerance::where('id', $intoleranceId)
             ->where('user_id', Auth::id())->exists();

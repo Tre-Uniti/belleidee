@@ -110,7 +110,7 @@
                                 <li><a href="{{ url('/admin') }}">Admin</a></li>
                             @endif
                             <li> <form id="logout-form" action="{{ url('/logout') }}" method="POST">
-                                    {!! Form::submit('Logout', ['class' => 'indexButton', 'id' => 'submit']) !!}
+                                    {!! Form::submit('Logout', ['class' => 'indexButton', 'id' => 'logout']) !!}
                                     {{ csrf_field() }}
                                 </form></li>
                         </ul>

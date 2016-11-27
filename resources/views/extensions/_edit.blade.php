@@ -13,8 +13,8 @@
 
             @if(isset($sources['post_id']))
                 <a href = "{{ url('/posts/' . $sources['post_id'] ) }}">{{ $sourceModel->title }}</a>
-            @elseif(isset($sources['legacy_post']))
-                <a href = "{{ url('/legacyPosts/' . $sources['legacy_post_id'] ) }}">{{ $sourceModel->title }}</a>
+            @elseif(isset($sources['legacy_id']))
+                <a href = "{{ url('/legacyPosts/' . $sourceModel->id ) }}">{{ $sourceModel->title }}</a>
             @else
                 <a href = "{{ url('/extensions/' . $sources['extenception']) }}">An Extension</a>
             @endif

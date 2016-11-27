@@ -121,6 +121,7 @@ class DraftController extends Controller
 
             //Create image file name
             $title = str_replace(' ', '_', $request['title']);
+            $title = str_replace('?', '_', $title);
             $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
             $path = '/user_photos/drafts/'. $user->id . '/' .$imageFileName;
             $originalPath = '/user_photos/drafts/originals/'. $user->id . '/' .$imageFileName;
@@ -146,6 +147,7 @@ class DraftController extends Controller
                 'body' => 'required|min:5|max:5000'
             ]);
             $title = $request->input('title');
+            $title = str_replace('?', '_', $title);
             $path = '/drafts/' . $user_id . '/' . $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';
             $inspiration = Purifier::clean($request->input('body'));
             $excerpt = substr($inspiration, 0, 300);
@@ -368,6 +370,7 @@ class DraftController extends Controller
 
                 //Create image file name
                 $title = str_replace(' ', '_', $request['title']);
+                $title = str_replace('?', '_', $title);
                 $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
                 $newPath = '/user_photos/drafts/'. $user->id . '/' .$imageFileName;
                 $originalPath = '/user_photos/drafts/originals/'. $user->id . '/' .$imageFileName;
@@ -483,6 +486,7 @@ class DraftController extends Controller
 
         //Determine if draft is image or text and move to new location
         $title = str_replace(' ', '_', $draft->title);
+        $title = str_replace('?', '_', $title);
         $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $type;
         if($type != 'txt')
         {

@@ -18,7 +18,7 @@ class RedirectIfNotPostOwner
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        $id = $request->route('posts');
+        $id = $request->post;
         $post = Post::findOrFail($id); // Fetch the post
 
         if($post->user_id == Auth::id())

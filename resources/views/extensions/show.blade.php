@@ -19,6 +19,8 @@
 
 @section('centerText')
     <div id="fb-root"></div>
+    <div id = "mainContent">
+        <article>
     <h2>
         @if($sourceType == 'Extenception')
             Extends:
@@ -57,7 +59,9 @@
             {!! nl2br($extension->body) !!}
             </p>
     </div>
-<div class = "contentDetails">
+        </article>
+        </div>
+<div id = "contentDetails">
     <div class = "footerSection">
         <div class = "leftSection">
             <div class = "leftIcon">
@@ -197,7 +201,7 @@
             </div>
         </div>
         <div>
-            <button class = "interactButton" type = "button" id = "hiddenIndex">Show Tags</button>
+            <button class = "interactButton" type = "button" id = "hiddenIndex">Tags</button>
             {!! Form::submit('Add Extension', ['class' => 'navButton', 'id' => 'submit']) !!}
             {!! Form::close()   !!}
             <button class = "interactButton" type = "button" id = "fullScreen">Full Screen</button>

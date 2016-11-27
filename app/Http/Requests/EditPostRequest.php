@@ -15,7 +15,7 @@ class EditPostRequest extends Request
      */
     public function authorize()
     {
-        $postId = $this->route('posts');
+        $postId = $this->post;
 
         return Post::where('id', $postId)
             ->where('user_id', Auth::id())->exists();

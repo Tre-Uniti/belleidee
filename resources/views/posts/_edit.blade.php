@@ -75,7 +75,7 @@
     </div>
     @section('centerFooter')
         <button class = "interactButton" type = "button" id = "hiddenIndex">Tags</button>
-        {!! Form::submit($submitButtonText, ['class' => 'indexButton', 'id' => 'submit']) !!}
+        {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
         <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "interactButton">Cancel</button></a>
     @stop
 </div>

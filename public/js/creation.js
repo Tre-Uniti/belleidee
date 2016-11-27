@@ -55,8 +55,8 @@ $(document).ready(function() {
             document.getElementById("extensionIndex").style.display = "None";
             document.getElementById("listExtensions").style.display = "None";
             document.getElementById("contentSeparator").style.display = "None";
-            document.getElementById("postDetails").style.display = "None";
-            document.getElementById("postContent").style.display = "None";
+            document.getElementById("contentDetails").style.display = "None";
+            document.getElementById("mainContent").style.display = "None";
             $("#createBodyText").attr('rows', '20');
         }
         else
@@ -66,8 +66,8 @@ $(document).ready(function() {
             document.getElementById("extensionIndex").style.display = "Inline";
             document.getElementById("listExtensions").style.display = "Inline";
             document.getElementById("contentSeparator").style.display = "Block";
-            document.getElementById("postDetails").style.display = "Inline";
-            document.getElementById("postContent").style.display = "Block";
+            document.getElementById("contentDetails").style.display = "Inline";
+            document.getElementById("mainContent").style.display = "Block";
         }
 
     });

@@ -35,10 +35,10 @@
         <p>Created by: <a href = "{{ url('/users/'. $sourceUser['id']) }}" target="_blank">{{ $sourceUser['handle'] }}</a></p>
     @endif
     </div>
-    <div id = "centerTextContent">
-            <p>
-                This content is intolerant because it contains: {{ $intolerance->user_ruling }}
-            </p>
+    <div id = "contentCard">
+            <div class = "contentHandle">
+                Contains: {{ $intolerance->user_ruling }}
+            </div>
     </div>
 @stop
 
@@ -51,7 +51,7 @@
         @endif
         @if($user->type > 2)
                 <a href="{{ url('intolerances/userIndex/'. $user->id) }}"><button type = "button" class = "navButton">Others</button></a>
-                {!! Form::open(['method' => 'DELETE', 'route' => ['intolerances.destroy', $intolerance->id], 'class' => 'formDeletion']) !!}
+                {!! Form::open(['method' => 'DELETE', 'route' => ['intolerances.destroy', $intolerance->id], 'class' => 'formBlock']) !!}
                 {!! Form::submit('Delete', ['class' => 'redButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}
         @endif

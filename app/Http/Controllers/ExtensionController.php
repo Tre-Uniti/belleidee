@@ -1044,20 +1044,17 @@ class ExtensionController extends Controller
         $user = Auth::user();
 
         //Get search title
-        $title = $request->input('title');
-        $extensions = filterContentLocationSearch($user, 0, 'Extension', $title);
+        $identifier = $request->input('title');
+        $extensions = filterContentLocationSearch($user, 0, 'Extension', $identifier);
 
-        if(!count($extensions))
-        {
-            flash()->overlay('No extensions with this title');
-            return redirect()->back();
-        }
+        $extensionCount = count($extensions);
 
         $sponsor = getSponsor($user);
 
         return view ('extensions.results')
             ->with(compact('user', 'extensions', 'sponsor'))
-            ->with('title', $title);
+            ->with('identifier', $identifier)
+            ->with('extensionCount', $extensionCount);
     }
 
     /**

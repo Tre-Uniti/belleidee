@@ -15,7 +15,7 @@ class EditExtensionRequest extends Request
      */
     public function authorize()
     {
-        $extensionId = $this->route('extensions');
+        $extensionId = $this->extension;
 
         return Extension::where('id', $extensionId)
             ->where('user_id', Auth::id())->exists();

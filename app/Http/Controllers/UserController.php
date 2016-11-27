@@ -244,22 +244,17 @@ class UserController extends Controller
         $user = Auth::user();
 
         //Get search title
-        $handle = $request->input('identifier');
+        $identifier = $request->input('identifier');
 
         //Filter by location
-        $users = filterContentLocationSearch($user, 0, 'User', $handle);
+        $users = filterContentLocationSearch($user, 0, 'User', $identifier);
 
-        //Get search title
-        $handle = $request->input('identifier');
-
-        if (!count($users)) {
-            flash()->overlay('No users with this handle');
-            return redirect()->back();
-        }
+        $userCount = count($users);
 
         return view('users.results')
             ->with(compact('user', 'users'))
-            ->with('handle', $handle);
+            ->with('identifier', $identifier)
+            ->with('userCount', $userCount);
     }
 
     /**

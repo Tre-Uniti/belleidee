@@ -18,7 +18,7 @@ class RedirectIfNotPromotionOwner
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        $id = $request->route('promotions');
+        $id = $request->promotion;
         $promotion = Promotion::findOrFail($id); // Fetch the Promotion
         $user = Auth::user();
 

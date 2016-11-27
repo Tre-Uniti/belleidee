@@ -212,7 +212,7 @@ class IntoleranceController extends Controller
         }
 
         return view ('intolerances.show')
-            ->with(compact('user', 'intolerance', 'sourceUser', 'content'))
+            ->with(compact('user', 'intolerance', 'sourceUser', 'sourceModel', 'content'))
             ->with('type', $type);
     }
 

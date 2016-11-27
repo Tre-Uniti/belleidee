@@ -135,6 +135,7 @@ class LegacyPostController extends Controller
 
                 //Create image file name
                 $title = str_replace(' ', '_', $request['title']);
+                $title = str_replace('?', '_', $title);
                 $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
                 $path = '/belief_photos/' . $legacy->belief->name . '/' . $imageFileName;
                 $originalPath = '/belief_photos/' . $legacy->belief->name . '/originals/' . $title . '-' . $imageFileName;
@@ -355,6 +356,7 @@ class LegacyPostController extends Controller
 
                 //Create image file name
                 $title = str_replace(' ', '_', $request['title']);
+                $title = str_replace('?', '_', $title);
                 $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
                 $newPath = '/belief_photos/' . $legacy->belief->name . '/' . $imageFileName;
                 $newOriginalPath = '/belief_photos/' . $legacy->belief->name . '/originals/' . $title . '-' . $imageFileName;
@@ -384,6 +386,7 @@ class LegacyPostController extends Controller
         elseif($type == 'txt')
         {
             $title = $request->input('title');
+            $title = str_replace('?', '_', $title);
             $newPath = '/legacy/' . $legacy->belief->name . '/' . $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.txt';
             $this->validate($request, [
                 'body' => 'required|min:5|max:5000',

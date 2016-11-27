@@ -18,7 +18,7 @@ class UserDeletion
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        $id = $request->route('users');
+        $id = $request->user;
         if(Auth::user())
         {
             $viewUser = Auth::user();

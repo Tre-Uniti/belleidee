@@ -252,6 +252,7 @@ class PostController extends Controller
 
             //Create image file name
             $title = str_replace(' ', '_', $request['title']);
+            $title = str_replace('?', '_', $title);
             $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
             $path = '/user_photos/posts/'. $user->id . '/' .$imageFileName;
             $originalPath = '/user_photos/posts/originals/'. $user->id . '/' .$imageFileName;
@@ -278,6 +279,7 @@ class PostController extends Controller
                 'body' => 'required|min:5|max:5000'
             ]);
             $title = $request->input('title');
+            $title = str_replace('?', '_', $title);
             $path = '/posts/'.$user_id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
             $inspiration = Purifier::clean($request->input('body'));
             $excerpt = substr($inspiration, 0, 300);
@@ -608,6 +610,7 @@ class PostController extends Controller
 
                 //Create image file name
                 $title = str_replace(' ', '_', $request['title']);
+                $title = str_replace('?', '_', $title);
                 $imageFileName = $title . '-' . Carbon::now()->format('M-d-Y-H-i-s') . '.' . $image->getClientOriginalExtension();
                 $newPath = '/user_photos/posts/'. $user->id . '/' .$imageFileName;
                 $originalPath = '/user_photos/posts/originals/'. $user->id . '/' .$imageFileName;
@@ -635,6 +638,7 @@ class PostController extends Controller
         elseif($type == 'txt')
         {
             $title = $request->input('title');
+            $title = str_replace('?', '_', $title);
             $newPath = '/posts/'.$user->id.'/'.$title. '-' . Carbon::now()->format('M-d-Y-H-i-s') .'.txt';
             $this->validate($request, [
                 'body' => 'required|min:5|max:3500',
@@ -780,23 +784,18 @@ class PostController extends Controller
         $user = Auth::user();
 
         //Get search title
-        $title = $request->input('title');
+        $identifier = $request->input('title');
         
         //Filter by location
-        $posts = filterContentLocationSearch($user, 0, 'Post', $title);
+        $posts = filterContentLocationSearch($user, 0, 'Post', $identifier);
         $posts = preparePostCards($posts, $user);
 
-        if(!count($posts))
-        {
-            flash()->overlay('No posts with this title');
-            return redirect('/posts/search');
-        }
-
-        $sponsor = getSponsor($user);
+        $postCount = count($posts);
 
         return view ('posts.results')
-            ->with(compact('user', 'posts', 'sponsor'))
-            ->with('title', $title);
+            ->with(compact('user', 'posts'))
+            ->with('postCount', $postCount)
+            ->with('identifier', $identifier);
     }
 
     /**

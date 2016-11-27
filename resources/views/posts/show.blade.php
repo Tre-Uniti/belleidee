@@ -28,7 +28,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
 
 @section('centerText')
     <div id="fb-root"></div>
-    <div id = "postContent">
+    <div id = "mainContent">
 <article>
     <header>
         <h1>{{ $post->title }}</h1>
@@ -62,7 +62,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     @endif
 </article>
     </div>
-    <div id = "postDetails">
+    <div id = "contentDetails">
         <div class = "footerSection">
             <div class = "leftSection">
                 <div class = "leftIcon">

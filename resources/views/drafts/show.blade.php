@@ -51,7 +51,7 @@
         <a href="{{ url('/drafts/convert/'. $draft->id) }}"><button type = "button" class = "navButton">Convert to Post</button></a>
         @if($draft->user_id == Auth::id())
             <a href="{{ url('/drafts/'.$draft->id.'/edit') }}"><button type = "button" class = "navButton">Edit</button></a>
-            {!! Form::open(['method' => 'DELETE', 'route' => ['drafts.destroy', $draft->id], 'class' => 'formDeletion']) !!}
+            {!! Form::open(['method' => 'DELETE', 'route' => ['drafts.destroy', $draft->id], 'class' => 'formBlock']) !!}
             {!! Form::submit('Delete', ['class' => 'redButton', 'id' => 'delete']) !!}
             {!! Form::close() !!}
         @else

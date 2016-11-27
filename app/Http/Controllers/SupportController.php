@@ -117,6 +117,7 @@ class SupportController extends Controller
         // Get ticket and update Idee status and type if it has changed
         $zendesk = Zendesk::tickets($support->zendesk_id)->find();
 
+
         if($support->status != $zendesk->ticket->status || $support->type != $zendesk->ticket->custom_fields[0]->value)
         {
             $support->status = $zendesk->ticket->status;
