@@ -47,7 +47,7 @@ class PostController extends Controller
 
     public function __construct(Post $post)
     {
-        $this->middleware('auth', ['except' => 'show', 'index']);
+        $this->middleware('auth', ['except' => ['index', 'show']]);
         $this->middleware('postOwner', ['only' => 'edit', 'update', 'destroy']);
         $this->post = $post;
     }

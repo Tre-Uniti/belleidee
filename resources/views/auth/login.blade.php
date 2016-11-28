@@ -31,8 +31,6 @@
             </form>
         </div>
     </div>
-@stop
-@section('footer')
     <hr/>
     <a href="{{ secure_url('/auth/register') }}">Join now</a> - <a href="{{ url('/password/reset') }}">Reset Password</a>
 @stop

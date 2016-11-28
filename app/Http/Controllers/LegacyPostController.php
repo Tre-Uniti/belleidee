@@ -38,7 +38,7 @@ class LegacyPostController extends Controller
 
     public function __construct(LegacyPost $legacyPost)
     {
-        $this->middleware('auth', ['except' => 'show', 'beliefIndex', 'index']);
+        $this->middleware('auth', ['except' => ['show', 'beliefIndex', 'index']]);
         $this->middleware('admin', ['only' => ['create', 'store', 'edit', 'update']]);
     }
 

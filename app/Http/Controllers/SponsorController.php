@@ -38,7 +38,7 @@ class SponsorController extends Controller
 
     public function __construct(Sponsor $sponsor)
     {
-        $this->middleware('auth', ['except' => 'show']);
+        $this->middleware('auth', ['except' => ['index', 'show']]);
         $this->middleware('admin', ['only' => ['create', 'store', 'edit', 'update', 'destroy', 'pay', 'payment']]);
         $this->middleware('sponsorAdmin', ['only' => ['eligible', 'eligibleSearch', 'analytics']]);
         $this->sponsor = $sponsor;
@@ -50,7 +50,16 @@ class SponsorController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        //Get logged in user or set to Transferred for Guest
+        if(Auth::user())
+        {
+            $user = Auth::user();
+        }
+        else
+        {
+            //Set user equal to the Transferred user with no access
+            $user = User::where('handle', '=', 'Transferred')->first();
+        }
         $sponsors = filterContentLocation($user, 1, 'Sponsor');
         $location = getLocation();
 
@@ -155,7 +164,6 @@ class SponsorController extends Controller
         {
             //Set user equal to the Transferred user with no access
             $user = User::where('handle', '=', 'Transferred')->first();
-            $user->handle = 'Guest';
         }
 
         //Check Sponsor exists and is active belongs to an Idee Beacon

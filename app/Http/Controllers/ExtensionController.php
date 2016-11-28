@@ -46,7 +46,7 @@ class ExtensionController extends Controller
 
     public function __construct(Extension $extension)
     {
-        $this->middleware('auth', ['except' => 'show', 'index']);
+        $this->middleware('auth', ['except' => ['show', 'index']]);
         $this->middleware('extensionOwner', ['only' => 'edit', 'update', 'destroy']);
         $this->extension = $extension;
     }
@@ -684,7 +684,7 @@ class ExtensionController extends Controller
         }
         else
         {
-            $extension = 'Elevate';
+            $extension->elevationStatus = 'Elevate';
         }
 
         //Get extensions of Extension

@@ -20,9 +20,8 @@
                     <a href="{{ action('PostController@show', [$post->id])}}" class = "excerptText">{{ $post->excerpt }}</a><a href="{{ action('PostController@show', [$post->id])}}">... Read More</a>
                 </p>
             @elseif(isset($post->caption))
-                <p>
+                <p class = "cardExcerpt">
                     <a href="{{ action('PostController@show', [$post->id])}}">{{ $post->caption }}</a>
-
                 </p>
                 <div class = "cardPhoto">
                     <a href="{{ url('/posts/'. $post->id) }}"><img src= {{ url(env('IMAGE_LINK'). $post->post_path) }} alt="{{$post->title}}"></a>

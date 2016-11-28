@@ -550,6 +550,10 @@ function setCoordinates($user, $last_tag)
 function getLocation()
 {
     $user = Auth::user();
+    if($user == null)
+    {
+        $user = User::where('handle', '=', 'Transferred')->first();
+    }
     if($user->location == 0)
     {
         $coordinates = session('coordinates');
