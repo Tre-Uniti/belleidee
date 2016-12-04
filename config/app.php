@@ -169,6 +169,8 @@ return [
         Huddle\Zendesk\Providers\ZendeskServiceProvider::class,
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
     ],
 
     /*
@@ -224,6 +226,7 @@ return [
         'Zendesk'   => Huddle\Zendesk\Facades\Zendesk::class,
         'Javascript'=> Laracasts\Utilities\JavaScript\JavaScriptFacade::class,
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];
