@@ -16,8 +16,6 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
         <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $post->post_path) }}"/>
     @elseif(isset($sourcePhotoPath) && $sourcePhotoPath != NULL)
         <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $sourcePhotoPath) }}"/>
-    @elseif(isset($photoPath) && $photoPath != NULL)
-        <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $photoPath) }}"/>
     @else
         <meta property="og:image"         content={{ url('/img/idee.png') }}/>
     @endif
@@ -132,7 +130,7 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                     @if(!$sponsor == null)
                         <a href={{ url('/sponsors/click/'. $sponsor->id) }}><img src= {{ url(env('IMAGE_LINK'). $sponsor->photo_path) }} alt="{{$sponsor->name}}" ></a>
                     @else
-                        <a href={{ url('/sponsors/click/1') }}><img src= "/img/tre-uniti.png" alt="tre-uniti" ></a>
+                        <a href={{ url('/sponsors/click/1') }}><img src= "/img/belle-idee.png" alt="belle-idee" ></a>
                     @endif
                 </div>
             @endif
