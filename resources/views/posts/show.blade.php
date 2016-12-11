@@ -14,8 +14,8 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     <meta property="og:description"   content="{{ $post->title }}"/>
     @if($type != 'txt')
         <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $post->post_path) }}"/>
-    @elseif(isset($sourcePhotoPath) && $sourcePhotoPath != NULL)
-        <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $sourcePhotoPath) }}"/>
+    @elseif($user->photo_path != null)
+        <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $user->photo_path) }}"/>
     @else
         <meta property="og:image"         content={{ url('/img/idee.png') }}/>
     @endif
