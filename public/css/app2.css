@@ -1263,52 +1263,36 @@ p.verification {
 /*
 Login Specific
 */
-div.social {
-  color: gray;
-  font-size: 1.1em;
+.socialLogin {
+  text-align: center;
+  width: auto;
+  height: auto;
+  margin: 5px 0 5px 0; }
+
+.socialLogin a.btn-facebook {
+  background: #3a589a;
+  padding: 5px;
+  text-decoration: none;
+  font-family: "Open Sans", Arial, serif;
+  border-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  color: #FFFFFF;
+  border-color: #FFFFFF; }
+  .socialLogin a.btn-facebook:hover {
+    background: #FFFFFF;
+    color: #27AE60; }
+
+.wordLineSeparator {
+  width: 50%;
+  height: 12px;
+  margin: 35px auto 35px auto;
+  border-bottom: 2px solid  #DCDCDC;
   text-align: center; }
 
-.btn-facebook {
-  background: #3a589a;
-  padding: 8px 25px;
-  text-decoration: none;
-  font-family: "Open Sans", Arial, serif;
-  border-radius: 7px;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  font-weight: 500;
-  color: #FFFFFF;
-  border-color: #FFFFFF; }
-  .btn-facebook:hover {
-    background: rgba(58, 88, 154, 0.8); }
-
-.btn-twitter {
-  background: #4099ff;
-  padding: 8px 25px;
-  text-decoration: none;
-  font-family: "Open Sans", Arial, serif;
-  border-radius: 7px;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  font-weight: 500;
-  color: #FFFFFF;
-  border-color: #FFFFFF; }
-  .btn-twitter:hover {
-    background: rgba(64, 153, 255, 0.8); }
-
-.btn-google-plus {
-  background: #e9544f;
-  padding: 8px 25px;
-  text-decoration: none;
-  font-family: "Open Sans", Arial, serif;
-  border-radius: 7px;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  font-weight: 500;
-  color: #FFFFFF;
-  border-color: #FFFFFF; }
-  .btn-google-plus:hover {
-    background: rgba(233, 84, 79, 0.8); }
+.spanWordSeparator {
+  background-color: #FFFFFF;
+  padding: 0 5px; }
 
 @media screen and (min-width: 1501px) and (min-height: 850px) {
   #welcome {

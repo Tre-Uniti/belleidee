@@ -322,4 +322,7 @@ $api->version('v1', ['middleware' => 'api.auth', 'api.throttle', 'limit' => 500,
     $api->get('beacons/{id}', ['as' => 'beacons.show', 'uses' => 'App\Api\Controllers\BeaconController@show']);
 });*/
 
+//Socialite Routes
+Route::get('auth/facebook', 'Auth\LoginController@redirectToProvider');
+Route::get('auth/facebook/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('/home', 'HomeController@index');

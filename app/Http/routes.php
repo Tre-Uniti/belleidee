@@ -11,6 +11,10 @@
 |
 */
 
+/*
+ * This Routes file was deprecated in upgrade to 5.3
+
+
 //User Routes (Resource)
 Route::get('users/elevation', 'UserController@sortByElevation');
 Route::get('users/extension', 'UserController@sortByExtension');
@@ -321,8 +325,9 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'auth:api'], function () {
 $api->version('v1', ['middleware' => 'api.auth', 'api.throttle', 'limit' => 500, 'expires' => 5], function ($api)
 {
     $api->get('beacons/{id}', ['as' => 'beacons.show', 'uses' => 'App\Api\Controllers\BeaconController@show']);
-});*/
+});
 
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+*/

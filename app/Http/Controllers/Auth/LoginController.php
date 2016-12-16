@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
+use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -35,5 +40,72 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);
+    }
+
+
+    /**
+     * Redirect the user to the Facebook authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain the user information from Facebook.
+     * Sourced from Matt Stauffer
+     *
+     * @return Response
+     */
+    public function handleProviderCallback()
+    {
+        try {
+            $user = Socialite::driver('facebook')->user();
+        } catch (Exception $e) {
+            return Redirect::to('auth/facebook');
+        }
+
+        $authUser = $this->findOrCreateUser($user);
+
+        Auth::login($authUser, true);
+
+        return Redirect::to('/home');
+    }
+
+    /**
+     * Return user if exists; create and return if doesn't
+     * Sourced from Matt Stauffer
+     *
+     * @param $facebookUser
+     * @return User
+     */
+    private function findOrCreateUser($facebookUser)
+    {
+        if ($authUser = User::where('facebook_id', $facebookUser->id)->first()) {
+            return $authUser;
+        }
+
+        //Generate API token for user
+        $api_token = str_random(60);
+        while(User::where('api_token', '=', $api_token)->exists())
+        {
+            $api_token = str_random(30);
+        }
+        $tempPass = str_random(20);
+
+        return User::create([
+            'handle' => $facebookUser->getName(),
+            'email' => $facebookUser->email,
+            'password' => bcrypt($tempPass),
+            'facebook_id' => $facebookUser->id,
+            'verified' => true,
+            'emailToken' => null,
+            'location' => 3,
+            'frequency' => 3,
+            'theme' => 1,
+            'api_token' => $api_token
+            ]);
     }
 }

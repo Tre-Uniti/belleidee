@@ -35,10 +35,12 @@
                 <button type="submit" class = "navButton">Login</button>
             </form>
         </div>
-<hr class = "contentHeaderSeparator"/>
-        <button type = "button" class="btn-facebook">
-            <span><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i> | Login with Facebook</span>
-        </button>
+        <div class = "wordLineSeparator">
+            <span class = "spanWordSeparator">Or</span>
+        </div>
+        <div class = "socialLogin">
+            <a href = "{{ url('/auth/facebook') }}" class = "btn-facebook"><span><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i> | Login with Facebook</span></a>
+        </div>
     </div>
     <a href="{{ secure_url('/register') }}">Join now</a> - <a href="{{ url('/password/reset') }}">Reset Password</a>
 @stop
