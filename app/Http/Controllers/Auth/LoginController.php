@@ -31,6 +31,7 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+    protected $socialRedirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -71,7 +72,7 @@ class LoginController extends Controller
 
         Auth::login($authUser, true);
 
-        return Redirect::to('/home');
+        return Redirect::to($this->socialRedirectTo);
     }
 
     /**
@@ -95,17 +96,22 @@ class LoginController extends Controller
         }
         $tempPass = str_random(20);
 
-        return User::create([
+        $newUser = User::create([
             'handle' => $facebookUser->getName(),
             'email' => $facebookUser->email,
             'password' => bcrypt($tempPass),
             'facebook_id' => $facebookUser->id,
-            'verified' => true,
             'emailToken' => null,
             'location' => 3,
             'frequency' => 3,
             'theme' => 1,
             'api_token' => $api_token
             ]);
+        $this->socialRedirectTo = '/auth/facebook/confirm/'. $newUser->id;
+
+        return $newUser;
     }
+
+
+
 }

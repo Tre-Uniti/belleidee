@@ -62,12 +62,15 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
+
         //Check and update User startup
 
         if ($user->startup < 5 || $user->startup == null)
         {
             startupGuide($user);
+
             $startupList = session('startupList');
+
             if($user->startup < 5 && $startupList['skip'] != 'Yes')
             {
                 return redirect('/gettingStarted');
@@ -87,8 +90,6 @@ class HomeController extends Controller
         {
             Event::fire(New SetLocation($user));
             $location = getLocation();
-
-            //dd($location);
         }
 
         //Get latest Extensions

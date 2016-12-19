@@ -100,7 +100,7 @@
         <h3>Your Recent Posts</h3>
     </div>
     @include('posts._postCards')
-    @if(count($posts) == 0))
+    @if(count($posts) == 0)
     <p>Create your first <a href = "{{ url('/posts/create') }}">here</a></p>
     @endif
 

@@ -64,10 +64,14 @@
 
             <div class = "rightSection">
                 <div class = "rightIcon">
-                    <a href="{{ url('/local') }}" @if(strlen($location) > 6) class = "navLink" @else class = "indexLink" @endif>Local</a>
-                    <a href="{{ url('/country') }}" @if(strlen($location) < 3) class = "navLink" @else class = "indexLink" @endif>Country</a>
-                    <a href="{{ url('/global') }}" @if($location == 'Global') class = "navLink" @else class = "indexLink" @endif>Global</a>
+                    @if($location == 'Undefined')
+                        <a href="{{ url('/newLocation') }}" class = "indexLink">New</a>
+                    @else
+                        <a href="{{ url('/local') }}" @if(strlen($location) > 6) class = "navLink" @else class = "indexLink" @endif>Local</a>
+                         <a href="{{ url('/country') }}" @if(strlen($location) < 3) class = "navLink" @else class = "indexLink" @endif>Country</a>
+                        <a href="{{ url('/global') }}" @if($location == 'Global') class = "navLink" @else class = "indexLink" @endif>Global</a>
                     <span class="tooltiptext">Change the scope of your location</span>
+                    @endif
                 </div>
             </div>
         </div>

@@ -295,7 +295,7 @@ class UserController extends Controller
         }
         flash()->overlay('User has been deleted and content transferred');
 
-        return redirect('users/' . 20);
+        return redirect('/');
     }
 
     /**
@@ -639,5 +639,37 @@ class UserController extends Controller
 
         flash()->overlay('Total:' . $counter);
         return redirect('home');
+    }
+
+    /*
+     * Show updates page for new Facebook users confirmation
+     */
+    public function confirmAccount($id)
+    {
+        $user = User::findOrFail($id);
+
+        return view('auth.facebook.confirm')
+            ->with(compact('user'));
+    }
+    /*
+     * Handle confirmation of Facebook users creating an account
+     * Give them the option to update Username
+     * Give them a chance to review User Terms and Privacy
+     * @param Request
+     * @param $id //user id
+     */
+    public function confirmation(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $this->validate($request, [
+            'handle' => 'required|max:25',
+        ]);
+
+        $user->handle = $request['handle'];
+        $user->verified = true;
+        $user->update();
+
+        return redirect('/home');
     }
 }

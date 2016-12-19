@@ -13,7 +13,6 @@
                         <input id="name" type="text" class="welcomeInputText" name="handle" value="{{ old('handle') }}">
                     </div>
                 </div>
-
                 <div class="formData{{ $errors->has('email') ? ' has-error' : '' }}">
                     <label for="email" class="formLabel">Email</label>
 
@@ -21,7 +20,6 @@
                         <input id="email" type="email" class="welcomeInputText" name="email" value="{{ old('email') }}">
                     </div>
                 </div>
-
                 <div class="formData{{ $errors->has('password') ? ' has-error' : '' }}">
                     <label for="password" class="formLabel">Password</label>
 
@@ -48,10 +46,14 @@
                 <button type="submit" class = "navButton">Register</button>
             </form>
         </div>
+        <div class = "wordLineSeparator">
+            <span class = "spanWordSeparator">Or</span>
+        </div>
+        <div class = "socialLogin">
+            <a href = "{{ url('/auth/facebook') }}" class = "btn-facebook"><span><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i> | Login with Facebook</span></a>
+        </div>
     </div>
-
-@stop
-@section('footer')
     <h4>Guidelines:</h4>
-    <p>Share beautiful ideas, values, and experiences instead of arguing for/against beliefs</p>
+    <p>Share beautiful ideas, values, and experiences instead of arguing for or against beliefs.</p>
 @stop
+

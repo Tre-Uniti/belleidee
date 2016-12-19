@@ -1,8 +1,6 @@
 @extends('auth')
 @section('pageHeader')
     <script src = "/js/social.js"></script>
-    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-    <meta name="google-signin-client_id" content="194631899006-slpmvh45ou17sf3ecg89vlu6o1rbtu8o.apps.googleusercontent.com.apps.googleusercontent.com">
 @stop
 @section('siteTitle')
     Login
@@ -39,7 +37,7 @@
             <span class = "spanWordSeparator">Or</span>
         </div>
         <div class = "socialLogin">
-            <a href = "{{ url('/auth/facebook') }}" class = "btn-facebook"><span><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i> | Login with Facebook</span></a>
+            <a href = "{{ url('/auth/facebook') }}" class = "btn-facebook" onclick="fb_login();"><span><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i> | Login with Facebook</span></a>
         </div>
     </div>
     <a href="{{ secure_url('/register') }}">Join now</a> - <a href="{{ url('/password/reset') }}">Reset Password</a>

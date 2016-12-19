@@ -12,7 +12,7 @@
 
         </p>
           {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) !!}
-                {!! Form::submit('Delete Account', ['class' => 'navButton', 'id' => 'delete']) !!}
+                {!! Form::submit('Delete Account', ['class' => 'redButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}
     </div>
     <hr/>

@@ -7,6 +7,7 @@ use App\Beacon;
 use App\BeaconRequest;
 use App\Draft;
 use App\Elevate;
+use App\Elevation;
 use App\Events\TransferUser;
 use App\Extension;
 use App\Intolerance;
@@ -53,8 +54,8 @@ class TransferUserContent
         $extensions = Extension::where('user_id', '=', $user->id)->get();
         $sourceExtensions = Extension::where('source_user', '=', $user->id)->get();
         $questions = Question::where('user_id', '=', $user->id)->get();
-        $elevations = Elevate::where('user_id', '=', $user->id)->get();
-        $sourceElevations = Elevate::where('source_user', '=', $user->id)->get();
+        $elevations = Elevation::where('user_id', '=', $user->id)->get();
+        $sourceElevations = Elevation::where('source_user', '=', $user->id)->get();
         $intolerances = Intolerance::where('user_id', '=', $user->id)->get();
         $moderations = Moderation::where('user_id', '=', $user->id)->get();
         $adjudications = Adjudication::where('user_id', '=', $user->id)->get();

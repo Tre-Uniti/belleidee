@@ -25,6 +25,16 @@ class RegisterController extends Controller
     */
 
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+
+    /**
      * Show the application registration form.
      *
      * @return \Illuminate\Http\Response
@@ -66,16 +76,6 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
 
     /**
      * Get a validator for an incoming registration request.
@@ -138,8 +138,10 @@ class RegisterController extends Controller
         return redirect('/login');
     }
 
+
     /**
      * Handle a registration request for the application.
+     * Old system
      *
      * @param  \Illuminate\Http\Request $request
      * @param UserMailer $mailer

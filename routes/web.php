@@ -325,4 +325,7 @@ $api->version('v1', ['middleware' => 'api.auth', 'api.throttle', 'limit' => 500,
 //Socialite Routes
 Route::get('auth/facebook', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/facebook/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('auth/facebook/confirm/{id}', 'UserController@confirmAccount');
+Route::patch('auth/facebook/confirmation/{id}', 'UserController@confirmation')->name('confirmation');
+
 Route::get('/home', 'HomeController@index');
