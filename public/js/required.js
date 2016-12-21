@@ -13,4 +13,8 @@ $(document).ready(function(){
         $('html, body').animate({scrollTop : 0},800);
         return false;
     });
+
+    //Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent
+    window.cookieconsent_options = {"message":"This website uses cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":"https://belle-idee.org/cookies","theme":"light-bottom"};
+    <!-- End Cookie Consent plugin -->
 });

@@ -470,6 +470,21 @@ class HomeController extends Controller
     }
 
     /*
+     * Return the Belle-idee cookie policy for new users/visitors
+     * Pulls from the Policy stored on AWS
+     */
+    public function cookies()
+    {
+        $filename = 'CookiePolicy.pdf';
+        $path = '/docs/'. $filename;
+        $content = Storage::get($path);
+        return Response::make($content, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; '.$filename,
+        ]);
+    }
+
+    /*
 * Return the Belle-Idee Image Guidelines
 */
     public function images()

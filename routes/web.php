@@ -11,7 +11,6 @@
 |
 */
 
-
 //User Routes (Resource)
 use Illuminate\Support\Facades\Auth;
 Auth::routes();
@@ -274,6 +273,7 @@ Route::get('tutorials', 'HomeController@tutorials');
 Route::get('workshops', 'HomeController@workshops');
 Route::get('privacy', 'HomeController@privacy');
 Route::get('terms', 'HomeController@terms');
+Route::get('cookies', 'HomeController@cookies');
 Route::get('images', 'HomeController@images');
 Route::get('nymi', 'HomeController@nymi');
 Route::get('frequency', 'HomeController@frequency');
