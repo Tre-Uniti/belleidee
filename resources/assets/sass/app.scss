@@ -78,8 +78,6 @@ ul.tour
   text-align: left;
 }
 
-
-
 .bookmarkLeft
 {
   width: 60%;
@@ -90,8 +88,6 @@ ul.tour
   width: 40%;
   float: right;
 }
-
-
 
 //Table Specific
 table
@@ -255,8 +251,6 @@ article
   text-align: center;
 }
 
-
-
 /* Button specific */
 .navButton
 {
@@ -332,8 +326,5 @@ article
 
 //Include Media Queries
 @include desktop($imgBackground1);
-@include tablet($imgBackgroundLandscape);
-@include mobile($imgBackgroundPortrait);
-
-
-
+@include tablet($imgBackgroundPortrait, $imgBackgroundLandscape);
+@include mobile($imgBackgroundMobile, $imgBackgroundLandscape);

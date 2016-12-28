@@ -345,5 +345,5 @@ article
 
 //Include Media Queries
 @include desktop($imgBackground1);
-@include tablet($imgBackgroundLandscape);
-@include mobile($imgBackgroundPortrait);
+@include tablet($imgBackgroundPortrait, $imgBackgroundLandscape);
+@include mobile($imgBackgroundMobile, $imgBackgroundLandscape);

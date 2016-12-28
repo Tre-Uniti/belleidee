@@ -55,7 +55,7 @@ class SupportController extends Controller
                 'beacon' => 'Beacon',
                 'sponsor' => 'Sponsor',
                 'intolerance' => 'Intolerance',
-                'copywrite' => 'Copywrite',
+                'copyright' => 'Copyright',
                 'other' => 'Other'
             ];
 
@@ -148,7 +148,7 @@ class SupportController extends Controller
                 'beacon' => 'Beacon',
                 'sponsor' => 'Sponsor',
                 'intolerance' => 'Intolerance',
-                'copywrite' => 'Copywrite',
+                'copyright' => 'Copyright',
                 'other' => 'Other'
             ];
 

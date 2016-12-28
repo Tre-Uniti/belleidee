@@ -1610,6 +1610,11 @@ article {
     background: linear-gradient(#B71C1C, #B71C1C); }
 
 @media screen and (min-width: 1501px) and (min-height: 850px) {
+  html {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("/img/background.jpg"); }
   .topNav {
     width: 100%; }
   .interactButton {
@@ -1672,6 +1677,11 @@ article {
     padding: 12px 24px; } }
 
 @media screen and (max-width: 800px) and (min-height: 600px) {
+  html {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("/img/backgroundPortrait.jpg"); }
   #centerContent {
     width: 95%; }
   .topNav > ul > .searchIconBackground {
@@ -1688,6 +1698,11 @@ article {
     padding: 0 18px; } }
 
 @media screen and (min-width: 852px) and (max-width: 1500px) {
+  html {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("/img/backgroundLandscape.jpg"); }
   #centerContent {
     width: 75%; }
   .createTitleText {
@@ -1710,7 +1725,12 @@ article {
   .topNav > ul > li > p {
     padding: 0 24px; } }
 
-@media screen and (max-width: 419px) and (min-height: 541px) {
+@media screen and (max-width: 419px) and (min-height: 601px) {
+  html {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("/img/backgroundMobile.jpg"); }
   .topNav > ul > li > a {
     padding: 0 1px; }
   .topNav > ul > li > p {
@@ -1746,8 +1766,6 @@ article {
   #createBodyText {
     padding-left: 1px;
     padding-right: 1px; }
-  #createOptions {
-    max-height: 340px; }
   .createTitleText {
     max-width: 70%; }
   .infoNav > ul > li {
@@ -1760,8 +1778,6 @@ article {
   .listResourceLeft {
     padding-left: 1%;
     width: 45%; }
-  .interactButton {
-    padding: 3px 1px; }
   .profileNav > ul > li > div ul > li {
     display: block; }
   #questionContainer {
@@ -1787,6 +1803,11 @@ article {
     left: -60%; } }
 
 @media screen and (min-width: 419px) and (max-width: 751px) and (max-height: 450px) {
+  html {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("/img/backgroundLandscape.jpg"); }
   .topNav > ul > li > a {
     padding: 0 1px; }
   .topNav > ul > li > p {
@@ -1846,7 +1867,12 @@ article {
   .profileNav > ul > li:hover > div {
     visibility: hidden; } }
 
-@media screen and (max-width: 465px) and (max-height: 540px) {
+@media screen and (max-width: 465px) and (max-height: 600px) {
+  html {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("/img/backgroundMobile.jpg"); }
   .topNav > ul > li > a {
     padding: 0 0; }
   .topNav > ul > li > p {
@@ -1894,8 +1920,6 @@ article {
   .listResourceLeft {
     padding-left: 1%;
     width: 45%; }
-  .interactButton {
-    padding: 3px 1px; }
   .profileNav > ul > li > div ul > li {
     display: block; }
   #questionContainer {
