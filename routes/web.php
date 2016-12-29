@@ -305,7 +305,7 @@ Route::patch('admin/sponsor/update/{id}', 'AdminController@updateSponsorRequest'
 Route::get('admin/sponsor/convert/{id}', 'AdminController@convertSponsorRequest');
 
 //Cashier
-Route::post('stripe/webhook', '\Laravel\Cashier\WebhookController@handleWebhook');
+Route::post('stripe/webhook', '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook');
 
 //API Routing
 /*

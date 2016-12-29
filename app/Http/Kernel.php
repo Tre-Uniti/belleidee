@@ -65,5 +65,7 @@ class Kernel extends HttpKernel
         'beaconMod' => \App\Http\Middleware\RedirectIfNotBeaconMod::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
+        'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
     ];
 }

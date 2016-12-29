@@ -13,6 +13,9 @@
             </div>
 
         <div class = "indexNav">
+
+            <passport-clients></passport-clients>
+
             <div class = "cardImg">
             @if($user->photo_path != NULL)
                 <a href={{ url('/users/'. $user->id) }}><img src= {{ url(env('IMAGE_LINK'). $user->photo_path) }} alt="{{$user->handle}}" height = "99%" width = "99%"></a>

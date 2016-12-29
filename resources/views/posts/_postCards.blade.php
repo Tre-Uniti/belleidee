@@ -45,8 +45,12 @@
             </div>
 
             <div class = "centerSection">
-                <a href="{{ url('/beacons/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a>
-                <span class="tooltiptext">Beacon community where this post is located</span>
+                @if($post->safePost == true)
+                    Pending safe post approval.
+                @else
+                    <a href="{{ url('/beacons/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a>
+                    <span class="tooltiptext">The Beacon for this post:  {{ $beacon->name }}</span>
+                @endif
             </div>
 
             <div class = "rightSection">

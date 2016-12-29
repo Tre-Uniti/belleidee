@@ -77,9 +77,12 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
             </div>
 
             <div class = "centerSection">
-                
-                <a href="{{ url('/beacons/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a>
-                <span class="tooltiptext">The Beacon for this post:  {{ $beacon->name }}</span>
+                @if($post->safePost == true)
+                    Pending safe post approval.
+                @else
+                    <a href="{{ url('/beacons/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a>
+                    <span class="tooltiptext">The Beacon for this post:  {{ $beacon->name }}</span>
+                @endif
             </div>
 
             <div class = "rightSection">
@@ -89,7 +92,6 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                 </div>
                 <div class = "rightCounter">
                     <a href={{ url('/extensions/post/list/'.$post->id)}}>{{ $post->extension }}</a>
-
                 </div>
             </div>
             <div class = "moreSection">
@@ -119,11 +121,6 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                     {!! Form::close() !!}
                 @endif
             </div>
-            @if($post->safePost == true)
-                <p>
-                    Post is pending safe post approval.
-                </p>
-            @endif
             @if($beacon->stripe_plan < 1)<p>Sponsored by:</p>
 
                 <div class = "sponsorContentLogo">
