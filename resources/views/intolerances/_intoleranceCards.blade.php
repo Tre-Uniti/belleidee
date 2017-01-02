@@ -12,20 +12,20 @@
                             @elseif($intolerance->extension_id != null)
                                 <a href="{{ action('ExtensionController@show', [$intolerance->extension_id])}}" target = "_blank">Extension {{ $intolerance->extension_id }}</a>
                             @endif
+                                By: <a href="{{ action('UserController@show', [$intolerance->source_user])}}">{{ $intolerance->source_user}}</a>
                         </h3>
-                        <p>By: <a href="{{ action('UserController@show', [$intolerance->source_user])}}">{{ $intolerance->source_user}}</a></p>
                         <p>Beacon: <a href="{{ url('/beacons/' . $intolerance->beacon_tag) }}">{{ $intolerance->beacon_tag }}</a></p>
                     </header>
                 </div>
                 <div class = "cardHandleSection">
-                    <p class = "contentHandle">
-                        <a href = "{{ action('IntoleranceController@show', [$intolerance->id])}}">Content contains: {{ $intolerance->user_ruling }}</a>
-                    </p>
                     @if($intolerance->user_id == Auth::id())
                         <a href="{{ url('/intolerances/'.$intolerance->id.'/edit') }}" class = "navLink">Edit</a>
                     @elseif($user->type > 0)
                         <a href="{{ url('/moderations/intolerance/'. $intolerance->id) }}" class = "navLink">Moderate</a>
                     @endif
+                    <p class = "contentHandle">
+                        <a href = "{{ action('IntoleranceController@show', [$intolerance->id])}}">Content contains: {{ $intolerance->user_ruling }}</a>
+                    </p>
                     <p>
                         Submitted by: <a href="{{ action('UserController@show', [$intolerance->user_id])}}">{{ $intolerance->user->handle}}</a>
                         on <a href = "{{ action('IntoleranceController@show', [$intolerance->id])}}">{{ $intolerance->created_at->format('M-d-Y')}}</a>

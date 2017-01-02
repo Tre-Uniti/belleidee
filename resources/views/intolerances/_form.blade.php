@@ -4,7 +4,7 @@
     <script src = "/js/toggleSource.js"></script>
 @stop
 <div id = "createOptions">
-    <h2>Intolerance</h2>
+    <h2>Report Intolerance</h2>
     <p><button type = "button" class = "interactButton" id = "content">Show Source</button></p>
     <div class = "extensionContent" id = "hiddenContent">
         @if($sources['post_id'] != null)
@@ -29,10 +29,9 @@
     </div>
         <div id = "formDataContainer">
             <div class = "formData">
-                <div class = "formLabel">
-                    {!! Form::label('user_ruling', 'Why is this content intolerant?') !!}
-                </div>
+
                 <div class = "formInput">
+                    {!! Form::label('user_ruling', 'Why is this content intolerant?') !!}
                     {!! Form::select('user_ruling', $options, null, ['class' => 'tagSelector']) !!}
                 </div>
             </div>
@@ -43,5 +42,4 @@
         <a href="{{ URL::previous() }}"><button type = "button" class = "navButton">Cancel</button></a>
         {!! Form::close()   !!}
     @stop
-
 </div>

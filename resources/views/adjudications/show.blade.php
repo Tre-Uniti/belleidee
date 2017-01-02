@@ -50,9 +50,9 @@
 
 @section('centerFooter')
     <div id = "centerFooter">
-        @if($user->type > 1)
+        @if($user->type > 2)
                 {!! Form::open(['method' => 'DELETE', 'route' => ['adjudications.destroy', $adjudication->id]]) !!}
-                {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
+                {!! Form::submit('Delete', ['class' => 'redButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}
         @endif
     </div>

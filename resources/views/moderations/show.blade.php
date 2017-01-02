@@ -6,7 +6,7 @@
     Show Moderation
 @stop
 @section('centerText')
-    <h2><a href = {{ url('moderations') }}>Moderation</a></h2>
+    <h2><a href = {{ url('moderations') }}>Moderation Overview</a></h2>
     <p><button type = "button" class = "interactButton" id = "content">Show Source</button></p>
     <div class = "extensionContent" id = "hiddenContent">
         @if($intolerance->post_id != null)
@@ -49,9 +49,9 @@
         @endif
         @if($user->type > 1)
                 <a href="{{ url('moderations/userIndex/'. $user->id) }}"><button type = "button" class = "navButton">Others</button></a>
-                <a href="{{ url('moderator'. $moderation->id) }}"><button type = "button" class = "navButton">Adjudicate</button></a>
+                <a href="{{ url('adjudications/moderation/'. $moderation->id) }}"><button type = "button" class = "navButton">Adjudicate</button></a>
                 {!! Form::open(['method' => 'DELETE', 'route' => ['moderations.destroy', $moderation->id]]) !!}
-                {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
+                {!! Form::submit('Delete', ['class' => 'redButton', 'id' => 'delete']) !!}
                 {!! Form::close() !!}
         @endif
     </div>

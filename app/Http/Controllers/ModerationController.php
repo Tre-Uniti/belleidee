@@ -64,7 +64,6 @@ class ModerationController extends Controller
             return redirect('moderations/' . $moderation->id);
         }
 
-
         if($intolerance->post_id != null)
         {
             $sourceModel = Post::findOrFail($intolerance->post_id);
@@ -111,7 +110,7 @@ class ModerationController extends Controller
         $moderation->intolerance()->associate($intolerance);
         $moderation->user()->associate($user);
         $moderation->save();
-        flash()->overlay('Your moderator has been created and will be reviewed');
+        flash()->overlay('Your moderation has been created and will be reviewed');
         return redirect('moderations/' . $moderation->id);
     }
 

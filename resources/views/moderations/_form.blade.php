@@ -28,8 +28,8 @@
     </div>
 
     <div id = "centerTextContent">
-        <p>{{ $intolerance->user_ruling }}</p>
-        {!! Form::textarea('mod_ruling', null, ['id' => 'createBodyText', 'placeholder' => 'Is this intolerant?:', 'rows' => '3%', 'maxlength' => '300']) !!}
+        <p class = "centered">Submitted for {{ $intolerance->user_ruling }} by <a href = "{{ url('/users/'. $intolerance->user_id) }}" target = "_blank">{{ $intolerance->user->handle }}</a></p>
+        {!! Form::textarea('mod_ruling', null, ['id' => 'createBodyText', 'placeholder' => 'Is this intolerant?', 'rows' => '3%', 'maxlength' => '300']) !!}
     </div>
 <!-- Body Form Input -->
     @section('centerFooter')

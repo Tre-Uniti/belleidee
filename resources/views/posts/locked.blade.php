@@ -28,7 +28,7 @@
         <a href="{{ url('/posts/unlock/'. $post->id) }}"><button type = "button" class = "navButton">Unlock and View</button></a>
         @if($viewUser->type > 1)
             {!! Form::open(['method' => 'DELETE', 'route' => ['adjudications.destroy', $adjudication->id]]) !!}
-            {!! Form::submit('Delete', ['class' => 'navButton', 'id' => 'delete']) !!}
+            {!! Form::submit('Delete', ['class' => 'redButton', 'id' => 'delete']) !!}
             {!! Form::close() !!}
         @endif
     </div>

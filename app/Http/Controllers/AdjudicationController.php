@@ -37,23 +37,10 @@ class AdjudicationController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $adjudications = $this->adjudication->latest()->paginate(10);
 
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
-
         return view ('adjudications.index')
-            ->with(compact('user', 'adjudications', 'profilePosts', 'profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'adjudications'));
     }
 
     /**
@@ -64,8 +51,6 @@ class AdjudicationController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $profilePosts = $user->posts()->latest('created_at')->take(7)->get();
-        $profileExtensions = $user->extensions()->latest('created_at')->take(7)->get();
 
         $moderationId = Session::get('moderationId');
         $moderation = Moderation::findOrFail($moderationId);
@@ -96,7 +81,7 @@ class AdjudicationController extends Controller
 
 
         return view ('adjudications.create')
-            ->with(compact('user', 'adjudication', 'moderation', 'intolerance', 'profilePosts', 'profileExtensions', 'sourceUser', 'content'))
+            ->with(compact('user', 'adjudication', 'moderation', 'intolerance', 'sourceUser', 'content'))
             ->with('type', $type);
     }
 
@@ -147,8 +132,6 @@ class AdjudicationController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
 
         //Get moderator with associated id
         $adjudication = $this->adjudication->findOrFail($id);
@@ -180,7 +163,7 @@ class AdjudicationController extends Controller
             $type = substr($sourceModel->post_path, -3);
         }
         return view ('adjudications.show')
-            ->with(compact('user', 'adjudication', 'moderation', 'intolerance', 'profilePosts','profileExtensions', 'sourceUser', 'content'))
+            ->with(compact('user', 'adjudication', 'moderation', 'intolerance', 'sourceUser', 'content'))
             ->with('type', $type);
     }
 
@@ -193,27 +176,14 @@ class AdjudicationController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        $profilePosts = Post::where('user_id', $user->id)->latest('created_at')->take(7)->get();
-        $profileExtensions = Extension::where('user_id', $user->id)->latest('created_at')->take(7)->get();
         $adjudication = $this->adjudication->findOrFail($id);
 
         //Get moderator associated with adjudication
         $moderation = Moderation::where('id', $adjudication->moderation_id)->first();
         $intolerance = Intolerance::where('id', $moderation->intolerance_id)->first();
 
-        //Get user photo
-        if($user->photo_path == '')
-        {
-
-            $photoPath = '';
-        }
-        else
-        {
-            $photoPath = $user->photo_path;
-        }
         return view ('adjudication.edit')
-            ->with(compact('user', 'adjudication', 'moderation', 'intolerance', 'profilePosts','profileExtensions'))
-            ->with('photoPath', $photoPath);
+            ->with(compact('user', 'adjudication', 'moderation', 'intolerance'));
     }
 
     /**
@@ -227,7 +197,7 @@ class AdjudicationController extends Controller
     {
         $adjudication = $this->adjudication->findOrFail($id);
         $adjudication->update($request->all());
-        flash()->overlay('Moderation has been updated');
+        flash()->overlay('Adjudication has been updated');
 
         return redirect('adjudication/'. $adjudication->id);
     }
@@ -256,6 +226,7 @@ class AdjudicationController extends Controller
             if ($post = Post::where('id', '=', $intolerance->post_id)->first())
             {
                 $post->status = NULL;
+                $post->update();
             } else
             {
                 flash()->overlay('Post not found');
@@ -266,6 +237,7 @@ class AdjudicationController extends Controller
         {
             if ($extension = Post::where('id', '=', $intolerance->post_id)->first()) {
                 $extension->status = NULL;
+                $extension->update();
             }
             else
             {
@@ -277,6 +249,7 @@ class AdjudicationController extends Controller
         {
             if ($legacy = Legacy::where('id', '=', $intolerance->legacy_post_id)->first()) {
                 $legacy->status = NULL;
+                $legacy->update();
             }
             else
             {

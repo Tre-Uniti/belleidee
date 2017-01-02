@@ -49,7 +49,7 @@
                     Pending safe post approval.
                 @else
                     <a href="{{ url('/beacons/'.$post->beacon_tag) }}">{{ $post->beacon_tag }}</a>
-                    <span class="tooltiptext">The Beacon for this post:  {{ $beacon->name }}</span>
+                    <span class="tooltiptext">The Beacon for this post:  {{ $post->beacon_tag }}</span>
                 @endif
             </div>
 

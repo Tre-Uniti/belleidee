@@ -95,14 +95,14 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
                 </div>
             </div>
             <div class = "moreSection">
-                <p class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i></p>
+                <p class = "moreOptions"><i class="fa fa-angle-up fa-lg" aria-hidden="true"></i>i</p>
                 <div class="moreOptionsMenu">
                     <a href="{{ url('bookmarks/posts/'.$post->id) }}"><i class="fa fa-bookmark-o fa-lg" aria-hidden="true"></i></a>
                     <a href="https://www.facebook.com/share.php?u={{Request::url()}}&title={{$post->title}}" target="_blank"><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i></a>
                     <a href="https://twitter.com/intent/tweet?status={{$post->title}} - {{Request::url()}}" target="_blank"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>
                     <a href="https://plus.google.com/share?url={{Request::url()}}" target="_blank"><i class="fa fa-google-plus-square fa-lg" aria-hidden="true"></i></a>
                     @if($post->user_id != Auth::id())
-                        <a href="{{ url('/intolerances/post/'.$post->id) }}"><i class="fa fa-flag-o fa-lg" aria-hidden="true"></i></a>
+                        <a href="{{ url('/intolerances/post/'.$post->id) }}">i<i class="fa fa-flag-o fa-lg" aria-hidden="true"></i></a>
                     @elseif ($post->status < 1)
                         Status: Tolerant
                     @else

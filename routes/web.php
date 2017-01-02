@@ -237,7 +237,7 @@ Route::get('moderations/beacon/{id}', 'ModerationController@beaconIndex');
 Route::resource('moderations', 'ModerationController');
 
 //Adjudication routes (resource)
-Route::get('adjudications/moderator/{source}', 'AdjudicationController@moderator');
+Route::get('adjudications/moderation/{source}', 'AdjudicationController@moderation');
 Route::resource('adjudications', 'AdjudicationController');
 
 //Notification routes (resource)
