@@ -77,7 +77,7 @@
         <div id = "footerButtons" class = "indexContent">
             <button class = "interactButton" type = "button" id = "hiddenIndex">Tags</button>
             {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
-            <button type = "button" id = "back" class = "indexButton">Back</button>
+            <button type = "button" id = "back" class = "interactButton">Back</button>
             {!! Form::close()   !!}
         </div>
     @stop

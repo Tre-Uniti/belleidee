@@ -865,7 +865,11 @@ progress[value]::-webkit-progress-value {
   padding: 0 5px 0px 10px; }
 
 p.moreOptions {
-  color: #2C3E50;
+  color: #A9A9A9;
+  margin: 0 auto; }
+
+p.moreOptions:hover {
+  color: #27AE60;
   margin: 0 auto; }
 
 /* Dropdown Content (Hidden by Default) */
@@ -1550,7 +1554,8 @@ article {
   background-color: #ECF0F1;
   border: none;
   cursor: pointer;
-  overflow: hidden; }
+  overflow: hidden;
+  border: 1px solid #A9A9A9; }
   .interactButton:hover {
     color: #FFFFFF;
     background: -webkit-linear-gradient(#27AE60, #27AE60);
