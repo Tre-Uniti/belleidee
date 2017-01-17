@@ -9,11 +9,10 @@
     <button id = "imageButton" type = "button" class = "indexButton">Upload an Image</button>
     <button id = "textButton" type = "button" class = "indexButton">Write an Article</button>
     <div id = "indexInfo" class = "indexContent">
-        <div class = "formInput">
-            {!! Form::label('title', 'Title:', ['class' => 'tagLabel']) !!}
-        </div>
+
         <div class = "formData">
-            {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus']) !!}
+            {!! Form::label('title', 'Title   ', ['class' => 'tagLabel']) !!}<span>:  </span>
+            {!! Form::text('title', null, ['class' => 'createTitleText', 'autofocus', ]) !!}
         </div>
         </div>
 

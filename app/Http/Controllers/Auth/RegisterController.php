@@ -147,6 +147,7 @@ class RegisterController extends Controller
      * @param UserMailer $mailer
      * @return \Illuminate\Http\Response
      */
+    /*
     public function postRegister(Request $request, UserMailer $mailer)
     {
         $validator = $this->validator($request->all());
@@ -172,5 +173,5 @@ class RegisterController extends Controller
         }*/
 
 
-    }
+    //}
 }

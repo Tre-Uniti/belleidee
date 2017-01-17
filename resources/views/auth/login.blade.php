@@ -1,6 +1,8 @@
 @extends('auth')
 @section('pageHeader')
     <script src = "/js/social.js"></script>
+    <script src="/js/mailcheck.min.js"></script>
+    <script src="/js/domainCheck.js"></script>
 @stop
 @section('siteTitle')
     Login
@@ -12,11 +14,12 @@
                 {{ csrf_field() }}
 
                 <div class="formData {{ $errors->has('email') ? ' has-error' : '' }}">
+                    <p id="suggestion"></p>
                     <label for="email" class="formLabel">Email</label>
-
                     <div class="formInput">
                         <input id="email" type="email" name="email" class="welcomeInputText" value="{{ old('email') }}">
                     </div>
+
                 </div>
                 <div class="formData{{ $errors->has('password') ? ' has-error' : '' }}">
                     <label for="password" class="formLabel">Password</label>

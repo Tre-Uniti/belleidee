@@ -85,31 +85,44 @@ class LoginController extends Controller
     private function findOrCreateUser($facebookUser)
     {
         if ($authUser = User::where('facebook_id', $facebookUser->id)->first()) {
+
             return $authUser;
         }
 
-        //Generate API token for user
-        $api_token = str_random(60);
-        while(User::where('api_token', '=', $api_token)->exists())
+        //If User has already registered but wants to link their FB account
+        elseif ($authUser = User::where('email', $facebookUser->email)->where('verified', '=', 1)->first())
         {
-            $api_token = str_random(30);
+            $authUser->facebook_id = $facebookUser->id;
+            $authUser->update();
+
+            return $authUser;
         }
-        $tempPass = str_random(20);
 
-        $newUser = User::create([
-            'handle' => $facebookUser->getName(),
-            'email' => $facebookUser->email,
-            'password' => bcrypt($tempPass),
-            'facebook_id' => $facebookUser->id,
-            'emailToken' => null,
-            'location' => 3,
-            'frequency' => 3,
-            'theme' => 1,
-            'api_token' => $api_token
+            //Generate API token for user
+            $api_token = str_random(60);
+            while(User::where('api_token', '=', $api_token)->exists())
+            {
+                $api_token = str_random(30);
+            }
+            $tempPass = str_random(20);
+
+            $newUser = User::create([
+                'handle' => $facebookUser->getName(),
+                'email' => $facebookUser->email,
+                'password' => bcrypt($tempPass),
+                'facebook_id' => $facebookUser->id,
+                'emailToken' => null,
+                'location' => 3,
+                'frequency' => 3,
+                'theme' => 1,
+                'api_token' => $api_token
             ]);
-        $this->socialRedirectTo = '/auth/facebook/confirm/'. $newUser->id;
+            $this->socialRedirectTo = '/auth/facebook/confirm/'. $newUser->id;
 
-        return $newUser;
+            return $newUser;
+
+
+
     }
 
 

@@ -865,7 +865,7 @@ progress[value]::-webkit-progress-value {
   padding: 0 5px 0px 10px; }
 
 p.moreOptions {
-  color: #A9A9A9;
+  color: #696969;
   margin: 0 auto; }
 
 p.moreOptions:hover {
@@ -1760,7 +1760,7 @@ article {
   .topNav > ul > li > p {
     padding: 0 24px; } }
 
-@media screen and (max-width: 419px) and (min-height: 601px) {
+@media screen and (max-width: 419px) and (min-height: 630px) {
   .topNav > ul > li > a {
     padding: 0 1px; }
   .topNav > ul > li > p {
@@ -1795,16 +1795,12 @@ article {
     padding-right: 3px; }
   #createBodyText {
     padding-left: 1px;
-    padding-right: 1px; }
+    padding-right: 1px;
+    height: 110px; }
   .createTitleText {
     max-width: 70%; }
   .infoNav > ul > li {
     width: 100%; }
-  .innerProfileMenus {
-    height: 70px; }
-  .innerPhotos {
-    height: 100px;
-    padding-top: 3px; }
   .listResourceLeft {
     padding-left: 1%;
     width: 45%; }
@@ -1844,7 +1840,7 @@ article {
   #centerContent {
     width: 75%; }
   #centerText {
-    width: 85%; }
+    width: 90%; }
   .topNav > ul > .searchIconBackground {
     display: inline-block;
     width: 130px; }
@@ -1872,27 +1868,14 @@ article {
     padding-right: 3px; }
   #createBodyText {
     padding-left: 1px;
-    padding-right: 1px; }
+    padding-right: 1px;
+    height: 30px; }
   .createTitleText {
     max-width: 60%; }
-  #createOptions {
-    max-height: 300px; }
-  .innerPhotos {
-    height: 120px; }
-  .listResourceLeft {
-    padding-left: 1%;
-    width: 45%; }
-  .interactButton {
-    padding: 3px 1px; }
-  .profileNav > ul > li > a {
-    color: #202020;
-    display: block;
-    line-height: 45px;
-    padding: 1px 10px; }
   .profileNav > ul > li:hover > div {
     visibility: hidden; } }
 
-@media screen and (max-width: 465px) and (max-height: 600px) {
+@media screen and (max-width: 465px) and (max-height: 629px) {
   .topNav > ul > li > a {
     padding: 0 0; }
   .topNav > ul > li > p {
@@ -1920,6 +1903,8 @@ article {
   #centerTextContent {
     padding-left: 3px;
     padding-right: 3px; }
+  #createBodyText {
+    height: 100px; }
   .formDataContainer {
     width: 98%;
     height: auto;
@@ -1934,9 +1919,6 @@ article {
     padding-right: 1px; }
   .infoNav > ul > li {
     width: 100%; }
-  .innerPhotos {
-    padding-top: 5px;
-    height: 80px; }
   .listResourceLeft {
     padding-left: 1%;
     width: 45%; }
@@ -1998,12 +1980,8 @@ article {
     padding-right: 3px; }
   #createBodyText {
     padding-left: 1px;
-    padding-right: 1px; }
-  .innerProfileMenus {
-    height: 70px; }
-  .innerPhotos {
-    height: 120px;
-    padding-top: 3px; }
+    padding-right: 1px;
+    height: 30px; }
   .listResourceLeft {
     padding-left: 1%;
     width: 45%; }
