@@ -8,7 +8,7 @@ $(document).ready(function(){
         }
         else
         {
-            content.innerHTML = "View Source"
+            content.innerHTML = "Source"
         }
 
     });

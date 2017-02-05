@@ -196,9 +196,9 @@ Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
         <input type="hidden" name="id" value="{{ $post->id }}">
         <div>
             <button class = "interactButton" type = "button" id = "hiddenIndex">Tags</button>
-            {!! Form::submit('Add Extension', ['class' => 'navButton', 'id' => 'submit']) !!}
+            {!! Form::submit('Post', ['class' => 'navButton', 'id' => 'submit']) !!}
             {!! Form::close()   !!}
-            <button class = "interactButton" type = "button" id = "fullScreen">Full Screen</button>
+            <button class = "interactButton" type = "button" id = "fullScreen">Expand</button>
         </div>
     </div>
 @stop

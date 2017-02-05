@@ -49,7 +49,7 @@ $(document).ready(function() {
     $(document.getElementById("fullScreen")).click(function () {
 
         var fullScreen = document.getElementById("fullScreen");
-        if(fullScreen.innerHTML == "Full Screen")
+        if(fullScreen.innerHTML == "Expand")
         {
             fullScreen.innerHTML = "Exit Full Screen";
             document.getElementById("extensionIndex").style.display = "None";
@@ -61,7 +61,7 @@ $(document).ready(function() {
         }
         else
         {
-            fullScreen.innerHTML = "Full Screen";
+            fullScreen.innerHTML = "Expand";
             $("#createBodyText").attr('rows', '5');
             document.getElementById("extensionIndex").style.display = "Inline";
             document.getElementById("listExtensions").style.display = "Inline";

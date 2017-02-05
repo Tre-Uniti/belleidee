@@ -131,12 +131,12 @@
     <div>
         <button class = "interactButton" type = "button" id = "hiddenIndex">Tags</button>
             @if(($sources['type'] == 'question'))
-                {!! Form::submit('Update Answer', ['class' => 'navButton', 'id' => 'submit']) !!}
+                {!! Form::submit('Update', ['class' => 'navButton', 'id' => 'submit']) !!}
             @else
                 {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
             @endif
             <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
         {!! Form::close()   !!}
-        <button type = "button" class = "interactButton" id = "content">View Source</button>
+        <button type = "button" class = "interactButton" id = "content">Source</button>
     </div>
 </div>
