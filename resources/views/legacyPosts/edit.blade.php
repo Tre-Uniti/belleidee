@@ -10,7 +10,7 @@
     </div>
 
     {!! Form::model($legacyPost, ['route' => ['legacyPosts.update', $legacyPost->id], 'method' => 'patch', 'files' => true]) !!}
-    @include ('legacyPosts._edit', ['submitButtonText' => 'Update Legacy Post'])
+    @include ('legacyPosts._edit', ['submitButtonText' => 'Update Legacy'])
 
 @stop
 

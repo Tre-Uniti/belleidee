@@ -135,8 +135,8 @@
     @endif
     <div>
         <button class = "interactButton" type = "button" id = "hiddenIndex">Tags</button>
-        {!! Form::submit('Add Extension', ['class' => 'navButton', 'id' => 'submit']) !!}
+        {!! Form::submit('Post', ['class' => 'navButton', 'id' => 'submit']) !!}
         {!! Form::close()   !!}
-        <button type = "button" class = "interactButton" id = "content">View Source</button>
+        <button type = "button" class = "interactButton" id = "content">Source</button>
     </div>
 </div>

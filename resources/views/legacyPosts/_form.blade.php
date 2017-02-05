@@ -1,7 +1,6 @@
 @section('pageHeader')
     <script src = "/js/caffeine.js"></script>
     <script src = "/js/creation.js"></script>
-    <script src = "/js/submit.js"></script>
 @stop
 
 <div id = "createOptions">
@@ -34,8 +33,7 @@
     @section('centerFooter')
             <div id = "footerButtons" class = "indexContent">
         {!! Form::submit($submitButtonText, ['class' => 'navButton', 'id' => 'submit']) !!}
-    <a href="{{ URL::previous() }}"><button type = "button" id = "cancel" class = "navButton">Cancel</button></a>
-                </div>
+                <button type = "button" id = "back" class = "interactButton">Back</button>                </div>
     @stop
 </div>
 </div>

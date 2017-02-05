@@ -7,7 +7,7 @@
     @include ('errors.list')
 
     {!! Form::open(['url' => 'legacyPosts', 'files' => true]) !!}
-    @include ('legacyPosts._form', ['submitButtonText' => 'Create Legacy Post'])
+    @include ('legacyPosts._form', ['submitButtonText' => 'Post Legacy'])
 @stop
 
 
