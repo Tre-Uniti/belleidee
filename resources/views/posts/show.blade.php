@@ -10,8 +10,12 @@
 Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     <meta property="og:url"           content= "{{ Request::url() }}"/>
     <meta property="og:type"          content="website"/>
-    <meta property="og:title"         content="Belle-Idee"/>
-    <meta property="og:description"   content="{{ $post->title }}"/>
+    <meta property="og:title"         content="{{ $post->title }}"/>
+    @if($type != 'txt')
+        <meta property="og:description" content="{{ $post->caption }}"/>
+    @else
+        <meta property="og:description" content="{{ $post->excerpt }}"/>
+    @endif
     @if($type != 'txt')
         <meta property="og:image"         content="{{ url(env('IMAGE_LINK'). $post->post_path) }}"/>
     @elseif($user->photo_path != null)
